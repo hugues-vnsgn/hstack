@@ -5,6 +5,14 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
+For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
+before the first owner dispatch. Protect the approved checklist, accepted proof
+and installed plugin with actual host write enforcement. At every round's
+existing verdict step, the root runs `program-check` against its owner-held
+baseline and complete decision/finding state. A nonzero result holds a clean
+verdict; neither a rewritten plan nor self-proof can replace accepted evidence.
+Keep the phase order and all gates below.
+
 ### Autopilot-full
 
 **Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)

@@ -40,6 +40,14 @@ assumptions and mandatory transitive inputs are in the
 | One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,821.25 | 135,888 → 135,347 |
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,517.75 | 146,269 → 146,133 |
 
+The approved-proof candidate adds deferred new-program references separately
+from those pinned scenarios. The guide is 7,716 bytes; constructing records also
+loads a 5,627-byte format reference. Together they add 13,343 bytes (3,335.75
+characters/4 estimated tokens), not a measured host charge. The generated
+`new_program_proof` inventory binds both files. Do not describe the original
+scenario totals as a complete new-program cost; approval records, host framing
+and actual worker reads require their own accounting.
+
 The routing inventory falls about 23.8% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
 verification and publication instructions still apply. The bug-fix profile
@@ -114,13 +122,15 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,972 bytes,
-about 6,483.0 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 25,965 bytes,
+about 6,481.75 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
 adapter. The router rewrite and its fix round take 752 bytes back, which leaves it 8
-bytes under `main`. The fix round restored the scope words the rewrite had
+bytes under `main`. The approved-proof candidate's shorter adapter wording and
+deferred pointer save a further seven bytes, leaving it 15 bytes under that
+baseline. The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes

@@ -1,7 +1,8 @@
 # Claude Code and Codex host adapter
 
-Apply this adapter and the mobile applicability section before the canonical workflow. Follow the consumer project’s own PR policy. These adapters translate host
-mechanisms and limit authority; the canonical skill owns workflow
+Apply this adapter and mobile applicability before the canonical workflow.
+Follow the consumer project's PR policy. Adapters translate host mechanics and
+limit authority; the canonical skill owns workflow
 phases, mandatory gates, panel cardinality, fallback and stop rules. A constraint
 can block execution. It cannot turn an omitted gate into success.
 
@@ -67,13 +68,13 @@ authority or a necessary capability is absent and continue independent work.
 
 ## Required phase guidance
 
-Before the triggering action, read its complete reference. A deferred read is a
-prerequisite, not permission to skip a rule. Keep already-loaded guidance in
-context; reread it after compaction when needed. These are ordinary owned
-references, not alternate skill bodies or a custom native loader.
+Before the triggering action, read its complete reference. Deferral never skips a rule.
+Retain loaded guidance and reread after compaction when needed. These are owned
+references, not skill bodies or a native loader.
 
 | Before this action | Read in full |
 |---|---|
+| New consumer program: plan, first build, proof or verdict | [Program proof](program-proof.md) |
 | Worker dispatch, worker execution, role selection or setup-hstack | [Workers and models](host-workers.md) |
 | Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations | [Workflow tools](host-workflow-tools.md) |
 | Transcript-dependent skills, optional integrations or consumer skill placement | [Special skills](host-special-skills.md) |

@@ -1,10 +1,12 @@
-# Installed planning and worktree audit commands
+# Installed planning, proof and worktree commands
 
 These are mechanical translations of bundled operands in the canonical playbooks.
 Reach the selected skill first, as [host.md](host.md) directs, and preserve its todo order,
 verification rules, explicit execution go and active/pinned-chat gate. Python 3 and Git must already
 be available; plan validation also needs Node. Missing tools block the gate.
-The adapters do not install dependencies, fetch, query a forge or delete anything.
+The adapters do not install dependencies, fetch or query a forge. `worker-run`
+executes authorized worker argv within its write scope; the other commands only
+read inputs and print results.
 
 ## Bind and reread the approved installed payload
 
@@ -129,7 +131,7 @@ the operator ruling separately. Source tests do not establish host writer isolat
 ## Integrity trust boundary
 
 The trusted entrypoint is `adapters/host_tools.py`, including its approved runtime
-hash table. It verifies all four runtime source buffers before executing any,
+hash table. It verifies all five runtime source buffers before executing any,
 checks saved runtime/bootstrap binding data for bound commands, and executes those
 same buffers without reopening them. Package checks reject a runtime/hash-table
 mismatch. Python bytecode caches are not executed. The saved binding then checks
@@ -141,6 +143,13 @@ lie; it cannot authenticate itself. Initial `bind` is the owner's approval point
 for the installed non-core files, not an external signature service. These checks
 detect drift; they do not promise protection against an adversary concurrently
 rewriting every workflow or external helper during later reads/execution.
+
+## Approved program proof and scoped workers
+
+Before a new program's first build, read [program proof](program-proof.md)
+for its four additive commands and [record format](program-records.md) for JSON
+inputs. Keep `plan-check` and existing gates. Changed installations require
+explicit migration; never replace a live binding silently.
 
 ## Audit explicit authorized native activity sources
 

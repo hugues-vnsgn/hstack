@@ -579,7 +579,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-full.md",
       "disposition": "canonical",
-      "destination_sha256": "b58fd3eb00eef16fd868e9d4bd4fcc04981769aeb6aea0bef81a972f45c0c17d"
+      "destination_sha256": "0be2c612db8ebff9a2cbb59665fdf02cc0bc94af540049ca6dbed67fbb9019c9"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
@@ -587,7 +587,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-stack.md",
       "disposition": "canonical",
-      "destination_sha256": "c5957d8ed80daa30f89a2f5bbb8433d1ba91dd713801f16c199ae548df6c11bc"
+      "destination_sha256": "7e0705e6a2d2b53e1e2647ea6cfc5a87b11e91df93edb83b469d4434ed470912"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
@@ -643,7 +643,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/multi-phase-plan.md",
       "disposition": "canonical",
-      "destination_sha256": "659124aa2888b0a609d93ecfb325a2d2fb1ede09f1a9a96006a72e901318b613"
+      "destination_sha256": "4dc5fd989dc38da0bcdb470b9014952b9ea532b2cfd9d80a477b08dfca1e4f9a"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
@@ -651,7 +651,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/opening-a-pr.md",
       "disposition": "canonical",
-      "destination_sha256": "17f822dc631f5d9492f3f665d4b3e8ca851fe48dc234ca25b92b10c3cda2d282"
+      "destination_sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
@@ -1587,7 +1587,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "f35e6cbd2557f3b7ee46ff6faf19cbf194dc9c0f0d3e5d0b59b85f171d498835",
+      "sha256": "d7bbf518abc834eebcddb013b2c3d85c6a8270ec45c044a29895f4118de562a8",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1595,19 +1595,19 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "3ccb8ec218ce2292b0c9aa3ac09c4d28c1d3019bc140a53cd233acd04f545c68",
+      "sha256": "9c3a33903b06b1041aef173a128dfbead366083a55e0175425a40281d6d847b7",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "69f98a4164946bfeee9923ef96c1c06e098cb6754f3c33d41090b8a8f406e21e",
+      "sha256": "cb8573585f1a2ee0446fe43fbc7448f303b45e15c2bc741a5c1542c9d2f19b41",
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "d934fa6db5c320d15844263cd0d4f573b2e4893ccd1ff49631a822fa56ddbd1a",
+      "sha256": "f2ef98960ba73eee2293f26ddf4258eee1af768498172adc8934682817e6bb80",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "f0d4aa69f0bd6535229d703f773b1654332dc9ca85217108a32dfd98653a23ea",
+      "sha256": "099facc77a5dbb8f8928c631b53fad6a40b5d7bd2428caccb35b2bec39078d19",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1620,6 +1620,14 @@
     },
     "adapters/payload-protection.md": {
       "sha256": "5c2803ee812ff3125defd9aba7bab5f6fd6928ac921021759c1c1e91a13b4a5a",
+      "mode": 420
+    },
+    "adapters/program-proof.md": {
+      "sha256": "690f5f990afdb51ff60668035b926a0129c2d244fb964f4e5056345a208208e0",
+      "mode": 420
+    },
+    "adapters/program-records.md": {
+      "sha256": "9de8c2633bfd16648fd6866274667d2d06bce4e7b7f7cdc537a448645a8fb98a",
       "mode": 420
     },
     "adapters/runtime/__init__.py": {
@@ -1635,11 +1643,15 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "c50e66f2761b3a7cc1aed31b17ffac4a01a3b91c9b850764f2d1cf4da3ba49dd",
+      "sha256": "a5a47852301414c0761803cd367540bb7c295d32534f65087b2917fe4f38e3ec",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "bca494d375d79fe04b0ed189aa949eb3fc628e63fca9e31341c763138080fabe",
+      "sha256": "f612f7a9ac477c631c026452897f2e45d46272f6e6e748c088ce00819dcfb89b",
+      "mode": 420
+    },
+    "adapters/runtime/program.py": {
+      "sha256": "04a101e6b6d3c18c7ebf8064b8894da0e7c900ab3a1be2beccd71bf215a244ce",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1803,11 +1815,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-full.md": {
-      "sha256": "b58fd3eb00eef16fd868e9d4bd4fcc04981769aeb6aea0bef81a972f45c0c17d",
+      "sha256": "0be2c612db8ebff9a2cbb59665fdf02cc0bc94af540049ca6dbed67fbb9019c9",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-stack.md": {
-      "sha256": "c5957d8ed80daa30f89a2f5bbb8433d1ba91dd713801f16c199ae548df6c11bc",
+      "sha256": "7e0705e6a2d2b53e1e2647ea6cfc5a87b11e91df93edb83b469d4434ed470912",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/babysit.md": {
@@ -1847,15 +1859,15 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/mobile-proof.md": {
-      "sha256": "00ded56505fb6b1c19fa78bbc00062c6b62072d91a571fd6456995293c48b76e",
+      "sha256": "da95ba13a9f13940cbd67e62a8ed328716c014488750bc7dc91a1d0d616f28bf",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
-      "sha256": "659124aa2888b0a609d93ecfb325a2d2fb1ede09f1a9a96006a72e901318b613",
+      "sha256": "4dc5fd989dc38da0bcdb470b9014952b9ea532b2cfd9d80a477b08dfca1e4f9a",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/opening-a-pr.md": {
-      "sha256": "17f822dc631f5d9492f3f665d4b3e8ca851fe48dc234ca25b92b10c3cda2d282",
+      "sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/orchestrate.md": {
@@ -1907,11 +1919,11 @@
       "mode": 420
     },
     "skills/hugues-mode/references/evidence-guide.md": {
-      "sha256": "71ed308d9c6ece14715efc89498c026c3402c007ee184e747125512dc836fd4d",
+      "sha256": "116ed6adaedf608f50f7deb467a1d5045fe516e0a90bfd7014bad778ee555c07",
       "mode": 420
     },
     "skills/hugues-mode/references/evidence-template.md": {
-      "sha256": "c8a88d7af0548223fdad542c50dcc6de08541dd1b92ec02d39460b18c87d5cff",
+      "sha256": "006b68bb6c2d21bb67c9584a7b06aca8d205df163ca75fd149e104b1ec04d28c",
       "mode": 420
     },
     "skills/hugues-mode/references/host-notes.md": {

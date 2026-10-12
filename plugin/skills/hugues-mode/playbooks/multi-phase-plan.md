@@ -5,6 +5,14 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
+For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
+while filling the plan. Extract design rules and prototype content before
+prototyping/building; settle source conflicts at the existing plan approval.
+Attach the protected checklist and trusted approval digest to the handoff.
+The checklist is authoritative; a builder's edits to this plan cannot weaken it.
+Keep the installed binding for the program. Include `program-check` in its
+existing verdict step and write boundaries in every worker brief.
+
 ### Multi-phase or multi-PR plan
 
 **You own the plan, not the code. The plan is a checklist an owner runs box by box and the operator audits from the evidence.** The plan is the deliverable. Do not implement.

@@ -240,6 +240,10 @@ def measure(root=ROOT):
             'mode_full_file': inventory(current, ['plugin/skills/hugues-mode/SKILL.md']),
             'mode_workflow_body_only': metrics([current['plugin/skills/hugues-mode/SKILL.md'].split('---', 2)[2]]),
             'unchanged_files': sum(before[p] == current[p] for p in original_declarations)},
+        'new_program_proof': {
+            'scope': 'Additional deferred references for new-program approval/proof; separate from the pinned source scenarios. '
+                     'The record format loads only when constructing records. Not measured host tokens.',
+            'candidate': inventory(current, ['plugin/adapters/program-proof.md', 'plugin/adapters/program-records.md'])},
         'scenarios': scenarios, 'worker_accounting': spec['worker_accounting'],
         'public_skills': len(declaration_paths),
         'limits': ['No runtime host, tokenizer, prompt framing, cache or native invocation observation.',

@@ -18,6 +18,9 @@ applicable principle's SKILL.md in full as the scoped bundled reference below.
 If the host cannot preserve required context isolation or parallelism, mark
 that phase blocked.
 
+For new programs, apply [program proof](program-proof.md) before dispatch.
+Missing enforced write protection holds dependent workers.
+
 **`hugues-agent` by host.** Claude Code registers it as `hstack:hugues-agent`, the
 `subagent_type` to pass. Codex has no registered name observed here: the fresh worker
 takes the role instructions of `agents/hugues-agent.md` through its supported

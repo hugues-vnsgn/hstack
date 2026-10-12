@@ -5,6 +5,14 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
+For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
+before owner dispatch and at the existing round verification step. The root
+runs `program-check` against the protected approved baseline and complete
+decision/finding state before accepting STACK-READY or appending a clean link.
+Enforce application write scopes and protect the installed plugin and accepted
+proof. A worker's revised plan cannot replace the approved checklist. Keep the
+phase order and all gates below.
+
 ### Autopilot-stack
 
 **Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)

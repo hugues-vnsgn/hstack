@@ -42,7 +42,7 @@ def seal(root=ROOT, accept=()):
         raise ValueError('canonical destination changed; review it, then pass --accept: '
                          + ', '.join(sorted(changed - set(accept))))
     for name in ANCHORS | {'adapters/runtime/__init__.py', 'adapters/runtime/json_input.py',
-                           'adapters/runtime/activity.py'}:
+                           'adapters/runtime/activity.py', 'adapters/runtime/program.py'}:
         if stat.S_IMODE((plugin / name).stat().st_mode) != 0o644:
             raise ValueError('unsafe trust anchor/runtime mode: ' + name)
     files = []
@@ -64,7 +64,7 @@ def seal(root=ROOT, accept=()):
     payload.write_text(re.sub(r"MANIFEST_SHA256 = '[^']+'", "MANIFEST_SHA256 = '" + digest(manifest) + "'", payload.read_text()))
     bootstrap = plugin / 'adapters/host_tools.py'
     hashes = {name: digest(plugin / 'adapters/runtime' / name)
-              for name in ['__init__.py', 'json_input.py', 'activity.py', 'payload.py']}
+              for name in ['__init__.py', 'json_input.py', 'activity.py', 'payload.py', 'program.py']}
     bootstrap.write_text(re.sub(r'RUNTIME_SHA256 = \{.*?\n\}', 'RUNTIME_SHA256 = ' + json.dumps(hashes, indent=4), bootstrap.read_text(), flags=re.S))
     for row in receipt['files']:
         if row['destination']:
