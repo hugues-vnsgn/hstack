@@ -1,5 +1,6 @@
 Apply [installed host tools](../../../adapters/host-tools.md): bound `read-workflow`
-for owned playbook/reference rereads and `plan-check` for validation. Neither
+for owned playbook/reference rereads, `plan-check` for validation and
+`plan-compare` for verification-contract changes. Neither
 reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.

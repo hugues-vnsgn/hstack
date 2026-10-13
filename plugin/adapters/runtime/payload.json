@@ -169,7 +169,7 @@
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "12e7e9fb6ab8e20dc8f4020fe8ab30a0ead91e0ee08349d3230c4689295cc9af",
+      "sha256": "f4821b098aae94fb32c764f06544958d66a2a617dbb7ca3adbc44fd16f535d13",
       "mode": "100644"
     },
     {
@@ -384,12 +384,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "bb11d4c95b793203434afe58bcb879ea1602a72087e1a98ea1f4e6fd2b15176b",
+      "sha256": "37a8d7616bd961d30bd32b1c8c82c93764b9e60bddc0d56a812f015d1f2d03ff",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-stack.md",
-      "sha256": "0ba53e8de98ac28ff18c3d94cf7db641631209a8b4d50f3d2c5c330a42bbe30b",
+      "sha256": "c2796d1b271e0a1fc9f981ad7840e39dbf5fe3d89553f80ddc5875306f363746",
       "mode": "100644"
     },
     {
@@ -444,7 +444,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/multi-phase-plan.md",
-      "sha256": "e2c82c858e2676e7cb633b5ef46a8a6e4aa4caf40639ac8656ec2aaebee51d07",
+      "sha256": "d165a425058d523138e08c7a00943df4971463d3be95ac2a871d456bcd9187a0",
       "mode": "100644"
     },
     {
@@ -544,7 +544,7 @@
     },
     {
       "path": "skills/hugues-mode/references/verification-contract.md",
-      "sha256": "dd0403cff4ebcadb1220025110a843ded57496905d20f25278deb240a08e0a23",
+      "sha256": "afaf9701341702108c4c97b381deefe36494d8eb48f09870a5a2c7a7b0087317",
       "mode": "100644"
     },
     {
@@ -559,12 +559,12 @@
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.mjs",
-      "sha256": "007c84ff413271d1ae27530f63504b0fff719db37f81a3d23c598a036d68bb45",
+      "sha256": "bd44a21e565f88ccf6271fb25a9d82135c459f775f952f5ec8b7d071feba774e",
       "mode": "100755"
     },
     {
       "path": "skills/hugues-mode/scripts/compare-plan.py",
-      "sha256": "ab8347433883d4396e30c6353e02c37a25a29b7435d500408349b58e5eb8c6ec",
+      "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
       "mode": "100644"
     },
     {

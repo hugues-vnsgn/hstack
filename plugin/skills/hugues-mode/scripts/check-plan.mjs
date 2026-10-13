@@ -94,6 +94,13 @@ else {
 		if (at === -1) fail(program.n, `Program checklist lacks "### ${name}" in order`);
 		else cursor = at + 1;
 	}
+	const verdictStart = program.body.findIndex((l) => !l.code && l.text.startsWith("### Verdict and merge"));
+	const verdictEnd = program.body.findIndex((l, i) => i > verdictStart && !l.code && l.text.startsWith("### "));
+	const verdict = program.body.slice(verdictStart, verdictEnd === -1 ? undefined : verdictEnd);
+	if (!boxes(verdict).some((b) => ["verification-contract.md", "plan-compare", "operator ruling"]
+		.every((marker) => b.text.includes(marker)))) {
+		fail(program.n, "Verdict and merge lacks the verification-contract comparison and operator ruling box");
+	}
 	for (const marker of PROGRAM_MARKERS) {
 		if (!bodyText(program).includes(marker)) fail(program.n, `Program checklist lacks "${marker}"`);
 	}

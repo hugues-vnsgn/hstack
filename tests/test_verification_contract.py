@@ -1,5 +1,7 @@
 """Verification-rule gates through the bound installed adapter and real Git snapshots."""
 import json
+import re
+import shutil
 import subprocess
 import unittest
 
@@ -38,6 +40,7 @@ class VerificationContract(InstalledFixture, unittest.TestCase):
         return self.git('rev-parse', 'HEAD')
 
     def compare(self, head, *extra):
+        self.git('update-ref', 'refs/remotes/origin/main', self.base)
         return self.bound('plan-compare', '--repo', self.consumer, '--plan', 'plan.md',
                           '--section', 'Search (PR1)', '--base-sha', self.base,
                           '--head-sha', head, *extra)
@@ -49,7 +52,7 @@ class VerificationContract(InstalledFixture, unittest.TestCase):
         report = json.loads(result.stdout)
         self.assertEqual(report['gate'], 'hold')
         self.assertEqual((report['base_sha'], report['head_sha']), (self.base, head))
-        self.assertIn('-Lane 1. Relaunch.', report['diff'])
+        self.assertIn('-- [ ] Lane 1. Relaunch.', report['diff'])
         self.assertIn('filters reset to defaults', report['diff'])
         self.assertTrue(report['verification_required'])
 
@@ -95,13 +98,13 @@ class VerificationContract(InstalledFixture, unittest.TestCase):
         result = self.compare(head)
         self.assertEqual(result.returncode, 2)
         report = json.loads(result.stdout)
-        self.assertIsNone(report['before'])
+        self.assertTrue(report['missing_baseline'])
         result = self.compare(head, '--ruling', self.approve(report))
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)['gate'], 'approved')
 
-    def test_unchanged_rules_ignore_other_sections_and_working_tree(self):
-        head = self.commit(PLAN.replace('Unrelated work.', 'New unrelated work.'))
+    def test_unchanged_plan_ignores_working_tree(self):
+        head = self.commit(PLAN)
         (self.consumer / 'plan.md').write_text('Uncommitted misleading content')
         result = self.compare(head)
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -147,3 +150,100 @@ class VerificationContract(InstalledFixture, unittest.TestCase):
         result = self.compare(head)
         self.assertEqual(result.returncode, 2, result.stderr)
         self.assertIn('filters persist', json.loads(result.stdout)['before'])
+
+    def test_plan_rules_outside_live_blocks_cannot_be_weakened(self):
+        before = PLAN.replace('## Search (PR1)', '## Program checklist\n- [ ] Hold unresolved changes.\n## Search (PR1)').replace('## Other (PR2)', '**Merge.**\n- [ ] Root clean verdict required.\n## Other (PR2)')
+        self.base = self.commit(before)
+        changes = {
+            'review gate': before.replace('**Review gate.** Operator reviews.', '**Review gate.** None.'),
+            'merge gate': before.replace('Root clean verdict required.', 'Owner may merge directly.'),
+            'other PR': before.replace('Unrelated work.', 'Pass with no verification.'),
+            'program gate': before.replace('- [ ] Hold unresolved changes.\n', ''),
+            'checkbox removal': before.replace('- [ ] Lane 2.', 'Lane 2.'),
+        }
+        for name, plan in changes.items():
+            with self.subTest(change=name):
+                result = self.compare(self.commit(plan))
+                self.assertEqual(result.returncode, 2, result.stdout)
+
+    def test_evidence_urls_ignore_layout_but_labels_stay_reviewable(self):
+        for receipt in ['Evidence. [Run](https://example.invalid/old)',
+                        '  Evidence. [Run](https://example.invalid/old)',
+                        '- [ ] Keep filters. Evidence. [Run](https://example.invalid/old)']:
+            with self.subTest(receipt=receipt):
+                before = PLAN.replace('**Verify, perf.**', receipt + '\n**Verify, perf.**')
+                self.base = self.commit(before)
+                result = self.compare(self.commit(before.replace('/old)', '/new)')))
+                self.assertEqual(result.returncode, 0, result.stdout)
+                changed = before.replace('[Run]', '[Lane 2 waived: pass when any rows appear]')
+                self.assertEqual(self.compare(self.commit(changed)).returncode, 2)
+
+    def test_rejected_ruling_keeps_json_comparison_and_disposition(self):
+        head = self.commit(PLAN.replace('100 ms', '120 ms'))
+        report = json.loads(self.compare(head).stdout)
+        ruling = self.approve(report)
+        ruling.write_text(ruling.read_text().replace('approved', 'rejected'))
+        result = self.compare(head, '--ruling', ruling)
+        self.assertEqual(result.returncode, 2)
+        rejected = json.loads(result.stdout)
+        self.assertEqual(rejected['gate'], 'hold')
+        self.assertEqual(rejected['ruling']['decision'], 'rejected')
+        self.assertEqual(rejected['diff'], report['diff'])
+
+    def test_ruling_in_another_consumer_worktree_holds(self):
+        head = self.commit(PLAN.replace('100 ms', '120 ms'))
+        report = json.loads(self.compare(head).stdout)
+        sibling = self.area / 'consumer sibling'
+        self.git('worktree', 'add', '--detach', str(sibling), head)
+        ruling = sibling / 'ruling.json'
+        ruling.write_text(self.approve(report).read_text())
+        result = self.compare(head, '--ruling', ruling)
+        self.assertEqual(result.returncode, 2, result.stdout)
+
+    def test_baseline_must_match_fetched_main_not_owner_selected_head(self):
+        head = self.commit(PLAN.replace('100 ms', '120 ms'))
+        result = self.compare(head, '--base-sha', head)
+        self.assertEqual(result.returncode, 2, result.stdout)
+        self.assertIn('origin/main', result.stderr)
+
+    def test_main_may_advance_without_being_an_ancestor_of_pr_head(self):
+        head = self.commit(PLAN)
+        self.git('checkout', '--detach', self.base)
+        self.base = self.commit(PLAN.replace('Unrelated work.', 'New main rule.'))
+        result = self.compare(head)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('New main rule.', json.loads(result.stdout)['before'])
+
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_real_plan_template_requires_rule_gate_and_compares_review_changes(self):
+        source = (self.plugin / 'skills/hugues-mode/playbooks/multi-phase-plan.md').read_text()
+        plan = source.split('````markdown\n', 1)[1].split('````', 1)[0]
+        plan = plan.replace('<execution playbook>', 'autopilot-full')
+        plan = re.sub(r'<[^>\n]+>', 'example', plan)
+        path = self.consumer / 'plan.md'
+        path.write_text(plan)
+        checked = self.bound('plan-check', path)
+        self.assertEqual(checked.returncode, 0, checked.stderr)
+        self.base = self.commit(plan)
+        head = self.commit(plan.replace('**Review gate.** The operator reviews before merge.',
+                                        '**Review gate.** None.'))
+        result = self.compare(head, '--section', 'example (example)')
+        self.assertEqual(result.returncode, 2, result.stdout)
+        without_gate = '\n'.join(line for line in plan.splitlines()
+                                 if 'verification-contract.md' not in line and
+                                 'verification-contract gate' not in line)
+        path.write_text(without_gate)
+        checked = self.bound('plan-check', path)
+        self.assertEqual(checked.returncode, 1, checked.stdout)
+        self.assertIn('verification-contract', checked.stderr)
+
+    def test_attaching_or_removing_receipts_does_not_change_pass_rules(self):
+        for receipt in ['Evidence. [Run](https://example.invalid/1)',
+                        '  Evidence. [Screenshot](https://example.invalid/1) [Log](https://example.invalid/2)']:
+            with self.subTest(receipt=receipt):
+                self.base = self.commit(PLAN)
+                head = self.commit(PLAN.replace('**Verify, perf.**', receipt + '\n**Verify, perf.**'))
+                result = self.compare(head)
+                self.assertEqual(result.returncode, 0, result.stdout)
+                self.base = head
+                self.assertEqual(self.compare(self.commit(PLAN)).returncode, 0)

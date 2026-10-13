@@ -12,17 +12,26 @@ Keep implementing against the approved contract while the proposal is pending.
 The operator approves or rejects the specific change. An owner's explanation,
 a green test, a root countersign or a general autonomy grant is not that ruling.
 
-Protect the full unit/live/perf contract, including scenario actions, predicates,
-lane additions or removals, metrics, probes and thresholds. Replacing typed search
+Protect the full plan, including unit/live/perf rules, review and merge gates,
+other PR sections and the program checklist. Compare the whole document so one
+PR cannot weaken a later PR's baseline. Substantive non-rule edits also hold for
+review; the checker does not infer their meaning. Replacing typed search
 with a filter shortcut changes the contract even if the pass predicate is identical.
-Checkbox updates and receipt links alone do not change rules. Put receipt links on
-standalone `Evidence. [label](url)` lines. Reserve those lines for receipts; keep
-requirements and executable instructions in the verification blocks.
+Checkbox state updates and receipt URL changes alone do not change rules. Keep
+the checkbox marker. Use `Evidence. [label](url)` at the end of a line or on its
+own line, optionally indented. Use the fixed labels `Run`, `Screenshot`, `Video`, `Log`, `Trace` or `Receipt`
+for attachments. Adding, removing or updating these attachments is ignored.
+Other labels stay in the comparison, with only their URL destinations ignored,
+so instructions hidden in a label require review. Surrounding instructions remain
+protected. Receipt URLs supply evidence, never requirements or executable instructions.
 
 ## Compare immutable snapshots
 
 The root fetches main and records its full commit SHA and the owner's code-ready
-head SHA. Use main even for a stack child; its parent branch cannot approve rules.
+head SHA. The helper requires the base SHA to match `refs/remotes/origin/main`.
+The root must own the fetch and verify the remote/ref; local refs are not
+authentication. Use main even for a stack child. Main may advance independently
+of the head, so ancestry alone is neither required nor proof of baseline authority.
 Retain the approved starting contract and any rulings outside owner write access.
 If that boundary cannot be enforced by the host, report the gap and keep the gate
 on hold until the operator reviews the comparison directly.
@@ -35,12 +44,18 @@ reseal the installation, or silently rebind it to clear a hold.
 python3 "<plugin>/adapters/host_tools.py" plan-compare --binding "<program>/plugin-binding.json" --repo "<consumer>" --plan "<repo-relative-plan.md>" --section "<exact PR section heading>" --base-sha "<main commit SHA>" --head-sha "<PR commit SHA>"
 ```
 
-The helper reads committed blobs, compares the selected section from
-`**Verify, unit.**` up to `**Review gate.**`, and emits JSON with both SHAs,
-the old and new contracts, a unified diff and `comparison_sha256`. It ignores
-checkbox state, blank lines, trailing whitespace and standalone receipt lines in
-the format above. Other edits conservatively require review. It reads no working
-tree plan and performs no fetch or write.
+The helper reads both committed plan blobs, requires the selected PR's contract
+at the head, and compares the whole plan. JSON includes both SHAs, the old and new
+plan text, a unified diff and `comparison_sha256`. It normalizes checkbox state,
+blank lines, trailing whitespace and the fixed-label receipt attachments above.
+It preserves checkbox markers and all other receipt labels. It reads no working tree plan and performs
+no fetch or write.
+
+Before dispatch, the root also exports the head's committed plan to its round
+receipt directory and runs bound `plan-check` on that snapshot. A structural
+failure holds the round. The checker requires the verification-contract,
+plan-compare and operator-ruling checklist box under Verdict and merge. This
+structural check complements the comparison; it cannot authenticate a ruling.
 
 A missing baseline produces a hold requiring the operator's explicit approval of
 the starting contract. A missing head contract, ambiguous section, malformed
@@ -49,15 +64,15 @@ Keep plans in the supported plain Markdown form. Plans stored only outside Git
 must first have an operator-approved committed starting contract; never substitute
 the builder's working copy for main. Confirm the selected path and section against
 the approved plan, and inspect moved requirements, referenced documents and the
-rest of the plan diff during the existing independent audit lanes. The helper
+meaning of every changed line during the existing independent audit lanes. The helper
 compares text, not Markdown semantics or the contents of linked documents.
 
 ## Record the ruling and verdict
 
 Save the comparison as a round receipt. Present every contract change to the
-operator with the owner's reason. For an approval, the root records the exact
+operator with the owner's reason. For approval or rejection, the root records the exact
 comparison digest and a reference to the operator's actual ruling in a JSON file
-outside the consumer worktree and owner write access.
+outside all registered consumer worktrees and owner write access.
 
 ```json
 {
@@ -68,10 +83,14 @@ outside the consumer worktree and owner write access.
 ```
 
 Re-run the same command with `--ruling "<operator-ruling.json>"`. The root must
-check the referenced ruling and confirm it explicitly approves every change in
-that comparison before supplying the file. The file is a record, not proof of
+check the referenced ruling and confirm its disposition covers every change in
+that comparison before supplying the file. Use `"decision": "rejected"` to retain
+a rejection in the JSON receipt; the gate stays on hold. Partial approvals also
+hold until every displayed change is approved. The file is a record, not proof of
 who approved it. Filesystem location alone does not enforce writer isolation.
-A rejected, absent, malformed or stale ruling cannot clear changed rules. A new
+The helper rejects ruling files inside any registered consumer worktree, including
+siblings. It cannot discover every owner-writable external directory. A rejected,
+absent, malformed or stale ruling cannot clear changed rules. A new
 head or main SHA needs a fresh comparison and a ruling tied to it; do not reuse
 a patch-id exception to skip this gate.
 
