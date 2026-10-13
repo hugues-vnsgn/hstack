@@ -244,6 +244,10 @@ def measure(root=ROOT):
             'scope': 'Additional deferred references for new-program approval/proof; separate from the pinned source scenarios. '
                      'The record format loads only when constructing records. Not measured host tokens.',
             'candidate': inventory(current, ['plugin/adapters/program-proof.md', 'plugin/adapters/program-records.md'])},
+        'new_program_control': {
+            'scope': 'Additional deferred controller guide for new-program scheduling and recovery; '
+                     'not part of the pinned task scenarios and not measured host tokens.',
+            'candidate': inventory(current, ['plugin/adapters/program-control.md'])},
         'scenarios': scenarios, 'worker_accounting': spec['worker_accounting'],
         'public_skills': len(declaration_paths),
         'limits': ['No runtime host, tokenizer, prompt framing, cache or native invocation observation.',

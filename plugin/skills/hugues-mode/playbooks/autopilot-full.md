@@ -21,6 +21,10 @@ installation, record effective writer coverage and require it for every worker.
 Missing or unverifiable protection holds dependent execution. Keep the payload
 readable and report plugin defects for separate owner-authorized maintenance.
 
+For a new program, the controller applies [program control](../../../adapters/program-control.md)
+before every owner/helper/group dispatch and on pickup. Its approved scheduling
+limits override parallel-owner defaults; preserve complete required groups.
+
 **You own the verdicts, never the PRs. One owner carries each PR from build to merge, and nothing merges until your swarm, which never wrote the code, has proven the code that lands.**
 
 A verdict covers one patch and green CI covers one head. Step 4 runs a full swarm once, and again only for a major change. The patch-id rule in `playbooks/shipping.md` can carry a lane's result, and every new head needs its own green CI.

@@ -48,6 +48,12 @@ characters/4 estimated tokens), not a measured host charge. The generated
 scenario totals as a complete new-program cost; approval records, host framing
 and actual worker reads require their own accounting.
 
+Issue #28 adds a deferred controller guide of 10,892 bytes (2,723 estimated
+tokens) for program scheduling and recovery. The generated `new_program_control`
+inventory records it separately. Controllers read it when that phase applies;
+worker briefs carry their own task and limits. These source counts do not measure
+actual host loads, waiting cost, cache use or a complete program's usage.
+
 The routing inventory falls about 23.8% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
 verification and publication instructions still apply. The bug-fix profile

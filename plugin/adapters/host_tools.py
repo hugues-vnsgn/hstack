@@ -19,8 +19,9 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "f612f7a9ac477c631c026452897f2e45d46272f6e6e748c088ce00819dcfb89b",
-    "program.py": "04a101e6b6d3c18c7ebf8064b8894da0e7c900ab3a1be2beccd71bf215a244ce"
+    "payload.py": "084004e429e113274b241338a873cc30e20269a5630e508df22c415489e95220",
+    "program.py": "04a101e6b6d3c18c7ebf8064b8894da0e7c900ab3a1be2beccd71bf215a244ce",
+    "control.py": "4e116997864db964c1d5007a8bd9d06d63a9b18457e269abcd7403c279347563"
 }
 
 
@@ -129,6 +130,20 @@ def main(argv=None):
         child = sub.add_parser(verb)
         child.add_argument('--binding', type=Path, required=True)
         child.add_argument('path', type=Path)
+    control = sub.add_parser('run-control', help='Check program limits and save controller progress')
+    control.add_argument('--binding', type=Path, required=True)
+    control.add_argument('--policy', type=Path, required=True)
+    control.add_argument('--policy-sha256', required=True)
+    control.add_argument('--store', type=Path, required=True)
+    control.add_argument('--event', type=Path, required=True)
+    waiting = sub.add_parser('run-wait', help='Wait in one process for saved completion or device release')
+    waiting.add_argument('--binding', type=Path, required=True)
+    waiting.add_argument('--policy', type=Path, required=True)
+    waiting.add_argument('--policy-sha256', required=True)
+    waiting.add_argument('--store', type=Path, required=True)
+    waiting.add_argument('--kind', choices=['actor', 'device'], required=True)
+    waiting.add_argument('--target', required=True)
+    waiting.add_argument('--timeout', type=float, default=30)
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[1]
     program = None
@@ -179,6 +194,15 @@ def main(argv=None):
             print(json.dumps({'sha256': program.fingerprint(args.path)}))
         elif args.verb == 'decode-design':
             sys.stdout.write(program.decode_design(args.path))
+        elif args.verb == 'run-control':
+            result = sys.modules['runtime.control'].control(root, args.binding, args.policy,
+                                                          args.policy_sha256, args.store, args.event)
+            print(json.dumps(result, indent=2))
+        elif args.verb == 'run-wait':
+            result = sys.modules['runtime.control'].wait(root, args.binding, args.policy,
+                args.policy_sha256, args.store, args.kind, args.target, args.timeout)
+            print(json.dumps(result))
+            return 0 if result['wait_satisfied'] else 2
         return 0
     except (ValueError, OSError, KeyError, TypeError, RecursionError) as exc:
         if args.verb == 'program-check' and program is not None:

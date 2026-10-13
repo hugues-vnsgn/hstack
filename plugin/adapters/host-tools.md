@@ -1,12 +1,16 @@
 # Installed planning, proof and worktree commands
 
+New-program scheduling, progress and runtime waiting use `run-control` and
+`run-wait`; the controller loads [program control](program-control.md) at dispatch
+or pickup. They record/check state and grant no native dispatch permission.
+
 These are mechanical translations of bundled operands in the canonical playbooks.
 Reach the selected skill first, as [host.md](host.md) directs, and preserve its todo order,
 verification rules, explicit execution go and active/pinned-chat gate. Python 3 and Git must already
 be available; plan validation also needs Node. Missing tools block the gate.
 The adapters do not install dependencies, fetch or query a forge. `worker-run`
-executes authorized worker argv within its write scope; the other commands only
-read inputs and print results.
+executes authorized worker argv within its write scope. `run-control` writes the
+protected progress store; the remaining commands read inputs and print results.
 
 ## Bind and reread the approved installed payload
 

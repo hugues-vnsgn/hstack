@@ -166,7 +166,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "d7bbf518abc834eebcddb013b2c3d85c6a8270ec45c044a29895f4118de562a8",
+      "sha256": "4071e7e317e78abc5c604ab0a078c9f5a4c467402b312ad296df2c66fa3fbd90",
       "mode": "100644"
     },
     {
@@ -176,12 +176,12 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "9c3a33903b06b1041aef173a128dfbead366083a55e0175425a40281d6d847b7",
+      "sha256": "b4cf41cc3f1b95e4a5764cbe277b754af87b14989632a43ae43c2c9e0eec7e1e",
       "mode": "100644"
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "cb8573585f1a2ee0446fe43fbc7448f303b45e15c2bc741a5c1542c9d2f19b41",
+      "sha256": "9ce593a69747b2d12fd120359c577e1e6c4f983d8f3453ef3e73186cd9a61996",
       "mode": "100644"
     },
     {
@@ -205,6 +205,11 @@
       "mode": "100644"
     },
     {
+      "path": "adapters/program-control.md",
+      "sha256": "43b0b73b19806a2ddfe131ae776c42f805c2d1a0c050387b6954beaceadfa077",
+      "mode": "100644"
+    },
+    {
       "path": "adapters/program-proof.md",
       "sha256": "690f5f990afdb51ff60668035b926a0129c2d244fb964f4e5056345a208208e0",
       "mode": "100644"
@@ -222,6 +227,11 @@
     {
       "path": "adapters/runtime/activity.py",
       "sha256": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
+      "mode": "100644"
+    },
+    {
+      "path": "adapters/runtime/control.py",
+      "sha256": "4e116997864db964c1d5007a8bd9d06d63a9b18457e269abcd7403c279347563",
       "mode": "100644"
     },
     {
@@ -436,12 +446,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "0be2c612db8ebff9a2cbb59665fdf02cc0bc94af540049ca6dbed67fbb9019c9",
+      "sha256": "15c92f9537506f028e8f850d949b148522382853e83502953f1aab04c35ced93",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-stack.md",
-      "sha256": "7e0705e6a2d2b53e1e2647ea6cfc5a87b11e91df93edb83b469d4434ed470912",
+      "sha256": "6ca13bcfd7d5d6bcdadc313acae16b9a1d4f0f100c871621f3abb79ac657bb68",
       "mode": "100644"
     },
     {
@@ -506,12 +516,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/orchestrate.md",
-      "sha256": "08dce6c9e7be1d13bc6944ab9b51665f935c531437f5e088bc53d2a62099ef05",
+      "sha256": "4bb9387c09b93ec7eb76af609493c87bf5ab2696f8454cf10323ba6b57ad92ab",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/pause-safely.md",
-      "sha256": "77968cfe5f4a71a8cd33e0ae8ffcdbd88dd693a212c240457773e6c40c96c21d",
+      "sha256": "ed6e77d7821d632ab0f184f6500678779a809232d2ed8f356e1437a0a4b1b5c2",
       "mode": "100644"
     },
     {
@@ -536,7 +546,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/session-pickup.md",
-      "sha256": "d194f2a7ef392c1598ef3f0e3b561370ca25c2c7a78308007af4aa46ada8ee12",
+      "sha256": "00ef0b02343f13e48c3a983f498708e09e1222f940d8ef336db2668d78bfa23b",
       "mode": "100644"
     },
     {

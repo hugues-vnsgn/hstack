@@ -1,5 +1,10 @@
 ### Orchestrate
 
+For a new program, the controller applies [program control](../../../adapters/program-control.md)
+before dispatch and pickup. Keep the existing planned-time cutoff, complete
+required groups and native dispatch. Runtime waiting replaces waiting-only model
+polls; the store and required program audits remain in force.
+
 **You own the program, never the code. Author briefs, drain the queue, keep the frontier green, decide.** For a whole project handed to one standing coordinator chat: multi-day, many stacked PRs, dozens to hundreds of subagents, the human checking in twice a day instead of every five minutes. One task driven to a predicate is Autonomous run. One ambitious run needing a bespoke workflow is figure-it-out. Route here when the work outlives any single agent. Work one agent could finish inside the session's budget is not a program.
 
 Ceremony must scale with the program. On cheap near-identical units, collapse it as each section directs.

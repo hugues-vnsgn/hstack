@@ -28,6 +28,10 @@ authorization and effective configuration in the program evidence. Reuse
 authorization within that scope; hold an unresolved or expanded scope. Other hosts
 keep their native permission controls.
 
+For a new program, the controller applies [program control](../../../adapters/program-control.md)
+before every owner/helper/group dispatch and on pickup. Its approved scheduling
+limits override parallel-owner defaults; preserve complete required groups.
+
 **You own the stack, never the landing. Hand the operator one linear stack of base-chained PRs to review and land.** **Autopilot-full** holds except for how verified work leaves. Each tick re-reads both playbooks from trunk (`git show origin/main:skills/hugues-mode/playbooks/autopilot-full.md` and `git show origin/main:skills/hugues-mode/playbooks/autopilot-stack.md`), and this one wins where they differ.
 
 1. **Run Autopilot-full's owners, minus the landing.** Owners report STACK-READY in place of merge-ready. They never rebase onto another branch, trunk included, and never retarget, merge, close a PR, or arm auto-merge, because the root owns the chain's topology and the operator owns the landing. When an item depends on another, its owner branches from that item's branch, not from trunk.

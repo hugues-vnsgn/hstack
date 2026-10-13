@@ -20,6 +20,9 @@ that phase blocked.
 
 For new programs, apply [program proof](program-proof.md) before dispatch.
 Missing enforced write protection holds dependent workers.
+The controller applies [program control](program-control.md) before every
+program worker/group dispatch and after restart. Workers request declared groups
+through that controller; preserve required parallelism and native tool authority.
 
 **`hugues-agent` by host.** Claude Code registers it as `hstack:hugues-agent`, the
 `subagent_type` to pass. Codex has no registered name observed here: the fresh worker

@@ -17,6 +17,8 @@ Before each autopilot verdict, use bound `plan-compare` per the
 
 For new programs, apply [program proof](program-proof.md) before building and
 at verification. Its commands grant no execution or publication authority.
+The controller applies [program control](program-control.md) for limits,
+checkpoints and pickup. Warning records add no quota-triggered stop.
 
 The pinned Bun helpers include a bootstrap that can install dependencies.
 Do not execute it without installation authority. First inspect local runtime and

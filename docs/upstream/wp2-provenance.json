@@ -272,14 +272,14 @@
     {
       "source": "pstack/skills/poteto-mode/playbooks/session-pickup.md",
       "destination": "plugin/skills/hugues-mode/playbooks/session-pickup.md",
-      "disposition": "verbatim",
+      "disposition": "adapted",
       "blob_sha": "876b1433828ccc7c874123cdf300240abb285dd9",
       "sha256": "d194f2a7ef392c1598ef3f0e3b561370ca25c2c7a78308007af4aa46ada8ee12"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/pause-safely.md",
       "destination": "plugin/skills/hugues-mode/playbooks/pause-safely.md",
-      "disposition": "verbatim",
+      "disposition": "adapted",
       "blob_sha": "9d1c5f8303976fff40de099f7f28185909430c11",
       "sha256": "77968cfe5f4a71a8cd33e0ae8ffcdbd88dd693a212c240457773e6c40c96c21d"
     },
