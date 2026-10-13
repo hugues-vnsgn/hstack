@@ -16,7 +16,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = '32030cf15f8b7903b67b5d74f44b26d1779dbb91c645bed2147c556005283b43'
+MANIFEST_SHA256 = '59c0fe3dc123e7925171d06dc0d7e83600335af2e862187431aee13d8c4504b5'
 
 
 def digest(path):
@@ -51,6 +51,11 @@ def names_skill_body(text):
     unquoted = re.sub(r'[\'"`\\]', '', text)
     return any((revision or '/' in run) and is_skill_body(run)
                for revision, run in PATH_RUN.findall(unquoted))
+
+
+def names_skill_directory(text):
+    unquoted = re.sub(r"['\"\\]", '', text)
+    return bool(re.search(r'(?<![\w.-])skills(?=/|$|[\s;|&<>()])', unquoted, re.I))
 
 
 def unreadable(error):
@@ -138,7 +143,7 @@ def command(root, binding, verb, operand):
                        '--binding', str(binding), '--', operand])
 
 
-def translate(root, binding, text):
+def translate(root, binding, text, *, markdown=False):
     rows = verify(root)
     known = {row['path'] for row in rows['files'] if row['path'].endswith('.md')}
     known |= {old for old, new in rows['legacy_paths'].items() if new in known}
@@ -154,17 +159,29 @@ def translate(root, binding, text):
         if names_skill_body(value):
             raise ValueError('native skill invocation required; plan cannot substitute raw skill reads')
 
-    def fragment(value):
+    def fragment(value, *, prose=False):
         # Ahead of parsing and every form-specific branch, so no early return skips it.
         refuse_skill_body(value)
+        if prose:
+            return value
+        skill_directory = names_skill_directory(value)
+        unquoted = re.sub(r"['\"\\]", '', value)
+        skill_name = re.search(r'(?<![\w.-])skill\.md(?![\w.-])', unquoted, re.I)
         try:
             words = shlex.split(value)
         except ValueError:
-            if 'pstack/' in value or 'skills/' in value:
+            if 'pstack/' in value or skill_directory or skill_name:
                 raise ValueError('unresolved quoting in plan reference')
             return value
-        if words and words[-1] in known and words == shlex.split(command(root, binding, 'read-workflow', words[-1])):
-            return value
+        if words:
+            source = words[-1]
+            if source in known and value == command(root, binding, 'read-workflow', source):
+                return value
+            if (not names_skill_directory(source) and not is_skill_body(source)
+                    and value == command(root, binding, 'plan-check', source)):
+                return value
+        if (skill_directory or skill_name) and re.search(r'[$`(){}\[\]*?~]', value):
+            raise ValueError('shell expansion near a skill name; name the skill to apply')
         bundled = any(pattern.search(content) for pattern in operands
                       for content in (value, ' '.join(words)))
         if bundled and re.search(r'[;&|<>$`(){}\[\]*?~]', value):
@@ -176,12 +193,13 @@ def translate(root, binding, text):
             if separator and revision == 'origin/main':
                 if source in known:
                     return command(root, binding, 'read-workflow', source)
-            else:
-                return value
         if len(words) == 2 and words[0] == 'cat' and words[1] in known:
             return command(root, binding, 'read-workflow', words[1])
-        if len(words) == 3 and words[0] == 'node' and words[1] in helpers:
+        if (len(words) == 3 and words[0] == 'node' and words[1] in helpers
+                and not names_skill_directory(words[2]) and not is_skill_body(words[2])):
             return command(root, binding, 'plan-check', words[2])
+        if skill_directory:
+            raise ValueError('unsupported skill-directory command; name the skill to apply')
         if bundled:
             raise ValueError('unsupported bundled command; use a standalone guarded read')
         return value
@@ -189,21 +207,42 @@ def translate(root, binding, text):
     result = []
     standalone = 0
     nonempty = 0
+    fence = None
     for line in text.splitlines(keepends=True):
         nonempty += bool(line.strip())
         # Whole line too: splitting it into code spans must not split a path apart.
         refuse_skill_body(line)
+        if markdown:
+            delimiter = re.match(r'^ {0,3}(`{3,}|~{3,})(.*)$', line.rstrip('\r\n'))
+            if delimiter and fence is None:
+                fence = (delimiter[1], delimiter[2].strip().lower() in {'md', 'markdown'})
+                result.append(line)
+                continue
+            if (delimiter and fence and delimiter[1][0] == fence[0][0]
+                    and len(delimiter[1]) >= len(fence[0]) and not delimiter[2].strip()):
+                fence = None
+                result.append(line)
+                continue
+            if (fence and not fence[1]) or re.match(r'^( {4}|\t)', line):
+                content = line.strip()
+                translated = fragment(content)
+                result.append(line if translated == content else line.replace(content, translated, 1))
+                continue
         if '`' in line:
             inline = r'(?<!`)`([^`\n]+)`(?!`)'
             surrounding = re.sub(inline, '', line).strip()
-            if fragment(surrounding) != surrounding:
+            if markdown and '`' in surrounding:
+                raise ValueError('use complete single-backtick code spans in Markdown plans')
+            if fragment(surrounding, prose=markdown) != surrounding:
                 raise ValueError('mixed bundled command and inline syntax; use a standalone guarded read')
             result.append(re.sub(inline, lambda match: '`' + fragment(match[1]) + '`', line))
         else:
             content = line.strip()
-            translated = fragment(content)
+            translated = fragment(content, prose=markdown)
             standalone += translated != content
             result.append(line if translated == content else line.replace(content, translated, 1))
+    if fence:
+        raise ValueError('unclosed code fence in Markdown plan')
     if standalone and standalone != nonempty:
         raise ValueError('standalone command input must contain only supported standalone commands; use inline references in Markdown plans')
     return ''.join(result)

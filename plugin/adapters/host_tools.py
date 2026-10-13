@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "b17449fff28314342658301514d928f1ec44ace050d1d73daf2ee3eda9358880"
+    "payload.py": "e7628e3a68e202c2c7e8885bbaaaf5e6e2469dd12b12662ff55d163c8c3647f9"
 }
 
 
@@ -82,6 +82,9 @@ def main(argv=None):
                           ('translate-plan', 'plan')]:
         child = sub.add_parser(verb)
         child.add_argument('--binding', type=Path, required=True)
+        if verb == 'translate-plan':
+            child.add_argument('--markdown', action='store_true',
+                               help='Treat text outside inline code as prose, not commands')
         child.add_argument(operand)
     audit = sub.add_parser('worktree-audit')
     audit.add_argument('--binding', type=Path, required=True)
@@ -100,7 +103,8 @@ def main(argv=None):
         if args.verb == 'read-workflow':
             sys.stdout.buffer.write(payload.workflow(root, args.source))
         elif args.verb == 'translate-plan':
-            print(payload.translate(root, args.binding.resolve(), Path(args.plan).read_text()), end='')
+            print(payload.translate(root, args.binding.resolve(), Path(args.plan).read_text(),
+                                    markdown=args.markdown), end='')
         elif args.verb == 'plan-check':
             node = shutil.which('node')
             if not node:

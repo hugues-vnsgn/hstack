@@ -61,7 +61,7 @@ class PlanOwnership(InstalledFixture, unittest.TestCase):
     def test_consumer_owned_paths_revisions_and_prefixes_are_preserved(self):
         for text in ['`pstack/notes/todo.md`', 'cat pstack/notes/todo.md',
                      'git show origin/main:pstack/notes/todo.md',
-                     'git show main:' + self.source, '`git show HEAD:' + self.source + '`',
+                     'git show main:docs/feature.md', '`git show HEAD:docs/feature.md`',
                      '`foo-' + self.source + '`', 'foo-' + self.source]:
             with self.subTest(text=text):
                 result = self.translate(text)
