@@ -154,7 +154,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "80321e64b5992105ba11be67f03e6a870f9d39703fc41c6bdba5fa50470a5c87",
+      "sha256": "6988339f83570aff42f8cc6d5c90f14f777303597713434bd46757827ea1aee2",
       "mode": "100644"
     },
     {
@@ -169,7 +169,7 @@
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "12e7e9fb6ab8e20dc8f4020fe8ab30a0ead91e0ee08349d3230c4689295cc9af",
+      "sha256": "f4821b098aae94fb32c764f06544958d66a2a617dbb7ca3adbc44fd16f535d13",
       "mode": "100644"
     },
     {
@@ -384,12 +384,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "eddc1e3f0124a59854da1b84a288d98b23dedc86c17121e1eb9689125eaa4b9c",
+      "sha256": "37a8d7616bd961d30bd32b1c8c82c93764b9e60bddc0d56a812f015d1f2d03ff",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-stack.md",
-      "sha256": "826bfa0cb31d7e6608fac5f87740d92e0c08004114fc3a956bdcdaa4eb4e4001",
+      "sha256": "c2796d1b271e0a1fc9f981ad7840e39dbf5fe3d89553f80ddc5875306f363746",
       "mode": "100644"
     },
     {
@@ -444,7 +444,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/multi-phase-plan.md",
-      "sha256": "647b6fb558db00e53ce2ee47ef5e40595fcd522843fcfb229c7ba5dfe0fa014b",
+      "sha256": "d165a425058d523138e08c7a00943df4971463d3be95ac2a871d456bcd9187a0",
       "mode": "100644"
     },
     {
@@ -543,6 +543,11 @@
       "mode": "100644"
     },
     {
+      "path": "skills/hugues-mode/references/verification-contract.md",
+      "sha256": "afaf9701341702108c4c97b381deefe36494d8eb48f09870a5a2c7a7b0087317",
+      "mode": "100644"
+    },
+    {
       "path": "skills/hugues-mode/scripts/bootstrap.ts",
       "sha256": "ccd2ed08fd9da9d0d942e5f2491cfc74bb92d8a08fa51755e0da1ac8de287361",
       "mode": "100644"
@@ -554,8 +559,13 @@
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.mjs",
-      "sha256": "007c84ff413271d1ae27530f63504b0fff719db37f81a3d23c598a036d68bb45",
+      "sha256": "bd44a21e565f88ccf6271fb25a9d82135c459f775f952f5ec8b7d071feba774e",
       "mode": "100755"
+    },
+    {
+      "path": "skills/hugues-mode/scripts/compare-plan.py",
+      "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
+      "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/orch/orch.test.ts",

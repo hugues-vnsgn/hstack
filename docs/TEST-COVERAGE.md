@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **406 top-level unittest cases**. One is a driver that
+The current candidate collects **425 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -15,7 +15,8 @@ native workflow proof. Subtests are not added to case totals.
 | Current native-layout contracts | 48 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, budgets and the native-reach lint (a corpus of 45 reviewed contradictions in five line shapes each, 16 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,840 cases (306 `read-workflow`, 1,484 `translate-plan` and 50 in-plan cases) over all 50 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
-| Total collected | 406 | Current, mixed and historical scopes remain distinct |
+| Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
+| Total collected | 425 | Current, mixed and historical scopes remain distinct |
 
 The 131 historical modules are test_wp2_contract (45), test_wp3_contract (15),
 test_retained_design (7), test_retained_research (8), test_retained_verification (6),
@@ -71,7 +72,7 @@ every inline fragment translated separately as command input, giving 402.
 The PR #41 review adds four installed-tolerance cases for expansions immediately
 after a skill-directory name, shell backticks around a skill-name token, rejected
 Markdown container code blocks, and nested checklist translation with indented-code
-controls. The current total is 406. The existing 1,840-case rejection matrix remains intact.
+controls. That brought the total to 406. The existing 1,840-case rejection matrix remains intact.
 
 Current adapter cases execute the public installed Python entrypoint in disposable
 external consumer directories, including Node plan validation when available.
@@ -118,3 +119,10 @@ review-fix pass ran it on a scratch install of the candidate: Bun 1.4.2,
 watch-pr` cases and strict `tsc --noEmit` for watch-pr passed. That run is outside
 the Python suite and is not counted above. See the
 [helper input receipt](HELPER-INPUTS.json) and [context report](CONTEXT-FOOTPRINT.md).
+
+Issue #37 adds nineteen installed verification-contract cases, bringing the current
+total to 425. Eight review regressions cover whole-plan changes, receipt labels,
+rejected rulings, sibling worktrees, fetched-main identity, divergent main, and the
+real plan template through both installed helpers, plus attaching and removing
+receipts without triggering approval. Ruling authentication and owner write isolation remain workflow
+requirements; these synthetic Git fixtures do not prove either in a live host.

@@ -24,10 +24,10 @@
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "source_sha256": "4f9432d9989880b6afc2bdda503d5b12a9d07d357ecf31936b7ab5e83bc80523",
-      "candidate_sha256": "007c84ff413271d1ae27530f63504b0fff719db37f81a3d23c598a036d68bb45",
+      "candidate_sha256": "bd44a21e565f88ccf6271fb25a9d82135c459f775f952f5ec8b7d071feba774e",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": true,
-      "scope": "Node plan gate changed and exercised through installed Python/Node tests"
+      "scope": "adapted plan checker; installed Python/Node integration tests cover required operator-rule gate"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",

@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "bc74200168a7f0da71380dbc806f1d4d4ee014016bd49ab9190da2834b7881a4"
+    "payload.py": "ba6773f0b9f6ce0b1c4e0f88160844e43884ecb5c92929940a6da6f1e71e74e3"
 }
 
 
@@ -86,6 +86,11 @@ def main(argv=None):
             child.add_argument('--markdown', action='store_true',
                                help='Treat text outside inline code as prose, not commands')
         child.add_argument(operand)
+    comparison = sub.add_parser('plan-compare')
+    comparison.add_argument('--binding', type=Path, required=True)
+    for name in ['repo', 'plan', 'section', 'base-sha', 'head-sha']:
+        comparison.add_argument('--' + name, required=True)
+    comparison.add_argument('--ruling')
     audit = sub.add_parser('worktree-audit')
     audit.add_argument('--binding', type=Path, required=True)
     audit.add_argument('--repo', type=Path, required=True)
@@ -111,6 +116,14 @@ def main(argv=None):
                 raise ValueError('Node unavailable; plan validation gate blocked')
             helper = payload.checked_file(root, 'skills/hugues-mode/scripts/check-plan.mjs')
             return subprocess.run([node, str(helper), str(Path(args.plan).resolve())], check=False).returncode
+        elif args.verb == 'plan-compare':
+            helper = payload.checked_file(root, 'skills/hugues-mode/scripts/compare-plan.py')
+            command = [sys.executable, '-I', str(helper)]
+            for name in ['repo', 'plan', 'section', 'base-sha', 'head-sha']:
+                command.extend(['--' + name, getattr(args, name.replace('-', '_'))])
+            if args.ruling:
+                command.extend(['--ruling', args.ruling])
+            return subprocess.run(command, check=False).returncode
         elif args.verb == 'worktree-audit':
             result = activity.audit(args.repo.resolve(), args.sources, args.pr_snapshot, args.base)
             print(json.dumps(result, indent=2))
