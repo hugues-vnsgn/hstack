@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-Version 0.3.0 collects **385 top-level unittest cases**. One is a driver that
+The current candidate collects **406 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -14,8 +14,8 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed adapters and regressions | 97 | test_host_adapters (72), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 48 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, budgets and the native-reach lint (a corpus of 45 reviewed contradictions in five line shapes each, 16 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
-| Current installed-tolerance regressions | 24 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,840 cases (306 `read-workflow`, 1,484 `translate-plan` and 50 in-plan cases) over all 50 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
-| Total collected | 385 | Current, mixed and historical scopes remain distinct |
+| Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,840 cases (306 `read-workflow`, 1,484 `translate-plan` and 50 in-plan cases) over all 50 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
+| Total collected | 406 | Current, mixed and historical scopes remain distinct |
 
 The 131 historical modules are test_wp2_contract (45), test_wp3_contract (15),
 test_retained_design (7), test_retained_research (8), test_retained_verification (6),
@@ -61,7 +61,17 @@ more read-only router cases (the scope words that positive rewrites had dropped,
 the per-host registered `hugues-agent` name and question tool), giving 383.
 The skill-path normalization fix adds two installed-tolerance cases (normalized
 paths, and open quotes or split code spans), giving 385. The 0.3.0 release adds
-no case, so the total stays 385.
+no case, so the total stays 385. Issue #26 adds seventeen installed-tolerance cases:
+seven shell-expansion bypasses, the skill-directory allow-list, quote and helper
+operand checks, backtick-comment bypasses, unrelated-shell controls, explicit
+Markdown prose, safe and rejected fenced/indented-code, malformed spans, emitted helpers
+under skill-directory installation paths, and translation of all three
+bundled Markdown plan templates with both execution-playbook choices, plus
+every inline fragment translated separately as command input, giving 402.
+The PR #41 review adds four installed-tolerance cases for expansions immediately
+after a skill-directory name, shell backticks around a skill-name token, rejected
+Markdown container code blocks, and nested checklist translation with indented-code
+controls. The current total is 406. The existing 1,840-case rejection matrix remains intact.
 
 Current adapter cases execute the public installed Python entrypoint in disposable
 external consumer directories, including Node plan validation when available.

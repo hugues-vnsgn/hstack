@@ -50,38 +50,56 @@ Translate the filled bundled references in multi-phase-plan, autopilot-full and
 autopilot-stack before handing the plan to another worker:
 
 ```sh
-python3 "<plugin>/adapters/host_tools.py" translate-plan --binding "<program>/plugin-binding.json" "<program>/plan-draft.md" > "<program>/plan.md"
+python3 "<plugin>/adapters/host_tools.py" translate-plan --markdown --binding "<program>/plugin-binding.json" "<program>/plan-draft.md" > "<program>/plan.md"
 python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin-binding.json" "<program>/plan.md"
 ```
 
-Translation accepts two bounded input forms: Markdown plans with complete
-single-backtick inline references, or an input consisting only of supported
-standalone commands (blank lines are allowed). Mixing standalone bundled commands
-with other text holds, even across blank lines; put those references in inline
-code when writing a Markdown plan. Single-backtick spans are explicitly Markdown
-references, not shell command substitutions. Supported fragments are a known
-owned Markdown resource path, `cat <known path>`,
-`git show origin/main:<known path>`, and the exact bundled Node plan-check command
-with one plan operand. Markdown references and reads become quoted, binding-guarded
-`read-workflow` commands; no direct installed-file read is emitted. Other Git
-revisions, unknown consumer-owned `pstack/...` paths, and prefixed paths remain
-unchanged. Unsupported commands that contain a bundled operand block translation
-instead of being partially rewritten. A line naming a path to any `SKILL.md`,
-bundled or consumer-owned, blocks translation in every letter case, after `.`, `..`
-and repeated slashes resolve, at every Git revision and in every supported shell
-form, including as the plan-check helper's operand; name the skill to apply
-instead. A bare `SKILL.md` in prose names no file. Bundled input commands accept
-literal operands and ordinary quoting for spaces; shell operators, substitutions, globs, brace or
-tilde syntax hold, including quoted operands containing those syntax characters.
-Use a plain literal plan path. Line continuations and heredoc syntax are outside
-this translator's input contract and hold before individual fragments are processed.
-This is not a shell interpreter.
+Use `--markdown` for pstack-style plans. Write executable commands in complete
+single-backtick code spans or fenced code blocks; text outside them is prose and
+is preserved. A `markdown` or `md` fence contains another Markdown example;
+other fences contain commands. Nested list items keep inline-code handling. Other
+four-space or tab-indented lines receive command checks, including list
+continuations; keep prose and its inline command on the list-item line. Indented
+list items also check text outside inline spans as commands, because the same
+shape can be executable indented code. Fences inside lists or blockquotes, and code
+indented directly after a container marker, hold: move those code blocks to the
+top level. Each code fragment is checked before translation.
+Incomplete or multi-backtick inline spans and unclosed fences hold. When executing
+a translated Markdown plan, treat its prose as explanation, not shell input.
 
-By choosing this translation, the author designates exact known bundled paths in
-those forms as bundled workflow references. Ownership cannot be inferred from
-arbitrary text. To read a consumer file with the same name, use an explicit
-consumer Git revision such as `git show HEAD:pstack/...`. Fill placeholders
-first. Inspect the translated plan; repeating translation preserves its commands.
+Without `--markdown`, bare lines and text surrounding inline references receive
+the command checks too. Shell backticks around a `skill.md` token are checked
+before inline references are split. Adding a backtick comment never switches the
+input mode.
+Use this default for standalone commands. Mixing translated standalone commands
+with other text holds, even across blank lines. The caller selects the mode;
+the file cannot declare its own mode. Neither mode requires prose markers in a
+pstack plan.
+
+For a command that names a skill directory, use only a known owned Markdown
+resource path, `cat <known path>`, `git show origin/main:<known path>`, or the exact
+bundled Node plan-check command with one literal plan operand outside skill
+directories. Any path segment named `skills` is in scope, including consumer,
+home, plugin and absolute paths, with quotes, escapes and letter case accounted
+for. Unknown paths, other Git revisions and unsupported commands in that scope
+hold. Glob, brace, tilde, variable and command-substitution syntax near a skill
+directory or a `skill.md` token also hold, even inside quotes. Name the skill to
+apply when the step needs a skill; reach it as [host.md](host.md) directs.
+
+A literal path to any `SKILL.md` still holds on every line, after `.`, `..` and
+repeated slashes resolve, in any letter case, at any Git revision, including as
+the plan-check operand. A bare `SKILL.md` in prose names no file. Supported owned
+resource reads become quoted, binding-guarded `read-workflow` commands; the Node
+command becomes `plan-check`. Exact emitted commands can be translated again.
+Shell operators and expansions on bundled operands hold rather than being
+partially rewritten. Commands outside skill directories that name no skill body
+or bundled operand retain their shell syntax and consumer Git revisions.
+
+Fill placeholders first and inspect the translated plan. Exact known bundled
+paths in the supported forms designate bundled workflow references; arbitrary
+text does not establish ownership. Line continuations and heredocs hold before
+fragment processing. This translator enforces a plan contract, not a shell
+sandbox; host permissions remain the execution boundary.
 
 The unchanged installed Node helper validates the absolute consumer plan path
 and preserves its exit code and diagnostics. Any binding, hash, mode or

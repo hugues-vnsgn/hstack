@@ -1,6 +1,8 @@
 """Installed-payload regressions from the PR 17 review: host files, modes and raw skill reads."""
 import os
+import re
 import runpy
+import shlex
 import unittest
 from unittest.mock import patch
 
@@ -78,10 +80,10 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                 self.assertEqual(self.run_tool('bind').returncode, 2)
                 path.chmod(original)
 
-    def plan_result(self, text):
+    def plan_result(self, text, *, markdown=False):
         plan = self.consumer / 'plan.md'
         plan.write_text(text + '\n')
-        return self.bound('translate-plan', plan)
+        return self.bound('translate-plan', *(['--markdown'] if markdown else []), plan)
 
     def test_translate_refuses_every_spelling_of_a_raw_skill_read(self):
         for text in ['cat /abs/plugin/skills/tdd/SKILL.md',
@@ -127,11 +129,250 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                     self.assertEqual(result.returncode, 2, result.stdout)
                     self.assertIn('native skill invocation', result.stderr)
         for text in ['Each public skill keeps one skill.md body.',
-                     'cat .claude/skills/mine/references/notes.md',
-                     'cat .claude/skills/mine/SKILL.md.bak']:
+                     'cat .claude/references/notes.md',
+                     'cat docs/SKILL.md.bak']:
             with self.subTest(control=text):
                 result = self.plan_result(text)
                 self.assertEqual((result.returncode, result.stdout), (0, text + '\n'), result.stderr)
+
+    def assert_skill_command_refused(self, command):
+        for text, markdown in [(command, False), (f'Run `{command}`.', False),
+                               (f'Run `{command}`.', True)]:
+            with self.subTest(text=text, markdown=markdown):
+                result = self.plan_result(text, markdown=markdown)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+                self.assertIn('skill', result.stderr)
+
+    def test_translate_refuses_question_mark_skill_expansion(self):
+        self.assert_skill_command_refused('cat .claude/skills/mine/SKILL.m?')
+
+    def test_translate_refuses_skill_body_command_substitution(self):
+        self.assert_skill_command_refused("cat $(find .claude -iname 'skill.md')")
+
+    def test_translate_refuses_skill_prefix_glob(self):
+        self.assert_skill_command_refused('cat .claude/skills/mine/S*')
+
+    def test_translate_refuses_skill_directory_glob(self):
+        self.assert_skill_command_refused('cat .claude/skills/mine/*')
+
+    def test_translate_refuses_skill_bracket_glob(self):
+        self.assert_skill_command_refused('cat .claude/skills/mine/SKILL.[m]d')
+
+    def test_translate_refuses_skill_brace_expansion(self):
+        self.assert_skill_command_refused('cat .claude/skills/mine/SKILL.{md,txt}')
+
+    def test_translate_refuses_skill_variable_expansion(self):
+        self.assert_skill_command_refused('f=SKILL.md; cat .claude/skills/mine/$f')
+
+    def test_expansion_after_skill_directory_name_is_refused(self):
+        for command in ['suffix=/mine; cat .claude/skills${suffix}/*',
+                        'cat .claude/skills`printf /mine/`*',
+                        'cat .claude/skills"$(printf /mine/)"*',
+                        'cat .claude/skills{,/mine}/*',
+                        'cat .claude/skills*/mine/*']:
+            for text, markdown in [(command, False), (f'~~~sh\n{command}\n~~~', True)]:
+                with self.subTest(text=text, markdown=markdown):
+                    result = self.plan_result(text, markdown=markdown)
+                    self.assertEqual(result.returncode, 2, result.stdout)
+                    self.assertEqual(result.stdout, '')
+
+    def test_translate_limits_skill_directories_to_known_literal_forms(self):
+        paths = ['skills/mine/notes.md', '.claude/skills/mine/notes.md',
+                 '.agents/skills/mine/notes.md', '~/.claude/skills/mine/notes.md',
+                 '/abs/plugin/skills/mine/notes.md', 'other-plugin/skills/mine/notes.md',
+                 '.claude//Skills//mine/notes.md', ".claude/sk''ills/mine/notes.md"]
+        for path in paths:
+            for form in ['{}', 'cat {}', 'head -50 {}', 'git show HEAD:{}',
+                         'git show origin/main:{}', '`cat {}`']:
+                with self.subTest(text=form.format(path)):
+                    result = self.plan_result(form.format(path))
+                    self.assertEqual(result.returncode, 2, result.stdout)
+                    self.assertEqual(result.stdout, '')
+
+    def test_skill_scope_cannot_escape_through_quotes_or_helper_operands(self):
+        for text in ["cat .claude/Skills/mine/* 'unfinished",
+                     "cat $(find .claude -iname 'SK''ILL.md')",
+                     "cat $(find .claude -iname 'skill.md",
+                     'cat .claude/Skills',
+                     'find skills -type f -exec cat {} ;',
+                     'node skills/hugues-mode/scripts/check-plan.mjs .claude/skills/mine/notes.md',
+                     'git show HEAD:skills/hugues-mode/playbooks/feature.md']:
+            with self.subTest(text=text):
+                result = self.plan_result(text)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+
+    def test_backticks_cannot_hide_a_standalone_skill_command(self):
+        for text in ["cat .claude/skills/mine/* # `note`",
+                     "cat .claude/skills/mine/`echo '*'`",
+                     "cat $(find .claude -iname 'skill.md') # `note`"]:
+            with self.subTest(text=text):
+                result = self.plan_result(text)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+
+    def test_default_shell_backticks_cannot_hide_skill_name(self):
+        for text in ["cat `find .claude -iname 'skill.md'`",
+                     "cat `find .agents -iname 'SK''ILL.md'`"]:
+            with self.subTest(text=text):
+                result = self.plan_result(text)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+        text = "cat `find docs -iname 'notes.md'`"
+        result = self.plan_result(text)
+        self.assertEqual((result.returncode, result.stdout), (0, text + '\n'), result.stderr)
+
+    def test_translation_preserves_unrelated_shell_commands(self):
+        for text in [
+                'cat docs/*.md', 'cat ~/notes.txt', 'echo "$HOME"',
+                'git diff --name-only $(git merge-base HEAD origin/main) origin/main',
+                'git fetch origin branch && git checkout abc123',
+                'cat docs/skills-guide.md', 'cat my-skills/notes.md']:
+            with self.subTest(text=text):
+                result = self.plan_result(text)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, text + '\n')
+
+    def test_markdown_option_preserves_prose_with_or_without_code_spans(self):
+        for text in ["The .claude/skills/ folder holds * patterns.",
+                     "Discuss * and $variables near SKILL.md; run `git status`.",
+                     "The operator's .claude/skills/ folder holds * patterns; run `git status`."]:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, text + '\n')
+
+    def test_markdown_code_blocks_and_malformed_spans_cannot_hide_skill_reads(self):
+        for text in ['```sh\ncat .claude/skills/mine/*\n```',
+                     '~~~\ncat .claude/skills/mine/* # `note`\n~~~',
+                     "```bash\ncat `find .claude -iname 'skill.md'`\n```",
+                     '    cat .claude/skills/mine/*',
+                     "\tcat $(find .claude -iname 'skill.md')",
+                     "    cat `find .claude -iname 'skill.md'`",
+                     'Run ``cat .claude/skills/mine/*``.',
+                     'Run `cat .claude/skills/mine/*',
+                     '```sh\ncat docs/notes.md']:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+
+    def test_markdown_container_code_blocks_hold(self):
+        for text in ['> ~~~sh\n> cat .claude/skills/mine/*\n> ~~~',
+                     '> ```sh\n> cat .claude/skills/mine/*\n> ```',
+                     '>>~~~sh\n>>cat .claude/skills/mine/*\n>>~~~',
+                     '>     cat .claude/skills/mine/*',
+                     '- > ~~~sh\n  > cat .claude/skills/mine/*\n  > ~~~',
+                     '> ~~~sh\n> git status\n> ~~~']:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+
+    def test_markdown_code_blocks_keep_safe_commands_and_guard_resource_reads(self):
+        guarded = shlex.join(['python3', str(self.helper), 'read-workflow',
+                             '--binding', str(self.binding), '--', FEATURE])
+        for opener, closer in [('```sh', '```'), ('~~~~', '~~~~')]:
+            text = f'Explanation.\n{opener}\ncat {FEATURE}\ngit status\n{closer}\nDone.'
+            result = self.plan_result(text, markdown=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout, text.replace('cat ' + FEATURE, guarded) + '\n')
+            repeated = self.plan_result(result.stdout.rstrip('\n'), markdown=True)
+            self.assertEqual(repeated.stdout, result.stdout, repeated.stderr)
+
+    def test_markdown_indented_resource_reads_keep_the_surrounding_prose(self):
+        text = f'Explanation.\n\n    cat {FEATURE}\n\nDone.'
+        guarded = shlex.join(['python3', str(self.helper), 'read-workflow',
+                             '--binding', str(self.binding), '--', FEATURE])
+        result = self.plan_result(text, markdown=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, text.replace('cat ' + FEATURE, guarded) + '\n')
+
+    def test_markdown_nested_lists_translate_inline_commands(self):
+        guarded = shlex.join(['python3', str(self.helper), 'read-workflow',
+                             '--binding', str(self.binding), '--', FEATURE])
+        for text in [f'- [ ] Parent\n    - [ ] Read `cat {FEATURE}`.',
+                     f'1. Parent\n    1. Read `cat {FEATURE}`.',
+                     f'- Parent\n    - Child\n        - Read `cat {FEATURE}`.']:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, text.replace('cat ' + FEATURE, guarded) + '\n')
+                repeated = self.plan_result(result.stdout.rstrip('\n'), markdown=True)
+                self.assertEqual(repeated.stdout, result.stdout, repeated.stderr)
+        for text in ['- Parent\n    - Run `cat .claude/skills/mine/*`.',
+                     '- Parent\n\n      cat .claude/skills/mine/*',
+                     "- Parent\n\n      cat `find .claude -iname 'skill.md'`",
+                     '    - cat .claude/skills/mine/*',
+                     '- - -\n\n    cat .claude/skills/mine/*',
+                     '* * *\n\n    cat .claude/skills/mine/*',
+                     'Heading\n- \n\n    cat .claude/skills/mine/*',
+                     'Paragraph\n2. Not a list interruption\n\n    cat .claude/skills/mine/*',
+                     f'- Parent\n    Continue with `cat {FEATURE}`.',
+                     'Heading\n- \n\n    - ignored; cat .claude/skills/mine/*',
+                     'Paragraph\n2. Not a list interruption\n\n    - ignored; cat .claude/skills/mine/*',
+                     "Heading\n- \n\n    - ignored; cat `find .claude -iname 'skill.md'`"]:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+
+    def test_emitted_helpers_retranslate_when_the_install_path_contains_skills(self):
+        for folder in ['skills/plugin', 'skills/plugin $literal']:
+            destination = self.area / folder
+            destination.parent.mkdir(exist_ok=True)
+            self.plugin.rename(destination)
+            self.plugin = destination
+            self.helper = self.plugin / 'adapters/host_tools.py'
+            bound = self.run_tool('bind')
+            self.assertEqual(bound.returncode, 0, bound.stderr)
+            self.binding.write_text(bound.stdout)
+            for command in ['cat ' + FEATURE,
+                            'node skills/hugues-mode/scripts/check-plan.mjs plan.md']:
+                with self.subTest(folder=folder, command=command):
+                    translated = self.plan_result(command)
+                    self.assertEqual(translated.returncode, 0, translated.stderr)
+                    repeated = self.plan_result(translated.stdout.rstrip('\n'))
+                    self.assertEqual(repeated.returncode, 0, repeated.stderr)
+                    self.assertEqual(repeated.stdout, translated.stdout)
+
+    def test_bundled_plan_templates_keep_their_command_translations(self):
+        helper = ['python3', str(self.helper)]
+        binding = ['--binding', str(self.binding), '--']
+        plan_path = str(self.consumer / 'filled plan.md')
+        replacements = {
+            'node skills/hugues-mode/scripts/check-plan.mjs ' + shlex.quote(plan_path):
+                shlex.join(helper + ['plan-check'] + binding + [plan_path]),
+        }
+        for playbook in ['autopilot-full', 'autopilot-stack', 'opening-a-pr']:
+            source = f'skills/hugues-mode/playbooks/{playbook}.md'
+            guarded = shlex.join(helper + ['read-workflow'] + binding + [source])
+            replacements[source] = guarded
+            replacements['git show origin/main:' + source] = guarded
+        commands = {}
+        inline = r'(?<!`)`([^`\n]+)`(?!`)'
+        for template in ['multi-phase-plan', 'autopilot-full', 'autopilot-stack']:
+            for execution in ['autopilot-full', 'autopilot-stack']:
+                with self.subTest(template=template, execution=execution):
+                    text = (self.plugin / f'skills/hugues-mode/playbooks/{template}.md').read_text()
+                    text = text.replace('<execution playbook>', execution)
+                    text = text.replace('<plan.md>', shlex.quote(plan_path))
+                    expected = text
+                    for source, guarded in replacements.items():
+                        expected = expected.replace('`' + source + '`', '`' + guarded + '`')
+                    result = self.plan_result(text, markdown=True)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(result.stdout, expected + '\n')
+                    repeated = self.plan_result(result.stdout.rstrip('\n'), markdown=True)
+                    self.assertEqual(repeated.returncode, 0, repeated.stderr)
+                    self.assertEqual(repeated.stdout, result.stdout.rstrip('\n') + '\n')
+                    commands.update(zip(re.findall(inline, text), re.findall(inline, expected)))
+        for source, expected in commands.items():
+            with self.subTest(command=source):
+                result = self.plan_result(source)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, expected + '\n')
 
     def test_open_quotes_and_code_spans_cannot_skip_the_skill_body_check(self):
         # An unclosed quote returned the line before any skill-body check ran, and a code span
