@@ -57,13 +57,20 @@ python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin
 Use `--markdown` for pstack-style plans. Write executable commands in complete
 single-backtick code spans or fenced code blocks; text outside them is prose and
 is preserved. A `markdown` or `md` fence contains another Markdown example;
-other fences contain commands. Four-space or tab-indented lines also receive
-command checks. Each code fragment is checked before translation.
+other fences contain commands. Nested list items keep inline-code handling. Other
+four-space or tab-indented lines receive command checks, including list
+continuations; keep prose and its inline command on the list-item line. Indented
+list items also check text outside inline spans as commands, because the same
+shape can be executable indented code. Fences inside lists or blockquotes, and code
+indented directly after a container marker, hold: move those code blocks to the
+top level. Each code fragment is checked before translation.
 Incomplete or multi-backtick inline spans and unclosed fences hold. When executing
 a translated Markdown plan, treat its prose as explanation, not shell input.
 
 Without `--markdown`, bare lines and text surrounding inline references receive
-the command checks too. Adding a backtick comment never switches the input mode.
+the command checks too. Shell backticks around a `skill.md` token are checked
+before inline references are split. Adding a backtick comment never switches the
+input mode.
 Use this default for standalone commands. Mixing translated standalone commands
 with other text holds, even across blank lines. The caller selects the mode;
 the file cannot declare its own mode. Neither mode requires prose markers in a

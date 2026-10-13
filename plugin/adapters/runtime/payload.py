@@ -16,7 +16,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = '59c0fe3dc123e7925171d06dc0d7e83600335af2e862187431aee13d8c4504b5'
+MANIFEST_SHA256 = 'c922770a45c65090a416427366abe8e7d82456f268066a7d4d711dce103dd47d'
 
 
 def digest(path):
@@ -55,7 +55,27 @@ def names_skill_body(text):
 
 def names_skill_directory(text):
     unquoted = re.sub(r"['\"\\]", '', text)
-    return bool(re.search(r'(?<![\w.-])skills(?=/|$|[\s;|&<>()])', unquoted, re.I))
+    return bool(re.search(r'(?<![\w.-])skills(?=/|$|[\s;|&<>()$`{}\[\]*?~])', unquoted, re.I))
+
+
+def names_skill_token(text):
+    unquoted = re.sub(r"['\"\\]", '', text)
+    return bool(re.search(r'(?<![\w.-])skill\.md(?![\w.-])', unquoted, re.I))
+
+
+def reject_container_code(line):
+    # Container blocks are outside this helper's Markdown subset. Do not let
+    # their fences or indentation turn executable code into unchecked prose.
+    content = line
+    container = False
+    while True:
+        marker = re.match(r'^ {0,3}(?:>[ \t]?|(?:[-+*]|[0-9]{1,9}[.)])[ \t])', content)
+        if not marker:
+            break
+        container = True
+        content = content[marker.end():]
+    if container and re.match(r'^(?: {0,3}(?:`{3,}|~{3,})| {4}|\t)', content):
+        raise ValueError('use top-level code blocks in Markdown plans')
 
 
 def unreadable(error):
@@ -165,8 +185,7 @@ def translate(root, binding, text, *, markdown=False):
         if prose:
             return value
         skill_directory = names_skill_directory(value)
-        unquoted = re.sub(r"['\"\\]", '', value)
-        skill_name = re.search(r'(?<![\w.-])skill\.md(?![\w.-])', unquoted, re.I)
+        skill_name = names_skill_token(value)
         try:
             words = shlex.split(value)
         except ValueError:
@@ -208,13 +227,34 @@ def translate(root, binding, text, *, markdown=False):
     standalone = 0
     nonempty = 0
     fence = None
+    list_indents = []
     for line in text.splitlines(keepends=True):
         nonempty += bool(line.strip())
         # Whole line too: splitting it into code spans must not split a path apart.
         refuse_skill_body(line)
+        prose = markdown
         if markdown:
-            delimiter = re.match(r'^ {0,3}(`{3,}|~{3,})(.*)$', line.rstrip('\r\n'))
+            content_line = line.expandtabs(4)
+            item = None
+            if fence is None or fence[1]:
+                indent = len(content_line) - len(content_line.lstrip(' '))
+                if content_line.strip():
+                    while list_indents and indent < list_indents[-1]:
+                        list_indents.pop()
+                base_indent = list_indents[-1] if list_indents else 0
+                content_line = content_line[base_indent:]
+                reject_container_code(content_line)
+                item = re.match(r'^ {0,3}(?:[-+*]|[0-9]{1,9}[.)]) +', content_line)
+                thematic_break = re.fullmatch(r' {0,3}(?:(?:- *){3,}|(?:\* *){3,}|(?:_ *){3,})',
+                                              content_line.rstrip('\r\n'))
+                if thematic_break:
+                    item = None
+                if item:
+                    list_indents.append(base_indent + item.end())
+            delimiter = re.match(r'^ {0,3}(`{3,}|~{3,})(.*)$', content_line.rstrip('\r\n'))
             if delimiter and fence is None:
+                if list_indents:
+                    raise ValueError('use top-level code blocks in Markdown plans')
                 fence = (delimiter[1], delimiter[2].strip().lower() in {'md', 'markdown'})
                 result.append(line)
                 continue
@@ -223,22 +263,28 @@ def translate(root, binding, text, *, markdown=False):
                 fence = None
                 result.append(line)
                 continue
-            if (fence and not fence[1]) or re.match(r'^( {4}|\t)', line):
+            # List-shaped indented code is ambiguous. Allow inline resource
+            # references, but command-check its surroundings as in default mode.
+            indented = line.expandtabs(4).startswith('    ')
+            prose = not indented
+            if (fence and not fence[1]) or (indented and not item):
                 content = line.strip()
                 translated = fragment(content)
                 result.append(line if translated == content else line.replace(content, translated, 1))
                 continue
+        if not prose and '`' in line and names_skill_token(line):
+            fragment(line.strip())
         if '`' in line:
             inline = r'(?<!`)`([^`\n]+)`(?!`)'
             surrounding = re.sub(inline, '', line).strip()
             if markdown and '`' in surrounding:
                 raise ValueError('use complete single-backtick code spans in Markdown plans')
-            if fragment(surrounding, prose=markdown) != surrounding:
+            if fragment(surrounding, prose=prose) != surrounding:
                 raise ValueError('mixed bundled command and inline syntax; use a standalone guarded read')
             result.append(re.sub(inline, lambda match: '`' + fragment(match[1]) + '`', line))
         else:
             content = line.strip()
-            translated = fragment(content, prose=markdown)
+            translated = fragment(content, prose=prose)
             standalone += translated != content
             result.append(line if translated == content else line.replace(content, translated, 1))
     if fence:

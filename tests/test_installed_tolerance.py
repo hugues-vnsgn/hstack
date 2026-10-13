@@ -165,6 +165,18 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
     def test_translate_refuses_skill_variable_expansion(self):
         self.assert_skill_command_refused('f=SKILL.md; cat .claude/skills/mine/$f')
 
+    def test_expansion_after_skill_directory_name_is_refused(self):
+        for command in ['suffix=/mine; cat .claude/skills${suffix}/*',
+                        'cat .claude/skills`printf /mine/`*',
+                        'cat .claude/skills"$(printf /mine/)"*',
+                        'cat .claude/skills{,/mine}/*',
+                        'cat .claude/skills*/mine/*']:
+            for text, markdown in [(command, False), (f'~~~sh\n{command}\n~~~', True)]:
+                with self.subTest(text=text, markdown=markdown):
+                    result = self.plan_result(text, markdown=markdown)
+                    self.assertEqual(result.returncode, 2, result.stdout)
+                    self.assertEqual(result.stdout, '')
+
     def test_translate_limits_skill_directories_to_known_literal_forms(self):
         paths = ['skills/mine/notes.md', '.claude/skills/mine/notes.md',
                  '.agents/skills/mine/notes.md', '~/.claude/skills/mine/notes.md',
@@ -199,6 +211,17 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                 result = self.plan_result(text)
                 self.assertEqual(result.returncode, 2, result.stdout)
                 self.assertEqual(result.stdout, '')
+
+    def test_default_shell_backticks_cannot_hide_skill_name(self):
+        for text in ["cat `find .claude -iname 'skill.md'`",
+                     "cat `find .agents -iname 'SK''ILL.md'`"]:
+            with self.subTest(text=text):
+                result = self.plan_result(text)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+        text = "cat `find docs -iname 'notes.md'`"
+        result = self.plan_result(text)
+        self.assertEqual((result.returncode, result.stdout), (0, text + '\n'), result.stderr)
 
     def test_translation_preserves_unrelated_shell_commands(self):
         for text in [
@@ -235,6 +258,18 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                 self.assertEqual(result.returncode, 2, result.stdout)
                 self.assertEqual(result.stdout, '')
 
+    def test_markdown_container_code_blocks_hold(self):
+        for text in ['> ~~~sh\n> cat .claude/skills/mine/*\n> ~~~',
+                     '> ```sh\n> cat .claude/skills/mine/*\n> ```',
+                     '>>~~~sh\n>>cat .claude/skills/mine/*\n>>~~~',
+                     '>     cat .claude/skills/mine/*',
+                     '- > ~~~sh\n  > cat .claude/skills/mine/*\n  > ~~~',
+                     '> ~~~sh\n> git status\n> ~~~']:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
+
     def test_markdown_code_blocks_keep_safe_commands_and_guard_resource_reads(self):
         guarded = shlex.join(['python3', str(self.helper), 'read-workflow',
                              '--binding', str(self.binding), '--', FEATURE])
@@ -253,6 +288,35 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
         result = self.plan_result(text, markdown=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout, text.replace('cat ' + FEATURE, guarded) + '\n')
+
+    def test_markdown_nested_lists_translate_inline_commands(self):
+        guarded = shlex.join(['python3', str(self.helper), 'read-workflow',
+                             '--binding', str(self.binding), '--', FEATURE])
+        for text in [f'- [ ] Parent\n    - [ ] Read `cat {FEATURE}`.',
+                     f'1. Parent\n    1. Read `cat {FEATURE}`.',
+                     f'- Parent\n    - Child\n        - Read `cat {FEATURE}`.']:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, text.replace('cat ' + FEATURE, guarded) + '\n')
+                repeated = self.plan_result(result.stdout.rstrip('\n'), markdown=True)
+                self.assertEqual(repeated.stdout, result.stdout, repeated.stderr)
+        for text in ['- Parent\n    - Run `cat .claude/skills/mine/*`.',
+                     '- Parent\n\n      cat .claude/skills/mine/*',
+                     "- Parent\n\n      cat `find .claude -iname 'skill.md'`",
+                     '    - cat .claude/skills/mine/*',
+                     '- - -\n\n    cat .claude/skills/mine/*',
+                     '* * *\n\n    cat .claude/skills/mine/*',
+                     'Heading\n- \n\n    cat .claude/skills/mine/*',
+                     'Paragraph\n2. Not a list interruption\n\n    cat .claude/skills/mine/*',
+                     f'- Parent\n    Continue with `cat {FEATURE}`.',
+                     'Heading\n- \n\n    - ignored; cat .claude/skills/mine/*',
+                     'Paragraph\n2. Not a list interruption\n\n    - ignored; cat .claude/skills/mine/*',
+                     "Heading\n- \n\n    - ignored; cat `find .claude -iname 'skill.md'`"]:
+            with self.subTest(text=text):
+                result = self.plan_result(text, markdown=True)
+                self.assertEqual(result.returncode, 2, result.stdout)
+                self.assertEqual(result.stdout, '')
 
     def test_emitted_helpers_retranslate_when_the_install_path_contains_skills(self):
         for folder in ['skills/plugin', 'skills/plugin $literal']:
