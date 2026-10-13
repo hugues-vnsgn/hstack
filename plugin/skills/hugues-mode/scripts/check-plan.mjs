@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import process from "node:process";
+import { validateCoverage } from "./mobile-coverage.mjs";
 
 const RULE =
 	"Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.";
@@ -42,6 +43,14 @@ const fail = (line, message) => problems.push(`${file}:${line}: ${message}`);
 let start = 0;
 if (raw[0] === "---") {
 	start = raw.indexOf("---", 1) + 1;
+}
+let mobile = false;
+if (raw[0] === "---") {
+	if (!start) fail(1, "unterminated frontmatter");
+	const profiles = raw.slice(1, start - 1).filter(l => /^\s*["']?verification_profile\b/i.test(l));
+	if (profiles.length > 1) fail(1, "duplicate verification_profile");
+	if (profiles.length && profiles[0] !== "verification_profile: mobile-risk-v1") fail(1, "unknown or malformed verification_profile");
+	mobile = profiles.length === 1 && profiles[0] === "verification_profile: mobile-risk-v1";
 }
 
 const lines = [];
@@ -138,20 +147,26 @@ if (prSections.length === 0) fail(1, "no PR sections between Program checklist a
 
 const report = [];
 for (const pr of prSections) {
+	const subBlocks = mobile ? ["Depends on.", "Coverage.", ...SUB_BLOCKS.slice(1)] : SUB_BLOCKS;
 	const heads = [];
 	for (const l of pr.body) {
 		if (l.code) continue;
 		const m = l.text.match(/^\*\*([^*]+)\*\*(.*)$/);
-		if (m && SUB_BLOCKS.includes(m[1])) heads.push({ name: m[1], n: l.n, rest: m[2].trim(), lines: [] });
+		if (m && subBlocks.includes(m[1])) heads.push({ name: m[1], n: l.n, rest: m[2].trim(), lines: [] });
 		else if (heads.length) heads.at(-1).lines.push(l);
 	}
 	const names = heads.map((h) => h.name);
-	if (names.join("|") !== SUB_BLOCKS.join("|")) {
-		fail(pr.n, `${pr.title}: sub-blocks are [${names.join(", ")}], expected [${SUB_BLOCKS.join(", ")}]`);
+	if (names.join("|") !== subBlocks.join("|")) {
+		fail(pr.n, `${pr.title}: sub-blocks are [${names.join(", ")}], expected [${subBlocks.join(", ")}]`);
 	}
 	const block = (name) => heads.find((h) => h.name === name);
+	const coverage = mobile ? validateCoverage(pr, block("Coverage."), block("Verify, live."), fail) : {live: true, perf: true};
 	const counts = {};
 	for (const h of heads) counts[h.name] = boxes(h.lines).length;
+	if (mobile && coverage.workType !== "mobile-behavior") {
+		const checks = boxes(block("Verify, unit.")?.lines ?? []);
+		if (!checks.some(b => /Run `[^`<>]+`/.test(b.text))) fail(pr.n, `${pr.title}: documentation/workflow needs a command check`);
+	}
 
 	const depends = block("Depends on.");
 	if (depends && depends.rest === "") fail(depends.n, `${pr.title}: Depends on names nothing`);
@@ -165,12 +180,16 @@ for (const pr of prSections) {
 	}
 
 	const live = block("Verify, live.");
-	if (live) {
-		if (!LANES.test(live.rest)) fail(live.n, `${pr.title}: Verify, live lacks "Ten lanes on \`<swarm workers model>\` at the PR head" with the model filled in`);
+	if (live && !coverage.live) {
+		if (!live.rest.endsWith("Not applicable.") || boxes(live.lines).length) fail(live.n, `${pr.title}: exempt live block must say Not applicable and contain no checks`);
+	} else if (live) {
+		const laneHeader = mobile ? /Risk-based lanes on `[^`<>]+` at the PR head/ : LANES;
+		if (!laneHeader.test(live.rest)) fail(live.n, `${pr.title}: Verify, live lacks the ${mobile ? "risk-based" : "Ten lanes"} heading with the model filled in`);
 		const lanes = boxes(live.lines).map((b) => ({ ...b, m: b.text.match(/^Lane (\d+)\. /) }));
 		const numbers = lanes.filter((b) => b.m).map((b) => Number(b.m[1])).sort((a, b) => a - b);
-		if (numbers.join(",") !== "1,2,3,4,5,6,7,8,9,10") fail(live.n, `${pr.title}: lanes are [${numbers.join(",")}], expected 1 to 10`);
-		for (const lane of lanes) {
+		const expected = mobile ? Array.from({length: lanes.length}, (_, i) => i + 1) : [1,2,3,4,5,6,7,8,9,10];
+		if (!numbers.length || numbers.join(",") !== expected.join(",")) fail(live.n, `${pr.title}: lanes are [${numbers.join(",")}], expected 1 to ${expected.length}`);
+		for (const lane of mobile ? [] : lanes) {
 			if (!lane.m) fail(lane.n, `${pr.title}: live box is not a lane`);
 			else if (!/Save `[^`]+`/.test(lane.text)) fail(lane.n, `${pr.title}: lane ${lane.m[1]} names no screenshot`);
 			else if (!lane.text.includes("Pass when")) fail(lane.n, `${pr.title}: lane ${lane.m[1]} has no pass predicate`);
@@ -178,7 +197,9 @@ for (const pr of prSections) {
 	}
 
 	const perf = block("Verify, perf.");
-	if (perf) {
+	if (perf && !coverage.perf) {
+		if (!perf.rest.endsWith("Not applicable.") || boxes(perf.lines).length) fail(perf.n, `${pr.title}: exempt perf block must say Not applicable and contain no checks`);
+	} else if (perf) {
 		const items = boxes(perf.lines).map((b) => b.text.split(" ")[0]);
 		if (items.join("|") !== PERF_ITEMS.join("|")) fail(perf.n, `${pr.title}: perf boxes are [${items.join(", ")}], expected [${PERF_ITEMS.join(", ")}]`);
 	}

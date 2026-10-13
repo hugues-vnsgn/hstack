@@ -31,6 +31,12 @@ route. Add applicable target proof as a phase in that designed workflow.
 
 ## Evidence and scope
 
+For operator-approved mobile programs, apply
+[mobile coverage](../skills/hugues-mode/references/mobile-coverage.md) when selecting
+and dispatching verification. Its explicit profile replaces the fixed live-check
+count, preserving other pstack phases and reviews. Legacy/non-mobile plans retain
+their default contract; profile migration requires the operator's ruling.
+
 Read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md),
 [evidence guide](../skills/hugues-mode/references/evidence-guide.md), and
 [jev drive](../skills/hugues-mode/references/jev-drive.md) at the relevant proof

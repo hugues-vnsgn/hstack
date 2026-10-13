@@ -4,6 +4,12 @@ Apply this gate before every autopilot verification round and before granting it
 clean verdict. Keep pstack's unit, live, perf and independent review lanes. This
 gate checks which rules they use; it does not prove the behavior.
 
+For an approved `mobile-risk-v1` plan, keep this same gate. Compare profile
+selection, PR classifications, risk decisions, target/check mappings and
+exemptions as part of the whole plan. Both applicable and exempt verification
+blocks remain present. Exempt blocks record non-applicability rather than passes;
+all applicable checks and independent reviews remain required.
+
 ## Owners propose; the operator rules
 
 A PR never changes its own verification pass rules without the operator's explicit

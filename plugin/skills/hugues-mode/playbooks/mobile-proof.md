@@ -11,6 +11,11 @@ independent verifier inspect the artifacts and the controller run `program-check
 before a supported pass. Preserve failed/blocked/waived checks, crashes, data
 anomalies and all unresolved owner decisions in the derived verdict.
 
+For a round in an operator-approved mobile program, apply
+[mobile coverage](../references/mobile-coverage.md) before executing checks.
+Use the approved IDs, exact round revision/build and target; restore shared devices
+before release and record inaccessible paths as gaps. This does not grant a profile migration.
+
 ## Steps
 
 1. Confirm the authorized consumer repo and SHA, plugin SHA, host/version and changed domains. Read [mobile lanes](../references/mobile-lanes.md) and repository instructions. Invoke the existing project `verify-<app>` through the host's supported native mechanism. If unavailable, disabled, denied or unknown, hold its dependent proof; request explicit native invocation only when the host requires it. Never read its body as a fallback. Reconcile the invoked recipe's commands, selectors and readiness signals with current authority and repo facts before execution. Pin scheme or variant, target tests, native callers, device identity and expected changed behavior before execution.

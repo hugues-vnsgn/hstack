@@ -34,7 +34,10 @@
     },
     {
       "paragraph": 4,
-      "slice": [0, 218],
+      "slice": [
+        0,
+        218
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "908ea1518bf2e2bf893ef33822c075be8abaa1985e4cac31015f17c813a3acfa",
       "disposition": "replaced",
@@ -43,7 +46,10 @@
     },
     {
       "paragraph": 4,
-      "slice": [218, 296],
+      "slice": [
+        218,
+        296
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "7e5dd18594c351d94aae01f47218102e9213d6ce3f9435b3d9f1ab969b077bdc",
       "disposition": "replaced",
@@ -52,13 +58,19 @@
     },
     {
       "paragraph": 4,
-      "slice": [296, 886],
+      "slice": [
+        296,
+        886
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "042531ad133d16a1fdd8709a346d40c2c320dadfdc2ace3095c994aee1e222dc"
     },
     {
       "paragraph": 4,
-      "slice": [886, 946],
+      "slice": [
+        886,
+        946
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "0d6cb1863a1d6b3e8b8c0f261e9eed602a7c4a312b5d60b0113fd7e473566aee",
       "disposition": "replaced",
@@ -67,7 +79,10 @@
     },
     {
       "paragraph": 4,
-      "slice": [946, 1281],
+      "slice": [
+        946,
+        1281
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "74195c3c6c409ed21724d998466d87b7355c4758c735a52616d2762161501cda",
       "disposition": "replaced",
@@ -88,7 +103,10 @@
     },
     {
       "paragraph": 7,
-      "slice": [0, 106],
+      "slice": [
+        0,
+        106
+      ],
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "2b022e09b00727d9ace0a7c6be32d67d6b2c6782c25c1094300c4c118df0ffa5",
       "disposition": "replaced",
@@ -97,7 +115,10 @@
     },
     {
       "paragraph": 7,
-      "slice": [106, 183],
+      "slice": [
+        106,
+        183
+      ],
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "7c8c84045fddd2c5f5c150788b395cdf98572c2dcc553d45155ba4eab8f6a35b",
       "disposition": "replaced",
@@ -106,19 +127,28 @@
     },
     {
       "paragraph": 7,
-      "slice": [183, 778],
+      "slice": [
+        183,
+        778
+      ],
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "63770e6f5651476b96594fb1eccf6a2a96a56c602fc0e9778be47006c2ba90bc"
     },
     {
       "paragraph": 8,
-      "slice": [0, 981],
+      "slice": [
+        0,
+        981
+      ],
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "2d38038763942aa5a5b899bf5703ff26ae744ba876af43f62efa8233654c3651"
     },
     {
       "paragraph": 8,
-      "slice": [981, 1147],
+      "slice": [
+        981,
+        1147
+      ],
       "destination": "plugin/adapters/host-typescript.md",
       "sha256": "f76cefa49103026d1cc77857fc030c67c4d7bb0cc37e542392108df02ed7375e",
       "disposition": "replaced",
@@ -127,7 +157,10 @@
     },
     {
       "paragraph": 8,
-      "slice": [1147, 1394],
+      "slice": [
+        1147,
+        1394
+      ],
       "destination": "plugin/adapters/host-typescript.md",
       "sha256": "f770602b9ffc729fbcf03d7510cc46fdd936e4ec428ee416bb5a1d29f1c4d74b",
       "disposition": "replaced",
@@ -142,13 +175,19 @@
     },
     {
       "paragraph": 10,
-      "slice": [0, 607],
+      "slice": [
+        0,
+        607
+      ],
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "015d81c41f94372c769533c1958ca82508f4fe4e3d901956334dd879fa7847de"
     },
     {
       "paragraph": 10,
-      "slice": [607, 793],
+      "slice": [
+        607,
+        793
+      ],
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "7543ba3540e4939253edfa7c2c8e60a910c7cd23a5c5a4bac29af5d4b5923abf",
       "disposition": "replaced",
@@ -157,13 +196,19 @@
     },
     {
       "paragraph": 11,
-      "slice": [0, 918],
+      "slice": [
+        0,
+        918
+      ],
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "8c3ca5512dd31e9ffaeedca91ac4b995616c4bde1c6931b5aa44d584eed12e06"
     },
     {
       "paragraph": 11,
-      "slice": [918, 1053],
+      "slice": [
+        918,
+        1053
+      ],
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "7c016eb570991bbcb82dddc60e0af419b10517f2efebc354fb803777cda0fd63",
       "disposition": "replaced",
@@ -172,7 +217,10 @@
     },
     {
       "paragraph": 11,
-      "slice": [1053, 1391],
+      "slice": [
+        1053,
+        1391
+      ],
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "bc36947983ce53a884c49c10a9d6f2dc5f2d6ffae1202ed721f953c38355eaeb"
     },
@@ -211,7 +259,10 @@
     },
     {
       "paragraph": 17,
-      "slice": [0, 81],
+      "slice": [
+        0,
+        81
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
@@ -220,7 +271,10 @@
     },
     {
       "paragraph": 17,
-      "slice": [82, 400],
+      "slice": [
+        82,
+        400
+      ],
       "destination": "plugin/adapters/host.md",
       "sha256": "b36a8a532282cbd2ecf316a167aa88ecbaf2c44e207a6e90bd67857eba54a809"
     },
@@ -251,7 +305,20 @@
   "mobile_sha256": "11a718eeaa16d23528b72f2791e5b80e360398c5fa85069af6b03904c2c5f228",
   "mobile_fragments": [
     {
-      "slice": [4086, 4202],
+      "slice": [
+        1847,
+        1870
+      ],
+      "sha256": "045ae00a4c16fffc2a18e261d080bf66ce1a72eddb981deec06668867ea33344",
+      "disposition": "replaced",
+      "reason": "Owner-approved issue30 adds a conditional mobile-risk-v1 coverage reference; the existing mobile proof rules remain intact and non-mobile plans retain their default contract.",
+      "replacement": "## Evidence and scope\n\nFor operator-approved mobile programs, apply\n[mobile coverage](../skills/hugues-mode/references/mobile-coverage.md) when selecting\nand dispatching verification. Its explicit profile replaces the fixed live-check\ncount, preserving other pstack phases and reviews. Legacy/non-mobile plans retain\ntheir default contract; profile migration requires the operator's ruling.\n\n"
+    },
+    {
+      "slice": [
+        4086,
+        4202
+      ],
       "sha256": "ed8f2484bf9d78f7c01fb5262007d87d5e99e249197f1731bae7b494c751ba77",
       "disposition": "replaced",
       "reason": "'use supported native invocation for skills; never substitute direct body reads for unavailable or denied invocation' was unscoped, loaded on every mobile task, and sent an agent to native invocation of a bundled user-only skill such as tdd, which is refused; PR 1 fix round 4 scopes it to consumer and external skills and points a bundled user-only skill at host.md.",

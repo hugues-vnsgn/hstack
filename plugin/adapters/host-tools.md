@@ -116,7 +116,7 @@ text does not establish ownership. Line continuations and heredocs hold before
 fragment processing. This translator enforces a plan contract, not a shell
 sandbox; host permissions remain the execution boundary.
 
-The unchanged installed Node helper validates the absolute consumer plan path
+The installed Node helper validates the absolute consumer plan path
 and preserves its exit code and diagnostics. Any binding, hash, mode or
 required-file drift blocks rereading or validation. Reconcile changed payloads
 with the operator; never silently rebind a live program. These commands do not

@@ -7,8 +7,8 @@ their named actions. A small mobile applicability file requires the complete
 mobile adapter before any explicit mobile task; non-mobile work stops at the
 applicability decision. This uses ordinary file reads, not a new native loader.
 
-Every original host instruction is retained in one of those files, and the full
-mobile adapter is byte-identical to the previous candidate. The
+Every original host instruction is retained in one of those files, and the mobile
+adapter preserves the earlier rules while adding the approved mobile coverage profile. The
 [partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account for
 every original paragraph, each preserved verbatim or replaced with an explicit,
 tested reason. Deferral changes when guidance is read, not whether its

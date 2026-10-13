@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **534 top-level unittest cases**. One is a driver that
+The current candidate collects **549 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -21,11 +21,12 @@ native workflow proof. Subtests are not added to case totals.
 | Current native-runner CLI contracts | 2 | test_payload_boundary; synthetic Claude/Codex transcripts accept read-only prerequisite holds and reject attempted watch-pr, orch, install or bootstrap calls in missing/stale/uncovered scenarios, including failed attempts. These check evidence validation, not native enforcement. |
 | Current approved requirements/proof | 42 | test_program_proof; installed JSON checks, artifact/build identities, safe design decoding, workflow reach and macOS process write isolation |
 | Current program scheduling/recovery | 38 | test_program_control; installed policy gates, whole-group dispatch, saved progress, usage coverage, process groups, device receipts, concurrent writers and runtime waiting |
-| Total collected | 534 | Current, mixed and historical scopes remain distinct |
+| Current mobile coverage | 15 | test_mobile_coverage; installed risk coverage, exemptions, profile/default compatibility, operator rulings and integrity drift; synthetic plan fixtures, no native/mobile behavior claim |
+| Total collected | 549 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-534 Python cases. The opt-in CI workflow requires a provisioned native runner.
+549 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -210,3 +211,6 @@ The issue-28 candidate adds 38 installed-command cases. These observe
 local process groups, kernel locks and blocking command waits with synthetic
 consumer records. Native dispatch enforcement, complete host usage delivery,
 mobile restoration and real fresh-session pickup remain deferred trial gaps.
+
+Issue #30 adds fifteen installed mobile-coverage cases. Matrix
+subtests are not added to this total. Real host/mobile trials remain deferred.

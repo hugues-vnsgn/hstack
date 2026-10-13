@@ -24,10 +24,10 @@
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "source_sha256": "e58c3d871b09d477be00628d69dd23ffa6c2e3a1728f5b867a841baa8e90278b",
-      "candidate_sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
+      "candidate_sha256": "71e21024602525dcc3f81091540f9cc80339e06da07da242216295f300d25d86",
       "same_bytes_as_upstream": false,
-      "same_bytes_as_7db3e80": true,
-      "scope": "adapted plan checker; installed Python/Node integration tests cover required operator-rule gate"
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted plan checker; installed Python/Node tests cover operator-rule protection and approved risk-based mobile coverage; native/mobile trials deferred"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
