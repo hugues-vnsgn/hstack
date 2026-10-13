@@ -5,13 +5,10 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
-while filling the plan. Extract design rules and prototype content before
-prototyping/building; settle source conflicts at the existing plan approval.
-Attach the protected checklist and trusted approval digest to the handoff.
-The checklist is authoritative; a builder's edits to this plan cannot weaken it.
-Keep the installed binding for the program. Include `program-check` in its
-existing verdict step and write boundaries in every worker brief.
+For new consumer programs apply [program proof](../../../adapters/program-proof.md)
+at plan approval: inspect design/prototype rules, resolve source conflicts and
+freeze the protected checklist/digest. Hand off binding and enforced write scopes.
+Use `program-check` at the verdict; builder edits cannot weaken approved rules.
 
 ### Multi-phase or multi-PR plan
 
@@ -29,8 +26,10 @@ existing verdict step and write boundaries in every worker brief.
 
 **Mobile programs.** For an operator-approved mobile program, apply
 [mobile coverage](../references/mobile-coverage.md) before filling this skeleton.
-Its explicit profile selects justified checks and records applicability; all
-other pstack phases and reviews remain. Keep the default skeleton for other programs.
+In the skeleton below add `verification_profile: mobile-risk-v1` frontmatter,
+insert its Coverage template after Depends on, and replace Ten lanes plus the
+ten example boxes with its risk-based heading/check template. Record exemptions
+as it directs. Other programs keep this default; all other phases/reviews remain.
 
 **Receipt links.** Put receipt URLs in `Evidence. [Run](url)` at the end of a line or on a standalone line. Use the fixed labels `Run`, `Screenshot`, `Video`, `Log`, `Trace` or `Receipt` for attachments. Adding, removing or updating those attachments is ignored by comparison. Other labels and all surrounding instructions remain protected. Checkbox state may change, but retain the checkbox marker.
 

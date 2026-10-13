@@ -12,6 +12,18 @@ Record changed areas and source evidence. Review the relevant entries in
 [the shared risk catalog](mobile-risks.json). A risk names a coverage question,
 not a new application requirement. Treat unknown impact as unresolved.
 
+Load only relevant rows into worker briefs. Use the consumer's approved behavior
+as the oracle; retain actual inputs and outcomes.
+
+| Area | Assess and exercise |
+| --- | --- |
+| navigation | Background and reopen; kill the process and restore the saved route/back stack. Assess supported rotation and navigation gestures. |
+| persistence | Read/write failures, corrupt stored bytes, interruption during writes and existing-data preservation. Inspect related paths when a failure repeats. |
+| layout | Smallest supported width and large accessibility text. Type realistic input and exercise keyboard focus, dismissal and navigation. |
+| native-views | Repeated presentation/dismissal, retained memory and cleanup after the view closes. |
+| launch | Oldest supported OS, release build and the meaningful content-ready state the user waits for. Retain measurement resolution against the threshold. |
+| network | Offline entry, request failure and recovery without lost state or duplicate effects. |
+
 Each relevant risk is `applicable`, `not-applicable` with a reason and the actual
 operator ruling, or `unresolved`. Applicable risks need checks on every affected
 target. Unresolved risks hold verification. Preserve affected Android and iOS
@@ -36,6 +48,9 @@ Keep the existing headings and verification rule. Insert `**Coverage.**` after
 `**Depends on.**` in each PR section. The actual plan uses plain Markdown outside
 fences/comments. Fields end with periods; lists use commas. Target IDs use
 lowercase letters, digits and hyphens.
+Attach receipts after the final period as `Evidence. [Run](receipt-path)` or
+`[Run](receipt-path)`. Keep acceptance text outside HTML comments. Risk rows and
+check tags must map in both directions, including checks beyond the minimum.
 
 ```text
 **Coverage.**
@@ -83,8 +98,15 @@ interleaved baseline method; insufficient precision is inconclusive.
 
 Give workers the approved checks, fixed commit/build, target and relevant risk
 guidance. Keep the verifier's approved contract outside owner write access.
-Put every selected check into [approved proof records](../../../adapters/program-records.md),
-including checks beyond minimum risk mappings. Apply [program proof](../../../adapters/program-proof.md)
+Put every selected check into [approved proof records](../../../adapters/program-records.md).
+Hash the committed plan as a source snapshot and include its `verification_plan`
+source/section and complete lane-to-check mapping in the approved checklist.
+Use exact target IDs, action text and pass-condition text from the plan, excluding
+grammar delimiters and receipt links. The bound `program-check` validates the
+snapshot through the shared plan checker, then checks every mapping; Android-only
+records cannot satisfy an iOS plan. Existing records without a mobile plan keep
+their schema and semantics. Approval and diff completeness still require review.
+Apply [program proof](../../../adapters/program-proof.md)
 and independently inspect actual actions/artifacts. Distinguish failed, blocked,
 untested, inconclusive and explicitly waived checks.
 

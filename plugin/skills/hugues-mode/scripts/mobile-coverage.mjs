@@ -1,14 +1,13 @@
 import fs from "node:fs";
 
-const catalog = JSON.parse(fs.readFileSync(new URL("../references/mobile-risks.json", import.meta.url), "utf8"));
-
 const list = text => text === "none" ? [] : (text ?? "").split(",").map(s => s.trim()).filter(Boolean);
 const meaningful = text => {
-	const value = text?.trim();
-	return Boolean(value) && !/[<>]/.test(value) && !/^(none|unknown|unresolved)$/i.test(value);
+	const value = text?.replace(/[\u200b-\u200d\ufeff]/g, "").trim();
+	return Boolean(value) && !/^<[^>]*>$|<(?:[a-z_][a-z0-9_-]*|)>/i.test(value) && !/^(none|unknown|unresolved|tbd|n\/a)$/i.test(value);
 };
 
 export function validateCoverage(pr, coverage, live, fail) {
+	const catalog = JSON.parse(fs.readFileSync(new URL("../references/mobile-risks.json", import.meta.url), "utf8"));
 	const reject = (n, message) => fail(n ?? pr.n, `${pr.title}: ${message}`);
 	const fields = new Map(), targets = new Map(), risks = new Map();
 	for (const line of coverage?.lines.filter(l => !l.code && l.text.trim()) ?? []) {
@@ -73,17 +72,22 @@ export function validateCoverage(pr, coverage, live, fail) {
 	for (const risk of risks.keys()) if (!required.has(risk)) reject(coverage?.n, `undeclared risk ${risk}`);
 	const checks = new Map();
 	for (const line of live?.lines.filter(l => !l.code && /^\s*- \[[ x]\]/.test(l.text)) ?? []) {
-		const match = line.text.match(/^- \[[ x]\] Lane ([1-9][0-9]*)\. (.+?) Risks `([^`]+)`\. Target `([^`]+)`\. Reason (.+?)\. Action (.+?)\. Save `([^`]+)`\. Pass when (.+)\.$/);
-		if (!match || [2, 5, 6, 7, 8].some(i => !meaningful(match[i]))) {
+		const definition = line.text.replace(/(?: Evidence\.)?(?: \[(?:Run|Screenshot|Video|Log|Trace|Receipt)\]\([^)]*\))+\s*$/, "");
+		const match = definition.match(/^- \[[ x]\] Lane ([1-9][0-9]*)\. (.+?) Risks `([^`]+)`\. Target `([^`]+)`\. Reason (.+?)\. Action (.+?)\. Save `([^`]+)`\. Pass when (.+)\.$/);
+		if (!match) {
 			reject(line.n, "live check needs scenario, risks, target, reason, action, artifact and pass condition");
 			continue;
+		}
+		for (const [i, field] of [[2, "scenario"], [5, "reason"], [6, "action"], [7, "artifact"], [8, "pass condition"]]) {
+			if (!meaningful(match[i])) reject(line.n, `check ${match[1]} has an unresolved ${field}`);
 		}
 		const [id, tagged, target] = [match[1], list(match[3]), match[4]];
 		if (checks.has(id)) reject(line.n, `duplicate check ${id}`);
 		if (!targets.has(target)) reject(line.n, `check ${id} uses unknown target ${target}`);
 		if (!tagged.length || new Set(tagged).size !== tagged.length) reject(line.n, `check ${id} has invalid risks`);
 		for (const risk of tagged) if (risks.get(risk)?.status !== "applicable") reject(line.n, `check ${id} uses undeclared/exempt risk ${risk}`);
-		checks.set(id, {target, risks: tagged});
+		for (const risk of tagged) if (!risks.get(risk)?.checks.includes(id)) reject(line.n, `check ${id} has inconsistent risk mapping for ${risk}`);
+		checks.set(id, {id, target, risks: tagged, action: match[6], expected: match[8], artifact: match[7]});
 	}
 	for (const [risk, row] of risks) {
 		if (row.status !== "applicable") continue;
@@ -93,5 +97,5 @@ export function validateCoverage(pr, coverage, live, fail) {
 			if (!row.checks.some(id => checks.get(id)?.target === target && checks.get(id)?.risks.includes(risk))) reject(row.n, `risk ${risk} has no check on ${target}`);
 		}
 	}
-	return {live: liveApplies, perf: perfApplies, workType};
+	return {live: liveApplies, perf: perfApplies, workType, checks: [...checks.values()]};
 }

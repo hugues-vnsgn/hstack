@@ -45,12 +45,17 @@ if (raw[0] === "---") {
 	start = raw.indexOf("---", 1) + 1;
 }
 let mobile = false;
+let profiles = [];
 if (raw[0] === "---") {
-	if (!start) fail(1, "unterminated frontmatter");
-	const profiles = raw.slice(1, start - 1).filter(l => /^\s*["']?verification_profile\b/i.test(l));
+	profiles = raw.slice(1, start ? start - 1 : undefined).filter(l => /^\s*["']?verification_profile\b/i.test(l));
+	if (!start && profiles.length) fail(1, "unterminated mobile frontmatter");
 	if (profiles.length > 1) fail(1, "duplicate verification_profile");
 	if (profiles.length && profiles[0] !== "verification_profile: mobile-risk-v1") fail(1, "unknown or malformed verification_profile");
 	mobile = profiles.length === 1 && profiles[0] === "verification_profile: mobile-risk-v1";
+}
+if (process.argv[3] === "--profile-json") {
+	console.log(JSON.stringify({attempted: profiles.length > 0}));
+	process.exit(0);
 }
 
 const lines = [];
@@ -81,6 +86,7 @@ for (let i = start; i < raw.length; i++) {
 	}
 	lines.push({ n, text, code });
 	if (code) continue;
+	if (mobile && /<!--|-->/.test(text)) fail(n, "mobile plans must keep requirements outside comments");
 	const prose = text
 		.replace(/`[^`]*`/g, "`")
 		.replace(/!\[[^\]]*\]\([^)]*\)/g, "")
@@ -146,6 +152,7 @@ const prSections = programIndex === -1 || closeIndex === -1 ? [] : sections.slic
 if (prSections.length === 0) fail(1, "no PR sections between Program checklist and Close the program");
 
 const report = [];
+const manifests = [];
 for (const pr of prSections) {
 	const subBlocks = mobile ? ["Depends on.", "Coverage.", ...SUB_BLOCKS.slice(1)] : SUB_BLOCKS;
 	const heads = [];
@@ -161,6 +168,7 @@ for (const pr of prSections) {
 	}
 	const block = (name) => heads.find((h) => h.name === name);
 	const coverage = mobile ? validateCoverage(pr, block("Coverage."), block("Verify, live."), fail) : {live: true, perf: true};
+	if (mobile) manifests.push({section: pr.title, ...coverage});
 	const counts = {};
 	for (const h of heads) counts[h.name] = boxes(h.lines).length;
 	if (mobile && coverage.workType !== "mobile-behavior") {
@@ -231,7 +239,12 @@ if (closeIndex !== -1) {
 	if (!tail.some((s) => s.title.includes("Prototype evidence"))) fail(close.n, 'no "## Appendix ... Prototype evidence" section');
 }
 
-for (const line of report) console.log(line);
-console.log(`${prSections.length} PR sections, ${problems.length} problems`);
+if (process.argv[3] === "--coverage-json") {
+	if (!mobile) fail(1, "mobile verification plan requires mobile-risk-v1");
+	if (!problems.length) console.log(JSON.stringify(manifests));
+} else {
+	for (const line of report) console.log(line);
+	console.log(`${prSections.length} PR sections, ${problems.length} problems`);
+}
 for (const p of problems) console.error(p);
 process.exit(problems.length ? 1 : 0);

@@ -6,6 +6,8 @@ import unittest
 
 from test_host_adapters import InstalledFixture, ROOT
 
+CHECK_IDS = ', '.join(str(n) for n in range(1, 13))
+
 
 def mobile_plan():
     plan = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
@@ -35,7 +37,7 @@ def mobile_plan():
                      f'Target `{target}`. Reason route {n} has a distinct saved state. '
                      f'Action background, kill and reopen route {n}. Save `lane-{n}.png`. '
                      f'Pass when route {n} and its back navigation restore.')
-    return plan[:start].replace('Ten lanes on', 'Risk-based lanes on') + '\n'.join(lanes) + '\n' + plan[end:]
+    return (plan[:start].replace('Ten lanes on', 'Risk-based lanes on') + '\n'.join(lanes) + '\n' + plan[end:]).replace('Checks 1, 2.', f'Checks {CHECK_IDS}.')
 
 
 def document_plan(work_type='documentation'):
@@ -63,7 +65,7 @@ def area_plan(area, risks):
     plan = mobile_plan().replace('Areas. navigation.', f'Areas. {area}.')
     start = plan.index('- Risk process-death.')
     end = plan.index('- Live.', start)
-    rows = ''.join(f'- Risk {risk}. applicable. Checks 1, 2. Reason {area} changes.\n' for risk in risks)
+    rows = ''.join(f'- Risk {risk}. applicable. Checks {CHECK_IDS}. Reason {area} changes.\n' for risk in risks)
     plan = plan[:start] + rows + plan[end:]
     return plan.replace('Risks `process-death, background-reopen, restored-navigation`',
                         'Risks `' + ', '.join(risks) + '`')
@@ -82,13 +84,13 @@ class MobileCoverage(InstalledFixture, unittest.TestCase):
         self.assertIn('0 problems', result.stdout)
 
     def test_navigation_plan_cannot_omit_process_death(self):
-        plan = mobile_plan().replace('- Risk process-death. applicable. Checks 1, 2. Reason saved navigation changes.\n', '')
+        plan = mobile_plan().replace(f'- Risk process-death. applicable. Checks {CHECK_IDS}. Reason saved navigation changes.\n', '')
         result = self.check(plan)
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('process-death', result.stderr)
 
     def test_risk_requires_check_on_every_affected_target(self):
-        result = self.check(mobile_plan().replace('Risk process-death. applicable. Checks 1, 2.',
+        result = self.check(mobile_plan().replace(f'Risk process-death. applicable. Checks {CHECK_IDS}.',
                                                  'Risk process-death. applicable. Checks 1.'))
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('process-death', result.stderr)
@@ -96,14 +98,14 @@ class MobileCoverage(InstalledFixture, unittest.TestCase):
 
     def test_storage_coverage_is_accepted_and_corruption_is_required(self):
         plan = mobile_plan().replace('Areas. navigation.', 'Areas. navigation, persistence.')
-        rows = ''.join(f'- Risk {risk}. applicable. Checks 1, 2. Reason storage changes.\n'
+        rows = ''.join(f'- Risk {risk}. applicable. Checks {CHECK_IDS}. Reason storage changes.\n'
                        for risk in ['read-write-failure', 'corruption', 'interrupted-write', 'existing-data'])
         plan = plan.replace('- Live. applicable.', rows + '- Live. applicable.')
         plan = plan.replace('Risks `process-death, background-reopen, restored-navigation`',
                             'Risks `process-death, background-reopen, restored-navigation, read-write-failure, corruption, interrupted-write, existing-data`')
         result = self.check(plan)
         self.assertEqual(result.returncode, 0, result.stderr)
-        result = self.check(plan.replace('- Risk corruption. applicable. Checks 1, 2. Reason storage changes.\n', ''))
+        result = self.check(plan.replace(f'- Risk corruption. applicable. Checks {CHECK_IDS}. Reason storage changes.\n', ''))
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('missing risk corruption', result.stderr)
 
@@ -132,7 +134,7 @@ class MobileCoverage(InstalledFixture, unittest.TestCase):
 
     def test_other_mobile_areas_have_declared_risk_coverage(self):
         for area, risks in [('layout', ['small-layout', 'large-text', 'keyboard-input']),
-                            ('native-views', ['memory-retention', 'view-cleanup']),
+                            ('native-views', ['repeated-presentation', 'memory-retention', 'view-cleanup']),
                             ('launch', ['oldest-os', 'release-build', 'content-readiness']),
                             ('network', ['offline', 'failure-recovery'])]:
             with self.subTest(area=area):
@@ -147,8 +149,8 @@ class MobileCoverage(InstalledFixture, unittest.TestCase):
                    ('Pass when route 1 and its back navigation restore.', 'Pass when <>.'),
                    ('Target `ios-debug`', 'Target `missing-device`'),
                    ('Platforms. android, ios.', 'Platforms. android.'),
-                   ('Risk process-death. applicable. Checks 1, 2.', 'Risk process-death. applicable. Checks 999.'),
-                   ('Risk process-death. applicable. Checks 1, 2.', 'Risk process-death. applicable. Checks 1, 1.'),
+                   (f'Risk process-death. applicable. Checks {CHECK_IDS}.', 'Risk process-death. applicable. Checks 999.'),
+                   (f'Risk process-death. applicable. Checks {CHECK_IDS}.', 'Risk process-death. applicable. Checks 1, 1.'),
                    ('Risk background-reopen. applicable.', 'Risk background-reopen. unresolved.'),
                    ('. Approval owner fixture ruling', ''),
                    ('- Source. Fixture navigation change and supported-target declarations.\n', ''),
@@ -183,19 +185,26 @@ class MobileCoverage(InstalledFixture, unittest.TestCase):
         path = self.consumer / 'plan.md'
         path.write_text(mobile_plan()); git('add', 'plan.md'); git('commit', '-qm', 'Approved mobile plan')
         base = git('rev-parse', 'HEAD'); git('update-ref', 'refs/remotes/origin/main', base)
-        path.write_text(mobile_plan().replace('Reason saved navigation changes.', 'Reason builder proposes removing coverage.'))
-        git('commit', '-qam', 'Proposed coverage change'); head = git('rev-parse', 'HEAD')
-        args = ('--repo', self.consumer, '--plan', 'plan.md', '--section', 'PR 1', '--base-sha', base, '--head-sha', head)
-        pending = self.bound('plan-compare', *args)
-        self.assertEqual(pending.returncode, 2)
-        report = json.loads(pending.stdout)
-        self.assertIn('builder proposes', report['diff'])
-        ruling = self.area / 'ruling.json'
-        ruling.write_text(json.dumps({'comparison_sha256': report['comparison_sha256'],
-                                     'decision': 'approved', 'reference': 'actual fixture owner ruling'}))
-        approved = self.bound('plan-compare', *args, '--ruling', ruling)
-        self.assertEqual(approved.returncode, 0, approved.stderr)
-        self.assertTrue(json.loads(approved.stdout)['verification_required'])
+        proposals = [
+            mobile_plan().replace('Reason saved navigation changes.', 'Reason builder proposes removing coverage.'),
+            mobile_plan().replace('verification_profile: mobile-risk-v1\n', ''),
+            mobile_plan().replace(f'- Risk process-death. applicable. Checks {CHECK_IDS}. Reason saved navigation changes.\n', ''),
+            mobile_plan().replace('Pass when route 1 and its back navigation restore.', 'Pass when routes reset.')]
+        for proposal in proposals:
+            with self.subTest(proposal=proposal[:100]):
+                path.write_text(proposal)
+                git('commit', '-qam', 'Proposed coverage change'); head = git('rev-parse', 'HEAD')
+                args = ('--repo', self.consumer, '--plan', 'plan.md', '--section', 'PR 1', '--base-sha', base, '--head-sha', head)
+                pending = self.bound('plan-compare', *args)
+                self.assertEqual(pending.returncode, 2)
+                report = json.loads(pending.stdout)
+                self.assertTrue(report['diff'])
+                ruling = self.area / 'ruling.json'
+                ruling.write_text(json.dumps({'comparison_sha256': report['comparison_sha256'],
+                                             'decision': 'approved', 'reference': 'actual fixture owner ruling'}))
+                approved = self.bound('plan-compare', *args, '--ruling', ruling)
+                self.assertEqual(approved.returncode, 0, approved.stderr)
+                self.assertTrue(json.loads(approved.stdout)['verification_required'])
 
     def test_unknown_area_rejects_with_diagnostic_without_crashing(self):
         result = self.check(mobile_plan().replace('Areas. navigation.', 'Areas. constructor.'))
@@ -220,3 +229,36 @@ class MobileCoverage(InstalledFixture, unittest.TestCase):
                               ('Reason saved navigation changes.', 'Reason unknown .')]:
             with self.subTest(field=before):
                 self.assertNotEqual(self.check(plan.replace(before, after)).returncode, 0)
+
+    def test_mobile_checks_accept_thresholds_and_receipt_links(self):
+        for predicate in ['restore takes < 2 s', 'restore takes < 2 s and retained memory > 0 MB']:
+            for attachment in ['[Run](proof/restore.md)', 'Evidence. [Run](proof/restore.md)']:
+                with self.subTest(predicate=predicate, attachment=attachment):
+                    plan = mobile_plan().replace('Pass when route 1 and its back navigation restore.',
+                        f'Pass when {predicate}. {attachment}')
+                    result = self.check(plan)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_mobile_risk_mapping_must_work_in_both_directions(self):
+        result = self.check(mobile_plan().replace(f'Risk process-death. applicable. Checks {CHECK_IDS}.',
+                                                'Risk process-death. applicable. Checks 1, 2.'))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('risk mapping', result.stderr)
+
+    def test_comment_lanes_and_unresolved_placeholders_cannot_count(self):
+        for before, after, message in [
+            ('- [ ] Lane 2.', '<!--\n- [ ] Lane 2.', 'comment'),
+            ('Identity debug APK on fixture emulator.', 'Identity TBD.', 'target'),
+            ('Reason saved navigation changes.', 'Reason \u200b.', 'risk reason')]:
+            with self.subTest(value=after):
+                result = self.check(mobile_plan().replace(before, after))
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(message, result.stderr)
+
+    def test_legacy_unterminated_frontmatter_preserves_default_scan(self):
+        legacy = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+        result = self.check('---\nstatus draft\n' + legacy)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        result = self.check('---\nverification_profile: mobile-risk-v1\n' + legacy)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('unterminated', result.stderr)

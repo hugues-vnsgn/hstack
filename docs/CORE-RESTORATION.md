@@ -22,7 +22,7 @@ The additive `worker-run` command executes authorized worker argv within enforce
 local write roots; worker operations retain their own current authority.
 The bootstrap executes verified source buffers, not bytecode caches.
 
-The current candidate collects 549 tests, including one driver for 50 historical 0.2.0 cases.
+The current candidate collects 556 tests, including one driver for 50 historical 0.2.0 cases.
 Current and historical suite totals are maintained in [test accounting](TEST-COVERAGE.md).
 The 0.1.0 archive and its tests are unchanged. The 50 old restoration-contract
 cases also run against a hash-bound 0.2.0 archive and are historical only.

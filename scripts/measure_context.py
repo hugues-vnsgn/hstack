@@ -140,6 +140,8 @@ def measure(root=ROOT):
     current = {p.relative_to(root).as_posix(): p.read_text()
                for p in (root / 'plugin').rglob('*') if p.is_file() and
                (p.suffix == '.md' or p.name == 'openai.yaml')}
+    risk_catalog = 'plugin/skills/hugues-mode/references/mobile-risks.json'
+    current[risk_catalog] = (root / risk_catalog).read_text()
     declaration_paths = sorted(p for p in current if p.startswith('plugin/skills/') and p.endswith('/SKILL.md'))
     original_declarations = sorted(p for p in release if p.startswith('plugin/skills/') and p.endswith('/SKILL.md'))
     added_declarations = sorted(ADDED_AFTER_RELEASE)
@@ -248,6 +250,9 @@ def measure(root=ROOT):
             'scope': 'Additional deferred controller guide for new-program scheduling and recovery; '
                      'not part of the pinned task scenarios and not measured host tokens.',
             'candidate': inventory(current, ['plugin/adapters/program-control.md'])},
+        'mobile_risk_profile': {
+            'scope': 'Deferred mobile-risk-v1 selection guide and shared catalog, outside the pinned non-mobile scenarios; source counts only.',
+            'candidate': inventory(current, ['plugin/skills/hugues-mode/references/mobile-coverage.md', risk_catalog])},
         'scenarios': scenarios, 'worker_accounting': spec['worker_accounting'],
         'public_skills': len(declaration_paths),
         'limits': ['No runtime host, tokenizer, prompt framing, cache or native invocation observation.',

@@ -24,7 +24,7 @@
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "source_sha256": "e58c3d871b09d477be00628d69dd23ffa6c2e3a1728f5b867a841baa8e90278b",
-      "candidate_sha256": "71e21024602525dcc3f81091540f9cc80339e06da07da242216295f300d25d86",
+      "candidate_sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted plan checker; installed Python/Node tests cover operator-rule protection and approved risk-based mobile coverage; native/mobile trials deferred"

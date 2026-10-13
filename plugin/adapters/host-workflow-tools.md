@@ -16,7 +16,7 @@ Gate autopilot verdicts with bound `plan-compare` per
 [contract](../skills/hugues-mode/references/verification-contract.md).
 New programs use [proof](program-proof.md) before build/verify;
 [control](program-control.md) for limits, checkpoints and pickup.
-No execution/publication scope; quota warnings never pause.
+Helpers grant no authority; quota warnings alone never pause.
 
 The pinned Bun helpers include a bootstrap that can install dependencies.
 Do not execute it without installation authority. First inspect local runtime and
