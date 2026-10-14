@@ -26,17 +26,20 @@ For a small diff you don't fully trust, [`/blast-radius`](../../../plugin/skills
 
 ## Create a project verification skill
 
-The UI bullet above hides a real requirement. The agent needs a scripted way to drive your app. If your project has one, great. If not, run:
+Mobile proof requires a project `verify-<app>` recipe, even if driving tools already exist. For non-mobile work, an existing harness can suffice. To generate a recipe, run the active host's command:
 
 ```text
-/create-verification-skill
+# Claude Code
+/hugues-stack:create-verification-skill
+# Codex
+$create-verification-skill
 ```
 
-[`/create-verification-skill`](../../../plugin/skills/create-verification-skill/SKILL.md) interviews the repository, not you. It works out what a user touches, how the app launches locally, what can drive it (an existing harness first, otherwise browser and CDP, a PTY, or plain HTTP), what evidence proves behavior, and whether two instances can run side by side. It asks you only what the code can't answer.
+[`create-verification-skill`](../../../plugin/skills/create-verification-skill/SKILL.md) interviews the repository, not you. It works out what a user touches, how the app launches locally, what can drive it (an existing harness first, otherwise browser and CDP, a PTY, or plain HTTP), what evidence proves behavior, and whether two instances can run side by side. It asks you only what the code can't answer.
 
-It writes `.cursor/skills/verify-<app>/`, agent-facing instructions with exact Launch, Doctor, Drive, Evidence, and Cleanup sections, plus a feature map under `features/` that indexes what the app does and what result proves each feature works. The skill ships a [worked feature-map example](../../../plugin/skills/create-verification-skill/references/feature-map-example/) with a README index and one file per feature using the four required H2s. Before handing it over, the generator proves the skill once end to end: launch, doctor check, drive one feature, capture evidence, clean up. If that proof fails, don't use the output.
+It writes `verify-<app>/` under the consumer's established `.claude/skills/` or `.agents/skills/` directory, agent-facing instructions with exact Launch, Doctor, Drive, Evidence, and Cleanup sections, plus a feature map under `features/` that indexes what the app does and what result proves each feature works. The skill ships a [worked feature-map example](../../../plugin/skills/create-verification-skill/references/feature-map-example/) with a README index and one file per feature using the four required H2s. Before handing it over, the generator proves the skill once end to end: launch, doctor check, drive one feature, capture evidence, clean up. If that proof fails, don't use the output.
 
-From then on, "verify it in the app" is a step any agent can execute, in this repo, with no setup conversation.
+Before proof, invoke the project recipe through the host's native mechanism. Unavailable, disabled, denied or unknown invocation holds dependent proof; a generated file alone does not establish permission.
 
 Once the verify skill works, a [`/swarm`](../../../plugin/skills/swarm/SKILL.md) can split a full pass by feature-map entry and aggregate the results.
 
@@ -45,10 +48,13 @@ Once the verify skill works, a [`/swarm`](../../../plugin/skills/swarm/SKILL.md)
 Apps change and feature maps rot. When yours drifts, run:
 
 ```text
-/maintain-verification-skill
+# Claude Code
+/hugues-stack:maintain-verification-skill
+# Codex
+$maintain-verification-skill
 ```
 
-[`/maintain-verification-skill`](../../../plugin/skills/maintain-verification-skill/SKILL.md) audits the generated skill: one read-only source reader per feature in parallel, then one live pass that drives every mapped feature. It ends in exactly one of three outcomes. `clean` means full coverage and nothing to ship. `changed` means one PR of proven corrections, confined to the verification skill's own directory. `blocked` names the blocker. It never edits product code. If the live pass catches a product regression, it reports the regression instead of papering over it in docs.
+[`maintain-verification-skill`](../../../plugin/skills/maintain-verification-skill/SKILL.md) audits the generated skill: one read-only source reader per feature in parallel, then one live pass that drives every mapped feature. It ends in exactly one of three outcomes. `clean` means full coverage and nothing to ship. `changed` means one PR of proven corrections, confined to the verification skill's own directory. `blocked` names the blocker. It never edits product code. If the live pass catches a product regression, it reports the regression instead of papering over it in docs.
 
 ## Open the PR
 

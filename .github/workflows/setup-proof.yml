@@ -1,0 +1,20 @@
+name: Native setup-to-proof
+on:
+  workflow_dispatch:
+jobs:
+  ios:
+    runs-on: [self-hosted, macOS, huguesstack-proof]
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run setup, generate a recipe and invoke it on iOS
+        run: python3 scripts/check_setup_proof.py --output "$RUNNER_TEMP/setup-proof-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Retain native proof and failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: setup-proof
+          path: ${{ runner.temp }}/setup-proof-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: warn
