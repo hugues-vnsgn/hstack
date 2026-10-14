@@ -1,6 +1,6 @@
 ---
 name: setup-huguesstack
-description: Configure huguesStack's model and reasoning budget per role. Use for /setup-huguesstack or changing which models huguesStack uses.
+description: Configure huguesStack's model and reasoning budget per role. Use when setting up huguesStack or changing which models it uses.
 ---
 
 ## Host invocation contract
@@ -20,7 +20,7 @@ A role value is one or more alternatives joined by ` or `, such as `opus high or
 - The model is `inherit-parent` or a real slug, a value a host's native agent tool accepts for `model`: a Claude Code alias such as `opus` or `sonnet`, or a Codex model such as `gpt-6.1-sol`. `inherit-parent` leaves `model` unset, so the worker runs on the parent chat model. It is valid on every host.
 - The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. It sets the agent tool's effort.
 - A host runs the first alternative its agent tool accepts, so one file serves both hosts: a single-model role lists its Claude model first and its Codex model after it. With no accepted alternative, the role runs on `inherit-parent` at the first alternative's effort.
-- A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for both hosts and alternate which comes first, so each host fills the panel with distinct models: `opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
+- A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for both hosts and alternate which comes first, to use distinct available models where possible: `opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
 - `arena cross-judge pool` is also a list, but Arena selects one value from it whose model differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ## Model tiers
@@ -86,13 +86,19 @@ arena runners: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhig
 arena cross-judge pool: fable high or gpt-6-astra high, opus high or gpt-6.1-sol high
 swarm workers: sonnet medium or gpt-6.1-sol medium
 architect runners: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or fable high
-interrogate reviewers: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhigh, fable high or gpt-6-sol xhigh
+interrogate reviewers: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhigh, fable high or gpt-6.1-sol xhigh
 ```
 
 ### 6. Confirm
 
 Tell the user the file was written and that each skill reads it at its next role selection. Re-running this skill updates it. Name the alternatives step 4 left unverified; re-running setup on the other host confirms them.
 
-### 7. Offer a verification skill (optional)
+### 7. Check verification readiness
 
-Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. On no, move on without pushing.
+For a mobile project, require a project `verify-<app>` skill before [mobile proof](../hugues-mode/playbooks/mobile-proof.md). If absent, offer once to generate it, even when a harness or device tools already exist. Reuse the existing harness in the generated recipe; XcodeBuildMCP or jev-ios-bridge availability alone does not supply that recipe. If generation is declined, finish model setup and explicitly hold dependent mobile proof until the recipe is available. For an existing recipe, preserve native invocation controls: unavailable, disabled, denied or unknown invocation holds dependent proof; do not replace it to evade that hold.
+
+For a non-mobile project, an existing harness remains sufficient. Offer generation only when neither a project verification skill nor a harness exists; declining leaves model setup complete.
+
+On acceptance, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. Report a generated but unproved recipe as a draft with its blocker. Before later mobile proof, invoke the project recipe through the host's native mechanism; writing the file does not establish discovery or permission.
+
+For a manual handoff, show `/hugues-stack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the active host's discovered entry. End by reporting model setup and verification readiness separately, including any held proof.

@@ -304,7 +304,7 @@
     },
     {
       "path": "skills/create-verification-skill/SKILL.md",
-      "sha256": "cd6b29574e00e156b43e364b5b1575f98a10e123b14162bc7453e8ea587b65ff",
+      "sha256": "69b32bb52c619196289d6400739e4052f47367d1f386bfa7aa42ec908864724d",
       "mode": "100644"
     },
     {
@@ -364,7 +364,7 @@
     },
     {
       "path": "skills/hugues-mode/SKILL.md",
-      "sha256": "1e73e9c6697ddba86fd022e1585cd9ad10c31c955d57e8189497eb5137a0f212",
+      "sha256": "d14b96d0435f5f56572bed432bccfc6fe39770bc3a8a072a969bad7394d2ee6e",
       "mode": "100644"
     },
     {
@@ -679,7 +679,7 @@
     },
     {
       "path": "skills/maintain-verification-skill/SKILL.md",
-      "sha256": "a4176cf966bc2be60076b3ee720bf151714806ba7be78037c9f94aa1ed43a8da",
+      "sha256": "77d3169af61db5f1bd2c5393e33b5e44f9824b14a41cf73f5585627089dbaa29",
       "mode": "100644"
     },
     {
@@ -989,7 +989,7 @@
     },
     {
       "path": "skills/setup-huguesstack/SKILL.md",
-      "sha256": "99416da624e2dd851cfd0650386599997ebfc4995d89fb1e97d4a2a27aed06d6",
+      "sha256": "fde37acf33bf4282306136ad1943e9272bf6591947ca7a956518617945a44a6f",
       "mode": "100644"
     },
     {

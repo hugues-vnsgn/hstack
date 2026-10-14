@@ -163,7 +163,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/01-setup.md",
       "disposition": "canonical",
-      "destination_sha256": "737c736e66c0896133574aae2f7a61d5e1be8f54777ff48369584cb272304d71"
+      "destination_sha256": "e8b77bec321c1d35ccac18ed354229de51c956627b392bd8503f4ff49595a29f"
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
@@ -203,7 +203,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/06-verify-and-ship.md",
       "disposition": "canonical",
-      "destination_sha256": "54c4ebf0b2c3e5315a6a7de5e388477a6d2d2550cced2ff5e8331ffed21c3662"
+      "destination_sha256": "0be22212f44f423cc6b20659b60ba0893db3f16442857dd4fa5c61a950a5968e"
     },
     {
       "source": "pstack/docs/guide/07-overnight.md",
@@ -227,7 +227,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/09-make-it-yours.md",
       "disposition": "canonical",
-      "destination_sha256": "538de92ae383d61c779b334ba9fe68e128e8e5aebb55ffedf63761b1099665e9"
+      "destination_sha256": "9077a8a4dd19d6b84bfbf98de76fa0336a23aec4d45edcfdaa233a1644e9c400"
     },
     {
       "source": "pstack/docs/guide/10-recipes-and-pitfalls.md",
@@ -379,7 +379,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/create-verification-skill/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "cd6b29574e00e156b43e364b5b1575f98a10e123b14162bc7453e8ea587b65ff"
+      "destination_sha256": "69b32bb52c619196289d6400739e4052f47367d1f386bfa7aa42ec908864724d"
     },
     {
       "source": "pstack/skills/create-verification-skill/references/feature-map-example/README.md",
@@ -483,7 +483,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/maintain-verification-skill/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "a4176cf966bc2be60076b3ee720bf151714806ba7be78037c9f94aa1ed43a8da"
+      "destination_sha256": "77d3169af61db5f1bd2c5393e33b5e44f9824b14a41cf73f5585627089dbaa29"
     },
     {
       "source": "pstack/skills/make-bot-ui/SKILL.md",
@@ -507,7 +507,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "1e73e9c6697ddba86fd022e1585cd9ad10c31c955d57e8189497eb5137a0f212"
+      "destination_sha256": "d14b96d0435f5f56572bed432bccfc6fe39770bc3a8a072a969bad7394d2ee6e"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -1107,7 +1107,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/setup-huguesstack/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "99416da624e2dd851cfd0650386599997ebfc4995d89fb1e97d4a2a27aed06d6"
+      "destination_sha256": "fde37acf33bf4282306136ad1943e9272bf6591947ca7a956518617945a44a6f"
     },
     {
       "source": "pstack/skills/show-me-your-work/SKILL.md",
@@ -1531,7 +1531,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "b945f6fe395436fd827d1f36d335eb1d815d9362385d0c7c00d43a9bd43bd55f",
+      "sha256": "79ef6580e55f8be8fb6ea26a73b470d96221c63b1d687dd2d7c38804439d97ae",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1555,11 +1555,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "3257ddb18f6d9a06674d6a6f0e9901d6c9c00c2da47ac6d7f7ebb8354bf1def6",
+      "sha256": "749538bb7202cde8c13f7dad15a4132cf5d2c3d9b6b594f97eae96a14f3bcfa7",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "ba6773f0b9f6ce0b1c4e0f88160844e43884ecb5c92929940a6da6f1e71e74e3",
+      "sha256": "cfbc4b1d70387e4ba42fe5bb78838ab35c12bc121252d49958f90b23d0cd8cf8",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1643,7 +1643,7 @@
       "mode": 420
     },
     "skills/create-verification-skill/SKILL.md": {
-      "sha256": "cd6b29574e00e156b43e364b5b1575f98a10e123b14162bc7453e8ea587b65ff",
+      "sha256": "69b32bb52c619196289d6400739e4052f47367d1f386bfa7aa42ec908864724d",
       "mode": 420
     },
     "skills/create-verification-skill/agents/openai.yaml": {
@@ -1691,7 +1691,7 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "1e73e9c6697ddba86fd022e1585cd9ad10c31c955d57e8189497eb5137a0f212",
+      "sha256": "d14b96d0435f5f56572bed432bccfc6fe39770bc3a8a072a969bad7394d2ee6e",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {
@@ -1943,7 +1943,7 @@
       "mode": 420
     },
     "skills/maintain-verification-skill/SKILL.md": {
-      "sha256": "a4176cf966bc2be60076b3ee720bf151714806ba7be78037c9f94aa1ed43a8da",
+      "sha256": "77d3169af61db5f1bd2c5393e33b5e44f9824b14a41cf73f5585627089dbaa29",
       "mode": 420
     },
     "skills/maintain-verification-skill/agents/openai.yaml": {
@@ -2191,7 +2191,7 @@
       "mode": 420
     },
     "skills/setup-huguesstack/SKILL.md": {
-      "sha256": "99416da624e2dd851cfd0650386599997ebfc4995d89fb1e97d4a2a27aed06d6",
+      "sha256": "fde37acf33bf4282306136ad1943e9272bf6591947ca7a956518617945a44a6f",
       "mode": 420
     },
     "skills/setup-huguesstack/agents/openai.yaml": {

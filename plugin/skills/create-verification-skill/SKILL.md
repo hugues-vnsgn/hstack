@@ -1,6 +1,6 @@
 ---
 name: create-verification-skill
-description: "Generate a project-local verification skill that drives your app the way a user does — any language, framework, or platform. Use for /create-verification-skill, \"make a control skill for this repo\", or when a project has no scripted way to prove UI/CLI/service behavior."
+description: "Generate a project-local verification skill that drives your app the way a user does, for any language, framework, or platform."
 disable-model-invocation: true
 ---
 
@@ -47,4 +47,4 @@ Run its own instructions end to end once: launch, doctor, drive ONE mapped featu
 
 ## 5. Offer the maintenance loop
 
-Point the user at `/maintain-verification-skill` for keeping the map honest as the app changes. Suggest a cadence only if they ask.
+Point the user at `/hugues-stack:maintain-verification-skill` in Claude Code or `$maintain-verification-skill` in Codex, using the active host's discovered entry, for keeping the map honest as the app changes. Suggest a cadence only if they ask.
