@@ -16,5 +16,6 @@ def release_root():
         _snapshot = tempfile.TemporaryDirectory(prefix='huguesstack-release-contracts-')
         atexit.register(_snapshot.cleanup)
         with tarfile.open(archive) as stream:
-            stream.extractall(_snapshot.name, filter='data')
+            # Older 3.9 stdlibs lack extraction filters; the exact archive is hash-bound above.
+            stream.extractall(_snapshot.name, **({'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}))
     return Path(_snapshot.name)

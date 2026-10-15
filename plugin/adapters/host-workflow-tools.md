@@ -22,3 +22,7 @@ loop primitive blocks that operation; preserve its intended gate and report the
 gap. Native local workers substitute for cloud only where the core permits local
 execution; do not simulate a race sequentially. Nothing in Babysit, Shipping or
 Orchestrate arms a remote action without explicit scope.
+
+Under payload protection, run bound `helper-ready` from
+[payload protection](payload-protection.md) before a Bun helper. Missing or stale
+dependencies hold before bootstrap; prepare separately with owner authorization.

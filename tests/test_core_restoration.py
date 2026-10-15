@@ -13,7 +13,8 @@ class HistoricalRestoration(unittest.TestCase):
         self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), '8b6afedc7dc188d6d0bf85262b208707f5cbb4d15b2317c68925750d36904f5b')
         with tempfile.TemporaryDirectory(prefix='huguesstack-release02-') as folder:
             with tarfile.open(archive) as stream:
-                stream.extractall(folder, filter='data')
+                # Older 3.9 stdlibs lack extraction filters; the exact archive is hash-bound above.
+                stream.extractall(folder, **({'filter': 'data'} if hasattr(tarfile, 'data_filter') else {}))
             result = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'tests',
                                      '-p', 'test_core_restoration.py', '-v'],
                                     cwd=folder, capture_output=True, text=True)

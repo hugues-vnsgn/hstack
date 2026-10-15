@@ -1,11 +1,13 @@
 """Resolve the approved installed payload, independent of consumer Git refs."""
 import hashlib
+import json
 from .json_input import load_json
 import os
 from pathlib import Path, PurePosixPath
 import posixpath
 import re
 import shlex
+import shutil
 import stat
 
 PIN = 'huguesstack-native-v1'
@@ -16,7 +18,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = '749538bb7202cde8c13f7dad15a4132cf5d2c3d9b6b594f97eae96a14f3bcfa7'
+MANIFEST_SHA256 = '97d6b8140a4bb92ec2caaed2132bfdaaf676b981ef5bd897760c9460d63664fe'
 
 
 def digest(path):
@@ -141,6 +143,48 @@ def load_binding(root, path):
     if recorded != bind(root):
         raise ValueError('approved installed binding changed; stop and reconcile the program')
     return recorded
+
+
+def policy(root, host, consumer, evidence, parent=None):
+    """Print configuration only; the native host owns effective enforcement."""
+    writable = sorted({str(path.resolve(strict=True)) for path in (consumer, evidence)})
+    for name in [str(root), *writable]:
+        if any(c in name for c in '*?[](){}!\n\r'):
+            raise ValueError('policy path contains pattern syntax; owner configuration required')
+    if any(not Path(name).is_dir() or Path(name).is_relative_to(root) for name in writable):
+        raise ValueError('consumer/evidence must be directories outside the protected payload')
+    if host == 'claude':
+        return json.dumps({
+            'permissions': {'deny': ['Edit(/' + str(root) + '/**)']},
+            'sandbox': {'enabled': True, 'failIfUnavailable': True,
+                        'allowUnsandboxedCommands': False,
+                        'filesystem': {'disabled': False, 'denyWrite': [str(root)],
+                                       'allowWrite': writable}}}, indent=2)
+    if not parent or parent in {':danger-full-access', 'huguesstack-program'}:
+        raise ValueError('name the active bounded Codex permission profile with --parent')
+    lines = ['default_permissions = "huguesstack-program"', '',
+             '[permissions.huguesstack-program]', 'extends = ' + json.dumps(parent), '',
+             '[permissions.huguesstack-program.filesystem]']
+    lines.extend(json.dumps(name) + ' = "write"' for name in writable)
+    lines.append(json.dumps(str(root)) + ' = "read"')
+    return '\n'.join(lines)
+
+
+def helper_ready(root):
+    """Read the pinned bootstrap's prerequisites without running it or installing."""
+    scripts = root / 'skills/hugues-mode/scripts'
+    cache = scripts / 'node_modules'
+    key = hashlib.sha256((scripts / 'package.json').read_bytes() + b'\0' +
+                         (scripts / 'bun.lock').read_bytes()).hexdigest()
+    runtime = shutil.which('bun')
+    if not runtime:
+        raise ValueError('helper prerequisite held: Bun unavailable; owner preparation required')
+    receipt = cache / '.poteto-mode-tools-install-key'
+    if not (cache / 'commander/package.json').is_file() or not receipt.is_file():
+        raise ValueError('helper prerequisite held: dependencies missing; owner preparation required')
+    if receipt.read_text().strip() != key:
+        raise ValueError('helper prerequisite held: dependencies stale; owner preparation required')
+    return {'status': 'prepared', 'plugin_root': str(root), 'bun': runtime, 'install_key': key}
 
 
 def resolve_source(rows, source):

@@ -7,6 +7,12 @@ Unavailable or denied invocation holds that step.
 
 ### Autopilot-stack
 
+**Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)
+through bound `read-workflow`. Establish native read-only protection for the bound
+installation, record effective writer coverage and require it for every worker.
+Missing or unverifiable protection holds dependent execution. Keep the payload
+readable and report plugin defects for separate owner-authorized maintenance.
+
 **You own the stack, never the landing. Build and verify the queue with full autonomy, then hand the operator one linear base-branch stack to review and land.** The sibling of **Autopilot-full**.
 
 1. **Run the owner loop unchanged.** Owners follow `../references/verification-contract.md`: propose the old rule, new rule and reason before editing a pass rule, and wait for the operator's explicit ruling. Resolve the forge once for the program. GitHub CLI (`gh`) is the default. If `command -v origin` succeeds and Origin can resolve the repository, use `origin pr ...` for PR create, edit, view, watch, and merge operations. Otherwise stay on `gh` and record the fallback. Never require Graphite (`gt`). One Cursor cloud agent per PR owns its change end to end: build, first push, a ready PR opened before self-proof, self-proof (gates, CI, receipts), skeptical Bugbot triage per `../references/bugbot-triage.md`, a slop-strip (the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`)), `/no-comments` (the **no-comments** skill), and babysit to green per `playbooks/babysit.md`. Owners parallelize when the work is self-contained. Within about 15 minutes, every owner starts a `decisions.tsv` trail per the **show-me-your-work** skill, pushes its first branch snapshot, and opens the PR ready, never draft. After that, the owner pushes its branch again after every verifiable unit (hooks on, a WIP commit is fine). Keep the trail uncommitted and return it in the report. Owners also keep the `children.tsv` of Autopilot-full step 2.

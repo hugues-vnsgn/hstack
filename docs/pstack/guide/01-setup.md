@@ -33,6 +33,14 @@ Accepting generates a project-local recipe under the consumer's `.claude/skills/
 
 After setup, start a new chat. The model rule applies to new sessions.
 
+## Prepare an autopilot program
+
+Both autopilot workflows require [read-only payload protection](../../../plugin/adapters/payload-protection.md)
+before write-capable work. Review the generated native host configuration, retain
+your existing settings and verify the boundary for the coordinator and workers.
+Uncovered writers or unsupported host protection hold the program. Plugin
+maintenance belongs to a separate owner-authorized task.
+
 ## Run your first task
 
 Pick something real but small, and describe it the way you'd describe it to a colleague:
