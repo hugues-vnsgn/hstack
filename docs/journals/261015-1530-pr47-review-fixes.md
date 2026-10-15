@@ -37,5 +37,7 @@ exact program bytes and actors while preserving explicit host-coverage gaps.
 
 ## Next Steps
 
-- Run clean-commit native probes, publish their receipt, push and request Claude
-  rereview of the exact head. Keep the PR open for the owner.
+- All eight clean-commit native scenarios passed. The receipt records exact
+  identities and hashes. All 439 tests pass on Python 3.14; the frozen Python 3.9
+  historical driver gap remains documented.
+- Push and request Claude rereview of the exact head. Keep the PR open for the owner.

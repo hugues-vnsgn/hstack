@@ -1,91 +1,107 @@
 # Issue 36: native payload protection evidence
 
-This receipt covers the bound configuration helper, disposable installed-consumer
-startup and native write probes. It does not claim a full autopilot queue or mobile
-execution. The [approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6184377164)
-defines the boundary and acceptance criteria. The
-[repeatable regression](../tests/payload-boundary.md) documents commands and limits.
+The [current approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6184377164)
+defines the boundary. These runs cover bounded installed-consumer startup,
+prepared helpers and write probes. Full autopilot lifecycle and mobile execution
+remain unobserved. [Repeat the regression](../tests/payload-boundary.md).
 
-## Before
+## Tested identity
 
-On macOS 27.0.1 with Codex CLI 0.162.1, a disposable bound plugin nested inside a
-writable consumer remained writable under the native `:workspace` sandbox.
-A Python child changed `adapters/host.md`, exiting 0. The later guarded read
-exited 2 with `installed workflow bytes/mode drift`. Detection followed the write.
-The separate `red-baseline` receipt retains that command and result.
+- Tested commit: `ebf31800b02ed5a5a75053cff70adf25a18f9e70`.
+- Authored plugin Git tree: `e637e82bef481c62cdb7f29c7a262d2648a6b958`.
+- Runner SHA256: `aba0bc8af54ec67093e808d760d4510e4f2302db1681be1cd55d17a3af9ad2cc`.
+- All eight `identity.json` files record that commit/tree, the source plugin path
+  and `source_dirty: false`. They used the default checkout plugin, copied into
+  a Git-free installation nested inside a writable consumer with spaces.
+- Codex CLI 0.162.1, Claude Code 2.1.300 (`dontAsk`), Bun 1.3.14, Python 3.14.7,
+  macOS 27.0.1 arm64. Dependencies were prepared separately in a disposable copy
+  before binding and protection; no live installation or persistent policy changed.
 
-The first new installed-interface test also failed because `payload-policy` did
-not exist. After implementation, the installed CLI generated a Claude JSON
-fragment and a Codex TOML fragment, and held unsafe write scopes and unbounded or
-missing Codex parents. The denial-evidence tests first failed without their
-parser, then passed with paired native-event checks.
-Review added a failing printed-denial reproduction; the tightened parser rejects
-that fake while retaining the actual native failures. An ordinary editor error
-without a structured permission denial also supplies no proof.
+The receipt-only follow-up changes no plugin or runner bytes. A separate protected
+copy does not establish readiness for another bound live root.
 
-## Codex native observation
+## Red and green
 
-Tested Codex CLI 0.162.1 on macOS 27.0.1 (arm64), with invocation-only
-`huguesstack-program` extending `:workspace`, approval policy `never`, user
-configuration/rules ignored, and an installed plugin nested in the writable
-consumer. The binding covers a Git-free installed copy.
+On `0050123`, an actual patch context-mismatch error quoting the permission-denial
+sentence was misclassified by the evidence parser. `denial-red.log` records that
+failing assertion. The complete native-error matcher now rejects it while retaining
+paired real denials. The new shell-evidence test rejects absent results, commands
+for another probe and mismatched Claude worker parents. Codex proof comes from
+successful native command records in each actor's own rollout, excluding forked
+parent history. Labels alone establish no actor identity.
 
-- The coordinator and fresh delegated worker read the installed autopilot and
-  protection reference through the bound helper.
-- Each attempted a native patch to the canonical payload and received
-  `patch rejected: writing outside of the project; rejected by user approval settings`.
-- The coordinator's native alias-path patch failed with `Failed to write file`;
-  that generic error is retained separately from the explicit canonical denial.
-- Each ran the Python child probe. Append, creation, rename, deletion, chmod,
-  symlink-alias writes and atomic replacement all raised `PermissionError`.
-- Native positive-control writes succeeded for both coordinator and worker.
-- The outer filesystem oracle found unchanged bytes, modes and inventory, and
-  the later binding-guarded read succeeded. Root and worker turn contexts record
-  the exact payload as read-only, with approval policy `never`.
+`policy-before-python39.log` records the new suite's `tomllib` import failure on
+Python 3.9.6. All eight payload-policy cases now pass there and on Python 3.14.7.
+Missing, stale and absent-runtime prerequisite cases first failed without the
+bound command, then passed with specific diagnostics and unchanged cache bytes.
 
-An initial native run reported a hold for broader untested writer coverage.
-The final bounded rerun completed the tested native patch and shell probes with
-separate required coordinator/worker shell receipts and unchanged policy, binding
-and probe inputs. Neither result establishes coverage of other writers.
+## Native results
 
-## Claude observation
+Both prepared runs passed these checks:
 
-Claude Code 2.1.296 on macOS 27.0.1 (arm64) first stopped before tools with
-`authentication_failed` / `Not logged in`. After the owner signed in, the bounded
-native regression used the generated invocation policy, no user/project settings,
-hooks disabled and no MCP servers. The native inventory contained Task, Bash,
-Edit, Read and Write.
+- Coordinators read the installed startup/protection guidance. Root and fresh
+  native worker each read the payload, ran bound `helper-ready` and prepared
+  `watch-pr --help` under protection.
+- Each actor attempted native canonical payload edits and received paired native
+  permission denials. Claude denied root Write, Edit and alias Edit, plus worker
+  Edit, correlated with the host's structured permission-denial IDs. Codex denied
+  the canonical root/worker patches. Its generic alias failure supplies no
+  independent permission-cause claim.
+- Each actor's exact Python child command completed all seven PermissionError
+  probes: append, create, rename, delete, chmod, symlink alias and atomic replace.
+- Native root/worker consumer and evidence writes succeeded. The root also wrote
+  a consumer-local corrective artifact and generated verification skill artifact
+  outside the payload; no generated skill invocation is claimed.
+- Payload inventory, bytes and modes, including the prepared cache, stayed equal.
+  Binding, policy and probe script stayed unchanged. Guarded rereads succeeded.
 
-- The coordinator read the installed startup and protection reference. Native
-  Write and Edit to the canonical payload were denied; an alias Edit was also
-  denied. All three errored tool results correlate with the host's structured
-  `permission_denials` entries.
-- A fresh native general-purpose worker inherited the boundary. Its Edit was
-  denied and correlated with its own native tool ID. The root waited for it.
-- Coordinator and worker each ran their exact labeled Python child probe once;
-  all seven operations raised `PermissionError`. Their native positive-control
-  writes succeeded and payload reads remained available.
-- The first authenticated run exposed a parser error on a string-valued system
-  notice. A regression case now covers that event shape without loosening denial
-  matching. The fresh final rerun passed the outer checks: separate shell
-  receipts, unchanged policy/binding/probe inputs, unchanged payload bytes/modes/
-  inventory and successful guarded rereads.
+Each host also passed missing-cache, stale-key and uncovered-writer startup
+smokes. Missing/stale cases retained the actual failed read-only helper command;
+no helper/bootstrap, app marker or worker dispatch occurred. The uncovered case
+held for an external executor without a verified boundary. These are bounded
+playbook-gate observations with explicit fixture prerequisites.
 
-The print sessions could not open interactive `/permissions` or `/sandbox`, and
-the displayed deny list was truncated. This proves the configured boundary for
-the tested writers through observed native denials and controls; it is not a
-complete interactive effective-settings inspection. The program's policy review
-and broader writer-coverage prerequisites remain in force.
+## Durable receipts
 
-## Receipt locations and gaps
+Private raw evidence lives at
+`~/huguesstack-evidence/2026-10-15-pr47-review-fix/` on the authorized Mac.
+Each exact subdirectory below retains commands, native logs, binding, policy,
+platform/identity records, before/after snapshots and control artifacts. Codex
+runs also retain their own coordinator/worker rollouts. Each `SHA256.json` binds
+those files; its digest is listed here. All manifest entries were rehashed and
+matched. Raw host context is retained privately, outside plugin assets.
 
-Private raw receipts are retained on the authorized Mac in the external
-`huguesstack-issue36-*20261015*` evidence directories: baseline results, policy
-fragments, bindings, platform/version records, commands, native JSONL streams,
-Codex root/worker rollouts, shell results and before/after filesystem inventories.
-They contain local paths and host context and are not published as plugin assets.
+| Subdirectory | Result | SHA256 of `SHA256.json` |
+|---|---|---|
+| `codex-prepared` | probes passed | `434b94712b62db0d81ada0e38d14fd37a3d2b9ff74627c054cbd18960236edf9` |
+| `codex-missing` | startup held | `76fa3dd78f870b15c4e4db1613522d0090e8028121a2997117fe72e1812e88c4` |
+| `codex-stale` | startup held | `84bf05862e9398e4c0993d67f5df2364be6af23c14fd1bcae44a3c5af402ec86` |
+| `codex-uncovered` | startup held | `f4dc9af27469ddfe8d8e5a05227ea267120d4d5457a123c28ea17473b0b33f9e` |
+| `claude-prepared` | probes passed | `57fdc12dd7d20184fc132989faf8ae4c57b509d47467b542ceef15c18a080962` |
+| `claude-missing` | startup held | `6e72e345bbd1e3511d28bd7e57c1263488074c0341ba2c05d80c62e7dee510ad` |
+| `claude-stale` | startup held | `8b4427f24be662601f8dc74fc90db108bad103a9421f85aa2bc9469966783e30` |
+| `claude-uncovered` | startup held | `86905f0f3d26a521d310f9629f9034c273e2901d62e95ea737c12eb43dc88ac3` |
 
-The regression covers bounded startup and probes. Complete autopilot lifecycle,
+## Source checks and limits
+
+All 439 top-level cases pass on Python 3.14.7, including the separate 50-case
+frozen restoration execution. Every README maintenance check passes. The full
+Python 3.9.6 run has 438 passing top-level cases and one failing frozen 0.2.0
+driver: its unchanged nested loader needs newer tar-filter behavior and extraction
+modes. The eight current payload-policy cases pass. This is a historical
+compatibility gap, not a Python 3.9 full-suite pass. See [test accounting](TEST-COVERAGE.md).
+
+Standards and Spec reviews found no actionable issue in the revision. An ambient
+Bun dependency in the test fixture was replaced with a deterministic fake runtime.
+
+Claude print sessions did not perform interactive `/permissions` or `/sandbox`
+inspection. Hooks were disabled only for fixture isolation; required Git/safety
+hooks in consumer programs still need verified coverage and must not be disabled
+to proceed. Complete effective-settings inspection, other permission modes,
 Desktop, other operating systems, MCP/REPL/external executors, remote execution,
-mobile builds/devices and forge publication remain unobserved. Such uncovered
-writers hold the program until verified or removed; they are not inferred safe.
+mobile builds/devices, full queue execution and forge publication remain gaps.
+Uncovered writers hold execution. Separate owner-authorized plugin maintenance
+keeps its own task and boundary; these consumer probes grant no maintenance scope.
+
+[Earlier observations at 0050123](https://github.com/hugues-vnsgn/huguesStack/blob/0050123e6b06b213fd60b17b418ca4c56769f0f1/docs/payload-protection-proof.md)
+remain historical evidence for their original inputs.
