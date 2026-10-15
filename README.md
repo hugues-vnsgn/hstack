@@ -57,4 +57,7 @@ python3 scripts/upstream-diff.py check
 python3 scripts/check_whitespace.py
 ```
 
+[Source maintenance CI](.github/workflows/maintenance.yml) runs these commands on
+pull requests and pushes to main. Native host and device proofs run separately.
+
 The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT; see [pstack's notice](PSTACK-LICENSE) and the [upstream pin and ledger](docs/upstream/README.md).

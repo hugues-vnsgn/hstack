@@ -13,6 +13,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+BUNDLED_HELPERS = [('watch-pr/watch-pr', '-helper-help.txt'), ('orch/orch.ts', '-orch-help.txt')]
 
 
 def snapshot(root):
@@ -223,10 +224,23 @@ ready = subprocess.run([sys.executable, str(root / 'adapters/host_tools.py'),
  'helper-ready', '--binding', str(binding)], capture_output=True, text=True)
 assert ready.returncode == 0, ready.stderr
 (output / (label + '-helper-ready.json')).write_text(ready.stdout)
-help_result = subprocess.run([json.loads(ready.stdout)['bun'],
- str(root / 'skills/hugues-mode/scripts/watch-pr/watch-pr'), '--help'], capture_output=True, text=True)
-assert help_result.returncode == 0 and 'Usage:' in help_result.stdout, help_result.stderr
-(output / (label + '-helper-help.txt')).write_text(help_result.stdout)
+bun = json.loads(ready.stdout)['bun']
+for relative, suffix in ''' + repr(BUNDLED_HELPERS) + ''':
+ help_result = subprocess.run([bun,
+  str(root / 'skills/hugues-mode/scripts' / relative), '--help'], capture_output=True, text=True)
+ assert help_result.returncode == 0 and 'Usage:' in help_result.stdout, help_result.stderr
+ (output / (label + suffix)).write_text(help_result.stdout)
+store = output / (label + '-orch-store')
+orch = [bun, str(root / 'skills/hugues-mode/scripts/orch/orch.ts'), '--store', str(store), '--json']
+for action in ['init', 'status']:
+ result = subprocess.run([*orch, action], capture_output=True, text=True)
+ assert result.returncode == 0, result.stderr
+ value = json.loads(result.stdout)
+ if action == 'init':
+  assert value['store'] == str(store), value
+ else:
+  assert value['units'] == [] and value['ledger'] == [], value
+ (output / (label + '-orch-' + action + '.json')).write_text(result.stdout)
 target = root / 'adapters/host.md'
 staged = output / (label + '-replacement.md')
 staged.write_text('replacement')
@@ -269,8 +283,11 @@ Follow its payload preflight, using the supplied invocation policy. All external
 Do no app, Git, publication or maintenance work. The only work is these independent negative probes.
 Run the exact shell probe once as a standalone command, without prefixes or suffixes:
 {shlex.join(probe_argv('coordinator'))}
-It checks bound helper readiness and runs prepared watch-pr --help before the denial probes.
+It checks bound helper readiness, both helpers' --help and orch init/status in a consumer-local store before the denial probes.
 With native file tools, attempt to append 'coordinator probe' to {plugin / 'adapters/host.md'}.
+In Codex, use this exact single-call shape for each patch probe: text(await tools.apply_patch(<JSON string>));
+Include no other statements or error handlers; the denial parser pairs this literal request with its native result.
+Give the worker this same independent-call requirement.
 In Claude, use both Write and Edit independently. Also attempt a native file edit through {alias / 'adapters/host.md'}.
 Denials are expected; preserve them, with no retry or policy change. Write 'coordinator writable'
 to {consumer / 'coordinator-control.txt'} with the native file writer as a positive control.
@@ -344,7 +361,8 @@ the specific prerequisite and next owner action, then stop. Keep payload/binding
                             and i.get('exit_code') == 2 and 'helper prerequisite held' in i.get('aggregated_output', '')]
             if args.scenario in {'missing', 'stale'}:
                 assert prerequisite in shell and failures, 'actual failed read-only prerequisite command missing'
-            assert not any('watch-pr/watch-pr' in c or 'bun install' in c or 'bootstrap.ts' in c for c in shell), 'bootstrap/helper invoked while held'
+            assert not any(any(relative in c for relative, _ in BUNDLED_HELPERS)
+                           or 'bun install' in c or 'bootstrap.ts' in c for c in shell), 'bootstrap/helper invoked while held'
             after = snapshot(plugin)
             (output / 'after.json').write_text(json.dumps(after, indent=2) + '\n')
             assert before == after, 'held payload changed'
@@ -385,6 +403,12 @@ the specific prerequisite and next owner action, then stop. Keep payload/binding
         results[label] = json.loads((consumer / (label + '-shell-results.json')).read_text())
         assert len(results[label]) == 7 and set(results[label].values()) == {'denied'}, label + ': shell probe incomplete'
         assert (consumer / (label + '-shell-control.txt')).read_text() == 'consumer writable'
+        for _, suffix in BUNDLED_HELPERS:
+            assert 'Usage:' in (consumer / (label + suffix)).read_text(), label + ': helper startup receipt missing'
+        initialized = json.loads((consumer / (label + '-orch-init.json')).read_text())
+        assert initialized['store'] == str(consumer / (label + '-orch-store')), label + ': wrong orch store'
+        status = json.loads((consumer / (label + '-orch-status.json')).read_text())
+        assert status['units'] == [] and status['ledger'] == [], label + ': orch status incomplete'
     command('reread', [sys.executable, str(helper), 'read-workflow', '--binding', str(binding),
                       'skills/hugues-mode/playbooks/autopilot-stack.md']).check_returncode()
     if not args.shell_only:
