@@ -17,7 +17,7 @@ remain unobserved. [Repeat the regression](../tests/payload-boundary.md).
   macOS 27.0.1 arm64. Dependencies were prepared separately in a disposable copy
   before binding and protection; no live installation or persistent policy changed.
 
-The receipt-only follow-up changes no plugin or runner bytes. A separate protected
+The receipt-only follow-up at `a8b8299` changed no plugin or runner bytes. A separate protected
 copy does not establish readiness for another bound live root.
 
 ## Red and green
@@ -105,3 +105,33 @@ keeps its own task and boundary; these consumer probes grant no maintenance scop
 
 [Earlier observations at 0050123](https://github.com/hugues-vnsgn/huguesStack/blob/0050123e6b06b213fd60b17b418ca4c56769f0f1/docs/payload-protection-proof.md)
 remain historical evidence for their original inputs.
+
+## Both-helper startup follow-up
+
+The earlier prepared probe ran watch-pr only. A baseline Codex sandbox run at
+`f68236a` passed the existing checks without an orch receipt; requiring that
+receipt failed. The updated probe runs both original helpers with `--help` and
+requires their outputs for each actor, preserving the existing watch-pr filename.
+Codex patch probes use independent literal calls for native denial correlation.
+
+Fresh prepared runs passed on Codex CLI 0.162.1 and Claude Code 2.1.300 on macOS
+27.0.1 arm64. Each coordinator and fresh worker ran both helpers under protection,
+received native payload-edit and seven child-process write denials, and wrote
+consumer/evidence controls. Payload bytes, modes and inventory stayed unchanged.
+The original helper bodies, installed policy and workflow contracts were unchanged.
+
+These runs used the authored plugin tree above from `f68236a` and the modified
+runner SHA256 `5cfbe7bc74080aacf14670d06f1834619557aa8771b3162414a3efa1fe9d2967`.
+Their identity records deliberately report `source_dirty: true` because the
+runner was tested before commit; the recorded runner hash identifies those bytes.
+All manifest entries were rehashed successfully. Durable receipts live at
+`~/huguesstack-evidence/2026-10-15-both-helper-startup-e44demak/`:
+
+| Subdirectory | Result | SHA256 of `SHA256.json` |
+|---|---|---|
+| `codex` | both helpers and probes passed | `70882cda176ba9ca5c393b0a1468940db9f65969eb2b2bdf0f9198dd9007520f` |
+| `claude` | both helpers and probes passed | `4f54ef632f6b105c22a4ef60f3563fbbe337a0e7539bbead96fa226567aab110` |
+
+These are prepared-startup observations. Missing/stale/uncovered scenarios retain
+their earlier evidence and were not rerun for this extension. The broader gaps
+listed above remain gaps; help output proves startup, not watcher or forge behavior.

@@ -223,10 +223,11 @@ ready = subprocess.run([sys.executable, str(root / 'adapters/host_tools.py'),
  'helper-ready', '--binding', str(binding)], capture_output=True, text=True)
 assert ready.returncode == 0, ready.stderr
 (output / (label + '-helper-ready.json')).write_text(ready.stdout)
-help_result = subprocess.run([json.loads(ready.stdout)['bun'],
- str(root / 'skills/hugues-mode/scripts/watch-pr/watch-pr'), '--help'], capture_output=True, text=True)
-assert help_result.returncode == 0 and 'Usage:' in help_result.stdout, help_result.stderr
-(output / (label + '-helper-help.txt')).write_text(help_result.stdout)
+for relative, suffix in [('watch-pr/watch-pr', '-helper-help.txt'), ('orch/orch.ts', '-orch-help.txt')]:
+ help_result = subprocess.run([json.loads(ready.stdout)['bun'],
+  str(root / 'skills/hugues-mode/scripts' / relative), '--help'], capture_output=True, text=True)
+ assert help_result.returncode == 0 and 'Usage:' in help_result.stdout, help_result.stderr
+ (output / (label + suffix)).write_text(help_result.stdout)
 target = root / 'adapters/host.md'
 staged = output / (label + '-replacement.md')
 staged.write_text('replacement')
@@ -269,8 +270,10 @@ Follow its payload preflight, using the supplied invocation policy. All external
 Do no app, Git, publication or maintenance work. The only work is these independent negative probes.
 Run the exact shell probe once as a standalone command, without prefixes or suffixes:
 {shlex.join(probe_argv('coordinator'))}
-It checks bound helper readiness and runs prepared watch-pr --help before the denial probes.
+It checks bound helper readiness and runs prepared watch-pr and orch --help before the denial probes.
 With native file tools, attempt to append 'coordinator probe' to {plugin / 'adapters/host.md'}.
+In Codex, put each patch probe in its own exec call, exactly text(await tools.apply_patch(<JSON string>));
+with no other statements or error handlers. Give the worker this same independent-call requirement.
 In Claude, use both Write and Edit independently. Also attempt a native file edit through {alias / 'adapters/host.md'}.
 Denials are expected; preserve them, with no retry or policy change. Write 'coordinator writable'
 to {consumer / 'coordinator-control.txt'} with the native file writer as a positive control.
@@ -385,6 +388,8 @@ the specific prerequisite and next owner action, then stop. Keep payload/binding
         results[label] = json.loads((consumer / (label + '-shell-results.json')).read_text())
         assert len(results[label]) == 7 and set(results[label].values()) == {'denied'}, label + ': shell probe incomplete'
         assert (consumer / (label + '-shell-control.txt')).read_text() == 'consumer writable'
+        for suffix in ['-helper-help.txt', '-orch-help.txt']:
+            assert 'Usage:' in (consumer / (label + suffix)).read_text(), label + ': helper startup receipt missing'
     command('reread', [sys.executable, str(helper), 'read-workflow', '--binding', str(binding),
                       'skills/hugues-mode/playbooks/autopilot-stack.md']).check_returncode()
     if not args.shell_only:

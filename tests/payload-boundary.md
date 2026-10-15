@@ -20,8 +20,11 @@ The default `prepared` scenario requires the pinned Bun dependencies and matchin
 install key, either in that plugin copy or supplied with `--prepared-cache`.
 Prepare them separately with installation authority in a disposable copy before
 running this check. The runner copies the cache before binding and protection;
-it never installs. Each actor's shell probe runs bound `helper-ready` and the
-prepared `watch-pr --help`, retaining their outputs, before attempting writes.
+it never installs. Each actor's shell probe runs bound `helper-ready`, then prepared
+`watch-pr --help` and `orch --help`, retaining their outputs before attempting writes.
+The existing `*-helper-help.txt` receipts retain watch-pr output; `*-orch-help.txt`
+records orch output. Both are required for each actor. Codex patch probes run as
+separate literal tool calls so each native failure has an unambiguous request.
 
 Repeat on each host with `--scenario missing`, `--scenario stale` and
 `--scenario uncovered`, each using a new output directory. The first two alter
