@@ -114,6 +114,36 @@ class PayloadPolicy(InstalledFixture, unittest.TestCase):
         self.assertIn(json.dumps(str(self.consumer)) + ' = "write"\n', result.stdout)
         self.assertNotIn('network', result.stdout)
 
+    def test_mobile_write_roots_reject_broad_directories_and_resolved_aliases(self):
+        alias = self.area / 'parent alias'
+        alias.symlink_to(self.plugin.parent, target_is_directory=True)
+        for path in [Path('/'), Path.home(), self.plugin.parent, alias]:
+            with self.subTest(path=path):
+                result = self.bound('payload-policy', '--host', 'claude',
+                                    '--consumer', self.consumer, '--evidence', self.area,
+                                    '--macos-mobile', '--allow-write', path)
+                self.assertEqual(result.returncode, 2, result.stderr)
+                self.assertEqual(result.stdout, '')
+        # Legacy roots may contain the payload; the exact denial remains the carve-out.
+        for host, extra in [('claude', []), ('codex', ['--parent', 'existing-policy'])]:
+            result = self.bound('payload-policy', '--host', host, '--consumer', self.area,
+                                '--evidence', self.area, *extra)
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_mobile_jdk_cannot_resolve_into_the_protected_payload(self):
+        java = self.area / 'selected JDK'
+        (java / 'bin').mkdir(parents=True)
+        (java / 'bin/java').symlink_to(self.plugin / 'adapters/host_tools.py')
+        alias = self.area / 'JDK alias'
+        alias.symlink_to(self.plugin, target_is_directory=True)
+        for path in [java, self.plugin, alias]:
+            with self.subTest(path=path):
+                result = self.bound('payload-policy', '--host', 'claude',
+                                    '--consumer', self.consumer, '--evidence', self.area,
+                                    '--macos-mobile', '--java-home', path)
+                self.assertEqual(result.returncode, 2, result.stderr)
+                self.assertEqual(result.stdout, '')
+
     def test_unsafe_policy_requests_hold_without_printing_configuration(self):
         for extra in [('--host', 'codex'),
                       ('--host', 'codex', '--parent', ':danger-full-access'),
@@ -129,6 +159,15 @@ class PayloadPolicy(InstalledFixture, unittest.TestCase):
             with self.subTest(extra=extra):
                 result = self.bound('payload-policy', '--consumer', self.consumer,
                                     '--evidence', self.area, *extra)
+                self.assertEqual(result.returncode, 2, result.stderr)
+                self.assertEqual(result.stdout, '')
+        for domain in ['', '*', '*.com', '*.github.com', 'a;b', 'x.com:443', 'x.\u200bcom',
+                       'api..github.com', '-api.github.com', 'api.github-.com', 'api_github.com',
+                       'github.com.', 'com', 'a' * 64 + '.com', '.'.join(['a' * 63] * 4)]:
+            with self.subTest(domain=domain):
+                result = self.bound('payload-policy', '--host', 'claude',
+                                    '--consumer', self.consumer, '--evidence', self.area,
+                                    '--macos-mobile', '--allow-domain', domain)
                 self.assertEqual(result.returncode, 2, result.stderr)
                 self.assertEqual(result.stdout, '')
 
@@ -159,12 +198,14 @@ class NativeProbePreparation(InstalledFixture, unittest.TestCase):
         fixture.mkdir()
         (fixture / 'settings.gradle.kts').write_text('rootProject.name = "fixture"')
         output = self.area / 'mobile preparation'
+        cache = self.area / 'selected cache'
+        cache.mkdir()
         gate = 'python3 -c "print(123)"'
         result = subprocess.run([sys.executable, str(ROOT / 'scripts/check_payload_boundary.py'),
                                  '--host', 'claude', '--plugin', str(self.plugin),
                                  '--output', str(output), '--prepare-only', '--macos-mobile',
                                  '--mobile-fixture', str(fixture), '--mobile-command', gate,
-                                 '--allow-write', str(self.area), '--allow-domain', 'api.github.com'],
+                                 '--allow-write', str(cache), '--allow-domain', 'api.github.com'],
                                 capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         plan = json.loads((output / 'mobile-gates.json').read_text())
@@ -174,10 +215,26 @@ class NativeProbePreparation(InstalledFixture, unittest.TestCase):
         self.assertEqual(copied.read_bytes(), (fixture / 'settings.gradle.kts').read_bytes())
         config = json.loads((output / 'policy.json').read_text())
         self.assertTrue(config['sandbox']['network']['allowLocalBinding'])
-        self.assertIn(str(self.area), config['sandbox']['filesystem']['allowWrite'])
+        self.assertIn(str(cache), config['sandbox']['filesystem']['allowWrite'])
 
 
 class NativeDenialEvidence(unittest.TestCase):
+    def test_claude_classifier_refusals_cannot_qualify_native_editor_protection(self):
+        inspect = runpy.run_path(str(ROOT / 'scripts/check_payload_boundary.py'))['denied_edits']
+        request = {'message': {'content': [{'type': 'tool_use', 'id': 'edit-1',
+                    'name': 'Edit', 'input': {'file_path': '/fixture/plugin/file'}}]}}
+        response = {'message': {'content': [{'type': 'tool_result', 'tool_use_id': 'edit-1',
+                    'is_error': True, 'content': 'Permission to edit /fixture/plugin/file has been denied.'}]}}
+        result = {'type': 'result', 'permission_denials': [{'tool_use_id': 'edit-1',
+                  'tool_name': 'Edit', 'tool_input': {'file_path': '/fixture/plugin/file'}}]}
+        events = [request, response, result]
+        self.assertEqual(inspect(events, 'claude'), set())
+        for mode in ['auto', 'unknown', None]:
+            with self.subTest(mode=mode):
+                self.assertEqual(inspect(events, 'claude', permission_mode=mode), set())
+        self.assertEqual(inspect(events, 'claude', permission_mode='dontAsk'),
+                         {('/fixture/plugin/file', 'Edit', None)})
+
     def test_shell_results_must_belong_to_the_actor_that_ran_the_exact_probe(self):
         inspect = runpy.run_path(str(ROOT / 'scripts/check_payload_boundary.py'))['shell_probes']
         results = dict.fromkeys(['append', 'create', 'rename', 'delete', 'chmod', 'alias', 'replace'], 'denied')
@@ -204,17 +261,18 @@ class NativeDenialEvidence(unittest.TestCase):
                     'is_error': True, 'content': 'Permission denied'}]}}
         result = {'type': 'result', 'permission_denials': [{'tool_use_id': 'write-1',
                   'tool_name': 'Write', 'tool_input': {'file_path': '/fixture/plugin/file'}}]}
-        self.assertEqual(inspect([request, response, result], 'claude'), {('/fixture/plugin/file', 'Write', None)})
+        self.assertEqual(inspect([request, response, result], 'claude', permission_mode='dontAsk'),
+                         {('/fixture/plugin/file', 'Write', None)})
         for events in ([request], [response], [request, response],
                        [{'type': 'assistant', 'text': 'Write was denied'}]):
-            self.assertEqual(inspect(events, 'claude'), set())
+            self.assertEqual(inspect(events, 'claude', permission_mode='dontAsk'), set())
         editor_error = {'message': {'content': [{'type': 'tool_result', 'tool_use_id': 'write-1',
                         'is_error': True, 'content': 'String permission was not found in the file'}]}}
-        self.assertEqual(inspect([request, editor_error], 'claude'), set())
+        self.assertEqual(inspect([request, editor_error], 'claude', permission_mode='dontAsk'), set())
         native_error = {'message': {'content': [{'type': 'tool_result', 'tool_use_id': 'write-1',
                         'is_error': True, 'content': '<tool_use_error>File is in a directory that is denied by your permission settings.</tool_use_error>'}]}}
         notice = {'type': 'system', 'message': 'Permission to edit the fixture has been denied.'}
-        self.assertEqual(inspect([notice, request, native_error, result], 'claude'),
+        self.assertEqual(inspect([notice, request, native_error, result], 'claude', permission_mode='dontAsk'),
                          {('/fixture/plugin/file', 'Write', None)})
 
     def test_codex_denial_requires_a_matching_native_patch_failure(self):

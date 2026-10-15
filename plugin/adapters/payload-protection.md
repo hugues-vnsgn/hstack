@@ -86,8 +86,10 @@ For a macOS mobile program, print the optional `--macos-mobile` recipe. It keeps
 payload file-tool and shell write denials and adds local binding, the exact
 `com.apple.CoreSimulator.CoreSimulatorService`, `simdiskimaged`,
 `SimLaunchHost-*` and `SimulatorTrampoline` services under the same case-sensitive
-`com.apple.CoreSimulator.` prefix, and weaker network isolation for macOS trust
-services used by tools such as `gh`. This changes network/service access; review
+`com.apple.CoreSimulator.` prefix, and weaker network isolation. The recorded
+`gh` check passed with that option enabled; whether macOS trust services require
+it was not isolated by a paired comparison and remains unverified.
+This changes network/service access; review
 it with the operator. It does not exclude commands from the filesystem sandbox.
 Local binding also exposes existing localhost services, including Gradle and adb
 daemons. Inventory their effects as external writers; a sandboxed client does not
@@ -98,7 +100,12 @@ pass its absolute directory with `--java-home` when the program uses Gradle.
 The helper prints `env.JAVA_HOME`; it does not run JDK discovery or choose a JDK.
 Create required cache/log directories during separately authorized preparation.
 Pass only the selected tools' existing writable directories with repeated
-`--allow-write` and needed hosts with repeated `--allow-domain`. For example:
+`--allow-write` and needed hosts with repeated `--allow-domain`. Select exact
+ASCII DNS hosts; wildcard patterns, ports and malformed names hold. Explicit
+tool-write roots cannot be home or ancestors of the payload (including `/`),
+and the JDK and its resolved `bin/java` must stay outside the payload.
+These checks apply to the new tool options; the base consumer/evidence carve-out
+is unchanged. For example:
 
 ```sh
 python3 "<plugin>/adapters/host_tools.py" payload-policy --binding "<program>/plugin-binding.json" --host claude --consumer "<consumer>" --evidence "<evidence>" --macos-mobile --java-home "<selected-jdk>" --allow-write "<gradle-cache>" --allow-write "<konan-cache>" --allow-write "<android-state>" --allow-write "<home>/Library/Logs/CoreSimulator" --allow-domain api.github.com
@@ -114,8 +121,10 @@ in a sandboxed shell may differ from Java's `java.io.tmpdir`.
 
 Add other required build-cache, simulator or network access only after inspecting
 the actual failing command. Preserve existing domain restrictions and settings.
-Merge the reviewed recipe into the invocation's `--settings` file: strict sandbox
-mode ignores repository-level additions that loosen these restrictions. A printed
+Merge the reviewed recipe into the invocation's `--settings` file. Administrative
+strict-sandbox precedence over repository settings was not exercised by the
+recorded regression and remains unverified; inspect the effective settings in
+the actual invocation before treating the boundary as ready. A printed
 recipe is neither an effective-policy inspection nor a mobile compatibility pass.
 Check a real build/test gate, adb/Simulator access and required forge commands in
 the protected environment. Require available Simulator devices and an operation
@@ -132,8 +141,9 @@ independent process/filesystem boundary, then verify payload rejection and requi
 consumer/device operations. A generic `PreToolUse` path-string filter, a read-only
 tool annotation or an operator's risk acknowledgment does not establish that boundary.
 
-Retain required mobile tools. If a writer is optional, remove it from this run and
-record that decision. If a required writer has no demonstrated boundary, hold its
+Retain required mobile tools. If a writer is optional, remove it from this run
+under the existing authorization and record that decision. If a required writer
+has no demonstrated boundary, hold its
 dependent work with the missing control and next operator action. Disabling the
 required tool does not complete the proof lane. This recipe supplies no generic
 MCP enforcement or full mobile-service isolation claim.

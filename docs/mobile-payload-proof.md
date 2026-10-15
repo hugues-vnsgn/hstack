@@ -15,8 +15,9 @@ Dependencies and the fixture's Android SDK path were prepared separately.
 
 The tested worktree was based on `f68236a` with `source_dirty: true`. Its recorded
 HEAD/plugin tree identifies the base, not the changed candidate. The exact Claude
-binding was compared against every current authored adapter hash and the runner
-hash before recording these results:
+binding was compared against every authored adapter hash and the runner hash
+before recording these results in commit `8d767fa`. The following hashes describe
+that historical candidate, not the later PR-review corrections:
 
 - Installed payload manifest SHA256: `fe008d20bbb8b0b77b57cc86015b10431c19a261b59f45772d17c17502eb1aab`.
 - Native runner SHA256: `15cd5d58dfabf85658f6585e6d83f3b908a75c27f36d6689e24905449314e40b`.
@@ -91,8 +92,35 @@ The manifests were rehashed and verified:
 | `codex-final` | `4508a8219f36fd85ae8e52ae294ff5fb92c627bfd5a30cc723aa1a8bfda200c3` |
 
 The [native regression guide](../tests/payload-boundary.md) describes reproduction.
-The three additional Python cases bring the repository suite to 442; the full
-suite passed. Static checks establish source/workflow wiring, not host behavior.
+The original three additional Python cases brought the repository suite to 442;
+that full suite passed. Static checks establish source/workflow wiring, not host
+behavior.
+
+## PR-review corrections
+
+The correction rejects broad explicit tool-write roots, malformed or wildcard
+domains and JDK paths resolving into the payload. It also requires an explicit
+`dontAsk` mode before editor receipts can qualify protection; auto-mode receipts
+have no reliable denial-cause field. Auto runs remain diagnostic only. The original
+native run used `dontAsk` and its paired editor receipts still pass that check.
+
+The recorded Claude policy-generation argv from `mobile-qualified` and Codex argv
+from `codex-final` were replayed with both `8d767fa` and the amended generator.
+Their printed configurations were byte-identical, including the retained payload
+denial. Base Claude and Codex output was also unchanged. This establishes generator
+compatibility for those inputs; it does not establish native execution of the
+amended payload or runner. No new native run was performed for these corrections.
+The historical hashes above remain unchanged and do not bind the amended source.
+The runner also retains PR #54's helper/startup checks after integration with main;
+those additions have their own historical receipt and are not part of this
+mobile-qualified run.
+
+Three new regression cases and the expanded unsafe-input matrix bring the current
+suite to 445 tests; integrating PR #54 adds two runner cases for a combined 447.
+Rebased onto hStack 0.4.0, the suite has 454 tests; the rebase received no new native run.
+The 14 payload-policy cases cover broad explicit
+roots and aliases, inward JDK links, malformed domains, permission-mode ambiguity,
+and preserved legacy consumer/evidence behavior.
 
 Auto-mode classifier acceptance, interactive effective-settings inspection,
 Desktop, Intel Macs, other operating systems, full autopilot lifecycle, stack

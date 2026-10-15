@@ -110,7 +110,11 @@ Already-running Gradle/adb/Simulator services have their own effects and protect
 gaps; these commands alone do not qualify them as isolated writers.
 
 Claude defaults to `--permission-mode dontAsk`, matching the original regression.
-Choose `--permission-mode auto` only for an independently authorized auto-mode run.
+Choose `--permission-mode auto` only for an independently authorized diagnostic
+run. Its editor receipts do not reliably distinguish classifier refusals from
+deny-rule enforcement, so the runner cannot qualify native protection in that
+mode even if the other gates pass. Only explicit `dontAsk` qualifies Claude editor
+evidence; an omitted or unknown mode also fails closed in the receipt parser.
 A classifier refusal, missing worker result or failed mobile gate fails the check;
 retain the logs and hold that coverage. The runner never switches modes or retries
 outside protection. Full autopilot, forge mutations, MCP isolation and live-root

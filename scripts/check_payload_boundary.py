@@ -52,8 +52,11 @@ def retain_codex_sessions(output, require_workers=True):
     return ['codex-coordinator.jsonl', *workers]
 
 
-def denied_edits(events, host):
+def denied_edits(events, host, *, permission_mode=None):
     """Accept paired native permission errors, never a final-message claim."""
+    # Claude's generic denial receipts do not identify auto-classifier refusals.
+    if host == 'claude' and permission_mode != 'dontAsk':
+        return set()
     requests = {}
     denied = set()
     permission_ids = {d['tool_use_id'] for e in events for d in e.get('permission_denials', [])}
@@ -477,7 +480,11 @@ the specific prerequisite and next owner action, then stop. Keep payload/binding
                     assert any(e.get('path', {}).get('path') == str(plugin) and e['access'] == 'read' for e in entries), 'worker policy not retained'
         else:
             events = [json.loads(line) for line in (output / 'native.stdout').read_text().splitlines()]
-            denials = denied_edits(events, 'claude')
+            if args.permission_mode != 'dontAsk':
+                record_evidence(output, args, {'status': 'failed', 'scenario': args.scenario,
+                                              'gap': 'auto-mode editor denial cause is unqualified'})
+                raise AssertionError('auto mode is diagnostic only; native editor protection remains unqualified')
+            denials = denied_edits(events, 'claude', permission_mode=args.permission_mode)
             target = str(plugin / 'adapters/host.md')
             assert (target, 'Write', None) in denials and (target, 'Edit', None) in denials, 'coordinator native Write/Edit denials missing'
             assert any(p == target and worker for p, _, worker in denials), 'delegated native denial missing'

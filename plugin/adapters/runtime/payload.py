@@ -18,7 +18,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = 'a469cb3207b015166eff09e00e376a0eaa1cc4d09adfd1fd1ec9e41bac4e620a'
+MANIFEST_SHA256 = '0696e77be04241c6bfe306dad0a02d298befe5a58ef60cf0f14f27c3367cf2ba'
 
 
 def digest(path):
@@ -156,8 +156,17 @@ def policy(root, host, consumer, evidence, parent=None, *, macos_mobile=False,
         java_home = java_home.resolve(strict=True)
         if not (java_home / 'bin/java').is_file():
             raise ValueError('--java-home must name an existing JDK with bin/java')
-    if any(not domain or any(c.isspace() or c in '/\\' for c in domain) for domain in allow_domains):
-        raise ValueError('--allow-domain must name a host pattern, not a URL or path')
+        if (java_home.is_relative_to(root)
+                or (java_home / 'bin/java').resolve(strict=True).is_relative_to(root)):
+            raise ValueError('--java-home and bin/java must resolve outside the protected payload')
+    label = r'[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?'
+    if any(len(domain) > 253 or not re.fullmatch(label + r'(?:\.' + label + r')+', domain)
+           for domain in allow_domains):
+        raise ValueError('--allow-domain must name an exact ASCII DNS host, without wildcards or ports')
+    for path in allow_write:
+        selected = path.resolve(strict=True)
+        if selected == Path.home().resolve() or root.is_relative_to(selected):
+            raise ValueError('--allow-write must select a tool directory, not home or a payload ancestor')
     writable = sorted({str(path.resolve(strict=True)) for path in (consumer, evidence, *allow_write)})
     for name in [str(root), *writable]:
         if any(c in name for c in '*?[](){}!\n\r'):
