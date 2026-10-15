@@ -25,6 +25,10 @@ it never installs. Each actor's shell probe runs bound `helper-ready`, then prep
 The existing `*-helper-help.txt` receipts retain watch-pr output; `*-orch-help.txt`
 records orch output. Both are required for each actor. Codex patch probes run as
 separate literal tool calls so each native failure has an unambiguous request.
+The same actor then runs `orch init` and `orch status` against its own
+consumer-local store. The `*-orch-init.json` and `*-orch-status.json` receipts
+record successful commands and the empty store state. This exercises store
+creation, locking and status writes under protection.
 
 Repeat on each host with `--scenario missing`, `--scenario stale` and
 `--scenario uncovered`, each using a new output directory. The first two alter
@@ -33,6 +37,9 @@ read-only prerequisite check, record a startup hold and stop before bootstrap,
 application work or delegation. The last supplies an unresolved external-writer
 coverage prerequisite and requires the same startup hold. These bounded startup
 smokes exercise the playbook gate; they do not attest to arbitrary external tools.
+An attempted watch-pr, orch, install or bootstrap command rejects the hold even
+when the command fails. The runner CLI tests cover this with transcript fixtures
+for both hosts; those fixtures establish parser behavior only.
 
 The check copies the installed plugin inside a writable consumer with spaces in
 its path, creates a symlink alias, binds it and prints its native policy. It reads

@@ -110,7 +110,10 @@ remain historical evidence for their original inputs.
 
 The earlier prepared probe ran watch-pr only. A baseline Codex sandbox run at
 `f68236a` passed the existing checks without an orch receipt; requiring that
-receipt failed. The updated probe runs both original helpers with `--help` and
+receipt failed. The baseline receipts originally remained in `/tmp`; the
+[PR 54 retrospective](../plans/reports/261015-1645-pr54-retro.md) records their durable
+copy, the recovered original assertion and a later repetition. The updated
+probe runs both original helpers with `--help` and
 requires their outputs for each actor, preserving the existing watch-pr filename.
 Codex patch probes use independent literal calls for native denial correlation.
 
@@ -120,11 +123,12 @@ received native payload-edit and seven child-process write denials, and wrote
 consumer/evidence controls. Payload bytes, modes and inventory stayed unchanged.
 The original helper bodies, installed policy and workflow contracts were unchanged.
 
-These runs used the authored plugin tree above from `f68236a` and the modified
+These runs used plugin tree `e637e82bef481c62cdb7f29c7a262d2648a6b958`, shared by
+`ebf3180` and `f68236a`, and the modified
 runner SHA256 `5cfbe7bc74080aacf14670d06f1834619557aa8771b3162414a3efa1fe9d2967`.
 Their identity records deliberately report `source_dirty: true` because the
 runner was tested before commit; the recorded runner hash identifies those bytes.
-All manifest entries were rehashed successfully. Durable receipts live at
+All manifest entries were rehashed successfully. Private durable receipts live at
 `~/huguesstack-evidence/2026-10-15-both-helper-startup-e44demak/`:
 
 | Subdirectory | Result | SHA256 of `SHA256.json` |
@@ -134,4 +138,6 @@ All manifest entries were rehashed successfully. Durable receipts live at
 
 These are prepared-startup observations. Missing/stale/uncovered scenarios retain
 their earlier evidence and were not rerun for this extension. The broader gaps
-listed above remain gaps; help output proves startup, not watcher or forge behavior.
+listed above remain gaps; help output proves startup only. These runs did not
+exercise orch store writes, watcher or forge behavior. The retrospective records
+the later store-write probes separately.

@@ -1,0 +1,26 @@
+name: Source maintenance
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Run the source test suite
+        run: python3 -m unittest discover -s tests -v
+      - name: Check plugin packaging
+        run: ./scripts/check-plugin.sh
+      - name: Check core contracts
+        run: python3 scripts/check_core.py
+      - name: Check upstream provenance
+        run: python3 scripts/upstream-diff.py check
+      - name: Check whitespace
+        run: python3 scripts/check_whitespace.py
