@@ -80,6 +80,64 @@ exceptions. Remove uncovered capabilities under the existing authorization or
 hold. Preserve invocation controls from [host.md](host.md). Preserve the parent's
 boundary in each native Agent call; a worker must not request bypass permissions.
 
+### macOS mobile tools
+
+For a macOS mobile program, print the optional `--macos-mobile` recipe. It keeps
+payload file-tool and shell write denials and adds local binding, the exact
+`com.apple.CoreSimulator.CoreSimulatorService`, `simdiskimaged`,
+`SimLaunchHost-*` and `SimulatorTrampoline` services under the same case-sensitive
+`com.apple.CoreSimulator.` prefix, and weaker network isolation for macOS trust
+services used by tools such as `gh`. This changes network/service access; review
+it with the operator. It does not exclude commands from the filesystem sandbox.
+Local binding also exposes existing localhost services, including Gradle and adb
+daemons. Inventory their effects as external writers; a sandboxed client does not
+prove that an already-running service inherits its filesystem boundary.
+
+Select an existing JDK outside the sandbox with `/usr/libexec/java_home`, then
+pass its absolute directory with `--java-home` when the program uses Gradle.
+The helper prints `env.JAVA_HOME`; it does not run JDK discovery or choose a JDK.
+Create required cache/log directories during separately authorized preparation.
+Pass only the selected tools' existing writable directories with repeated
+`--allow-write` and needed hosts with repeated `--allow-domain`. For example:
+
+```sh
+python3 "<plugin>/adapters/host_tools.py" payload-policy --binding "<program>/plugin-binding.json" --host claude --consumer "<consumer>" --evidence "<evidence>" --macos-mobile --java-home "<selected-jdk>" --allow-write "<gradle-cache>" --allow-write "<konan-cache>" --allow-write "<android-state>" --allow-write "<home>/Library/Logs/CoreSimulator" --allow-domain api.github.com
+```
+
+For JVM compilation with the Kotlin daemon, select its actual state directory
+(for example, `<home>/Library/Application Support/kotlin/daemon`). A build that
+falls back after a denied daemon write does not prove daemon compatibility.
+For Kotlin/Native, include the actual JVM temporary directory if compiler reports
+use it, or configure compiler temporary output inside an approved writable root.
+Select it outside protection (for example, `getconf DARWIN_USER_TEMP_DIR`); `$TMPDIR`
+in a sandboxed shell may differ from Java's `java.io.tmpdir`.
+
+Add other required build-cache, simulator or network access only after inspecting
+the actual failing command. Preserve existing domain restrictions and settings.
+Merge the reviewed recipe into the invocation's `--settings` file: strict sandbox
+mode ignores repository-level additions that loosen these restrictions. A printed
+recipe is neither an effective-policy inspection nor a mobile compatibility pass.
+Check a real build/test gate, adb/Simulator access and required forge commands in
+the protected environment. Require available Simulator devices and an operation
+on the selected booted device; a zero-exit listing with unavailable devices is a
+gap. Keep an unsupported host/version or failing gate held.
+
+### Writers outside Bash
+
+For each enabled MCP, hook, REPL, remote executor or service, record its executable
+or endpoint, host/version, permitted effects, bound payload root, enforcing control
+and observed evidence. Include implicit destinations and filesystem aliases, not
+only literal paths in arguments. Use a server's supported path restrictions or an
+independent process/filesystem boundary, then verify payload rejection and required
+consumer/device operations. A generic `PreToolUse` path-string filter, a read-only
+tool annotation or an operator's risk acknowledgment does not establish that boundary.
+
+Retain required mobile tools. If a writer is optional, remove it from this run and
+record that decision. If a required writer has no demonstrated boundary, hold its
+dependent work with the missing control and next operator action. Disabling the
+required tool does not complete the proof lane. This recipe supplies no generic
+MCP enforcement or full mobile-service isolation claim.
+
 ## Codex
 
 The TOML fragment creates `hstack-program`, extending the active bounded
@@ -124,6 +182,21 @@ Record `payload-protection: held` with the uncovered capability and prerequisite
 start only after the evidence supports `payload-protection: ready` for the root
 and every write-capable worker. Recheck on fresh dispatch, restart, tool/policy
 changes and each audit tick. Keep policy and binding evidence available to workers.
+
+For disposable probes, first establish that the copy has no immutable/append-only
+file flags and that an ordinary append and file creation succeed before binding
+and host protection; restore it before taking the baseline. Name that same copy
+in both the native editor deny and sandbox `denyWrite`. Retain the unprotected
+control and the protected denial. A file lock or a classifier refusal cannot
+prove filesystem sandbox enforcement. Preserve the live bound-root inspection
+requirement above; evidence for a different copy cannot mark the live root ready.
+
+If auto mode refuses an authorized negative probe before it runs, retain the tool
+input and classifier reason, mark shell/worker enforcement unverified and hold.
+Never keep rewriting the probe, change modes in that run, or retry through another
+writer. A separately owner-authorized maintainer regression can choose `dontAsk`
+at launch and use a disposable copy; it proves only that mode/environment. Its
+receipt does not attest to worker inheritance or startup in the live auto session.
 
 On a denied plugin edit, retain the exact attempted action and native denial and
 confirm the payload is unchanged. Hold dependent work and report the defect to

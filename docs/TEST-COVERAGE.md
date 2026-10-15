@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **448 top-level unittest cases**. One is a driver that
+The current candidate collects **451 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -17,13 +17,13 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,980 cases (330 `read-workflow`, 1,596 `translate-plan` and 54 in-plan cases) over all 54 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
-| Current payload-policy contracts | 8 | test_payload_policy; bound host fragments, unsafe-scope holds, read-only prepared/missing/stale helper readiness and actor-correlated native denial/shell evidence. These are source/interface checks, not native enforcement proof. |
+| Current payload-policy contracts | 11 | test_payload_policy; bound host fragments, unsafe-scope holds, read-only prepared/missing/stale helper readiness and actor-correlated native denial/shell evidence. These are source/interface checks, not native enforcement proof. |
 | Current native-runner CLI contracts | 2 | test_payload_boundary; synthetic Claude/Codex transcripts accept read-only prerequisite holds and reject attempted watch-pr, orch, install or bootstrap calls in missing/stale/uncovered scenarios, including failed attempts. These check evidence validation, not native enforcement. |
-| Total collected | 448 | Current, mixed and historical scopes remain distinct |
+| Total collected | 451 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-448 Python cases. The opt-in CI workflow requires a provisioned native runner.
+451 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -183,3 +183,12 @@ its older extraction modes also fail frozen integrity checks. The current outer
 loaders support hash-verified extraction on 3.9, but the frozen archive and its
 assertions remain unchanged. This is a historical compatibility gap, not a
 Python 3.9 full-suite pass.
+
+Issue #53 adds three public-interface cases, bringing the current total to 451:
+the optional Claude macOS mobile recipe preserves the payload denial, preparation
+proves the disposable copy writable without claiming enforcement, and mobile
+preparation copies the fixture and records exact gate argv. The unsafe-request
+matrix also covers unsupported hosts, absent opt-in, invalid JDKs, payload write
+roots and malformed domains. The eleven payload-policy cases remain source/CLI
+checks. Native mobile observations and remaining gaps are recorded in the
+[issue 53 receipt](mobile-payload-proof.md).

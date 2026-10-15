@@ -4,6 +4,8 @@ import hashlib
 import os
 from pathlib import Path
 import runpy
+import subprocess
+import sys
 import unittest
 
 from test_host_adapters import InstalledFixture
@@ -68,6 +70,39 @@ class PayloadPolicy(InstalledFixture, unittest.TestCase):
         self.assertIn(str(self.consumer), sandbox['filesystem']['allowWrite'])
         self.assertNotIn('allow', config['permissions'])
 
+    def test_macos_mobile_recipe_keeps_protection_and_names_selected_tool_access(self):
+        java = self.area / 'JDK with spaces'
+        (java / 'bin').mkdir(parents=True)
+        (java / 'bin/java').write_text('fixture runtime')
+        cache = self.area / 'selected cache'
+        cache.mkdir()
+        result = self.bound('payload-policy', '--host', 'claude',
+                            '--consumer', self.consumer, '--evidence', self.area,
+                            '--macos-mobile', '--java-home', java,
+                            '--allow-write', cache, '--allow-domain', 'api.github.com')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        config = json.loads(result.stdout)
+        self.assertEqual(config['env']['JAVA_HOME'], str(java))
+        sandbox = config['sandbox']
+        self.assertTrue(sandbox['network']['allowLocalBinding'])
+        self.assertIn('com.apple.CoreSimulator.CoreSimulatorService',
+                      sandbox['network']['allowMachLookup'])
+        self.assertIn('com.apple.CoreSimulator.simdiskimaged',
+                      sandbox['network']['allowMachLookup'])
+        self.assertIn('com.apple.CoreSimulator.SimLaunchHost-*',
+                      sandbox['network']['allowMachLookup'])
+        self.assertIn('com.apple.CoreSimulator.SimulatorTrampoline',
+                      sandbox['network']['allowMachLookup'])
+        self.assertEqual(sandbox['network']['allowedDomains'], ['api.github.com'])
+        self.assertTrue(sandbox['enableWeakerNetworkIsolation'])
+        self.assertIn(str(cache), sandbox['filesystem']['allowWrite'])
+        self.assertEqual(sandbox['filesystem']['denyWrite'], [str(self.plugin)])
+        self.assertFalse(sandbox['allowUnsandboxedCommands'])
+        self.assertFalse(sandbox['filesystem']['disabled'])
+        self.assertNotIn('excludedCommands', sandbox)
+        self.assertEqual(config['permissions']['deny'],
+                         ['Edit(/' + str(self.plugin) + '/**)'])
+
     def test_codex_fragment_extends_the_selected_policy_with_an_exact_carveout(self):
         result = self.bound('payload-policy', '--host', 'codex', '--parent', 'existing-policy',
                             '--consumer', self.consumer, '--evidence', self.area)
@@ -85,12 +120,61 @@ class PayloadPolicy(InstalledFixture, unittest.TestCase):
                       ('--host', 'codex', '--parent', 'hstack-program'),
                       ('--host', 'codex', '--parent', 'huguesstack-program'),
                       ('--host', 'claude', '--consumer', self.plugin),
-                      ('--host', 'claude', '--evidence', self.plugin / 'adapters')]:
+                      ('--host', 'claude', '--evidence', self.plugin / 'adapters'),
+                      ('--host', 'codex', '--parent', 'existing-policy', '--macos-mobile'),
+                      ('--host', 'claude', '--allow-write', self.area),
+                      ('--host', 'claude', '--macos-mobile', '--java-home', self.consumer),
+                      ('--host', 'claude', '--macos-mobile', '--allow-write', self.plugin),
+                      ('--host', 'claude', '--macos-mobile', '--allow-domain', 'https://github.com')]:
             with self.subTest(extra=extra):
                 result = self.bound('payload-policy', '--consumer', self.consumer,
                                     '--evidence', self.area, *extra)
                 self.assertEqual(result.returncode, 2, result.stderr)
                 self.assertEqual(result.stdout, '')
+
+
+class NativeProbePreparation(InstalledFixture, unittest.TestCase):
+    def test_prepare_only_proves_copy_writable_without_claiming_enforcement(self):
+        output = self.area / 'native preparation'
+        result = subprocess.run([sys.executable, str(ROOT / 'scripts/check_payload_boundary.py'),
+                                 '--host', 'claude', '--plugin', str(self.plugin),
+                                 '--output', str(output), '--prepare-only'],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        control = json.loads((output / 'unprotected-control.json').read_text())
+        self.assertTrue(control['append_succeeded'])
+        self.assertTrue(control['create_succeeded'])
+        self.assertTrue(control['restored'])
+        self.assertIn('not enforcement evidence', result.stdout)
+        self.assertFalse((output / 'native-command.json').exists())
+        self.assertFalse((output / 'identity.json').exists())
+        copied = output / 'consumer with spaces/installed plugin'
+        self.assertEqual((copied / 'adapters/host.md').read_bytes(),
+                         (self.plugin / 'adapters/host.md').read_bytes())
+        config = json.loads((output / 'policy.json').read_text())
+        self.assertEqual(config['sandbox']['filesystem']['denyWrite'], [str(copied)])
+
+    def test_mobile_preparation_copies_fixture_and_records_exact_gate_argv(self):
+        fixture = self.area / 'mobile source'
+        fixture.mkdir()
+        (fixture / 'settings.gradle.kts').write_text('rootProject.name = "fixture"')
+        output = self.area / 'mobile preparation'
+        gate = 'python3 -c "print(123)"'
+        result = subprocess.run([sys.executable, str(ROOT / 'scripts/check_payload_boundary.py'),
+                                 '--host', 'claude', '--plugin', str(self.plugin),
+                                 '--output', str(output), '--prepare-only', '--macos-mobile',
+                                 '--mobile-fixture', str(fixture), '--mobile-command', gate,
+                                 '--allow-write', str(self.area), '--allow-domain', 'api.github.com'],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        plan = json.loads((output / 'mobile-gates.json').read_text())
+        self.assertEqual(plan['commands'], [['python3', '-c', 'print(123)']])
+        self.assertEqual(plan['fixture_source'], str(fixture))
+        copied = output / 'consumer with spaces/mobile fixture/settings.gradle.kts'
+        self.assertEqual(copied.read_bytes(), (fixture / 'settings.gradle.kts').read_bytes())
+        config = json.loads((output / 'policy.json').read_text())
+        self.assertTrue(config['sandbox']['network']['allowLocalBinding'])
+        self.assertIn(str(self.area), config['sandbox']['filesystem']['allowWrite'])
 
 
 class NativeDenialEvidence(unittest.TestCase):

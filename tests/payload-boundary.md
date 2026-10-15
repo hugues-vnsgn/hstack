@@ -74,3 +74,47 @@ and control artifacts. Report the manifest hash with the exact durable directory
 Shell labels alone are insufficient: Claude pairs Bash requests and results with
 the same worker parent ID; Codex requires successful native CommandExecution
 records in each actor's own rollout after its forked history.
+
+## Mobile compatibility and auto-mode limits
+
+The runner first rejects immutable/append-only flags on the disposable payload
+and proves an unprotected append and creation succeed, restoring the copy before
+binding. `unprotected-control.json` retains that positive control. It never clears
+file flags or writes to the source installation.
+
+Use `--prepare-only` to inspect the generated policy and copied fixture without
+starting a native host. Preparation is not enforcement evidence. For a Claude
+macOS mobile check, add `--macos-mobile`, the selected `--java-home`, repeated
+`--allow-write` cache/log directories and `--allow-domain` hosts. Supply a small
+fixture with `--mobile-fixture` and repeat `--mobile-command` for each required
+gate, such as:
+
+```sh
+--mobile-command './gradlew --offline --no-daemon :composeApp:compileDebugKotlinAndroid :composeApp:compileKotlinIosSimulatorArm64'
+--mobile-command 'xcrun simctl list devices booted --json'
+--mobile-command 'xcrun simctl spawn <selected-booted-device-udid> launchctl getenv HOME'
+--mobile-command 'adb devices -l'
+--mobile-command 'gh api repos/hugues-vnsgn/hstack --jq .full_name'
+```
+
+These are arguments to the runner, not standalone shell commands. It copies the
+fixture without Git metadata, build outputs or `.gradle`; the source remains
+untouched. Each actor runs the exact selected argv without a shell from the copy
+before its denial probes. Logs and exit codes for every requested gate are kept
+in that actor's mobile receipts. The copied fixture must have its dependencies
+prepared separately; `--offline` cannot fetch missing dependencies. Choose gates
+for the actual fixture and require an actual booted-device operation. `simctl list`
+can exit zero with unavailable devices; inspect availability or use `getenv` on
+the selected booted device. Neither a compile nor these queries proves a device UI test.
+Already-running Gradle/adb/Simulator services have their own effects and protection
+gaps; these commands alone do not qualify them as isolated writers.
+
+Claude defaults to `--permission-mode dontAsk`, matching the original regression.
+Choose `--permission-mode auto` only for an independently authorized auto-mode run.
+A classifier refusal, missing worker result or failed mobile gate fails the check;
+retain the logs and hold that coverage. The runner never switches modes or retries
+outside protection. Full autopilot, forge mutations, MCP isolation and live-root
+readiness remain separate verification requirements.
+
+[Issue 53 observed mobile results and limits](../docs/mobile-payload-proof.md) bind
+the combined native checks to their actual recipe and source hashes.
