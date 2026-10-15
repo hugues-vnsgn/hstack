@@ -8,6 +8,11 @@ The adapters do not install dependencies, fetch, query a forge or delete anythin
 
 ## Bind and reread the approved installed payload
 
+For either autopilot, read [payload protection](payload-protection.md) before
+write-capable work. Binding and guarded reads detect drift; native host policy
+must prevent payload writes. The bound `payload-policy` command prints a
+reviewable host fragment without applying settings or asserting enforcement.
+
 Resolve `<plugin>` from the loaded public entrypoint, not the consumer directory.
 Use absolute paths below. The plugin may be an installed directory without Git.
 At program authoring, save a binding in the authorized program evidence directory:

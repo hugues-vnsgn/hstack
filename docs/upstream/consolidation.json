@@ -163,7 +163,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/01-setup.md",
       "disposition": "canonical",
-      "destination_sha256": "e8b77bec321c1d35ccac18ed354229de51c956627b392bd8503f4ff49595a29f"
+      "destination_sha256": "da6721e6effa1d973f6de5da6010ab5a6335e2b2cfb48932c4e187f53f25a1d1"
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
@@ -531,7 +531,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-full.md",
       "disposition": "canonical",
-      "destination_sha256": "37a8d7616bd961d30bd32b1c8c82c93764b9e60bddc0d56a812f015d1f2d03ff"
+      "destination_sha256": "77a57de0a2ea956c583631043a5af1cf1f794a548f56afd381f99ed6b29fe4da"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
@@ -539,7 +539,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-stack.md",
       "disposition": "canonical",
-      "destination_sha256": "c2796d1b271e0a1fc9f981ad7840e39dbf5fe3d89553f80ddc5875306f363746"
+      "destination_sha256": "96d3ca635016c5713d6a64d5bcf2e4361b4a95f9050c4a50236d58bc8204bfb4"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
@@ -1511,7 +1511,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "6988339f83570aff42f8cc6d5c90f14f777303597713434bd46757827ea1aee2",
+      "sha256": "77b37bcb414a2d6be13cd4c2c686c25b8f326ec2f923a0b9187e4f1ddf0c3a25",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1519,7 +1519,7 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "c560c1ba77420f8fe9014b315f10afeadead38772e282739e1c27840e1167950",
+      "sha256": "9e3b9f79213ffc173cc2fd504c06173355792712c65f62edf542b6c8c263a185",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
@@ -1531,7 +1531,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "79ef6580e55f8be8fb6ea26a73b470d96221c63b1d687dd2d7c38804439d97ae",
+      "sha256": "be2334ca92ffb68997ecc57266fdba6b022e796961c28eec1a8e58773332573a",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1540,6 +1540,10 @@
     },
     "adapters/mobile.md": {
       "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825",
+      "mode": 420
+    },
+    "adapters/payload-protection.md": {
+      "sha256": "6c907b7e7a1dbb28a551151cf2a2b8cd1164e25b240c5f434b6a4cfdf9a4862b",
       "mode": 420
     },
     "adapters/runtime/__init__.py": {
@@ -1555,11 +1559,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "749538bb7202cde8c13f7dad15a4132cf5d2c3d9b6b594f97eae96a14f3bcfa7",
+      "sha256": "db41293ad26ca6d1df3c271af79327d2cb9d3b48544b0560ca8b2ea0967509cd",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "cfbc4b1d70387e4ba42fe5bb78838ab35c12bc121252d49958f90b23d0cd8cf8",
+      "sha256": "5008d5cc1dbf368b3032cfa8c52e4adb1affe7ba08b45b14977debb1791ee129",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1707,11 +1711,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-full.md": {
-      "sha256": "37a8d7616bd961d30bd32b1c8c82c93764b9e60bddc0d56a812f015d1f2d03ff",
+      "sha256": "77a57de0a2ea956c583631043a5af1cf1f794a548f56afd381f99ed6b29fe4da",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-stack.md": {
-      "sha256": "c2796d1b271e0a1fc9f981ad7840e39dbf5fe3d89553f80ddc5875306f363746",
+      "sha256": "96d3ca635016c5713d6a64d5bcf2e4361b4a95f9050c4a50236d58bc8204bfb4",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/babysit.md": {
