@@ -154,7 +154,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "77b37bcb414a2d6be13cd4c2c686c25b8f326ec2f923a0b9187e4f1ddf0c3a25",
+      "sha256": "f35e6cbd2557f3b7ee46ff6faf19cbf194dc9c0f0d3e5d0b59b85f171d498835",
       "mode": "100644"
     },
     {
@@ -169,7 +169,7 @@
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "f4821b098aae94fb32c764f06544958d66a2a617dbb7ca3adbc44fd16f535d13",
+      "sha256": "69f98a4164946bfeee9923ef96c1c06e098cb6754f3c33d41090b8a8f406e21e",
       "mode": "100644"
     },
     {
@@ -189,7 +189,7 @@
     },
     {
       "path": "adapters/payload-protection.md",
-      "sha256": "6c907b7e7a1dbb28a551151cf2a2b8cd1164e25b240c5f434b6a4cfdf9a4862b",
+      "sha256": "b3be7694dd90853cc53dff1791406cbdce20e9b0e5d7bf75ce734ec7fef354b4",
       "mode": "100644"
     },
     {

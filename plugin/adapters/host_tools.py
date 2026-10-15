@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "5008d5cc1dbf368b3032cfa8c52e4adb1affe7ba08b45b14977debb1791ee129"
+    "payload.py": "61c0f69842672f7d849d01f54abb14e28aa7b9d942eb61fc1386308c3974a4a2"
 }
 
 
@@ -78,6 +78,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='verb', required=True)
     sub.add_parser('bind', help='Print the installed payload binding for an approved program')
+    ready = sub.add_parser('helper-ready', help='Check bound Bun helper prerequisites without installing')
+    ready.add_argument('--binding', type=Path, required=True)
     policy = sub.add_parser('payload-policy', help='Print an owner-reviewable native policy fragment; apply nothing')
     policy.add_argument('--binding', type=Path, required=True)
     policy.add_argument('--host', choices=['claude', 'codex'], required=True)
@@ -113,6 +115,8 @@ def main(argv=None):
         payload.load_binding(root, args.binding.resolve())
         if args.verb == 'payload-policy':
             print(payload.policy(root, args.host, args.consumer, args.evidence, args.parent))
+        elif args.verb == 'helper-ready':
+            print(json.dumps(payload.helper_ready(root), indent=2))
         elif args.verb == 'read-workflow':
             sys.stdout.buffer.write(payload.workflow(root, args.source))
         elif args.verb == 'translate-plan':

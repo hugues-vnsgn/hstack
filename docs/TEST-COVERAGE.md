@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **436 top-level unittest cases**. One is a driver that
+The current candidate collects **439 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -17,12 +17,12 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,840 cases (306 `read-workflow`, 1,484 `translate-plan` and 50 in-plan cases) over all 50 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
-| Current payload-policy contracts | 5 | test_payload_policy; bound host fragments, unsafe-scope holds and paired native denial parsing. These are source/interface checks, not native enforcement proof. |
-| Total collected | 436 | Current, mixed and historical scopes remain distinct |
+| Current payload-policy contracts | 8 | test_payload_policy; bound host fragments, unsafe-scope holds, read-only prepared/missing/stale helper readiness and actor-correlated native denial/shell evidence. These are source/interface checks, not native enforcement proof. |
+| Total collected | 439 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-436 Python cases. The opt-in CI workflow requires a provisioned native runner.
+439 Python cases. The opt-in CI workflow requires a provisioned native runner.
 
 The 131 historical modules are test_wp2_contract (45), test_wp3_contract (15),
 test_retained_design (7), test_retained_research (8), test_retained_verification (6),
@@ -133,7 +133,16 @@ real plan template through both installed helpers, plus attaching and removing
 receipts without triggering approval. Ruling authentication and owner write isolation remain workflow
 requirements; these synthetic Git fixtures do not prove either in a live host.
 
-Issue #36 adds five payload-policy and evidence-parser cases, bringing the total
-to 436. Its [opt-in native regression](../tests/payload-boundary.md) runs separately;
+Issue #36 and its review fixes add eight payload-policy and evidence-parser cases, bringing the total
+to 439. Its [opt-in native regression](../tests/payload-boundary.md) runs separately;
 the [observed receipt](payload-protection-proof.md) distinguishes native probe
 results from unobserved writers and full-program execution.
+
+The PR 47 review-fix check ran all 439 cases on Python 3.14.7 successfully.
+On macOS's Python 3.9.6, the eight payload-policy cases pass and the full run has
+438 passing top-level cases plus one failing historical 0.2.0 driver. Its frozen
+nested loader requires tar extraction-filter behavior absent from that stdlib;
+its older extraction modes also fail frozen integrity checks. The current outer
+loaders support hash-verified extraction on 3.9, but the frozen archive and its
+assertions remain unchanged. This is a historical compatibility gap, not a
+Python 3.9 full-suite pass.

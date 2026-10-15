@@ -12,6 +12,10 @@ For either autopilot, read [payload protection](payload-protection.md) before
 write-capable work. Binding and guarded reads detect drift; native host policy
 must prevent payload writes. The bound `payload-policy` command prints a
 reviewable host fragment without applying settings or asserting enforcement.
+Bound `helper-ready` checks Bun and the pinned helper's package/lock install key
+without execution or installation. Run it before selecting a Bun helper under
+protection; missing or stale prerequisites hold that operation. See the same
+protection reference for separate preparation and exact-root readiness evidence.
 
 Resolve `<plugin>` from the loaded public entrypoint, not the consumer directory.
 Use absolute paths below. The plugin may be an installed directory without Git.

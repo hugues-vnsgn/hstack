@@ -2,7 +2,7 @@
 
 This receipt covers the bound configuration helper, disposable installed-consumer
 startup and native write probes. It does not claim a full autopilot queue or mobile
-execution. The [approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6165237473)
+execution. The [approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6184377164)
 defines the boundary and acceptance criteria. The
 [repeatable regression](../tests/payload-boundary.md) documents commands and limits.
 

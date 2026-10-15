@@ -8,8 +8,18 @@ drift; host permissions must reject the write itself.
 ## Prepare the boundary
 
 Complete any separately authorized dependency bootstrap before binding and
-protecting the installation. A missing runtime dependency holds the program for
-owner preparation; generated caches do not get a writable exception in the payload.
+protecting the installation. Before selecting a bundled Bun helper, run the bound
+read-only prerequisite check:
+
+```sh
+python3 "<plugin>/adapters/host_tools.py" helper-ready --binding "<program>/plugin-binding.json"
+```
+
+Missing Bun, missing dependencies or a stale package/lock install key holds that
+operation **before** running the helper or its bootstrap. Obtain separate owner
+authorization for preparation, then bind and protect the prepared installation.
+Prepared helpers remain available under protection. Generated caches do not get
+a writable exception in the payload; `prepared` reports prerequisites only.
 
 1. Resolve the loaded installation and create its binding as
    [host tools](host-tools.md) directs. Record its manifest digest, plugin version
@@ -21,6 +31,10 @@ owner preparation; generated caches do not get a writable exception in the paylo
    use the version and bound digest. Dirt outside the payload is not a blocker.
 2. Inventory every enabled writer: native file tools, shell/child processes,
    delegated workers, MCP, REPL, external executors and remote/computer-use tools.
+   Include host hooks and background commands, plugin monitors, language servers,
+   status-line commands and credential helpers. Claude runs several of these
+   outside its Bash sandbox. Preserve required Git and safety hooks; verify their
+   independent boundary or hold the program rather than disabling them to proceed.
    For each, establish effective enforcement on this root or remove that
    capability from this program. An unverified writer holds dependent execution.
    A tool annotation or an agent's promise is not enforcement.
@@ -89,6 +103,15 @@ verify it again when dispatch creates a different execution environment.
 
 ## Prove startup and preserve the boundary
 
+Readiness belongs to the canonical root in this program's binding. Record the
+binding digest, exact root, effective policy sources, writer inventory and native
+results together. A protected disposable copy proves only its own configuration;
+it cannot establish readiness for a different live root. For the bound live
+installation, inspect effective native policy without modifying it and establish
+that every enabled writer enforces that exact root. If this inspection or the
+mapping from evidence to the bound root is unavailable, hold. Never probe a live
+payload with a write merely to fill the gap.
+
 Before application writes, inspect effective policy and retain native evidence
 of a denied disposable payload edit, a successful payload read and an authorized
 consumer/evidence write in the same execution environment. Use a disposable
@@ -114,7 +137,7 @@ host enforcement, and neither grants publication or landing authority.
 
 ## References
 
-- [Issue 36 and its approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6165237473)
+- [Issue 36 and its current approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6184377164)
 - [Claude file permissions](https://code.claude.com/docs/en/permissions)
 - [Claude sandboxing](https://code.claude.com/docs/en/sandboxing)
 - [Codex permission profiles](https://learn.chatgpt.com/docs/permissions)
