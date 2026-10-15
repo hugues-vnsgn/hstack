@@ -59,7 +59,10 @@ def denied_edits(events, host):
     permission_ids = {d['tool_use_id'] for e in events for d in e.get('permission_denials', [])}
     for event in events:
         if host == 'claude':
-            for block in event.get('message', {}).get('content', []):
+            message = event.get('message', {})
+            if not isinstance(message, dict):
+                continue
+            for block in message.get('content', []):
                 if not isinstance(block, dict):
                     continue
                 if block.get('type') == 'tool_use' and block.get('name') in ['Write', 'Edit']:

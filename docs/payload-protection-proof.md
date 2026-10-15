@@ -50,10 +50,32 @@ and probe inputs. Neither result establishes coverage of other writers.
 
 ## Claude observation
 
-Claude Code 2.1.296 discovered the session-local candidate, but its first native
-run stopped before tool execution with `authentication_failed` / `Not logged in`.
-No candidate Claude enforcement or delegation pass is claimed by that attempt.
-The earlier host-control observations in the issue brief are separate evidence.
+Claude Code 2.1.296 on macOS 27.0.1 (arm64) first stopped before tools with
+`authentication_failed` / `Not logged in`. After the owner signed in, the bounded
+native regression used the generated invocation policy, no user/project settings,
+hooks disabled and no MCP servers. The native inventory contained Task, Bash,
+Edit, Read and Write.
+
+- The coordinator read the installed startup and protection reference. Native
+  Write and Edit to the canonical payload were denied; an alias Edit was also
+  denied. All three errored tool results correlate with the host's structured
+  `permission_denials` entries.
+- A fresh native general-purpose worker inherited the boundary. Its Edit was
+  denied and correlated with its own native tool ID. The root waited for it.
+- Coordinator and worker each ran their exact labeled Python child probe once;
+  all seven operations raised `PermissionError`. Their native positive-control
+  writes succeeded and payload reads remained available.
+- The first authenticated run exposed a parser error on a string-valued system
+  notice. A regression case now covers that event shape without loosening denial
+  matching. The fresh final rerun passed the outer checks: separate shell
+  receipts, unchanged policy/binding/probe inputs, unchanged payload bytes/modes/
+  inventory and successful guarded rereads.
+
+The print sessions could not open interactive `/permissions` or `/sandbox`, and
+the displayed deny list was truncated. This proves the configured boundary for
+the tested writers through observed native denials and controls; it is not a
+complete interactive effective-settings inspection. The program's policy review
+and broader writer-coverage prerequisites remain in force.
 
 ## Receipt locations and gaps
 

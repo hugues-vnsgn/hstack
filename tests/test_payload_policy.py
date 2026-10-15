@@ -64,6 +64,11 @@ class NativeDenialEvidence(unittest.TestCase):
         editor_error = {'message': {'content': [{'type': 'tool_result', 'tool_use_id': 'write-1',
                         'is_error': True, 'content': 'String permission was not found in the file'}]}}
         self.assertEqual(inspect([request, editor_error], 'claude'), set())
+        native_error = {'message': {'content': [{'type': 'tool_result', 'tool_use_id': 'write-1',
+                        'is_error': True, 'content': '<tool_use_error>File is in a directory that is denied by your permission settings.</tool_use_error>'}]}}
+        notice = {'type': 'system', 'message': 'Permission to edit the fixture has been denied.'}
+        self.assertEqual(inspect([notice, request, native_error, result], 'claude'),
+                         {('/fixture/plugin/file', 'Write', None)})
 
     def test_codex_denial_requires_a_matching_native_patch_failure(self):
         inspect = runpy.run_path(str(ROOT / 'scripts/check_payload_boundary.py'))['denied_edits']
