@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -23,7 +24,7 @@ class PinnedEvidenceTests(unittest.TestCase):
         cls.history_before = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.5.json')
         cls.before = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.9.json')
         cls.after = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json')
-        cls.ledger = u.load(ROOT / 'docs/upstream/huguesStack-dispositions.json')
+        cls.ledger = u.load(ROOT / 'docs/upstream/hstack-dispositions.json')
         cls.baseline = u.load(ROOT / 'docs/upstream/baseline-dispositions.json')
         cls.history_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.5-dispositions.json')
 
@@ -298,7 +299,7 @@ class PinnedEvidenceTests(unittest.TestCase):
             target = Path(folder) / 'delta.md'
             args = ['diff', '--from-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.9.json'),
                     '--to-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json'),
-                    '--ledger', str(ROOT / 'docs/upstream/huguesStack-dispositions.json'), '--output', str(target)]
+                    '--ledger', str(ROOT / 'docs/upstream/hstack-dispositions.json'), '--output', str(target)]
             subprocess.run([sys.executable, str(SCRIPT), *args], check=True, capture_output=True)
             self.assertEqual(target.read_bytes(), (ROOT / 'docs/upstream/delta-e43c7ee2-6ce45c59.md').read_bytes())
             subprocess.run([sys.executable, str(SCRIPT), *args, '--check'], check=True, capture_output=True)
@@ -319,10 +320,10 @@ class PinnedEvidenceTests(unittest.TestCase):
     def test_csv_cli_validates_source_and_preserves_existing_output(self):
         with tempfile.TemporaryDirectory() as folder:
             output = Path(folder) / 'ledger.csv'
-            args = [sys.executable, str(SCRIPT), 'csv', '--ledger', str(ROOT / 'docs/upstream/huguesStack-dispositions.json'),
+            args = [sys.executable, str(SCRIPT), 'csv', '--ledger', str(ROOT / 'docs/upstream/hstack-dispositions.json'),
                     '--snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json'), '--output', str(output)]
             subprocess.run(args, check=True, capture_output=True)
-            self.assertEqual(output.read_bytes(), (ROOT / 'docs/upstream/huguesStack-dispositions.csv').read_bytes())
+            self.assertEqual(output.read_bytes(), (ROOT / 'docs/upstream/hstack-dispositions.csv').read_bytes())
             subprocess.run(args + ['--check'], check=True, capture_output=True)
             output.write_bytes(b'curated export')
             self.assertNotEqual(subprocess.run(args, capture_output=True).returncode, 0)
@@ -435,6 +436,62 @@ class LocalGitTests(unittest.TestCase):
         captured = u.snapshot(self.repo, revision)
         self.assertEqual(captured['committed_at_utc'], self.before['committed_at_utc'])
         self.assertEqual(captured['revision'], revision)
+
+
+class RetiredPredecessorTests(unittest.TestCase):
+    """hstack-alpha (the retired predecessor, GitHub osxsystem/hstack) was deleted on
+    2026-10-16. Every file this repository cites from it stays verifiable from the repository."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.receipts = u.load(ROOT / 'docs/wp3-source-receipts.json')
+        cls.predecessor = cls.receipts['retired_predecessor']
+        cls.retained = ROOT / cls.predecessor['retained_at']
+
+    def sha256(self, relative):
+        return hashlib.sha256((self.retained / relative).read_bytes()).hexdigest()
+
+    def test_receipt_note_names_the_deletion_and_the_retained_bytes(self):
+        self.assertEqual(self.predecessor['repository'], 'https://github.com/osxsystem/hstack')
+        self.assertEqual(self.predecessor['revision'], '99cc6129aea3f702ee6cd3b448e4f67700b4353c')
+        self.assertEqual(self.predecessor['retained_at'], 'provenance/upstream/hstack-alpha-99cc612/')
+        self.assertIn('deleted on 2026-10-16', self.predecessor['note'])
+        self.assertIn('hstack-alpha (retired predecessor)', self.predecessor['note'])
+
+    def test_every_cited_predecessor_input_has_a_retained_copy_with_the_receipted_hash(self):
+        rows = [row for row in self.receipts['inputs'] if row['repository'] == self.predecessor['repository']]
+        self.assertEqual(len(rows), 4)
+        for row in rows:
+            # The original repository and revision fields stay on each input.
+            self.assertEqual(row['revision'], self.predecessor['revision'])
+            self.assertEqual(self.sha256(row['source']), row['sha256'], row['source'])
+
+    def test_every_source_line_citation_has_a_retained_copy(self):
+        hashes = {row['source']: row['sha256'] for row in self.receipts['inputs']
+                  if row['repository'] == self.predecessor['repository']}
+        hashes.update(self.predecessor['cited_without_input_row'])
+        cited = set()
+        for path in sorted((ROOT / 'plugin/skills/hugues-mode').rglob('*.md')):
+            for line in path.read_text().splitlines():
+                if not (line.startswith('source:') and 'osxsystem/hstack' in line):
+                    continue
+                self.assertIn(self.predecessor['revision'], line, path.name)
+                self.assertIn('hstack-alpha (retired predecessor', line, path.name)
+                after = line.split('`' + self.predecessor['revision'] + '`', 1)[1]
+                for span in re.findall(r'`([^`]+)`', after):
+                    cited.update(item.strip() for item in span.split(',') if item.strip().endswith('.md'))
+        self.assertEqual(cited, {
+            'packs/mobile/skills/mobile-proof/SKILL.md', 'packs/mobile/references/evidence.md',
+            'packs/mobile/references/platforms.md', 'skills/core/hstack/playbooks/build-doctor.md',
+            'packs/mobile/references/kmp-compose-pilot.md'})
+        for source in sorted(cited):
+            self.assertEqual(self.sha256(source), hashes[source], source)
+
+    def test_retained_link_targets_match_their_recorded_hashes(self):
+        targets = self.predecessor['retained_link_targets']
+        self.assertEqual(len(targets), 13)
+        for source, expected in targets.items():
+            self.assertEqual(self.sha256(source), expected, source)
 
 
 if __name__ == '__main__':

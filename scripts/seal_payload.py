@@ -58,7 +58,7 @@ def seal(root=ROOT, accept=()):
     legacy = {r['source']: r['destination'].removeprefix('plugin/') for r in receipt['files']
               if r['destination'] and r['destination'].startswith('plugin/')}
     manifest = plugin / 'adapters/runtime/payload.json'
-    manifest.write_text(encode({'schema_version': 2, 'revision': 'huguesstack-native-v1',
+    manifest.write_text(encode({'schema_version': 2, 'revision': 'hstack-native-v1',
         'upstream_revision': receipt['upstream_revision'], 'legacy_paths': legacy, 'files': files}))
     payload = plugin / 'adapters/runtime/payload.py'
     payload.write_text(re.sub(r"MANIFEST_SHA256 = '[^']+'", "MANIFEST_SHA256 = '" + digest(manifest) + "'", payload.read_text()))

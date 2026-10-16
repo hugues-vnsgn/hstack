@@ -1,16 +1,16 @@
-# huguesStack maintainer reference
+# hStack maintainer reference
 
-This reference describes the native consolidation shipped in 0.3.0. Start with the [developer guide](DEVELOPER-GUIDE.md) for the current layout and invocation limits. Published release evidence remains bound to its original revision. The source pin is now pstack 0.15.25 at `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f`, merged after 0.3.0 and not yet released.
+This reference describes the native consolidation shipped in 0.3.0 and renamed in 0.4.0. Start with the [developer guide](DEVELOPER-GUIDE.md) for the current layout and invocation limits. Published release evidence remains bound to its original revision. The source pin is now pstack 0.15.25 at `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f`, merged after 0.3.0 and carried by 0.4.0.
 
 ## Load the intended checkout
 
 Use a fresh Claude Code session in the intended consumer repository:
 
 ```sh
-claude --plugin-dir /absolute/path/to/huguesStack/plugin
+claude --plugin-dir /absolute/path/to/hstack/plugin
 ```
 
-Verify discovery of hugues-mode and use the registered command the host exposes. The manifest name is hugues-stack and carries version 0.3.0, a new minor version because the native layout, payload schema 2 and bindings are incompatible with 0.2.0. Verify the checkout path and exact commit as well as the cache/version label. Claude discovery and router invocation were observed once, at commit `0988b56` (see the [interactive check](router-interactive-check.md)); a later checkout still needs its own invocation evidence.
+Verify discovery of hugues-mode and use the registered command the host exposes. The manifest name is hstack and carries version 0.4.0, a new minor version because the plugin name, command prefix, setup skill name, project config folder, Codex permission profile and seal revision changed, so 0.3.x installs and program bindings do not carry over. 0.3.0 was itself a new minor version because the native layout, payload schema 2 and bindings were incompatible with 0.2.0. Verify the checkout path and exact commit as well as the cache/version label. Claude discovery and router invocation were observed once, at commit `0988b56` (see the [interactive check](router-interactive-check.md)); a later checkout still needs its own invocation evidence.
 
 For Codex, use an already-authorized supported native invocation. If discovery or invocation is unavailable, disabled, denied or unknown, hold the dependent step. Provide a manual handoff only when the host requires explicit user invocation; never substitute a direct file read. These instructions authorize no host configuration changes or installations.
 
@@ -31,11 +31,11 @@ The coordinator invokes the selected native skill, loads its phase-required owne
 
 ## Configure roles explicitly
 
-Every role defaults to `inherit-parent` at the effort its skill names. Optional project-local `.huguesstack/models.md` overrides roles; deleting a role restores its skill default. `/setup-huguesstack` detects exposed models, loads state, asks for budget/role choices, validates and writes only after confirmation and authority. Restoring the plugin does not execute setup.
+Every role defaults to `inherit-parent` at the effort its skill names. Optional project-local `.hstack/models.md` overrides roles; deleting a role restores its skill default. `/setup-hstack` detects exposed models, loads state, asks for budget/role choices, validates and writes only after confirmation and authority. Restoring the plugin does not execute setup.
 
 Budgets remain unlimited/max, large/xhigh, medium/high and small/medium. Panel lists launch one worker per entry, `inherit-parent` entries included. `inherit-parent` omits the model override. A rejected value runs on `inherit-parent` at its effort. Report actual models/efforts, blocked seats and process independence separately from model diversity.
 
-Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix. The [two-seat Astra High policy](../plugin/policies/astra-pr-review.md) is suspended for huguesStack PRs; re-activating it in AGENTS.md restores its exact-head review, fix and fresh re-review gate.
+Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix. The [two-seat Astra High policy](../plugin/policies/astra-pr-review.md) is suspended for hStack PRs; re-activating it in AGENTS.md restores its exact-head review, fix and fresh re-review gate.
 
 ## Prove the actual mobile behavior
 

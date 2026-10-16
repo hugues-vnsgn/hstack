@@ -1,19 +1,23 @@
-# huguesStack
+# hStack
 
-huguesStack is the standalone adaptation of pstack for first-class mobile development through Claude Code and Codex.
+hStack is the standalone adaptation of pstack for first-class mobile development through Claude Code and Codex.
 
 ## Language
 
-**huguesStack**:
-The project named by the product owner for this mobile-first pstack adaptation.
-_Avoid_: Mobile Stack, mobile stack as the product name
+**hStack**:
+The project named by the product owner for this mobile-first pstack adaptation. It was called huguesStack until 0.4.0. The rename moved the plugin and marketplace name to `hstack`, the command prefix to `/hstack:`, the setup skill to `setup-hstack` and the project-local folder to `.hstack/`. The `hugues-*` skill names are unchanged.
+_Avoid_: Mobile Stack, mobile stack as the product name, bare "hstack" for the retired predecessor (see **hstack-alpha**)
+
+**hstack-alpha**:
+The retired predecessor, GitHub `osxsystem/hstack`, deleted on 2026-10-16. It is a different project from hStack. The files this repository cites from it stay in [`provenance/upstream/hstack-alpha-99cc612/`](../provenance/upstream/hstack-alpha-99cc612/), byte for byte at revision `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, and the [source receipts](wp3-source-receipts.json) hold their hashes. Name it "hstack-alpha (retired predecessor)" in prose.
+_Avoid_: hstack, the old hStack
 
 **Mobile domains**:
-The four first-class areas covered by huguesStack: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform shared logic, and Compose Multiplatform shared UI.
+The four first-class areas covered by hStack: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform shared logic, and Compose Multiplatform shared UI.
 _Avoid_: Primary native platforms with secondary multiplatform support
 
 **Consumer app**:
-A mobile application that huguesStack helps its owner develop and verify. It is a separate project from huguesStack.
+A mobile application that hStack helps its owner develop and verify. It is a separate project from hStack.
 _Avoid_: Bundled demo app, plugin app
 
 **Upstream responsibility**:
@@ -33,15 +37,15 @@ A bounded version presented for acceptance against declared requirements, with i
 _Avoid_: Full parity, production-ready by date alone
 
 **Layer 1**:
-The huguesStack plugin itself: skills, playbooks, principles, one agent definition, two scripts and docs, installed in Claude Code and Codex from a marketplace manifest. It is the whole 0.1.0 release candidate.
+The hStack plugin itself: skills, playbooks, principles, one agent definition, two scripts and docs, installed in Claude Code and Codex from a marketplace manifest. It is the whole 0.1.0 release candidate.
 _Avoid_: The harness, the runtime, the core
 
 **Layer 2**:
-hstack-alpha's Orca-managed worker runtime, Work Units and captured-review contracts, kept as a deferred option. Its existing evidence is never cited as Layer 1 proof.
+The Orca-managed worker runtime, Work Units and captured-review contracts of hstack-alpha (retired predecessor), kept as a deferred option. Its existing evidence is never cited as Layer 1 proof.
 _Avoid_: Phase 2, the full product
 
 **hugues-mode**:
-The huguesStack router skill, forked from pstack's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
+The hStack router skill, forked from pstack's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
 _Avoid_: mobile-mode, the orchestrator
 
 **Proof lane**:
@@ -53,7 +57,7 @@ An `interrogate` run in the host that did not produce the diff: Claude Code revi
 _Avoid_: Multi-model panel, second opinion from the same host
 
 **Consumer fixture**:
-A small disposable app with a planted defect, used as a consumer when no real app is selected for a domain. The default for KMP and CMP is hstack-alpha's `kmp-compose-ios-pilot`.
+A small disposable app with a planted defect, used as a consumer when no real app is selected for a domain. The default for KMP and CMP is the `kmp-compose-ios-pilot` app, copied from hstack-alpha (retired predecessor) into [`tests/fixtures/kmp-compose-ios-pilot/`](../tests/fixtures/kmp-compose-ios-pilot/).
 _Avoid_: Demo app, sample bundled in the plugin
 
 **Personal-workflow bar**:

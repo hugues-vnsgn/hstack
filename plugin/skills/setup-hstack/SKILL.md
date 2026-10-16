@@ -1,6 +1,6 @@
 ---
-name: setup-huguesstack
-description: Configure huguesStack's model and reasoning budget per role. Use when setting up huguesStack or changing which models it uses.
+name: setup-hstack
+description: Configure hStack's model and reasoning budget per role. Use when setting up hStack or changing which models it uses.
 ---
 
 ## Host invocation contract
@@ -11,7 +11,7 @@ The host contract governs how this skill reaches any sibling dependency.
 
 # Setup pstack
 
-Write `.huguesstack/models.md` at the project root: the model-role file every pstack skill reads before it picks a worker's model.
+Write `.hstack/models.md` at the project root: the model-role file every pstack skill reads before it picks a worker's model.
 
 ## Role values
 
@@ -43,7 +43,7 @@ Read the `model` and effort values your host's native agent tool accepts from it
 
 ### 2. Load current state
 
-The starting role values are the file shape shown in step 5 below. If `.huguesstack/models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those values. A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
+The starting role values are the file shape shown in step 5 below. If `.hstack/models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it. Treat its values as the current choices. Otherwise start from those values. A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
 
 ### 3. Budget, map, and confirm
 
@@ -64,10 +64,10 @@ Every real slug written for the current host must be in the detected set. The ot
 
 ### 5. Write the file
 
-Write `.huguesstack/models.md` with a `# budget` line naming the chosen label and its target effort, and one line per role, using the role labels in [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels). Overwrite the whole file so re-runs stay idempotent. Shape:
+Write `.hstack/models.md` with a `# budget` line naming the chosen label and its target effort, and one line per role, using the role labels in [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels). Overwrite the whole file so re-runs stay idempotent. Setup writes only `.hstack/`; it never writes or deletes `.huguesstack/`. Shape:
 
 ```
-# huguesStack model roles. One line per role. Delete a line to fall back to the skill default (`inherit-parent`).
+# hStack model roles. One line per role. Delete a line to fall back to the skill default (`inherit-parent`).
 # Value: alternatives joined by ` or `, each `<model> <effort>`. A host runs the first one its agent tool accepts. Panel seats alternate which host's model comes first. `inherit-parent` leaves the agent tool's `model` unset. Each comma-separated panel entry runs one subagent.
 # budget: unlimited (max)
 feature, refactoring: sonnet high or gpt-6.1-sol high
@@ -101,4 +101,4 @@ For a non-mobile project, an existing harness remains sufficient. Offer generati
 
 On acceptance, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. Report a generated but unproved recipe as a draft with its blocker. Before later mobile proof, invoke the project recipe through the host's native mechanism; writing the file does not establish discovery or permission.
 
-For a manual handoff, show `/hugues-stack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the active host's discovered entry. End by reporting model setup and verification readiness separately, including any held proof.
+For a manual handoff, show `/hstack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the active host's discovered entry. End by reporting model setup and verification readiness separately, including any held proof.

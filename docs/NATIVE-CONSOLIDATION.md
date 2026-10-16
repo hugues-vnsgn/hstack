@@ -14,7 +14,9 @@ mirror, symlink shadow or custom discovery registry. The former generated
 entrypoints are authored files now; `render_core.py` refuses to regenerate them.
 
 The two historical aliases remain `poteto-mode` → `hugues-mode` and
-`setup-pstack` → `setup-huguesstack`. Public native paths remain stable, including
+`setup-pstack` → `setup-hstack` (then `setup-huguesstack`; the 0.4.0 rename moved
+that one skill, its folder and the plugin name from `hugues-stack` to `hstack`).
+Every other public native path remains stable, including
 paths an owner may have used to disable skills. Different installation roots can
 still affect path-based host settings; reconcile those explicitly during an update.
 The pstack 0.15.25 merge adds a third alias, `poteto-help` → `hugues-help`.
@@ -34,7 +36,7 @@ provenance-only. The installed artifact includes the original MIT notice.
 
 ## Invocation and resources
 
-Use native skill invocation for `hugues-mode`, `setup-huguesstack` and any
+Use native skill invocation for `hugues-mode`, `setup-hstack` and any
 consumer or external skill. Read ordinary owned references only when the
 current phase needs them. None of those is a reference-file fallback:
 unavailable, owner-disabled, denied or unknown invocation stops its dependent
@@ -44,21 +46,21 @@ proven universal limitation in this setup.
 
 At the pstack 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
 with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
-only `setup-pstack` is model-invocable. huguesStack restores that design instead of the earlier native
+only `setup-pstack` is model-invocable. hStack restores that design instead of the earlier native
 table that made 46 skills model-invocable: only `hugues-mode` and
-`setup-huguesstack` are model-invocable now, so only their descriptions enter
+`setup-hstack` are model-invocable now, so only their descriptions enter
 startup context on Claude Code. The other 52 bundled skills are user-only; the
 owner can still type any of them by name, and the mode reaches each one as its
 router's reference: the agent reads its SKILL.md in full with the host's own
 file-read tool instead of invoking it natively. The installed helper takes no
 part in that read. `hugues-agent` preloads `hugues-mode` through the Claude Code agent
 `skills` field and invokes it natively when the preload is absent; whether the
-plugin-scoped name `hugues-stack:hugues-mode` resolves is unobserved. Generated
+plugin-scoped name `hstack:hugues-mode` resolves is unobserved. Generated
 project verification skills stay consumer-local and model-invocable so proof
 steps can drive them; that tier is unrelated to the bundled table above.
 
 The host adapter's native-only rule takes precedence over inherited
-sibling-read wording for `hugues-mode`, `setup-huguesstack` and consumer or
+sibling-read wording for `hugues-mode`, `setup-hstack` and consumer or
 external skills; a bundled user-only skill keeps that inherited wording, read
 in full as the mode's reference. The adapter also prevents unconditional
 traversal of navigation links. A figure-it-out consultation of mode principles
@@ -76,7 +78,7 @@ and their legacy aliases. `translate-plan` also rejects such reads, including a
 path to any `SKILL.md` in any letter case or with `.`, `..` or repeated slashes.
 A plan names the bundled skill to apply, never a path to read: the agent reads a user-only
 skill's file with the host's own file-read tool, and reaches `hugues-mode`,
-`setup-huguesstack` and consumer or external skills natively. Owned
+`setup-hstack` and consumer or external skills natively. Owned
 playbook/reference rereads stay binding-guarded. PR 1 fix rounds 1 and 2 briefly
 let the helper read bundled skill bodies; each review found another branch that
 slipped past the skill-body guard, and round 3 restored the `a67df90` runtime

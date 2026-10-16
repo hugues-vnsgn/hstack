@@ -14,10 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 PIN = '6ce45c59b9301a638c1fe1a7b8dc2a82b650898f'
 TREE = '8ff8d978aee18904b8be529b477ade363a53f7dd'
 EXCLUDED = set()
-ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-huguesstack', 'poteto-help': 'hugues-help'}
+ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
-# huguesStack restores that design. Only `hugues-mode` (the router) and
-# `setup-huguesstack` stay model-invocable, so their descriptions are the only ones
+# hStack restores that design. Only `hugues-mode` (the router) and
+# `setup-hstack` stay model-invocable, so their descriptions are the only ones
 # paid for in the host's per-turn skill list. Every other bundled skill is user-only:
 # the owner can still type it by name, and the mode reaches it by reading its
 # SKILL.md in full (the scoped host adapter rule), never by native invocation.
@@ -94,7 +94,7 @@ def worker_roles():
 
 ADAPTERS = ['plugin/adapters/host.md', 'plugin/adapters/mobile.md']
 PHASE_GUIDANCE = {
-    'host-workers.md': 'Worker dispatch, worker execution, role selection or setup-huguesstack',
+    'host-workers.md': 'Worker dispatch, worker execution, role selection or setup-hstack',
     'host-workflow-tools.md': 'Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations',
     'host-special-skills.md': 'Transcript-dependent skills, optional integrations or consumer skill placement',
     'host-typescript.md': 'Reading or editing TypeScript files',
@@ -209,7 +209,7 @@ def adapter_errors(texts):
             errors.append('missing phase prerequisite: ' + name)
     for marker in ['Before the triggering action, read its complete reference',
                    'never use a file read as an invocation fallback', 'never restart task routing',
-                   'Reach `hugues-mode`, `setup-huguesstack` and each consumer or external skill',
+                   'Reach `hugues-mode`, `setup-hstack` and each consumer or external skill',
                    "only through the host's supported native mechanism",
                    'owner-disabled entries and native denials',
                    'No translation grants new authority', 'A constraint\ncan block execution',
@@ -227,7 +227,7 @@ def adapter_errors(texts):
     obligations = {
         ADAPTERS[0]: ['canonical skill owns workflow', 'never use a file read as an invocation fallback',
                      'never restart task routing', 'consumer or external skill', 'List length sets', 'never an implicit replacement', 'effort setting',
-                     'project-local `.huguesstack/models.md`', 'No translation grants new authority',
+                     'project-local `.hstack/models.md`', 'No translation grants new authority',
                      'mark the seat blocked', 'Do not execute it without installation authority',
                      'ready-PR and stack/base mechanics', 'Supply absolute paths',
                      '`Comment Sicko` to `hugues-comment-sicko`',
@@ -617,7 +617,7 @@ def check(root=ROOT):
     payload_path = root / 'plugin/adapters/runtime/payload.json'
     payload = upstream.load(payload_path)
     anchors = {'adapters/runtime/payload.json', 'adapters/runtime/payload.py', 'adapters/host_tools.py'}
-    require(payload == {'schema_version': 2, 'revision': 'huguesstack-native-v1',
+    require(payload == {'schema_version': 2, 'revision': 'hstack-native-v1',
         'upstream_revision': PIN,
         'legacy_paths': {s: d.removeprefix('plugin/') for s, d in source_map.items() if d and d.startswith('plugin/')},
         'files': [{'path': p, 'sha256': row['sha256'], 'mode': '100'+format(row['mode'], '03o')}

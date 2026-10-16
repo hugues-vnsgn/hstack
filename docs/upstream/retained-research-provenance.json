@@ -11,7 +11,7 @@
       "blob_sha": "67edc340d4d8a9c7ab0b9e08c663e0e63b8d9125",
       "sha256": "08a00079bb15b4258874ac3ff62d4ca7e94350ffedb521d0fd296dc9dd21904e",
       "mode": "100644",
-      "destination_sha256": "77848f25f174fc8d23ac09a36c918f587cb229fed5b6b94b5626ceffbd52af30",
+      "destination_sha256": "d8a219fe2638e253b6a41e12955a22ce5efcbf82738001ab568ce22524d771c2",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -54,7 +54,7 @@
       "blob_sha": "b5fe93f8b78f58b06e0bf245a6b5b8faae4300e8",
       "sha256": "144d42e7712723d763e607bc0a969e5f1cdf83ec7228519d87677cc534571bed",
       "mode": "100644",
-      "destination_sha256": "5079ccba1382aebb62ef6ce093df86d1c14f5eec4296caaad1cbe4048a01a369",
+      "destination_sha256": "304dc3b8c2f1326a3cafdec3abc9f3e385bb8b195896ff28a0ba505ad21b0bb2",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],

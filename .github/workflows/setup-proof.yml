@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   ios:
-    runs-on: [self-hosted, macOS, huguesstack-proof]
+    runs-on: [self-hosted, macOS, hstack-proof]
     timeout-minutes: 60
     permissions:
       contents: read

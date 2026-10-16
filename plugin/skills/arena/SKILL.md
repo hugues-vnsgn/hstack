@@ -20,7 +20,7 @@ Every candidate gets the same prompt, so the prompt is the contract.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric, 3-6 concrete gradeable criteria for what success looks like on *this* task. It is the picker's tool in Phase D. Candidates only see the task.
-3. Pick the runners. Use the `arena runners` line in `.huguesstack/models.md`, one seat per entry. If the file or that line is missing, default to three seats on `inherit-parent max`. An `inherit-parent` entry in this line or the cross-judge line means the parent model, so omit `model` for it. Pass each entry's effort as the agent tool's effort setting. If the agent tool rejects a configured entry, run that seat on `inherit-parent` at the entry's effort and say so. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and speed for the job, per [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
+3. Pick the runners. Use the `arena runners` line in `.hstack/models.md`, one seat per entry. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it. If the file or that line is missing, default to three seats on `inherit-parent max`. An `inherit-parent` entry in this line or the cross-judge line means the parent model, so omit `model` for it. Pass each entry's effort as the agent tool's effort setting. If the agent tool rejects a configured entry, run that seat on `inherit-parent` at the entry's effort and say so. Spawn more runners when the arena covers multiple design directions. Use the same model N times when the work is generation-bound rather than judgment-sensitive. Pick each subagent's reasoning level and speed for the job, per [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
 4. Give each candidate its own output location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
 
 ## Phase B: Fan out
@@ -31,7 +31,7 @@ If a candidate produces no output, proceed with N-1 and note the dropout.
 
 ## Phase C: Cross-judge
 
-After all Phase B candidates complete, choose one value from the `arena cross-judge pool` line in `.huguesstack/models.md`, or use `inherit-parent max` if the file or that line is missing. Prefer a model different from the parent's when the pool offers one. Spawn one readonly judge subagent on that value. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Don't spawn it while candidates are still writing.
+After all Phase B candidates complete, choose one value from the `arena cross-judge pool` line in `.hstack/models.md`, or use `inherit-parent max` if the file or that line is missing. Prefer a model different from the parent's when the pool offers one. Spawn one readonly judge subagent on that value. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with your reading in Phase D. Don't spawn it while candidates are still writing.
 
 ## Phase D: Pick a base
 

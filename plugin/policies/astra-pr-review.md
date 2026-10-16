@@ -1,10 +1,10 @@
 # Project policy: Astra High PR review
 
-This owner-selected profile applies to PR-bound changes in huguesStack. It is an
+This owner-selected profile applies to PR-bound changes in hStack. It is an
 explicit project addition to pstack, not an upstream default.
 It is currently suspended: this repository's AGENTS.md does not activate it, and
 it applies only after an owner explicitly re-activates or opts into it. Installing
-huguesStack in another project does not activate this profile. Consumer projects use their own policy
+hStack in another project does not activate this profile. Consumer projects use their own policy
 and the pinned core defaults unless their owner explicitly opts into this one.
 
 Before publication, obtain two fresh independent GPT-Astra reviewers at High effort

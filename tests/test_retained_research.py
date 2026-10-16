@@ -20,7 +20,7 @@ RECEIPT = Path('docs/upstream/retained-research-provenance.json')
 
 class RetainedResearchPackageTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='huguesstack-research-')
+        self.temp = tempfile.TemporaryDirectory(prefix='hstack-research-')
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name) / 'package'
         shutil.copytree(ROOT, self.root,

@@ -47,4 +47,4 @@ Run its own instructions end to end once: launch, doctor, drive ONE mapped featu
 
 ## 5. Offer the maintenance loop
 
-Point the user at `/hugues-stack:maintain-verification-skill` in Claude Code or `$maintain-verification-skill` in Codex, using the active host's discovered entry, for keeping the map honest as the app changes. Suggest a cadence only if they ask.
+Point the user at `/hstack:maintain-verification-skill` in Claude Code or `$maintain-verification-skill` in Codex, using the active host's discovered entry, for keeping the map honest as the app changes. Suggest a cadence only if they ask.

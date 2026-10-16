@@ -1,6 +1,6 @@
 # Durable mobile evidence
 
-Use this guide before executing a mobile proof and when writing `evidence.md`. Keep one task folder outside both plugin and consumer repositories, normally `~/huguesstack-evidence/<date>-<task>/`. Choose a writable equivalent when that location is unavailable and disclose it. Preserve raw results and artifacts there before removing any scratch checkout or run state. This is plain Markdown guidance, with no report parser, runtime or evidence schema.
+Use this guide before executing a mobile proof and when writing `evidence.md`. Keep one task folder outside both plugin and consumer repositories, normally `~/hstack-evidence/<date>-<task>/`. Choose a writable equivalent when that location is unavailable and disclose it. Preserve raw results and artifacts there before removing any scratch checkout or run state. This is plain Markdown guidance, with no report parser, runtime or evidence schema.
 
 ## Before the run
 

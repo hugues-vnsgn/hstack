@@ -36,7 +36,7 @@
       "candidate_sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted plan-checker tests added at pstack 0.15.25; run with Bun against the huguesStack checker"
+      "scope": "adapted plan-checker tests added at pstack 0.15.25; run with Bun against the hStack checker"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",

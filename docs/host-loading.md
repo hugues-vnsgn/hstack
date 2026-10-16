@@ -18,15 +18,17 @@ claude plugin validate --strict ./plugin
 claude plugin validate --strict ./.claude-plugin/marketplace.json
 ```
 
-The following was the WP1 fresh-session probe command:
+The following is the WP1 fresh-session probe command. The probe ran it with the
+command prefix the plugin had before 0.4.0 (`/hugues-stack:hugues-mode`); the
+renamed prefix below has not been observed:
 
 ```sh
-claude --plugin-dir "$PLUGIN_DIRECTORY" --print '/hugues-stack:hugues-mode'
+claude --plugin-dir "$PLUGIN_DIRECTORY" --print '/hstack:hugues-mode'
 ```
 
 Set `PLUGIN_DIRECTORY` to the plugin directory for the checkout being tested.
-Claude Code 2.1.286 passed this direct invocation in a fresh session on
-4 October 2026: the exact probe reply matched and the command exited 0.
+Claude Code 2.1.286 passed the pre-rename form of this direct invocation in a
+fresh session on 4 October 2026: the exact probe reply matched and the command exited 0.
 Invoking the probe through the Skill tool was rejected because the skill uses
 `disable-model-invocation`; the direct command is the appropriate probe method.
 Record the host version, plugin Git SHA,
@@ -46,7 +48,7 @@ empty-setting-source probes returned unknown-skill; their failures remain in
 the evidence. No symlink freshness cause was established.
 
 A separate fresh session loaded this checkout's plugin with `--plugin-dir` and
-invoked `/hugues-stack:create-verification-skill` directly. The generator uses
+invoked `/hstack:create-verification-skill` (then `/hugues-stack:create-verification-skill`) directly. The generator uses
 `disable-model-invocation: true`; direct user invocation is the appropriate path.
 It read the repository and template and returned a complete private candidate,
 exit 0. It performed no file write, build or drive. Preserve an existing recipe's
@@ -68,7 +70,7 @@ for the later applied cycle and its remaining limits.
 ## Codex
 
 **Codex native marketplace discovery** is **observed-pass**. The
-[PR #1 reviewer](https://github.com/hugues-vnsgn/huguesStack/pull/1) reported this
+[PR #1 reviewer](https://github.com/hugues-vnsgn/hstack/pull/1) reported this
 per-invocation override on 4 October 2026 with Codex 0.160.0 (`$REPO` denotes the
 reviewed checkout):
 
@@ -76,9 +78,10 @@ reviewed checkout):
 codex -c 'marketplaces.hs.source_type="local"' -c "marketplaces.hs.source=\"$REPO\"" plugin list
 ```
 
-The output listed `` Marketplace `hugues-stack` `` at
+The output listed `` Marketplace `hstack` `` at
 `$REPO/.claude-plugin/marketplace.json` and the row
-`hugues-stack@hugues-stack  not installed  $REPO/plugin`.
+`hstack@hstack  not installed  $REPO/plugin` (the observed output read
+`hugues-stack` and `hugues-stack@hugues-stack`, the names before 0.4.0).
 `~/.codex/config.toml` was byte-identical before and after. Codex names the
 marketplace after the manifest's `name`, rather than the config key `hs`.
 This records the reviewer's observation; the override was not rerun here.
@@ -161,7 +164,7 @@ writes or consumer commands ran. All 48 plugin file fingerprints matched the
 preview. The host again exposed no todo/plan tool, so this result covers the
 displayed JSON checklist fallback. Native todo integration remains unrun. The
 final tested head and review result are recorded in
-[PR #3](https://github.com/hugues-vnsgn/huguesStack/pull/3).
+[PR #3](https://github.com/hugues-vnsgn/hstack/pull/3).
 
 The owner subsequently authorized Claude Code review. Claude Code 2.1.286 with
 `claude-opus-5-5` completed a static code review of that head in plan permission
@@ -198,7 +201,7 @@ permission bypass occurred. Route probes restricted tools and disabled hooks
 per invocation. Their isolation grants no implementation authority.
 
 A separate initial synthetic Claude session kept normal hook policy and launched the
-registered `hugues-stack:hugues-agent` and a fresh native Explore reviewer.
+registered `hstack:hugues-agent` (then `hugues-stack:hugues-agent`) and a fresh native Explore reviewer.
 Parented events show mode/principle reads. Claude denied the one exact scratch
 Write despite the explicit one-path `allowedTools` setting: the authorized
 probe lacked an effective matching grant and its noninteractive session had no

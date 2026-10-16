@@ -29,7 +29,7 @@ def overrides(config):
             return '{' + ','.join(json.dumps(k) + '=' + inline(v) for k, v in value.items()) + '}'
         return json.dumps(value)
     return ['-c', 'default_permissions=' + inline(config['default_permissions']),
-            '-c', 'permissions.huguesstack-program=' + inline(config['permissions']['huguesstack-program'])]
+            '-c', 'permissions.hstack-program=' + inline(config['permissions']['hstack-program'])]
 
 
 def retain_codex_sessions(output, require_workers=True):
@@ -272,7 +272,7 @@ print(json.dumps(results))
         import tomllib  # The opt-in Codex runner needs 3.11; ordinary discovery supports 3.9.
         flags = overrides(tomllib.loads(settings.read_text()))
         if args.scenario == 'prepared':
-            command('shell', ['codex', 'sandbox', '-C', str(consumer), '-P', 'huguesstack-program',
+            command('shell', ['codex', 'sandbox', '-C', str(consumer), '-P', 'hstack-program',
                               *flags, '--', *probe_argv('sandbox')]).check_returncode()
     if not args.shell_only:
         startup = shlex.join([sys.executable, str(helper), 'read-workflow', '--binding', str(binding),

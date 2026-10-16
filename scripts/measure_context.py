@@ -19,6 +19,23 @@ ADDED_AFTER_RELEASE = (
     'plugin/skills/sharpen/SKILL.md',
 )
 
+# Skills renamed after the frozen archives were cut. The archive bytes stay as published; only
+# the loaded path keys take today's name, so every historical comparison finds the renamed skill.
+RENAMED_AFTER_ARCHIVE = {'plugin/skills/setup-huguesstack/': 'plugin/skills/setup-hstack/'}
+
+
+def current_names(texts):
+    renamed = {}
+    for name, text in texts.items():
+        for old, new in RENAMED_AFTER_ARCHIVE.items():
+            if name.startswith(old):
+                name = new + name[len(old):]
+                break
+        renamed[name] = text
+    if len(renamed) != len(texts):
+        raise ValueError('context archive rename collides with a current path')
+    return renamed
+
 
 def metrics(texts):
     chars = sum(len(s) for s in texts)
@@ -113,10 +130,13 @@ def inventory(texts, paths):
 
 
 def measure(root=ROOT):
-    release = archive_texts(root / 'tests/fixtures/release-0.2.0.tar.gz')
+    release = current_names(archive_texts(root / 'tests/fixtures/release-0.2.0.tar.gz'))
     before, before_revision = native_baseline(root)
+    before = current_names(before)
     pre_pr_main, pre_pr_main_revision = pre_pr_main_baseline(root)
+    pre_pr_main = current_names(pre_pr_main)
     pre_pr_mode, _ = pre_pr_main_mode_read_set(root)
+    pre_pr_mode = current_names(pre_pr_mode)
     current = {p.relative_to(root).as_posix(): p.read_text()
                for p in (root / 'plugin').rglob('*') if p.is_file() and
                (p.suffix == '.md' or p.name == 'openai.yaml')}

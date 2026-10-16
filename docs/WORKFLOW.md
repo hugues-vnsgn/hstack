@@ -6,7 +6,7 @@ Intent precedes domain: pause, pickup, maintenance, authoring, review and invest
 
 The coordinator grounds/designs, copies the selected todos, delegates fresh rounds, reads actual outputs and verifies them. Feature work with several valid shapes requires arena. Mobile bug work observes RED against unfixed production before a separate production worker, then GREEN on the same regression, or records the pinned impractical-test exception. KMP/CMP changes need affected target proof.
 
-Role defaults and explicit panel lists come from pinned skills and optional project-local `.huguesstack/models.md`. Availability and actual models/efforts are disclosed. Same-model process independence does not imply family diversity. This repository activates its two-seat Astra High PR policy through AGENTS.md; consumer projects retain their own policy. Generic interrogate retains its defaults.
+Role defaults and explicit panel lists come from pinned skills and optional project-local `.hstack/models.md`. Availability and actual models/efforts are disclosed. Same-model process independence does not imply family diversity. This repository activates its two-seat Astra High PR policy through AGENTS.md; consumer projects retain their own policy. Generic interrogate retains its defaults.
 
 Generation seeds a feature map and proves one feature end to end. Maintenance discovers source-only omissions and drives the whole map. A bounded diagnostic reports only visited journeys. Evidence survives cleanup; builds/skips/wrong targets cannot become behavior passes.
 

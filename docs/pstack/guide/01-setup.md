@@ -4,7 +4,7 @@ In this page you install the plugin, pick which models pstack uses, and run your
 
 ## Install the plugin
 
-Follow the [huguesStack installation instructions](../../../README.md) for Claude Code or Codex, then return here to configure the consumer project.
+Follow the [hStack installation instructions](../../../README.md) for Claude Code or Codex, then return here to configure the consumer project.
 
 ## Pick your models
 
@@ -12,12 +12,12 @@ Run the active host's command:
 
 ```text
 # Claude Code
-/hugues-stack:setup-huguesstack
+/hstack:setup-hstack
 # Codex
-$setup-huguesstack
+$setup-hstack
 ```
 
-[`setup-huguesstack`](../../../plugin/skills/setup-huguesstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `.huguesstack/models.md` in your project, a small file every pstack skill reads before it picks a subagent's model.
+[`setup-hstack`](../../../plugin/skills/setup-hstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `.hstack/models.md` in your project, a small file every pstack skill reads before it picks a subagent's model.
 
 You only override what you care about. A role with no line in the file keeps the skill's default. To restore a default, delete that role's line. A rerun of setup keeps any role whose model differs from the default. When a default changes, a file written before the change still pins the old default, so delete those role lines, or delete the file, then run setup again.
 
@@ -29,11 +29,11 @@ For mobile projects, setup looks for a project `verify-<app>` skill, even when X
 
 For non-mobile projects, an existing harness remains sufficient. Setup offers generation when neither a verification skill nor a harness exists.
 
-Accepting generates a project-local recipe under the consumer's `.claude/skills/` or `.agents/skills/` convention. The generator proves one feature before handing it over; unexecuted output remains a draft. You can start it manually with `/hugues-stack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the host's discovered entry. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers the workflow.
+Accepting generates a project-local recipe under the consumer's `.claude/skills/` or `.agents/skills/` convention. The generator proves one feature before handing it over; unexecuted output remains a draft. You can start it manually with `/hstack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the host's discovered entry. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers the workflow.
 
 If you're new to pstack, accept the offer. An agent that can check its own work keeps going until the check passes. An agent that can't hands every result back to you to check by hand. Of everything in this guide, the verification skill pays off the most.
 
-Each skill reads `.huguesstack/models.md` at its next role selection, so the roles apply from the next subagent spawn.
+Each skill reads `.hstack/models.md` at its next role selection, so the roles apply from the next subagent spawn.
 
 ## Prepare an autopilot program
 
@@ -58,7 +58,7 @@ Pick something real but small, and describe it the way you'd describe it to a co
 
 ```text
 # Claude Code
-/hugues-stack:hugues-mode add a --json flag to this command. text output stays byte-identical. verify both.
+/hstack:hugues-mode add a --json flag to this command. text output stays byte-identical. verify both.
 # Codex
 $hugues-mode add a --json flag to this command. text output stays byte-identical. verify both.
 ```

@@ -1,6 +1,6 @@
 # Mobile lanes
 
-source: huguesStack first-release requirements; conceptual reference to osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/skills/mobile-proof/SKILL.md`, `packs/mobile/references/platforms.md`, `packs/mobile/references/evidence.md` and `packs/mobile/references/kmp-compose-pilot.md`. No consumer code or managed-worker runtime is imported.
+source: hStack first-release requirements; conceptual reference to hstack-alpha (retired predecessor; GitHub osxsystem/hstack, deleted 2026-10-16; bytes retained in `provenance/upstream/hstack-alpha-99cc612/`) at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/skills/mobile-proof/SKILL.md`, `packs/mobile/references/platforms.md`, `packs/mobile/references/evidence.md` and `packs/mobile/references/kmp-compose-pilot.md`. No consumer code or managed-worker runtime is imported.
 
 Read this file before a mobile build, bug fix, feature, refactor, prototype or proof. The selected lane binds the target and observations, not just a command name.
 
@@ -44,7 +44,7 @@ For changes spanning domains, select every affected lane. A linked framework is 
 
 ## Evidence and outcomes
 
-Read the [durable evidence guide](evidence-guide.md) for recording commands and tools, dirty work, result-file provenance and post-teardown checks. Use its [Markdown template](evidence-template.md). Store each authorized run outside the repository in a task-specific evidence folder, for example `~/huguesstack-evidence/<date>-<task>/`. Preserve raw logs, xcresult bundles, JUnit XML, UI reports and screenshots next to evidence.md. Record:
+Read the [durable evidence guide](evidence-guide.md) for recording commands and tools, dirty work, result-file provenance and post-teardown checks. Use its [Markdown template](evidence-template.md). Store each authorized run outside the repository in a task-specific evidence folder, for example `~/hstack-evidence/<date>-<task>/`. Preserve raw logs, xcresult bundles, JUnit XML, UI reports and screenshots next to evidence.md. Record:
 
 - Plugin SHA, host name/version, consumer repo and SHA, and any dirty consumer diff that changes the tested artifact.
 - Domain, scheme/variant, target and explicit simulator UDID or emulator serial/API identity.

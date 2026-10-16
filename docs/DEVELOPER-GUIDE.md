@@ -1,6 +1,6 @@
-# Use huguesStack 0.3.0
+# Use hStack 0.4.0
 
-This guide is for version 0.3.0, the native layout that follows 0.2.0. Your app
+This guide is for version 0.4.0, which renames 0.3.0's native layout to hStack. Your app
 stays in its own repository. Skills are instruction files for specific jobs; playbooks order the
 steps of a larger task. Start with `hugues-mode` and describe the result you want.
 It retains the generic workflows and applicable Swift/iOS, Kotlin/Android,
@@ -17,21 +17,22 @@ performs no installation or authentication setup.
 
 ## Install in Claude Code
 
-Version 0.3.0 loads for one session from a checkout of its `v0.3.0` tag. Keep an
-existing 0.2.0 install while you check it. Start from your app directory:
+Version 0.4.0 loads for one session from a checkout of its `v0.4.0` tag. Keep an
+existing 0.3.0 install while you check it. Start from your app directory:
 
 ```sh
-claude --plugin-dir "/absolute/path/to/huguesStack/plugin"
+claude --plugin-dir "/absolute/path/to/hstack/plugin"
 ```
 
-Check native discovery before invoking `/hugues-stack:hugues-mode`. A package
+Check native discovery before invoking `/hstack:hugues-mode`. A package
 manifest check is not evidence that invocation succeeded. Do not modify global
 settings to force discovery or bypass an owner-disabled skill.
 
-For the earlier release, use its [0.2.0 release notes](RELEASE-0.2.0.md)
-and instructions at that tag. Its historical manual-loading instructions do not
-apply to this version's native invocation contract. The [0.3.0 release
-notes](RELEASE-0.3.0.md) list what changed and what is unobserved.
+For an earlier release, use its release notes ([0.2.0](RELEASE-0.2.0.md),
+[0.3.0](RELEASE-0.3.0.md)) and the instructions at that tag. Their historical
+instructions use the earlier names and do not apply to this version. The
+[0.4.0 release notes](RELEASE-0.4.0.md) list the renames, how to migrate from
+0.3.0 and what is unobserved.
 
 ## Use Codex
 
@@ -70,7 +71,7 @@ checks and any proof you could not run. Do not push or publish.
 The workflow retains its evidence and worker requirements. When another bundled
 skill is needed, the mode reads that user-only skill's file itself with the
 host's own file-read tool; it uses supported native invocation only for
-`hugues-mode`, `setup-huguesstack` and your own skills. A separate command is
+`hugues-mode`, `setup-hstack` and your own skills. A separate command is
 needed only if the host requires explicit user invocation. A disabled or denied
 native-only dependency holds its phase; the agent must not silently replace it
 with a file read. These handoffs are conditional, not a proven limitation in
@@ -103,7 +104,7 @@ relative entry paths are retained; a changed installation root may still affect
 owner settings that use absolute paths. Reconcile these explicitly through the
 host's supported controls. The real controls are the plugin as a whole
 (install, enable, disable) and any native denial the host applies to
-`hugues-mode` or `setup-huguesstack`'s invocation; never silently re-enable
+`hugues-mode` or `setup-hstack`'s invocation; never silently re-enable
 either after the owner disabled it. A bundled user-only skill has no separate
 per-skill disablement to preserve across an update, since the agent's own file
 read ignores any such setting.
@@ -111,7 +112,7 @@ read ignores any such setting.
 Old 0.2.0 installed-payload bindings are intentionally rejected. Review the changed
 workflow and plan, then create a new binding as described in
 [host tools](../plugin/adapters/host-tools.md). Ordinary resource rereads remain
-binding-guarded; no skill body is a helper read. `hugues-mode`, `setup-huguesstack`
+binding-guarded; no skill body is a helper read. `hugues-mode`, `setup-hstack`
 and consumer or external skills require native invocation, a bundled user-only
 skill's SKILL.md is read with the host's own file-read tool, and a plan names the
 skill to apply instead of a path. The plan translator holds on every raw-skill

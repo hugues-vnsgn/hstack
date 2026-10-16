@@ -449,17 +449,17 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                 self.assertNotIn('standalone guarded read', result.stderr)
 
     def test_read_workflow_and_translate_keep_model_invocable_skills_native_only(self):
-        # `hugues-mode` and `setup-huguesstack` stay model-invocable and, like every other
+        # `hugues-mode` and `setup-hstack` stay model-invocable and, like every other
         # bundled skill, their SKILL.md is refused by both verbs.
-        for source in ['skills/hugues-mode/SKILL.md', 'skills/setup-huguesstack/SKILL.md',
+        for source in ['skills/hugues-mode/SKILL.md', 'skills/setup-hstack/SKILL.md',
                        'pstack/skills/poteto-mode/SKILL.md', 'pstack/skills/setup-pstack/SKILL.md']:
             with self.subTest(source=source):
                 result = self.bound('read-workflow', source)
                 self.assertEqual(result.returncode, 2)
                 self.assertIn('native skill invocation', result.stderr)
-        for text in ['cat skills/hugues-mode/SKILL.md', 'cat skills/setup-huguesstack/SKILL.md',
+        for text in ['cat skills/hugues-mode/SKILL.md', 'cat skills/setup-hstack/SKILL.md',
                      'git show origin/main:skills/hugues-mode/SKILL.md',
-                     '`skills/setup-huguesstack/SKILL.md`']:
+                     '`skills/setup-hstack/SKILL.md`']:
             with self.subTest(text=text):
                 result = self.plan_result(text)
                 self.assertEqual(result.returncode, 2, result.stdout)

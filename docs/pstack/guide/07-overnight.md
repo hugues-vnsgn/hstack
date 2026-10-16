@@ -114,7 +114,7 @@ Every loop above still waits for you to start it. A scheduled or event-driven tr
 - Every stage can stop the line. Triage can decide the report is expected behavior, repro can fail to reproduce it, and the fixer can judge the change too risky. Each of those outcomes is useful, because it keeps bad work from reaching the next stage, where it costs more to undo.
 - Every stage hands over evidence. Repro attaches screenshots and video of the broken state, and the fix attaches before-and-after proof. A human can then check that the agent fixed the right thing before reading a line of code.
 
-huguesStack ships no ready-made automation pack for this. Upstream's Benny service source stays in the provenance archive and is not a supported helper.
+hStack ships no ready-made automation pack for this. Upstream's Benny service source stays in the provenance archive and is not a supported helper.
 
 **Pitfall:** a duration is not a finish condition. "work on this for 4 hours" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.
 

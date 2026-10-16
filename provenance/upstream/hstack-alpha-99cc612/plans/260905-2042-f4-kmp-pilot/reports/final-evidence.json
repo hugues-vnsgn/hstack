@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "status": "accepted",
+  "scope": "Disposable KMP and Compose Android/iOS debug pilot; supervised Codex team",
+  "baseCommit": "ccbbae970ac93b818e269215e883050c940fab87",
+  "hstackBaseCommit": "34eed3071b1ea4820f2153f43241f720a959e3b6",
+  "rawEvidenceRoot": "/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/hstack-gate-f4-krthktsg",
+  "profile": {
+    "provider": "codex",
+    "model": "gpt-5.6-terra",
+    "reasoningEffort": "xhigh"
+  },
+  "snapshot": {
+    "snapshotId": "319e16ad62feb4cba31e16eb79272189ff84e6c715fe09a3ba631e2f966e8ece",
+    "snapshotFileSha256": "319e16ad62feb4cba31e16eb79272189ff84e6c715fe09a3ba631e2f966e8ece",
+    "evidenceFilesCompared": 115,
+    "changedFilesCompared": 2,
+    "allBytesMatch": true
+  },
+  "workUnits": {
+    "kmp_f4_impl": {
+      "revision": 17,
+      "acceptanceState": "accepted",
+      "activeAttemptId": null,
+      "attempts": [
+        {
+          "id": "impl_1",
+          "state": "closed",
+          "session": {
+            "provider": "codex",
+            "id": "01a071e0-e7c7-7442-ae34-eabbd8134119"
+          },
+          "terminal": {
+            "runtimeId": "fa4ec323-6148-4f3f-9e36-0945ffc483cb",
+            "terminalHandle": "term_79f28abd-e612-47ea-aa09-21a1555a0e8c"
+          }
+        }
+      ],
+      "acceptedResultSha256": "b32c52be4d13eafbb7bbafe737fe7092ecca263c997c366ebb1be3d8a7447850",
+      "artifactHashesVerified": 117
+    },
+    "kmp_f4_review": {
+      "revision": 22,
+      "acceptanceState": "accepted",
+      "activeAttemptId": null,
+      "attempts": [
+        {
+          "id": "review_1",
+          "state": "closed",
+          "session": {
+            "provider": "codex",
+            "id": "01a071eb-f620-7a01-8f4d-7b287679b670"
+          },
+          "terminal": {
+            "runtimeId": "fa4ec323-6148-4f3f-9e36-0945ffc483cb",
+            "terminalHandle": "term_e6fb208e-79da-466b-9dc5-6393b6681ccf"
+          }
+        }
+      ],
+      "acceptedResultSha256": "1dbe7c666556ace899e188a201d2d3adaa7bcc12c4586ffa560fc328c5c85e06",
+      "artifactHashesVerified": 12
+    }
+  },
+  "runtime": {
+    "android": {
+      "passed": true,
+      "serial": "emulator-5554",
+      "apkSha256": "6470e6057157b4fa0899d090b4c340bdff92c42ba16e2e1e23a7402289f48da6",
+      "cases": [
+        {
+          "subtotal_cents": 9999,
+          "expected_discount_cents": 0,
+          "passed": true,
+          "observed_text": "Discount: 0 cents"
+        },
+        {
+          "subtotal_cents": 10000,
+          "expected_discount_cents": 1000,
+          "passed": true,
+          "observed_text": "Discount: 1000 cents"
+        },
+        {
+          "subtotal_cents": 10001,
+          "expected_discount_cents": 1000,
+          "passed": true,
+          "observed_text": "Discount: 1000 cents"
+        }
+      ],
+      "evidence": "f4-live/implementation/android-ui/result.json"
+    },
+    "ios": {
+      "passed": true,
+      "device": {
+        "actualIds": [
+          "6FB28FD2-CB6B-45EB-9B5B-FADB2BAB20C4"
+        ],
+        "matchesRequestedExactly": true,
+        "requestedId": "6FB28FD2-CB6B-45EB-9B5B-FADB2BAB20C4"
+      },
+      "counts": {
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "totalTestCount": 1
+      },
+      "appExecutableSha256": "792862a434732bc665597fb1ede492001b29bb56df6f431d8d07809aef1f925d",
+      "hashScope": "App executable only; excludes Info.plist, frameworks, and all other App.app bundle contents.",
+      "evidence": "f4-live/implementation/ios-ui/result.json"
+    }
+  },
+  "localValidation": {
+    "command": [
+      "bash",
+      "tests/run-gates.sh"
+    ],
+    "exitCode": 0,
+    "coreTests": 152,
+    "parserTests": 2,
+    "routerSelfTest": "passed",
+    "log": "local-gates.log"
+  },
+  "recovery": {
+    "cause": "Coordinator reviewer brief omitted role-specific output path and canonical verdict schema; initial command argv concatenated four invocations.",
+    "trackedFollowUps": [
+      "reviewer_delivery_repair",
+      "reviewer_argv_metadata_repair"
+    ],
+    "originalArtifactsPreserved": true,
+    "codeChangedDuringRecovery": false,
+    "correctedTemplateDryRender": "passed"
+  },
+  "cleanup": {
+    "complete": true,
+    "workerTerminalCounts": {
+      "impl": 0,
+      "review": 0
+    },
+    "androidEmulatorAbsent": true,
+    "emulatorProcessExitCode": 0,
+    "iosSimulatorState": "Shutdown",
+    "capacity": {
+      "store": "/private/var/folders/yd/86fjng8s4hbfhcz7_0yqcl9w0000gn/T/hstack-gate-f4-krthktsg/store",
+      "configured": true,
+      "maxWorkers": 1,
+      "occupied": 0,
+      "queue": []
+    },
+    "retainedWorktrees": true,
+    "retainedSimulator": true,
+    "orcaEmulatorRunning": false,
+    "iosHelperPidAbsent": 13250
+  },
+  "evidenceHashes": {
+    "supervisor-cleanup.json": "364a1d1b6bd4ccb1affa08d9ea960ca3425bd0bfbdcd3367ca578db1e06a542e",
+    "supervisor-acceptance-audit.json": "60cbadac427845d71b3b2ef9e427d8216676e6059d12d6e81ae934c8eafb8fc9",
+    "supervisor-snapshot-audit.json": "74bf980d61028ff26499ba16e3295dae1b3d695163550e0a7b2b393031397d1a",
+    "local-gates.log": "fa148f1a0410deedbc9b5befe084ac627daed868fd872c2505a96f1e80fcb668",
+    "baseline-ios-summary.json": "87e87b1a53812cbf031e44a55093cb533ee922ae8e577187908aa195585c694e",
+    "baseline-android-observations.json": "8635d02e8cdeb3e03ca71f3554f025f57293eac5eeaccdb5bcda6d7fc53f32e1",
+    "supervisor-template-audit.json": "49b9db7d57c1097ed1d8186008010aaa1130dfc52bd6a2100c2e04a20eb2f379"
+  }
+}

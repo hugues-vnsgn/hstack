@@ -21,7 +21,7 @@ When you're stuck, or can't tell which skill fits, type [`hugues-help`](../../..
 
 ```text
 # Claude Code
-/hugues-stack:hugues-help which skill should i use to review this branch?
+/hstack:hugues-help which skill should i use to review this branch?
 # Codex
 $hugues-help which skill should i use to review this branch?
 ```

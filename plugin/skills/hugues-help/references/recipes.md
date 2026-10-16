@@ -1,6 +1,6 @@
 # Prompts worth copying
 
-Swap in the real paths, skills, and done checks. Informal wording works. These use the short slash form. In Claude Code, type the plugin prefix, as in `/hugues-stack:hugues-mode`. In Codex, type `$hugues-mode`.
+Swap in the real paths, skills, and done checks. Informal wording works. These use the short slash form. In Claude Code, type the plugin prefix, as in `/hstack:hugues-mode`. In Codex, type `$hugues-mode`.
 
 ## Understand
 

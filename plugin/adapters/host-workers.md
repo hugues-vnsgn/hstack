@@ -18,7 +18,7 @@ applicable principle's SKILL.md in full as the scoped bundled reference below.
 If the host cannot preserve required context isolation or parallelism, mark
 that phase blocked.
 
-**`hugues-agent` by host.** Claude Code registers it as `hugues-stack:hugues-agent`, the
+**`hugues-agent` by host.** Claude Code registers it as `hstack:hugues-agent`, the
 `subagent_type` to pass. Codex has no registered name observed here: the fresh worker
 takes the role instructions of `agents/hugues-agent.md` through its supported
 fresh-worker mechanism. The `poteto-agent` mapping above stays for playbooks that
@@ -73,9 +73,9 @@ mark the seat blocked and ask for an explicit configuration choice. Never invent
 an available model or label a blocked seat completed. Do not update or publish a
 default-fix PR without publication authority.
 
-`setup-huguesstack` uses the pinned detect → load → budget/map/confirm → validate
+`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate
 → write → confirm → optional verification sequence. Translate the Cursor global
-rule path to project-local `.huguesstack/models.md`. Read it before all role
+rule path to project-local `.hstack/models.md`. Read it before all role
 selection; deleting a role restores its pinned default. Write only after the
 skill's confirmation and current filesystem authority. Keep every role and panel,
 the four budget choices and availability validation. This file is guidance;
@@ -83,12 +83,12 @@ restoring the plugin does not execute setup or change any user's configuration.
 
 ## Model defaults and role labels
 
-**Defaults for every agent-tool call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers instead of inlined context, and an explicit model and effort per role. The defaults are `inherit-parent xhigh` for code and `inherit-parent max` for prose and judgment, and `/setup-huguesstack` configures them.
+**Defaults for every agent-tool call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers instead of inlined context, and an explicit model and effort per role. The defaults are `inherit-parent xhigh` for code and `inherit-parent max` for prose and judgment, and `/setup-hstack` configures them.
 
 Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) go to your strongest judgment model (default `inherit-parent max`), whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your fast code model.
 
-Per-role lines in `.huguesstack/models.md`, written by `/setup-huguesstack`, override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role value of `inherit-parent` runs that role on the parent chat model (omit the agent tool's `model`).
+Per-role lines in `.hstack/models.md`, written by `/setup-hstack`, override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default, and a role value of `inherit-parent` runs that role on the parent chat model (omit the agent tool's `model`). If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
 
-**Match the model to the job.** Before each spawn, start from the role's line in `.huguesstack/models.md`, or its default above when the role has none. That value already fits the work its tier assumes, so move it only when this job is harder or easier than that: raise it one step, up to `max`, for the hardest or subtlest work, and lower it one step for routine work. Go faster only when the job is urgent, meaning CI or trunk is red or a person is blocked on the result right now, and only through a speed option the native agent tool exposes. Otherwise use standard speed. Whether Claude Code or Codex lets a delegate choose a speed is unobserved here: where the tool exposes none, the worker runs at its standard speed and the report says so. A tool with no effort setting leaves the level at the host's effort, as above. Verification is the exception and stays on the `swarm workers` role's model, level and speed. Change only the level and the speed, and keep the model family the role names, so a diverse panel stays diverse. A role on `inherit-parent` stays on the parent model and only its level moves. If the tool offers no model at the adjusted level, use the nearest one it exposes and record the requested and actual level. If the tool rejects the adjusted level or speed, do not try another adjustment. Use the role's line or default and say so.
+**Match the model to the job.** Before each spawn, start from the role's line in `.hstack/models.md`, or its default above when the role has none. That value already fits the work its tier assumes, so move it only when this job is harder or easier than that: raise it one step, up to `max`, for the hardest or subtlest work, and lower it one step for routine work. Go faster only when the job is urgent, meaning CI or trunk is red or a person is blocked on the result right now, and only through a speed option the native agent tool exposes. Otherwise use standard speed. Whether Claude Code or Codex lets a delegate choose a speed is unobserved here: where the tool exposes none, the worker runs at its standard speed and the report says so. A tool with no effort setting leaves the level at the host's effort, as above. Verification is the exception and stays on the `swarm workers` role's model, level and speed. Change only the level and the speed, and keep the model family the role names, so a diverse panel stays diverse. A role on `inherit-parent` stays on the parent model and only its level moves. If the tool offers no model at the adjusted level, use the nearest one it exposes and record the requested and actual level. If the tool rejects the adjusted level or speed, do not try another adjustment. Use the role's line or default and say so.
 
-**Role labels.** `setup-huguesstack` writes these labels and the router's playbooks read them. A code playbook's configured model comes from its line: `feature, refactoring`, `bug-fix`, `perf-issue` or `hillclimb`. The hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
+**Role labels.** `setup-hstack` writes these labels and the router's playbooks read them. A code playbook's configured model comes from its line: `feature, refactoring`, `bug-fix`, `perf-issue` or `hillclimb`. The hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.

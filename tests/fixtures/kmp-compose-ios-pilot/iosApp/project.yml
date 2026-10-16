@@ -1,0 +1,63 @@
+name: App
+options:
+  bundleIdPrefix: com.hstack.gatef4
+  deploymentTarget:
+    iOS: "18.5"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "18.5"
+targets:
+  App:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Gate F4
+        CADisableMinimumFrameDurationOnPhone: true
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hstack.gatef4.ios
+        PRODUCT_NAME: App
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""
+        EXCLUDED_ARCHS[sdk=iphonesimulator*]: x86_64
+        USER_SCRIPT_SANDBOXING: NO
+        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(SRCROOT)/../composeApp/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)"
+        OTHER_LDFLAGS: "$(inherited) -framework SharedUI"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks"
+    preBuildScripts:
+      - name: Build SharedUI framework
+        script: |
+          if [ "YES" = "$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED" ]; then
+            exit 0
+          fi
+          cd "$SRCROOT/.."
+          ./gradlew :composeApp:embedAndSignAppleFrameworkForXcode
+        basedOnDependencyAnalysis: false
+  AppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: AppUITests
+    dependencies:
+      - target: App
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hstack.gatef4.ios.uitests
+        TEST_TARGET_NAME: App
+schemes:
+  App:
+    build:
+      targets:
+        App: all
+        AppUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - AppUITests

@@ -54,7 +54,7 @@ Mobile proof requires a project `verify-<app>` recipe, even if driving tools alr
 
 ```text
 # Claude Code
-/hugues-stack:create-verification-skill
+/hstack:create-verification-skill
 # Codex
 $create-verification-skill
 ```
@@ -94,7 +94,7 @@ Apps change and feature maps rot. Run this at least once a day, ideally from a s
 
 ```text
 # Claude Code
-/hugues-stack:maintain-verification-skill
+/hstack:maintain-verification-skill
 # Codex
 $maintain-verification-skill
 ```

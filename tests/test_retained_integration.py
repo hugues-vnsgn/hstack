@@ -373,7 +373,7 @@ def native_binding_errors(root, by_cell):
 
 class RetainedIntegration(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='huguesstack-retained-integration-')
+        self.temp = tempfile.TemporaryDirectory(prefix='hstack-retained-integration-')
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name) / 'package'
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns('.git', '__pycache__', 'planning'))

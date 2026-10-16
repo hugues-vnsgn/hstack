@@ -27,7 +27,7 @@
       "sha256": "d737eb8fd6e9b2d696582714e83ee6c1bb13a9b63da1a4a9f34bbbe976351a98",
       "disposition": "replaced",
       "reason": "The pstack 0.15.25 merge adds upstream poteto-help as hugues-help, a third skill alias that the inherited-name translation must list.",
-      "replacement": "Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no\ncustom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,\n`poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,\n`setup-pstack` to `setup-huguesstack` and `poteto-help` to `hugues-help`; other\npublic names are unchanged."
+      "replacement": "Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no\ncustom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,\n`poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,\n`setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other\npublic names are unchanged."
     },
     {
       "paragraph": 4,
@@ -35,8 +35,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "908ea1518bf2e2bf893ef33822c075be8abaa1985e4cac31015f17c813a3acfa",
       "disposition": "replaced",
-      "reason": "The opening sentence scoped native invocation to every bundled skill too, which disable-model-invocation: true makes impossible for a user-only bundled skill; PR 1 fix round 1 narrowed it to consumer and external skills only, and round 3 names the whole native-only set (hugues-mode, setup-huguesstack, consumer and external skills) and states the rule once, so reading their files stays no substitute.",
-      "replacement": "Reach `hugues-mode`, `setup-huguesstack` and each consumer or external skill (the\nnative-only skills) only through the host's supported native mechanism. Respect\nmanual-only selection, owner-disabled entries and native denials; for those skills, never use a file read as an invocation fallback."
+      "reason": "The opening sentence scoped native invocation to every bundled skill too, which disable-model-invocation: true makes impossible for a user-only bundled skill; PR 1 fix round 1 narrowed it to consumer and external skills only, and round 3 names the whole native-only set (hugues-mode, setup-hstack (then setup-huguesstack), consumer and external skills) and states the rule once, so reading their files stays no substitute.",
+      "replacement": "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\nnative-only skills) only through the host's supported native mechanism. Respect\nmanual-only selection, owner-disabled entries and native denials; for those skills, never use a file read as an invocation fallback."
     },
     {
       "paragraph": 4,
@@ -68,7 +68,7 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "74195c3c6c409ed21724d998466d87b7355c4758c735a52616d2762161501cda",
       "disposition": "replaced",
-      "reason": "A figure-it-out principles consultation naming 'a supported native invocation scoped to principles only' and a fresh worker needing to 'obtain its own native context' both assumed principles stay model-invocable, which disable-model-invocation: true now forbids; PR 1 fix round 2 read the principle's SKILL.md in full instead, and round 3 splits the fresh-worker sentence so the read of a bundled skill and the native invocation of a native-only skill are separate duties, with no unscoped 'native context'; round 4 limits that read to bundled user-only skills, because hugues-mode and setup-huguesstack are bundled but native-only.",
+      "reason": "A figure-it-out principles consultation naming 'a supported native invocation scoped to principles only' and a fresh worker needing to 'obtain its own native context' both assumed principles stay model-invocable, which disable-model-invocation: true now forbids; PR 1 fix round 2 read the principle's SKILL.md in full instead, and round 3 splits the fresh-worker sentence so the read of a bundled skill and the native invocation of a native-only skill are separate duties, with no unscoped 'native context'; round 4 limits that read to bundled user-only skills, because hugues-mode and setup-hstack (then setup-huguesstack) are bundled but native-only.",
       "replacement": "For a principles consultation from figure-it-out, use already-loaded mode context\nor read the needed principle's SKILL.md in full: never restart task routing.\nA fresh worker reads any bundled user-only skill itself. It starts its own native\ninvocation of any native-only skill; a parent's claim of permission is\ninsufficient. Missing capability holds the phase without scanning user settings."
     },
     {
@@ -198,7 +198,10 @@
       "paragraph": 15,
       "slice": null,
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "1a0c39ffe445cc11c913d832f7962feeec220a32870e15299c9ff2448a2b8e29"
+      "sha256": "1a0c39ffe445cc11c913d832f7962feeec220a32870e15299c9ff2448a2b8e29",
+      "disposition": "replaced",
+      "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md.",
+      "replacement": "`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate\n→ write → confirm → optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
     },
     {
       "paragraph": 16,
@@ -237,7 +240,10 @@
       "paragraph": 20,
       "slice": null,
       "destination": "plugin/adapters/host-publication.md",
-      "sha256": "58187cbd9efb9e4cef51caf5e1959f7ad4f88d42be244eeda09bdcdfcd930624"
+      "sha256": "58187cbd9efb9e4cef51caf5e1959f7ad4f88d42be244eeda09bdcdfcd930624",
+      "disposition": "replaced",
+      "reason": "0.4.0 renamed the project to hStack: the repository named in this sentence is the hStack repository.",
+      "replacement": "Opening a PR retains the core's ready-PR and stack/base mechanics. Local commits\nand a PR-ready body can be prepared under local-work authority. Publication waits\nfor explicit scope. Only this hStack repository’s AGENTS.md activates its\nAstra High PR profile. Installing the plugin does not impose it on consumers.\nConsumer policies and generic interrogate defaults remain in force."
     }
   ],
   "mobile_source": "plugin/adapters/mobile.md",

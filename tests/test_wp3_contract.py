@@ -17,7 +17,7 @@ GENERATOR = Path('plugin/skills/create-verification-skill/SKILL.md')
 
 class WP3PackageRegressions(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='huguesstack-wp3-check-')
+        self.temp = tempfile.TemporaryDirectory(prefix='hstack-wp3-check-')
         self.addCleanup(self.temp.cleanup)
         self.repo = Path(self.temp.name) / 'package'
         shutil.copytree(ROOT, self.repo,
