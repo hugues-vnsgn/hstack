@@ -12,7 +12,10 @@
       "paragraph": 1,
       "slice": null,
       "destination": "plugin/adapters/host.md",
-      "sha256": "571635456034ac994641e3445f29dc01e26f776e917b5fa019589648906cea02"
+      "sha256": "571635456034ac994641e3445f29dc01e26f776e917b5fa019589648906cea02",
+      "disposition": "replaced",
+      "reason": "Shorten equivalent authority and phase guidance so the deferred new-program proof pointer preserves the initial-read budget. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint.",
+      "replacement": "Apply this adapter and mobile applicability before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
     },
     {
       "paragraph": 2,
@@ -109,10 +112,7 @@
     },
     {
       "paragraph": 8,
-      "slice": [
-        0,
-        981
-      ],
+      "slice": [0, 981],
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "2d38038763942aa5a5b899bf5703ff26ae744ba876af43f62efa8233654c3651"
     },

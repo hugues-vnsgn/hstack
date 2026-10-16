@@ -10,6 +10,7 @@ Copy this plain Markdown outline into the private task evidence folder. Replace 
 - Domains, selected schemes/variants, target tests and native callers: <facts>
 - Devices: <per-target UDID/serial, runtime/API, dimensions and text-scale conditions>
 - Evidence folder and artifact privacy boundary: <local path>
+- New program: protected approved checklist, trusted digest, binding and candidate record: <controller-held paths; actual approval reference>
 
 ## Baseline
 
@@ -35,6 +36,7 @@ Copy this plain Markdown outline into the private task evidence folder. Replace 
 <Exact reviewed revision/diff, reviewer host/model/effort, independence label, findings and adjudication.>
 <Per-domain build, tests, native callers and runtime outcomes. Support states remain separate from run outcomes.>
 <Unrun/blocked checks, missing prerequisites and next permitted action.>
+<New program: derived program-check verdict and inspected record. Actual user-visible outcome, including crash; remaining defects/unexplained data changes; missing proof; every unresolved owner decision. Keep passed, failed, untested, blocked, inconclusive and owner-waived checks distinct.>
 
 ## Teardown and evidence survival
 

@@ -5,6 +5,14 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
+For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
+before the first owner dispatch. Protect the approved checklist, accepted proof
+and installed plugin with actual host write enforcement. At every round's
+existing verdict step, the root runs `program-check` against its owner-held
+baseline and complete decision/finding state. A nonzero result holds a clean
+verdict; neither a rewritten plan nor self-proof can replace accepted evidence.
+Keep the phase order and all gates below.
+
 ### Autopilot-full
 
 **Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)
@@ -12,6 +20,10 @@ through bound `read-workflow`. Establish native read-only protection for the bou
 installation, record effective writer coverage and require it for every worker.
 Missing or unverifiable protection holds dependent execution. Keep the payload
 readable and report plugin defects for separate owner-authorized maintenance.
+
+For a new program, the controller applies [program control](../../../adapters/program-control.md)
+before every owner/helper/group dispatch and on pickup. Its approved scheduling
+limits override parallel-owner defaults; preserve complete required groups.
 
 **You own the verdicts, never the PRs. One owner carries each PR from build to merge, and nothing merges until your swarm, which never wrote the code, has proven the code that lands.**
 

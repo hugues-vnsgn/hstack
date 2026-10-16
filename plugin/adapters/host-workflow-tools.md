@@ -15,6 +15,11 @@ These are mechanical operand translations, not new execution or deletion scope.
 Before each autopilot verdict, use bound `plan-compare` per the
 [verification contract](../skills/hugues-mode/references/verification-contract.md).
 
+For new programs, apply [program proof](program-proof.md) before building and
+at verification. Its commands grant no execution or publication authority.
+The controller applies [program control](program-control.md) for limits,
+checkpoints and pickup. Warning records add no quota-triggered stop.
+
 The pinned Bun helpers include a bootstrap that can install dependencies.
 Do not execute it without installation authority. First inspect local runtime and
 cached dependencies. A missing runtime, dependency, cloud worker, forge API or

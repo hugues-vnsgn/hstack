@@ -1,5 +1,10 @@
 ### Session pickup
 
+For a program using [program control](../../../adapters/program-control.md), run
+`pickup` before continuation, refresh native worker observations, and reconcile
+live processes and device restoration. Preserve stop instructions and completed
+work; uncertainty holds affected work rather than spawning duplicates.
+
 **You own the resume point. Read the prior trail, don't redo it.**
 
 1. Locate the prior trail. A local transcript under the active workspace's `agent-transcripts/` directory (the system prompt names the path. Do not glob across `~/.cursor/projects/*/`, that crosses workspace boundaries and reads private chats from unrelated projects), a cloud-agent URL, or a pushed branch. Read the metadata overview and last messages first, then scan back for the decision points. Parse a long transcript in a subagent and keep the reduced timeline in the main thread (the **principle-guard-the-context-window** skill). Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section.
