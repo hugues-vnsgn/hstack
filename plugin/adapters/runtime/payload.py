@@ -160,7 +160,7 @@ def policy(root, host, consumer, evidence, parent=None):
                         'allowUnsandboxedCommands': False,
                         'filesystem': {'disabled': False, 'denyWrite': [str(root)],
                                        'allowWrite': writable}}}, indent=2)
-    if not parent or parent in {':danger-full-access', 'hstack-program'}:
+    if not parent or parent in {':danger-full-access', 'hstack-program', 'huguesstack-program'}:
         raise ValueError('name the active bounded Codex permission profile with --parent')
     lines = ['default_permissions = "hstack-program"', '',
              '[permissions.hstack-program]', 'extends = ' + json.dumps(parent), '',

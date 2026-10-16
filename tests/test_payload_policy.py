@@ -82,6 +82,8 @@ class PayloadPolicy(InstalledFixture, unittest.TestCase):
     def test_unsafe_policy_requests_hold_without_printing_configuration(self):
         for extra in [('--host', 'codex'),
                       ('--host', 'codex', '--parent', ':danger-full-access'),
+                      ('--host', 'codex', '--parent', 'hstack-program'),
+                      ('--host', 'codex', '--parent', 'huguesstack-program'),
                       ('--host', 'claude', '--consumer', self.plugin),
                       ('--host', 'claude', '--evidence', self.plugin / 'adapters')]:
             with self.subTest(extra=extra):
