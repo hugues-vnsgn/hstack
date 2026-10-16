@@ -2,12 +2,15 @@
 
 hStack gives Claude Code and Codex a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.3.0** keeps 50 public skills, 23 generic playbooks, two agents and
-four mobile playbooks. Each skill owns one canonical `SKILL.md`. The unreleased
-source merges pstack 0.15.25 and adds four user-only skills, for 54. Exact pstack
+Version **0.4.0** renames the project from huguesStack to hStack. The plugin is
+`hstack`, its commands start with `/hstack:` and the setup skill is `setup-hstack`;
+the [0.4.0 release notes](docs/RELEASE-0.4.0.md) list the renames and how to
+migrate. It has 54 public skills, 23 generic playbooks, two agents and four mobile
+playbooks. Each skill owns one canonical `SKILL.md`. Against 0.3.0's 50 skills, it
+merges pstack 0.15.25 and adds four user-only skills. Exact pstack
 source remains in a provenance archive outside runtime discovery. Only
 `hugues-mode` and `setup-hstack` appear in the host's skill list; the router
-reads the other skills as files. The published 0.1.0 and 0.2.0 releases and
+reads the other skills as files. The published 0.1.0, 0.2.0 and 0.3.0 releases and
 their evidence are unchanged.
 
 ## Start with Claude Code
@@ -37,7 +40,7 @@ explains the boundary and a first-task workflow.
 
 The workflows ask the agent to inspect the project, keep a task checklist, use focused workers where required, verify the result and report missing evidence. Mobile changes need checks on the affected targets. hStack does not supply Xcode, Android tooling, model access or device control.
 
-The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete planning was blocked by isolated host startup/authentication. It did not establish full Claude/Codex workflow execution, native transcript compatibility, mobile behavior or unattended cleanup. Read the [0.3.0 release notes](docs/RELEASE-0.3.0.md) and the [0.2.0 release notes](docs/RELEASE-0.2.0.md) for the evidence and limits.
+The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete planning was blocked by isolated host startup/authentication. It did not establish full Claude/Codex workflow execution, native transcript compatibility, mobile behavior or unattended cleanup. Read the [0.4.0 release notes](docs/RELEASE-0.4.0.md), the [0.3.0 release notes](docs/RELEASE-0.3.0.md) and the [0.2.0 release notes](docs/RELEASE-0.2.0.md) for the evidence and limits.
 
 ## Reference and maintenance
 

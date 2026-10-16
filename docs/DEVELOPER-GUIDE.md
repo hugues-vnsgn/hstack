@@ -1,6 +1,6 @@
-# Use hStack 0.3.0
+# Use hStack 0.4.0
 
-This guide is for version 0.3.0, the native layout that follows 0.2.0. Your app
+This guide is for version 0.4.0, which renames 0.3.0's native layout to hStack. Your app
 stays in its own repository. Skills are instruction files for specific jobs; playbooks order the
 steps of a larger task. Start with `hugues-mode` and describe the result you want.
 It retains the generic workflows and applicable Swift/iOS, Kotlin/Android,
@@ -17,8 +17,8 @@ performs no installation or authentication setup.
 
 ## Install in Claude Code
 
-Version 0.3.0 loads for one session from a checkout of its `v0.3.0` tag. Keep an
-existing 0.2.0 install while you check it. Start from your app directory:
+Version 0.4.0 loads for one session from a checkout of its `v0.4.0` tag. Keep an
+existing 0.3.0 install while you check it. Start from your app directory:
 
 ```sh
 claude --plugin-dir "/absolute/path/to/hstack/plugin"
@@ -28,10 +28,11 @@ Check native discovery before invoking `/hstack:hugues-mode`. A package
 manifest check is not evidence that invocation succeeded. Do not modify global
 settings to force discovery or bypass an owner-disabled skill.
 
-For the earlier release, use its [0.2.0 release notes](RELEASE-0.2.0.md)
-and instructions at that tag. Its historical manual-loading instructions do not
-apply to this version's native invocation contract. The [0.3.0 release
-notes](RELEASE-0.3.0.md) list what changed and what is unobserved.
+For an earlier release, use its release notes ([0.2.0](RELEASE-0.2.0.md),
+[0.3.0](RELEASE-0.3.0.md)) and the instructions at that tag. Their historical
+instructions use the earlier names and do not apply to this version. The
+[0.4.0 release notes](RELEASE-0.4.0.md) list the renames, how to migrate from
+0.3.0 and what is unobserved.
 
 ## Use Codex
 
