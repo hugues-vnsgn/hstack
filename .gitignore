@@ -2,3 +2,6 @@ __pycache__/
 *.py[cod]
 .DS_Store
 docs/planning/
+skills-lock.json
+.claude/
+.agents/
