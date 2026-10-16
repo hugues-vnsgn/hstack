@@ -79,3 +79,15 @@ _Avoid_: Builder when referring to every code-writing participant
 **Program usage budget**:
 The owner-approved limits on usage and active agents across an hStack program, including its coordinator, PR owners, reviewers and nested helpers. It is distinct from the host's remaining subscription allowance and model reasoning-effort presets.
 _Avoid_: Remaining allowance, model effort budget
+
+**Payload protection**:
+The guarantee that no writer in an hStack program can change the installed plugin payload the program is bound to, while that payload stays readable. Detecting drift afterwards is not payload protection; the write itself must be refused.
+_Avoid_: Payload lock, hash check
+
+**Out-of-reach control**:
+An operating-system protection on the installed payload that the agent's OS user cannot remove, such as ownership by another user, a read-only mount attached by root, or the system-immutable flag. A protection the agent's own user can lift, such as the user-immutable flag or an ACL on files it owns, is not one.
+_Avoid_: File lock, immutable payload
+
+**Held / ready**:
+The two states of payload protection for a program. Ready means current evidence shows the payload's writes are refused for every enabled writer; held means it does not, and dependent work waits.
+_Avoid_: Protected, locked, pending
