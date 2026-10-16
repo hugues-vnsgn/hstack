@@ -10,7 +10,7 @@ import shlex
 import shutil
 import stat
 
-PIN = 'huguesstack-native-v1'
+PIN = 'hstack-native-v1'
 ANCHORS = {'adapters/runtime/payload.json', 'adapters/runtime/payload.py', 'adapters/host_tools.py'}
 # Created after install by the bundled Bun bootstrap or the host OS; never workflow inputs.
 GENERATED_TREES = {'skills/hugues-mode/scripts/node_modules'}
@@ -18,7 +18,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = '525317268a703b454551a67d7fee84892c26f066af5b78a47085fd05f61b5a40'
+MANIFEST_SHA256 = '33a3d5e5ae5287f972b9935e4a55a08496d145f4b749796e5f01ce0963313675'
 
 
 def digest(path):
@@ -160,11 +160,11 @@ def policy(root, host, consumer, evidence, parent=None):
                         'allowUnsandboxedCommands': False,
                         'filesystem': {'disabled': False, 'denyWrite': [str(root)],
                                        'allowWrite': writable}}}, indent=2)
-    if not parent or parent in {':danger-full-access', 'huguesstack-program'}:
+    if not parent or parent in {':danger-full-access', 'hstack-program'}:
         raise ValueError('name the active bounded Codex permission profile with --parent')
-    lines = ['default_permissions = "huguesstack-program"', '',
-             '[permissions.huguesstack-program]', 'extends = ' + json.dumps(parent), '',
-             '[permissions.huguesstack-program.filesystem]']
+    lines = ['default_permissions = "hstack-program"', '',
+             '[permissions.hstack-program]', 'extends = ' + json.dumps(parent), '',
+             '[permissions.hstack-program.filesystem]']
     lines.extend(json.dumps(name) + ' = "write"' for name in writable)
     lines.append(json.dumps(str(root)) + ' = "read"')
     return '\n'.join(lines)

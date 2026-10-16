@@ -13,7 +13,7 @@ CHECKER = ROOT / 'scripts/check-plugin.sh'
 
 class PackageChecks(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='huguesstack-check-')
+        self.temp = tempfile.TemporaryDirectory(prefix='hstack-check-')
         self.addCleanup(self.temp.cleanup)
         self.repo = Path(self.temp.name) / 'package'
         from release_snapshot import release_root
@@ -92,7 +92,7 @@ class PackageChecks(unittest.TestCase):
     def test_planning_symlink_is_rejected(self):
         folder = self.repo / 'docs/planning'
         folder.mkdir()
-        (folder / 'escape.md').symlink_to('/tmp/missing-huguesstack-planning')
+        (folder / 'escape.md').symlink_to('/tmp/missing-hstack-planning')
         self.assert_rejected('symlinks are forbidden')
 
     def test_missing_and_malformed_frontmatter(self):

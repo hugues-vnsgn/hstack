@@ -1,6 +1,6 @@
 # KMP bridge change
 
-source: huguesStack first-release requirements; conceptual reference to osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/references/kmp-compose-pilot.md`, `packs/mobile/references/platforms.md` and `packs/mobile/references/evidence.md`. No fixture or consumer source is imported.
+source: hStack first-release requirements; conceptual reference to osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/references/kmp-compose-pilot.md`, `packs/mobile/references/platforms.md` and `packs/mobile/references/evidence.md`. No fixture or consumer source is imported.
 
 Own the shared contract and prove both native boundaries.
 

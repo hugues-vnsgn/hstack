@@ -10,10 +10,10 @@ can block execution. It cannot turn an omitted gate into success.
 Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no
 custom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,
 `poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,
-`setup-pstack` to `setup-huguesstack` and `poteto-help` to `hugues-help`; other
+`setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other
 public names are unchanged.
 
-Only `hugues-mode` and `setup-huguesstack` are model-invocable; their
+Only `hugues-mode` and `setup-hstack` are model-invocable; their
 descriptions enter the host's skill list. Every other bundled skill, including
 each `principle-*`, is user-only: the owner can still type it by name. An agent
 reads its SKILL.md in full as the scoped bundled reference, with the host's own
@@ -29,7 +29,7 @@ are role defaults to resolve against models the native tool exposes. Read
 [workers and models](host-workers.md), which names each host's registered
 `hugues-agent`, before the dispatch itself.
 
-Reach `hugues-mode`, `setup-huguesstack` and each consumer or external skill (the
+Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the
 native-only skills) only through the host's supported native mechanism. Respect
 manual-only selection, owner-disabled entries and native denials; for those skills, never use a file read as an invocation fallback.
 For a native-only skill, unavailable, disabled, denied or unknown invocation stops
@@ -74,7 +74,7 @@ references, not alternate skill bodies or a custom native loader.
 
 | Before this action | Read in full |
 |---|---|
-| Worker dispatch, worker execution, role selection or setup-huguesstack | [Workers and models](host-workers.md) |
+| Worker dispatch, worker execution, role selection or setup-hstack | [Workers and models](host-workers.md) |
 | Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations | [Workflow tools](host-workflow-tools.md) |
 | Transcript-dependent skills, optional integrations or consumer skill placement | [Special skills](host-special-skills.md) |
 | Reading or editing TypeScript files | [TypeScript scope](host-typescript.md) |

@@ -12,7 +12,7 @@ A later native restoration made 46 of the 50 skills model-invocable, so every
 description entered the host's per-turn skill list. The skill-list-budget work
 reverses that: it returns to pstack's own router design, where only
 `poteto-mode` (here `hugues-mode`) was model-invocable and read every other
-skill as a file. Only `hugues-mode` and `setup-huguesstack` stay
+skill as a file. Only `hugues-mode` and `setup-hstack` stay
 model-invocable now; the other 52 bundled skills are user-only again, which is
 the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
 This is an invocation-exposure change only: no upstream responsibility,
@@ -36,12 +36,12 @@ is a manual merge against this body, not a line-by-line port.
 
 The pin moves from 0.15.9 to 0.15.25. Upstream changed 94 files and added 8.
 Each adapted body took upstream's intent by a manual merge, and every
-huguesStack adaptation stayed. `setup-huguesstack` is unchanged: its upstream
+hStack adaptation stayed. `setup-hstack` is unchanged: its upstream
 hunks only move Cursor model defaults and budget semantics. Verbatim files took the new upstream bytes.
 Four skills are new: `ketchup`, `sharpen`, `in-your-own-words` and
 `hugues-help` (upstream `poteto-help`, the third alias). All four are user-only,
 so the per-turn skill list does not grow. Upstream's model defaults (Opus,
-Grok, Sol) do not apply; huguesStack keeps its own defaults and takes only the
+Grok, Sol) do not apply; hStack keeps its own defaults and takes only the
 rule that moves effort to fit the job. Upstream's Agent Plugins root manifest
 stays in provenance. Two upstream changes are known gaps: the audit helper
 still defaults its MERGED base to `origin/main` (pass `--base` otherwise),
@@ -63,8 +63,8 @@ WP5's first sync, 0.15.5 to 0.15.9, stays in
 [its delta](delta-2eb7ed46-e43c7ee2.md), with its 158-file pin and ledger in
 [history](history/).
 
-[The current ledger](huguesStack-dispositions.json), also available as
-[CSV](huguesStack-dispositions.csv), has one active row per upstream file.
+[The current ledger](hstack-dispositions.json), also available as
+[CSV](hstack-dispositions.csv), has one active row per upstream file.
 The 161 responsibilities at 0.15.9 remain in
 [baseline-dispositions.json](baseline-dispositions.json); the current ledger
 retains their `earlier_proposal` fields and the previous decisions for the
@@ -89,7 +89,7 @@ authored and static-tested: `how`, `why`, `architect`, `arena`, `tdd`,
 destination fingerprints remain in the research, design and verification receipts
 linked from [retained integration](../retained-integration.md). The current ledger
 marked their 25 files present. At that release, `swarm`, `show-me-your-work` and
-`setup-huguesstack` remained deferred to 0.2. The subsequent approved core
+`setup-hstack` (then `setup-huguesstack`) remained deferred to 0.2. The subsequent approved core
 restoration registers those definitions too. The pin, historical snapshots and
 private owner originals remain unchanged. Static accounting proves no native
 host execution of the eight workflows.
@@ -104,7 +104,7 @@ python3 scripts/upstream-diff.py check
 python3 scripts/upstream-diff.py diff \
   --from-snapshot docs/upstream/snapshots/pstack-0.15.9.json \
   --to-snapshot docs/upstream/snapshots/pstack-0.15.25.json \
-  --ledger docs/upstream/huguesStack-dispositions.json \
+  --ledger docs/upstream/hstack-dispositions.json \
   --output docs/upstream/delta-e43c7ee2-6ce45c59.md --check
 python3 -m unittest discover -s tests -v
 ./scripts/check-plugin.sh
@@ -156,7 +156,7 @@ and generate a separate ledger proposal:
 python3 scripts/upstream-diff.py reconcile \
   --from-snapshot docs/upstream/snapshots/pstack-0.15.25.json \
   --to-snapshot /tmp/pstack-candidate.json \
-  --ledger docs/upstream/huguesStack-dispositions.json \
+  --ledger docs/upstream/hstack-dispositions.json \
   --output /tmp/pstack-ledger-proposal.json
 ```
 

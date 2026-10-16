@@ -22,7 +22,7 @@ class RetainedProvenanceTests(unittest.TestCase):
         self.root = Path(self.temp.name) / 'package'
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns('.git', '__pycache__', 'planning'))
         self.directory = self.root / 'docs/upstream'
-        self.ledger = u.load(self.directory / 'huguesStack-dispositions.json')
+        self.ledger = u.load(self.directory / 'hstack-dispositions.json')
         self.source = u.read_pin(self.directory / 'pin.json')
         # Keep this fixture independent of which retained packages are integrated.
         # Replace retained leaves only inside the temporary copied checkout.
@@ -58,8 +58,8 @@ class RetainedProvenanceTests(unittest.TestCase):
 
     def save(self):
         self.receipt_path.write_bytes(u.encode(self.receipt))
-        (self.directory / 'huguesStack-dispositions.json').write_bytes(u.encode(self.ledger))
-        (self.directory / 'huguesStack-dispositions.csv').write_bytes(u.render_csv(self.ledger))
+        (self.directory / 'hstack-dispositions.json').write_bytes(u.encode(self.ledger))
+        (self.directory / 'hstack-dispositions.csv').write_bytes(u.render_csv(self.ledger))
         before = u.read_pin(self.directory / 'baseline-pin.json')
         name = f"delta-{before['revision'][:8]}-{self.source['revision'][:8]}.md"
         (self.directory / name).write_bytes(u.render_delta(before, self.source, self.ledger))

@@ -19,10 +19,10 @@ class ContextDisclosure(unittest.TestCase):
         mobile = (ROOT / 'plugin/adapters/mobile.md').read_text()
         self.assertLess(len(host.encode()) + len(mobile.encode()), 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
-        # setup-huguesstack are reached only by native invocation, with denials respected, and
+        # setup-hstack are reached only by native invocation, with denials respected, and
         # a file read is no substitute. The user-only read is stated once too, beside the tier.
         self.assertEqual(host.count("only through the host's supported native mechanism"), 1)
-        self.assertIn('Reach `hugues-mode`, `setup-huguesstack` and each consumer or external skill', host)
+        self.assertIn('Reach `hugues-mode`, `setup-hstack` and each consumer or external skill', host)
         self.assertIn('owner-disabled entries and native denials', host)
         self.assertIn('never use a file read as an invocation fallback', host)
         self.assertIn("reads its SKILL.md in full as the scoped bundled reference, with the host's own", host)
@@ -120,7 +120,7 @@ class ContextDisclosure(unittest.TestCase):
         for name, marker in [('plugin/adapters/mobile.md', '[mobile workflows](mobile-workflows.md) in full'),
                              ('plugin/adapters/mobile-workflows.md', 'separate\nfresh production worker'),
                              ('plugin/adapters/host-workers.md', 'List length sets'),
-                             ('plugin/adapters/host.md', 'Reach `hugues-mode`, `setup-huguesstack` and each consumer or external skill'),
+                             ('plugin/adapters/host.md', 'Reach `hugues-mode`, `setup-hstack` and each consumer or external skill'),
                              ('plugin/adapters/host.md', "only through the host's supported native mechanism")]:
             with self.subTest(name=name):
                 changed = dict(original)
@@ -159,7 +159,7 @@ class ContextDisclosure(unittest.TestCase):
         # skill bodies, matching most of the pre-restoration baseline again. PR 1 fix round 1's
         # reworded host-contract marker (now scoped to the bundled-reference rule rather than a
         # blanket override) touches the same sentence in all 26 non-principle bodies, 24 of which
-        # were otherwise unchanged; the other two (hugues-mode, setup-huguesstack) already
+        # were otherwise unchanged; the other two (hugues-mode, setup-hstack) already
         # differed. architect, arena, how, interrogate, reflect, swarm and why also still carry
         # the separate tiered-model-role wiring change. 50 - 26 = 24 bodies were byte-identical
         # to the pre-restoration baseline (the 24 principle-* skills, which never carried that
@@ -168,6 +168,7 @@ class ContextDisclosure(unittest.TestCase):
         # in-your-own-words, ketchup, sharpen) have no baseline body and are not compared. The
         # list is recomputed here from the files, so only principle-* bodies can be counted.
         baseline, _ = measure_context.native_baseline(ROOT)
+        baseline = measure_context.current_names(baseline)
         identical = sorted(p for p in baseline if p.startswith('plugin/skills/') and p.endswith('/SKILL.md')
                            and baseline[p] == (ROOT / p).read_text())
         self.assertEqual(len(identical), 10)
@@ -186,13 +187,14 @@ class ContextDisclosure(unittest.TestCase):
         self.assertLessEqual(skill_list['candidate']['characters'], 2500)
         self.assertEqual(skill_list['candidate']['model_invocable_skills'], 2)
         self.assertEqual(set(skill_list['candidate']['paths']),
-                         {'plugin/skills/hugues-mode/SKILL.md', 'plugin/skills/setup-huguesstack/SKILL.md'})
+                         {'plugin/skills/hugues-mode/SKILL.md', 'plugin/skills/setup-hstack/SKILL.md'})
         # No hardcoded baseline here: native_before is recomputed, by the same function, over
         # the same pinned CONTEXT-BASELINE.json bytes every other measurement in this module
         # already compares against (measured['native_before_revision'] names the exact
         # revision). Recompute it independently of measure_context.skill_list_metrics itself,
         # so this proves the counting rule, not just the wiring.
         baseline, _ = measure_context.native_baseline(ROOT)
+        baseline = measure_context.current_names(baseline)
         declaration_paths = sorted(p for p in baseline
                                    if p.startswith('plugin/skills/') and p.endswith('/SKILL.md'))
         expected_invocable = [p for p in declaration_paths
@@ -209,6 +211,7 @@ class ContextDisclosure(unittest.TestCase):
         # (just the 50 SKILL.md frontmatter blocks), by the same unmodified function.
         self.assertEqual(measured['pre_pr_main_revision'], 'a67df901162cc2add4aabb9e2a3843134696c490')
         pre_pr_main, _ = measure_context.pre_pr_main_baseline(ROOT)
+        pre_pr_main = measure_context.current_names(pre_pr_main)
         pre_pr_paths = sorted(pre_pr_main)
         self.assertEqual(len(pre_pr_paths), 50)
         pre_pr_invocable = [p for p in pre_pr_paths

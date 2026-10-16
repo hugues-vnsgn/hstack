@@ -88,13 +88,13 @@ def main():
     schema = {'type': 'object', 'properties': {
         'generation_offered': {'type': 'boolean'}, 'mobile_proof_held': {'type': 'boolean'}},
         'required': ['generation_offered', 'mobile_proof_held'], 'additionalProperties': False}
-    _, setup = session('setup', '/hugues-stack:setup-huguesstack '
+    _, setup = session('setup', '/hstack:setup-hstack '
         'This is an isolated integration consumer. Read its README. Complete model setup with '
         'budget small and inherit-parent medium for every seat, retaining panel cardinalities; '
         'I accept those choices now. Follow step 7 normally, but stop before any offered generation. '
         'Do not drive the app yet. Return whether you offered generation and whether mobile proof '
         'is held, based on your actual actions and the mobile-proof prerequisite.', schema)
-    assert (consumer / '.huguesstack/models.md').is_file(), 'setup did not write model config'
+    assert (consumer / '.hstack/models.md').is_file(), 'setup did not write model config'
     assert not list(consumer.glob('.claude/skills/*/SKILL.md')), 'setup generated before acceptance'
     assert setup.get('structured_output') == {
         'generation_offered': True, 'mobile_proof_held': True}, 'setup skipped the required mobile recipe offer'
@@ -102,7 +102,7 @@ def main():
     visual_schema = {'type': 'object', 'properties': {
         'observed_greeting': {'type': 'string'}, 'visual_verified': {'type': 'boolean'}},
         'required': ['observed_greeting', 'visual_verified'], 'additionalProperties': False}
-    generation_events, generation = session('generate', '/hugues-stack:setup-huguesstack '
+    generation_events, generation = session('generate', '/hstack:setup-hstack '
         'Continue setup in this isolated consumer. Keep the accepted model choices. '
         'Yes to the verification-skill offer: generate the project recipe using the existing harness '
         'and prove it once under the generator contract. You may write only within this consumer '

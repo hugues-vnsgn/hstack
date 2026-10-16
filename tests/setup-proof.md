@@ -23,7 +23,7 @@ plugin. Authentication is supplied by the runner's existing Claude setup; the
 check does not configure credentials or persistent permissions.
 
 `.github/workflows/setup-proof.yml` exposes the same command as an explicit
-workflow dispatch on a self-hosted macOS runner labeled `huguesstack-proof`.
+workflow dispatch on a self-hosted macOS runner labeled `hstack-proof`.
 Provisioning or dispatching that runner is separate from this local check.
 The ordinary unittest suite checks source contracts and installed command paths
 without requiring Claude credentials or a simulator. A source pass is not a native

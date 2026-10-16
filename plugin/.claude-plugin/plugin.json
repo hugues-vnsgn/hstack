@@ -1,7 +1,7 @@
 {
-  "name": "hugues-stack",
+  "name": "hstack",
   "version": "0.3.0",
-  "description": "Mobile routing, proof guidance and principles for huguesStack in Claude Code and Codex.",
+  "description": "Mobile routing, proof guidance and principles for hStack in Claude Code and Codex.",
   "author": {
     "name": "hugues-vnsgn"
   },

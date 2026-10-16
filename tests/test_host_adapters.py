@@ -18,7 +18,7 @@ from runtime import activity
 
 class InstalledFixture:
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='huguesstack-consumer-')
+        self.temp = tempfile.TemporaryDirectory(prefix='hstack-consumer-')
         self.addCleanup(self.temp.cleanup)
         self.area = Path(self.temp.name).resolve()
         self.plugin = self.area / 'installed plugin with spaces'
@@ -50,7 +50,7 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
 
     def test_binding_is_revision_and_adapter_bound(self):
         data = json.loads(self.binding.read_text())
-        self.assertEqual(data['revision'], 'huguesstack-native-v1')
+        self.assertEqual(data['revision'], 'hstack-native-v1')
         self.assertIn('adapters/runtime/activity.py', data['adapter_sha256'])
         self.assertEqual(data['plugin_root'], str(self.plugin))
 
@@ -141,7 +141,7 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
 
 class SyntheticActivity(unittest.TestCase):
     def setUp(self):
-        temp = tempfile.TemporaryDirectory(prefix='huguesstack-synthetic-history-')
+        temp = tempfile.TemporaryDirectory(prefix='hstack-synthetic-history-')
         self.addCleanup(temp.cleanup)
         self.area = Path(temp.name).resolve()
         self.wt = self.area / 'worktree with spaces'

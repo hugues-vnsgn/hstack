@@ -82,7 +82,7 @@ boundary in each native Agent call; a worker must not request bypass permissions
 
 ## Codex
 
-The TOML fragment creates `huguesstack-program`, extending the active bounded
+The TOML fragment creates `hstack-program`, extending the active bounded
 permission profile and carving out the exact payload as `read` inside authorized
 writable directories. Name the actual parent; use `:workspace` only when that is
 the approved baseline. Retain its narrower restrictions. An existing profile
@@ -92,7 +92,7 @@ must not be mixed for this invocation.
 
 Use the reviewed layer through Codex's supported named configuration profile
 (`-p <name>`, loading `<active CODEX_HOME>/<name>.config.toml`) or equivalent native
-`-c` overrides for `default_permissions` and `permissions.huguesstack-program`.
+`-c` overrides for `default_permissions` and `permissions.hstack-program`.
 Show the exact launch configuration. Do not set unrestricted sandbox mode or
 permit escalated retries. With approval policy `never`, a denial is returned to
 the worker; otherwise preserve stricter existing approval requirements and hold
@@ -137,7 +137,7 @@ host enforcement, and neither grants publication or landing authority.
 
 ## References
 
-- [Issue 36 and its current approved brief](https://github.com/hugues-vnsgn/huguesStack/issues/36#issuecomment-6184377164)
+- [Issue 36 and its current approved brief](https://github.com/hugues-vnsgn/hstack/issues/36#issuecomment-6184377164)
 - [Claude file permissions](https://code.claude.com/docs/en/permissions)
 - [Claude sandboxing](https://code.claude.com/docs/en/sandboxing)
 - [Codex permission profiles](https://learn.chatgpt.com/docs/permissions)

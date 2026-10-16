@@ -1,6 +1,6 @@
 # Build doctor
 
-source: Conceptual adaptation of osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `skills/core/hstack/playbooks/build-doctor.md`; huguesStack first-release requirements. No managed-worker runtime is imported.
+source: Conceptual adaptation of osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `skills/core/hstack/playbooks/build-doctor.md`; hStack first-release requirements. No managed-worker runtime is imported.
 
 Diagnose first. Repair only within explicit authority.
 

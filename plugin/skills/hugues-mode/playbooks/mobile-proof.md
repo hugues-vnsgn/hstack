@@ -1,6 +1,6 @@
 # Mobile proof
 
-source: Conceptual adaptation of osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/skills/mobile-proof/SKILL.md, packs/mobile/references/platforms.md, packs/mobile/references/evidence.md`; huguesStack first-release requirements. No managed-worker runtime is imported.
+source: Conceptual adaptation of osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/skills/mobile-proof/SKILL.md, packs/mobile/references/platforms.md, packs/mobile/references/evidence.md`; hStack first-release requirements. No managed-worker runtime is imported.
 
 Select the changed domain's proof and report what actually ran.
 

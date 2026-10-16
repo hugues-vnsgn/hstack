@@ -1,19 +1,19 @@
-# huguesStack
+# hStack
 
-huguesStack is the standalone adaptation of pstack for first-class mobile development through Claude Code and Codex.
+hStack is the standalone adaptation of pstack for first-class mobile development through Claude Code and Codex.
 
 ## Language
 
-**huguesStack**:
+**hStack**:
 The project named by the product owner for this mobile-first pstack adaptation.
 _Avoid_: Mobile Stack, mobile stack as the product name
 
 **Mobile domains**:
-The four first-class areas covered by huguesStack: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform shared logic, and Compose Multiplatform shared UI.
+The four first-class areas covered by hStack: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform shared logic, and Compose Multiplatform shared UI.
 _Avoid_: Primary native platforms with secondary multiplatform support
 
 **Consumer app**:
-A mobile application that huguesStack helps its owner develop and verify. It is a separate project from huguesStack.
+A mobile application that hStack helps its owner develop and verify. It is a separate project from hStack.
 _Avoid_: Bundled demo app, plugin app
 
 **Upstream responsibility**:
@@ -33,7 +33,7 @@ A bounded version presented for acceptance against declared requirements, with i
 _Avoid_: Full parity, production-ready by date alone
 
 **Layer 1**:
-The huguesStack plugin itself: skills, playbooks, principles, one agent definition, two scripts and docs, installed in Claude Code and Codex from a marketplace manifest. It is the whole 0.1.0 release candidate.
+The hStack plugin itself: skills, playbooks, principles, one agent definition, two scripts and docs, installed in Claude Code and Codex from a marketplace manifest. It is the whole 0.1.0 release candidate.
 _Avoid_: The harness, the runtime, the core
 
 **Layer 2**:
@@ -41,7 +41,7 @@ hstack-alpha's Orca-managed worker runtime, Work Units and captured-review contr
 _Avoid_: Phase 2, the full product
 
 **hugues-mode**:
-The huguesStack router skill, forked from pstack's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
+The hStack router skill, forked from pstack's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
 _Avoid_: mobile-mode, the orchestrator
 
 **Proof lane**:

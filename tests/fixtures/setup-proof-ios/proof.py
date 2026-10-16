@@ -29,10 +29,10 @@ def main():
         raise RuntimeError('An available iOS 17+ simulator runtime is required')
     runtime = compatible[0]
     device_type = next(t['identifier'] for t in runtime['supportedDeviceTypes'] if t['productFamily'] == 'iPhone')
-    udid = run('xcrun', 'simctl', 'create', 'huguesstack-issue35', device_type, runtime['identifier'])
+    udid = run('xcrun', 'simctl', 'create', 'hstack-issue35', device_type, runtime['identifier'])
     receipt = {'device': udid, 'runtime': runtime['identifier'], 'status': 'failed'}
     try:
-        bundle = 'org.huguesstack.setup-proof'
+        bundle = 'org.hstack.setup-proof'
         spec = {'name': 'SetupProof', 'options': {'deploymentTarget': {'iOS': '17.0'}},
                 'targets': {
                     'SetupProof': {'type': 'application', 'platform': 'iOS',

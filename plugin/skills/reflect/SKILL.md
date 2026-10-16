@@ -30,7 +30,7 @@ That covers the legacy flat (`<id>.jsonl`), current nested (`<id>/<id>.jsonl`), 
 
 One message, three `Task` calls, `subagent_type: generalPurpose`, agent mode (`readonly: false`). Reviewers need MCP access to look up the tickets, chat threads, and observability traces the transcript references, and readonly strips MCPs.
 
-Each reviewer and the synthesizer name a role line in `.huguesstack/models.md` and a default. Use that line's value, or the default if the file or the line is missing. A value is a model and an effort: leave `model` unset for `inherit-parent`, and pass the effort as the agent tool's effort setting. If the agent tool rejects a value, use the default and say so. Pick each subagent's reasoning level and speed for the job, per [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
+Each reviewer and the synthesizer name a role line in `.hstack/models.md` and a default. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it. Use that line's value, or the default if the file or the line is missing. A value is a model and an effort: leave `model` unset for `inherit-parent`, and pass the effort as the agent tool's effort setting. If the agent tool rejects a value, use the default and say so. Pick each subagent's reasoning level and speed for the job, per [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
 
 | Lens | Role line | Default value | Prompt template |
 |---|---|---|---|

@@ -29,7 +29,7 @@ class SetupProofContract(unittest.TestCase):
                 self.assertEqual(inspect([request, altered]), set())
 
     def test_mobile_setup_and_proof_require_the_same_project_recipe(self):
-        setup = (SKILLS / 'setup-huguesstack/SKILL.md').read_text().split('### 7.', 1)[1]
+        setup = (SKILLS / 'setup-hstack/SKILL.md').read_text().split('### 7.', 1)[1]
         proof = (SKILLS / 'hugues-mode/playbooks/mobile-proof.md').read_text()
         self.assertIn('For a mobile project, require a project `verify-<app>` skill', setup)
         self.assertIn('even when a harness or device tools already exist', setup)
@@ -37,7 +37,7 @@ class SetupProofContract(unittest.TestCase):
         self.assertIn('Invoke the existing project `verify-<app>`', proof)
 
     def test_setup_preserves_native_controls_and_nonmobile_harnesses(self):
-        setup = (SKILLS / 'setup-huguesstack/SKILL.md').read_text().split('### 7.', 1)[1]
+        setup = (SKILLS / 'setup-hstack/SKILL.md').read_text().split('### 7.', 1)[1]
         for contract in ('If generation is declined', 'hold dependent mobile proof',
                          'unavailable, disabled, denied or unknown',
                          'For a non-mobile project, an existing harness remains sufficient'):
@@ -47,18 +47,18 @@ class SetupProofContract(unittest.TestCase):
 
     def test_verification_handoffs_name_both_hosts(self):
         for caller, command in (
-            ('setup-huguesstack', 'create-verification-skill'),
+            ('setup-hstack', 'create-verification-skill'),
             ('create-verification-skill', 'maintain-verification-skill'),
             ('maintain-verification-skill', 'create-verification-skill'),
         ):
             with self.subTest(caller=caller):
                 body = (SKILLS / caller / 'SKILL.md').read_text()
-                self.assertIn('/hugues-stack:' + command, body)
+                self.assertIn('/hstack:' + command, body)
                 self.assertIn('$' + command, body)
                 self.assertNotRegex(body, r'(?<![\w:/-])/' + command + r'\b')
 
     def test_review_seats_use_declared_model_tiers(self):
-        body = (SKILLS / 'setup-huguesstack/SKILL.md').read_text()
+        body = (SKILLS / 'setup-hstack/SKILL.md').read_text()
         tiers = set(re.findall(r'^\| (?:Workhorse|Judgment|Frontier) \| `[^`]+` \| `(gpt-[^`]+)`', body, re.M))
         self.assertTrue(tiers)
         row = re.search(r'^interrogate reviewers: (.+)$', body, re.M).group(1)

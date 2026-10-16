@@ -85,7 +85,7 @@ CONTRADICTIONS = [
      'as a fallback for an unavailable or denied invocation.'),
     ('a67df90 hugues-agent invoke a leaf principle natively',
      'Invoke a leaf `principle-*` skill natively whenever you apply that principle.'),
-    ('a67df90 setup-huguesstack invoke create-verification-skill',
+    ('a67df90 setup-hstack invoke create-verification-skill',
      'On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin).'),
     ('a67df90 teach real skill invocations',
      "Teach sits on top of `how` and `why`. Then run `how` for how it works and `why` for why it's that way.\n"
@@ -141,7 +141,7 @@ CONTRADICTIONS = [
 # Sentences that name a native-reach word and a skill, or a class word, and are correct.
 CLEAN = [
     ('native-only tier rule',
-     "Reach `hugues-mode`, `setup-huguesstack` and each consumer or external skill (the\n"
+     "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\n"
      "native-only skills) only through the host's supported native mechanism."),
     ('mode natively, principles by reading, split at the semicolon',
      "Obtain the mode through supported native invocation before work; read each\n"
@@ -152,7 +152,7 @@ CLEAN = [
     ('consumer and external dependency',
      'A consumer or external skill dependency must succeed through native invocation before work; '
      'never substitute a file read for one of those.'),
-    # Round 4 fix: "any bundled skill" had also covered hugues-mode and setup-huguesstack,
+    # Round 4 fix: "any bundled skill" had also covered hugues-mode and setup-hstack,
     # which are native-only; the read is scoped to the user-only skills, as host.md says.
     ('fresh worker split in two sentences',
      'A fresh worker reads any bundled user-only skill itself. It starts its own native\n'
@@ -174,7 +174,7 @@ CLEAN = [
     ('project verification skill is a consumer skill',
      "Invoke the existing project `verify-<app>` through the host's supported native mechanism."),
     ('tier statement',
-     "Only `hugues-mode` and `setup-huguesstack` are model-invocable; their descriptions enter the\n"
+     "Only `hugues-mode` and `setup-hstack` are model-invocable; their descriptions enter the\n"
      "host's skill list. Every other bundled skill, including each `principle-*`, is user-only."),
     ('property name beside a skill name',
      '`disable-model-invocation: true` removes tdd from the model\'s list; the owner can still type /tdd.'),

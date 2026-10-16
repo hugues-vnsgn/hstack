@@ -1,9 +1,9 @@
-# huguesStack
+# hStack
 
-huguesStack is pstack for mobile development, running in Claude Code and Codex.
+hStack is pstack for mobile development, running in Claude Code and Codex.
 pstack is poteto's Cursor plugin: a router mode matches a task to a playbook,
 the playbook calls skills and principles as its steps fire, and the work ends in
-evidence. huguesStack preserves its upstream source in a nondiscoverable provenance archive
+evidence. hStack preserves its upstream source in a nondiscoverable provenance archive
 and authors one canonical native body per skill. Read the
 [pstack guide](docs/pstack/guide/README.md) and [glossary](docs/GLOSSARY.md).
 
@@ -96,7 +96,7 @@ projects.
 
 ### Issue tracker
 
-Issues live in GitHub Issues on hugues-vnsgn/huguesStack, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues live in GitHub Issues on hugues-vnsgn/hstack, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

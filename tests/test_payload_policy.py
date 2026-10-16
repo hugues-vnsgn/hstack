@@ -72,9 +72,9 @@ class PayloadPolicy(InstalledFixture, unittest.TestCase):
         result = self.bound('payload-policy', '--host', 'codex', '--parent', 'existing-policy',
                             '--consumer', self.consumer, '--evidence', self.area)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('default_permissions = "huguesstack-program"\n', result.stdout)
-        self.assertIn('[permissions.huguesstack-program]\nextends = "existing-policy"\n', result.stdout)
-        self.assertIn('[permissions.huguesstack-program.filesystem]\n', result.stdout)
+        self.assertIn('default_permissions = "hstack-program"\n', result.stdout)
+        self.assertIn('[permissions.hstack-program]\nextends = "existing-policy"\n', result.stdout)
+        self.assertIn('[permissions.hstack-program.filesystem]\n', result.stdout)
         self.assertIn(json.dumps(str(self.plugin)) + ' = "read"\n', result.stdout)
         self.assertIn(json.dumps(str(self.consumer)) + ' = "write"\n', result.stdout)
         self.assertNotIn('network', result.stdout)

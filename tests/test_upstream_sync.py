@@ -23,7 +23,7 @@ class PinnedEvidenceTests(unittest.TestCase):
         cls.history_before = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.5.json')
         cls.before = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.9.json')
         cls.after = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json')
-        cls.ledger = u.load(ROOT / 'docs/upstream/huguesStack-dispositions.json')
+        cls.ledger = u.load(ROOT / 'docs/upstream/hstack-dispositions.json')
         cls.baseline = u.load(ROOT / 'docs/upstream/baseline-dispositions.json')
         cls.history_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.5-dispositions.json')
 
@@ -298,7 +298,7 @@ class PinnedEvidenceTests(unittest.TestCase):
             target = Path(folder) / 'delta.md'
             args = ['diff', '--from-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.9.json'),
                     '--to-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json'),
-                    '--ledger', str(ROOT / 'docs/upstream/huguesStack-dispositions.json'), '--output', str(target)]
+                    '--ledger', str(ROOT / 'docs/upstream/hstack-dispositions.json'), '--output', str(target)]
             subprocess.run([sys.executable, str(SCRIPT), *args], check=True, capture_output=True)
             self.assertEqual(target.read_bytes(), (ROOT / 'docs/upstream/delta-e43c7ee2-6ce45c59.md').read_bytes())
             subprocess.run([sys.executable, str(SCRIPT), *args, '--check'], check=True, capture_output=True)
@@ -319,10 +319,10 @@ class PinnedEvidenceTests(unittest.TestCase):
     def test_csv_cli_validates_source_and_preserves_existing_output(self):
         with tempfile.TemporaryDirectory() as folder:
             output = Path(folder) / 'ledger.csv'
-            args = [sys.executable, str(SCRIPT), 'csv', '--ledger', str(ROOT / 'docs/upstream/huguesStack-dispositions.json'),
+            args = [sys.executable, str(SCRIPT), 'csv', '--ledger', str(ROOT / 'docs/upstream/hstack-dispositions.json'),
                     '--snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json'), '--output', str(output)]
             subprocess.run(args, check=True, capture_output=True)
-            self.assertEqual(output.read_bytes(), (ROOT / 'docs/upstream/huguesStack-dispositions.csv').read_bytes())
+            self.assertEqual(output.read_bytes(), (ROOT / 'docs/upstream/hstack-dispositions.csv').read_bytes())
             subprocess.run(args + ['--check'], check=True, capture_output=True)
             output.write_bytes(b'curated export')
             self.assertNotEqual(subprocess.run(args, capture_output=True).returncode, 0)

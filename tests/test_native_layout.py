@@ -10,6 +10,28 @@ class NativeLayout(unittest.TestCase):
         self.assertIn('## Phase E: Scrap when the architecture is wrong', body)
         self.assertFalse((ROOT / 'plugin/core').exists())
 
+    def test_every_reader_of_the_models_file_says_what_to_do_with_the_legacy_file(self):
+        # 0.4.0 moved the project model file from `.huguesstack/` to `.hstack/`. A project that
+        # has not moved it keeps its roles only if each reader says what to do when the new file
+        # is absent: read the legacy file and tell the user to move it.
+        legacy = ('If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, '
+                  'read the legacy file and tell the user to move it.')
+        readers = {p.relative_to(ROOT / 'plugin').as_posix() for p in (ROOT / 'plugin').rglob('*.md')
+                   if '.hstack/models.md' in p.read_text()}
+        self.assertTrue({'adapters/host-workers.md', 'skills/setup-hstack/SKILL.md', 'skills/hugues-help/SKILL.md',
+                         'skills/architect/SKILL.md', 'skills/arena/SKILL.md', 'skills/how/SKILL.md',
+                         'skills/interrogate/SKILL.md', 'skills/reflect/SKILL.md', 'skills/swarm/SKILL.md',
+                         'skills/why/SKILL.md'} <= readers, sorted(readers))
+        for name in sorted(readers):
+            text = (ROOT / 'plugin' / name).read_text()
+            self.assertIn(legacy, ' '.join(text.split()), name)
+
+    def test_setup_writes_only_the_new_models_folder(self):
+        setup = ' '.join((ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text().split())
+        self.assertIn('Write `.hstack/models.md`', setup)
+        self.assertIn('Setup writes only `.hstack/`; it never writes or deletes `.huguesstack/`.', setup)
+        self.assertIsNone(re.search(r'[Ww]rite `\.huguesstack', setup))
+
 from test_host_adapters import InstalledFixture
 class NativeInstalled(InstalledFixture, unittest.TestCase):
     @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
@@ -109,7 +131,7 @@ import seal_payload
 
 class NativeIntegrity(unittest.TestCase):
     def setUp(self):
-        temp = tempfile.TemporaryDirectory(prefix='huguesstack-native-contract-')
+        temp = tempfile.TemporaryDirectory(prefix='hstack-native-contract-')
         self.addCleanup(temp.cleanup)
         self.root = Path(temp.name) / 'package'
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns('.git', '__pycache__', 'planning'))
@@ -172,7 +194,7 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_native_policy_mutation_is_rejected_even_after_sealing(self):
-        path = self.root / 'plugin/skills/setup-huguesstack/agents/openai.yaml'
+        path = self.root / 'plugin/skills/setup-hstack/agents/openai.yaml'
         path.write_text('policy:\n  allow_implicit_invocation: false\n')
         seal_payload.seal(self.root)
         self.rejected()
@@ -209,10 +231,10 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_dependency_skill_cannot_become_manual_only(self):
-        path = self.root / 'plugin/skills/setup-huguesstack/SKILL.md'
+        path = self.root / 'plugin/skills/setup-hstack/SKILL.md'
         path.write_text(path.read_text().replace('\n---\n', '\ndisable-model-invocation: true\n---\n', 1))
         (path.parent / 'agents/openai.yaml').write_text('policy:\n  allow_implicit_invocation: false\n')
-        seal_payload.seal(self.root, accept=['plugin/skills/setup-huguesstack/SKILL.md'])
+        seal_payload.seal(self.root, accept=['plugin/skills/setup-hstack/SKILL.md'])
         self.rejected()
 
     def test_verbatim_port_may_only_drop_the_inherited_manual_only_line(self):
@@ -510,7 +532,7 @@ class HuguesModeRouter(unittest.TestCase):
                        '`feature, refactoring`', '`bug-fix`', '`perf-issue`', '`hillclimb`',
                        '`hardest tasks`', '`judgment and prose`']:
             self.assertIn(phrase, defaults)
-        setup = (ROOT / 'plugin/skills/setup-huguesstack/SKILL.md').read_text()
+        setup = (ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text()
         self.assertIn(link, setup)
         self.assertNotIn('the same labels hugues-mode uses', setup)
 
@@ -541,13 +563,13 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn('`poteto-agent` is `hugues-agent`', flat)
         line = next(paragraph for paragraph in self.workers.split('\n\n') if paragraph.startswith('**`hugues-agent` by host.**'))
         line = ' '.join(line.split())
-        self.assertIn('Claude Code registers it as `hugues-stack:hugues-agent`', line)
+        self.assertIn('Claude Code registers it as `hstack:hugues-agent`', line)
         self.assertIn('Codex has no registered name observed here', line)
         self.assertIn('`poteto-agent` mapping above stays', line)
         self.assertIn('A core `poteto-agent` call uses the registered hugues-agent in', ' '.join(self.workers.split()))
         self.assertEqual(self.workers.count('**`hugues-agent` by host.**'), 1)
         manifest = json.loads((ROOT / 'plugin/.claude-plugin/plugin.json').read_text())
-        self.assertEqual(manifest['name'], 'hugues-stack')
+        self.assertEqual(manifest['name'], 'hstack')
         agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
         self.assertIn('\n# Hugues subagent\n', agent)
         self.assertNotIn('Poteto', agent)

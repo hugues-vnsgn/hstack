@@ -50,7 +50,7 @@ class RetainedVerificationAccounting(unittest.TestCase):
 
 class RetainedVerificationPackageMutations(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='huguesstack-retained-verification-')
+        self.temp = tempfile.TemporaryDirectory(prefix='hstack-retained-verification-')
         self.addCleanup(self.temp.cleanup)
         self.repo = Path(self.temp.name) / 'package'
         shutil.copytree(ROOT, self.repo, ignore=shutil.ignore_patterns('.git', '__pycache__', 'planning'))

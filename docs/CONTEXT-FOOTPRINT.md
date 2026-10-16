@@ -13,7 +13,7 @@ mobile adapter is byte-identical to the previous candidate. The
 every original paragraph, each preserved verbatim or replaced with an explicit,
 tested reason. Deferral changes when guidance is read, not whether its
 triggered requirements apply. Unknown native invocation for `hugues-mode`,
-`setup-huguesstack` or a consumer or external skill still holds; a reference
+`setup-hstack` or a consumer or external skill still holds; a reference
 never substitutes for that invocation. A bundled user-only skill's SKILL.md is
 its sanctioned reach instead, read with the host's own file-read tool per the
 host adapter rule; the installed helper never reads it.
@@ -61,17 +61,17 @@ Twenty-four canonical skill files remain byte-identical to `7db3e80`: the 24
 below. Restoring pstack's router design puts the inherited Cursor
 `disable-model-invocation: true` line back on 44 skill bodies, matching most
 of that pre-restoration baseline again. The other 26 differ for three
-separate reasons: `hugues-mode` and `setup-huguesstack` diverge from upstream
+separate reasons: `hugues-mode` and `setup-hstack` diverge from upstream
 to stay the only model-invocable skills; architect, arena, how, interrogate,
 reflect, swarm and why carry the separate tiered-model-role wiring that
-replaced Cursor's rule file with project-local `.huguesstack/models.md` and
+replaced Cursor's rule file with project-local `.hstack/models.md` and
 `inherit-parent` defaults; and PR 1 fix round 1's reworded host-contract
 marker ("The host contract governs how this skill reaches any sibling
 dependency.", replacing wording that read as a blanket override of the scoped
 bundled-reference rule) touches every one of the 26 non-principle bodies. PR 1
-fix round 2 also reworded part of setup-huguesstack's own body (item 3's
+fix round 2 also reworded part of setup-hstack's (then setup-huguesstack's) own body (item 3's
 `create-verification-skill` resolution fix). The router rewrite (issue #22)
-edits `hugues-mode` and one line of `setup-huguesstack`, both already among
+edits `hugues-mode` and one line of `setup-hstack`, both already among
 the 26, so the 24 byte-identical files are unchanged. The
 50 files' combined whole-file size is 191,824 bytes; bodies excluding
 frontmatter and delimiters total 177,003 bytes. The mode file is 20,046
@@ -80,8 +80,9 @@ bytes and about 3,023 words before the rewrite. The rewrite drops the four
 Cursor-only frontmatter fields, moves the model-defaults paragraph into
 [the worker reference](../plugin/adapters/host-workers.md#model-defaults-and-role-labels)
 and adds the four mobile routes to the Playbooks list. Only `hugues-mode` and
-`setup-huguesstack` are model-invocable now, so only their 366 characters of
-description (236 for the router, 130 for setup) enter startup context on Claude Code; the
+`setup-hstack` are model-invocable now, so only their 352 characters of
+description (236 for the router, 116 for setup) enter startup context on Claude Code (362
+before the rename shortened the setup description); the
 [skill-list measurement](CONTEXT-BUDGET.json) tracks this directly. It
 carries two "before" points, both computed by the same function, neither
 hardcoded: `native_before`, against the `7db3e80`-pinned bytes every other
@@ -99,7 +100,7 @@ name, and the mode reads it in full as its router reference. The agent never
 invokes one natively; the owner still can. [Host validation](skill-list-host-validation.md) observed, at
 code commit `ae51493`, that Claude Code's attached skill list grows by exactly
 two when the plugin loads (a count; which two skills is inferred), that exactly
-two huguesStack entries reach Codex's rendered skills block (which cut the
+two entries from this plugin reach Codex's rendered skills block (which cut the
 router's then 312-character description at 243 characters; the owner's reordered
 236-character description fits whole, per that receipt's
 [addendum](skill-list-host-validation.md#addendum-the-reordered-router-description-on-codex)),

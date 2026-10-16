@@ -97,7 +97,7 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **Use `subagent_type: "hugues-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/hugues-mode` runs the playbook. Never spawn a `hugues-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review, so keep what the skill prescribes.
 
-**Model defaults, and match the model to the job.** Every agent-tool call takes its defaults, role labels, `.huguesstack/models.md` overrides and the rule for fitting its reasoning level and speed to the job from [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
+**Model defaults, and match the model to the job.** Every agent-tool call takes its defaults, role labels, project model overrides and the rule for fitting its reasoning level and speed to the job from [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
 
 You own every subagent's work. Review the diff and write your own summary. A second opinion is the same prompt against a different model. Agreement is high-signal.
 

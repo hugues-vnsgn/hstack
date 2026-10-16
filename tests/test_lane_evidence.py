@@ -473,7 +473,7 @@ class LaneEvidence(unittest.TestCase):
                          [{'case_id': None, 'errors': ['observations must be a list']}])
 
     def test_CLI_complete_suite_flag_and_partial_scope(self):
-        with tempfile.TemporaryDirectory(prefix='huguesstack-lane-checker-') as directory:
+        with tempfile.TemporaryDirectory(prefix='hstack-lane-checker-') as directory:
             records_path = Path(directory) / 'observations.json'
             records = self.all_records()
             argv = [sys.executable, str(Path(__file__).resolve()), '--check-observations', str(records_path)]

@@ -524,7 +524,7 @@ def main(argv=None):
         if args.to_snapshot:
             after = validate_snapshot(load(args.to_snapshot))
         else:
-            with tempfile.TemporaryDirectory(prefix='huguesstack-upstream-') as directory:
+            with tempfile.TemporaryDirectory(prefix='hstack-upstream-') as directory:
                 git(directory, 'init', '--bare', '--quiet')
                 git(directory, 'fetch', '--quiet', '--no-tags', '--depth=1', REPOSITORY + '.git', 'main')
                 after = snapshot(directory, 'FETCH_HEAD')
@@ -538,9 +538,9 @@ def main(argv=None):
         before = read_pin(directory / 'baseline-pin.json')
         after = read_pin(directory / 'pin.json')
         validate_ledger(load(directory / 'baseline-dispositions.json'), before)
-        ledger = validate_ledger(load(directory / 'huguesStack-dispositions.json'), after)
+        ledger = validate_ledger(load(directory / 'hstack-dispositions.json'), after)
         check_destinations(ledger, after, args.root)
-        write_output(directory / 'huguesStack-dispositions.csv', render_csv(ledger), check=True)
+        write_output(directory / 'hstack-dispositions.csv', render_csv(ledger), check=True)
         name = f"delta-{before['revision'][:8]}-{after['revision'][:8]}.md"
         write_output(directory / name, render_delta(before, after, ledger), check=True)
         print(f"Verified pstack {after['version']}: {after['file_count']} ledger rows; {len(changes(before, after))} historical changes")

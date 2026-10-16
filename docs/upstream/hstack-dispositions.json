@@ -47,7 +47,7 @@
       "category": "root_metadata",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Preserve ignored local/run artifacts using actual huguesStack tooling; do not hide distributable evidence by accident."
+        "reason": "Preserve ignored local/run artifacts using actual hStack tooling; do not hide distributable evidence by accident."
       }
     },
     {
@@ -85,7 +85,7 @@
       "category": "root_metadata",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Document huguesStack installation, supported scope and evidence limits instead of claiming Cursor behavior."
+        "reason": "Document hStack installation, supported scope and evidence limits instead of claiming Cursor behavior."
       },
       "previous_decision": {
         "disposition": "ignore with reason",
@@ -169,7 +169,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -416,7 +416,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -444,7 +444,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -472,7 +472,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -500,7 +500,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -528,7 +528,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -556,7 +556,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -612,7 +612,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -640,7 +640,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -668,7 +668,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -696,7 +696,7 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
         "disposition": "port with adaptation",
@@ -724,7 +724,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -743,7 +743,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -762,7 +762,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -781,7 +781,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -800,7 +800,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -819,7 +819,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -829,7 +829,7 @@
       "size": 619,
       "sha256": "68f0ddbdda23d1e663b48c881f1b896305a3dcdc320ff83c65dd24cd9ac6850f",
       "disposition": "ignore with reason",
-      "reason": "Upstream Agent Plugins v1 root manifest; huguesStack ships its own Claude Code and Codex manifests. Historical source preserved in provenance archive only.",
+      "reason": "Upstream Agent Plugins v1 root manifest; hStack ships its own Claude Code and Codex manifests. Historical source preserved in provenance archive only.",
       "release_target": "not planned",
       "destinations": [
         "provenance/upstream/pstack-0.15.25.tar.gz"
@@ -2266,7 +2266,7 @@
       "size": 3289,
       "sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
       "disposition": "port with adaptation",
-      "reason": "Upstream plan-check tests adapted to the huguesStack plan checker; exact original remains in the upstream provenance archive.",
+      "reason": "Upstream plan-check tests adapted to the hStack plan checker; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/check-plan.test.ts"
@@ -3449,10 +3449,10 @@
       "size": 5716,
       "sha256": "d61b47256a18155a81c8e5ef95e3cc6569ce8c18317c35c4dd9c8015cf68cb59",
       "disposition": "port with adaptation",
-      "reason": "Canonical native consolidation; the 0.15.25 hunks only change Cursor model defaults and budget semantics (owner decision: keep huguesStack defaults), so the body is unchanged at this pin. Original bytes preserved in the upstream provenance archive.",
+      "reason": "Canonical native consolidation; the 0.15.25 hunks only change Cursor model defaults and budget semantics (owner decision: keep hStack defaults), so the body is unchanged at this pin. Original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
-        "plugin/skills/setup-huguesstack/SKILL.md"
+        "plugin/skills/setup-hstack/SKILL.md"
       ],
       "implementation_state": "present",
       "category": "top_level_skill",
@@ -3465,7 +3465,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
         "destinations": [
-          "plugin/skills/setup-huguesstack/SKILL.md"
+          "plugin/skills/setup-hstack/SKILL.md"
         ],
         "implementation_state": "present"
       }
