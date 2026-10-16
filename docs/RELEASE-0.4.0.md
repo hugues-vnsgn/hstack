@@ -42,7 +42,7 @@ Temp-dir prefixes, simulator names and bundle ids in the checks follow the same 
 ## Repository changes
 
 - **hstack-alpha (retired predecessor).** The GitHub repository `osxsystem/hstack`, a different project, was deleted on 2026-10-16. The files this repository cites from it are retained byte for byte under `provenance/upstream/hstack-alpha-99cc612/`, with the 13 files they link to. The [source receipts](wp3-source-receipts.json) carry a note about the deletion, and each receipted input hashes to its retained copy.
-- **KMP/CMP practice app.** `tests/fixtures/kmp-compose-ios-pilot/` is hstack-alpha's disposable Kotlin Multiplatform and Compose Multiplatform app with a planted boundary defect, copied in full. No repository check rejected a file, so nothing was left out and no check was changed. The [glossary](GLOSSARY.md) points there.
+- **KMP/CMP practice app.** `tests/fixtures/kmp-compose-ios-pilot/` is hstack-alpha's disposable Kotlin Multiplatform and Compose Multiplatform app with a planted boundary defect, copied in full. Nothing was left out and no check was changed; a scoped `.gitattributes` marks the CRLF line endings of its `gradlew.bat` as intended. The [glossary](GLOSSARY.md) points there.
 
 ## Validation and limits
 
