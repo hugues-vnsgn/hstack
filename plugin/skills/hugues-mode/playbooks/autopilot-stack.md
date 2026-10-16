@@ -13,6 +13,13 @@ installation, record effective writer coverage and require it for every worker.
 Missing or unverifiable protection holds dependent execution. Keep the payload
 readable and report plugin defects for separate owner-authorized maintenance.
 
+**Before unattended topology writes in Claude Code auto mode:** complete the
+[stack permission preflight](../../../adapters/claude-stack-permissions.md) through
+bound `read-workflow`. Record the approved repository/child branches, operator
+authorization and effective configuration in the program evidence. Reuse
+authorization within that scope; hold an unresolved or expanded scope. Other hosts
+keep their native permission controls.
+
 **You own the stack, never the landing. Hand the operator one linear stack of base-chained PRs to review and land.** **Autopilot-full** holds except for how verified work leaves. Each tick re-reads both playbooks from trunk (`git show origin/main:skills/hugues-mode/playbooks/autopilot-full.md` and `git show origin/main:skills/hugues-mode/playbooks/autopilot-stack.md`), and this one wins where they differ.
 
 1. **Run Autopilot-full's owners, minus the landing.** Owners report STACK-READY in place of merge-ready. They never rebase onto another branch, trunk included, and never retarget, merge, close a PR, or arm auto-merge, because the root owns the chain's topology and the operator owns the landing. When an item depends on another, its owner branches from that item's branch, not from trunk.
