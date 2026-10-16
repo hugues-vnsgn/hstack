@@ -13,6 +13,11 @@ baseline and complete decision/finding state. A nonzero result holds a clean
 verdict; neither a rewritten plan nor self-proof can replace accepted evidence.
 Keep the phase order and all gates below.
 
+For an explicitly approved mobile program, apply
+[mobile coverage](../references/mobile-coverage.md) before verification dispatch.
+Use its selected checks and applicability; preserve this playbook's phase timing,
+review roles and operator gates. Default/non-mobile plans retain their rules.
+
 ### Autopilot-full
 
 **Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)

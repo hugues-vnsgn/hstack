@@ -7,8 +7,8 @@ their named actions. A small mobile applicability file requires the complete
 mobile adapter before any explicit mobile task; non-mobile work stops at the
 applicability decision. This uses ordinary file reads, not a new native loader.
 
-Every original host instruction is retained in one of those files, and the full
-mobile adapter is byte-identical to the previous candidate. The
+Every original host instruction is retained in one of those files, and the mobile
+adapter preserves the earlier rules while adding the approved mobile coverage profile. The
 [partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account for
 every original paragraph, each preserved verbatim or replaced with an explicit,
 tested reason. Deferral changes when guidance is read, not whether its
@@ -42,11 +42,17 @@ assumptions and mandatory transitive inputs are in the
 
 The approved-proof candidate adds deferred new-program references separately
 from those pinned scenarios. The guide is 7,716 bytes; constructing records also
-loads a 5,627-byte format reference. Together they add 13,343 bytes (3,335.75
+loads a 6,737-byte format reference. Together they add 14,453 bytes (3,613.25
 characters/4 estimated tokens), not a measured host charge. The generated
 `new_program_proof` inventory binds both files. Do not describe the original
 scenario totals as a complete new-program cost; approval records, host framing
 and actual worker reads require their own accounting.
+
+Issue #30 adds a deferred mobile selection guide and risk catalog, totaling
+8,493 bytes (2,123.25 estimated tokens). The `mobile_risk_profile` inventory
+records both. The mobile-workflows adapter already included in applicable reads
+adds the 369-byte profile pointer. These amounts describe source reads, not
+observed host tokens; worker briefs include only relevant risk guidance.
 
 Issue #28 adds a deferred controller guide of 10,892 bytes (2,723 estimated
 tokens) for program scheduling and recovery. The generated `new_program_control`
@@ -179,10 +185,10 @@ adapters, playbooks and bundled skills as files. It measured no tokens.
 
 The [helper input receipt](HELPER-INPUTS.json) records all 20 original mode-helper
 files. Nineteen remain installed; the legacy history-scanning audit is preserved
-only as provenance. The installed helpers are unchanged by this disclosure pass.
-Eighteen remain byte-identical to upstream. The Node plan validator changed
-earlier to accept bound workflow reads and is exercised by current installed
-Python/Node tests. The Bun/TypeScript helpers and dependency files did not change
+only as provenance. Eighteen remain byte-identical to upstream. The Node plan
+validator now accepts bound workflow reads and the approved mobile-risk profile;
+current installed Python/Node tests exercise both. Its reviewed digest is recorded
+in the helper receipt. The Bun/TypeScript helpers and dependency files did not change
 bytes. Their disclosure-pass runtime validation did not run because the harmless
 offline sandbox preflight returned `EPERM`. The later review-fix pass ran it on a
 scratch install of the candidate: Bun 1.4.2 installed the locked dependencies

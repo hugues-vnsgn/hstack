@@ -27,6 +27,27 @@ different targets. Include design conflict decisions among the hashed sources.
 Obtain approval before building. Retain the approved file's digest in trusted
 controller state, not in a worker-replaceable approval file.
 
+For `mobile-risk-v1`, retain the committed plan as another hashed source. Add
+this field to the approved checklist before its existing owner approval:
+
+```json
+"verification_plan": {
+  "source_id": "mobile-plan", "section": "PR 1",
+  "checks": [{"lane": "1", "check_id": "C-001"}, {"lane": "2", "check_id": "C-002"}]
+}
+```
+
+Map every live lane once, including extra checks. Each mapped requirement names
+the plan source and uses the lane's exact pass-condition text as `expected`.
+Its check uses the exact target ID and `["<exact Action text>"]`. Omit grammar
+delimiters and receipt attachments from these values. Other unit/performance
+checks may coexist. A documentation/workflow plan has an empty live mapping and
+still needs its approved executable checks and their actual evidence.
+The derived verdict includes plan digest, section, work type, mapping and explicit
+live/performance applicability. Non-applicability is not a device pass. Records
+without a mobile plan retain their previous format; migration needs approval.
+The checker cannot discover an omitted plan or authenticate an owner's approval.
+
 ## Candidate
 
 ```json

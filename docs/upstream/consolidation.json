@@ -579,7 +579,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-full.md",
       "disposition": "canonical",
-      "destination_sha256": "15c92f9537506f028e8f850d949b148522382853e83502953f1aab04c35ced93"
+      "destination_sha256": "4dd04e42e8df264c75024028d02acb74a125e2a6b25e693f80120f71cd12bb00"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
@@ -587,7 +587,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-stack.md",
       "disposition": "canonical",
-      "destination_sha256": "6ca13bcfd7d5d6bcdadc313acae16b9a1d4f0f100c871621f3abb79ac657bb68"
+      "destination_sha256": "1b45018c81bb3fbec38a75a1e54e0528af5e438e14e79508fa8642226f60ff68"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
@@ -643,7 +643,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/multi-phase-plan.md",
       "disposition": "canonical",
-      "destination_sha256": "4dc5fd989dc38da0bcdb470b9014952b9ea532b2cfd9d80a477b08dfca1e4f9a"
+      "destination_sha256": "3b91e488fd608ea83cb3da52dc6b68abdcdb438cf43dd12782dc45398d979da6"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
@@ -771,7 +771,7 @@
       "source_mode": 493,
       "destination": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "disposition": "canonical",
-      "destination_sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7"
+      "destination_sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
@@ -1587,7 +1587,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "4071e7e317e78abc5c604ab0a078c9f5a4c467402b312ad296df2c66fa3fbd90",
+      "sha256": "15a2831dd33036f777b5f1a89aebc18ac6fce9b3aada081b2302221141f222e8",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1599,7 +1599,7 @@
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "9ce593a69747b2d12fd120359c577e1e6c4f983d8f3453ef3e73186cd9a61996",
+      "sha256": "16ac9f20f07b846d803f98e41c905b33ed9fc48a1409ee8ecc5f12d41d2d3bc8",
       "mode": 420
     },
     "adapters/host.md": {
@@ -1607,11 +1607,11 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "aaa00fcf301c1f75ca1908f48cfae35a84e40d12f3bbcaa537fb7e547e638477",
+      "sha256": "2a8369deb4156b9aea488e3568f93c8c9752828a8e36041410b8ae3197b5261d",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
-      "sha256": "abc5b2ad7013f898a551f5c9aee131807d9fec371cf3cf4ce773a3d0d1780c4a",
+      "sha256": "73a16bd45de505b58302ddbeada28a2841dda9d27d2b7d25bdc3c3a3395b55d2",
       "mode": 420
     },
     "adapters/mobile.md": {
@@ -1631,7 +1631,7 @@
       "mode": 420
     },
     "adapters/program-records.md": {
-      "sha256": "9de8c2633bfd16648fd6866274667d2d06bce4e7b7f7cdc537a448645a8fb98a",
+      "sha256": "e491d7ed221998fc80666dd19d2e71dc0eff0f234168074b5e1042fcbb94372b",
       "mode": 420
     },
     "adapters/runtime/__init__.py": {
@@ -1651,15 +1651,15 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "8f187dc6bc1d74e9d957a89bd74c64df16166cb902bf07968185f70f00cb4bcf",
+      "sha256": "1e52ccc5a76ea9639af846f69f853e86820267b77a18a4ae700ae5b6268863fd",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "084004e429e113274b241338a873cc30e20269a5630e508df22c415489e95220",
+      "sha256": "87ed2d73bdec40e8a520aa6ba6edf5ffac4054f9c0312cd9d4af917a7fd85181",
       "mode": 420
     },
     "adapters/runtime/program.py": {
-      "sha256": "04a101e6b6d3c18c7ebf8064b8894da0e7c900ab3a1be2beccd71bf215a244ce",
+      "sha256": "8a427f9ffa18ca8580065850626082c34ba3846b36b84931498c1dc5ed8302b9",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1823,11 +1823,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-full.md": {
-      "sha256": "15c92f9537506f028e8f850d949b148522382853e83502953f1aab04c35ced93",
+      "sha256": "4dd04e42e8df264c75024028d02acb74a125e2a6b25e693f80120f71cd12bb00",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-stack.md": {
-      "sha256": "6ca13bcfd7d5d6bcdadc313acae16b9a1d4f0f100c871621f3abb79ac657bb68",
+      "sha256": "1b45018c81bb3fbec38a75a1e54e0528af5e438e14e79508fa8642226f60ff68",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/babysit.md": {
@@ -1867,11 +1867,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/mobile-proof.md": {
-      "sha256": "da95ba13a9f13940cbd67e62a8ed328716c014488750bc7dc91a1d0d616f28bf",
+      "sha256": "d318241c82be4bc05bb043e9561649b6f01558e23b185cfb16905fe43650284c",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
-      "sha256": "4dc5fd989dc38da0bcdb470b9014952b9ea532b2cfd9d80a477b08dfca1e4f9a",
+      "sha256": "3b91e488fd608ea83cb3da52dc6b68abdcdb438cf43dd12782dc45398d979da6",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/opening-a-pr.md": {
@@ -1942,8 +1942,16 @@
       "sha256": "1cc347de11a682541488e3686c9cd18388899ca064943a260dbaa6d5dbc2f85e",
       "mode": 420
     },
+    "skills/hugues-mode/references/mobile-coverage.md": {
+      "sha256": "48a62b03b9c1621e34554f778c3cb69f36616e85ce714b40f369eb6c4a3cec87",
+      "mode": 420
+    },
     "skills/hugues-mode/references/mobile-lanes.md": {
       "sha256": "9946a4dbea105ee27372b41e748a9af33b4f61673e8f6db7cc48e2f37cb48936",
+      "mode": 420
+    },
+    "skills/hugues-mode/references/mobile-risks.json": {
+      "sha256": "95d6d984276fc0e9beba2cd105ecd7289011dcd4ab087ee772456d7b75063b74",
       "mode": 420
     },
     "skills/hugues-mode/references/pr-review-policy.md": {
@@ -1951,7 +1959,7 @@
       "mode": 420
     },
     "skills/hugues-mode/references/verification-contract.md": {
-      "sha256": "afaf9701341702108c4c97b381deefe36494d8eb48f09870a5a2c7a7b0087317",
+      "sha256": "a802ce47466079814906424c071c7c8497f438566f2e70054f668564d81f2af4",
       "mode": 420
     },
     "skills/hugues-mode/scripts/bootstrap.ts": {
@@ -1963,7 +1971,7 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/check-plan.mjs": {
-      "sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
+      "sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26",
       "mode": 493
     },
     "skills/hugues-mode/scripts/check-plan.test.ts": {
@@ -1972,6 +1980,10 @@
     },
     "skills/hugues-mode/scripts/compare-plan.py": {
       "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
+      "mode": 420
+    },
+    "skills/hugues-mode/scripts/mobile-coverage.mjs": {
+      "sha256": "e3017039c73cb1d0ff153b8755174407678ddd7eb7d627f8ab9ad0c8bd934858",
       "mode": 420
     },
     "skills/hugues-mode/scripts/orch/orch.test.ts": {

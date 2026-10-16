@@ -5,13 +5,10 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
-while filling the plan. Extract design rules and prototype content before
-prototyping/building; settle source conflicts at the existing plan approval.
-Attach the protected checklist and trusted approval digest to the handoff.
-The checklist is authoritative; a builder's edits to this plan cannot weaken it.
-Keep the installed binding for the program. Include `program-check` in its
-existing verdict step and write boundaries in every worker brief.
+For new consumer programs apply [program proof](../../../adapters/program-proof.md)
+at plan approval: inspect design/prototype rules, resolve source conflicts and
+freeze the protected checklist/digest. Hand off binding and enforced write scopes.
+Use `program-check` at the verdict; builder edits cannot weaken approved rules.
 
 ### Multi-phase or multi-PR plan
 
@@ -25,7 +22,14 @@ existing verdict step and write boundaries in every worker brief.
 6. Run `node skills/hugues-mode/scripts/check-plan.mjs <plan.md>` and fix every line it prints (the **encode-lessons-in-structure** principle skill).
 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
 
-**Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Ten lanes at the PR head drive the real surface through its control skill, per the **swarm** skill, on the `swarm workers` model (default `inherit-parent xhigh`). Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. One lane is the **Regression lane against trunk.** It runs the same load-bearing scenario on trunk and head. If trunk does not have the feature, the lane records that fact and gates the behavior the diff adds plus the end state the user waits for instead of inventing a trunk result. The perf gate is dual-sided. Trunk and head must both produce the named metric. If trunk lacks the feature, also isolate the work the diff adds and set an absolute budget for that work plus the end-to-end state the user waits for. Do not claim a ratio between unlike scenarios. The perf block names the metric, the interleaved probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
+**Verification, default profile.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Ten lanes at the PR head drive the real surface through its control skill, per the **swarm** skill, on the `swarm workers` model (default `inherit-parent xhigh`). Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. One lane is the **Regression lane against trunk.** It runs the same load-bearing scenario on trunk and head. If trunk does not have the feature, the lane records that fact and gates the behavior the diff adds plus the end state the user waits for instead of inventing a trunk result. The perf gate is dual-sided. Trunk and head must both produce the named metric. If trunk lacks the feature, also isolate the work the diff adds and set an absolute budget for that work plus the end-to-end state the user waits for. Do not claim a ratio between unlike scenarios. The perf block names the metric, the interleaved probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
+
+**Mobile programs.** For an operator-approved mobile program, apply
+[mobile coverage](../references/mobile-coverage.md) before filling this skeleton.
+In the skeleton below add `verification_profile: mobile-risk-v1` frontmatter,
+insert its Coverage template after Depends on, and replace Ten lanes plus the
+ten example boxes with its risk-based heading/check template. Record exemptions
+as it directs. Other programs keep this default; all other phases/reviews remain.
 
 **Receipt links.** Put receipt URLs in `Evidence. [Run](url)` at the end of a line or on a standalone line. Use the fixed labels `Run`, `Screenshot`, `Video`, `Log`, `Trace` or `Receipt` for attachments. Adding, removing or updating those attachments is ignored by comparison. Other labels and all surrounding instructions remain protected. Checkbox state may change, but retain the checkbox marker.
 
@@ -83,7 +87,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 - [ ] Apply `../references/verification-contract.md` through bound `read-workflow`. Use bound `plan-compare` at the recorded main and head SHAs. Record every contract change and its operator ruling in the verdict. Hold unresolved changes or a missing unapproved baseline. Owners propose the old rule, proposed rule and reason before editing.
 
-- [ ] A full swarm runs once, at the code-ready head. Another full swarm runs only for new behavior, a redesign, or a large new diff. A rebase, a merge-conflict resolution, or a minor fix gets a single verifier at the new head. Run each full swarm per the `swarm` skill. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. Two or more audit lanes, each with its own focus, that read the diff and the receipts and distrust the PR body. The root audits the receipts in the merge-ready report before the verdict.
+- [ ] A full swarm runs once, at the code-ready head. Another full swarm runs only for new behavior, a redesign, or a large new diff. A rebase, a merge-conflict resolution, or a minor fix gets a single verifier at the new head. Run each full swarm per the `swarm` skill. One gates lane. The PR's selected live checks, ten under the default profile or risk-selected under the approved mobile profile. The perf lane from its **Verify, perf** block. Two or more audit lanes, each with its own focus, that read the diff and the receipts and distrust the PR body. The root audits the receipts in the merge-ready report before the verdict.
 - [ ] Clean only when every lane is `PASS` and the verification-contract gate is clear. Approval of a rule change still requires verification under the approved contract. Findings go back to the owner, including a defect that a lane filed as a note. A new head gets a fresh verdict, except for results that stay valid under the patch-id rule in `playbooks/shipping.md`.
 - [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `playbooks/shipping.md`.>
 

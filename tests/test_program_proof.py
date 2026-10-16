@@ -84,6 +84,132 @@ class ProgramProof(InstalledFixture, unittest.TestCase):
         self.assertTrue(report['ready'])
         self.assertEqual(report['checks'][0]['status'], 'passed')
         self.assertEqual(report['checks'][0]['expected'], 'Remember filters after reopening.')
+        # A quoted example in a design body is not a plan profile.
+        source = self.control / 'design.txt'
+        source.write_text('Example\nverification_profile: mobile-risk-v1\n')
+        approved = json.loads(self.approved.read_text())
+        approved['sources'][0]['sha256'] = digest(source)
+        self.write(self.approved, approved)
+        self.approval_digest = digest(self.approved)
+        self.record['approved_sha256'] = self.approval_digest
+        self.assertEqual(self.check().returncode, 0)
+
+    def mobile_records(self):
+        from test_mobile_coverage import mobile_plan
+        plan = self.control / 'mobile-plan.md'
+        plan.write_text(mobile_plan())
+        approved = json.loads(self.approved.read_text())
+        approved['sources'].append({'id': 'mobile-plan', 'snapshot': plan.name,
+                                    'sha256': digest(plan), 'locator': 'PR 1'})
+        approved['verification_plan'] = {'source_id': 'mobile-plan', 'section': 'PR 1',
+            'checks': [{'lane': str(n), 'check_id': f'C-{n:03}'} for n in range(1, 13)]}
+        requirements, attempts = [], []
+        builds = {}
+        for n in range(1, 13):
+            target = 'android-debug' if n % 2 else 'ios-debug'
+            action = f'background, kill and reopen route {n}'
+            requirements.append({'id': f'R-{n:03}', 'source_ids': ['mobile-plan'],
+                'expected': f'route {n} and its back navigation restore',
+                'checks': [{'id': f'C-{n:03}', 'target': target, 'actions': [action]}]})
+            attempt = copy.deepcopy(self.record['attempts'][0])
+            attempt.update(id=f'A-{n:03}', check_id=f'C-{n:03}', target=target, actions=[action])
+            attempt['artifacts'][0].update(attempt_id=attempt['id'], target=target)
+            attempts.append(attempt)
+            builds[target] = {'path': str(self.build), 'sha256': digest(self.build)}
+        approved['requirements'] = requirements
+        self.write(self.approved, approved)
+        self.approval_digest = digest(self.approved)
+        self.record.update(approved_sha256=self.approval_digest, attempts=attempts)
+        candidate = json.loads(self.candidate.read_text())
+        candidate.update(requirements=requirements, builds=builds)
+        self.write(self.candidate, candidate)
+        return approved, candidate
+
+    def test_mobile_plan_checks_are_bound_to_proof_including_extra_lanes(self):
+        approved, candidate = self.mobile_records()
+        result = self.check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(len(json.loads(result.stdout)['checks']), 12)
+        # Simulate a controller exporting Android only despite the approved plan.
+        approved['requirements'] = [r for r in approved['requirements']
+                                    if r['checks'][0]['target'] == 'android-debug']
+        approved['verification_plan']['checks'] = [r for r in approved['verification_plan']['checks']
+                                                   if int(r['lane']) % 2]
+        self.write(self.approved, approved)
+        self.approval_digest = digest(self.approved)
+        candidate['requirements'] = approved['requirements']
+        self.write(self.candidate, candidate)
+        self.record['approved_sha256'] = self.approval_digest
+        self.record['attempts'] = [a for a in self.record['attempts'] if a['target'] == 'android-debug']
+        result = self.check()
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(json.loads(result.stdout)['ready'])
+        self.assertIn('plan check mapping', result.stderr)
+
+    def test_mobile_plan_cannot_relabel_checks_or_omit_selected_proof(self):
+        approved, candidate = self.mobile_records()
+        for field, value in [('target', 'android'), ('actions', ['skip reopening'])]:
+            with self.subTest(field=field):
+                changed = copy.deepcopy(approved)
+                changed['requirements'][0]['checks'][0][field] = value
+                self.write(self.approved, changed)
+                self.approval_digest = digest(self.approved)
+                self.record['approved_sha256'] = self.approval_digest
+                result = self.check()
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('mapping target/actions/pass condition mismatch', result.stderr)
+        changed = copy.deepcopy(approved)
+        changed['requirements'][0]['expected'] = 'ignore saved routes'
+        self.write(self.approved, changed)
+        self.approval_digest = digest(self.approved)
+        self.assertIn('mapping target/actions/pass condition mismatch', self.check().stderr)
+        changed = copy.deepcopy(approved)
+        del changed['verification_plan']
+        self.write(self.approved, changed)
+        self.approval_digest = digest(self.approved)
+        self.assertIn('requires a verification_plan', self.check().stderr)
+        plan = self.control / 'mobile-plan.md'
+        original = plan.read_text()
+        for profile in ['verification_profile: mobile-risk-v1 ',
+                        '"verification_profile": mobile-risk-v1',
+                        'Verification_profile: mobile-risk-v1',
+                        '\u00a0verification_profile: mobile-risk-v1',
+                        '\ufeffverification_profile: mobile-risk-v1',
+                        'verification_profile\u00e9: mobile-risk-v1',
+                        'verification_profile mobile-risk-v1',
+                        'verification_profile: unknown']:
+            with self.subTest(profile=profile):
+                plan.write_text(original.replace('verification_profile: mobile-risk-v1', profile))
+                changed['sources'][-1]['sha256'] = digest(plan)
+                self.write(self.approved, changed)
+                self.approval_digest = digest(self.approved)
+                self.record['approved_sha256'] = self.approval_digest
+                result = self.check()
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('requires a verification_plan', result.stderr)
+        plan.write_text(original)
+        self.write(self.approved, approved)
+        self.approval_digest = digest(self.approved)
+        self.record['approved_sha256'] = self.approval_digest
+        self.record['attempts'] = self.record['attempts'][:-1]
+        result = self.check()
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('C-012', json.loads(result.stdout)['missing_proof'])
+
+    def test_document_plan_records_non_applicability_without_device_passes(self):
+        from test_mobile_coverage import document_plan
+        plan = self.control / 'mobile-plan.md'
+        plan.write_text(document_plan())
+        approved = json.loads(self.approved.read_text())
+        approved['sources'].append({'id': 'mobile-plan', 'snapshot': plan.name,
+                                    'sha256': digest(plan), 'locator': 'PR 1'})
+        approved['verification_plan'] = {'source_id': 'mobile-plan', 'section': 'PR 1', 'checks': []}
+        self.write(self.approved, approved)
+        self.approval_digest = digest(self.approved)
+        self.record['approved_sha256'] = self.approval_digest
+        result = self.check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)['verification_plan']['live'], False)
 
     def test_no_attempt_is_untested_with_missing_proof(self):
         self.record['attempts'] = []

@@ -1,0 +1,10 @@
+{
+  "navigation": ["process-death", "background-reopen", "restored-navigation", "rotation", "navigation-gestures"],
+  "persistence": ["read-write-failure", "corruption", "interrupted-write", "existing-data"],
+  "layout": ["small-layout", "large-text", "keyboard-input"],
+  "native-views": ["repeated-presentation", "memory-retention", "view-cleanup"],
+  "launch": ["oldest-os", "release-build", "content-readiness"],
+  "network": ["offline", "failure-recovery"],
+  "documentation": [],
+  "workflow": []
+}

@@ -110,8 +110,8 @@ def sha(value):
         raise ValueError('SHA256 required')
 
 
-def header(row, required):
-    fields(row, ['schema_version', 'program', *required])
+def header(row, required, optional=()):
+    fields(row, ['schema_version', 'program', *required], optional)
     if type(row['schema_version']) is not int or row['schema_version'] != 1:
         raise ValueError('unsupported program schema; explicit migration required')
     text(row['program'])
@@ -207,10 +207,11 @@ def approved_record(path, approval_digest):
     if digest(body) != approval_digest:
         raise ValueError('approved requirements changed')
     approved = load_json(body.decode('utf-8'))
-    header(approved, ['revision', 'approval_reference', 'sources', 'requirements'])
+    header(approved, ['revision', 'approval_reference', 'sources', 'requirements'], ['verification_plan'])
     text(approved['revision'])
     text(approved['approval_reference'])
     source_ids = set()
+    has_mobile_plan = False
     for source in items(approved['sources'], True):
         fields(source, ['id', 'snapshot', 'sha256', 'locator'])
         identity = text(source['id'])
@@ -219,8 +220,13 @@ def approved_record(path, approval_digest):
         source_ids.add(identity)
         text(source['locator'])
         sha(source['sha256'])
-        if digest(file_bytes(relative(Path(path).parent, source['snapshot']))) != source['sha256']:
+        snapshot = file_bytes(relative(Path(path).parent, source['snapshot']))
+        if digest(snapshot) != source['sha256']:
             raise ValueError('approved source snapshot changed')
+        if (snapshot.startswith((b'---\n', b'---\r\n'))
+                and b'verification_profile' in snapshot.lower()
+                and inspect_plan(relative(Path(path).parent, source['snapshot']), '--profile-json')['attempted']):
+            has_mobile_plan = True
     requirement_ids, planned = set(), {}
     for requirement in items(approved['requirements'], True):
         fields(requirement, ['id', 'source_ids', 'expected', 'checks'])
@@ -240,7 +246,59 @@ def approved_record(path, approval_digest):
             for action in items(check['actions'], True):
                 text(action)
             planned[identity] = check
-    return approved, planned
+    if has_mobile_plan and 'verification_plan' not in approved:
+        raise ValueError('mobile plan requires a verification_plan mapping')
+    plan = plan_checks(path, approved, planned) if 'verification_plan' in approved else None
+    return approved, planned, plan
+
+
+def inspect_plan(snapshot, mode):
+    """Use the installed parser for profile detection and validated check export."""
+    node = shutil.which('node')
+    if node is None:
+        raise ValueError('Node unavailable; mobile plan proof gate blocked')
+    helper = Path(__file__).resolve().parents[2] / 'skills/hugues-mode/scripts/check-plan.mjs'
+    result = subprocess.run([node, str(helper), str(snapshot), mode],
+                            capture_output=True, text=True, check=False)
+    if result.returncode:
+        raise ValueError('invalid verification plan: ' + result.stderr.strip())
+    return load_json(result.stdout)
+
+
+def plan_checks(path, approved, planned):
+    """Cross-check the hashed mobile plan using the same installed validator."""
+    link = approved['verification_plan']
+    fields(link, ['source_id', 'section', 'checks'])
+    source = next((s for s in approved['sources'] if s['id'] == text(link['source_id'])), None)
+    if source is None:
+        raise ValueError('unknown verification plan source')
+    manifests = inspect_plan(relative(Path(path).parent, source['snapshot']), '--coverage-json')
+    selected = [m for m in manifests if m['section'] == text(link['section'])]
+    if len(selected) != 1:
+        raise ValueError('verification plan section must exist exactly once')
+    checks = {c['id']: c for c in selected[0]['checks']}
+    mapping, ids = {}, set()
+    for row in items(link['checks']):
+        fields(row, ['lane', 'check_id'])
+        lane, identity = text(row['lane']), text(row['check_id'])
+        if lane in mapping or identity in ids:
+            raise ValueError('duplicate plan check mapping')
+        mapping[lane] = identity
+        ids.add(identity)
+    if set(mapping) != set(checks):
+        raise ValueError('plan check mapping must include every selected lane')
+    for lane, identity in mapping.items():
+        declared, accepted = checks[lane], planned.get(identity)
+        requirement = next((r for r in approved['requirements']
+                            if any(c['id'] == identity for c in r['checks'])), None)
+        if (accepted is None or accepted['target'] != declared['target']
+                or accepted['actions'] != [declared['action']]
+                or requirement['expected'] != declared['expected']
+                or link['source_id'] not in requirement['source_ids']):
+            raise ValueError('plan check mapping target/actions/pass condition mismatch: ' + lane)
+    return {'source_sha256': source['sha256'], 'section': link['section'],
+            'live': selected[0]['live'], 'perf': selected[0]['perf'],
+            'work_type': selected[0]['workType'], 'checks': link['checks']}
 
 
 def coordinator_state(path):
@@ -270,7 +328,7 @@ def coordinator_state(path):
 
 
 def check(approved_path, approval_digest, candidate_path, record_path, state_path):
-    approved, planned_checks = approved_record(approved_path, approval_digest)
+    approved, planned_checks, verification_plan = approved_record(approved_path, approval_digest)
     for path in (candidate_path, record_path, state_path):
         if not Path(path).resolve().is_relative_to(Path(approved_path).parent.resolve()):
             raise ValueError('verdict inputs must be inside protected owner control directory')
@@ -395,6 +453,7 @@ def check(approved_path, approval_digest, candidate_path, record_path, state_pat
     remaining = [f for f in state['findings'] if f['status'] == 'open']
     decisions = [d for d in state['decisions'] if d['status'] == 'open']
     return {'schema_version': 1, 'program': approved['program'], 'approved_sha256': approval_digest,
+            'verification_plan': verification_plan,
             'source': candidate['source'], 'checks': checks, 'remaining_findings': remaining,
             'open_decisions': decisions,
             'missing_proof': [c['id'] for c in checks if c['status'] not in ('passed', 'waived')],

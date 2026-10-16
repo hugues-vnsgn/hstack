@@ -13,6 +13,11 @@ Enforce application write scopes and protect the installed plugin and accepted
 proof. A worker's revised plan cannot replace the approved checklist. Keep the
 phase order and all gates below.
 
+For an explicitly approved mobile program, apply
+[mobile coverage](../references/mobile-coverage.md) before verification dispatch.
+Use its selected checks and applicability; preserve this playbook's phase timing,
+review roles and operator gates. Default/non-mobile plans retain their rules.
+
 ### Autopilot-stack
 
 **Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)

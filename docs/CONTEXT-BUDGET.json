@@ -1323,17 +1323,17 @@
         "plugin/adapters/program-records.md"
       ],
       "unique_files": 2,
-      "bytes": 13343,
-      "characters": 13343,
-      "estimated_tokens_characters_divided_by_4": 3335.75,
+      "bytes": 14453,
+      "characters": 14453,
+      "estimated_tokens_characters_divided_by_4": 3613.25,
       "inputs": {
         "plugin/adapters/program-proof.md": {
           "bytes": 7716,
           "sha256": "690f5f990afdb51ff60668035b926a0129c2d244fb964f4e5056345a208208e0"
         },
         "plugin/adapters/program-records.md": {
-          "bytes": 5627,
-          "sha256": "9de8c2633bfd16648fd6866274667d2d06bce4e7b7f7cdc537a448645a8fb98a"
+          "bytes": 6737,
+          "sha256": "e491d7ed221998fc80666dd19d2e71dc0eff0f234168074b5e1042fcbb94372b"
         }
       }
     }
@@ -1352,6 +1352,29 @@
         "plugin/adapters/program-control.md": {
           "bytes": 10892,
           "sha256": "43b0b73b19806a2ddfe131ae776c42f805c2d1a0c050387b6954beaceadfa077"
+        }
+      }
+    }
+  },
+  "mobile_risk_profile": {
+    "scope": "Deferred mobile-risk-v1 selection guide and shared catalog, outside the pinned non-mobile scenarios; source counts only.",
+    "candidate": {
+      "paths": [
+        "plugin/skills/hugues-mode/references/mobile-coverage.md",
+        "plugin/skills/hugues-mode/references/mobile-risks.json"
+      ],
+      "unique_files": 2,
+      "bytes": 8493,
+      "characters": 8493,
+      "estimated_tokens_characters_divided_by_4": 2123.25,
+      "inputs": {
+        "plugin/skills/hugues-mode/references/mobile-coverage.md": {
+          "bytes": 7988,
+          "sha256": "48a62b03b9c1621e34554f778c3cb69f36616e85ce714b40f369eb6c4a3cec87"
+        },
+        "plugin/skills/hugues-mode/references/mobile-risks.json": {
+          "bytes": 505,
+          "sha256": "95d6d984276fc0e9beba2cd105ecd7289011dcd4ab087ee772456d7b75063b74"
         }
       }
     }
@@ -2015,9 +2038,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 34,
-        "bytes": 126875,
-        "characters": 126805,
-        "estimated_tokens_characters_divided_by_4": 31701.25,
+        "bytes": 126748,
+        "characters": 126678,
+        "estimated_tokens_characters_divided_by_4": 31669.5,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1045,
@@ -2028,8 +2051,8 @@
             "sha256": "b4cf41cc3f1b95e4a5764cbe277b754af87b14989632a43ae43c2c9e0eec7e1e"
           },
           "plugin/adapters/host-workflow-tools.md": {
-            "bytes": 2112,
-            "sha256": "9ce593a69747b2d12fd120359c577e1e6c4f983d8f3453ef3e73186cd9a61996"
+            "bytes": 1985,
+            "sha256": "16ac9f20f07b846d803f98e41c905b33ed9fc48a1409ee8ecc5f12d41d2d3bc8"
           },
           "plugin/adapters/host.md": {
             "bytes": 5386,
@@ -2834,9 +2857,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 44,
-        "bytes": 138809,
-        "characters": 138739,
-        "estimated_tokens_characters_divided_by_4": 34684.75,
+        "bytes": 138682,
+        "characters": 138612,
+        "estimated_tokens_characters_divided_by_4": 34653.0,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1045,
@@ -2851,8 +2874,8 @@
             "sha256": "b4cf41cc3f1b95e4a5764cbe277b754af87b14989632a43ae43c2c9e0eec7e1e"
           },
           "plugin/adapters/host-workflow-tools.md": {
-            "bytes": 2112,
-            "sha256": "9ce593a69747b2d12fd120359c577e1e6c4f983d8f3453ef3e73186cd9a61996"
+            "bytes": 1985,
+            "sha256": "16ac9f20f07b846d803f98e41c905b33ed9fc48a1409ee8ecc5f12d41d2d3bc8"
           },
           "plugin/adapters/host.md": {
             "bytes": 5386,
