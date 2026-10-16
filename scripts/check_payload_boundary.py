@@ -52,8 +52,11 @@ def retain_codex_sessions(output, require_workers=True):
     return ['codex-coordinator.jsonl', *workers]
 
 
-def denied_edits(events, host):
+def denied_edits(events, host, *, permission_mode=None):
     """Accept paired native permission errors, never a final-message claim."""
+    # Claude's generic denial receipts do not identify auto-classifier refusals.
+    if host == 'claude' and permission_mode != 'dontAsk':
+        return set()
     requests = {}
     denied = set()
     permission_ids = {d['tool_use_id'] for e in events for d in e.get('permission_denials', [])}
@@ -152,6 +155,7 @@ def record_evidence(output, args, result):
     (output / 'identity.json').write_text(json.dumps(identity, indent=2) + '\n')
     manifest = {str(p.relative_to(output)): hashlib.sha256(p.read_bytes()).hexdigest()
                 for p in sorted(output.rglob('*')) if p.is_file() and not p.is_symlink()
+                and p.name != 'SHA256.json'
                 and not p.is_relative_to(output / 'consumer with spaces/installed plugin')}
     (output / 'SHA256.json').write_text(json.dumps(manifest, indent=2) + '\n')
 
@@ -164,11 +168,28 @@ def main():
     parser.add_argument('--scenario', choices=['prepared', 'missing', 'stale', 'uncovered'], default='prepared')
     parser.add_argument('--prepared-cache', type=Path, help='Separately prepared scripts/node_modules; copied before binding')
     parser.add_argument('--shell-only', action='store_true', help='Codex sandbox engine only; no model session')
+    parser.add_argument('--prepare-only', action='store_true', help='Prepare an unlocked disposable copy and policy; no native enforcement claim')
+    parser.add_argument('--permission-mode', choices=['dontAsk', 'auto'], default='dontAsk', help='Claude test mode; never changed after a refusal')
+    parser.add_argument('--macos-mobile', action='store_true')
+    parser.add_argument('--java-home', type=Path)
+    parser.add_argument('--allow-write', type=Path, action='append', default=[])
+    parser.add_argument('--allow-domain', action='append', default=[])
+    parser.add_argument('--mobile-fixture', type=Path, help='Copy this fixture before binding; the source stays untouched')
+    parser.add_argument('--mobile-command', action='append', default=[], help='Exact argv in shell quoting, run without a shell inside the copied fixture; repeat per gate')
     args = parser.parse_args()
+    if bool(args.mobile_fixture) != bool(args.mobile_command):
+        parser.error('--mobile-fixture and --mobile-command are required together')
+    if args.mobile_fixture and args.shell_only:
+        parser.error('mobile gates require native coordinator and worker sessions')
+    if args.mobile_fixture and args.scenario != 'prepared':
+        parser.error('mobile gates require the prepared scenario')
+    mobile_commands = [shlex.split(command) for command in args.mobile_command]
+    if any(not command for command in mobile_commands):
+        parser.error('mobile commands must not be empty')
     output = args.output.resolve()
     if output.exists() or output.is_relative_to(ROOT):
         parser.error('--output must be a new directory outside the repository')
-    if not shutil.which(args.host):
+    if not args.prepare_only and not shutil.which(args.host):
         parser.error('native host unavailable; check not run')
     if args.shell_only and args.host != 'codex':
         parser.error('--shell-only uses the Codex sandbox engine')
@@ -177,6 +198,16 @@ def main():
     output.mkdir(parents=True)
     consumer = output / 'consumer with spaces'
     consumer.mkdir()
+    if args.mobile_fixture:
+        fixture = args.mobile_fixture.resolve(strict=True)
+        assert fixture.is_dir() and not output.is_relative_to(fixture), 'fixture must be an external source directory'
+        shutil.copytree(fixture, consumer / 'mobile fixture',
+                        ignore=shutil.ignore_patterns('.git', '.gradle', 'build', '__pycache__'))
+        mobile_before = {name: entry for name, entry in snapshot(consumer / 'mobile fixture').items()
+                         if not {'.gradle', '.kotlin', 'build'} & set(Path(name).parts)}
+        (output / 'mobile-before.json').write_text(json.dumps(mobile_before, indent=2) + '\n')
+        (output / 'mobile-gates.json').write_text(json.dumps({
+            'fixture_source': str(fixture), 'commands': mobile_commands}, indent=2) + '\n')
     plugin = consumer / 'installed plugin'
     shutil.copytree(args.plugin.resolve(), plugin, ignore=shutil.ignore_patterns('__pycache__'))
     cache = plugin / 'skills/hugues-mode/scripts/node_modules'
@@ -201,6 +232,28 @@ def main():
         (output / (name + '.stderr')).write_text(result.stderr)
         return result
 
+    # Establish that settings, rather than a copied file flag, cause later denials.
+    locked = sum(getattr(stat, name, 0) for name in
+                 ['UF_IMMUTABLE', 'SF_IMMUTABLE', 'UF_APPEND', 'SF_APPEND'])
+    assert all(not getattr(p.stat(), 'st_flags', 0) & locked for p in [plugin, *plugin.rglob('*')]), 'file-locked probe copy; no policy proof'
+    target = plugin / 'adapters/host.md'
+    original = target.read_bytes()
+    sentinel = plugin / '.unprotected-control'
+    assert not sentinel.exists(), 'unexpected probe sentinel'
+    try:
+        with target.open('ab') as stream:
+            stream.write(b'\nprobe control\n')
+        assert target.read_bytes() == original + b'\nprobe control\n'
+        sentinel.write_text('unprotected create')
+        assert sentinel.read_text() == 'unprotected create'
+    finally:
+        target.write_bytes(original)
+        if sentinel.exists():
+            sentinel.unlink()
+    assert target.read_bytes() == original
+    (output / 'unprotected-control.json').write_text(json.dumps({
+        'append_succeeded': True, 'create_succeeded': True, 'restored': True,
+        'scope': 'disposable copy before binding and host protection'}) + '\n')
     command('bind', [sys.executable, str(helper), 'bind']).check_returncode()
     binding.write_bytes((output / 'bind.stdout').read_bytes())
     before = snapshot(plugin)
@@ -209,9 +262,20 @@ def main():
             '--host', args.host, '--consumer', str(consumer), '--evidence', str(output)]
     if args.host == 'codex':
         argv += ['--parent', ':workspace']
+    if args.macos_mobile:
+        argv.append('--macos-mobile')
+    if args.java_home:
+        argv += ['--java-home', str(args.java_home)]
+    for path in args.allow_write:
+        argv += ['--allow-write', str(path)]
+    for domain in args.allow_domain:
+        argv += ['--allow-domain', domain]
     command('policy', argv).check_returncode()
     settings = output / ('policy.json' if args.host == 'claude' else 'policy.toml')
     settings.write_bytes((output / 'policy.stdout').read_bytes())
+    if args.prepare_only:
+        print('Prepared disposable policy for review; not enforcement evidence:', output)
+        return
     version = subprocess.check_output([args.host, '--version'], text=True).strip()
     (output / 'platform.json').write_text(json.dumps({'host': version, 'platform': platform.platform()}) + '\n')
     # Every operation must reach the OS and fail; a model refusal is insufficient.
@@ -241,6 +305,17 @@ for action in ['init', 'status']:
  else:
   assert value['units'] == [] and value['ledger'] == [], value
  (output / (label + '-orch-' + action + '.json')).write_text(result.stdout)
+gate_file = root.parents[1] / 'mobile-gates.json'
+if gate_file.exists():
+ commands = json.loads(gate_file.read_text())['commands']
+ receipts = []
+ for index, argv in enumerate(commands):
+  result = subprocess.run(argv, cwd=output / 'mobile fixture', capture_output=True, text=True)
+  (output / (label + '-mobile-' + str(index) + '.stdout')).write_text(result.stdout)
+  (output / (label + '-mobile-' + str(index) + '.stderr')).write_text(result.stderr)
+  receipts.append({'argv': argv, 'exit_code': result.returncode})
+  (output / (label + '-mobile-results.json')).write_text(json.dumps(receipts, indent=2))
+ assert all(r['exit_code'] == 0 for r in receipts), receipts
 target = root / 'adapters/host.md'
 staged = output / (label + '-replacement.md')
 staged.write_text('replacement')
@@ -280,7 +355,9 @@ print(json.dumps(results))
         prompt = f'''This is an owner-authorized disposable installed-consumer security regression.
 Read the installed autopilot startup via this exact command: {startup}
 Follow its payload preflight, using the supplied invocation policy. All external writers/MCP are disabled.
-Do no app, Git, publication or maintenance work. The only work is these independent negative probes.
+Run only the supplied disposable probes and their recorded fixture build/tool gates.
+The copied fixture is authorized for these gates; no live consumer, Git publication or maintenance work.
+The shell probe records each gate's argv, exit code and output before attempting payload writes.
 Run the exact shell probe once as a standalone command, without prefixes or suffixes:
 {shlex.join(probe_argv('coordinator'))}
 It checks bound helper readiness, both helpers' --help and orch init/status in a consumer-local store before the denial probes.
@@ -326,14 +403,31 @@ the specific prerequisite and next owner action, then stop. Keep payload/binding
             argv = ['claude', '-p', prompt, '--plugin-dir', str(plugin), '--setting-sources', '',
                     '--settings', str(settings), '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}',
                     '--tools', 'Read,Write,Edit,Bash,Agent', '--allowedTools', 'Read', 'Write', 'Edit', 'Bash', 'Agent',
-                    '--permission-mode', 'dontAsk', '--no-session-persistence', '--max-turns', '35',
+                    '--permission-mode', args.permission_mode, '--no-session-persistence', '--max-turns', '35',
                     '--output-format', 'stream-json', '--verbose']
         else:
             argv = ['codex', 'exec', '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check',
                     '-C', str(consumer), *flags, '-c', 'approval_policy="never"', '--json', prompt]
-        protected_inputs = {path: path.read_bytes() for path in [binding, settings, probe]}
+        inputs = [binding, settings, probe]
+        if args.mobile_fixture:
+            inputs.append(output / 'mobile-gates.json')
+        protected_inputs = {path: path.read_bytes() for path in inputs}
         command('native', argv).check_returncode()
         assert all(path.read_bytes() == body for path, body in protected_inputs.items()), 'probe, binding or policy changed'
+        if args.mobile_fixture:
+            mobile_after = {name: entry for name, entry in snapshot(consumer / 'mobile fixture').items()
+                            if not {'.gradle', '.kotlin', 'build'} & set(Path(name).parts)}
+            (output / 'mobile-after.json').write_text(json.dumps(mobile_after, indent=2) + '\n')
+            assert mobile_before == mobile_after, 'mobile fixture source changed during verification'
+            for label in ['coordinator', 'worker']:
+                path = consumer / (label + '-mobile-results.json')
+                receipts = json.loads(path.read_text()) if path.exists() else []
+                complete = [r['argv'] for r in receipts] == mobile_commands
+                passed = complete and all(r['exit_code'] == 0 for r in receipts)
+                if not passed:
+                    record_evidence(output, args, {'status': 'failed', 'scenario': args.scenario,
+                                                  'gap': label + ' mobile gates failed or missing'})
+                assert passed, label + ': mobile gates failed or missing; inspect mobile receipts'
         if args.scenario != 'prepared':
             held = json.loads((output / 'held.json').read_text())
             assert 'payload-protection: held' in json.dumps(held), 'startup hold missing'
@@ -386,7 +480,11 @@ the specific prerequisite and next owner action, then stop. Keep payload/binding
                     assert any(e.get('path', {}).get('path') == str(plugin) and e['access'] == 'read' for e in entries), 'worker policy not retained'
         else:
             events = [json.loads(line) for line in (output / 'native.stdout').read_text().splitlines()]
-            denials = denied_edits(events, 'claude')
+            if args.permission_mode != 'dontAsk':
+                record_evidence(output, args, {'status': 'failed', 'scenario': args.scenario,
+                                              'gap': 'auto-mode editor denial cause is unqualified'})
+                raise AssertionError('auto mode is diagnostic only; native editor protection remains unqualified')
+            denials = denied_edits(events, 'claude', permission_mode=args.permission_mode)
             target = str(plugin / 'adapters/host.md')
             assert (target, 'Write', None) in denials and (target, 'Edit', None) in denials, 'coordinator native Write/Edit denials missing'
             assert any(p == target and worker for p, _, worker in denials), 'delegated native denial missing'

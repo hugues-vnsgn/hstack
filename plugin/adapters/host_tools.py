@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "71239ac9bc3f824543b63dbe102903f9a309d12b6f36dd2416ba0229685aed76"
+    "payload.py": "5b76c8c36ab0331e86ad78301589a54fbcf4716b8a1a46a35e8254a9baea8473"
 }
 
 
@@ -86,6 +86,10 @@ def main(argv=None):
     policy.add_argument('--consumer', type=Path, required=True)
     policy.add_argument('--evidence', type=Path, required=True)
     policy.add_argument('--parent', help='Codex active permission profile to preserve')
+    policy.add_argument('--macos-mobile', action='store_true', help='Opt-in Claude macOS mobile tool access; review before applying')
+    policy.add_argument('--java-home', type=Path, help='Selected JDK; avoids sandboxed java_home discovery')
+    policy.add_argument('--allow-write', type=Path, action='append', default=[], help='Selected existing tool cache/log directory; repeat as needed')
+    policy.add_argument('--allow-domain', action='append', default=[], help='Selected tool network domain; repeat as needed')
     for verb, operand in [('read-workflow', 'source'), ('plan-check', 'plan'),
                           ('translate-plan', 'plan')]:
         child = sub.add_parser(verb)
@@ -114,7 +118,9 @@ def main(argv=None):
             return 0
         payload.load_binding(root, args.binding.resolve())
         if args.verb == 'payload-policy':
-            print(payload.policy(root, args.host, args.consumer, args.evidence, args.parent))
+            print(payload.policy(root, args.host, args.consumer, args.evidence, args.parent,
+                                 macos_mobile=args.macos_mobile, java_home=args.java_home,
+                                 allow_write=args.allow_write, allow_domains=args.allow_domain))
         elif args.verb == 'helper-ready':
             print(json.dumps(payload.helper_ready(root), indent=2))
         elif args.verb == 'read-workflow':
