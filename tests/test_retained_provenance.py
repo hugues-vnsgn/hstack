@@ -61,14 +61,15 @@ class RetainedProvenanceTests(unittest.TestCase):
         (self.directory / 'huguesStack-dispositions.json').write_bytes(u.encode(self.ledger))
         (self.directory / 'huguesStack-dispositions.csv').write_bytes(u.render_csv(self.ledger))
         before = u.read_pin(self.directory / 'baseline-pin.json')
-        (self.directory / 'delta-2eb7ed46-e43c7ee2.md').write_bytes(u.render_delta(before, self.source, self.ledger))
+        name = f"delta-{before['revision'][:8]}-{self.source['revision'][:8]}.md"
+        (self.directory / name).write_bytes(u.render_delta(before, self.source, self.ledger))
 
     def run_check(self, error=None):
         result = subprocess.run([sys.executable, str(self.root / 'scripts/upstream-diff.py'),
                                  'check', '--root', str(self.root)], capture_output=True, text=True)
         if error is None:
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertIn('Verified pstack 0.15.9', result.stdout)
+            self.assertIn('Verified pstack 0.15.25', result.stdout)
         else:
             self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
             self.assertIn(error, result.stderr)

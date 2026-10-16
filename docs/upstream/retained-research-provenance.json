@@ -1,17 +1,17 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
-  "upstream_version": "0.15.9",
+  "revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
+  "upstream_version": "0.15.25",
   "package": "research",
   "files": [
     {
       "source": "pstack/skills/how/SKILL.md",
       "destination": "plugin/skills/how/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "cd22fff659f14822ad2f485f711a355b6da0668d",
-      "sha256": "d31805589c7f6a63a6db6c9fadebbd79fb9660682cf1654e9b2e5e1e7cd30bc0",
+      "blob_sha": "67edc340d4d8a9c7ab0b9e08c663e0e63b8d9125",
+      "sha256": "08a00079bb15b4258874ac3ff62d4ca7e94350ffedb521d0fd296dc9dd21904e",
       "mode": "100644",
-      "destination_sha256": "0e93c00ef1afe1cdbdb01d2198620ac4e094ebad2863ae54f5a1b74694628cff",
+      "destination_sha256": "77848f25f174fc8d23ac09a36c918f587cb229fed5b6b94b5626ceffbd52af30",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -38,10 +38,10 @@
       "source": "pstack/skills/how/references/explorer-prompt.md",
       "destination": "plugin/skills/how/references/explorer-prompt.md",
       "disposition": "verbatim",
-      "blob_sha": "9b4b0594bfd779015616e9d280369aba939583b4",
-      "sha256": "a3b44a6e5bb16a6d4d1cac19db8ed5322ffd5f5f5d45baca4e73990ca096f8be",
+      "blob_sha": "724bacfc7df759865c0c29705bfee641e4c1aeca",
+      "sha256": "6300128385ee940fd42ecb84b0e623435440a2dc283eae54ee4a52ba56947ba1",
       "mode": "100644",
-      "destination_sha256": "a3b44a6e5bb16a6d4d1cac19db8ed5322ffd5f5f5d45baca4e73990ca096f8be",
+      "destination_sha256": "6300128385ee940fd42ecb84b0e623435440a2dc283eae54ee4a52ba56947ba1",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -51,10 +51,10 @@
       "source": "pstack/skills/why/SKILL.md",
       "destination": "plugin/skills/why/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "daac2c734a8f8fe43d30663054d694066f2b41ec",
-      "sha256": "2a852ec8680920109d2b56538b027c52867896a597250ac5d18a13e0b42e5b06",
+      "blob_sha": "b5fe93f8b78f58b06e0bf245a6b5b8faae4300e8",
+      "sha256": "144d42e7712723d763e607bc0a969e5f1cdf83ec7228519d87677cc534571bed",
       "mode": "100644",
-      "destination_sha256": "9de168d266946698eb21a2a482b019a61f184ac5be5b086081f53e6df2802c69",
+      "destination_sha256": "5079ccba1382aebb62ef6ce093df86d1c14f5eec4296caaad1cbe4048a01a369",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -68,10 +68,10 @@
       "source": "pstack/skills/why/references/epistemics.md",
       "destination": "plugin/skills/why/references/epistemics.md",
       "disposition": "verbatim",
-      "blob_sha": "3732bf6881b60d1337fa3498574452a85d33ba30",
-      "sha256": "fcc0f559c072832c869a5ada72434b4849320a637ae63c09e8ee14f7ad787059",
+      "blob_sha": "b18abf41dfa245ee55e94f1b3a80c0b750eb10cf",
+      "sha256": "d54a2361b2d5973bc3fe2edf62f446d87935974d4b40d47f23b9529f956ca758",
       "mode": "100644",
-      "destination_sha256": "fcc0f559c072832c869a5ada72434b4849320a637ae63c09e8ee14f7ad787059",
+      "destination_sha256": "d54a2361b2d5973bc3fe2edf62f446d87935974d4b40d47f23b9529f956ca758",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -81,10 +81,10 @@
       "source": "pstack/skills/why/references/investigator-prompt.md",
       "destination": "plugin/skills/why/references/investigator-prompt.md",
       "disposition": "verbatim",
-      "blob_sha": "3b56af44c589833508f4605cfdd4432b39a16739",
-      "sha256": "6892956a7ab0b5ee6c4babaf4f793703abe89b350ea7cb9463b4a56eea1c8266",
+      "blob_sha": "e1c2bbf52197ff600ba6e4552439e630687b7ae2",
+      "sha256": "c44afba186f899094f3694e6c9d6de5d14ff7c4ce28b787a9f50fc789c9a7fc3",
       "mode": "100644",
-      "destination_sha256": "6892956a7ab0b5ee6c4babaf4f793703abe89b350ea7cb9463b4a56eea1c8266",
+      "destination_sha256": "c44afba186f899094f3694e6c9d6de5d14ff7c4ce28b787a9f50fc789c9a7fc3",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -107,10 +107,10 @@
       "source": "pstack/skills/why/references/sources/code-archaeology.md",
       "destination": "plugin/skills/why/references/sources/code-archaeology.md",
       "disposition": "verbatim",
-      "blob_sha": "32d5f97f8d2d3974c668f5f0392737b7e8e25afd",
-      "sha256": "8c14aa382f0de40829b2668d43e3f54814480bb93a486c9282ada4003f6b9dbd",
+      "blob_sha": "e3555f809da0a5654ceefe7d2c20080397c03506",
+      "sha256": "a4a3970e9db448054aed676f3f7feeee667b4b69f0bd57c8fd72b751be687cc7",
       "mode": "100644",
-      "destination_sha256": "8c14aa382f0de40829b2668d43e3f54814480bb93a486c9282ada4003f6b9dbd",
+      "destination_sha256": "a4a3970e9db448054aed676f3f7feeee667b4b69f0bd57c8fd72b751be687cc7",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -133,10 +133,10 @@
       "source": "pstack/skills/why/references/sources/datadog.md",
       "destination": "plugin/skills/why/references/sources/datadog.md",
       "disposition": "verbatim",
-      "blob_sha": "d8363b1c1d1c7eadb15d47abd83bf70537c39620",
-      "sha256": "ebe9c07bac28e47757ee7f16fb93b0c01d427a08c501957d047f395a2f37b7e7",
+      "blob_sha": "536466ddd8ae6543836abb84bdf1efd8e43089ba",
+      "sha256": "b139faac5dc11b8f26c8255dce6033c1a6ac143b038d3dd103f2034c5dbec9cd",
       "mode": "100644",
-      "destination_sha256": "ebe9c07bac28e47757ee7f16fb93b0c01d427a08c501957d047f395a2f37b7e7",
+      "destination_sha256": "b139faac5dc11b8f26c8255dce6033c1a6ac143b038d3dd103f2034c5dbec9cd",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -146,10 +146,10 @@
       "source": "pstack/skills/why/references/sources/incident-postmortem.md",
       "destination": "plugin/skills/why/references/sources/incident-postmortem.md",
       "disposition": "verbatim",
-      "blob_sha": "450d6e52f25b1b41f741cb3e9c93e1c74ef858b4",
-      "sha256": "a899470f05f86029630a13a2696491cc708ca7b56a6e822a69ff6e954d6ff8cf",
+      "blob_sha": "e7397e7ef374bee3b7f0018ac8e5ddd4322bab12",
+      "sha256": "bf2661f1a81c37700884a45b77d6289be0c802b065febced31990e6564510839",
       "mode": "100644",
-      "destination_sha256": "a899470f05f86029630a13a2696491cc708ca7b56a6e822a69ff6e954d6ff8cf",
+      "destination_sha256": "bf2661f1a81c37700884a45b77d6289be0c802b065febced31990e6564510839",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -185,10 +185,10 @@
       "source": "pstack/skills/why/references/sources/sentry.md",
       "destination": "plugin/skills/why/references/sources/sentry.md",
       "disposition": "verbatim",
-      "blob_sha": "2b7cf6f3098ee868547dc4e69efacfe9c255246b",
-      "sha256": "6f292bc4fb1548e956f95e1900b9481abf5134254419f1cd9edec95428c82d73",
+      "blob_sha": "8200fd9f3abbb7fca76d0079663502b33524bd09",
+      "sha256": "2d4f83048eac1df530b399e2aed75dd7c9c18577b7665420aaeb96d0ceb0b702",
       "mode": "100644",
-      "destination_sha256": "6f292bc4fb1548e956f95e1900b9481abf5134254419f1cd9edec95428c82d73",
+      "destination_sha256": "2d4f83048eac1df530b399e2aed75dd7c9c18577b7665420aaeb96d0ceb0b702",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -198,10 +198,10 @@
       "source": "pstack/skills/why/references/sources/slack.md",
       "destination": "plugin/skills/why/references/sources/slack.md",
       "disposition": "verbatim",
-      "blob_sha": "863a527d60e4e055e680834ef8098ea04273a1ae",
-      "sha256": "58fee61d024b3700b407e7acbed367944720ff05adfddb6954d36c88368f3ba7",
+      "blob_sha": "cadd5618a349adc5eb1dce6fddde38e7221e00fd",
+      "sha256": "3bc6309f5c7b26ace3b919dbd7f7b048861dd2020f910fe24f656cc74b3b661c",
       "mode": "100644",
-      "destination_sha256": "58fee61d024b3700b407e7acbed367944720ff05adfddb6954d36c88368f3ba7",
+      "destination_sha256": "3bc6309f5c7b26ace3b919dbd7f7b048861dd2020f910fe24f656cc74b3b661c",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],
@@ -211,10 +211,10 @@
       "source": "pstack/skills/why/references/synthesizer-prompt.md",
       "destination": "plugin/skills/why/references/synthesizer-prompt.md",
       "disposition": "adapted",
-      "blob_sha": "9707dfcc2fc57ea126484a433c5cd9ee4d400ef3",
-      "sha256": "733a3e9cf897b1aca56aaddeae01a3832e4bfed024c2f602db2d1bf807d7a73b",
+      "blob_sha": "287a350c925c28b44f0e0dc687bb09a843e11100",
+      "sha256": "11c62671aa7b7a6e3d36929ffe2b59bf95e6ca664eee4d93e6ee527dd3390ddb",
       "mode": "100644",
-      "destination_sha256": "733a3e9cf897b1aca56aaddeae01a3832e4bfed024c2f602db2d1bf807d7a73b",
+      "destination_sha256": "11c62671aa7b7a6e3d36929ffe2b59bf95e6ca664eee4d93e6ee527dd3390ddb",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],

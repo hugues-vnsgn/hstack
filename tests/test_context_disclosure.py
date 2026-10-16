@@ -161,10 +161,18 @@ class ContextDisclosure(unittest.TestCase):
         # blanket override) touches the same sentence in all 26 non-principle bodies, 24 of which
         # were otherwise unchanged; the other two (hugues-mode, setup-huguesstack) already
         # differed. architect, arena, how, interrogate, reflect, swarm and why also still carry
-        # the separate tiered-model-role wiring change. 50 - 26 = 24 bodies remain byte-identical
+        # the separate tiered-model-role wiring change. 50 - 26 = 24 bodies were byte-identical
         # to the pre-restoration baseline (the 24 principle-* skills, which never carried that
-        # marker).
-        self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], 24)
+        # marker). The pstack 0.15.25 merge then ported upstream's rewrites of 14 of those 24
+        # principle bodies, so 10 remain identical. The four skills it added (hugues-help,
+        # in-your-own-words, ketchup, sharpen) have no baseline body and are not compared. The
+        # list is recomputed here from the files, so only principle-* bodies can be counted.
+        baseline, _ = measure_context.native_baseline(ROOT)
+        identical = sorted(p for p in baseline if p.startswith('plugin/skills/') and p.endswith('/SKILL.md')
+                           and baseline[p] == (ROOT / p).read_text())
+        self.assertEqual(len(identical), 10)
+        self.assertTrue(all(p.startswith('plugin/skills/principle-') for p in identical))
+        self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
         self.assertLess(measured['native_frontmatter']['candidate']['bytes'],
                         measured['native_frontmatter']['native_before']['bytes'])
         for profile in measured['scenarios'].values():

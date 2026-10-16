@@ -1,7 +1,7 @@
 ## Native consolidation
 
-All 161 pstack 0.15.9 source files are preserved byte-for-byte with their modes in
-`provenance/upstream/pstack-0.15.9.tar.gz`. Canonical native bodies retain all 50 top-level skills,
+All 169 pstack 0.15.25 source files are preserved byte-for-byte with their modes in
+`provenance/upstream/pstack-0.15.25.tar.gz`. Canonical native bodies retain all 54 top-level skills,
 both upstream agents, 23 generic playbooks and four mobile routes. The runtime
 core mirror and generated body loaders are retired. The current ledger and
 [consolidation map](consolidation.json) distinguish adapted runtime files from
@@ -13,7 +13,7 @@ description entered the host's per-turn skill list. The skill-list-budget work
 reverses that: it returns to pstack's own router design, where only
 `poteto-mode` (here `hugues-mode`) was model-invocable and read every other
 skill as a file. Only `hugues-mode` and `setup-huguesstack` stay
-model-invocable now; the other 48 bundled skills are user-only again, which is
+model-invocable now; the other 52 bundled skills are user-only again, which is
 the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
 This is an invocation-exposure change only: no upstream responsibility,
 destination or disposition moves.
@@ -32,22 +32,43 @@ Section names, the Principles index and its trigger sentences, and the markers
 `scripts/check_core.py` requires are kept. The next upstream sync of this file
 is a manual merge against this body, not a line-by-line port.
 
+## pstack 0.15.25 merge
+
+The pin moves from 0.15.9 to 0.15.25. Upstream changed 94 files and added 8.
+Each adapted body took upstream's intent by a manual merge, and every
+huguesStack adaptation stayed. `setup-huguesstack` is unchanged: its upstream
+hunks only move Cursor model defaults and budget semantics. Verbatim files took the new upstream bytes.
+Four skills are new: `ketchup`, `sharpen`, `in-your-own-words` and
+`hugues-help` (upstream `poteto-help`, the third alias). All four are user-only,
+so the per-turn skill list does not grow. Upstream's model defaults (Opus,
+Grok, Sol) do not apply; huguesStack keeps its own defaults and takes only the
+rule that moves effort to fit the job. Upstream's Agent Plugins root manifest
+stays in provenance. Two upstream changes are known gaps: the audit helper
+still defaults its MERGED base to `origin/main` (pass `--base` otherwise),
+where upstream's script now detects the default branch; and `plan-check` now
+accepts fenced code, which `plan-compare` still holds for manual review.
+Changed and added rows carry the release target
+`unreleased-pstack-0.15.25` until a release ships them.
+
 # Upstream sync
 
-WP5 pins [cursor/plugins pstack 0.15.9](https://github.com/cursor/plugins/tree/e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a/pstack)
-at `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a`, committed
-4 October 2026 at 00:06:48 UTC. [pin.json](pin.json) binds the version, date,
-161-file inventory and pstack tree hash to the checked-in snapshot bytes.
-The 0.15.5 [baseline pin](baseline-pin.json) accounts for 158 files.
-Fresh public Git fetches reproduced the plan's exact **3 added / 18 changed /
-0 removed** paths in [the delta](delta-2eb7ed46-e43c7ee2.md).
+The current pin is [cursor/plugins pstack 0.15.25](https://github.com/cursor/plugins/tree/6ce45c59b9301a638c1fe1a7b8dc2a82b650898f/pstack)
+at `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f`, committed
+14 October 2026 at 23:24:26 UTC. [pin.json](pin.json) binds the version, date,
+169-file inventory and pstack tree hash to the checked-in snapshot bytes.
+The previous pin, 0.15.9, is now the [baseline pin](baseline-pin.json) and
+accounts for 161 files. A fresh public Git fetch reproduced **8 added /
+94 changed / 0 removed** paths in [the delta](delta-e43c7ee2-6ce45c59.md).
+WP5's first sync, 0.15.5 to 0.15.9, stays in
+[its delta](delta-2eb7ed46-e43c7ee2.md), with its 158-file pin and ledger in
+[history](history/).
 
 [The current ledger](huguesStack-dispositions.json), also available as
 [CSV](huguesStack-dispositions.csv), has one active row per upstream file.
-The 158 earlier responsibilities and proposals remain in
+The 161 responsibilities at 0.15.9 remain in
 [baseline-dispositions.json](baseline-dispositions.json); the current ledger
 retains their `earlier_proposal` fields and the previous decisions for the
-18 changed files. Current decisions follow [the revised plan](../PLAN.md).
+94 changed files. Current decisions follow [the revised plan](../PLAN.md).
 The inaccessible prototype ZIP contributes no rows or implementation claims.
 
 Each row distinguishes its decision (`port verbatim`, `port with adaptation`,
@@ -81,10 +102,10 @@ execution is needed. From the repository root:
 ```sh
 python3 scripts/upstream-diff.py check
 python3 scripts/upstream-diff.py diff \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.5.json \
-  --to-snapshot docs/upstream/snapshots/pstack-0.15.9.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.9.json \
+  --to-snapshot docs/upstream/snapshots/pstack-0.15.25.json \
   --ledger docs/upstream/huguesStack-dispositions.json \
-  --output docs/upstream/delta-2eb7ed46-e43c7ee2.md --check
+  --output docs/upstream/delta-e43c7ee2-6ce45c59.md --check
 python3 -m unittest discover -s tests -v
 ./scripts/check-plugin.sh
 ```
@@ -104,8 +125,8 @@ To recapture from public Git, use a separate bare clone outside the plugin:
 ```sh
 git clone --bare https://github.com/cursor/plugins.git /tmp/pstack-upstream.git
 python3 scripts/upstream-diff.py snapshot --repo /tmp/pstack-upstream.git \
-  --revision e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a \
-  --output docs/upstream/snapshots/pstack-0.15.9.json --check
+  --revision 6ce45c59b9301a638c1fe1a7b8dc2a82b650898f \
+  --output docs/upstream/snapshots/pstack-0.15.25.json --check
 ```
 
 Capture resolves a ref once and records its full commit SHA. Git replacement
@@ -133,7 +154,7 @@ and generate a separate ledger proposal:
 
 ```sh
 python3 scripts/upstream-diff.py reconcile \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.9.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.25.json \
   --to-snapshot /tmp/pstack-candidate.json \
   --ledger docs/upstream/huguesStack-dispositions.json \
   --output /tmp/pstack-ledger-proposal.json
@@ -162,11 +183,11 @@ python3 scripts/upstream-diff.py csv \
 ```
 
 A changed pin requires matching WP2 receipts and WP3 generator source
-fingerprints, or a reviewed update to those receipts. The WP3 receipt retains
-its historical 0.15.5 input revision; its generator blob and byte SHA-256 must
-match the current ledger because that input is unchanged at the 0.15.9 pin.
-A future changed generator requires source review before re-pinning; stale
-provenance is rejected rather than silently accepted.
+fingerprints, or a reviewed update to those receipts. The generator changed at
+0.15.25 (readiness now means the app is usable), so its WP3 receipt was
+reviewed and now records the 0.15.25 input; its blob and byte SHA-256 must
+match the current ledger. A future changed generator requires source review
+before re-pinning; stale provenance is rejected rather than silently accepted.
 
 ## Attribution
 

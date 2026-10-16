@@ -1,5 +1,5 @@
 {
-  "source_revision": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
+  "source_revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
   "native_before_revision": "7db3e80d4b75e55f3f6d0ee85da5faa330e65d76",
   "files": [
     {
@@ -23,17 +23,26 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
-      "source_sha256": "4f9432d9989880b6afc2bdda503d5b12a9d07d357ecf31936b7ab5e83bc80523",
-      "candidate_sha256": "bd44a21e565f88ccf6271fb25a9d82135c459f775f952f5ec8b7d071feba774e",
+      "source_sha256": "e58c3d871b09d477be00628d69dd23ffa6c2e3a1728f5b867a841baa8e90278b",
+      "candidate_sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": true,
       "scope": "adapted plan checker; installed Python/Node integration tests cover required operator-rule gate"
     },
     {
+      "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
+      "installed": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
+      "source_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
+      "candidate_sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted plan-checker tests added at pstack 0.15.25; run with Bun against the huguesStack checker"
+    },
+    {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/orch/orch.test.ts",
-      "source_sha256": "174b86d21ff51ccd28d1a8c938cb2e0c6fa287b209d4ca6c03932fcb1b53372e",
-      "candidate_sha256": "174b86d21ff51ccd28d1a8c938cb2e0c6fa287b209d4ca6c03932fcb1b53372e",
+      "source_sha256": "5e80b416bdcd68e4067690ce857345852fd2e0db3dcf3e25607999cd55b963d2",
+      "candidate_sha256": "5e80b416bdcd68e4067690ce857345852fd2e0db3dcf3e25607999cd55b963d2",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -41,8 +50,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.ts",
       "installed": "plugin/skills/hugues-mode/scripts/orch/orch.ts",
-      "source_sha256": "f091687df627a0b75fabd54af58945a9cd6c7039ef0622012ac9ed60cd8ec434",
-      "candidate_sha256": "f091687df627a0b75fabd54af58945a9cd6c7039ef0622012ac9ed60cd8ec434",
+      "source_sha256": "47c92c57e8276616d8de94665a126bd832e748036afa8d0ffdbacb7946decb5c",
+      "candidate_sha256": "47c92c57e8276616d8de94665a126bd832e748036afa8d0ffdbacb7946decb5c",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -50,8 +59,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/store.ts",
       "installed": "plugin/skills/hugues-mode/scripts/orch/store.ts",
-      "source_sha256": "0eae7cf69282e827b1227166f2e32cee3560f2f3e65b3f1f2faf6fb83d3b4c5b",
-      "candidate_sha256": "0eae7cf69282e827b1227166f2e32cee3560f2f3e65b3f1f2faf6fb83d3b4c5b",
+      "source_sha256": "558cfda533e1ebe7c8d7842604f07e0be7618759cf129b4c2397a8e29516ecea",
+      "candidate_sha256": "558cfda533e1ebe7c8d7842604f07e0be7618759cf129b4c2397a8e29516ecea",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -59,8 +68,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/package.json",
       "installed": "plugin/skills/hugues-mode/scripts/package.json",
-      "source_sha256": "d1f815091209d49763775cc188e8e06ff32d5fec648bffd2272bc25a165e87c3",
-      "candidate_sha256": "d1f815091209d49763775cc188e8e06ff32d5fec648bffd2272bc25a165e87c3",
+      "source_sha256": "fd511a0c01f522e0c781ddd8eccea0e91697a0856c6e6a3261de78a6a0287c72",
+      "candidate_sha256": "fd511a0c01f522e0c781ddd8eccea0e91697a0856c6e6a3261de78a6a0287c72",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -86,8 +95,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/fakes.test-helper.ts",
-      "source_sha256": "e53e31b7f03068063f53a99a3591b052aaed66e4e2b196b3a364980f60324ab1",
-      "candidate_sha256": "e53e31b7f03068063f53a99a3591b052aaed66e4e2b196b3a364980f60324ab1",
+      "source_sha256": "cf0c5ee61b4a73444c1b775cfb6c81a40d312e055dd21a1f5eae6276e54de13f",
+      "candidate_sha256": "cf0c5ee61b4a73444c1b775cfb6c81a40d312e055dd21a1f5eae6276e54de13f",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -95,8 +104,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts",
-      "source_sha256": "0cbce011050522938523e36bb42a260e92b812dcd2076930fa681672ad316b24",
-      "candidate_sha256": "0cbce011050522938523e36bb42a260e92b812dcd2076930fa681672ad316b24",
+      "source_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
+      "candidate_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -104,8 +113,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
-      "source_sha256": "d1bbbafbe8e2c703c84da2029de7f2c4011412512f8cf65a42100f46bcb92c8a",
-      "candidate_sha256": "d1bbbafbe8e2c703c84da2029de7f2c4011412512f8cf65a42100f46bcb92c8a",
+      "source_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+      "candidate_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -113,8 +122,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts",
-      "source_sha256": "a9fedb25feefd1f57ef6a662f80c99018690170a3a8070773a08eaf694d1d3d9",
-      "candidate_sha256": "a9fedb25feefd1f57ef6a662f80c99018690170a3a8070773a08eaf694d1d3d9",
+      "source_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
+      "candidate_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -122,8 +131,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts",
-      "source_sha256": "68d240505852cf23c9b2dea463342e9e61243f486b3cc86c735d140f9ee7be49",
-      "candidate_sha256": "68d240505852cf23c9b2dea463342e9e61243f486b3cc86c735d140f9ee7be49",
+      "source_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
+      "candidate_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -158,8 +167,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/types.ts",
-      "source_sha256": "64ba6221e3bfe61bbb292337d199cdec6309455477280efb060203dba34e0e91",
-      "candidate_sha256": "64ba6221e3bfe61bbb292337d199cdec6309455477280efb060203dba34e0e91",
+      "source_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
+      "candidate_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -176,7 +185,7 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/worktree-audit.sh",
       "installed": null,
-      "source_sha256": "95b8530f3c0ccada8cabc4b0727c052fbc85c141531375aaace65c427af8aecc",
+      "source_sha256": "e0a94e5e5b1ff60638916e440600e15851f7b79bc1a1d1f602fde05d465e2ec0",
       "candidate_sha256": null,
       "same_bytes_as_upstream": null,
       "same_bytes_as_7db3e80": null,

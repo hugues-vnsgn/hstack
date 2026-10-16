@@ -7,6 +7,18 @@ import check_core
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# Skills added to the product after the frozen 0.2.0 release (tests/fixtures/release-0.2.0.tar.gz)
+# and after the pinned native baseline. They have no historical counterpart, so every historical
+# comparison (published 0.2.0, native_before) covers only the originally declared skills while the
+# candidate covers all of them. Each addition is listed here by name: a new SKILL.md that is not
+# listed, or a listed one that appears in the release, still fails the inventory check below.
+ADDED_AFTER_RELEASE = (
+    'plugin/skills/hugues-help/SKILL.md',
+    'plugin/skills/in-your-own-words/SKILL.md',
+    'plugin/skills/ketchup/SKILL.md',
+    'plugin/skills/sharpen/SKILL.md',
+)
+
 
 def metrics(texts):
     chars = sum(len(s) for s in texts)
@@ -110,7 +122,10 @@ def measure(root=ROOT):
                (p.suffix == '.md' or p.name == 'openai.yaml')}
     declaration_paths = sorted(p for p in current if p.startswith('plugin/skills/') and p.endswith('/SKILL.md'))
     original_declarations = sorted(p for p in release if p.startswith('plugin/skills/') and p.endswith('/SKILL.md'))
-    if declaration_paths != original_declarations or len(declaration_paths) != 50:
+    added_declarations = sorted(ADDED_AFTER_RELEASE)
+    if (len(original_declarations) != 50 or set(added_declarations) & set(original_declarations)
+            or len(added_declarations) != len(ADDED_AFTER_RELEASE)
+            or declaration_paths != sorted(original_declarations + added_declarations)):
         raise ValueError('context declaration inventory changed')
     receipt = json.loads((root / 'docs/upstream/consolidation.json').read_text())
     source_by_destination = {r['destination']: r['source'] for r in receipt['files'] if r['destination']}
@@ -176,10 +191,14 @@ def measure(root=ROOT):
             'native_before': metrics([before[p] for p in new_paths]),
             'pre_pr_main': metrics([pre_pr_mode[p] for p in new_paths]),
             'candidate': metrics([current[p] for p in new_paths])},
-        'native_frontmatter': {'scope': 'All 50 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown.',
+        'native_frontmatter': {'scope': f'All {len(declaration_paths)} declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. '
+                f'baseline and native_before cover the {len(original_declarations)} skills declared at 0.2.0; '
+                f'candidate adds the {len(added_declarations)} listed in added_after_release, which have no historical counterpart.',
             'baseline': frontmatter(release, original_declarations),
-            'native_before': frontmatter(before, declaration_paths),
+            'native_before': frontmatter(before, original_declarations),
             'candidate': frontmatter(current, declaration_paths),
+            'candidate_original_skills': frontmatter(current, original_declarations),
+            'added_after_release': added_declarations,
             'paths': declaration_paths},
         'codex_policy_metadata': {'scope': 'Additional policy-file bytes, not a claim these files enter model context.',
             'native_before': inventory(before, [p for p in before if p.endswith('/agents/openai.yaml')]),
@@ -191,16 +210,16 @@ def measure(root=ROOT):
                 "native_before (pinned 7db3e80) predates the 0.2.0-to-46-skill flip this PR undoes and is not a "
                 "pre-PR comparison point for this measurement; pre_pr_main (pinned a67df90, the revision this "
                 "restoration branched from and the Issue's Problem Statement measures) is the real one.",
-            'native_before': skill_list_metrics(before, declaration_paths),
+            'native_before': skill_list_metrics(before, original_declarations),
             'pre_pr_main': skill_list_metrics(pre_pr_main, sorted(pre_pr_main)),
             'candidate': skill_list_metrics(current, declaration_paths)},
         'canonical_skill_bodies': {'scope': 'Whole native SKILL.md files, metadata included; separate from invocation closure.',
-            'native_before': inventory(before, declaration_paths), 'candidate': inventory(current, declaration_paths),
-            'workflow_body_only_before': metrics([before[p].split('---', 2)[2] for p in declaration_paths]),
+            'native_before': inventory(before, original_declarations), 'candidate': inventory(current, declaration_paths),
+            'workflow_body_only_before': metrics([before[p].split('---', 2)[2] for p in original_declarations]),
             'workflow_body_only_candidate': metrics([current[p].split('---', 2)[2] for p in declaration_paths]),
             'mode_full_file': inventory(current, ['plugin/skills/hugues-mode/SKILL.md']),
             'mode_workflow_body_only': metrics([current['plugin/skills/hugues-mode/SKILL.md'].split('---', 2)[2]]),
-            'unchanged_files': sum(before[p] == current[p] for p in declaration_paths)},
+            'unchanged_files': sum(before[p] == current[p] for p in original_declarations)},
         'scenarios': scenarios, 'worker_accounting': spec['worker_accounting'],
         'public_skills': len(declaration_paths),
         'limits': ['No runtime host, tokenizer, prompt framing, cache or native invocation observation.',

@@ -24,7 +24,10 @@
       "paragraph": 3,
       "slice": null,
       "destination": "plugin/adapters/host.md",
-      "sha256": "d737eb8fd6e9b2d696582714e83ee6c1bb13a9b63da1a4a9f34bbbe976351a98"
+      "sha256": "d737eb8fd6e9b2d696582714e83ee6c1bb13a9b63da1a4a9f34bbbe976351a98",
+      "disposition": "replaced",
+      "reason": "The pstack 0.15.25 merge adds upstream poteto-help as hugues-help, a third skill alias that the inherited-name translation must list.",
+      "replacement": "Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no\ncustom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,\n`poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,\n`setup-pstack` to `setup-huguesstack` and `poteto-help` to `hugues-help`; other\npublic names are unchanged."
     },
     {
       "paragraph": 4,
@@ -84,7 +87,10 @@
       "paragraph": 7,
       "slice": [0, 106],
       "destination": "plugin/adapters/host-special-skills.md",
-      "sha256": "2b022e09b00727d9ace0a7c6be32d67d6b2c6782c25c1094300c4c118df0ffa5"
+      "sha256": "2b022e09b00727d9ace0a7c6be32d67d6b2c6782c25c1094300c4c118df0ffa5",
+      "disposition": "replaced",
+      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54.",
+      "replacement": "All 54 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
     },
     {
       "paragraph": 7,

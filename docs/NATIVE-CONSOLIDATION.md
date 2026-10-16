@@ -17,9 +17,11 @@ The two historical aliases remain `poteto-mode` → `hugues-mode` and
 `setup-pstack` → `setup-huguesstack`. Public native paths remain stable, including
 paths an owner may have used to disable skills. Different installation roots can
 still affect path-based host settings; reconcile those explicitly during an update.
+The pstack 0.15.25 merge adds a third alias, `poteto-help` → `hugues-help`.
 
-All 161 original source files, their modes and bytes are retained in
-`provenance/upstream/pstack-0.15.9.tar.gz`, outside runtime discovery. The
+All 169 original source files at the current pin, pstack 0.15.25, keep their
+modes and bytes in `provenance/upstream/pstack-0.15.25.tar.gz`, outside runtime
+discovery. The
 Git-object snapshot independently checks the archive. The current adaptation
 map is `docs/upstream/consolidation.json`. The original releases and their frozen
 tests are retained. `docs/upstream/core-restoration.json` remains the historical
@@ -40,11 +42,12 @@ phase. A manual handoff is
 needed only when the host requires explicit user invocation; it is not a
 proven universal limitation in this setup.
 
-Upstream Cursor metadata marks 49 skills manual-only; `poteto-mode` is the one
-exception. huguesStack restores that design instead of the earlier native
+At the pstack 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
+with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
+only `setup-pstack` is model-invocable. huguesStack restores that design instead of the earlier native
 table that made 46 skills model-invocable: only `hugues-mode` and
 `setup-huguesstack` are model-invocable now, so only their descriptions enter
-startup context on Claude Code. The other 48 bundled skills are user-only; the
+startup context on Claude Code. The other 52 bundled skills are user-only; the
 owner can still type any of them by name, and the mode reaches each one as its
 router's reference: the agent reads its SKILL.md in full with the host's own
 file-read tool instead of invoking it natively. The installed helper takes no
