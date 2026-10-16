@@ -484,7 +484,7 @@ class SkillBodyRejectionMatrix(InstalledFixture, unittest.TestCase):
 
     PR 1 rounds 1 and 2 let the helper read bundled SKILL.md files and each review found
     another branch that slipped past the skill-body guard. Round 3 puts the guard back, and
-    this matrix is the proof that it holds for all 50 bundled skills, their legacy aliases,
+    this matrix is the proof that it holds for all 54 bundled skills, their legacy aliases,
     a consumer's skill directories and an external plugin. It runs the installed runtime
     in-process (the same verified buffers the CLI runs) so the whole matrix stays fast;
     the tests above exercise the CLI end to end.
@@ -515,8 +515,8 @@ class SkillBodyRejectionMatrix(InstalledFixture, unittest.TestCase):
         self.assertNotIn('standalone guarded read', str(caught.exception))
 
     def test_the_fixture_covers_every_bundled_skill_and_alias(self):
-        self.assertEqual(len(self.bundled), 50)
-        self.assertEqual(len(self.legacy), 50)
+        self.assertEqual(len(self.bundled), 54)
+        self.assertEqual(len(self.legacy), 54)
         self.assertEqual(set(self.legacy.values()), {f'skills/{name}/SKILL.md' for name in self.bundled})
 
     def test_read_workflow_refuses_every_skill_body_spelling(self):

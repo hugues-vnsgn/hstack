@@ -37,6 +37,39 @@ You don't write a spec. You say what's wrong or what you want, plus anything you
 
 That's a Bug fix prompt. "repro first" is a real constraint, not politeness, and the playbook honors it. Watch the todo list fill with the Bug fix steps. A skipped step stays visible with `skip: <reason>`.
 
+## What goes in a prompt
+
+A useful prompt carries up to five things, and each one fits in a sentence:
+
+- **The goal.** Say what's wrong, or what you want.
+- **The done check.** It must be able to pass or fail. "Make it better" and "work on it for an hour" aren't checks.
+- **The proof you want to see.** Ask for the real command output, a video of the flow, the stored value, or a before-and-after number.
+- **What you already know.** A symptom, a repro step, a log line, or a link saves the agent a search.
+- **The real constraints.** "repro first", "don't change any code yet", "zero behavior change", and "let me review before proceeding" each change what the agent does.
+
+Here's one prompt with all five:
+
+```text
+/hugues-mode the csv export drops its last row since yesterday's deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.
+```
+
+Two things are worth leaving out:
+
+- **The how.** Say what to achieve, and leave the agent room to find a better path than the one you'd pick. The same goes for a list of skills, covered in the [pitfalls](./10-recipes-and-pitfalls.md#the-pitfalls).
+- **Your theory of the cause, at first.** A stated guess narrows the search to wherever you pointed. Let the agent restate the problem before you share your hunch.
+
+For a noisy report, such as a long thread or a vague bug, make the restatement the first step:
+
+```text
+/hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don't change any code yet.
+```
+
+A misreading shows up in the restatement, before any code exists. Correct it there, and it costs you one message instead of one wrong fix.
+
+Two skills you type yourself cover the same ground. [`/in-your-own-words`](../../../plugin/skills/in-your-own-words/SKILL.md) makes the agent play back your goals and the problem it thinks you're solving, so a misreading shows before any work starts. [`/sharpen`](../../../plugin/skills/sharpen/SKILL.md) goes further before it does the work: it asks how a top expert would approach the task, what you're really after, and whether the prompt says too much or too little. It loosens constraints that don't serve the goal, leaves your choices open, and keeps one outside check that the result is right. It doesn't hand back a rewritten prompt.
+
+## Follow up short
+
 When the conversation already carries the context, the prompt shrinks to almost nothing. All of these are enough:
 
 ```text
@@ -71,7 +104,7 @@ If you run several agents against one repository, they will fight over the worki
 /hugues-mode new task. branch off <base> in a fresh worktree, then port the parser change there.
 ```
 
-Each task in its own branch and worktree means no agent stomps another's files. The [Opening a PR playbook](../../../plugin/skills/hugues-mode/playbooks/opening-a-pr.md) already works from a worktree for code changes, so mostly you only say this when a specific base or location matters.
+Each task in its own branch and worktree means no agent stomps another's files. Worktrees cost disk and machine resources, so a laptop runs only a handful at once. The [Opening a PR playbook](../../../plugin/skills/hugues-mode/playbooks/opening-a-pr.md) already works from a worktree for code changes, so mostly you only say this when a specific base or location matters.
 
 Worktrees accumulate. When disk gets tight, ask:
 

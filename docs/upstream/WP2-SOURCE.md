@@ -3,6 +3,7 @@
 # WP2 source record
 
 WP2 reads pstack 0.15.9 from `cursor/plugins` at commit `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a`. Its extracted 161 pstack files matched the pinned Git blob SHA-1 values before adaptation. See [the pinned source](https://github.com/cursor/plugins/tree/e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a/pstack).
+The pstack 0.15.25 merge rebound the receipt fingerprints to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f`; this record still describes the original import.
 
 [wp2-provenance.json](wp2-provenance.json) records the source path, destination, upstream blob SHA-1 and upstream byte SHA-256 for the mode, worker, interrogate, ten adapted playbooks and all 24 principles. Source checksums describe upstream bytes, not adapted output. The principles and interrogate reference files are copied byte-for-byte. Attribution stays here so adding frontmatter does not alter those files. The inline principles index follows the upstream mode and links to the copied leaves.
 

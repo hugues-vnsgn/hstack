@@ -11,10 +11,10 @@ import sys
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PIN = 'e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a'
-TREE = '54dfdd87fd191ddda7fce01dd354d220adaeeacc'
+PIN = '6ce45c59b9301a638c1fe1a7b8dc2a82b650898f'
+TREE = '8ff8d978aee18904b8be529b477ade363a53f7dd'
 EXCLUDED = set()
-ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-huguesstack'}
+ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-huguesstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
 # huguesStack restores that design. Only `hugues-mode` (the router) and
 # `setup-huguesstack` stay model-invocable, so their descriptions are the only ones
@@ -23,7 +23,8 @@ ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-huguesstack'}
 # SKILL.md in full (the scoped host adapter rule), never by native invocation.
 USER_ONLY = {
     'architect', 'arena', 'automate-me', 'benchmark-checklist', 'blast-radius', 'bro',
-    'correct', 'create-verification-skill', 'figure-it-out', 'how', 'interrogate',
+    'correct', 'create-verification-skill', 'figure-it-out', 'how', 'hugues-help',
+    'in-your-own-words', 'interrogate', 'ketchup',
     'maintain-verification-skill', 'make-bot-ui', 'no-comments',
     'principle-attack-the-premise', 'principle-boundary-discipline', 'principle-build-the-lever',
     'principle-encode-lessons-in-structure', 'principle-exhaust-the-design-space',
@@ -36,7 +37,8 @@ USER_ONLY = {
     'principle-redesign-from-first-principles', 'principle-separate-before-serializing-shared-state',
     'principle-sequence-verifiable-units', 'principle-subtract-before-you-add',
     'principle-test-behavior-not-implementation', 'principle-type-system-discipline',
-    'recall', 'reflect', 'show-me-your-work', 'swarm', 'tdd', 'teach', 'technical-writing',
+    'recall', 'reflect', 'sharpen', 'show-me-your-work', 'swarm', 'tdd', 'teach',
+    'technical-writing',
     'typescript-best-practices', 'unslop', 'why',
 }
 # Cursor fields that neither Claude Code nor Codex reads from a skill's frontmatter.
@@ -230,7 +232,7 @@ def adapter_errors(texts):
                      'ready-PR and stack/base mechanics', 'Supply absolute paths',
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
-                     'All 50 top-level skills are registered',
+                     'All 54 top-level skills are registered',
                      'preserve `generalPurpose`', 'Do not replace these workers with `hugues-agent`',
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',
@@ -422,8 +424,8 @@ def current_document_errors(texts):
     errors = []
     plan = texts['docs/PLAN.md']
     guide = texts['docs/upstream/README.md'].split('# Upstream sync', 1)[0]
-    for name, text in [('docs/PLAN.md', plan), ('docs/upstream/README.md', guide)]:
-        if not all(marker in text for marker in ['all 50 top-level skills', 'both upstream agents']):
+    for name, text, count in [('docs/PLAN.md', plan, 50), ('docs/upstream/README.md', guide, 54)]:
+        if not all(marker in text for marker in [f'all {count} top-level skills', 'both upstream agents']):
             errors.append(name + ': incomplete current inventory')
         if re.search(r'(?:47|three excluded|families inactive)', text, re.I):
             errors.append(name + ': stale current exclusions')
@@ -461,13 +463,13 @@ def check(root=ROOT):
     upstream = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(upstream)
     snapshot = upstream.read_pin(root / 'docs/upstream/pin.json')
-    require(snapshot['revision'] == PIN and snapshot['file_count'] == 161, 'upstream pin differs')
+    require(snapshot['revision'] == PIN and snapshot['file_count'] == 169, 'upstream pin differs')
     receipt = upstream.load(root / 'docs/upstream/consolidation.json')
     require(receipt['schema_version'] == 1 and receipt['upstream_revision'] == PIN,
             'consolidation pin differs')
     require(not (root / 'plugin/core').exists() and not (root / 'plugin/core-bindings.json').exists(),
             'retired runtime core or registry present')
-    archive = root / 'provenance/upstream/pstack-0.15.9.tar.gz'
+    archive = root / 'provenance/upstream/pstack-0.15.25.tar.gz'
     require(receipt['archive'] == archive.relative_to(root).as_posix() and not archive.is_symlink()
             and hashlib.sha256(archive.read_bytes()).hexdigest() == receipt['archive_sha256'],
             'upstream archive differs')
@@ -520,7 +522,7 @@ def check(root=ROOT):
             require(stat.S_IMODE(path.stat().st_mode) == row['source_mode'], 'canonical source mode differs')
     names = {ALIASES.get(Path(name).parts[2], Path(name).parts[2]) for name in expected
              if len(Path(name).parts) == 4 and name.endswith('/SKILL.md')}
-    require(set(receipt['public_skills']) == names and len(names) == 50, 'public skill inventory differs')
+    require(set(receipt['public_skills']) == names and len(names) == 54, 'public skill inventory differs')
     require(receipt.get('host_invocation', {}).get('user_only') == sorted(USER_ONLY),
             'host invocation receipt differs')
     declarations = list((root / 'plugin').rglob('SKILL.md'))
@@ -622,7 +624,7 @@ def check(root=ROOT):
                   for p, row in sorted(installed.items()) if p not in anchors]}, 'installed payload manifest differs')
     require("MANIFEST_SHA256 = '" + hashlib.sha256(payload_path.read_bytes()).hexdigest() + "'" in
             (root / 'plugin/adapters/runtime/payload.py').read_text(), 'payload anchor differs')
-    return {'upstream_archive_files': 161, 'active_skills': 50, 'core_playbooks': 23,
+    return {'upstream_archive_files': 169, 'active_skills': 54, 'core_playbooks': 23,
             'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 15}
 
 

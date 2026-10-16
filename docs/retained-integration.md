@@ -30,6 +30,7 @@ combined package contains 35 skills, 14 playbooks and one worker, across 79 plug
 files. The eight leaves and their 25 source-accounted files retain their reviewed
 bytes. All 24 principles remain verbatim at the unchanged pstack 0.15.9 pin
 `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a`.
+The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes; this record still describes the original package.
 
 ## Existing playbook handoffs
 

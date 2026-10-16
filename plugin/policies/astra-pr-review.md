@@ -1,7 +1,7 @@
 # Project policy: Astra High PR review
 
 This owner-selected profile applies to PR-bound changes in huguesStack. It is an
-explicit project addition to pstack 0.15.9, not an upstream default.
+explicit project addition to pstack, not an upstream default.
 It is currently suspended: this repository's AGENTS.md does not activate it, and
 it applies only after an owner explicitly re-activates or opts into it. Installing
 huguesStack in another project does not activate this profile. Consumer projects use their own policy

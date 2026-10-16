@@ -10,7 +10,8 @@ can block execution. It cannot turn an omitted gate into success.
 Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no
 custom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,
 `poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,
-and `setup-pstack` to `setup-huguesstack`; other public names are unchanged.
+`setup-pstack` to `setup-huguesstack` and `poteto-help` to `hugues-help`; other
+public names are unchanged.
 
 Only `hugues-mode` and `setup-huguesstack` are model-invocable; their
 descriptions enter the host's skill list. Every other bundled skill, including

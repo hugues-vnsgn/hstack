@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
-  "upstream_version": "0.15.9",
+  "revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
+  "upstream_version": "0.15.25",
   "package": "verification",
   "files": [
     {
@@ -24,10 +24,10 @@
       "source": "pstack/skills/blast-radius/SKILL.md",
       "destination": "plugin/skills/blast-radius/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "1713b283d477530be64e925ede2bdbe5ce2d6e31",
-      "sha256": "5f02db9101ccf26c20254718f0fcd5c2c7ac5d4292b0e0923d0944ac47237aff",
+      "blob_sha": "b296cce0d746260a53c16e3671cb05bacfe82daf",
+      "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
       "mode": "100644",
-      "destination_sha256": "9f51307382b95f9e7b274e3b6bdab29f37e7e98c7d9e0b68c7edca751e644bad",
+      "destination_sha256": "523b4a87d5775a3484143eacc8ccfe8eb5eb7dcfecff88f0a6663f2897c205a7",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],

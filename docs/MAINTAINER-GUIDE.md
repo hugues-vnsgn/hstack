@@ -1,6 +1,6 @@
 # huguesStack maintainer reference
 
-This reference describes the native consolidation shipped in 0.3.0. Start with the [developer guide](DEVELOPER-GUIDE.md) for the current layout and invocation limits. Published release evidence remains bound to its original revision. The source pin remains pstack 0.15.9 at `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a`.
+This reference describes the native consolidation shipped in 0.3.0. Start with the [developer guide](DEVELOPER-GUIDE.md) for the current layout and invocation limits. Published release evidence remains bound to its original revision. The source pin is now pstack 0.15.25 at `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f`, merged after 0.3.0 and not yet released.
 
 ## Load the intended checkout
 
@@ -71,8 +71,8 @@ python3 scripts/upstream-diff.py check
 python3 scripts/check_whitespace.py
 ```
 
-Source checks verify all 161 archived upstream files against the Git snapshot, then check canonical mappings, installed inventory, modes, hashes and workflow boundaries. Development tests cover source, phases/cardinality/fallback, active wiring, bounded overrides and helpers. Installed adapter tests use external disposable consumer directories and synthetic native transcripts. Frozen release tests cover historical contracts only; [test accounting](TEST-COVERAGE.md) separates these roots. Passing static checks cannot attest to unrun host/mobile journeys.
+Source checks verify all 169 archived upstream files against the Git snapshot, then check canonical mappings, installed inventory, modes, hashes and workflow boundaries. Development tests cover source, phases/cardinality/fallback, active wiring, bounded overrides and helpers. Installed adapter tests use external disposable consumer directories and synthetic native transcripts. Frozen release tests cover historical contracts only; [test accounting](TEST-COVERAGE.md) separates these roots. Passing static checks cannot attest to unrun host/mobile journeys.
 
-See [restoration scope](CORE-RESTORATION.md) and [historical support](support.md). All upstream responsibilities stay in the ledger, including all 50 registered top-level skills, both native agent definitions and the separate Benny service source. Registration of automate-me or make-bot-ui grants no authority for personal transcript processing or bot/webhook execution. TypeScript guidance remains available alongside mobile adapters.
+See [restoration scope](CORE-RESTORATION.md) and [historical support](support.md). All upstream responsibilities stay in the ledger, including all 54 registered top-level skills, both native agent definitions and the separate Benny service source. Registration of automate-me or make-bot-ui grants no authority for personal transcript processing or bot/webhook execution. TypeScript guidance remains available alongside mobile adapters.
 
 The canonical Comment Sicko agent retains its complete source rules for no-comments. KMP/CMP extensions compose the selected core action procedure and require implementation arena within step 3 when Feature has multiple valid shapes; design-only arena cannot satisfy that gate. Both wiring failures have phase-local mutation regressions.

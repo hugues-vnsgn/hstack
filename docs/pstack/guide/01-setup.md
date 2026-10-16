@@ -19,9 +19,9 @@ $setup-huguesstack
 
 [`setup-huguesstack`](../../../plugin/skills/setup-huguesstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `.huguesstack/models.md` in your project, a small file every pstack skill reads before it picks a subagent's model.
 
-You only override what you care about. A role with no line in the file keeps the skill's default. To restore a default, delete that role's line. A rerun of setup keeps any role whose model differs from the default.
+You only override what you care about. A role with no line in the file keeps the skill's default. To restore a default, delete that role's line. A rerun of setup keeps any role whose model differs from the default. When a default changes, a file written before the change still pins the old default, so delete those role lines, or delete the file, then run setup again.
 
-Setup starts each role on a Claude model with a Codex model after it, such as `sonnet high or gpt-6.1-sol high`. Each host runs the first model its agent tool accepts, so one file serves Claude Code and Codex, and the budget question sets the efforts. Panel seats alternate which host's model comes first. The default interrogate panel has three seats; Codex uses GPT-6-Astra and two GPT-6.1-Sol seats. Repeated models provide independent processes, not additional model diversity. Setup checks current-host availability before writing the roles. A role with no line runs on `inherit-parent`: pstack omits the subagent `model` field, so the subagent inherits your parent chat model. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm.
+Setup starts each role on a Claude model with a Codex model after it, such as `sonnet high or gpt-6.1-sol high`. Each host runs the first model its agent tool accepts, so one file serves Claude Code and Codex, and the budget question sets the efforts: `unlimited` keeps each role at the effort setup lists, up to `max`, while `large`, `medium` and `small` set every role to `xhigh`, `high` or `medium`, and a lower effort spends fewer tokens. Panel seats alternate which host's model comes first. The default interrogate panel has three seats; Codex uses GPT-6-Astra and two GPT-6.1-Sol seats. Repeated models provide independent processes, not additional model diversity. Setup checks current-host availability before writing the roles. A role with no line runs on `inherit-parent`: pstack omits the subagent `model` field, so the subagent inherits your parent chat model. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm.
 
 ## Prepare verification
 
@@ -31,7 +31,9 @@ For non-mobile projects, an existing harness remains sufficient. Setup offers ge
 
 Accepting generates a project-local recipe under the consumer's `.claude/skills/` or `.agents/skills/` convention. The generator proves one feature before handing it over; unexecuted output remains a draft. You can start it manually with `/hugues-stack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the host's discovered entry. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers the workflow.
 
-After setup, start a new chat. The model rule applies to new sessions.
+If you're new to pstack, accept the offer. An agent that can check its own work keeps going until the check passes. An agent that can't hands every result back to you to check by hand. Of everything in this guide, the verification skill pays off the most.
+
+Each skill reads `.huguesstack/models.md` at its next role selection, so the roles apply from the next subagent spawn.
 
 ## Prepare an autopilot program
 
@@ -40,6 +42,15 @@ before write-capable work. Review the generated native host configuration, retai
 your existing settings and verify the boundary for the coordinator and workers.
 Uncovered writers or unsupported host protection hold the program. Plugin
 maintenance belongs to a separate owner-authorized task.
+
+## Keep the cost in check
+
+pstack spends extra tokens on subagents and review panels. That's the price of the rigor. To spend fewer:
+
+- Rerun setup and pick a smaller reasoning budget or cheaper models. A strong model in the main chat with cheaper, faster models in the code roles is a good split.
+- Set a role to `inherit-parent` so it runs on the chat's own model.
+- Shorten a panel list. Each entry runs one subagent.
+- Save `/hugues-mode` for work that needs rigor. A small, obvious edit doesn't.
 
 ## Run your first task
 

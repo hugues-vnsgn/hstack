@@ -3,10 +3,11 @@
 huguesStack gives Claude Code and Codex a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
 Version **0.3.0** keeps 50 public skills, 23 generic playbooks, two agents and
-four mobile playbooks. Each skill owns one canonical `SKILL.md`. Exact pstack
-0.15.9 source remains in a provenance archive outside runtime discovery. Only
+four mobile playbooks. Each skill owns one canonical `SKILL.md`. The unreleased
+source merges pstack 0.15.25 and adds four user-only skills, for 54. Exact pstack
+source remains in a provenance archive outside runtime discovery. Only
 `hugues-mode` and `setup-huguesstack` appear in the host's skill list; the router
-reads the other 48 skills as files. The published 0.1.0 and 0.2.0 releases and
+reads the other skills as files. The published 0.1.0 and 0.2.0 releases and
 their evidence are unchanged.
 
 ## Start with Claude Code

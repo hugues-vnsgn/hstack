@@ -120,8 +120,8 @@ class NativeIntegrity(unittest.TestCase):
 
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
-        self.assertEqual(result['active_skills'], 50)
-        self.assertEqual(result['upstream_archive_files'], 161)
+        self.assertEqual(result['active_skills'], 54)
+        self.assertEqual(result['upstream_archive_files'], 169)
 
     def test_missing_receipt_cannot_disable_integrity(self):
         (self.root / 'docs/upstream/consolidation.json').unlink()
@@ -154,7 +154,7 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_corrupt_source_archive_is_rejected(self):
-        path = self.root / 'provenance/upstream/pstack-0.15.9.tar.gz'
+        path = self.root / 'provenance/upstream/pstack-0.15.25.tar.gz'
         path.write_bytes(path.read_bytes() + b'changed')
         self.rejected()
 
@@ -344,9 +344,27 @@ class NativeIntegrity(unittest.TestCase):
         import measure_context
         measured = measure_context.measure(self.root)
         self.assertEqual(json.loads((self.root / 'docs/CONTEXT-BUDGET.json').read_text()), measured)
-        self.assertEqual(measured['public_skills'], 50)
+        self.assertEqual(measured['public_skills'], 54)
         self.assertLessEqual(measured['mode_initial_read_set']['candidate']['bytes'], 38000)
         self.assertLessEqual(measured['native_frontmatter']['candidate']['bytes'], 16000)
+
+    def test_context_inventory_lists_skills_added_after_the_release(self):
+        # Skills added after 0.2.0 have no historical counterpart, so each is listed by name.
+        # A new SKILL.md that is not listed, or a listed one that goes missing, still fails.
+        self.assertEqual(sorted(measure_context.ADDED_AFTER_RELEASE),
+                         ['plugin/skills/hugues-help/SKILL.md', 'plugin/skills/in-your-own-words/SKILL.md',
+                          'plugin/skills/ketchup/SKILL.md', 'plugin/skills/sharpen/SKILL.md'])
+        unlisted = self.root / 'plugin/skills/unlisted/SKILL.md'
+        unlisted.parent.mkdir()
+        unlisted.write_text((self.root / 'plugin/skills/ketchup/SKILL.md').read_text())
+        with self.subTest(change='unlisted new skill'):
+            with self.assertRaisesRegex(ValueError, 'context declaration inventory changed'):
+                measure_context.measure(self.root)
+        shutil.rmtree(unlisted.parent)
+        shutil.rmtree(self.root / 'plugin/skills/ketchup')
+        with self.subTest(change='listed skill missing'):
+            with self.assertRaisesRegex(ValueError, 'context declaration inventory changed'):
+                measure_context.measure(self.root)
 
     def test_router_sections_that_siblings_name_cannot_disappear(self):
         # Eight sibling files point at the router by section name. A rename or removal must

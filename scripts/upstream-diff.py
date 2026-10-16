@@ -216,7 +216,8 @@ def decision(row, allow_pending):
     require(isinstance(row['reason'], str) and row['reason'].strip(), 'missing triage reason')
     require(row['implementation_state'] in STATES, 'invalid implementation state')
     require(row['release_target'] in {'0.1.0', '0.2', 'not planned', 'pending',
-                                    'unreleased-core-restoration'}, 'invalid release target')
+                                    'unreleased-core-restoration',
+                                    'unreleased-pstack-0.15.25'}, 'invalid release target')
     require(allow_pending or (row['implementation_state'] != 'pending' and row['release_target'] != 'pending'),
             'incomplete triage decision')
     require(isinstance(row['destinations'], list) and all(isinstance(p, str) and p for p in row['destinations']), 'invalid destinations')
@@ -417,8 +418,8 @@ def check_destinations(ledger, source, root):
                   if receipt.get('repository') == REPOSITORY and receipt.get('source') == generator['path']]
         require(len(inputs) == 1, 'WP3 receipt missing or duplicated for present generator')
         receipt = inputs[0]
-        # Keep the historical input revision: the 0.15.5 and current 0.15.9
-        # generator blobs are identical. A changed upstream blob requires review.
+        # The receipt records the reviewed generator input. A changed upstream
+        # blob requires review before the receipt moves to it.
         require(receipt.get('blob_sha') == generator['blob_sha']
                 and receipt.get('sha256') == generator['sha256']
                 and receipt.get('disposition') == 'adapted'
