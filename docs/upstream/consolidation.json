@@ -1603,7 +1603,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "a377f266878baeac04df60f20c212a025eaff37df8d139bccc7723b2c4c12ebb",
+      "sha256": "b77661a18e3fa15ba887e7f3823c29fbfe919ef5b3ad9c7b62d3f38298435d99",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1631,11 +1631,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "33a3d5e5ae5287f972b9935e4a55a08496d145f4b749796e5f01ce0963313675",
+      "sha256": "7c182dce2bbab80dd55d5387a4d335c34cfc28e1743b2f71d9f0f69ad076ab38",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "1f34907372f6d67c61c915da42b22f2598eae61166d7c76495fc4335360faba8",
+      "sha256": "ddebb9a1445bddfa52ce673df194b34ff66a5c0860d5fd2ccf9329c70f8200be",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1815,11 +1815,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/build-doctor.md": {
-      "sha256": "14cc130cfe5a73740c5c8d00738865a46a7008f623a3d0600dc401af55dfbb85",
+      "sha256": "ff2cc8b79cf1e9c92633fc311345accc29527b76bfb03b2bd7653443920ba8ee",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/cmp-two-target-change.md": {
-      "sha256": "e5eb3dfea8144ebfb82d78ef77e577a32154691571e9215bad42c991e56204be",
+      "sha256": "239b8b10bd792678dc66ebca7ffa2d20c4d1401fd8294a09c0800a4a45418ec5",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/eval.md": {
@@ -1839,11 +1839,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/kmp-bridge-change.md": {
-      "sha256": "9b683fd1fcf66e9f16865dfeb05e4dfb76a0b5eac71dc0cfbf08eb6fd5018953",
+      "sha256": "628c7ad15c7751830d1b4f66cf2a5b5251bbf936bba5e39f0032c8701aba6d22",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/mobile-proof.md": {
-      "sha256": "7917548f3226ddfca61f867bf7b5fd19a84e979f450ea4b26ad7b05382532068",
+      "sha256": "00ded56505fb6b1c19fa78bbc00062c6b62072d91a571fd6456995293c48b76e",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
@@ -1919,7 +1919,7 @@
       "mode": 420
     },
     "skills/hugues-mode/references/mobile-lanes.md": {
-      "sha256": "35e1c9968b0a66da9a8719cd71df30661a323e40f78eab13b8f8ad32d15a8e04",
+      "sha256": "9946a4dbea105ee27372b41e748a9af33b4f61673e8f6db7cc48e2f37cb48936",
       "mode": 420
     },
     "skills/hugues-mode/references/pr-review-policy.md": {

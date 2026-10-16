@@ -1,5 +1,30 @@
 {
   "purpose": "WP3 source receipts, separate from WP5 upstream re-pin and responsibility ledger",
+  "retired_predecessor": {
+    "name": "hstack-alpha (retired predecessor)",
+    "repository": "https://github.com/osxsystem/hstack",
+    "revision": "99cc6129aea3f702ee6cd3b448e4f67700b4353c",
+    "retained_at": "provenance/upstream/hstack-alpha-99cc612/",
+    "note": "The GitHub repository osxsystem/hstack, hstack-alpha (retired predecessor) and a different project from this one, was deleted on 2026-10-16. The exact bytes of every file cited by the osxsystem/hstack inputs below, and by the source lines of plugin/skills/hugues-mode, are retained under retained_at at their original paths, copied from a checkout at revision 99cc6129aea3f702ee6cd3b448e4f67700b4353c. Each input's sha256 equals its retained copy. The inputs keep their original repository and revision fields. The retained Markdown files link to thirteen more files of that revision (retained_link_targets); they are retained too, so every relative link in the retained tree resolves.",
+    "cited_without_input_row": {
+      "packs/mobile/references/kmp-compose-pilot.md": "b7ae2958c80c914f0455132c71790dc5929bff9c3390fa65dea14bcfb28ca0fb"
+    },
+    "retained_link_targets": {
+      "docs/gate-f-team.md": "2d1752dcafaecb66280030650f7b1d32faf0ccf6cebd14cbe5c438c65beb4f2c",
+      "docs/adr/0004-serialize-local-admission.md": "884932e3a0bba1af86451972c190b6ef3cab69b375d64c50dd3d4fbc7dbd3def",
+      "docs/adr/0005-bind-review-to-captured-work.md": "b0dd9eabda80162137cb27a3553556d9baa357f6ba03a6e844bab456e49cfcff",
+      "docs/adr/0006-allow-audited-orphan-retirement.md": "fccefc8889b99c43f5d6e66448d157f8e94992d8148a474f06a3ee64417c66f6",
+      "packs/mobile/references/android-pilot.md": "bedb88ace9877aecae61b6ea96e5254c3fb143835fcf9bfda23deece1fca3f06",
+      "packs/mobile/tests/verify-android-pilot.py": "7e7b42c25cf2f89df5529056e9cace8b80057c4aae771bf507e62daba145e4ea",
+      "plans/260905-2042-f4-kmp-pilot/reports/tester-final.md": "adc22d57815a93ce9a315777c9477025e264eeff42fbbe0ebf4637ce05aa1a8b",
+      "plans/260905-2042-f4-kmp-pilot/reports/baseline.md": "7a1c592e173fcb299aca37b18b1be0ad651ae860f4a5e55d0217d062e1d5e2a0",
+      "plans/260905-2042-f4-kmp-pilot/reports/android-threshold.png": "f1d72ed61b0a2d08f5a5e02008f73c69edf79758e4addfe8d58ddfc4d0fe91bf",
+      "plans/260905-2042-f4-kmp-pilot/reports/ios-threshold.png": "83fd2a7d18267cd6874c82020cbdc6e91165961686fa1658a84974ba17a8fb8f",
+      "plans/260905-2042-f4-kmp-pilot/reports/review.md": "032105b6616973fb7b35e08ad9b05bcd5c274fe227fc4b5953c6375934aa1f17",
+      "plans/260905-2042-f4-kmp-pilot/reports/final-evidence.json": "561b3e26198418e0870b805c853499e49be0167040c52865d996625b891575ae",
+      "skills/core/hstack/references/delegation.md": "02edb1802f7aee7d4364ddb1b95f1ab1102804f6fc2dd23cef76cc15ce513e71"
+    }
+  },
   "inputs": [
     {
       "repository": "https://github.com/cursor/plugins",

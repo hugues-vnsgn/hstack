@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **444 top-level unittest cases**. One is a driver that
+The current candidate collects **448 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -10,7 +10,7 @@ native workflow proof. Subtests are not added to case totals.
 | Historical 0.1.0 contracts | 131 | Unchanged SHA256-bound release archive |
 | Current checker, historical 0.1.0 fixtures | 27 | Explicit historical validation mode and package mutations |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
-| Current source/provenance checks | 44 | test_upstream_sync (33), test_retained_provenance (11) |
+| Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
 | Current installed adapters and regressions | 97 | test_host_adapters (72), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 51 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 45 reviewed contradictions in five line shapes each, 16 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
@@ -19,11 +19,11 @@ native workflow proof. Subtests are not added to case totals.
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
 | Current payload-policy contracts | 8 | test_payload_policy; bound host fragments, unsafe-scope holds, read-only prepared/missing/stale helper readiness and actor-correlated native denial/shell evidence. These are source/interface checks, not native enforcement proof. |
 | Current native-runner CLI contracts | 2 | test_payload_boundary; synthetic Claude/Codex transcripts accept read-only prerequisite holds and reject attempted watch-pr, orch, install or bootstrap calls in missing/stale/uncovered scenarios, including failed attempts. These check evidence validation, not native enforcement. |
-| Total collected | 444 | Current, mixed and historical scopes remain distinct |
+| Total collected | 448 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-444 Python cases. The opt-in CI workflow requires a provisioned native runner.
+448 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -165,6 +165,15 @@ legacy `.huguesstack/models.md` when the new file is absent, and setup writes on
 historical modules keep the old names where they read the frozen 0.1.0 tree, and the
 context measurement renames the setup skill's path in the frozen 0.2.0 and baseline
 archives without editing them.
+
+The same release adds four source/provenance cases, bringing the current total to 448.
+They bind the retained bytes of hstack-alpha (retired predecessor, a different project whose
+GitHub repository was deleted on 2026-10-16): the receipt note names the deletion and the
+retained location, each cited input hashes to its retained copy, every `source:` line in
+`hugues-mode` cites a file that is retained with the receipted hash, and the thirteen
+files those retained Markdown files link to match their recorded hashes. The copied
+KMP/CMP practice app under `tests/fixtures/kmp-compose-ios-pilot/` is data for later
+mobile work and is not run by any case.
 
 The PR 47 review-fix check ran all 439 cases on Python 3.14.7 successfully.
 On macOS's Python 3.9.6, the eight payload-policy cases pass and the full run has

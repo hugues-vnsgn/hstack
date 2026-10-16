@@ -1,6 +1,6 @@
 # Mobile proof
 
-source: Conceptual adaptation of osxsystem/hstack at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/skills/mobile-proof/SKILL.md, packs/mobile/references/platforms.md, packs/mobile/references/evidence.md`; hStack first-release requirements. No managed-worker runtime is imported.
+source: Conceptual adaptation of hstack-alpha (retired predecessor; GitHub osxsystem/hstack, deleted 2026-10-16; bytes retained in `provenance/upstream/hstack-alpha-99cc612/`) at `99cc6129aea3f702ee6cd3b448e4f67700b4353c`, `packs/mobile/skills/mobile-proof/SKILL.md, packs/mobile/references/platforms.md, packs/mobile/references/evidence.md`; hStack first-release requirements. No managed-worker runtime is imported.
 
 Select the changed domain's proof and report what actually ran.
 
