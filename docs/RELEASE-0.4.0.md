@@ -25,8 +25,8 @@ Temp-dir prefixes, simulator names and bundle ids in the checks follow the same 
 ## Migrate from 0.3.x
 
 1. **Reinstall as `hstack@hstack`.** The old `hugues-stack@hugues-stack` entry does not update in place. Install the renamed plugin, then open a fresh host session. For a one-session check, load the new checkout with `claude --plugin-dir "/absolute/path/to/hstack/plugin"`.
-2. **Run `/hstack:setup-hstack`** in Claude Code, or `$setup-hstack` in Codex. It writes `.hstack/models.md` and writes only `.hstack/`.
-3. **Move `.huguesstack/` to `.hstack/`** in each project that has it, for example `mv .huguesstack .hstack`. Until you move it, a skill or adapter that finds no `.hstack/models.md` but finds `.huguesstack/models.md` reads the legacy file and tells you to move it. Setup never writes or deletes `.huguesstack/`.
+2. **Move `.huguesstack/` to `.hstack/`** in each project that has it, before you run setup: `mv .huguesstack .hstack`. If `.hstack/` already exists, that command would nest the old folder inside it, so move the file instead: `mv .huguesstack/models.md .hstack/` and then remove the empty `.huguesstack/`. Until you move it, a skill or adapter that finds no `.hstack/models.md` but finds `.huguesstack/models.md` reads the legacy file and tells you to move it. Setup never writes or deletes `.huguesstack/`.
+3. **Run `/hstack:setup-hstack`** in Claude Code, or `$setup-hstack` in Codex. It writes `.hstack/models.md` and writes only `.hstack/`.
 4. **Rename the Codex permission profile.** Generate the fragment again with `payload-policy --host codex`, as [payload protection](../plugin/adapters/payload-protection.md#codex) describes, so it creates `hstack-program`, and change launch lines that name `huguesstack-program` (`-P huguesstack-program`, `-c permissions.huguesstack-program=...`). A profile already named `hstack-program` needs an owner-reviewed merge, as that page says. Name your bounded profile with `--parent`: `payload-policy` refuses both `hstack-program` and the legacy `huguesstack-program`, so a generated profile never extends a generated one.
 5. **Rebind program bindings.** A binding records the payload revision and hash, so bindings made on 0.3.x are rejected. Pause a live program, review the change, then bind it again.
 6. **Update owner-disabled skill settings** that name the setup skill's old path (`skills/setup-huguesstack`) or the old command prefix.
@@ -42,7 +42,7 @@ Temp-dir prefixes, simulator names and bundle ids in the checks follow the same 
 ## Repository changes
 
 - **hstack-alpha (retired predecessor).** The GitHub repository `osxsystem/hstack`, a different project, was deleted on 2026-10-16. The files this repository cites from it are retained byte for byte under `provenance/upstream/hstack-alpha-99cc612/`, with the 13 files they link to. The [source receipts](wp3-source-receipts.json) carry a note about the deletion, and each receipted input hashes to its retained copy.
-- **KMP/CMP practice app.** `tests/fixtures/kmp-compose-ios-pilot/` is hstack-alpha's disposable Kotlin Multiplatform and Compose Multiplatform app with a planted boundary defect, copied in full. Nothing was left out and no check was changed; a scoped `.gitattributes` marks the CRLF line endings of its `gradlew.bat` as intended. The [glossary](GLOSSARY.md) points there.
+- **KMP/CMP practice app.** `tests/fixtures/kmp-compose-ios-pilot/` is hstack-alpha's disposable Kotlin Multiplatform and Compose Multiplatform app with a planted boundary defect, copied in full. Only the Windows launcher `gradlew.bat` was left out: the whitespace check rejects its CRLF line endings, and no check was changed to admit it. The fixture README says how to regenerate it. The [glossary](GLOSSARY.md) points there.
 
 ## Validation and limits
 
