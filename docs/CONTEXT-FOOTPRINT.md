@@ -35,10 +35,10 @@ assumptions and mandatory transitive inputs are in the
 
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
-| Declared startup metadata, all 50 frontmatter blocks | 3,940.25 | 3,700 | 3,629.5 | 14,803 → 14,521 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,613 | 45,289 → 34,494 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,821.25 | 135,888 → 135,347 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,517.75 | 146,269 → 146,133 |
+| Declared startup metadata, every frontmatter block (54 after disclosure) | 3,940.25 | 3,700 | 3,688.75 | 14,803 → 14,756 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,552.75 | 45,289 → 34,251 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,669.5 | 135,888 → 126,748 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,653 | 146,269 → 138,682 |
 
 The approved-proof candidate adds deferred new-program references separately
 from those pinned scenarios. The guide is 7,716 bytes; constructing records also
@@ -60,7 +60,7 @@ inventory records it separately. Controllers read it when that phase applies;
 worker briefs carry their own task and limits. These source counts do not measure
 actual host loads, waiting cost, cache use or a complete program's usage.
 
-The routing inventory falls about 23.8% from the previous native candidate.
+The routing inventory falls about 24.4% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
 verification and publication instructions still apply. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
