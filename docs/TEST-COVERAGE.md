@@ -89,8 +89,8 @@ and mobile observations remain separate gaps.
 
 Current adapter cases execute the public installed Python entrypoint in disposable
 external consumer directories, including Node plan validation when available.
-Bindings cover canonical files, metadata, adapters, policies, runtime code and
-permission modes. Tests reject missing/extra files, symlinks, world-writable files,
+Bindings cover canonical files, metadata, adapters, runtime code and permission
+modes. Tests reject missing/extra files, symlinks, world-writable files,
 changed executable bits, bootstrap execution before verification, poisoned
 bytecode caches, consumer path ownership errors and unsupported shell shapes.
 No SKILL.md is returned by `read-workflow` or translated by `translate-plan`:

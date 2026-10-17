@@ -88,8 +88,7 @@ class NativeInstalled(InstalledFixture, unittest.TestCase):
                 self.assertIn('native skill invocation', result.stderr)
 
     def test_initial_binding_rejects_adapter_and_native_metadata_drift(self):
-        for name in ['adapters/mobile.md', 'policies/astra-pr-review.md',
-                     'skills/swarm/agents/openai.yaml']:
+        for name in ['adapters/mobile.md', 'skills/swarm/agents/openai.yaml']:
             with self.subTest(name=name):
                 path = self.plugin / name
                 original = path.read_bytes()

@@ -35,7 +35,7 @@ Every role defaults to `inherit-parent` at the effort its skill names. Optional 
 
 Budgets remain unlimited/max, large/xhigh, medium/high and small/medium. Panel lists launch one worker per entry, `inherit-parent` entries included. `inherit-parent` omits the model override. A rejected value runs on `inherit-parent` at its effort. Report actual models/efforts, blocked seats and process independence separately from model diversity.
 
-Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix. The [two-seat Astra High policy](../plugin/policies/astra-pr-review.md) is suspended for hStack PRs; re-activating it in AGENTS.md restores its exact-head review, fix and fresh re-review gate.
+Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix.
 
 ## Prove the actual mobile behavior
 

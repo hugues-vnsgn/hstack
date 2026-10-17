@@ -151,7 +151,7 @@
     },
     {
       "path": "adapters/host-publication.md",
-      "sha256": "45cf691e17aa62362864ff7b1d88563d24d46ce3965dc0ec4418caa01feec138",
+      "sha256": "bd43ba258f4cd3d47ae78256a7aa703152dc42b8754029763cc7fbd9ad57e112",
       "mode": "100644"
     },
     {
@@ -217,11 +217,6 @@
     {
       "path": "agents/hugues-comment-sicko.md",
       "sha256": "535e9453caa91b288b12c39d3de89a2d89947799d07919077c514cf7c7ad1de1",
-      "mode": "100644"
-    },
-    {
-      "path": "policies/astra-pr-review.md",
-      "sha256": "9d895fa7b778f61e475db868237bfa0b241c8a8e88e3b40bc680c0470614d067",
       "mode": "100644"
     },
     {
@@ -562,11 +557,6 @@
     {
       "path": "skills/hugues-mode/references/mobile-lanes.md",
       "sha256": "9946a4dbea105ee27372b41e748a9af33b4f61673e8f6db7cc48e2f37cb48936",
-      "mode": "100644"
-    },
-    {
-      "path": "skills/hugues-mode/references/pr-review-policy.md",
-      "sha256": "63399ae5a94db80a0703938ffee74cf8a3a56d80bab7144ac014a23847882fcc",
       "mode": "100644"
     },
     {

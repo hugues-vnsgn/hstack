@@ -101,7 +101,6 @@ PHASE_GUIDANCE = {
     'host-publication.md': 'Skill authoring, commits, review, PR preparation/publication or missing control/writing capability reports',
 }
 ADAPTER_RESOURCES = ['plugin/adapters/' + name for name in PHASE_GUIDANCE] + ['plugin/adapters/mobile-workflows.md']
-PROJECT_POLICY = 'plugin/policies/astra-pr-review.md'
 
 
 def require(value, message):
@@ -229,7 +228,7 @@ def adapter_errors(texts):
                      'never restart task routing', 'consumer or external skill', 'List length sets', 'never an implicit replacement', 'effort setting',
                      'project-local `.hstack/models.md`', 'No translation grants new authority',
                      'mark the seat blocked', 'Do not execute it without installation authority',
-                     'ready-PR and stack/base mechanics', 'Supply absolute paths',
+                     'Supply absolute paths',
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
                      'All 54 top-level skills are registered',
@@ -247,11 +246,6 @@ def adapter_errors(texts):
                      'same\nregression', 'Keep the rubric', 'block blind judging',
                      'top 3–5', 'Maintenance covers the whole map',
                      'cannot replace or satisfy the core', 'One target does not prove'],
-        PROJECT_POLICY: ['does not activate this profile', 'two fresh independent GPT-Astra reviewers at High effort',
-                     'exact final candidate commit', 'explicit project addition',
-                     'Generic interrogate keeps its three-seat',
-                     'report the required review blocked', 'fresh review of the new exact head',
-                     'Do not create a draft as an implicit fallback'],
     }
     for path, markers in obligations.items():
         for marker in markers:
@@ -578,7 +572,7 @@ def check(root=ROOT):
                            if re.search(r'pstack-models\.mdc|\.cursor/rules|grok-\d|claude-opus-\d-\d-max|gpt-\d\.\d-sol-max',
                                         p.read_text()))
     require(not cursor_models, 'Cursor model wiring in installed skills: ' + ', '.join(cursor_models))
-    texts = {p: (root / p).read_text() for p in [*ADAPTERS, *ADAPTER_RESOURCES, PROJECT_POLICY]}
+    texts = {p: (root / p).read_text() for p in [*ADAPTERS, *ADAPTER_RESOURCES]}
     require(not adapter_errors(texts), 'adapter behavior differs: ' + '; '.join(adapter_errors(texts)))
     reach_errors = native_reach_errors(root)
     require(not reach_errors, 'user-only skill promised native reach: ' + '; '.join(reach_errors))

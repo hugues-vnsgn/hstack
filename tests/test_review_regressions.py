@@ -32,9 +32,8 @@ class PayloadReview(InstalledFixture, unittest.TestCase):
         self.assertEqual(result.stdout, (self.plugin / 'skills/hugues-mode/playbooks/feature.md').read_text())
         self.assertEqual(self.run_tool('bind').stdout, self.binding.read_text())
 
-    def test_every_effective_adapter_bridge_and_policy_is_bound(self):
-        for name in ['adapters/mobile.md', 'policies/astra-pr-review.md',
-                     'skills/hugues-mode/SKILL.md',
+    def test_every_effective_adapter_and_bridge_is_bound(self):
+        for name in ['adapters/mobile.md', 'skills/hugues-mode/SKILL.md',
                      'skills/hugues-mode/playbooks/multi-phase-plan.md']:
             with self.subTest(name=name):
                 path = self.plugin / name
