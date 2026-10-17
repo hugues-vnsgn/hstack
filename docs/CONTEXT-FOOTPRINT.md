@@ -7,12 +7,12 @@ their named actions. A small mobile applicability file requires the complete
 mobile adapter before any explicit mobile task; non-mobile work stops at the
 applicability decision. This uses ordinary file reads, not a new native loader.
 
-Every original host instruction is retained in one of those files, and the
-complete mobile adapter carries the original mobile file's rules. The
-[partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account for
-every original paragraph, each preserved verbatim or replaced with an explicit,
-tested reason. Deferral changes when guidance is read, not whether its
-triggered requirements apply. Unknown native invocation for `hugues-mode`,
+The [partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account
+for every original host paragraph, part by part: each part is preserved
+verbatim in one of those files, replaced or removed, and every replacement or
+removal carries an explicit, tested reason. The complete mobile adapter is the original mobile file
+with each recorded replacement applied. Deferral changes when guidance is read,
+not whether its triggered requirements apply. Unknown native invocation for `hugues-mode`,
 `setup-hstack` or a consumer or external skill still holds; a reference
 never substitutes for that invocation. A bundled user-only skill's SKILL.md is
 its sanctioned reach instead, read with the host's own file-read tool per the
