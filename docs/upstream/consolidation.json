@@ -195,7 +195,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/05-build-and-clean.md",
       "disposition": "canonical",
-      "destination_sha256": "ed4ca5152733a5ceb46f00a47e33677339155b653efef64635f5dee690220941"
+      "destination_sha256": "5bb0ae9b863261f815430fa5990d2c3cf001eb823c2d1f60b34371d16ea37117"
     },
     {
       "source": "pstack/docs/guide/06-verify-and-ship.md",
@@ -531,7 +531,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-help/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c"
+      "destination_sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416"
     },
     {
       "source": "pstack/skills/poteto-help/references/prompting.md",
@@ -555,7 +555,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+      "destination_sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -579,7 +579,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-full.md",
       "disposition": "canonical",
-      "destination_sha256": "ca26a174b00d42525df7994d07f1af4fdcff7717eebb40882e38fceee0c5c7e5"
+      "destination_sha256": "93d88e1729cf128b2df3a7013a234b180631ef87491ea372840db7d18449f658"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
@@ -651,7 +651,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/opening-a-pr.md",
       "disposition": "canonical",
-      "destination_sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57"
+      "destination_sha256": "0bc79b2a33ba66571751cd3990009d122696d19ff46d84ced8c274d3b79184f1"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
@@ -1367,6 +1367,7 @@
     "bro",
     "correct",
     "create-verification-skill",
+    "deslop",
     "figure-it-out",
     "how",
     "hugues-help",
@@ -1424,6 +1425,7 @@
       "bro",
       "correct",
       "create-verification-skill",
+      "deslop",
       "figure-it-out",
       "how",
       "hugues-help",
@@ -1558,6 +1560,24 @@
       "prompt": "plugin/skills/show-me-your-work/SKILL.md"
     }
   },
+  "external_skills": {
+    "deslop": {
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "ccb5507cec1546dc88135c1139c811e6c59115ba",
+      "source": "cursor-team-kit/skills/deslop/SKILL.md",
+      "source_blob_sha": "1b3827c7f991182149a7abda696af43ff8f17a12",
+      "source_sha256": "2f7b7def74af7ed11f5b44b4d32f0f91fca8c5d1f92bf2171e8d12fd33a0f810",
+      "source_copy": "provenance/upstream/cursor-team-kit-ccb5507/skills/deslop/SKILL.md",
+      "license": "MIT",
+      "license_holder": "Copyright (c) 2026 Cursor",
+      "license_source": "cursor-team-kit/LICENSE",
+      "license_blob_sha": "ca2bba771cd39dbef6acf96b52481133983451f3",
+      "license_sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "license_copy": "provenance/upstream/cursor-team-kit-ccb5507/LICENSE",
+      "destination": "plugin/skills/deslop/SKILL.md",
+      "license_destination": "plugin/skills/deslop/LICENSE"
+    }
+  },
   "adaptations": [
     "Canonical native bodies replace forwarding entries; stable public names.",
     "Host invocation contract supersedes raw sibling-skill reads; unavailable or denied dependencies hold.",
@@ -1579,11 +1599,11 @@
       "mode": 420
     },
     "adapters/host-publication.md": {
-      "sha256": "45cf691e17aa62362864ff7b1d88563d24d46ce3965dc0ec4418caa01feec138",
+      "sha256": "3ac13c1c0b6f7f4e5f7a5462c083b80e294325ec2ce0009d182258e5ff6fc739",
       "mode": 420
     },
     "adapters/host-special-skills.md": {
-      "sha256": "01a061e914060a66a47eb7a152efe7e5c5372b709027ef4fdc932a0a5c7a2f6b",
+      "sha256": "066ecac3fbb118b6a54d08581fc4b1a3dc7c4dcc0ac958c3ece5406b0c085666",
       "mode": 420
     },
     "adapters/host-tools.md": {
@@ -1607,7 +1627,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "270c78b70796c9ca9ed8b4710edb0090eadb025591e9f8eccd65917020294499",
+      "sha256": "496652fde4a70d60f94c1f16e07051b66ea9869e0dd08dbfe2117b59ea2cd471",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1647,11 +1667,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "31efb6d86f57e8dd380dd65677b42ddd6816b022cbf716bdd398aecbfebe5c8e",
+      "sha256": "be9951c8609567c6f678ef6c7e5548c1039e0cfa9a7c0bad9490c4b2f145d56b",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "725c903d61b9dcca15237083c5c3c04a1bd40f70181e2a5c136dcea15a3a1b16",
+      "sha256": "6906fb88bfef6ab9bd3dc55e90c61149fa766911eeb8fd2290164d5d2869569b",
       "mode": 420
     },
     "adapters/runtime/program.py": {
@@ -1762,6 +1782,18 @@
       "sha256": "207366fe6e5ebe7d8661206c66a30773731c1859b52889fba83309f598dc4406",
       "mode": 420
     },
+    "skills/deslop/LICENSE": {
+      "sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "mode": 420
+    },
+    "skills/deslop/SKILL.md": {
+      "sha256": "ff8ccbd185c955b869640eb1e65bb71286a21faea5c164c06607379724a386d5",
+      "mode": 420
+    },
+    "skills/deslop/agents/openai.yaml": {
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": 420
+    },
     "skills/figure-it-out/SKILL.md": {
       "sha256": "78da6777e5b688acf67e70bfb200462948e4fd24144dcea11f67aea0c46eaf10",
       "mode": 420
@@ -1787,7 +1819,7 @@
       "mode": 420
     },
     "skills/hugues-help/SKILL.md": {
-      "sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c",
+      "sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416",
       "mode": 420
     },
     "skills/hugues-help/agents/openai.yaml": {
@@ -1803,7 +1835,7 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9",
+      "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {
@@ -1819,7 +1851,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-full.md": {
-      "sha256": "ca26a174b00d42525df7994d07f1af4fdcff7717eebb40882e38fceee0c5c7e5",
+      "sha256": "93d88e1729cf128b2df3a7013a234b180631ef87491ea372840db7d18449f658",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-stack.md": {
@@ -1871,7 +1903,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/opening-a-pr.md": {
-      "sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57",
+      "sha256": "0bc79b2a33ba66571751cd3990009d122696d19ff46d84ced8c274d3b79184f1",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/orchestrate.md": {

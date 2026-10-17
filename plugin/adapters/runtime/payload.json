@@ -156,12 +156,12 @@
     },
     {
       "path": "adapters/host-publication.md",
-      "sha256": "45cf691e17aa62362864ff7b1d88563d24d46ce3965dc0ec4418caa01feec138",
+      "sha256": "3ac13c1c0b6f7f4e5f7a5462c083b80e294325ec2ce0009d182258e5ff6fc739",
       "mode": "100644"
     },
     {
       "path": "adapters/host-special-skills.md",
-      "sha256": "01a061e914060a66a47eb7a152efe7e5c5372b709027ef4fdc932a0a5c7a2f6b",
+      "sha256": "066ecac3fbb118b6a54d08581fc4b1a3dc7c4dcc0ac958c3ece5406b0c085666",
       "mode": "100644"
     },
     {
@@ -370,6 +370,21 @@
       "mode": "100644"
     },
     {
+      "path": "skills/deslop/LICENSE",
+      "sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/deslop/SKILL.md",
+      "sha256": "ff8ccbd185c955b869640eb1e65bb71286a21faea5c164c06607379724a386d5",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/deslop/agents/openai.yaml",
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644"
+    },
+    {
       "path": "skills/figure-it-out/SKILL.md",
       "sha256": "78da6777e5b688acf67e70bfb200462948e4fd24144dcea11f67aea0c46eaf10",
       "mode": "100644"
@@ -401,7 +416,7 @@
     },
     {
       "path": "skills/hugues-help/SKILL.md",
-      "sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c",
+      "sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416",
       "mode": "100644"
     },
     {
@@ -421,7 +436,7 @@
     },
     {
       "path": "skills/hugues-mode/SKILL.md",
-      "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9",
+      "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b",
       "mode": "100644"
     },
     {
@@ -441,7 +456,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "ca26a174b00d42525df7994d07f1af4fdcff7717eebb40882e38fceee0c5c7e5",
+      "sha256": "93d88e1729cf128b2df3a7013a234b180631ef87491ea372840db7d18449f658",
       "mode": "100644"
     },
     {
@@ -506,7 +521,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/opening-a-pr.md",
-      "sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57",
+      "sha256": "0bc79b2a33ba66571751cd3990009d122696d19ff46d84ced8c274d3b79184f1",
       "mode": "100644"
     },
     {

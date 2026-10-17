@@ -110,8 +110,8 @@
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "2b022e09b00727d9ace0a7c6be32d67d6b2c6782c25c1094300c4c118df0ffa5",
       "disposition": "replaced",
-      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54.",
-      "replacement": "All 54 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
+      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54. hStack also bundles deslop, a copy of Cursor's cursor-team-kit skill that is not part of pstack, so the registered count moves from 54 to 55.",
+      "replacement": "All 55 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
     },
     {
       "paragraph": 7,
@@ -288,7 +288,10 @@
       "paragraph": 19,
       "slice": null,
       "destination": "plugin/adapters/host-publication.md",
-      "sha256": "0c91ccbec3761664db9089bb8b9cb471d0a3d357510608995c2a7dd240407146"
+      "sha256": "0c91ccbec3761664db9089bb8b9cb471d0a3d357510608995c2a7dd240407146",
+      "disposition": "replaced",
+      "reason": "hStack now bundles the deslop skill (a copy of Cursor's cursor-team-kit deslop), so the sentence no longer asks for an available equivalent and no longer lists deslop among the missing external capabilities. control-cli, control-ui and writing-for-agents stay external.",
+      "replacement": "Cursor create-skill translates to an available agent-writing skill plus this\nrepository's package checks. Before commits, use the bundled deslop\nand the pinned unslop and technical-writing skills; retain no-comments before\nreview. Missing external control-cli, control-ui or writing-for-agents is\nreported as a capability gap, never silently marked performed. The bundled pinned\nunslop remains the prose contract; an owner's differently worded skill is an\nadditional style preference, not a source-equivalent replacement."
     },
     {
       "paragraph": 20,

@@ -23,7 +23,7 @@ ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto
 # SKILL.md in full (the scoped host adapter rule), never by native invocation.
 USER_ONLY = {
     'architect', 'arena', 'automate-me', 'benchmark-checklist', 'blast-radius', 'bro',
-    'correct', 'create-verification-skill', 'figure-it-out', 'how', 'hugues-help',
+    'correct', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help',
     'in-your-own-words', 'interrogate', 'ketchup',
     'maintain-verification-skill', 'make-bot-ui', 'no-comments',
     'principle-attack-the-premise', 'principle-boundary-discipline', 'principle-build-the-lever',
@@ -41,6 +41,35 @@ USER_ONLY = {
     'technical-writing',
     'typescript-best-practices', 'unslop', 'why',
 }
+# Skills hStack bundles from a source other than pstack. The pstack archive and the upstream
+# ledger have no row for them, so each is bound here instead: to the exact file and commit it
+# was copied from, to the MIT notice that came with it, and to the only changes allowed between
+# that file and the installed one (see external_skill_errors). consolidation.json carries the
+# same table as a reviewable receipt, and the two must agree.
+EXTERNAL_SKILLS = {
+    'deslop': {
+        'repository': 'https://github.com/cursor/plugins',
+        'revision': 'ccb5507cec1546dc88135c1139c811e6c59115ba',
+        'source': 'cursor-team-kit/skills/deslop/SKILL.md',
+        'source_blob_sha': '1b3827c7f991182149a7abda696af43ff8f17a12',
+        'source_sha256': '2f7b7def74af7ed11f5b44b4d32f0f91fca8c5d1f92bf2171e8d12fd33a0f810',
+        'source_copy': 'provenance/upstream/cursor-team-kit-ccb5507/skills/deslop/SKILL.md',
+        'license': 'MIT',
+        'license_holder': 'Copyright (c) 2026 Cursor',
+        'license_source': 'cursor-team-kit/LICENSE',
+        'license_blob_sha': 'ca2bba771cd39dbef6acf96b52481133983451f3',
+        'license_sha256': '702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0',
+        'license_copy': 'provenance/upstream/cursor-team-kit-ccb5507/LICENSE',
+        'destination': 'plugin/skills/deslop/SKILL.md',
+        'license_destination': 'plugin/skills/deslop/LICENSE',
+    },
+}
+EXTERNAL_MANUAL_ONLY = 'disable-model-invocation: true\n'
+EXTERNAL_HOST_CONTRACT = (
+    '## Host invocation contract\n\n'
+    'Before these workflow steps, apply the [host contract](../../adapters/host.md)\n'
+    'and [mobile applicability](../../adapters/mobile.md#applicability).\n'
+    'The host contract governs how this skill reaches any sibling dependency.\n\n')
 # Cursor fields that neither Claude Code nor Codex reads from a skill's frontmatter.
 # The router carried them until the router rewrite; no skill may bring them back.
 DEAD_FRONTMATTER = {'mode', 'icon', 'color', 'reminder'}
@@ -201,6 +230,48 @@ def behavior_errors(bodies):
     return errors
 
 
+def external_installed(source):
+    """The installed form of an external skill's source: the source plus the manual-only line that
+    closes its frontmatter and the host invocation contract that opens its body. Nothing else."""
+    head, divider, body = source.partition('\n---\n\n')
+    if not (divider and head.startswith('---\n')):
+        return None
+    return head + '\n' + EXTERNAL_MANUAL_ONLY + '---\n\n' + EXTERNAL_HOST_CONTRACT + body
+
+
+def external_skill_errors(root, receipt, upstream):
+    """Bind each skill hStack bundles from outside pstack to its source, so that its body is
+    never edited and the only differences are the two additions in external_installed."""
+    errors = []
+    if receipt.get('external_skills') != EXTERNAL_SKILLS:
+        errors.append('external skill receipt differs')
+    def read(relative):
+        path = root / relative
+        if not (path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(root)):
+            errors.append('missing/unsafe external skill file: ' + relative)
+            return None
+        return path.read_bytes()
+    for name, row in EXTERNAL_SKILLS.items():
+        source = read(row['source_copy'])
+        notice = read(row['license_copy'])
+        installed = read(row['destination'])
+        shipped_notice = read(row['license_destination'])
+        if None in (source, notice, installed, shipped_notice):
+            continue
+        if (hashlib.sha256(source).hexdigest() != row['source_sha256']
+                or upstream.oid('blob', source) != row['source_blob_sha']):
+            errors.append('external skill source copy differs from its pinned commit: ' + name)
+        if (hashlib.sha256(notice).hexdigest() != row['license_sha256']
+                or upstream.oid('blob', notice) != row['license_blob_sha']
+                or row['license_holder'].encode() not in notice):
+            errors.append('external skill license copy differs from its pinned commit: ' + name)
+        if shipped_notice != notice:
+            errors.append('installed external skill license differs from the pinned notice: ' + name)
+        if installed.decode() != external_installed(source.decode()):
+            errors.append('installed external skill differs from its source beyond the allowed additions: ' + name)
+    return errors
+
+
 def adapter_errors(texts):
     errors = []
     host = texts[ADAPTERS[0]]
@@ -232,7 +303,7 @@ def adapter_errors(texts):
                      'ready-PR and stack/base mechanics', 'Supply absolute paths',
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
-                     'All 54 top-level skills are registered',
+                     'All 55 top-level skills are registered',
                      'preserve `generalPurpose`', 'Do not replace these workers with `hugues-agent`',
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',
@@ -522,7 +593,11 @@ def check(root=ROOT):
             require(stat.S_IMODE(path.stat().st_mode) == row['source_mode'], 'canonical source mode differs')
     names = {ALIASES.get(Path(name).parts[2], Path(name).parts[2]) for name in expected
              if len(Path(name).parts) == 4 and name.endswith('/SKILL.md')}
-    require(set(receipt['public_skills']) == names and len(names) == 54, 'public skill inventory differs')
+    require(len(names) == 54 and not names & set(EXTERNAL_SKILLS), 'pstack skill inventory differs')
+    names |= set(EXTERNAL_SKILLS)
+    require(set(receipt['public_skills']) == names, 'public skill inventory differs')
+    external_errors = external_skill_errors(root, receipt, upstream)
+    require(not external_errors, '; '.join(external_errors))
     require(receipt.get('host_invocation', {}).get('user_only') == sorted(USER_ONLY),
             'host invocation receipt differs')
     declarations = list((root / 'plugin').rglob('SKILL.md'))
@@ -536,7 +611,8 @@ def check(root=ROOT):
         manual = fields['disable-model-invocation']
         require(not DEAD_FRONTMATTER & fields.keys(), 'dead frontmatter field: ' + name)
         upstream_name = next((old for old, new in ALIASES.items() if new == name), name)
-        original_fields = native_frontmatter(original_bodies[f'pstack/skills/{upstream_name}/SKILL.md'].decode())
+        original_fields = {} if name in EXTERNAL_SKILLS else native_frontmatter(
+            original_bodies[f'pstack/skills/{upstream_name}/SKILL.md'].decode())
         require(manual == (name in USER_ONLY), 'host invocation table differs: ' + name)
         require(fields.get('paths') == original_fields.get('paths'), 'native path scope differs: ' + name)
         require((path.parent / 'agents/openai.yaml').read_text() ==
@@ -624,7 +700,7 @@ def check(root=ROOT):
                   for p, row in sorted(installed.items()) if p not in anchors]}, 'installed payload manifest differs')
     require("MANIFEST_SHA256 = '" + hashlib.sha256(payload_path.read_bytes()).hexdigest() + "'" in
             (root / 'plugin/adapters/runtime/payload.py').read_text(), 'payload anchor differs')
-    return {'upstream_archive_files': 169, 'active_skills': 54, 'core_playbooks': 23,
+    return {'upstream_archive_files': 169, 'active_skills': len(names), 'core_playbooks': 23,
             'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 15}
 
 

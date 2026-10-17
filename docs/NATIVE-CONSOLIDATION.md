@@ -49,7 +49,7 @@ with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
 only `setup-pstack` is model-invocable. hStack restores that design instead of the earlier native
 table that made 46 skills model-invocable: only `hugues-mode` and
 `setup-hstack` are model-invocable now, so only their descriptions enter
-startup context on Claude Code. The other 52 bundled skills are user-only; the
+startup context on Claude Code. The other 53 bundled skills, `deslop` among them, are user-only; the
 owner can still type any of them by name, and the mode reaches each one as its
 router's reference: the agent reads its SKILL.md in full with the host's own
 file-read tool instead of invoking it natively. The installed helper takes no

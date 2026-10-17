@@ -174,7 +174,11 @@ class ContextDisclosure(unittest.TestCase):
         self.assertEqual(len(identical), 10)
         self.assertTrue(all(p.startswith('plugin/skills/principle-') for p in identical))
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
-        self.assertLess(measured['native_frontmatter']['candidate']['bytes'],
+        # native_before covers the 50 skills declared at 0.2.0, so the like-for-like candidate side
+        # is those same 50. Every skill added since, deslop the latest, has no `native_before`
+        # counterpart and adds its own frontmatter; the absolute cap on the
+        # whole set is asserted in test_native_layout.
+        self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
                         measured['native_frontmatter']['native_before']['bytes'])
         for profile in measured['scenarios'].values():
             self.assertLess(profile['candidate']['bytes'], profile['native_before']['bytes'])

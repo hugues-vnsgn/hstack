@@ -32,13 +32,13 @@
       "estimated_tokens_characters_divided_by_4": 6485.0
     },
     "candidate": {
-      "bytes": 25814,
-      "characters": 25776,
-      "estimated_tokens_characters_divided_by_4": 6444.0
+      "bytes": 25782,
+      "characters": 25744,
+      "estimated_tokens_characters_divided_by_4": 6436.0
     }
   },
   "native_frontmatter": {
-    "scope": "All 54 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. baseline and native_before cover the 50 skills declared at 0.2.0; candidate adds the 4 listed in added_after_release, which have no historical counterpart.",
+    "scope": "All 55 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. baseline and native_before cover the 50 skills declared at 0.2.0; candidate adds the 5 listed in added_after_release, which have no historical counterpart.",
     "baseline": {
       "bytes": 15764,
       "characters": 15761,
@@ -50,9 +50,9 @@
       "estimated_tokens_characters_divided_by_4": 3700.0
     },
     "candidate": {
-      "bytes": 14756,
-      "characters": 14755,
-      "estimated_tokens_characters_divided_by_4": 3688.75
+      "bytes": 14868,
+      "characters": 14867,
+      "estimated_tokens_characters_divided_by_4": 3716.75
     },
     "candidate_original_skills": {
       "bytes": 13876,
@@ -60,6 +60,7 @@
       "estimated_tokens_characters_divided_by_4": 3468.75
     },
     "added_after_release": [
+      "plugin/skills/deslop/SKILL.md",
       "plugin/skills/hugues-help/SKILL.md",
       "plugin/skills/in-your-own-words/SKILL.md",
       "plugin/skills/ketchup/SKILL.md",
@@ -74,6 +75,7 @@
       "plugin/skills/bro/SKILL.md",
       "plugin/skills/correct/SKILL.md",
       "plugin/skills/create-verification-skill/SKILL.md",
+      "plugin/skills/deslop/SKILL.md",
       "plugin/skills/figure-it-out/SKILL.md",
       "plugin/skills/how/SKILL.md",
       "plugin/skills/hugues-help/SKILL.md",
@@ -394,6 +396,7 @@
         "plugin/skills/bro/agents/openai.yaml",
         "plugin/skills/correct/agents/openai.yaml",
         "plugin/skills/create-verification-skill/agents/openai.yaml",
+        "plugin/skills/deslop/agents/openai.yaml",
         "plugin/skills/figure-it-out/agents/openai.yaml",
         "plugin/skills/how/agents/openai.yaml",
         "plugin/skills/hugues-help/agents/openai.yaml",
@@ -441,10 +444,10 @@
         "plugin/skills/unslop/agents/openai.yaml",
         "plugin/skills/why/agents/openai.yaml"
       ],
-      "unique_files": 54,
-      "bytes": 2320,
-      "characters": 2320,
-      "estimated_tokens_characters_divided_by_4": 580.0,
+      "unique_files": 55,
+      "bytes": 2363,
+      "characters": 2363,
+      "estimated_tokens_characters_divided_by_4": 590.75,
       "inputs": {
         "plugin/skills/architect/agents/openai.yaml": {
           "bytes": 43,
@@ -475,6 +478,10 @@
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
         "plugin/skills/create-verification-skill/agents/openai.yaml": {
+          "bytes": 43,
+          "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+        },
+        "plugin/skills/deslop/agents/openai.yaml": {
           "bytes": 43,
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
@@ -1013,6 +1020,7 @@
         "plugin/skills/bro/SKILL.md",
         "plugin/skills/correct/SKILL.md",
         "plugin/skills/create-verification-skill/SKILL.md",
+        "plugin/skills/deslop/SKILL.md",
         "plugin/skills/figure-it-out/SKILL.md",
         "plugin/skills/how/SKILL.md",
         "plugin/skills/hugues-help/SKILL.md",
@@ -1060,10 +1068,10 @@
         "plugin/skills/unslop/SKILL.md",
         "plugin/skills/why/SKILL.md"
       ],
-      "unique_files": 54,
-      "bytes": 210377,
-      "characters": 210284,
-      "estimated_tokens_characters_divided_by_4": 52571.0,
+      "unique_files": 55,
+      "bytes": 211418,
+      "characters": 211325,
+      "estimated_tokens_characters_divided_by_4": 52831.25,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1097,6 +1105,10 @@
           "bytes": 6744,
           "sha256": "ca09d6d278dc96ad35621eeb0c276136210a9dbd071f7c86fdeb005752edd08e"
         },
+        "plugin/skills/deslop/SKILL.md": {
+          "bytes": 1000,
+          "sha256": "ff8ccbd185c955b869640eb1e65bb71286a21faea5c164c06607379724a386d5"
+        },
         "plugin/skills/figure-it-out/SKILL.md": {
           "bytes": 4377,
           "sha256": "78da6777e5b688acf67e70bfb200462948e4fd24144dcea11f67aea0c46eaf10"
@@ -1106,12 +1118,12 @@
           "sha256": "d8a219fe2638e253b6a41e12955a22ce5efcbf82738001ab568ce22524d771c2"
         },
         "plugin/skills/hugues-help/SKILL.md": {
-          "bytes": 18903,
-          "sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c"
+          "bytes": 18976,
+          "sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416"
         },
         "plugin/skills/hugues-mode/SKILL.md": {
-          "bytes": 19884,
-          "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+          "bytes": 19852,
+          "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
         },
         "plugin/skills/in-your-own-words/SKILL.md": {
           "bytes": 565,
@@ -1289,29 +1301,29 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 195297,
-      "characters": 195205,
-      "estimated_tokens_characters_divided_by_4": 48801.25
+      "bytes": 196220,
+      "characters": 196128,
+      "estimated_tokens_characters_divided_by_4": 49032.0
     },
     "mode_full_file": {
       "paths": [
         "plugin/skills/hugues-mode/SKILL.md"
       ],
       "unique_files": 1,
-      "bytes": 19884,
-      "characters": 19846,
-      "estimated_tokens_characters_divided_by_4": 4961.5,
+      "bytes": 19852,
+      "characters": 19814,
+      "estimated_tokens_characters_divided_by_4": 4953.5,
       "inputs": {
         "plugin/skills/hugues-mode/SKILL.md": {
-          "bytes": 19884,
-          "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+          "bytes": 19852,
+          "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
         }
       }
     },
     "mode_workflow_body_only": {
-      "bytes": 19607,
-      "characters": 19569,
-      "estimated_tokens_characters_divided_by_4": 4892.25
+      "bytes": 19575,
+      "characters": 19537,
+      "estimated_tokens_characters_divided_by_4": 4884.25
     },
     "unchanged_files": 10
   },
@@ -1471,9 +1483,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 5,
-        "bytes": 34251,
-        "characters": 34211,
-        "estimated_tokens_characters_divided_by_4": 8552.75,
+        "bytes": 34219,
+        "characters": 34179,
+        "estimated_tokens_characters_divided_by_4": 8544.75,
         "inputs": {
           "plugin/adapters/host.md": {
             "bytes": 5386,
@@ -1484,8 +1496,8 @@
             "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825"
           },
           "plugin/skills/hugues-mode/SKILL.md": {
-            "bytes": 19884,
-            "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+            "bytes": 19852,
+            "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
             "bytes": 2360,
@@ -1584,9 +1596,9 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 35679,
-          "characters": 35629,
-          "estimated_tokens_characters_divided_by_4": 8907.25,
+          "bytes": 35647,
+          "characters": 35597,
+          "estimated_tokens_characters_divided_by_4": 8899.25,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8266,
@@ -1605,8 +1617,8 @@
               "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
             },
             "plugin/skills/hugues-mode/SKILL.md": {
-              "bytes": 19884,
-              "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+              "bytes": 19852,
+              "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
             }
           },
           "mode_workers": 0,
@@ -1618,7 +1630,7 @@
       "unknown_inputs": [
         "Actual native host startup metadata exposure and tool/token framing",
         "Supported invocation or required human handoff for every dependency; unknown capability holds instead of running",
-        "External control-cli, deslop and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
+        "External control-cli and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
         "Consumer source, investigation evidence, generated briefs, artifacts, tool output and replies",
         "Retries, additional evidence categories, contested designs, re-grounding or task-specific principles outside the fixed scenarios"
       ]
@@ -2038,13 +2050,13 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 34,
-        "bytes": 126118,
-        "characters": 126048,
-        "estimated_tokens_characters_divided_by_4": 31512.0,
+        "bytes": 126043,
+        "characters": 125973,
+        "estimated_tokens_characters_divided_by_4": 31493.25,
         "inputs": {
           "plugin/adapters/host-publication.md": {
-            "bytes": 1045,
-            "sha256": "45cf691e17aa62362864ff7b1d88563d24d46ce3965dc0ec4418caa01feec138"
+            "bytes": 1025,
+            "sha256": "3ac13c1c0b6f7f4e5f7a5462c083b80e294325ec2ce0009d182258e5ff6fc739"
           },
           "plugin/adapters/host-workers.md": {
             "bytes": 8266,
@@ -2079,16 +2091,16 @@
             "sha256": "ddb89cebefc24e2b54517a331aedfe045b6971e101f45c71b8cef4cccff45bff"
           },
           "plugin/skills/hugues-mode/SKILL.md": {
-            "bytes": 19884,
-            "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+            "bytes": 19852,
+            "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
             "bytes": 2360,
             "sha256": "e81578c9750544c1b07818a8818725a0ae50f660d071c0f6b7a5b7473f31d7a6"
           },
           "plugin/skills/hugues-mode/playbooks/opening-a-pr.md": {
-            "bytes": 5901,
-            "sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57"
+            "bytes": 5878,
+            "sha256": "0bc79b2a33ba66571751cd3990009d122696d19ff46d84ced8c274d3b79184f1"
           },
           "plugin/skills/no-comments/SKILL.md": {
             "bytes": 2959,
@@ -2293,9 +2305,9 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 35679,
-          "characters": 35629,
-          "estimated_tokens_characters_divided_by_4": 8907.25,
+          "bytes": 35647,
+          "characters": 35597,
+          "estimated_tokens_characters_divided_by_4": 8899.25,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8266,
@@ -2314,20 +2326,20 @@
               "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
             },
             "plugin/skills/hugues-mode/SKILL.md": {
-              "bytes": 19884,
-              "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+              "bytes": 19852,
+              "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
             }
           },
           "mode_workers": 1,
-          "repeated_bytes_floor": 35679,
-          "repeated_estimated_tokens_floor": 8907.25
+          "repeated_bytes_floor": 35647,
+          "repeated_estimated_tokens_floor": 8899.25
         }
       },
       "complete_execution_tokens": null,
       "unknown_inputs": [
         "Actual native host startup metadata exposure and tool/token framing",
         "Supported invocation or required human handoff for every dependency; unknown capability holds instead of running",
-        "External control-cli, deslop and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
+        "External control-cli and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
         "Consumer source, investigation evidence, generated briefs, artifacts, tool output and replies",
         "Retries, additional evidence categories, contested designs, re-grounding or task-specific principles outside the fixed scenarios"
       ]
@@ -2857,13 +2869,13 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 44,
-        "bytes": 138052,
-        "characters": 137982,
-        "estimated_tokens_characters_divided_by_4": 34495.5,
+        "bytes": 137977,
+        "characters": 137907,
+        "estimated_tokens_characters_divided_by_4": 34476.75,
         "inputs": {
           "plugin/adapters/host-publication.md": {
-            "bytes": 1045,
-            "sha256": "45cf691e17aa62362864ff7b1d88563d24d46ce3965dc0ec4418caa01feec138"
+            "bytes": 1025,
+            "sha256": "3ac13c1c0b6f7f4e5f7a5462c083b80e294325ec2ce0009d182258e5ff6fc739"
           },
           "plugin/adapters/host-typescript.md": {
             "bytes": 603,
@@ -2926,16 +2938,16 @@
             "sha256": "6300128385ee940fd42ecb84b0e623435440a2dc283eae54ee4a52ba56947ba1"
           },
           "plugin/skills/hugues-mode/SKILL.md": {
-            "bytes": 19884,
-            "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+            "bytes": 19852,
+            "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
           },
           "plugin/skills/hugues-mode/playbooks/feature.md": {
             "bytes": 2871,
             "sha256": "9a6400491b17f5d6ae6e367a31f34955c118a7a44dd0ddaeec5fbe04ef06cc8e"
           },
           "plugin/skills/hugues-mode/playbooks/opening-a-pr.md": {
-            "bytes": 5901,
-            "sha256": "9825226d41304b5b0fff929e245e99398b59ea5f8bf77630b41b56f7fec14f57"
+            "bytes": 5878,
+            "sha256": "0bc79b2a33ba66571751cd3990009d122696d19ff46d84ced8c274d3b79184f1"
           },
           "plugin/skills/no-comments/SKILL.md": {
             "bytes": 2959,
@@ -3157,9 +3169,9 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 35679,
-          "characters": 35629,
-          "estimated_tokens_characters_divided_by_4": 8907.25,
+          "bytes": 35647,
+          "characters": 35597,
+          "estimated_tokens_characters_divided_by_4": 8899.25,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8266,
@@ -3178,27 +3190,27 @@
               "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
             },
             "plugin/skills/hugues-mode/SKILL.md": {
-              "bytes": 19884,
-              "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+              "bytes": 19852,
+              "sha256": "a030e753cd7ec4ac6475730fe001349bbaa90f4c4a54abd4674db643c720b40b"
             }
           },
           "mode_workers": 8,
-          "repeated_bytes_floor": 285432,
-          "repeated_estimated_tokens_floor": 71258.0
+          "repeated_bytes_floor": 285176,
+          "repeated_estimated_tokens_floor": 71194.0
         }
       },
       "complete_execution_tokens": null,
       "unknown_inputs": [
         "Actual native host startup metadata exposure and tool/token framing",
         "Supported invocation or required human handoff for every dependency; unknown capability holds instead of running",
-        "External control-cli, deslop and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
+        "External control-cli and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
         "Consumer source, investigation evidence, generated briefs, artifacts, tool output and replies",
         "Retries, additional evidence categories, contested designs, re-grounding or task-specific principles outside the fixed scenarios"
       ]
     }
   },
   "worker_accounting": "Unique inventory deduplicates paths across contexts; it is not a workflow token total. Record fixed worker counts separately and a floor for the mandatory fresh mode-worker read set. This floor excludes their additional skills, role inputs and generated evidence, and is not additive to the unique inventory.",
-  "public_skills": 54,
+  "public_skills": 55,
   "limits": [
     "No runtime host, tokenizer, prompt framing, cache or native invocation observation.",
     "Required transitive bundled reads are included for the stated scenarios even if invocation would hold.",
