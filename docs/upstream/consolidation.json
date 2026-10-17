@@ -1607,7 +1607,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "06908fc23252b51e917903ef67d1f7d8cb4ed90087d6232318cc3a02ad97e5ee",
+      "sha256": "26504b865912652f276b6b91943f24a4618b2367e7edc055ee5a670e200f65a6",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1631,11 +1631,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "f1e0e4a3df8b57a88183dc182e677c49fe6ea0f1c4b0cb247950e7ea2c98fb60",
+      "sha256": "c6800b4fcaf9f20fef476aeb6a6b8ae99adc99fe67982cf70d5edd9401dd18bc",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "e6525778c4861bc133584916ae4e55c9d2a7104818ba711b47b41774de85f1b4",
+      "sha256": "6457d1b46fa776af37dc4ee0877fe93355403b1a3741773886ab55b270ed9eda",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1944,10 +1944,6 @@
     },
     "skills/hugues-mode/scripts/check-plan.test.ts": {
       "sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
-      "mode": 420
-    },
-    "skills/hugues-mode/scripts/compare-plan.py": {
-      "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
       "mode": 420
     },
     "skills/hugues-mode/scripts/orch/orch.test.ts": {

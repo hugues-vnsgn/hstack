@@ -600,11 +600,6 @@
       "mode": "100644"
     },
     {
-      "path": "skills/hugues-mode/scripts/compare-plan.py",
-      "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
-      "mode": "100644"
-    },
-    {
       "path": "skills/hugues-mode/scripts/orch/orch.test.ts",
       "sha256": "5e80b416bdcd68e4067690ce857345852fd2e0db3dcf3e25607999cd55b963d2",
       "mode": "100644"

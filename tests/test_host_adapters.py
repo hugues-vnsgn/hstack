@@ -155,7 +155,7 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
 
     def test_withdrawn_verbs_are_unknown(self):
         for verb in ['payload-policy', 'helper-ready', 'program-check', 'artifact-hash',
-                     'decode-design', 'worker-run', 'run-control', 'run-wait']:
+                     'decode-design', 'worker-run', 'run-control', 'run-wait', 'plan-compare']:
             with self.subTest(verb=verb):
                 result = self.bound(verb)
                 self.assertEqual(result.returncode, 2)
