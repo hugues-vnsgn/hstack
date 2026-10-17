@@ -311,7 +311,7 @@
       "destination": "plugin/adapters/host-publication.md",
       "sha256": "58187cbd9efb9e4cef51caf5e1959f7ad4f88d42be244eeda09bdcdfcd930624",
       "disposition": "removed",
-      "reason": "Issue #83 removes hStack's own PR review policy, which pstack 0.15.25 does not have. This paragraph only scoped that policy and the publication wait around it."
+      "reason": "Issue #83 removes this paragraph; pstack 0.15.25 has none of it. Besides scoping hStack's own Astra High PR review policy to this repository, it carried hStack's publication-scope rule: local commits and a PR-ready body under local-work authority, and publication only after explicit scope. The owner's ruling 3 on #78 keeps that rule removed, because this repository's AGENTS.md covers its own publication. Its restatements of the core's ready-PR and stack/base mechanics, consumer PR policy and interrogate's defaults were not rules of their own: the opening-a-pr playbook, host.md and the interrogate skill still carry them."
     }
   ],
   "mobile_source": "plugin/adapters/mobile.md",
