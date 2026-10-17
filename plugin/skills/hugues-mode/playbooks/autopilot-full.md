@@ -2,8 +2,7 @@ Apply [installed host tools](../../../adapters/host-tools.md): bound `read-workf
 for owned playbook/reference rereads, `plan-check` for validation and
 `plan-compare` for verification-contract changes. Neither
 reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
-directs, and write the skill a plan step applies, never a path to read.
-Unavailable or denied invocation holds that step.
+directs.
 
 For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
 before the first owner dispatch. Protect the approved checklist and accepted

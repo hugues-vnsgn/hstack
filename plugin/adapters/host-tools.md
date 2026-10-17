@@ -46,8 +46,8 @@ python3 "<plugin>/adapters/host_tools.py" read-workflow --binding "<program>/plu
 The helper never reads a skill body: `read-workflow` rejects every `SKILL.md`,
 including a bundled skill's own, a legacy alias and any consumer or external
 skill's. Read a bundled user-only skill's `SKILL.md` with the host's own
-file-read tool, resolved per [host.md](host.md); a plan names the skill to apply,
-never a path to read. A helper cannot grant invocation permission or report an
+file-read tool, resolved per [host.md](host.md); a plan names the skill to apply, and
+the agent resolves the path. A helper cannot grant invocation permission or report an
 owner-disabled skill as enabled; the reach and denial rules are in [host.md](host.md).
 Owned references and playbooks are ordinary resources; never move a skill body
 into them as an invocation workaround.
