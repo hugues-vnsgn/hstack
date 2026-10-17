@@ -57,6 +57,8 @@ export interface OpenPullRequest {
 }
 export interface ReviewComment {
   readonly authorLogin: string | null;
+  // GraphQL __typename of the author ("Bot", "User", ...); null when absent.
+  readonly authorType: string | null;
   readonly body: string;
   readonly path: string | null;
   readonly line: number | null;

@@ -541,6 +541,15 @@ class HuguesModeRouter(unittest.TestCase):
         for concept in ['Bugbot', '`control-cli`',
                         '`control-ui`', '**create-skill**', 'Cursor restart']:
             self.assertIn(concept, self.text)
+        # Bugbot keeps pstack's wording; the publication adapter says what it means here.
+        publication = ' '.join((ROOT / 'plugin/adapters/host-publication.md').read_text().split())
+        for marker in ['Claude Code Review', 'Claude GitHub Action review workflow',
+                       'Codex review (`chatgpt-codex-connector`)', 'Cursor Bugbot',
+                       '`bugbot-triage.md` applies to its comments unchanged',
+                       'setup installs nothing',
+                       '`Bugbot triage done. Not applicable. Reason no review bot.`',
+                       'never tick it as if triage happened']:
+            self.assertIn(marker, publication)
         # deslop is bundled, so the router names it like its sibling bundled skills.
         self.assertIn('- Before commit → the **deslop** skill (`/deslop`).', self.text)
         self.assertNotIn('cursor-team-kit` plugin (`/deslop`)', self.text)

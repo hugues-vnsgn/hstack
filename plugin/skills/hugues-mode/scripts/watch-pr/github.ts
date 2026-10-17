@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import type * as T from "./types.ts";
 import { nonEmpty, parsePrNumber } from "./types.ts";
 export const REVIEW_THREADS_QUERY =
-  "\nquery ReviewThreads($owner: String!, $repo: String!, $pr: Int!, $after: String) {\n  repository(owner: $owner, name: $repo) {\n    pullRequest(number: $pr) {\n      reviewThreads(first: 100, after: $after) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        nodes {\n          id\n          isResolved\n          comments(first: 10) {\n            nodes {\n              body\n              createdAt\n              path\n              line\n              author { login }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n";
+  "\nquery ReviewThreads($owner: String!, $repo: String!, $pr: Int!, $after: String) {\n  repository(owner: $owner, name: $repo) {\n    pullRequest(number: $pr) {\n      reviewThreads(first: 100, after: $after) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        nodes {\n          id\n          isResolved\n          comments(first: 10) {\n            nodes {\n              body\n              createdAt\n              path\n              line\n              author { login __typename }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n";
 export const PR_COMMIT_STATUS_QUERY =
   "\nquery PrCommitStatuses($owner: String!, $repo: String!, $pr: Int!) {\n  repository(owner: $owner, name: $repo) {\n    pullRequest(number: $pr) {\n      commits(last: 50) {\n        nodes {\n          commit {\n            oid\n            statusCheckRollup {\n              state\n            }\n          }\n        }\n      }\n    }\n  }\n}\n";
 export const PR_CHECK_ROLLUP_QUERY =
@@ -315,6 +315,10 @@ function parseComment(value: unknown): T.ReviewComment {
       author === null
         ? null
         : optionalString(author.login, "review comment.author.login"),
+    authorType:
+      author === null || typeof author.__typename !== "string"
+        ? null
+        : author.__typename,
     body: string(object.body, "review comment.body"),
     path: optionalString(object.path, "review comment.path"),
     line:
@@ -325,6 +329,26 @@ function parseComment(value: unknown): T.ReviewComment {
           : missing("review comment.line", object.line),
     createdAt: string(object.createdAt, "review comment.createdAt"),
   };
+}
+// pstack's "Bugbot" is whichever review bot is installed on the repository.
+// The thread query reads GraphQL, which reports an app login without the
+// "[bot]" suffix that REST adds, so compare with the suffix stripped. The
+// login alone is not enough: a human account can share it (github.com/claude
+// is a User), so the actor must also be a Bot.
+// - claude: the Claude GitHub App behind Claude Code Review and the Claude
+//   GitHub Action review workflow. UNCONFIRMED here: the Claude docs never
+//   state the login. "claude" is the app slug (github.com/apps/claude) and the
+//   form seen on third-party public PRs, not on a PR this watcher has read.
+// - chatgpt-codex-connector: Codex review, named on OpenAI's GitHub page.
+const REVIEW_BOT_APP_LOGINS: ReadonlySet<string> = new Set([
+  "claude",
+  "chatgpt-codex-connector",
+]);
+function isReviewBotApp(comment: T.ReviewComment): boolean {
+  const author = (comment.authorLogin ?? "").toLowerCase();
+  const login = author.endsWith("[bot]") ? author.slice(0, -5) : author;
+  const isBot = login !== author || comment.authorType === "Bot";
+  return isBot && REVIEW_BOT_APP_LOGINS.has(login);
 }
 function isBugbot(comment: T.ReviewComment | null): boolean {
   if (comment === null) return false;
@@ -339,7 +363,8 @@ function isBugbot(comment: T.ReviewComment | null): boolean {
         "agentic security review",
         "description start",
         "severity",
-      ].some((token) => body.includes(token)))
+      ].some((token) => body.includes(token))) ||
+    isReviewBotApp(comment)
   );
 }
 function passKey(comment: T.ReviewComment | null): string | null {

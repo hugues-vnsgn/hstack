@@ -50,11 +50,19 @@ async function mergeAssessment(
     }),
   };
 }
+// Substrings of pending check names that mean a review bot is still running.
+// "claude code review" is the check run Claude Code Review documents for
+// itself, and "claude-review" is the job name of the Claude GitHub Action
+// review workflow template. Neither has been seen on a PR this watcher read,
+// and a renamed workflow job is missed. Codex review documents no check run,
+// so it has no entry; its threads are still found by author in github.ts.
 const AUTOMATION_TOKENS = [
   "bugbot",
   "security review",
   "pr review automation",
   "review automation",
+  "claude code review",
+  "claude-review",
 ] as const;
 export async function readSnapshot(args: {
   readonly reader: T.GitHubReader;

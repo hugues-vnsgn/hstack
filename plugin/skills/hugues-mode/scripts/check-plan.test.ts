@@ -110,3 +110,20 @@ test("requires the verification-contract box in Verdict and merge", () => {
 		rmSync(directory, { recursive: true, force: true });
 	}
 });
+
+test("accepts the Bugbot box recorded as not applicable, and rejects the colon form", () => {
+	const record = (line: string) => {
+		const directory = mkdtempSync(join(tmpdir(), "check-plan-test-"));
+		const file = join(directory, "plan.md");
+		writeFileSync(file, validPlan.replace("- [ ] Merge when approved.", `- [ ] Merge when approved.\n${line}`));
+		try {
+			return spawnSync("node", [checker, file], { encoding: "utf8" });
+		} finally {
+			rmSync(directory, { recursive: true, force: true });
+		}
+	};
+	expect(record("- [ ] Bugbot triage done. Not applicable. Reason no review bot.").status).toBe(0);
+	const colon = record("- [ ] Bugbot triage done. Not applicable: no review bot.");
+	expect(colon.status).toBe(1);
+	expect(colon.stderr).toContain("mid-sentence colon");
+});
