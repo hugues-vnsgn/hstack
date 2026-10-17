@@ -12,9 +12,6 @@ The supported native hosts are Claude Code and Codex. Ignore Cursor transcript
 sources without reading them or counting them as supported-host coverage.
 These are mechanical operand translations, not new execution or deletion scope.
 
-Gate autopilot verdicts with bound `plan-compare` per
-[contract](../skills/hugues-mode/references/verification-contract.md).
-
 The pinned Bun helpers include a bootstrap that can install dependencies.
 Do not execute it without installation authority. First inspect local runtime and
 cached dependencies. A missing runtime, dependency, cloud worker, forge API or

@@ -107,16 +107,6 @@ required-file drift blocks rereading or validation. Reconcile changed payloads
 with the operator; never silently rebind a live program. These commands do not
 arm loops or start implementation.
 
-## Compare a PR's verification contract
-
-Use bound `plan-compare` with a consumer repository, repository-relative plan path,
-exact PR section heading, and full main/head commit SHAs. It executes the installed
-comparison helper only after the existing payload binding passes. See the
-[verification contract](../skills/hugues-mode/references/verification-contract.md)
-for the command, ruling record and verdict gate. The comparison is read-only;
-exit 0 clears only the rule-change gate, and exit 2 holds. The root authenticates
-the operator ruling separately. Source tests do not establish host writer isolation.
-
 ## Integrity trust boundary
 
 The trusted entrypoint is `adapters/host_tools.py`, including its approved runtime

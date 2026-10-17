@@ -579,7 +579,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-full.md",
       "disposition": "canonical",
-      "destination_sha256": "013d4a4cab75e96fcd21d16ef2ba26754cb292588b22c42c667aaeaf9d03b138"
+      "destination_sha256": "9e26d1bfb04436dfe8a260d0d28c9bf7dc618d8514eeb926da2d31a2e318267e"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
@@ -587,7 +587,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-stack.md",
       "disposition": "canonical",
-      "destination_sha256": "721addd2f93f7a14a4cb0a76367b429c3c6c303538ede795f2cb400ea75ba34b"
+      "destination_sha256": "b9e19f97395522f2dde18020801f23f56f223e8c95ace6b378568745b532ccfa"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
@@ -643,7 +643,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/multi-phase-plan.md",
       "disposition": "canonical",
-      "destination_sha256": "659124aa2888b0a609d93ecfb325a2d2fb1ede09f1a9a96006a72e901318b613"
+      "destination_sha256": "32836265dfcb7a9d670dc15fd138577c51121884f31419984901519b8a9a9afd"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
@@ -1575,7 +1575,7 @@
       "mode": 420
     },
     "adapters/claude-stack-permissions.md": {
-      "sha256": "d81924f069886101b308faf39b0dfbc7db1d7cf9d823b6c1adb3cad38e7e14e4",
+      "sha256": "fa08efb5080a30a6ee29c3b1b4d25195554439ba86cc87cb5717ee86864a79de",
       "mode": 420
     },
     "adapters/host-publication.md": {
@@ -1587,7 +1587,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "20a6bab47cfcf753d28ce88ee0e3457d37937b80cf4cf25009f1e76988e8e5c2",
+      "sha256": "09046bc53efbb29fcf80607369a2a7bd3a9e12e787815ddab4610769d1b8db79",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1599,7 +1599,7 @@
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "3f6e8ec47d39dd24efde20a3cb3b20e343ef7825ecfb028c2f9f344c8a218310",
+      "sha256": "12e7e9fb6ab8e20dc8f4020fe8ab30a0ead91e0ee08349d3230c4689295cc9af",
       "mode": 420
     },
     "adapters/host.md": {
@@ -1607,7 +1607,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "a259e75d30b39556e9d26de5d9586bc660d46375ab4ad7444623984ebbde0688",
+      "sha256": "7abbd53d30ce720c6debfb12ad0b31b772c242a10fe9bfd864537913a85c5713",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1631,11 +1631,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "75e38a0d9f40772a90c1457d69377a9c0860d5819e72937127d5f977ef37b888",
+      "sha256": "ee842a6d26114bb1a14ebb1e90eadb777203b3cb9b8eaa04338d86c8d14a3888",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "86b1c9329b174e98a27fa033ef9bb716bcbf156e9314543db7789a5c69acce91",
+      "sha256": "ad56941653fdfd1439a726a02ed76565d786efbf59c8184472b9fa049720b3b7",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1799,11 +1799,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-full.md": {
-      "sha256": "013d4a4cab75e96fcd21d16ef2ba26754cb292588b22c42c667aaeaf9d03b138",
+      "sha256": "9e26d1bfb04436dfe8a260d0d28c9bf7dc618d8514eeb926da2d31a2e318267e",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-stack.md": {
-      "sha256": "721addd2f93f7a14a4cb0a76367b429c3c6c303538ede795f2cb400ea75ba34b",
+      "sha256": "b9e19f97395522f2dde18020801f23f56f223e8c95ace6b378568745b532ccfa",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/babysit.md": {
@@ -1847,7 +1847,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
-      "sha256": "659124aa2888b0a609d93ecfb325a2d2fb1ede09f1a9a96006a72e901318b613",
+      "sha256": "32836265dfcb7a9d670dc15fd138577c51121884f31419984901519b8a9a9afd",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/opening-a-pr.md": {
@@ -1924,10 +1924,6 @@
     },
     "skills/hugues-mode/references/pr-review-policy.md": {
       "sha256": "63399ae5a94db80a0703938ffee74cf8a3a56d80bab7144ac014a23847882fcc",
-      "mode": 420
-    },
-    "skills/hugues-mode/references/verification-contract.md": {
-      "sha256": "afaf9701341702108c4c97b381deefe36494d8eb48f09870a5a2c7a7b0087317",
       "mode": 420
     },
     "skills/hugues-mode/scripts/bootstrap.ts": {
