@@ -166,9 +166,10 @@ adapters, playbooks and bundled skills as files. It measured no tokens.
 
 ## Helper inputs and evidence limits
 
-The [helper input receipt](HELPER-INPUTS.json) records all 20 original mode-helper
-files. Nineteen remain installed; the legacy history-scanning audit is preserved
-only as provenance. Eighteen remain byte-identical to upstream. The Node plan
+The [helper input receipt](HELPER-INPUTS.json) records all 21 original mode-helper
+files. Twenty remain installed (rows with an `installed` path); the legacy
+history-scanning audit is preserved only as provenance. Nineteen of the twenty
+remain byte-identical to upstream (`same_bytes_as_upstream`). The Node plan
 validator accepts bound workflow reads, and current installed Python/Node tests
 exercise it. Its reviewed digest is recorded in the helper receipt. The
 Bun/TypeScript helpers and dependency files did not change bytes. Their
