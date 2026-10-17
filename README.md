@@ -56,7 +56,7 @@ The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete
 - [Native consolidation and migration](docs/NATIVE-CONSOLIDATION.md)
 - [Source and workflow contracts](docs/CORE-RESTORATION.md)
 - [Test accounting](docs/TEST-COVERAGE.md)
-- [Installed planning, proof and worktree commands](plugin/adapters/host-tools.md)
+- [Installed planning and read-only worktree audit](plugin/adapters/host-tools.md)
 
 To check a source checkout, run these commands from the hstack folder:
 

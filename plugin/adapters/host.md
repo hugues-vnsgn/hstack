@@ -74,7 +74,6 @@ references, not skill bodies or a native loader.
 
 | Before this action | Read in full |
 |---|---|
-| New consumer program: plan, first build, proof or verdict | [Program proof](program-proof.md) |
 | Worker dispatch, worker execution, role selection or setup-hstack | [Workers and models](host-workers.md) |
 | Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations | [Workflow tools](host-workflow-tools.md) |
 | Transcript-dependent skills, optional integrations or consumer skill placement | [Special skills](host-special-skills.md) |

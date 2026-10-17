@@ -4,13 +4,6 @@ source: Conceptual adaptation of hstack-alpha (retired predecessor; GitHub osxsy
 
 Select the changed domain's proof and report what actually ran.
 
-For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
-before its first build. Use the protected approved checklist and record each
-attempt against its frozen whole-build identity and target. At step 5, have an
-independent verifier inspect the artifacts and the controller run `program-check`
-before a supported pass. Preserve failed/blocked/waived checks, crashes, data
-anomalies and all unresolved owner decisions in the derived verdict.
-
 For a round in an operator-approved mobile program, apply
 [mobile coverage](../references/mobile-coverage.md) before executing checks.
 Use the approved IDs, exact round revision/build and target; restore shared devices

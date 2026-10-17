@@ -5,24 +5,12 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
-before the first owner dispatch. Protect the approved checklist and accepted
-proof with actual host write enforcement. At every round's
-existing verdict step, the root runs `program-check` against its owner-held
-baseline and complete decision/finding state. A nonzero result holds a clean
-verdict; neither a rewritten plan nor self-proof can replace accepted evidence.
-Keep the phase order and all gates below.
-
 For an explicitly approved mobile program, apply
 [mobile coverage](../references/mobile-coverage.md) before verification dispatch.
 Use its selected checks and applicability; preserve this playbook's phase timing,
 review roles and operator gates. Default/non-mobile plans retain their rules.
 
 ### Autopilot-full
-
-For a new program, the controller applies [program control](../../../adapters/program-control.md)
-before every owner/helper/group dispatch and on pickup. Its approved scheduling
-limits override parallel-owner defaults; preserve complete required groups.
 
 **You own the verdicts, never the PRs. One owner carries each PR from build to merge, and nothing merges until your swarm, which never wrote the code, has proven the code that lands.**
 

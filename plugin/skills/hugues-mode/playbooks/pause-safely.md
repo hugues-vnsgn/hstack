@@ -1,10 +1,5 @@
 ### Pause safely
 
-For a program using [program control](../../../adapters/program-control.md),
-save the owner stop and durable checkpoint before handoff. Keep device reservations
-while owned processes run; inspect restoration before release. A usage warning
-alone does not invoke this playbook.
-
 **You own a clean stop. Leave a checkpoint a cold-start agent can resume from.** This is explicit only. On "keep going", "going to bed, keep going", or "don't stop", do not pause.
 
 1. Stop at a safe boundary. Finish the current atomic step or back out of it. Start nothing new, and cancel any nested subagents.
