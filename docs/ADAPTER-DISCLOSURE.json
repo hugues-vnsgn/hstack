@@ -286,9 +286,24 @@
     },
     {
       "paragraph": 19,
-      "slice": null,
+      "slice": [
+        0,
+        380
+      ],
       "destination": "plugin/adapters/host-publication.md",
-      "sha256": "0c91ccbec3761664db9089bb8b9cb471d0a3d357510608995c2a7dd240407146"
+      "sha256": "8ef5a187b0ccf33a527a68f56dee5ed5416fdd3c78ddee8d926d331552312503"
+    },
+    {
+      "paragraph": 19,
+      "slice": [
+        380,
+        541
+      ],
+      "destination": "plugin/adapters/host-publication.md",
+      "sha256": "1c5aef9ad0beec66762d764a897f0fbe6da14b2b6c51969ff3f0fc75d49893fb",
+      "disposition": "replaced",
+      "reason": "The owner's ruling 4 on #78 removes the clause that called an owner's differently worded skill an additional style preference rather than a source-equivalent replacement. pstack 0.15.25 has no such clause. The bundled pinned unslop stays the prose contract.",
+      "replacement": "The bundled pinned\nunslop remains the prose contract."
     },
     {
       "paragraph": 20,
