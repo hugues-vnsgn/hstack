@@ -148,6 +148,26 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
                 self.assertEqual(result.returncode, 1)
                 self.assertIn(message, result.stderr)
 
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_accepts_verdict_without_contract_box(self):
+        plan = self.consumer / 'plan.md'
+        fixture = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+        self.assertEqual(fixture.count('### Verdict and merge\n### Boot recipe\n'), 1)
+        # The Verdict and merge boxes of pstack 0.15.25's plan skeleton, renamed only.
+        verdict = ('### Verdict and merge\n'
+                   '- [ ] A full swarm runs once, at the code-ready head. Run each full swarm per the '
+                   '`swarm` skill. One gates lane. The ten live lanes from the PR\'s **Verify, live** block.\n'
+                   '- [ ] Clean only when every lane is `PASS`. Findings go back to the owner.\n'
+                   '### Boot recipe\n')
+        text = fixture.replace('### Verdict and merge\n### Boot recipe\n', verdict)
+        self.assertIn('- [ ] Clean only when every lane is `PASS`.', text)
+        for marker in ['verification-contract', 'plan-compare', 'operator ruling']:
+            self.assertNotIn(marker, text)
+        plan.write_text(text)
+        result = self.bound('plan-check', plan)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('1 PR sections, 0 problems', result.stdout)
+
     def test_missing_node_is_explicit_block(self):
         result = self.bound('plan-check', self.consumer / 'plan.md', env=dict(os.environ, PATH=''))
         self.assertEqual(result.returncode, 2)
@@ -155,7 +175,7 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
 
     def test_withdrawn_verbs_are_unknown(self):
         for verb in ['payload-policy', 'helper-ready', 'program-check', 'artifact-hash',
-                     'decode-design', 'worker-run', 'run-control', 'run-wait']:
+                     'decode-design', 'worker-run', 'run-control', 'run-wait', 'plan-compare']:
             with self.subTest(verb=verb):
                 result = self.bound(verb)
                 self.assertEqual(result.returncode, 2)

@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **440 top-level unittest cases**. One is a driver that
+The current candidate collects **422 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -11,17 +11,16 @@ native workflow proof. Subtests are not added to case totals.
 | Current checker, historical 0.1.0 fixtures | 27 | Explicit historical validation mode and package mutations |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
-| Current installed adapters and regressions | 99 | test_host_adapters (74), test_review_regressions (12), test_rereview_regressions (13) |
+| Current installed adapters and regressions | 100 | test_host_adapters (75), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 51 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 45 reviewed contradictions in five line shapes each, 16 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,980 cases (330 `read-workflow`, 1,596 `translate-plan` and 54 in-plan cases) over all 54 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
-| Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
-| Total collected | 440 | Current, mixed and historical scopes remain distinct |
+| Total collected | 422 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-440 Python cases. The opt-in CI workflow requires a provisioned native runner.
+422 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -237,3 +236,11 @@ cases go with the validator, risk catalog and selection guide they covered. One
 new installed-command case in test_host_adapters checks that the bound
 `plan-check` accepts a ten-lane plan, with or without frontmatter, and rejects an
 eleventh lane or a risk-based live heading, bringing the current total to 440.
+
+On 2026-10-17, issue #82 removes the verification-contract gate. The nineteen
+verification-contract cases go with the `plan-compare` verb, its comparison
+helper and the contract reference they covered. The test_host_adapters case that
+rejects withdrawn verbs now also checks that the bound CLI rejects `plan-compare`
+as unknown. One new installed-command case checks that the bound `plan-check`
+accepts a plan whose Verdict and merge section holds pstack's own boxes and no
+verification-contract box, bringing the current total to 422.

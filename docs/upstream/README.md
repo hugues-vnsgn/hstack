@@ -43,10 +43,9 @@ Four skills are new: `ketchup`, `sharpen`, `in-your-own-words` and
 so the per-turn skill list does not grow. Upstream's model defaults (Opus,
 Grok, Sol) do not apply; hStack keeps its own defaults and takes only the
 rule that moves effort to fit the job. Upstream's Agent Plugins root manifest
-stays in provenance. Two upstream changes are known gaps: the audit helper
+stays in provenance. One upstream change is a known gap: the audit helper
 still defaults its MERGED base to `origin/main` (pass `--base` otherwise),
-where upstream's script now detects the default branch; and `plan-check` now
-accepts fenced code, which `plan-compare` still holds for manual review.
+where upstream's script now detects the default branch.
 Changed and added rows carry the release target
 `unreleased-pstack-0.15.25` until a release ships them.
 

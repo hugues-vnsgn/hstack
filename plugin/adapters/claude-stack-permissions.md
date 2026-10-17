@@ -84,7 +84,7 @@ git push --force-with-lease=CHILD_BRANCH:EXPECTED_REMOTE_SHA origin HEAD:refs/he
 A changed remote tip holds the push; coordinate with the owner rather than
 refreshing the lease blindly. Reuse the approved permission scope during the
 run, and obtain a new ruling before adding a branch or repository to it.
-Apply the existing shipping patch-id rules, verification-contract comparison,
+Apply the existing shipping patch-id rules,
 fresh mergeability/CI checks and re-verification requirements. A matching
 patch-id does not skip those checks.
 
