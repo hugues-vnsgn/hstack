@@ -306,16 +306,6 @@
   "mobile_fragments": [
     {
       "slice": [
-        1847,
-        1870
-      ],
-      "sha256": "045ae00a4c16fffc2a18e261d080bf66ce1a72eddb981deec06668867ea33344",
-      "disposition": "replaced",
-      "reason": "Owner-approved issue30 adds a conditional mobile-risk-v1 coverage reference; the existing mobile proof rules remain intact and non-mobile plans retain their default contract.",
-      "replacement": "## Evidence and scope\n\nFor operator-approved mobile programs, apply\n[mobile coverage](../skills/hugues-mode/references/mobile-coverage.md) when selecting\nand dispatching verification. Its explicit profile replaces the fixed live-check\ncount, preserving other pstack phases and reviews. Legacy/non-mobile plans retain\ntheir default contract; profile migration requires the operator's ruling.\n\n"
-    },
-    {
-      "slice": [
         4086,
         4202
       ],

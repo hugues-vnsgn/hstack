@@ -5,11 +5,6 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For an explicitly approved mobile program, apply
-[mobile coverage](../references/mobile-coverage.md) before verification dispatch.
-Use its selected checks and applicability; preserve this playbook's phase timing,
-review roles and operator gates. Default/non-mobile plans retain their rules.
-
 ### Autopilot-stack
 
 **Before unattended topology writes in Claude Code auto mode:** complete the

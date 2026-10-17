@@ -8,7 +8,7 @@ mobile adapter before any explicit mobile task; non-mobile work stops at the
 applicability decision. This uses ordinary file reads, not a new native loader.
 
 Every original host instruction is retained in one of those files, and the mobile
-adapter preserves the earlier rules while adding the approved mobile coverage profile. The
+adapter preserves the earlier rules. The
 [partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account for
 every original paragraph, each preserved verbatim or replaced with an explicit,
 tested reason. Deferral changes when guidance is read, not whether its
@@ -39,12 +39,6 @@ assumptions and mandatory transitive inputs are in the
 | Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,528.25 | 45,289 → 34,153 |
 | One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,288.5 | 135,888 → 125,224 |
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,272 | 146,269 → 137,158 |
-
-Issue #30 adds a deferred mobile selection guide and risk catalog, totaling
-8,493 bytes (2,123.25 estimated tokens). The `mobile_risk_profile` inventory
-records both. The mobile-workflows adapter already included in applicable reads
-adds the 369-byte profile pointer. These amounts describe source reads, not
-observed host tokens; worker briefs include only relevant risk guidance.
 
 The routing inventory falls about 24.6% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,

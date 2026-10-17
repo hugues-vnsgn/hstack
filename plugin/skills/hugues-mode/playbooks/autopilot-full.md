@@ -5,11 +5,6 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For an explicitly approved mobile program, apply
-[mobile coverage](../references/mobile-coverage.md) before verification dispatch.
-Use its selected checks and applicability; preserve this playbook's phase timing,
-review roles and operator gates. Default/non-mobile plans retain their rules.
-
 ### Autopilot-full
 
 **You own the verdicts, never the PRs. One owner carries each PR from build to merge, and nothing merges until your swarm, which never wrote the code, has proven the code that lands.**
