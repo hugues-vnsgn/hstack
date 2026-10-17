@@ -10,7 +10,7 @@ Do not certify an old report by filling in missing observations afterward.
 
 1. Resolve the installed plugin from the loaded entrypoint. Save its binding
    using [host tools](host-tools.md). Keep it for the whole program; drift holds
-   the run for review. Plugin maintenance is a separate authorized task.
+   the run for review.
 2. Create an owner control directory outside the plugin and consumer checkouts.
    Only the trusted controller writes accepted records there. Put the binding,
    design snapshots, approved checklist, candidate, accepted proof and current
@@ -41,8 +41,8 @@ Do not certify an old report by filling in missing observations afterward.
 
 Pass workers the checklist and only the application paths authorized for their
 change, plus separate scratch/output directories. Protect the entire owner
-control directory, installed plugin and binding. Read-only Markdown and hash
-checks detect drift; they do not deny a write.
+control directory. Read-only Markdown and hash checks detect drift; they do not
+deny a write.
 
 For local macOS worker processes, use this installed launcher:
 

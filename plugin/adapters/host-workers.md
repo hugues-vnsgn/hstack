@@ -1,11 +1,5 @@
 ## Native workers and role models
 
-For either autopilot, complete [payload protection](payload-protection.md) before
-dispatching a write-capable worker. Pass the bound installation identity, effective
-host policy, covered writers and evidence destination. Require the same boundary
-in fresh and delegated workers; missing inheritance or an uncovered tool holds
-that dispatch. Recheck when the execution environment or available writers change.
-
 Translate Cursor Task to the current host's native agent tool. Each new work
 round gets a fresh worker. Preserve the core's narrow resume exceptions and the
 scoped-worker direct implementation exception; do not recursively delegate the

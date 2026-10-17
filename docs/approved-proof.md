@@ -13,7 +13,7 @@ explicit migration; old reports are not silently certified by the new gate.
 | Builder replaces persistence with reset | Gate holds against the approved original |
 | Approved file or source snapshot changes | Trusted approval digest holds |
 | Installed plugin changes | Existing binding holds |
-| Worker writes plugin or approved records | Process isolation denies the write |
+| Worker writes approved records | Process isolation denies the write |
 | Missing, empty, unreadable or unrelated proof | No supported pass |
 | Wrong build, platform or approved revision | No automatic evidence reuse |
 | Independent inspection rejects a claim | No supported pass |
