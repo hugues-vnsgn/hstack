@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "87ed2d73bdec40e8a520aa6ba6edf5ffac4054f9c0312cd9d4af917a7fd85181",
+    "payload.py": "c9ad0c22fb484ea785e1403e0bacf23ed8ff44d9db695094bb1f5e3875630c0a",
     "program.py": "8a427f9ffa18ca8580065850626082c34ba3846b36b84931498c1dc5ed8302b9",
     "control.py": "4e116997864db964c1d5007a8bd9d06d63a9b18457e269abcd7403c279347563"
 }
@@ -80,18 +80,6 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='verb', required=True)
     sub.add_parser('bind', help='Print the installed payload binding for an approved program')
-    ready = sub.add_parser('helper-ready', help='Check bound Bun helper prerequisites without installing')
-    ready.add_argument('--binding', type=Path, required=True)
-    policy = sub.add_parser('payload-policy', help='Print an owner-reviewable native policy fragment; apply nothing')
-    policy.add_argument('--binding', type=Path, required=True)
-    policy.add_argument('--host', choices=['claude', 'codex'], required=True)
-    policy.add_argument('--consumer', type=Path, required=True)
-    policy.add_argument('--evidence', type=Path, required=True)
-    policy.add_argument('--parent', help='Codex active permission profile to preserve')
-    policy.add_argument('--macos-mobile', action='store_true', help='Opt-in Claude macOS mobile tool access; review before applying')
-    policy.add_argument('--java-home', type=Path, help='Selected JDK; avoids sandboxed java_home discovery')
-    policy.add_argument('--allow-write', type=Path, action='append', default=[], help='Selected existing tool cache/log directory; repeat as needed')
-    policy.add_argument('--allow-domain', action='append', default=[], help='Selected tool network domain; repeat as needed')
     for verb, operand in [('read-workflow', 'source'), ('plan-check', 'plan'),
                           ('translate-plan', 'plan')]:
         child = sub.add_parser(verb)
@@ -154,13 +142,7 @@ def main(argv=None):
             print(json.dumps(payload.bind(root), indent=2))
             return 0
         payload.load_binding(root, args.binding.resolve())
-        if args.verb == 'payload-policy':
-            print(payload.policy(root, args.host, args.consumer, args.evidence, args.parent,
-                                 macos_mobile=args.macos_mobile, java_home=args.java_home,
-                                 allow_write=args.allow_write, allow_domains=args.allow_domain))
-        elif args.verb == 'helper-ready':
-            print(json.dumps(payload.helper_ready(root), indent=2))
-        elif args.verb == 'read-workflow':
+        if args.verb == 'read-workflow':
             sys.stdout.buffer.write(payload.workflow(root, args.source))
         elif args.verb == 'translate-plan':
             print(payload.translate(root, args.binding.resolve(), Path(args.plan).read_text(),

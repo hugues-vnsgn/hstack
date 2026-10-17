@@ -1607,7 +1607,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "2a8369deb4156b9aea488e3568f93c8c9752828a8e36041410b8ae3197b5261d",
+      "sha256": "42734c14b818560025e20943096f9c1cce01cdc0ddbd2522a379f45cf7b666c0",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1655,7 +1655,7 @@
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "87ed2d73bdec40e8a520aa6ba6edf5ffac4054f9c0312cd9d4af917a7fd85181",
+      "sha256": "c9ad0c22fb484ea785e1403e0bacf23ed8ff44d9db695094bb1f5e3875630c0a",
       "mode": 420
     },
     "adapters/runtime/program.py": {

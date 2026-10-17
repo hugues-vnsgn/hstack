@@ -592,6 +592,18 @@ class ProgramProof(InstalledFixture, unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertEqual(outside.read_text(), 'Keep this data')
 
+    def test_withdrawn_payload_protection_verbs_are_unknown(self):
+        evidence = self.area / 'evidence'
+        evidence.mkdir()
+        for argv in (['payload-policy', '--host', 'claude', '--consumer', self.consumer,
+                      '--evidence', evidence],
+                     ['helper-ready']):
+            with self.subTest(verb=argv[0]):
+                result = self.bound(*argv)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('invalid choice', result.stderr)
+                self.assertEqual(result.stdout, '')
+
     def test_required_program_contract_is_reachable_through_installed_workflows(self):
         for path in ('adapters/host.md', 'adapters/host-workers.md',
                      'skills/hugues-mode/playbooks/multi-phase-plan.md',
