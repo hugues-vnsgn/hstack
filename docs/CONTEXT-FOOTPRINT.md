@@ -56,36 +56,43 @@ the fixed profile or claimed covered by its total.
 
 ## What the counts include and leave unknown
 
-Twenty-four canonical skill files remain byte-identical to `7db3e80`: the 24
-`principle-*` skills, which never carried the reworded host-contract marker
-below. Restoring pstack's router design puts the inherited Cursor
-`disable-model-invocation: true` line back on 44 skill bodies, matching most
-of that pre-restoration baseline again. The other 26 differ for three
-separate reasons: `hugues-mode` and `setup-hstack` diverge from upstream
-to stay the only model-invocable skills; architect, arena, how, interrogate,
-reflect, swarm and why carry the separate tiered-model-role wiring that
-replaced Cursor's rule file with project-local `.hstack/models.md` and
-`inherit-parent` defaults; and PR 1 fix round 1's reworded host-contract
-marker ("The host contract governs how this skill reaches any sibling
-dependency.", replacing wording that read as a blanket override of the scoped
-bundled-reference rule) touches every one of the 26 non-principle bodies. PR 1
-fix round 2 also reworded part of setup-hstack's (then setup-huguesstack's) own body (item 3's
-`create-verification-skill` resolution fix). The router rewrite (issue #22)
-edits `hugues-mode` and one line of `setup-hstack`, both already among
-the 26, so the 24 byte-identical files are unchanged. The
-50 files' combined whole-file size is 191,824 bytes; bodies excluding
-frontmatter and delimiters total 177,003 bytes. The mode file is 20,046
-bytes, including its 19,769-byte body, about 2,845 words; it was 20,961
-bytes and about 3,023 words before the rewrite. The rewrite drops the four
-Cursor-only frontmatter fields, moves the model-defaults paragraph into
+Ten of the 50 skill files declared at 0.2.0 remain byte-identical to `7db3e80`,
+all of them `principle-*` skills, which never carried the reworded host-contract
+marker below. The other 40 differ. Fourteen are the principle skills the pstack
+0.15.25 re-pin updated. The 26 non-principle files differ for three separate
+reasons: `hugues-mode` and `setup-hstack` diverge from upstream to stay the only
+model-invocable skills; architect, arena, how, interrogate, reflect, swarm and
+why carry the separate tiered-model-role wiring that replaced Cursor's rule file
+with project-local `.hstack/models.md` and `inherit-parent` defaults; and PR 1
+fix round 1's reworded host-contract marker ("The host contract governs how this
+skill reaches any sibling dependency.", replacing wording that read as a blanket
+override of the scoped bundled-reference rule) touches every one of the 26. The
+four skills added after the release carry the marker too. All 54 skill files
+total 209,009 bytes; bodies excluding frontmatter and delimiters total 193,976
+bytes. The mode file is 19,296 bytes, including its 19,019-byte body.
+
+History, not current counts: until the pstack 0.15.25 re-pin, all 24
+`principle-*` files matched `7db3e80`. Restoring pstack's router design had put
+the inherited Cursor `disable-model-invocation: true` line back on 44 skill
+bodies, matching most of that pre-restoration baseline again. PR 1 fix round 2
+also reworded part of setup-hstack's (then setup-huguesstack's) own body (item
+3's `create-verification-skill` resolution fix). The router rewrite (issue #22)
+edited `hugues-mode` and one line of `setup-hstack`, both already among the 26,
+so it left the 24 byte-identical files unchanged. At its fix round 1
+(`8b7127a`), the 50 files totaled 191,824 bytes, with 177,003 bytes of bodies,
+and the mode file was 20,046 bytes, including its 19,769-byte body, about 2,845
+words; before the rewrite it was 20,961 bytes and about 3,023 words. The rewrite
+dropped the four Cursor-only frontmatter fields, moved the model-defaults
+paragraph into
 [the worker reference](../plugin/adapters/host-workers.md#model-defaults-and-role-labels)
-and adds the four mobile routes to the Playbooks list. Issue #83 then puts
+and added the four mobile routes to the Playbooks list. Issue #83 then put
 pstack's own wording back in every rule the rewrite had restated, keeping the
-renames, the host translation and the mobile routes, which leaves the mode file
-at 19,296 bytes. Only `hugues-mode` and
-`setup-hstack` are model-invocable now, so only their 352 characters of
-description (236 for the router, 116 for setup) enter startup context on Claude Code (362
-before the rename shortened the setup description); the
+renames, the host translation and the mobile routes, which brought the mode file
+to its current 19,296 bytes.
+
+Only `hugues-mode` and `setup-hstack` are model-invocable now, so only their
+352 characters of description (236 for the router, 116 for setup) enter startup
+context on Claude Code (362 before the rename shortened the setup description); the
 [skill-list measurement](CONTEXT-BUDGET.json) tracks this directly. It
 carries two "before" points, both computed by the same function, neither
 hardcoded: `native_before`, against the `7db3e80`-pinned bytes every other
@@ -98,7 +105,7 @@ the actual commit this restoration branched from and the exact revision the
 Issue's Problem Statement cites (46 model-invocable skills, 9,844 description
 characters, close to but not forced to equal the owner's earlier informally
 recorded 9,869, since that number was recorded rather than recomputed from
-pinned bytes). The other 48 skills are user-only: the owner types one by
+pinned bytes). The other 52 skills are user-only: the owner types one by
 name, and the mode reads it in full as its router reference. The agent never
 invokes one natively; the owner still can. [Host validation](skill-list-host-validation.md) observed, at
 code commit `ae51493`, that Claude Code's attached skill list grows by exactly
@@ -109,7 +116,7 @@ router's then 312-character description at 243 characters; the owner's reordered
 [addendum](skill-list-host-validation.md#addendum-the-reordered-router-description-on-codex)),
 and that `tdd`, a user-only skill, still runs when typed by name. It leaves the router description in
 Claude's list and a typed `principle-*` skill unobserved, and it establishes
-those claims, not the byte/character counts themselves. A user-only skill's frontmatter still counts toward the all-50
+those claims, not the byte/character counts themselves. A user-only skill's frontmatter still counts toward the all-54
 upper bound above regardless, since that bound is deliberately over every
 declared skill, not only what a host happens to expose. The reduction comes from avoiding unrelated adapter reads,
 not shrinking or omitting the procedures. Reducing the mode further by making
@@ -122,7 +129,7 @@ about 6,272.5 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
-adapter. The router rewrite and its fix round take 752 bytes back, which leaves it 8
+adapter. The router rewrite and its fix round took 752 bytes back, which left it 8
 bytes under `main`. Later adapter edits, including the shorter host-adapter
 wording, left it 264 bytes under that baseline, and restoring pstack's router
 wording (#83) leaves it 852 bytes under. The fix round restored the scope words the rewrite had
@@ -136,7 +143,7 @@ includes the selected bug-fix playbook and mandatory unslop dependency.
 Startup metadata is unchanged by this phase split. The table counts all declared
 frontmatter as an upper bound; actual host exposure, suppression and framing
 remain unobserved. Codex policy files add 2,149 source bytes at `7db3e80`
-versus 2,148 now, not assumed to enter model context either way. Startup and full-body numbers
+versus 2,320 now across 54 skills, not assumed to enter model context either way. Startup and full-body numbers
 overlap and must not be added as though they were independent reads.
 
 The workflow rows count each bundled path once across all participants. Fresh
@@ -144,11 +151,11 @@ workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
 agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 8,312.25 estimated tokens for the bug-fix worker, and from 75,228 to
-67,286.0 for the eight feature workers. The model-defaults paragraph and the
+9,403.5 to 8,647.5 estimated tokens for the bug-fix worker, and from 75,228 to
+69,180.0 for the eight feature workers. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
-also reads, and the host adapter points at it, which is why this floor is 252.5
-tokens (one worker) above its value before the router rewrite. These partial floors exclude other worker
+also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
+to this floor at the router rewrite. These partial floors exclude other worker
 skills, role inputs and evidence; they are not additive to the unique inventories.
 
 External control/deslop/agent-writing instructions, consumer configuration,
