@@ -57,8 +57,6 @@ Helpers live alongside their owning canonical skills. Inspect local runtime/cach
 
 For planning and cleanup, use the [installed host commands](../plugin/adapters/host-tools.md). Save the approved payload binding when authoring a program. Fill and translate bundled plan operands, validate with `plan-check`, and reread workflows through that binding at every required tick. Payload/adapter drift blocks the program; consumer-owned files still come from consumer trunk. The native worktree audit takes an explicit authorized source manifest and local PR snapshot. Incomplete activity coverage holds candidates. The separate active/pinned-chat gate remains required before any prune decision; the helper never deletes or discovers private transcript directories.
 
-Opening a PR retains ready-PR and stack/base mechanics. Prepare local commits/body when authorized; push/publication/merge/release need separate scope. Do not replace a blocked ready gate with a draft fallback.
-
 ## Change and validate the plugin
 
 Edit canonical skills or owned adapters, then run `python3 scripts/seal_payload.py`, naming each changed canonical file with `--accept <repository path>`, and update retained-source receipts for affected files. Review these changes and run all checks; sealing is not behavioral approval. The upstream archive is immutable provenance. `render_core.py` is retired. Mobile redesign remains separate from this consolidation.
