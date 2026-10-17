@@ -601,7 +601,7 @@
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.mjs",
-      "sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26",
+      "sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
       "mode": "100755"
     },
     {
@@ -612,11 +612,6 @@
     {
       "path": "skills/hugues-mode/scripts/compare-plan.py",
       "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
-      "mode": "100644"
-    },
-    {
-      "path": "skills/hugues-mode/scripts/mobile-coverage.mjs",
-      "sha256": "e3017039c73cb1d0ff153b8755174407678ddd7eb7d627f8ab9ad0c8bd934858",
       "mode": "100644"
     },
     {

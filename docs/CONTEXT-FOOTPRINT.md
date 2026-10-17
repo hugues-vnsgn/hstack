@@ -171,8 +171,8 @@ adapters, playbooks and bundled skills as files. It measured no tokens.
 The [helper input receipt](HELPER-INPUTS.json) records all 20 original mode-helper
 files. Nineteen remain installed; the legacy history-scanning audit is preserved
 only as provenance. Eighteen remain byte-identical to upstream. The Node plan
-validator now accepts bound workflow reads and the approved mobile-risk profile;
-current installed Python/Node tests exercise both. Its reviewed digest is recorded
+validator accepts bound workflow reads, and current installed Python/Node tests
+exercise it. Its reviewed digest is recorded
 in the helper receipt. The Bun/TypeScript helpers and dependency files did not change
 bytes. Their disclosure-pass runtime validation did not run because the harmless
 offline sandbox preflight returned `EPERM`. The later review-fix pass ran it on a

@@ -771,7 +771,7 @@
       "source_mode": 493,
       "destination": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "disposition": "canonical",
-      "destination_sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26"
+      "destination_sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
@@ -1607,7 +1607,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "8ea94d2da6d4a46ebdfe1a43bfe5f906dbf09a5ebc7c14b08114529df5e03d07",
+      "sha256": "e9762de6bce4a0c007cc229f9827f9abe470d008f952c8545ef94d4f32f7e7be",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1631,11 +1631,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "89b711b5493ebb59321f36ee985401c0af6367d03d002bb401dcd9a93e5fce43",
+      "sha256": "6dff9c6836d57bc18aa03c78601637d548df4d243a6254c9e702e9844bee8869",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "35aa917afcf973a45d34fda7c8e522515af26a60613a5241c1e83ff39c3cbfba",
+      "sha256": "ea2268ad9c2473521a88e7706365ed74e4499016b00b2100b0a7165d362c4ac6",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1947,7 +1947,7 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/check-plan.mjs": {
-      "sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26",
+      "sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
       "mode": 493
     },
     "skills/hugues-mode/scripts/check-plan.test.ts": {
@@ -1956,10 +1956,6 @@
     },
     "skills/hugues-mode/scripts/compare-plan.py": {
       "sha256": "99f1604ea71ecddfdd205985c889e27dace1a66cf8e60db946d16774ca81d82b",
-      "mode": 420
-    },
-    "skills/hugues-mode/scripts/mobile-coverage.mjs": {
-      "sha256": "e3017039c73cb1d0ff153b8755174407678ddd7eb7d627f8ab9ad0c8bd934858",
       "mode": 420
     },
     "skills/hugues-mode/scripts/orch/orch.test.ts": {
