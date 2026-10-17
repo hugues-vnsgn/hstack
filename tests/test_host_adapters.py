@@ -126,6 +126,28 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertEqual(bad.returncode, 1)
         self.assertIn('Verify, live. does not open with the rule', bad.stderr)
 
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_holds_pstack_fixed_ten_lane_rule(self):
+        plan = self.consumer / 'plan.md'
+        ten = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+        # Frontmatter is skipped, as in pstack: no profile field selects another live rule.
+        for text in [ten, '---\nverification_profile: custom\n---\n' + ten]:
+            with self.subTest(plan=text[:40]):
+                plan.write_text(text)
+                result = self.bound('plan-check', plan)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('verify-live=10', result.stdout)
+        extra = '- [ ] Lane 11. Extra. Save `lane-11.png`. Pass when visible.\n'
+        for text, message in [
+                (ten.replace('**Verify, perf.**', extra + '**Verify, perf.**'), 'expected 1 to 10'),
+                (ten.replace('Ten lanes on', 'Risk-based lanes on'),
+                 'Verify, live lacks "Ten lanes on `<swarm workers model>` at the PR head" with the model filled in')]:
+            with self.subTest(message=message):
+                plan.write_text(text)
+                result = self.bound('plan-check', plan)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(message, result.stderr)
+
     def test_missing_node_is_explicit_block(self):
         result = self.bound('plan-check', self.consumer / 'plan.md', env=dict(os.environ, PATH=''))
         self.assertEqual(result.returncode, 2)

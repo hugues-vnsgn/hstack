@@ -1315,29 +1315,6 @@
     },
     "unchanged_files": 10
   },
-  "mobile_risk_profile": {
-    "scope": "Deferred mobile-risk-v1 selection guide and shared catalog, outside the pinned non-mobile scenarios; source counts only.",
-    "candidate": {
-      "paths": [
-        "plugin/skills/hugues-mode/references/mobile-coverage.md",
-        "plugin/skills/hugues-mode/references/mobile-risks.json"
-      ],
-      "unique_files": 2,
-      "bytes": 7278,
-      "characters": 7278,
-      "estimated_tokens_characters_divided_by_4": 1819.5,
-      "inputs": {
-        "plugin/skills/hugues-mode/references/mobile-coverage.md": {
-          "bytes": 6773,
-          "sha256": "b03b8f6b5d8c62a05f583d7f35f6e19bc7908ea5ac6253292211f7c6083da214"
-        },
-        "plugin/skills/hugues-mode/references/mobile-risks.json": {
-          "bytes": 505,
-          "sha256": "95d6d984276fc0e9beba2cd105ecd7289011dcd4ab087ee772456d7b75063b74"
-        }
-      }
-    }
-  },
   "scenarios": {
     "initial_mode_routing": {
       "scenario": "Route a non-mobile single-function CLI bug: read the full bug-fix playbook, copy its todos and announce the route with mandatory unslop. Stop before the first task step; no installed planning-helper operands are used.",

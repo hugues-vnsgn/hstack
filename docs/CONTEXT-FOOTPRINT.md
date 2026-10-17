@@ -7,8 +7,8 @@ their named actions. A small mobile applicability file requires the complete
 mobile adapter before any explicit mobile task; non-mobile work stops at the
 applicability decision. This uses ordinary file reads, not a new native loader.
 
-Every original host instruction is retained in one of those files, and the mobile
-adapter preserves the earlier rules while adding the approved mobile coverage profile. The
+Every original host instruction is retained in one of those files, and the
+complete mobile adapter carries the original mobile file's rules. The
 [partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account for
 every original paragraph, each preserved verbatim or replaced with an explicit,
 tested reason. Deferral changes when guidance is read, not whether its
@@ -39,12 +39,6 @@ assumptions and mandatory transitive inputs are in the
 | Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,528.25 | 45,289 → 34,153 |
 | One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,288.5 | 135,888 → 125,224 |
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,272 | 146,269 → 137,158 |
-
-Issue #30 adds a deferred mobile selection guide and risk catalog, totaling
-8,493 bytes (2,123.25 estimated tokens). The `mobile_risk_profile` inventory
-records both. The mobile-workflows adapter already included in applicable reads
-adds the 369-byte profile pointer. These amounts describe source reads, not
-observed host tokens; worker briefs include only relevant risk guidance.
 
 The routing inventory falls about 24.6% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
@@ -171,10 +165,10 @@ adapters, playbooks and bundled skills as files. It measured no tokens.
 The [helper input receipt](HELPER-INPUTS.json) records all 20 original mode-helper
 files. Nineteen remain installed; the legacy history-scanning audit is preserved
 only as provenance. Eighteen remain byte-identical to upstream. The Node plan
-validator now accepts bound workflow reads and the approved mobile-risk profile;
-current installed Python/Node tests exercise both. Its reviewed digest is recorded
-in the helper receipt. The Bun/TypeScript helpers and dependency files did not change
-bytes. Their disclosure-pass runtime validation did not run because the harmless
+validator accepts bound workflow reads, and current installed Python/Node tests
+exercise it. Its reviewed digest is recorded in the helper receipt. The
+Bun/TypeScript helpers and dependency files did not change bytes. Their
+disclosure-pass runtime validation did not run because the harmless
 offline sandbox preflight returned `EPERM`. The later review-fix pass ran it on a
 scratch install of the candidate: Bun 1.4.2 installed the locked dependencies
 through the session proxy, 52 of 52 `bun test orch watch-pr` cases passed and
