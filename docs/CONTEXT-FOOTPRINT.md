@@ -41,8 +41,8 @@ assumptions and mandatory transitive inputs are in the
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,495.5 | 146,269 → 138,052 |
 
 The approved-proof candidate adds deferred new-program references separately
-from those pinned scenarios. The guide is 7,686 bytes; constructing records also
-loads a 6,737-byte format reference. Together they add 14,423 bytes (3,605.75
+from those pinned scenarios. The guide is 7,636 bytes; constructing records also
+loads a 6,737-byte format reference. Together they add 14,373 bytes (3,593.25
 characters/4 estimated tokens), not a measured host charge. The generated
 `new_program_proof` inventory binds both files. Do not describe the original
 scenario totals as a complete new-program cost; approval records, host framing

@@ -1323,13 +1323,13 @@
         "plugin/adapters/program-records.md"
       ],
       "unique_files": 2,
-      "bytes": 14423,
-      "characters": 14423,
-      "estimated_tokens_characters_divided_by_4": 3605.75,
+      "bytes": 14373,
+      "characters": 14373,
+      "estimated_tokens_characters_divided_by_4": 3593.25,
       "inputs": {
         "plugin/adapters/program-proof.md": {
-          "bytes": 7686,
-          "sha256": "71c943002eabf5cfe0b6934ede89bb8dfe5127df0263900352ff0d416ba16e47"
+          "bytes": 7636,
+          "sha256": "4c9892ddcf3ffd84385cf95fbd107fafcbff462b608cb14c059724db72318d08"
         },
         "plugin/adapters/program-records.md": {
           "bytes": 6737,

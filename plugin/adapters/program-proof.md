@@ -10,7 +10,7 @@ Do not certify an old report by filling in missing observations afterward.
 
 1. Resolve the installed plugin from the loaded entrypoint. Save its binding
    using [host tools](host-tools.md). Keep it for the whole program; drift holds
-   the run for review. Plugin maintenance is a separate authorized task.
+   the run for review.
 2. Create an owner control directory outside the plugin and consumer checkouts.
    Only the trusted controller writes accepted records there. Put the binding,
    design snapshots, approved checklist, candidate, accepted proof and current
