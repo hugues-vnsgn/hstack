@@ -295,9 +295,8 @@
       "slice": null,
       "destination": "plugin/adapters/host-publication.md",
       "sha256": "58187cbd9efb9e4cef51caf5e1959f7ad4f88d42be244eeda09bdcdfcd930624",
-      "disposition": "replaced",
-      "reason": "0.4.0 renamed the project to hStack: the repository named in this sentence is the hStack repository.",
-      "replacement": "Opening a PR retains the core's ready-PR and stack/base mechanics. Local commits\nand a PR-ready body can be prepared under local-work authority. Publication waits\nfor explicit scope. Only this hStack repository’s AGENTS.md activates its\nAstra High PR profile. Installing the plugin does not impose it on consumers.\nConsumer policies and generic interrogate defaults remain in force."
+      "disposition": "removed",
+      "reason": "Issue #83 removes hStack's own PR review policy, which pstack 0.15.25 does not have. This paragraph only scoped that policy and the publication wait around it."
     }
   ],
   "mobile_source": "plugin/adapters/mobile.md",

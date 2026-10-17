@@ -35,7 +35,7 @@ Every role defaults to `inherit-parent` at the effort its skill names. Optional 
 
 Budgets remain unlimited/max, large/xhigh, medium/high and small/medium. Panel lists launch one worker per entry, `inherit-parent` entries included. `inherit-parent` omits the model override. A rejected value runs on `inherit-parent` at its effort. Report actual models/efforts, blocked seats and process independence separately from model diversity.
 
-Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix. The [two-seat Astra High policy](../plugin/policies/astra-pr-review.md) is suspended for hStack PRs; re-activating it in AGENTS.md restores its exact-head review, fix and fresh re-review gate.
+Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix.
 
 ## Prove the actual mobile behavior
 
@@ -56,8 +56,6 @@ Long/autonomous work keeps the pinned append-only TSV trail, ownership start row
 Helpers live alongside their owning canonical skills. Inspect local runtime/cache/authority first. Bun bootstrap may install packages; do not run it without installation scope. Missing cloud, loop, forge or model capability blocks dependent work. Shipping does not gain merge authority from green tests.
 
 For planning and cleanup, use the [installed host commands](../plugin/adapters/host-tools.md). Save the approved payload binding when authoring a program. Fill and translate bundled plan operands, validate with `plan-check`, and reread workflows through that binding at every required tick. Payload/adapter drift blocks the program; consumer-owned files still come from consumer trunk. The native worktree audit takes an explicit authorized source manifest and local PR snapshot. Incomplete activity coverage holds candidates. The separate active/pinned-chat gate remains required before any prune decision; the helper never deletes or discovers private transcript directories.
-
-Opening a PR retains ready-PR and stack/base mechanics. Prepare local commits/body when authorized; push/publication/merge/release need separate scope. Do not replace a blocked ready gate with a draft fallback.
 
 ## Change and validate the plugin
 

@@ -69,6 +69,13 @@ class ContextDisclosure(unittest.TestCase):
                 self.assertEqual(destination_text.count(row['replacement']), 1)
                 self.assertEqual(destination_text.count(fragment), 0)
                 replaced.append(fragment)
+            elif disposition == 'removed':
+                # An intentional deletion: the receipt pins the original fragment's hash and the
+                # reason, and the destination no longer carries it.
+                self.assertTrue(row.get('reason'), 'a removed fragment needs a reason')
+                self.assertNotIn('replacement', row)
+                self.assertEqual(destination_text.count(fragment), 0)
+                replaced.append(fragment)
             else:
                 self.fail('unknown disposition: ' + disposition)
             restored.setdefault(row['paragraph'], []).append(fragment)
@@ -104,7 +111,7 @@ class ContextDisclosure(unittest.TestCase):
 
     def adapter_texts(self):
         return {p: (ROOT / p).read_text() for p in
-                [*check_core.ADAPTERS, *check_core.ADAPTER_RESOURCES, check_core.PROJECT_POLICY]}
+                [*check_core.ADAPTERS, *check_core.ADAPTER_RESOURCES]}
 
     def test_each_phase_reference_is_a_required_prerequisite(self):
         original = self.adapter_texts()

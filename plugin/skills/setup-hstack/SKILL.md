@@ -1,6 +1,6 @@
 ---
 name: setup-hstack
-description: Configure hStack's model and reasoning budget per role. Use when setting up hStack, changing which models it uses, or preparing Claude auto-mode stack permissions.
+description: Configure hStack's model and reasoning budget per role. Use when setting up hStack or changing which models it uses.
 ---
 
 ## Host invocation contract
@@ -11,7 +11,7 @@ The host contract governs how this skill reaches any sibling dependency.
 
 # Setup pstack
 
-Write `.hstack/models.md` at the project root: the model-role file every pstack skill reads before it picks a worker's model. For a request only about Claude stack permissions, follow step 8 without rewriting model roles.
+Write `.hstack/models.md` at the project root: the model-role file every pstack skill reads before it picks a worker's model.
 
 ## Role values
 
@@ -102,7 +102,3 @@ For a non-mobile project, an existing harness remains sufficient. Offer generati
 On acceptance, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. Report a generated but unproved recipe as a draft with its blocker. Before later mobile proof, invoke the project recipe through the host's native mechanism; writing the file does not establish discovery or permission.
 
 For a manual handoff, show `/hstack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the active host's discovered entry. End by reporting model setup and verification readiness separately, including any held proof.
-
-### 8. Prepare Claude stack permissions (when needed)
-
-For Claude Code auto-mode `autopilot-stack` work, read [Claude stack permissions](../../adapters/claude-stack-permissions.md) in full. Propose the concrete repository and child-branch scope, show the settings change, and apply it only under the operator's authorization for that settings change. Preserve all current settings and native controls. Complete its effective-configuration check and record the scope before unattended topology writes. Reuse that approval within the recorded scope; a new scope needs a new ruling. Skip this step for model-only requests and other hosts.

@@ -86,8 +86,7 @@ tool, model or execution authority stays visible as a gap.
 Ask for investigation, design, review, a plan or a specific implementation result.
 Give the consumer path/revision, scope and expected observable outcome. Mode
 routing preserves intent before mobile domain. Specific skills remain directly
-available through their native names. Generic review retains its own model panel;
-this repository's Astra PR policy is not imposed on your app.
+available through their native names. Generic review retains its own model panel.
 
 ## Pause and resume
 

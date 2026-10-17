@@ -88,10 +88,7 @@ stop and report it to the owner.
 
 Pushing, opening a PR, merging and releasing each need the owner's go-ahead for
 the current task. An operator's autopilot grant is that go-ahead for the run's
-PRs, within the playbook's gates. The [Astra High review policy](plugin/policies/astra-pr-review.md)
-is suspended for this repository: PR-bound changes need no Astra review until the
-owner re-activates it here. Installing the plugin never imposes it on consumer
-projects.
+PRs, within the playbook's gates.
 
 ## Agent skills
 
