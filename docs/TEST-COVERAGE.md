@@ -17,7 +17,7 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,980 cases (330 `read-workflow`, 1,596 `translate-plan` and 54 in-plan cases) over all 54 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
-| Current approved requirements/proof | 46 | test_program_proof; installed JSON checks, artifact/build identities, safe design decoding, workflow reach, macOS process write isolation and the withdrawn payload-protection verbs |
+| Current approved requirements/proof | 46 | test_program_proof; installed JSON checks, artifact/build identities, safe design decoding, workflow reach, macOS process write isolation and rejection of the two withdrawn host-tool verbs |
 | Current program scheduling/recovery | 38 | test_program_control; installed policy gates, whole-group dispatch, saved progress, usage coverage, process groups, device receipts, concurrent writers and runtime waiting |
 | Current mobile coverage | 19 | test_mobile_coverage; installed risk coverage, exemptions, profile/default compatibility, operator rulings and integrity drift; synthetic plan fixtures, no native/mobile behavior claim |
 | Total collected | 541 | Current, mixed and historical scopes remain distinct |
@@ -145,8 +145,8 @@ receipts without triggering approval. Ruling authentication and owner write isol
 requirements; these synthetic Git fixtures do not prove either in a live host.
 
 Issue #36 and its review fixes add eight payload-policy and evidence-parser cases, bringing the total
-to 439. Its [opt-in native regression](../tests/payload-boundary.md) runs separately;
-the [observed receipt](payload-protection-proof.md) distinguishes native probe
+to 439. Its [opt-in native regression](https://github.com/hugues-vnsgn/hstack/blob/v0.4.0/tests/payload-boundary.md) runs separately;
+the [observed receipt](https://github.com/hugues-vnsgn/hstack/blob/v0.4.0/docs/payload-protection-proof.md) distinguishes native probe
 results from unobserved writers and full-program execution.
 
 The PR 54 retrospective adds two runner CLI cases, bringing the current total to
@@ -203,7 +203,7 @@ and Claude permission-mode ambiguity. The invalid-domain matrix also rejects
 wildcards, ports, malformed labels and non-ASCII names. Legacy consumer/evidence
 behavior remains covered. These remain source/CLI checks.
 Native mobile observations and remaining gaps are recorded in the
-[issue 53 receipt](mobile-payload-proof.md).
+[issue 53 receipt](https://github.com/hugues-vnsgn/hstack/blob/262397d513bc69545fb1cc27535860aa8202e516/docs/mobile-payload-proof.md).
 
 The issue-28 candidate adds 38 installed-command cases. These observe
 local process groups, kernel locks and blocking command waits with synthetic
@@ -215,7 +215,7 @@ integration cases. Matrix
 subtests are not added to this total. Real host/mobile trials remain deferred.
 
 On 2026-10-17, issue #77 withdraws payload protection. The fourteen
-payload-policy cases go with the `payload-policy` and `helper-ready` verbs they
+policy-fragment and helper-readiness cases go with the two host-tool verbs they
 covered, and one installed-command case checks that the bound CLI now rejects
 both as unknown verbs. The two runner CLI cases go with the native
 payload-boundary regression script they checked, bringing the current total to
