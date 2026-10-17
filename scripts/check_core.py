@@ -127,7 +127,7 @@ PHASE_GUIDANCE = {
     'host-workflow-tools.md': 'Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations',
     'host-special-skills.md': 'Transcript-dependent skills, optional integrations or consumer skill placement',
     'host-typescript.md': 'Reading or editing TypeScript files',
-    'host-publication.md': 'Skill authoring, commits, review, PR preparation/publication or missing control/writing capability reports',
+    'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
 ADAPTER_RESOURCES = ['plugin/adapters/' + name for name in PHASE_GUIDANCE] + ['plugin/adapters/mobile-workflows.md']
 PROJECT_POLICY = 'plugin/policies/astra-pr-review.md'

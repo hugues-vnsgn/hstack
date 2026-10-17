@@ -203,7 +203,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/06-verify-and-ship.md",
       "disposition": "canonical",
-      "destination_sha256": "09d41e765410d47fca07486c1818c1a163c47c35cc54b008a7996c6158074518"
+      "destination_sha256": "6fe948ce3c16520cdb966c455682b5ba6c086f0c99688af048e789a9bd7ffff7"
     },
     {
       "source": "pstack/docs/guide/07-overnight.md",
@@ -779,7 +779,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b"
+      "destination_sha256": "e4e1079b2decc164f01809d5bfb02752539c370f519c0d6346a2b3229c2e96e5"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
@@ -843,7 +843,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b"
+      "destination_sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
@@ -851,7 +851,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
       "disposition": "canonical",
-      "destination_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9"
+      "destination_sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
@@ -859,7 +859,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2"
+      "destination_sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
@@ -867,7 +867,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts",
       "disposition": "canonical",
-      "destination_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb"
+      "destination_sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/render.ts",
@@ -899,7 +899,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/types.ts",
       "disposition": "canonical",
-      "destination_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59"
+      "destination_sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/watch-pr",
@@ -1599,7 +1599,7 @@
       "mode": 420
     },
     "adapters/host-publication.md": {
-      "sha256": "3ac13c1c0b6f7f4e5f7a5462c083b80e294325ec2ce0009d182258e5ff6fc739",
+      "sha256": "fe480ee1b16407d24a7367a656dde06a89e6935fe030323c3be683c0394d6ccb",
       "mode": 420
     },
     "adapters/host-special-skills.md": {
@@ -1623,11 +1623,11 @@
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "f2ef98960ba73eee2293f26ddf4258eee1af768498172adc8934682817e6bb80",
+      "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "496652fde4a70d60f94c1f16e07051b66ea9869e0dd08dbfe2117b59ea2cd471",
+      "sha256": "14f6bdc8c680d599730fef091639a60161dac7b24c11098d425c3d406c3dece7",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1667,11 +1667,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "be9951c8609567c6f678ef6c7e5548c1039e0cfa9a7c0bad9490c4b2f145d56b",
+      "sha256": "d8c48fa8041fa1c74fcadc92dcaad36b3f7d0cf3d98f48148123e8da896e2e35",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "6906fb88bfef6ab9bd3dc55e90c61149fa766911eeb8fd2290164d5d2869569b",
+      "sha256": "478f699e6b78628a36cb60883143ab2d4eb704e737adb9fd3fa9022689023018",
       "mode": 420
     },
     "adapters/runtime/program.py": {
@@ -2003,7 +2003,7 @@
       "mode": 493
     },
     "skills/hugues-mode/scripts/check-plan.test.ts": {
-      "sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
+      "sha256": "e4e1079b2decc164f01809d5bfb02752539c370f519c0d6346a2b3229c2e96e5",
       "mode": 420
     },
     "skills/hugues-mode/scripts/compare-plan.py": {
@@ -2043,19 +2043,19 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/github.test.ts": {
-      "sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
+      "sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/github.ts": {
-      "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+      "sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/policy.test.ts": {
-      "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
+      "sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/policy.ts": {
-      "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
+      "sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/render.ts": {
@@ -2071,7 +2071,7 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/types.ts": {
-      "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
+      "sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/watch-pr": {

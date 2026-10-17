@@ -36,9 +36,9 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (55 after disclosure) | 3,940.25 | 3,700 | 3,716.75 | 14,803 → 14,868 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,544.75 | 45,289 → 34,219 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,493.25 | 135,888 → 126,043 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,476.75 | 146,269 → 137,977 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,552.5 | 45,289 → 34,250 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,700.75 | 135,888 → 126,873 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,684.25 | 146,269 → 138,807 |
 
 The approved-proof candidate adds deferred new-program references separately
 from those pinned scenarios. The guide is 7,636 bytes; constructing records also
@@ -188,11 +188,13 @@ adapters, playbooks and bundled skills as files. It measured no tokens.
 
 The [helper input receipt](HELPER-INPUTS.json) records all 20 original mode-helper
 files. Nineteen remain installed; the legacy history-scanning audit is preserved
-only as provenance. Eighteen remain byte-identical to upstream. The Node plan
+only as provenance. Thirteen remain byte-identical to upstream: the review-bot
+change (issue 34) adapted five watch-pr files, `github.ts`, `policy.ts`, `types.ts`
+and two tests. The Node plan
 validator now accepts bound workflow reads and the approved mobile-risk profile;
 current installed Python/Node tests exercise both. Its reviewed digest is recorded
-in the helper receipt. The Bun/TypeScript helpers and dependency files did not change
-bytes. Their disclosure-pass runtime validation did not run because the harmless
+in the helper receipt. Apart from those five files, the Bun/TypeScript helpers and
+dependency files did not change bytes. Their disclosure-pass runtime validation did not run because the harmless
 offline sandbox preflight returned `EPERM`. The later review-fix pass ran it on a
 scratch install of the candidate: Bun 1.4.2 installed the locked dependencies
 through the session proxy, 52 of 52 `bun test orch watch-pr` cases passed and

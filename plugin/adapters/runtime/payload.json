@@ -156,7 +156,7 @@
     },
     {
       "path": "adapters/host-publication.md",
-      "sha256": "3ac13c1c0b6f7f4e5f7a5462c083b80e294325ec2ce0009d182258e5ff6fc739",
+      "sha256": "fe480ee1b16407d24a7367a656dde06a89e6935fe030323c3be683c0394d6ccb",
       "mode": "100644"
     },
     {
@@ -186,7 +186,7 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "f2ef98960ba73eee2293f26ddf4258eee1af768498172adc8934682817e6bb80",
+      "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310",
       "mode": "100644"
     },
     {
@@ -646,7 +646,7 @@
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.test.ts",
-      "sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
+      "sha256": "e4e1079b2decc164f01809d5bfb02752539c370f519c0d6346a2b3229c2e96e5",
       "mode": "100644"
     },
     {
@@ -696,22 +696,22 @@
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/github.test.ts",
-      "sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
+      "sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/github.ts",
-      "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+      "sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/policy.test.ts",
-      "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
+      "sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/policy.ts",
-      "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
+      "sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371",
       "mode": "100644"
     },
     {
@@ -731,7 +731,7 @@
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/types.ts",
-      "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
+      "sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8",
       "mode": "100644"
     },
     {

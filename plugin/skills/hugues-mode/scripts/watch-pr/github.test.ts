@@ -291,11 +291,116 @@ it("annotates Bugbot threads with distinct review-pass counts", () => {
   expect(threads.map((thread) => thread.bugbotReviewPasses)).toEqual([3, 3]);
 });
 
+describe("review bots other than Cursor Bugbot", () => {
+  // GraphQL reports an app login without REST's "[bot]" suffix and names the
+  // actor type, which is how a Bot is told from a human with the same login.
+  const threadsFor = (
+    authors: readonly { login: string; type?: string }[]
+  ) =>
+    buildReviewThreads(
+      parseReviewThreadPage({
+        data: {
+          repository: {
+            pullRequest: {
+              reviewThreads: {
+                pageInfo: { hasNextPage: false, endCursor: null },
+                nodes: authors.map((author, index) => ({
+                  id: `thread-${index}`,
+                  isResolved: false,
+                  comments: {
+                    nodes: [
+                      {
+                        body: "This can crash when the list is empty.",
+                        createdAt: "now",
+                        path: "a.ts",
+                        line: 1,
+                        author: {
+                          login: author.login,
+                          ...(author.type === undefined
+                            ? {}
+                            : { __typename: author.type }),
+                        },
+                      },
+                    ],
+                  },
+                })),
+              },
+            },
+          },
+        },
+      }).threads
+    );
+
+  it("treats a Claude review thread as a Bugbot thread and counts its pass", () => {
+    const threads = threadsFor([{ login: "claude", type: "Bot" }]);
+    expect(threads.map((thread) => thread.isBugbot)).toEqual([true]);
+    expect(threads.map((thread) => thread.bugbotReviewPasses)).toEqual([1]);
+  });
+
+  it("treats a Codex review thread as a Bugbot thread and counts its pass", () => {
+    const threads = threadsFor([
+      { login: "chatgpt-codex-connector", type: "Bot" },
+    ]);
+    expect(threads.map((thread) => thread.isBugbot)).toEqual([true]);
+    expect(threads.map((thread) => thread.bugbotReviewPasses)).toEqual([1]);
+  });
+
+  it("also takes the REST form of the login, with the [bot] suffix", () => {
+    const threads = threadsFor([
+      { login: "claude[bot]" },
+      { login: "chatgpt-codex-connector[bot]" },
+    ]);
+    expect(threads.map((thread) => thread.isBugbot)).toEqual([true, true]);
+  });
+
+  it("counts one pass across Claude and Codex threads that carry no run id", () => {
+    const threads = threadsFor([
+      { login: "claude", type: "Bot" },
+      { login: "chatgpt-codex-connector", type: "Bot" },
+      { login: "claude", type: "Bot" },
+    ]);
+    expect(threads.map((thread) => thread.bugbotReviewPasses)).toEqual([
+      1, 1, 1,
+    ]);
+  });
+
+  it("does not take a human whose login only looks like a review bot", () => {
+    const threads = threadsFor([
+      { login: "claudette", type: "User" },
+      { login: "claude-fan", type: "User" },
+      { login: "claude", type: "User" },
+      { login: "claude" },
+      { login: "chatgpt-codex-connector", type: "User" },
+      { login: "not-claude[bot]", type: "Bot" },
+    ]);
+    expect(threads.map((thread) => thread.isBugbot)).toEqual([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    expect(threads.map((thread) => thread.bugbotReviewPasses)).toEqual([
+      0, 0, 0, 0, 0, 0,
+    ]);
+  });
+
+  it("keeps recognising Cursor Bugbot beside the other bots", () => {
+    const threads = threadsFor([
+      { login: "bugbot", type: "Bot" },
+      { login: "claude", type: "Bot" },
+    ]);
+    expect(threads.map((thread) => thread.isBugbot)).toEqual([true, true]);
+  });
+});
+
 describe("review thread pagination", () => {
   const thread = (id: string, resolved = false) => ({
     id,
     firstComment: {
       authorLogin: "someone",
+      authorType: "User",
       body: "please fix",
       path: "a.ts",
       line: 1,
@@ -345,6 +450,7 @@ describe("review thread pagination", () => {
       id,
       firstComment: {
         authorLogin: "bugbot",
+        authorType: "Bot",
         body: `RUN_ID: ${runId}`,
         path: "a.ts",
         line: 1,

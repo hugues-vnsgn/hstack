@@ -19,6 +19,7 @@ import {
   pendingCheck,
 } from "./fakes.test-helper.ts";
 import type {
+  Check,
   GitHubReader,
   NonEmpty,
   PollingOptions,
@@ -148,6 +149,38 @@ describe("snapshot query planning", () => {
       ).kind
     ).toBe("merged");
     expect(reader.calls).toEqual(["pullRequest"]);
+  });
+});
+
+describe("review automation still running", () => {
+  const runningFor = async (checks: NonEmpty<Check>) => {
+    const snapshot = await readSnapshot({
+      reader: fakeReader({ fastPath: { kind: "checks", checks } }),
+      context: context(5),
+      pendingHistory: "omit",
+      allowDraft: false,
+    });
+    if (snapshot.kind !== "open") throw new Error("expected open snapshot");
+    return snapshot.reviewAutomationRunning;
+  };
+
+  it("sees a pending Cursor Bugbot check", async () => {
+    expect(await runningFor([pendingCheck("Cursor Bugbot")])).toBe(true);
+  });
+
+  it("sees a pending Claude Code Review check run", async () => {
+    expect(await runningFor([pendingCheck("Claude Code Review")])).toBe(true);
+  });
+
+  it("sees the pending job of the Claude GitHub Action review workflow", async () => {
+    expect(await runningFor([pendingCheck("claude-review")])).toBe(true);
+  });
+
+  it("ignores ordinary pending checks and finished review checks", async () => {
+    expect(await runningFor([pendingCheck("build-test")])).toBe(false);
+    expect(
+      await runningFor([passingCheck("Claude Code Review"), pendingCheck()])
+    ).toBe(false);
   });
 });
 
