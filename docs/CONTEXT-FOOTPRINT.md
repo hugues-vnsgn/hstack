@@ -36,11 +36,11 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (54 after disclosure) | 3,940.25 | 3,700 | 3,677 | 14,803 → 14,709 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,528.25 | 45,289 → 34,153 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,141 | 135,888 → 124,632 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,124.5 | 146,269 → 136,566 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,381.25 | 45,289 → 33,565 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 30,994 | 135,888 → 124,044 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 33,977.5 | 146,269 → 135,978 |
 
-The routing inventory falls about 24.6% from the previous native candidate.
+The routing inventory falls about 25.9% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
 verification and publication instructions still apply. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -79,7 +79,10 @@ bytes, including its 19,769-byte body, about 2,845 words; it was 20,961
 bytes and about 3,023 words before the rewrite. The rewrite drops the four
 Cursor-only frontmatter fields, moves the model-defaults paragraph into
 [the worker reference](../plugin/adapters/host-workers.md#model-defaults-and-role-labels)
-and adds the four mobile routes to the Playbooks list. Only `hugues-mode` and
+and adds the four mobile routes to the Playbooks list. Issue #83 then puts
+pstack's own wording back in every rule the rewrite had restated, keeping the
+renames, the host translation and the mobile routes, which leaves the mode file
+at 19,296 bytes. Only `hugues-mode` and
 `setup-hstack` are model-invocable now, so only their 352 characters of
 description (236 for the router, 116 for setup) enter startup context on Claude Code (362
 before the rename shortened the setup description); the
@@ -114,14 +117,15 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,716 bytes,
-about 6,419.5 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 25,128 bytes,
+about 6,272.5 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
 adapter. The router rewrite and its fix round take 752 bytes back, which leaves it 8
 bytes under `main`. Later adapter edits, including the shorter host-adapter
-wording, leave it 264 bytes under that baseline. The fix round restored the scope words the rewrite had
+wording, left it 264 bytes under that baseline, and restoring pstack's router
+wording (#83) leaves it 852 bytes under. The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes

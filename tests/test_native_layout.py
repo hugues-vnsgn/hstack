@@ -410,11 +410,15 @@ class NativeIntegrity(unittest.TestCase):
         sibling.write_text(sibling.read_text().replace('Principles section', 'principles list'))
         self.assertTrue(any('no longer says' in e for e in check_core.router_section_errors(self.root)))
         sibling.write_text(sibling.read_text().replace('principles list', 'Principles section'))
-        entry = '(**principle-prove-it-works**).'
-        self.assertIn(entry, text)
-        router.write_text(text.replace(entry, '(**principle-prove-it-works**)'))
-        self.assertEqual(check_core.router_section_errors(self.root),
-                         ['router Principles index lacks a trigger entry for principle-prove-it-works'])
+        # pstack's naming rule: the bold title in kebab case names the leaf, unless the entry
+        # gives the name itself.
+        for entry, broken, skill in [('- **Prove It Works.** ', '- **Prove It Works** ', 'principle-prove-it-works'),
+                                     ('(**principle-sequence-verifiable-units**). ', '(**principle-sequence-verifiable-units**) ',
+                                      'principle-sequence-verifiable-units')]:
+            self.assertIn(entry, text)
+            router.write_text(text.replace(entry, broken))
+            self.assertEqual(check_core.router_section_errors(self.root),
+                             ['router Principles index lacks a trigger entry for ' + skill])
 
     def test_dead_cursor_frontmatter_fields_fail_the_plugin_check(self):
         path = self.root / check_core.ROUTER
@@ -500,20 +504,6 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn('select\nthe core action playbook', adapter)
         self.assertIn('Build/toolchain diagnosis uses [build-doctor]', adapter)
 
-    def test_autonomy_owns_the_grant_policy_and_the_trigger_points_to_it(self):
-        autonomy = check_core.section(self.text, 'Autonomy')
-        for phrase in ['**Full-autonomy grant.**', 'act, and report it', 'apply a default',
-                       'a full explanation', 'in plain words', 'shorthand reply token',
-                       'Gates the operator named and the Always-pause list still need the operator']:
-            self.assertIn(phrase, autonomy)
-        trigger = self.bullet(self.text, '- About to `AskUserQuestion`')
-        for phrase in ['classify it before you ask', 'Prototype playbook', 'read-only Investigation',
-                       'cited answer', 'genuine product or preference call']:
-            self.assertIn(phrase, trigger)
-        self.assertTrue(trigger.endswith('follow the grant policy in Autonomy.'))
-        for moved in ['operator', 'shorthand', 'default']:
-            self.assertNotIn(moved, trigger)
-
     def test_model_defaults_have_one_home_and_setup_reads_its_labels_there(self):
         link = '(../../adapters/host-workers.md#model-defaults-and-role-labels)'
         subagents = check_core.section(self.text, 'Subagents')
@@ -534,19 +524,6 @@ class HuguesModeRouter(unittest.TestCase):
         setup = (ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text()
         self.assertIn(link, setup)
         self.assertNotIn('the same labels hugues-mode uses', setup)
-
-    def test_rewrites_keep_the_scope_of_the_obligations_they_restate(self):
-        # Each phrase is a scope word a positive rewrite once dropped: it narrows an obligation
-        # to its only case, or widens a style rule to every place text appears.
-        trigger = self.bullet(self.text, '- About to `AskUserQuestion`')
-        self.assertIn('answers from the evidence rather than building a sketch', trigger)
-        shipping = self.bullet(self.text, '- Asked to land or ship a green stack')
-        self.assertIn('Arm a PR only after its independent per-PR verdict', shipping)
-        self.assertIn('land only the contiguous verified run from the root', shipping)
-        controls = self.bullet(self.text, '- Shipping UI / IDE / CLI')
-        self.assertIn('hand to the user only when the narrow Bug fix step 1 exception applies', controls)
-        reply = check_core.section(self.text, 'Writing the reply')
-        self.assertIn('**Join thoughts with periods, commas and parentheses anywhere.**', reply)
 
     def test_hugues_agent_registered_name_and_question_tool_have_a_host_home(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()

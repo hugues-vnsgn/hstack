@@ -555,7 +555,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9"
+      "destination_sha256": "4f12659c54a4f415eb045a144ed7ef569af90c18c25c3ac2bc8669928b89e409"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -1603,7 +1603,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "7cf6cc5de41baabb643656655eb3e6dc7bf43aa7ce47afa7d679d1cc7dc02d28",
+      "sha256": "a0c2541ec38e7684a051ec69c7b070f596ab7e3d9fd0eb1c6c2044f066499fea",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1627,11 +1627,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "05a0e50a290df0bdadc91cc2b3d66a85d51b9f012d97d1aaa47c35f4bb26b5b7",
+      "sha256": "423a874909a3408b8c45ff07feb09661afe92ab17ae516a0e2fd33e063642001",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "3e7997523d4a27b370d5eed879c994bad49fe8b497995086c0506ad7af7e4ba2",
+      "sha256": "4b10534f4275a4ab03de620d8ebb876e59a7b6f964c1a56e8c180ee515f9c276",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1775,7 +1775,7 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "4c213057bb5c5b790f544bda1084d654eb7703a0f8f913b5c96bfc49341ae0b9",
+      "sha256": "4f12659c54a4f415eb045a144ed7ef569af90c18c25c3ac2bc8669928b89e409",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {

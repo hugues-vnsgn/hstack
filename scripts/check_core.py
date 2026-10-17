@@ -406,11 +406,21 @@ def router_section_errors(root):
             errors.append(path + ' no longer says "' + words + '"; update ROUTER_SECTION_POINTERS')
         elif name not in headings:
             errors.append(path + ' points at router section "' + name + '", which is missing')
-    index = section(router, 'Principles')
+    named = principle_entry_names(section(router, 'Principles'))
     for skill in sorted(p.name for p in (root / 'plugin/skills').glob('principle-*')):
-        if not re.search(r'\(\*\*' + re.escape(skill) + r'\*\*\)\. \S', index):
+        if skill not in named:
             errors.append('router Principles index lacks a trigger entry for ' + skill)
     return errors
+
+
+def principle_entry_names(index):
+    """pstack's naming rule: an entry's leaf is **principle-<title>**, the bold title in kebab
+    case with hyphens kept and other punctuation dropped, unless the entry gives its name."""
+    names = set()
+    for title, given in re.findall(r'^- \*\*([^*]+?)(?:\.\*\*|\*\* \(\*\*(principle-[a-z0-9-]+)\*\*\)\.) \S',
+                                   index, re.M):
+        names.add(given or 'principle-' + re.sub(r'[^a-z0-9 -]', '', title.lower()).replace(' ', '-'))
+    return names
 
 
 def current_document_errors(texts):
