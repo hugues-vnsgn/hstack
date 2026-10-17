@@ -19,8 +19,8 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "c9ad0c22fb484ea785e1403e0bacf23ed8ff44d9db695094bb1f5e3875630c0a",
-    "program.py": "8a427f9ffa18ca8580065850626082c34ba3846b36b84931498c1dc5ed8302b9",
+    "payload.py": "898dab5c3b2961079a9731cdd16bdce80b86a72e72e063a6b92d017a9a9e426c",
+    "program.py": "fe293361d4d5937e9d6246dce476645e1eb8fdde250f64ad0dc33eca3a1ebab9",
     "control.py": "4e116997864db964c1d5007a8bd9d06d63a9b18457e269abcd7403c279347563"
 }
 
@@ -170,7 +170,7 @@ def main(argv=None):
             print(json.dumps(result, indent=2))
             return 0 if result['ready'] else 2
         elif args.verb == 'worker-run':
-            return program.worker(root, args.binding, args.approved, args.approval_sha256,
+            return program.worker(args.approved, args.approval_sha256,
                                   args.writable, args.cwd, args.command, args.protect)
         elif args.verb == 'artifact-hash':
             print(json.dumps({'sha256': program.fingerprint(args.path)}))

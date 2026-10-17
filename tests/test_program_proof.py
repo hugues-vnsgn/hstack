@@ -491,23 +491,34 @@ class ProgramProof(InstalledFixture, unittest.TestCase):
                             '--', sys.executable, '-c', 'from pathlib import Path; Path("allowed.txt").write_text("ok")')
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(output.read_text(), 'ok')
-        for protected in (self.approved, self.plugin / 'adapters/host.md', self.binding):
-            with self.subTest(protected=protected):
-                before = protected.read_bytes()
-                result = self.bound('worker-run', '--approved', self.approved,
-                                    '--approval-sha256', self.approval_digest,
-                                    '--writable', self.consumer, '--cwd', self.consumer,
-                                    '--', sys.executable, '-c',
-                                    'import sys; from pathlib import Path; Path(sys.argv[1]).write_text("tampered")', protected)
-                self.assertNotEqual(result.returncode, 0)
-                self.assertEqual(protected.read_bytes(), before)
-
-    def test_worker_rejects_overlapping_writable_scope_before_execution(self):
+        before = self.approved.read_bytes()
         result = self.bound('worker-run', '--approved', self.approved,
                             '--approval-sha256', self.approval_digest,
-                            '--writable', self.area, '--cwd', self.consumer,
-                            '--', sys.executable, '-c', 'raise SystemExit(0)')
-        self.assertEqual(result.returncode, 2)
+                            '--writable', self.consumer, '--cwd', self.consumer,
+                            '--', sys.executable, '-c',
+                            'import sys; from pathlib import Path; Path(sys.argv[1]).write_text("tampered")', self.approved)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.approved.read_bytes(), before)
+
+    def test_worker_scope_may_cover_the_installed_plugin_but_not_the_control_directory(self):
+        with self.subTest(scope='owner control directory'):
+            before = self.approved.read_bytes()
+            result = self.bound('worker-run', '--approved', self.approved,
+                                '--approval-sha256', self.approval_digest,
+                                '--writable', self.control, '--cwd', self.control,
+                                '--', sys.executable, '-c', 'raise SystemExit(0)')
+            self.assertEqual(result.returncode, 2)
+            self.assertEqual(self.approved.read_bytes(), before)
+        with self.subTest(scope='installed plugin root'):
+            if not (sys.platform == 'darwin' and shutil.which('sandbox-exec')):
+                self.skipTest('macOS isolation unavailable')
+            result = self.bound('worker-run', '--approved', self.approved,
+                                '--approval-sha256', self.approval_digest,
+                                '--writable', self.plugin, '--cwd', self.plugin,
+                                '--', sys.executable, '-c',
+                                'from pathlib import Path; Path("worker-note.txt").write_text("ok")')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual((self.plugin / 'worker-note.txt').read_text(), 'ok')
 
     def test_worker_invalid_roots_directory_or_command_never_launches(self):
         cases = [(self.build, self.consumer, [sys.executable, '-c', 'raise SystemExit(0)']),

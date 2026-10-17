@@ -493,9 +493,9 @@ def hold(approved_path, record_path, state_path, problem):
     return result
 
 
-def worker(root, binding, approved_path, approval_digest, writable, cwd, command, protected):
+def worker(approved_path, approval_digest, writable, cwd, command, protected):
     approved_record(approved_path, approval_digest)
-    blocked = [root.resolve(), Path(approved_path).parent.resolve(), binding.resolve()]
+    blocked = [Path(approved_path).parent.resolve()]
     blocked.extend(Path(p).resolve(strict=True) for p in protected)
     for path in blocked:
         entries = path.rglob('*') if path.is_dir() else [path]
@@ -508,7 +508,7 @@ def worker(root, binding, approved_path, approval_digest, writable, cwd, command
     if any(p.is_file() and p.stat().st_nlink != 1 for scope in scopes for p in scope.rglob('*')):
         raise ValueError('hardlinked writable file may alias an out-of-scope path')
     if any(p.is_relative_to(b) or b.is_relative_to(p) for p in scopes for b in blocked):
-        raise ValueError('writable scope overlaps protected program/plugin path')
+        raise ValueError('writable scope overlaps protected program path')
     if not any(directory.is_relative_to(p) for p in scopes):
         raise ValueError('working directory is outside writable scope')
     argv = list(command)
