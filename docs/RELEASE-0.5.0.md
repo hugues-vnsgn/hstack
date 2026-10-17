@@ -6,7 +6,7 @@
 
 If you applied a `payload-policy` fragment, either the Claude Code permissions and sandbox entries or the `hstack-program` Codex permission profile, it is no longer needed and you can remove it by hand; hStack changes nothing on your machine.
 
-- **Approved proof, `worker-run` and program control are removed** ([#80](https://github.com/hugues-vnsgn/hstack/issues/80)). The `program-check`, `artifact-hash`, `decode-design`, `worker-run`, `run-control` and `run-wait` verbs and their guides are gone, device reservations included; pstack 0.15.25 has none of them.
+- **Approved proof, `worker-run` and program control are removed** ([#80](https://github.com/hugues-vnsgn/hstack/issues/80)). The `program-check`, `artifact-hash`, `decode-design`, `worker-run`, `run-control` and `run-wait` verbs and their guides are gone. Program control takes its fan-out limits (by default one PR owner and one arena or review group at a time), its pickup of interrupted work from saved checkpoints and its device reservations with it; pstack 0.15.25 has none of them.
 
 - **Risk-based mobile coverage is removed** ([#81](https://github.com/hugues-vnsgn/hstack/issues/81)). Plans return to pstack 0.15.25's fixed "Ten lanes on `<model>` at the PR head" rule, and `plan-check` ignores a `verification_profile` field. A plan written with risk-based lanes fails `plan-check` until its live block has the ten-lane heading and ten lanes.
 
