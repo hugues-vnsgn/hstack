@@ -5,14 +5,6 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For a new consumer program, apply [program proof](../../../adapters/program-proof.md)
-before owner dispatch and at the existing round verification step. The root
-runs `program-check` against the protected approved baseline and complete
-decision/finding state before accepting STACK-READY or appending a clean link.
-Enforce application write scopes and protect the accepted proof. A worker's
-revised plan cannot replace the approved checklist. Keep the phase order and all
-gates below.
-
 For an explicitly approved mobile program, apply
 [mobile coverage](../references/mobile-coverage.md) before verification dispatch.
 Use its selected checks and applicability; preserve this playbook's phase timing,
@@ -26,10 +18,6 @@ bound `read-workflow`. Record the approved repository/child branches, operator
 authorization and effective configuration in the program evidence. Reuse
 authorization within that scope; hold an unresolved or expanded scope. Other hosts
 keep their native permission controls.
-
-For a new program, the controller applies [program control](../../../adapters/program-control.md)
-before every owner/helper/group dispatch and on pickup. Its approved scheduling
-limits override parallel-owner defaults; preserve complete required groups.
 
 **You own the stack, never the landing. Hand the operator one linear stack of base-chained PRs to review and land.** **Autopilot-full** holds except for how verified work leaves. Each tick re-reads both playbooks from trunk (`git show origin/main:skills/hugues-mode/playbooks/autopilot-full.md` and `git show origin/main:skills/hugues-mode/playbooks/autopilot-stack.md`), and this one wins where they differ.
 

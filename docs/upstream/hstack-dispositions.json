@@ -1899,8 +1899,8 @@
       "blob_sha": "4ccb24d76c5e190125cecc99d4a9b5c9eb2932d9",
       "size": 17127,
       "sha256": "08dce6c9e7be1d13bc6944ab9b51665f935c531437f5e088bc53d2a62099ef05",
-      "disposition": "port with adaptation",
-      "reason": "Issue #28 owner-approved controller scheduling and durable pickup/device-restoration pointer; preserve every upstream phase and gate. Exact source bytes remain in provenance/upstream.",
+      "disposition": "port verbatim",
+      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/orchestrate.md"
@@ -1927,8 +1927,8 @@
       "blob_sha": "9d1c5f8303976fff40de099f7f28185909430c11",
       "size": 1135,
       "sha256": "77968cfe5f4a71a8cd33e0ae8ffcdbd88dd693a212c240457773e6c40c96c21d",
-      "disposition": "port with adaptation",
-      "reason": "Issue #28 owner-approved controller scheduling and durable pickup/device-restoration pointer; preserve every upstream phase and gate. Exact source bytes remain in provenance/upstream.",
+      "disposition": "port verbatim",
+      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/pause-safely.md"
@@ -2049,8 +2049,8 @@
       "blob_sha": "876b1433828ccc7c874123cdf300240abb285dd9",
       "size": 1782,
       "sha256": "d194f2a7ef392c1598ef3f0e3b561370ca25c2c7a78308007af4aa46ada8ee12",
-      "disposition": "port with adaptation",
-      "reason": "Issue #28 owner-approved controller scheduling and durable pickup/device-restoration pointer; preserve every upstream phase and gate. Exact source bytes remain in provenance/upstream.",
+      "disposition": "port verbatim",
+      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/session-pickup.md"

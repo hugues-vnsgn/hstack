@@ -75,7 +75,3 @@ _Avoid_: Upgrade, resync
 **PR owner**:
 The agent responsible for a PR's change throughout its assigned workflow. Reviewers and helper workers are separate participants.
 _Avoid_: Builder when referring to every code-writing participant
-
-**Program usage budget**:
-The owner-approved limits on usage and active agents across an hStack program, including its coordinator, PR owners, reviewers and nested helpers. It is distinct from the host's remaining subscription allowance and model reasoning-effort presets.
-_Avoid_: Remaining allowance, model effort budget

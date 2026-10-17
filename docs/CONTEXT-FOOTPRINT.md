@@ -36,17 +36,9 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (54 after disclosure) | 3,940.25 | 3,700 | 3,688.75 | 14,803 → 14,756 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,552.75 | 45,289 → 34,251 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,512 | 135,888 → 126,118 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,495.5 | 146,269 → 138,052 |
-
-The approved-proof candidate adds deferred new-program references separately
-from those pinned scenarios. The guide is 7,636 bytes; constructing records also
-loads a 6,737-byte format reference. Together they add 14,373 bytes (3,593.25
-characters/4 estimated tokens), not a measured host charge. The generated
-`new_program_proof` inventory binds both files. Do not describe the original
-scenario totals as a complete new-program cost; approval records, host framing
-and actual worker reads require their own accounting.
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,528.25 | 45,289 → 34,153 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,288.5 | 135,888 → 125,224 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,272 | 146,269 → 137,158 |
 
 Issue #30 adds a deferred mobile selection guide and risk catalog, totaling
 8,493 bytes (2,123.25 estimated tokens). The `mobile_risk_profile` inventory
@@ -54,13 +46,7 @@ records both. The mobile-workflows adapter already included in applicable reads
 adds the 369-byte profile pointer. These amounts describe source reads, not
 observed host tokens; worker briefs include only relevant risk guidance.
 
-Issue #28 adds a deferred controller guide of 10,892 bytes (2,723 estimated
-tokens) for program scheduling and recovery. The generated `new_program_control`
-inventory records it separately. Controllers read it when that phase applies;
-worker briefs carry their own task and limits. These source counts do not measure
-actual host loads, waiting cost, cache use or a complete program's usage.
-
-The routing inventory falls about 24.4% from the previous native candidate.
+The routing inventory falls about 24.6% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
 verification and publication instructions still apply. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -134,15 +120,14 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,965 bytes,
-about 6,481.75 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 25,716 bytes,
+about 6,419.5 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
 adapter. The router rewrite and its fix round take 752 bytes back, which leaves it 8
-bytes under `main`. The approved-proof candidate's shorter adapter wording and
-deferred pointer save a further seven bytes, leaving it 15 bytes under that
-baseline. The fix round restored the scope words the rewrite had
+bytes under `main`. Later adapter edits, including the shorter host-adapter
+wording, leave it 264 bytes under that baseline. The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes

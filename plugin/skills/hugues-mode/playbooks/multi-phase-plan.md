@@ -5,11 +5,6 @@ reads a skill body: reach each skill as [host.md](../../../adapters/host.md)
 directs, and write the skill a plan step applies, never a path to read.
 Unavailable or denied invocation holds that step.
 
-For new consumer programs apply [program proof](../../../adapters/program-proof.md)
-at plan approval: inspect design/prototype rules, resolve source conflicts and
-freeze the protected checklist/digest. Hand off binding and enforced write scopes.
-Use `program-check` at the verdict; builder edits cannot weaken approved rules.
-
 ### Multi-phase or multi-PR plan
 
 **You own the plan, not the code. The plan is a checklist an owner runs box by box and the operator audits from the evidence.** The plan is the deliverable. Do not implement.

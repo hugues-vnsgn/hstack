@@ -40,13 +40,6 @@ explains the boundary and a first-task workflow.
 
 The workflows ask the agent to inspect the project, keep a task checklist, use focused workers where required, verify the result and report missing evidence. Mobile changes need checks on the affected targets. hStack does not supply Xcode, Android tooling, model access or device control.
 
-The current candidate adds [approved requirements and proof](docs/approved-proof.md)
-for new programs. It preserves pstack's names and workflow order, and holds a
-clean verdict when rules changed, evidence is missing or an owner decision is
-still open. Actual worker write protection needs the supplied macOS process
-guard or verified equivalent host restrictions. Keep active programs on their
-approved installation until an explicit migration.
-
 The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete planning was blocked by isolated host startup/authentication. It did not establish full Claude/Codex workflow execution, native transcript compatibility, mobile behavior or unattended cleanup. Read the [0.4.0 release notes](docs/RELEASE-0.4.0.md), the [0.3.0 release notes](docs/RELEASE-0.3.0.md) and the [0.2.0 release notes](docs/RELEASE-0.2.0.md) for the evidence and limits.
 
 ## Reference and maintenance
@@ -56,7 +49,7 @@ The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete
 - [Native consolidation and migration](docs/NATIVE-CONSOLIDATION.md)
 - [Source and workflow contracts](docs/CORE-RESTORATION.md)
 - [Test accounting](docs/TEST-COVERAGE.md)
-- [Installed planning, proof and worktree commands](plugin/adapters/host-tools.md)
+- [Installed planning and read-only worktree audit](plugin/adapters/host-tools.md)
 
 To check a source checkout, run these commands from the hstack folder:
 

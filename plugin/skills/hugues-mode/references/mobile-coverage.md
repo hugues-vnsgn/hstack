@@ -94,33 +94,17 @@ behavior always requires live proof. Applicable performance retains metric,
 probe, baseline and rule. Measure meaningful content readiness with pstack's
 interleaved baseline method; insufficient precision is inconclusive.
 
-## Bind results and restore devices
+## Inspect results
 
 Give workers the approved checks, fixed commit/build, target and relevant risk
 guidance. Keep the verifier's approved contract outside owner write access.
-Put every selected check into [approved proof records](../../../adapters/program-records.md).
-Hash the committed plan as a source snapshot and include its `verification_plan`
-source/section and complete lane-to-check mapping in the approved checklist.
-Use exact target IDs, action text and pass-condition text from the plan, excluding
-grammar delimiters and receipt links. The bound `program-check` validates the
-snapshot through the shared plan checker, then checks every mapping; Android-only
-records cannot satisfy an iOS plan. Existing records without a mobile plan keep
-their schema and semantics. Approval and diff completeness still require review.
-Apply [program proof](../../../adapters/program-proof.md)
-and independently inspect actual actions/artifacts. Distinguish failed, blocked,
+Independently inspect actual actions/artifacts. Distinguish failed, blocked,
 untested, inconclusive and explicitly waived checks.
 
 A later head requires a new round decision. Apply the existing patch/build rule
 in [shipping](../playbooks/shipping.md) before reuse and retain each decision and
 comparison. Old attempts retain their original source/build, target and capture
 times. Assessment does not bypass current plan comparison or relabel old proof.
-The proof command clears only its indexed, build-bound record checks.
-
-Apply [program control](../../../adapters/program-control.md) before shared-device
-use. Record observed device ID, booted device set and potentially changed settings
-in the baseline settings object. After owning processes stop, restore authorized
-changes and inspect tool captures before matching release receipts. Live/unknown
-ownership or failed restoration holds release. Preserve proof and consumer data.
 
 For an inaccessible required path, record the gap and a concrete testing-support
 request in the verdict. Present unresolved owner decisions. Repeated inability
