@@ -7,8 +7,8 @@ their named actions. A small mobile applicability file requires the complete
 mobile adapter before any explicit mobile task; non-mobile work stops at the
 applicability decision. This uses ordinary file reads, not a new native loader.
 
-Every original host instruction is retained in one of those files, and the mobile
-adapter preserves the earlier rules. The
+Every original host instruction is retained in one of those files, and the
+complete mobile adapter carries the original mobile file's rules. The
 [partition receipt](ADAPTER-DISCLOSURE.json) and regression checks account for
 every original paragraph, each preserved verbatim or replaced with an explicit,
 tested reason. Deferral changes when guidance is read, not whether its
@@ -166,9 +166,9 @@ The [helper input receipt](HELPER-INPUTS.json) records all 20 original mode-help
 files. Nineteen remain installed; the legacy history-scanning audit is preserved
 only as provenance. Eighteen remain byte-identical to upstream. The Node plan
 validator accepts bound workflow reads, and current installed Python/Node tests
-exercise it. Its reviewed digest is recorded
-in the helper receipt. The Bun/TypeScript helpers and dependency files did not change
-bytes. Their disclosure-pass runtime validation did not run because the harmless
+exercise it. Its reviewed digest is recorded in the helper receipt. The
+Bun/TypeScript helpers and dependency files did not change bytes. Their
+disclosure-pass runtime validation did not run because the harmless
 offline sandbox preflight returned `EPERM`. The later review-fix pass ran it on a
 scratch install of the candidate: Bun 1.4.2 installed the locked dependencies
 through the session proxy, 52 of 52 `bun test orch watch-pr` cases passed and
