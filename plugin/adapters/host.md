@@ -14,12 +14,14 @@ custom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mod
 `setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other
 public names are unchanged.
 
-Only `hugues-mode` and `setup-hstack` are model-invocable; their
-descriptions enter the host's skill list. Every other bundled skill, including
-each `principle-*`, is user-only: the owner can still type it by name. An agent
+Only `hugues-mode` and `setup-hstack` are model-invocable. Every other
+bundled skill, including each `principle-*`, is user-only: the owner can still
+type it by name. On Claude Code, never call the Skill tool for one. In a
+playbook, `/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`.
+An agent
 reads its SKILL.md in full as the scoped bundled reference, with the host's own
-file-read tool and resolved as an owned resource below. The installed helpers
-never read a skill body. A missing or unreadable path holds the dependent step.
+file-read tool. Helpers never read a skill body. A missing or unreadable path
+holds the dependent step.
 A native denial on such a skill does not stop the host's file read; the owner's real
 control over those skills is enabling or disabling the plugin as a whole.
 

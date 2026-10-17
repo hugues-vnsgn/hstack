@@ -653,3 +653,50 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn("Spawn a fresh `hugues-agent` for each new task", description)
         self.assertIn("hugues-mode's Subagents section", description)
         self.assertIn('inline Principles index', description)
+
+    def test_hugues_agent_finds_the_mode_file_itself(self):
+        # Issue #48: owners whose brief carried no hugues-mode path never read a bundled
+        # skill. pstack's poteto-agent finds its mode file on disk; hugues-agent does the same
+        # in Claude Code terms, in this order, and keeps the preload.
+        agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
+        self.assertRegex(agent, r'(?m)^skills:\n  - hstack:hugues-mode$')
+        flat = ' '.join(agent.split())
+        order = ['the absolute path to the `hugues-mode` SKILL.md that your parent gave you',
+                 '"Base directory for this skill" that Claude Code shows with the preloaded `hugues-mode` skill',
+                 'search the installed plugins under the Claude config directory',
+                 'a file whose path ends in `skills/hugues-mode/SKILL.md`',
+                 'stop and tell your parent']
+        positions = [flat.find(step) for step in order]
+        self.assertNotIn(-1, positions, dict(zip(order, positions)))
+        self.assertEqual(positions, sorted(positions))
+
+    def test_bundled_user_only_skills_are_files_never_skill_tool_calls(self):
+        # Issue #48: Claude Code's Skill tool refuses a user-only skill and tells the model to
+        # take no other route, and five owners stopped there. The rule lives in the adapter and
+        # in the agent header, and the playbooks keep their inherited wording.
+        for path in ['plugin/adapters/host.md', 'plugin/agents/hugues-agent.md']:
+            flat = ' '.join((ROOT / path).read_text().split())
+            for phrase in ['On Claude Code, never call the Skill tool for one.',
+                           '`/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`',
+                           'file-read tool']:
+                with self.subTest(path=path, phrase=phrase):
+                    self.assertIn(phrase, flat)
+        # Native-only skills keep their native route.
+        self.assertIn('Reach `hugues-mode`, `setup-hstack` and each consumer or external skill',
+                      ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split()))
+
+    def test_playbook_headers_no_longer_hold_a_step_on_invocation(self):
+        # Issue #48: pstack's playbooks have no "never a path to read" clause. The three hStack
+        # headers keep read-workflow and plan-check (issue #78) and lose the clause.
+        for name in ['autopilot-full', 'autopilot-stack', 'multi-phase-plan']:
+            text = (ROOT / 'plugin/skills/hugues-mode/playbooks' / (name + '.md')).read_text()
+            header = ' '.join(text.split('\n\n', 1)[0].split())
+            with self.subTest(playbook=name):
+                self.assertNotIn('never a path to read', header)
+                self.assertNotIn('Unavailable or denied invocation holds that step', header)
+                self.assertIn('bound `read-workflow`', header)
+                self.assertIn('`plan-check` for validation', header)
+                self.assertIn('reach each skill as [host.md](../../../adapters/host.md) directs.', header)
+        tools = ' '.join((ROOT / 'plugin/adapters/host-tools.md').read_text().split())
+        self.assertNotIn('never a path to read', tools)
+        self.assertIn('a plan names the skill to apply, and the agent resolves the path', tools)

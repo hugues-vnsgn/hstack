@@ -166,7 +166,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "c96110ef1c13d0b57bcf680ec04ab1bcc0d39554bbbfb798673c7891fde3db44",
+      "sha256": "1f705fa519c10d059b46a66e4e474ae53eac4d54db7cbbea2cabf19100bdcf57",
       "mode": "100644"
     },
     {
@@ -186,7 +186,7 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310",
+      "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54",
       "mode": "100644"
     },
     {
@@ -241,7 +241,7 @@
     },
     {
       "path": "agents/hugues-agent.md",
-      "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26",
+      "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3",
       "mode": "100644"
     },
     {
@@ -456,12 +456,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "93d88e1729cf128b2df3a7013a234b180631ef87491ea372840db7d18449f658",
+      "sha256": "f53a5e7a33507c4ac2f73a3ac1dc40ba7685bbe57cbb1b1983dfbed2cc2096c2",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-stack.md",
-      "sha256": "a2661d5dbbd762faa5677440ff1946fd4d825dfedfc19b3b1cb9f53c2f67a6bb",
+      "sha256": "c92431b2eb201da87eb4141b8173e3828ba2ddc2ca82bc7fbea5b42423932694",
       "mode": "100644"
     },
     {
@@ -516,7 +516,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/multi-phase-plan.md",
-      "sha256": "3b91e488fd608ea83cb3da52dc6b68abdcdb438cf43dd12782dc45398d979da6",
+      "sha256": "54d5b9d6a8bfb0f7d7c8ad565272b07057170aea30d532c8b1344ccebb863897",
       "mode": "100644"
     },
     {

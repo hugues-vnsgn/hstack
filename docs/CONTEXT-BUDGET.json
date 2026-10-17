@@ -32,9 +32,9 @@
       "estimated_tokens_characters_divided_by_4": 6485.0
     },
     "candidate": {
-      "bytes": 25813,
-      "characters": 25775,
-      "estimated_tokens_characters_divided_by_4": 6443.75
+      "bytes": 25849,
+      "characters": 25811,
+      "estimated_tokens_characters_divided_by_4": 6452.75
     }
   },
   "native_frontmatter": {
@@ -1483,13 +1483,13 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 5,
-        "bytes": 34250,
-        "characters": 34210,
-        "estimated_tokens_characters_divided_by_4": 8552.5,
+        "bytes": 34286,
+        "characters": 34246,
+        "estimated_tokens_characters_divided_by_4": 8561.5,
         "inputs": {
           "plugin/adapters/host.md": {
-            "bytes": 5417,
-            "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310"
+            "bytes": 5453,
+            "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -1596,25 +1596,25 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 35678,
-          "characters": 35628,
-          "estimated_tokens_characters_divided_by_4": 8907.0,
+          "bytes": 36553,
+          "characters": 36503,
+          "estimated_tokens_characters_divided_by_4": 9125.75,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8266,
               "sha256": "6b05b74276ca7bdf983fe4a5f821dc4a96b69220551f3f59b689c1852ba3eb8f"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5417,
-              "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310"
+              "bytes": 5453,
+              "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
               "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825"
             },
             "plugin/agents/hugues-agent.md": {
-              "bytes": 1599,
-              "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
+              "bytes": 2438,
+              "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
             },
             "plugin/skills/hugues-mode/SKILL.md": {
               "bytes": 19852,
@@ -2050,9 +2050,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 34,
-        "bytes": 126873,
-        "characters": 126803,
-        "estimated_tokens_characters_divided_by_4": 31700.75,
+        "bytes": 127748,
+        "characters": 127678,
+        "estimated_tokens_characters_divided_by_4": 31919.5,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1824,
@@ -2067,16 +2067,16 @@
             "sha256": "40c12caca4d285ba93a468580669bda4a1368a9313029f04a6ecf0cc11c90e23"
           },
           "plugin/adapters/host.md": {
-            "bytes": 5417,
-            "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310"
+            "bytes": 5453,
+            "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
             "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825"
           },
           "plugin/agents/hugues-agent.md": {
-            "bytes": 1599,
-            "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
+            "bytes": 2438,
+            "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
           },
           "plugin/agents/hugues-comment-sicko.md": {
             "bytes": 2566,
@@ -2305,25 +2305,25 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 35678,
-          "characters": 35628,
-          "estimated_tokens_characters_divided_by_4": 8907.0,
+          "bytes": 36553,
+          "characters": 36503,
+          "estimated_tokens_characters_divided_by_4": 9125.75,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8266,
               "sha256": "6b05b74276ca7bdf983fe4a5f821dc4a96b69220551f3f59b689c1852ba3eb8f"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5417,
-              "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310"
+              "bytes": 5453,
+              "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
               "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825"
             },
             "plugin/agents/hugues-agent.md": {
-              "bytes": 1599,
-              "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
+              "bytes": 2438,
+              "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
             },
             "plugin/skills/hugues-mode/SKILL.md": {
               "bytes": 19852,
@@ -2331,8 +2331,8 @@
             }
           },
           "mode_workers": 1,
-          "repeated_bytes_floor": 35678,
-          "repeated_estimated_tokens_floor": 8907.0
+          "repeated_bytes_floor": 36553,
+          "repeated_estimated_tokens_floor": 9125.75
         }
       },
       "complete_execution_tokens": null,
@@ -2869,9 +2869,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 44,
-        "bytes": 138807,
-        "characters": 138737,
-        "estimated_tokens_characters_divided_by_4": 34684.25,
+        "bytes": 139682,
+        "characters": 139612,
+        "estimated_tokens_characters_divided_by_4": 34903.0,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1824,
@@ -2890,16 +2890,16 @@
             "sha256": "40c12caca4d285ba93a468580669bda4a1368a9313029f04a6ecf0cc11c90e23"
           },
           "plugin/adapters/host.md": {
-            "bytes": 5417,
-            "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310"
+            "bytes": 5453,
+            "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
             "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825"
           },
           "plugin/agents/hugues-agent.md": {
-            "bytes": 1599,
-            "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
+            "bytes": 2438,
+            "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
           },
           "plugin/agents/hugues-comment-sicko.md": {
             "bytes": 2566,
@@ -3169,25 +3169,25 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 35678,
-          "characters": 35628,
-          "estimated_tokens_characters_divided_by_4": 8907.0,
+          "bytes": 36553,
+          "characters": 36503,
+          "estimated_tokens_characters_divided_by_4": 9125.75,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8266,
               "sha256": "6b05b74276ca7bdf983fe4a5f821dc4a96b69220551f3f59b689c1852ba3eb8f"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5417,
-              "sha256": "34c84969ad365ebb39e8c9e4a0eec1450a00b1b33c280d2ee6ef2ffe2c2cf310"
+              "bytes": 5453,
+              "sha256": "cfad1434936d0b8228e54f52b5c4a932d16b420330f7ff6e4aa79ffc153ecb54"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
               "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825"
             },
             "plugin/agents/hugues-agent.md": {
-              "bytes": 1599,
-              "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
+              "bytes": 2438,
+              "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
             },
             "plugin/skills/hugues-mode/SKILL.md": {
               "bytes": 19852,
@@ -3195,8 +3195,8 @@
             }
           },
           "mode_workers": 8,
-          "repeated_bytes_floor": 285424,
-          "repeated_estimated_tokens_floor": 71256.0
+          "repeated_bytes_floor": 292424,
+          "repeated_estimated_tokens_floor": 73006.0
         }
       },
       "complete_execution_tokens": null,
