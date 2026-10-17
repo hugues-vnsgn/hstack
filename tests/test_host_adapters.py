@@ -131,6 +131,15 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn('Node unavailable', result.stderr)
 
+    def test_withdrawn_verbs_are_unknown(self):
+        for verb in ['payload-policy', 'helper-ready', 'program-check', 'artifact-hash',
+                     'decode-design', 'worker-run', 'run-control', 'run-wait']:
+            with self.subTest(verb=verb):
+                result = self.bound(verb)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('invalid choice', result.stderr)
+                self.assertEqual(result.stdout, '')
+
     def test_public_bridges_route_actual_adapter(self):
         for name in ['multi-phase-plan', 'autopilot-full', 'autopilot-stack']:
             self.assertIn('read-workflow', (self.plugin / f'skills/hugues-mode/playbooks/{name}.md').read_text())

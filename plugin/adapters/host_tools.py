@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Installed checks and scoped worker execution. No automatic install or cleanup."""
+"""Read-only host mechanics. No network, package bootstrap or deletion actions."""
 import sys
 
 if __name__ == '__main__' and sys.path:
@@ -19,9 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "725c903d61b9dcca15237083c5c3c04a1bd40f70181e2a5c136dcea15a3a1b16",
-    "program.py": "fe293361d4d5937e9d6246dce476645e1eb8fdde250f64ad0dc33eca3a1ebab9",
-    "control.py": "4e116997864db964c1d5007a8bd9d06d63a9b18457e269abcd7403c279347563"
+    "payload.py": "76dd48693bc90b82b5e8df32beb22ad3537f6926cbccd29430e3eb854ccb520b"
 }
 
 
@@ -99,45 +97,10 @@ def main(argv=None):
     audit.add_argument('--sources', type=Path, required=True)
     audit.add_argument('--pr-snapshot', type=Path)
     audit.add_argument('--base', default='refs/remotes/origin/main')
-    proof = sub.add_parser('program-check', help='Check approved requirements and inspected evidence')
-    proof.add_argument('--binding', type=Path, required=True)
-    proof.add_argument('--approved', type=Path, required=True)
-    proof.add_argument('--approval-sha256', required=True)
-    proof.add_argument('--candidate', type=Path, required=True)
-    proof.add_argument('--record', type=Path, required=True)
-    proof.add_argument('--state', type=Path, required=True)
-    worker = sub.add_parser('worker-run', help='Execute authorized argv with process write isolation')
-    worker.add_argument('--binding', type=Path, required=True)
-    worker.add_argument('--approved', type=Path, required=True)
-    worker.add_argument('--approval-sha256', required=True)
-    worker.add_argument('--writable', type=Path, action='append', required=True)
-    worker.add_argument('--protect', type=Path, action='append', default=[])
-    worker.add_argument('--cwd', type=Path, required=True)
-    worker.add_argument('command', nargs=argparse.REMAINDER)
-    for verb in ('artifact-hash', 'decode-design'):
-        child = sub.add_parser(verb)
-        child.add_argument('--binding', type=Path, required=True)
-        child.add_argument('path', type=Path)
-    control = sub.add_parser('run-control', help='Check program limits and save controller progress')
-    control.add_argument('--binding', type=Path, required=True)
-    control.add_argument('--policy', type=Path, required=True)
-    control.add_argument('--policy-sha256', required=True)
-    control.add_argument('--store', type=Path, required=True)
-    control.add_argument('--event', type=Path, required=True)
-    waiting = sub.add_parser('run-wait', help='Wait in one process for saved completion or device release')
-    waiting.add_argument('--binding', type=Path, required=True)
-    waiting.add_argument('--policy', type=Path, required=True)
-    waiting.add_argument('--policy-sha256', required=True)
-    waiting.add_argument('--store', type=Path, required=True)
-    waiting.add_argument('--kind', choices=['actor', 'device'], required=True)
-    waiting.add_argument('--target', required=True)
-    waiting.add_argument('--timeout', type=float, default=30)
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[1]
-    program = None
     try:
         activity, payload = load_runtime_sources(None if args.verb == 'bind' else args.binding.resolve())
-        program = sys.modules['runtime.program']
         if args.verb == 'bind':
             print(json.dumps(payload.bind(root), indent=2))
             return 0
@@ -165,30 +128,8 @@ def main(argv=None):
             result = activity.audit(args.repo.resolve(), args.sources, args.pr_snapshot, args.base)
             print(json.dumps(result, indent=2))
             return 0 if result['coverage'] == result['metadata_coverage'] == 'complete' else 2
-        elif args.verb == 'program-check':
-            result = program.check(args.approved, args.approval_sha256, args.candidate, args.record, args.state)
-            print(json.dumps(result, indent=2))
-            return 0 if result['ready'] else 2
-        elif args.verb == 'worker-run':
-            return program.worker(args.approved, args.approval_sha256,
-                                  args.writable, args.cwd, args.command, args.protect)
-        elif args.verb == 'artifact-hash':
-            print(json.dumps({'sha256': program.fingerprint(args.path)}))
-        elif args.verb == 'decode-design':
-            sys.stdout.write(program.decode_design(args.path))
-        elif args.verb == 'run-control':
-            result = sys.modules['runtime.control'].control(root, args.binding, args.policy,
-                                                          args.policy_sha256, args.store, args.event)
-            print(json.dumps(result, indent=2))
-        elif args.verb == 'run-wait':
-            result = sys.modules['runtime.control'].wait(root, args.binding, args.policy,
-                args.policy_sha256, args.store, args.kind, args.target, args.timeout)
-            print(json.dumps(result))
-            return 0 if result['wait_satisfied'] else 2
         return 0
     except (ValueError, OSError, KeyError, TypeError, RecursionError) as exc:
-        if args.verb == 'program-check' and program is not None:
-            print(json.dumps(program.hold(args.approved, args.record, args.state, exc), indent=2))
         print('host adapter blocked: ' + str(exc), file=sys.stderr)
         return 2
 

@@ -225,18 +225,8 @@
       "mode": "100644"
     },
     {
-      "path": "adapters/runtime/control.py",
-      "sha256": "4e116997864db964c1d5007a8bd9d06d63a9b18457e269abcd7403c279347563",
-      "mode": "100644"
-    },
-    {
       "path": "adapters/runtime/json_input.py",
       "sha256": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
-      "mode": "100644"
-    },
-    {
-      "path": "adapters/runtime/program.py",
-      "sha256": "fe293361d4d5937e9d6246dce476645e1eb8fdde250f64ad0dc33eca3a1ebab9",
       "mode": "100644"
     },
     {
