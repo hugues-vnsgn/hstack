@@ -37,12 +37,12 @@ assumptions and mandatory transitive inputs are in the
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (54 after disclosure) | 3,940.25 | 3,700 | 3,688.75 | 14,803 → 14,756 |
 | Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,552.75 | 45,289 → 34,251 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,669.5 | 135,888 → 126,748 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,653 | 146,269 → 138,682 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,512 | 135,888 → 126,118 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,495.5 | 146,269 → 138,052 |
 
 The approved-proof candidate adds deferred new-program references separately
-from those pinned scenarios. The guide is 7,716 bytes; constructing records also
-loads a 6,737-byte format reference. Together they add 14,453 bytes (3,613.25
+from those pinned scenarios. The guide is 7,686 bytes; constructing records also
+loads a 6,737-byte format reference. Together they add 14,423 bytes (3,605.75
 characters/4 estimated tokens), not a measured host charge. The generated
 `new_program_proof` inventory binds both files. Do not describe the original
 scenario totals as a complete new-program cost; approval records, host framing

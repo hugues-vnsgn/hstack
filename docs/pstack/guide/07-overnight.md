@@ -98,7 +98,7 @@ The [Orchestrate playbook](../../../plugin/skills/hugues-mode/playbooks/orchestr
 A few habits help:
 
 - Give each body of work its own coordinator chat, such as a feature, a migration, a perf push, or a tech-debt cleanup. Several can run side by side.
-- Give each PR a verification swarm before it merges, and let Autopilot-stack or Autopilot-full carry the queue. Both autopilots need [payload protection](./01-setup.md#prepare-an-autopilot-program) in place first.
+- Give each PR a verification swarm before it merges, and let Autopilot-stack or Autopilot-full carry the queue.
 - Ask the coordinator for a plan backed by data, and have it answer open questions with prototypes before it asks you.
 
 One prompt can carry a whole program, from research through execution:

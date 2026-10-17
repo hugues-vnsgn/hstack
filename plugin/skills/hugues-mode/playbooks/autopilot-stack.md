@@ -9,9 +9,9 @@ For a new consumer program, apply [program proof](../../../adapters/program-proo
 before owner dispatch and at the existing round verification step. The root
 runs `program-check` against the protected approved baseline and complete
 decision/finding state before accepting STACK-READY or appending a clean link.
-Enforce application write scopes and protect the installed plugin and accepted
-proof. A worker's revised plan cannot replace the approved checklist. Keep the
-phase order and all gates below.
+Enforce application write scopes and protect the accepted proof. A worker's
+revised plan cannot replace the approved checklist. Keep the phase order and all
+gates below.
 
 For an explicitly approved mobile program, apply
 [mobile coverage](../references/mobile-coverage.md) before verification dispatch.
@@ -19,12 +19,6 @@ Use its selected checks and applicability; preserve this playbook's phase timing
 review roles and operator gates. Default/non-mobile plans retain their rules.
 
 ### Autopilot-stack
-
-**Before write-capable work:** complete [payload protection](../../../adapters/payload-protection.md)
-through bound `read-workflow`. Establish native read-only protection for the bound
-installation, record effective writer coverage and require it for every worker.
-Missing or unverifiable protection holds dependent execution. Keep the payload
-readable and report plugin defects for separate owner-authorized maintenance.
 
 **Before unattended topology writes in Claude Code auto mode:** complete the
 [stack permission preflight](../../../adapters/claude-stack-permissions.md) through

@@ -41,8 +41,8 @@ Do not certify an old report by filling in missing observations afterward.
 
 Pass workers the checklist and only the application paths authorized for their
 change, plus separate scratch/output directories. Protect the entire owner
-control directory, installed plugin and binding. Read-only Markdown and hash
-checks detect drift; they do not deny a write.
+control directory. Read-only Markdown and hash checks detect drift; they do not
+deny a write.
 
 For local macOS worker processes, use this installed launcher:
 

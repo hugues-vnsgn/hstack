@@ -35,14 +35,6 @@ If you're new to pstack, accept the offer. An agent that can check its own work 
 
 Each skill reads `.hstack/models.md` at its next role selection, so the roles apply from the next subagent spawn.
 
-## Prepare an autopilot program
-
-Both autopilot workflows require [read-only payload protection](../../../plugin/adapters/payload-protection.md)
-before write-capable work. Review the generated native host configuration, retain
-your existing settings and verify the boundary for the coordinator and workers.
-Uncovered writers or unsupported host protection hold the program. Plugin
-maintenance belongs to a separate owner-authorized task.
-
 ## Keep the cost in check
 
 pstack spends extra tokens on subagents and review panels. That's the price of the rigor. To spend fewer:

@@ -166,7 +166,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "15a2831dd33036f777b5f1a89aebc18ac6fce9b3aada081b2302221141f222e8",
+      "sha256": "c96110ef1c13d0b57bcf680ec04ab1bcc0d39554bbbfb798673c7891fde3db44",
       "mode": "100644"
     },
     {
@@ -176,12 +176,12 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "b4cf41cc3f1b95e4a5764cbe277b754af87b14989632a43ae43c2c9e0eec7e1e",
+      "sha256": "6b05b74276ca7bdf983fe4a5f821dc4a96b69220551f3f59b689c1852ba3eb8f",
       "mode": "100644"
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "16ac9f20f07b846d803f98e41c905b33ed9fc48a1409ee8ecc5f12d41d2d3bc8",
+      "sha256": "40c12caca4d285ba93a468580669bda4a1368a9313029f04a6ecf0cc11c90e23",
       "mode": "100644"
     },
     {
@@ -200,18 +200,13 @@
       "mode": "100644"
     },
     {
-      "path": "adapters/payload-protection.md",
-      "sha256": "5c2803ee812ff3125defd9aba7bab5f6fd6928ac921021759c1c1e91a13b4a5a",
-      "mode": "100644"
-    },
-    {
       "path": "adapters/program-control.md",
       "sha256": "43b0b73b19806a2ddfe131ae776c42f805c2d1a0c050387b6954beaceadfa077",
       "mode": "100644"
     },
     {
       "path": "adapters/program-proof.md",
-      "sha256": "690f5f990afdb51ff60668035b926a0129c2d244fb964f4e5056345a208208e0",
+      "sha256": "71c943002eabf5cfe0b6934ede89bb8dfe5127df0263900352ff0d416ba16e47",
       "mode": "100644"
     },
     {
@@ -446,12 +441,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "4dd04e42e8df264c75024028d02acb74a125e2a6b25e693f80120f71cd12bb00",
+      "sha256": "ca26a174b00d42525df7994d07f1af4fdcff7717eebb40882e38fceee0c5c7e5",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-stack.md",
-      "sha256": "1b45018c81bb3fbec38a75a1e54e0528af5e438e14e79508fa8642226f60ff68",
+      "sha256": "a2661d5dbbd762faa5677440ff1946fd4d825dfedfc19b3b1cb9f53c2f67a6bb",
       "mode": "100644"
     },
     {
