@@ -2,7 +2,6 @@
 from datetime import datetime, timezone
 import json
 import os
-import re
 from pathlib import Path
 import shlex
 import shutil
@@ -152,10 +151,18 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
     @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
     def test_plan_check_accepts_verdict_without_contract_box(self):
         plan = self.consumer / 'plan.md'
-        # pstack's Verdict and merge heading needs no box of its own.
-        text = re.sub(r'### Verdict and merge\n.*?### Boot recipe', '### Verdict and merge\n### Boot recipe',
-                      (ROOT / 'tests/fixtures/adapter-plan.md').read_text(), count=1, flags=re.S)
-        self.assertIn('### Verdict and merge\n### Boot recipe', text)
+        fixture = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+        self.assertEqual(fixture.count('### Verdict and merge\n### Boot recipe\n'), 1)
+        # The Verdict and merge boxes of pstack 0.15.25's plan skeleton, renamed only.
+        verdict = ('### Verdict and merge\n'
+                   '- [ ] A full swarm runs once, at the code-ready head. Run each full swarm per the '
+                   '`swarm` skill. One gates lane. The ten live lanes from the PR\'s **Verify, live** block.\n'
+                   '- [ ] Clean only when every lane is `PASS`. Findings go back to the owner.\n'
+                   '### Boot recipe\n')
+        text = fixture.replace('### Verdict and merge\n### Boot recipe\n', verdict)
+        self.assertIn('- [ ] Clean only when every lane is `PASS`.', text)
+        for marker in ['verification-contract', 'plan-compare', 'operator ruling']:
+            self.assertNotIn(marker, text)
         plan.write_text(text)
         result = self.bound('plan-check', plan)
         self.assertEqual(result.returncode, 0, result.stderr)

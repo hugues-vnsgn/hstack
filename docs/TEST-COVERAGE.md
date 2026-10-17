@@ -242,5 +242,5 @@ verification-contract cases go with the `plan-compare` verb, its comparison
 helper and the contract reference they covered. The test_host_adapters case that
 rejects withdrawn verbs now also checks that the bound CLI rejects `plan-compare`
 as unknown. One new installed-command case checks that the bound `plan-check`
-accepts a plan whose Verdict and merge heading carries no box, as in pstack,
-bringing the current total to 422.
+accepts a plan whose Verdict and merge section holds pstack's own boxes and no
+verification-contract box, bringing the current total to 422.
