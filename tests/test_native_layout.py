@@ -388,7 +388,7 @@ class NativeIntegrity(unittest.TestCase):
                 measure_context.measure(self.root)
 
     def test_router_sections_that_siblings_name_cannot_disappear(self):
-        # Eight sibling files point at the router by section name. A rename or removal must
+        # Six sibling files point at the router by section name. A rename or removal must
         # break loudly, a sibling that stops saying the pointer words must break the table,
         # and a dropped Principles entry must break the index (the only pointer to a
         # user-only principle).

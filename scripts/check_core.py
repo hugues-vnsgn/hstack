@@ -53,7 +53,6 @@ ROUTER_SECTION_POINTERS = (
     ('plugin/agents/hugues-agent.md', 'Subagents', "hugues-mode's Subagents section"),
     ('plugin/agents/hugues-agent.md', 'Principles', 'inline Principles index'),
     ('plugin/skills/hugues-mode/playbooks/multi-phase-plan.md', 'Subagents', 'per the Subagents section'),
-    ('plugin/skills/hugues-mode/playbooks/autopilot-full.md', 'Subagents', "hugues-mode's Subagents section"),
     ('plugin/skills/hugues-mode/playbooks/bug-fix.md', 'Non-negotiables', '(Non-negotiables)'),
     ('plugin/skills/hugues-mode/playbooks/investigation.md', 'Autonomy', '(see Autonomy)'),
     ('plugin/skills/hugues-mode/playbooks/worktree-cleanup.md', 'Autonomy', 'Per Autonomy,'),
