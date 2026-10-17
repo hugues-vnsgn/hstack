@@ -19,7 +19,6 @@ ${rule}
 ### Spawn owners
 ### PR mechanics
 ### Verdict and merge
-- [ ] Apply \`../references/verification-contract.md\`, run \`plan-compare\` and record each operator ruling.
 ### Boot recipe
 \`git show origin/main:\` /loop 1h status message
 
@@ -94,19 +93,4 @@ test("rejects headings and prose outside a proper close", () => {
 test("rejects backtick info strings containing a backtick", () => {
 	const result = runPlan("```markdown `invalid`\n## Example only\n```\n", 1);
 	expect(result.stderr).toContain('"## Example only" after Close the program is not an appendix');
-});
-
-test("requires the verification-contract box in Verdict and merge", () => {
-	const directory = mkdtempSync(join(tmpdir(), "check-plan-test-"));
-	const file = join(directory, "plan.md");
-	writeFileSync(file, validPlan.replace(/^- \[ \] Apply .*verification-contract.*\n/m, ""));
-	try {
-		const result = spawnSync("node", [checker, file], { encoding: "utf8" });
-		expect(result.status).toBe(1);
-		expect(result.stderr).toContain(
-			"Verdict and merge lacks the verification-contract comparison and operator ruling box",
-		);
-	} finally {
-		rmSync(directory, { recursive: true, force: true });
-	}
 });

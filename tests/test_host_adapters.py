@@ -2,6 +2,7 @@
 from datetime import datetime, timezone
 import json
 import os
+import re
 from pathlib import Path
 import shlex
 import shutil
@@ -147,6 +148,18 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
                 result = self.bound('plan-check', plan)
                 self.assertEqual(result.returncode, 1)
                 self.assertIn(message, result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_accepts_verdict_without_contract_box(self):
+        plan = self.consumer / 'plan.md'
+        # pstack's Verdict and merge heading needs no box of its own.
+        text = re.sub(r'### Verdict and merge\n.*?### Boot recipe', '### Verdict and merge\n### Boot recipe',
+                      (ROOT / 'tests/fixtures/adapter-plan.md').read_text(), count=1, flags=re.S)
+        self.assertIn('### Verdict and merge\n### Boot recipe', text)
+        plan.write_text(text)
+        result = self.bound('plan-check', plan)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('1 PR sections, 0 problems', result.stdout)
 
     def test_missing_node_is_explicit_block(self):
         result = self.bound('plan-check', self.consumer / 'plan.md', env=dict(os.environ, PATH=''))

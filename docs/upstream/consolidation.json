@@ -771,7 +771,7 @@
       "source_mode": 493,
       "destination": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "disposition": "canonical",
-      "destination_sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7"
+      "destination_sha256": "c10fbf68eea64f8a2168d9f67687471c7aa5df14faaa07c865df1235afaa0900"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
@@ -779,7 +779,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b"
+      "destination_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
@@ -1607,7 +1607,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "26504b865912652f276b6b91943f24a4618b2367e7edc055ee5a670e200f65a6",
+      "sha256": "a259e75d30b39556e9d26de5d9586bc660d46375ab4ad7444623984ebbde0688",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1631,11 +1631,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "c6800b4fcaf9f20fef476aeb6a6b8ae99adc99fe67982cf70d5edd9401dd18bc",
+      "sha256": "75e38a0d9f40772a90c1457d69377a9c0860d5819e72937127d5f977ef37b888",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "6457d1b46fa776af37dc4ee0877fe93355403b1a3741773886ab55b270ed9eda",
+      "sha256": "86b1c9329b174e98a27fa033ef9bb716bcbf156e9314543db7789a5c69acce91",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1939,11 +1939,11 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/check-plan.mjs": {
-      "sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
+      "sha256": "c10fbf68eea64f8a2168d9f67687471c7aa5df14faaa07c865df1235afaa0900",
       "mode": 493
     },
     "skills/hugues-mode/scripts/check-plan.test.ts": {
-      "sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
+      "sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
       "mode": 420
     },
     "skills/hugues-mode/scripts/orch/orch.test.ts": {

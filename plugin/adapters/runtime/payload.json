@@ -591,12 +591,12 @@
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.mjs",
-      "sha256": "ab3b6fb371c8a939f9cdfaf1a581e4a49adcecfaf4ea189c64c191e27962b9b7",
+      "sha256": "c10fbf68eea64f8a2168d9f67687471c7aa5df14faaa07c865df1235afaa0900",
       "mode": "100755"
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.test.ts",
-      "sha256": "fa85667770e47a56e4538ea7779beb3f4abcdbbbc6a238fabebeab50cdb7b90b",
+      "sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
       "mode": "100644"
     },
     {
