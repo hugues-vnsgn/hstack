@@ -35,10 +35,10 @@ assumptions and mandatory transitive inputs are in the
 
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
-| Declared startup metadata, every frontmatter block (54 after disclosure) | 3,940.25 | 3,700 | 3,688.75 | 14,803 → 14,756 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,552.75 | 45,289 → 34,251 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,512 | 135,888 → 126,118 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,495.5 | 146,269 → 138,052 |
+| Declared startup metadata, every frontmatter block (55 after disclosure) | 3,940.25 | 3,700 | 3,716.75 | 14,803 → 14,868 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,544.75 | 45,289 → 34,219 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,493.25 | 135,888 → 126,043 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,476.75 | 146,269 → 137,977 |
 
 The approved-proof candidate adds deferred new-program references separately
 from those pinned scenarios. The guide is 7,636 bytes; constructing records also
@@ -168,9 +168,12 @@ also reads, and the host adapter points at it, which is why this floor is 252.5
 tokens (one worker) above its value before the router rewrite. These partial floors exclude other worker
 skills, role inputs and evidence; they are not additive to the unique inventories.
 
-External control/deslop/agent-writing instructions, consumer configuration,
+External control and agent-writing instructions, consumer configuration,
 source evidence, generated prompts, tool output, retries and native host
-overhead have unknown size. Every modeled dependency is counted even if its
+overhead have unknown size. The bundled `deslop` skill came after these
+scenarios were fixed. The startup row counts its frontmatter, and the scenario
+rows leave out its body, though the Opening a PR contract they include runs it.
+The released and pre-disclosure columns have no counterpart to compare it with. Every modeled dependency is counted even if its
 invocation would hold in a real host. Complete execution totals remain null.
 No live session established the intended on-demand behavior or token savings.
 The [router eval](hugues-mode-router-eval.md) ran the Issue's five tasks in Claude

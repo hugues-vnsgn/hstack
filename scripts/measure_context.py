@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 # candidate covers all of them. Each addition is listed here by name: a new SKILL.md that is not
 # listed, or a listed one that appears in the release, still fails the inventory check below.
 ADDED_AFTER_RELEASE = (
+    'plugin/skills/deslop/SKILL.md',
     'plugin/skills/hugues-help/SKILL.md',
     'plugin/skills/in-your-own-words/SKILL.md',
     'plugin/skills/ketchup/SKILL.md',

@@ -56,7 +56,7 @@ In context, that's enough. [`/tdd`](../../../plugin/skills/tdd/SKILL.md) writes 
 
 ## Clean before you commit
 
-The [Opening a PR playbook](../../../plugin/skills/hugues-mode/playbooks/opening-a-pr.md) runs `/deslop` on the diff before each commit and applies [`/unslop`](../../../plugin/skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` ships in the `cursor-team-kit` plugin, not in pstack. If you don't have it, ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
+The [Opening a PR playbook](../../../plugin/skills/hugues-mode/playbooks/opening-a-pr.md) runs [`/deslop`](../../../plugin/skills/deslop/SKILL.md) on the diff before each commit and applies [`/unslop`](../../../plugin/skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` is not a pstack skill. hStack bundles a copy of the `deslop` skill from Cursor's `cursor-team-kit` plugin, under its MIT license.
 
 For prose, `/unslop` takes a target and any extra rules you have:
 

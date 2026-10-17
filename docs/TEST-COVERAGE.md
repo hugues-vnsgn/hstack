@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **541 top-level unittest cases**. One is a driver that
+The current candidate collects **543 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -12,19 +12,19 @@ native workflow proof. Subtests are not added to case totals.
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
 | Current installed adapters and regressions | 97 | test_host_adapters (72), test_review_regressions (12), test_rereview_regressions (13) |
-| Current native-layout contracts | 51 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 45 reviewed contradictions in five line shapes each, 16 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition) |
+| Current native-layout contracts | 53 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the bundled non-pstack `deslop` skill (its pinned Cursor source, notice and two allowed additions, and six drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 45 reviewed contradictions in five line shapes each, 16 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
-| Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 1,980 cases (330 `read-workflow`, 1,596 `translate-plan` and 54 in-plan cases) over all 54 bundled skills, their legacy aliases, consumer and external paths, with symlink and traversal cases and positive controls |
+| Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,000 cases (335 `read-workflow`, 1,610 `translate-plan` and 55 in-plan cases) over all 55 bundled skills, the legacy aliases of the 54 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
 | Current approved requirements/proof | 46 | test_program_proof; installed JSON checks, artifact/build identities, safe design decoding, workflow reach, macOS process write isolation and rejection of the two withdrawn host-tool verbs |
 | Current program scheduling/recovery | 38 | test_program_control; installed policy gates, whole-group dispatch, saved progress, usage coverage, process groups, device receipts, concurrent writers and runtime waiting |
 | Current mobile coverage | 19 | test_mobile_coverage; installed risk coverage, exemptions, profile/default compatibility, operator rulings and integrity drift; synthetic plan fixtures, no native/mobile behavior claim |
-| Total collected | 541 | Current, mixed and historical scopes remain distinct |
+| Total collected | 543 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-541 Python cases. The opt-in CI workflow requires a provisioned native runner.
+543 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -110,7 +110,7 @@ JSON and unknown PR metadata. Candidate-specific holds and exit 2 remain require
 The active/pinned-chat gate stays separate. No real transcript was read and no
 real worktree was deleted.
 
-Native-layout cases compare all 54 public names and modes, archive/source identity,
+Native-layout cases compare all 55 public names (54 from pstack and `deslop`) and modes, archive/source identity,
 canonical mapping, workflow phase/cardinality/fallback constraints, the
 reviewed host invocation table, consumer boundaries and a measured source-context budget.
 Hash resealing cannot approve a lost phase gate or changed invocation policy.
@@ -223,3 +223,16 @@ payload-boundary regression script they checked, bringing the current total to
 installed plugin root and still rejects one over the owner control directory,
 and the approved-roots case no longer lists the plugin file or the binding as
 protected. The binding, guarded-read and drift cases are unchanged.
+
+The bundled `deslop` skill is a copy of Cursor's `cursor-team-kit` skill, not a
+pstack skill, and adds two native-layout cases. One binds the installed skill to
+its pinned Cursor source, the license notice and the two allowed additions. The
+other changes the installed body, the retained source copy, the shipped notice,
+the user-only metadata and the receipt in turn, reseals after each change and
+expects the core check to reject it. The existing cases now expect 55 public
+skills, list `deslop` among the skills added after 0.2.0 and compare the
+startup-metadata budget with `native_before` over the 50 skills both declare.
+The installed-tolerance rejection matrix grows from 1,980 to 2,000 subtests with
+the new skill, which has no legacy `pstack/skills/...` path. These are source
+checks of files and wiring. They do not show that a host lists, loads or runs
+`/deslop`.

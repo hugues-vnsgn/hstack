@@ -102,6 +102,7 @@ The default answer is `/hugues-mode`, which runs most of the others when its ste
 | Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |
 | Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |
 | Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |
+| Strip AI slop from the diff before committing | [`/deslop`](../deslop/SKILL.md) |
 | Strip comments before review, using a reviewer that didn't write them | [`/no-comments`](../no-comments/SKILL.md) |
 | Clean AI tells out of prose | [`/unslop`](../unslop/SKILL.md) |
 | Write docs, an RFC, a README, a PR description, or a commit message to a standard | [`/technical-writing`](../technical-writing/SKILL.md) |
@@ -133,7 +134,7 @@ Not in hStack:
 
 - There is no `/orchestrate` skill. Orchestrate is a `/hugues-mode` playbook. If the skill menu shows `/orchestrate`, another plugin provides it.
 - There is no loop skill. Playbooks that loop use the host's loop primitive, and a host without one blocks that operation and reports the gap.
-- `/deslop`, `control-cli` and `control-ui` come from Cursor's `cursor-team-kit` plugin, which hStack does not ship. Where a step names one and no equivalent is available, the run reports it as a missing capability per [publication rules](../../adapters/host-publication.md) instead of skipping it silently.
+- `control-cli` and `control-ui` come from Cursor's `cursor-team-kit` plugin, which hStack does not ship. Where a step names one and no equivalent is available, the run reports it as a missing capability per [publication rules](../../adapters/host-publication.md) instead of skipping it silently.
 
 ## Playbooks and principles
 

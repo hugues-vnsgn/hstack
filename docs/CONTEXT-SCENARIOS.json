@@ -373,7 +373,7 @@
   "unknown_inputs": [
     "Actual native host startup metadata exposure and tool/token framing",
     "Supported invocation or required human handoff for every dependency; unknown capability holds instead of running",
-    "External control-cli, deslop and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
+    "External control-cli and applicable create-skill/writing-for-agents instructions; consumer policy/model configuration",
     "Consumer source, investigation evidence, generated briefs, artifacts, tool output and replies",
     "Retries, additional evidence categories, contested designs, re-grounding or task-specific principles outside the fixed scenarios"
   ],
