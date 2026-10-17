@@ -15,4 +15,4 @@ The rule for this and later alignment work: follow the original pstack, and remo
 ## Consequences
 
 - Under an operator's full-autonomy grant, an hStack skill-fix PR goes from opening to merge on a clean verdict, as in pstack. Lab installs that track `main` pick up that fix on their next run without a manual review; the owner accepted this to match pstack.
-- Approved-checklist, accepted-proof and control-directory protection stay for now. [#78](https://github.com/hugues-vnsgn/hstack/issues/78) decides their fate under the same rule.
+- Approved-checklist, accepted-proof and control-directory protection are gone too. Under the same rule, [#78](https://github.com/hugues-vnsgn/hstack/issues/78) removed all three in [#80](https://github.com/hugues-vnsgn/hstack/issues/80), together with approved proof, `worker-run` and program control.
