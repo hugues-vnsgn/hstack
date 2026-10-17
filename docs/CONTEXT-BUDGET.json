@@ -50,14 +50,14 @@
       "estimated_tokens_characters_divided_by_4": 3700.0
     },
     "candidate": {
-      "bytes": 14756,
-      "characters": 14755,
-      "estimated_tokens_characters_divided_by_4": 3688.75
+      "bytes": 14709,
+      "characters": 14708,
+      "estimated_tokens_characters_divided_by_4": 3677.0
     },
     "candidate_original_skills": {
-      "bytes": 13876,
-      "characters": 13875,
-      "estimated_tokens_characters_divided_by_4": 3468.75
+      "bytes": 13829,
+      "characters": 13828,
+      "estimated_tokens_characters_divided_by_4": 3457.0
     },
     "added_after_release": [
       "plugin/skills/hugues-help/SKILL.md",
@@ -736,9 +736,9 @@
         "plugin/skills/hugues-mode/SKILL.md",
         "plugin/skills/setup-hstack/SKILL.md"
       ],
-      "bytes": 399,
-      "characters": 399,
-      "estimated_tokens_characters_divided_by_4": 99.75
+      "bytes": 352,
+      "characters": 352,
+      "estimated_tokens_characters_divided_by_4": 88.0
     }
   },
   "canonical_skill_bodies": {
@@ -1061,9 +1061,9 @@
         "plugin/skills/why/SKILL.md"
       ],
       "unique_files": 54,
-      "bytes": 210377,
-      "characters": 210284,
-      "estimated_tokens_characters_divided_by_4": 52571.0,
+      "bytes": 209597,
+      "characters": 209504,
+      "estimated_tokens_characters_divided_by_4": 52376.0,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1242,8 +1242,8 @@
           "sha256": "c091ea94669134889c7c20656ccc4cbfd6efdbbbddb5a683604a90d71e609304"
         },
         "plugin/skills/setup-hstack/SKILL.md": {
-          "bytes": 9960,
-          "sha256": "c156ba18318768bfc034dc1894119a7cb44adb34d0c41b1a6895e9e6fc67436f"
+          "bytes": 9180,
+          "sha256": "4b17c31de633431b2c6f47c6bdcb9cb5991914c8d80cf7c6eeef55e6151a6451"
         },
         "plugin/skills/sharpen/SKILL.md": {
           "bytes": 1042,
@@ -1289,9 +1289,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 195297,
-      "characters": 195205,
-      "estimated_tokens_characters_divided_by_4": 48801.25
+      "bytes": 194564,
+      "characters": 194472,
+      "estimated_tokens_characters_divided_by_4": 48618.0
     },
     "mode_full_file": {
       "paths": [
