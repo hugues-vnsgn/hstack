@@ -37,8 +37,8 @@ assumptions and mandatory transitive inputs are in the
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (54 after disclosure) | 3,940.25 | 3,700 | 3,677 | 14,803 → 14,709 |
 | Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,381.25 | 45,289 → 33,565 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 30,971.75 | 135,888 → 123,955 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 33,955.25 | 146,269 → 135,889 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 30,978.5 | 135,888 → 123,982 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 33,962 | 146,269 → 135,916 |
 
 The routing inventory falls about 25.9% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
@@ -88,7 +88,7 @@ paragraph into
 and added the four mobile routes to the Playbooks list. Issue #83 then put
 pstack's own wording back in every rule the rewrite had restated, keeping the
 renames, the host translation and the mobile routes, which brought the mode file
-to its current 19,296 bytes.
+to the size given above.
 
 Only `hugues-mode` and `setup-hstack` are model-invocable now, so only their
 352 characters of description (236 for the router, 116 for setup) enter startup
@@ -151,8 +151,8 @@ workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
 agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 8,647.5 estimated tokens for the bug-fix worker, and from 75,228 to
-69,180.0 for the eight feature workers. The model-defaults paragraph and the
+9,403.5 to 8,654.25 estimated tokens for the bug-fix worker, and from 75,228 to
+69,234.0 for the eight feature workers. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
 also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
 to this floor at the router rewrite. These partial floors exclude other worker
