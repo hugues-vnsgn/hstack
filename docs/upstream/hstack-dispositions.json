@@ -2458,8 +2458,8 @@
       "blob_sha": "54722a940aeeff3d8c8cdea5fe7e796296bb44c4",
       "size": 13101,
       "sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts"
@@ -2486,8 +2486,8 @@
       "blob_sha": "4828b0299672a4696e6844132c1caedb7ebbbd8b",
       "size": 25198,
       "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/github.ts"
@@ -2514,8 +2514,8 @@
       "blob_sha": "6dae16da71800fb06eb37a7e3b296a8d27275b08",
       "size": 12405,
       "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts"
@@ -2542,8 +2542,8 @@
       "blob_sha": "cabadb9bf96f4d8c4c0426d77d0cbdab80fbe3e5",
       "size": 25169,
       "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts"
@@ -2627,8 +2627,8 @@
       "blob_sha": "6c94e0a687f8e48f91acffd21f725320dd66e659",
       "size": 12649,
       "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/types.ts"

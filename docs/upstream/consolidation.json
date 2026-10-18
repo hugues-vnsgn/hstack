@@ -51,7 +51,7 @@
       "source_mode": 420,
       "destination": "plugin/agents/hugues-agent.md",
       "disposition": "canonical",
-      "destination_sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26"
+      "destination_sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
     },
     {
       "source": "pstack/assets/logo.png",
@@ -195,7 +195,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/05-build-and-clean.md",
       "disposition": "canonical",
-      "destination_sha256": "ed4ca5152733a5ceb46f00a47e33677339155b653efef64635f5dee690220941"
+      "destination_sha256": "5bb0ae9b863261f815430fa5990d2c3cf001eb823c2d1f60b34371d16ea37117"
     },
     {
       "source": "pstack/docs/guide/06-verify-and-ship.md",
@@ -203,7 +203,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/06-verify-and-ship.md",
       "disposition": "canonical",
-      "destination_sha256": "09d41e765410d47fca07486c1818c1a163c47c35cc54b008a7996c6158074518"
+      "destination_sha256": "6fe948ce3c16520cdb966c455682b5ba6c086f0c99688af048e789a9bd7ffff7"
     },
     {
       "source": "pstack/docs/guide/07-overnight.md",
@@ -531,7 +531,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-help/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c"
+      "destination_sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416"
     },
     {
       "source": "pstack/skills/poteto-help/references/prompting.md",
@@ -555,7 +555,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "4f12659c54a4f415eb045a144ed7ef569af90c18c25c3ac2bc8669928b89e409"
+      "destination_sha256": "08ad56976448cba11a9e7be228d3cb46821bff37df0e12833ed6604235d29eae"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -579,7 +579,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-full.md",
       "disposition": "canonical",
-      "destination_sha256": "9749ad2a1172fb38106777c5324819600f44f102780a419b039778c69e0aecf8"
+      "destination_sha256": "9749abd1c710cd24983e42e7b8d3ad7e7f234fb606032823e82506ab96327a7c"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
@@ -587,7 +587,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/autopilot-stack.md",
       "disposition": "canonical",
-      "destination_sha256": "bc71a1537acd4832de27065981ef9b4cadd220e323f65ca2002b6cdd176ff262"
+      "destination_sha256": "acaf04c6aafcb43ba18b16f6828f8a885fc361894b58f94a0b96392917c8fb97"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/babysit.md",
@@ -643,7 +643,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/multi-phase-plan.md",
       "disposition": "canonical",
-      "destination_sha256": "32836265dfcb7a9d670dc15fd138577c51121884f31419984901519b8a9a9afd"
+      "destination_sha256": "3c96c54ade61790ba7a4e72c46b60b459acb8bc1f63e76a8f59173508d877daa"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
@@ -651,7 +651,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/opening-a-pr.md",
       "disposition": "canonical",
-      "destination_sha256": "17f822dc631f5d9492f3f665d4b3e8ca851fe48dc234ca25b92b10c3cda2d282"
+      "destination_sha256": "175956e55c922bc8a31e452d1fd912914eebf5729469f8ab4e7a01f92ca00200"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
@@ -779,7 +779,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8"
+      "destination_sha256": "7b3149e06ccb2aaa31fae200127727241e0deb198c4366d9f6ff1b986ca8dba2"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
@@ -843,7 +843,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b"
+      "destination_sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
@@ -851,7 +851,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
       "disposition": "canonical",
-      "destination_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9"
+      "destination_sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
@@ -859,7 +859,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2"
+      "destination_sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
@@ -867,7 +867,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts",
       "disposition": "canonical",
-      "destination_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb"
+      "destination_sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/render.ts",
@@ -899,7 +899,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/scripts/watch-pr/types.ts",
       "disposition": "canonical",
-      "destination_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59"
+      "destination_sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/watch-pr",
@@ -1367,6 +1367,7 @@
     "bro",
     "correct",
     "create-verification-skill",
+    "deslop",
     "figure-it-out",
     "how",
     "hugues-help",
@@ -1424,6 +1425,7 @@
       "bro",
       "correct",
       "create-verification-skill",
+      "deslop",
       "figure-it-out",
       "how",
       "hugues-help",
@@ -1558,6 +1560,24 @@
       "prompt": "plugin/skills/show-me-your-work/SKILL.md"
     }
   },
+  "external_skills": {
+    "deslop": {
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "ccb5507cec1546dc88135c1139c811e6c59115ba",
+      "source": "cursor-team-kit/skills/deslop/SKILL.md",
+      "source_blob_sha": "1b3827c7f991182149a7abda696af43ff8f17a12",
+      "source_sha256": "2f7b7def74af7ed11f5b44b4d32f0f91fca8c5d1f92bf2171e8d12fd33a0f810",
+      "source_copy": "provenance/upstream/cursor-team-kit-ccb5507/skills/deslop/SKILL.md",
+      "license": "MIT",
+      "license_holder": "Copyright (c) 2026 Cursor",
+      "license_source": "cursor-team-kit/LICENSE",
+      "license_blob_sha": "ca2bba771cd39dbef6acf96b52481133983451f3",
+      "license_sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "license_copy": "provenance/upstream/cursor-team-kit-ccb5507/LICENSE",
+      "destination": "plugin/skills/deslop/SKILL.md",
+      "license_destination": "plugin/skills/deslop/LICENSE"
+    }
+  },
   "adaptations": [
     "Canonical native bodies replace forwarding entries; stable public names.",
     "Host invocation contract supersedes raw sibling-skill reads; unavailable or denied dependencies hold.",
@@ -1575,15 +1595,15 @@
       "mode": 420
     },
     "adapters/host-publication.md": {
-      "sha256": "b70e313e59671017284bcce9e67a60c1b76f4cec645d41d0e780fed1e1e0d6c3",
+      "sha256": "37161ce9490159d42c117320775ce43230d9d7520c4a573a8d6febf531f01c01",
       "mode": 420
     },
     "adapters/host-special-skills.md": {
-      "sha256": "01a061e914060a66a47eb7a152efe7e5c5372b709027ef4fdc932a0a5c7a2f6b",
+      "sha256": "066ecac3fbb118b6a54d08581fc4b1a3dc7c4dcc0ac958c3ece5406b0c085666",
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "09046bc53efbb29fcf80607369a2a7bd3a9e12e787815ddab4610769d1b8db79",
+      "sha256": "01b14db49c87c1d6e6531221bfc926ebe6455b776b46e98482db942a681bdeaa",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1599,11 +1619,11 @@
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "cae7f088ef77c806620f19ddcb53439a78879f364c3bbf47a5b080878b9bacc5",
+      "sha256": "a845ebaa90c67dfb9e681187abf68652b1a1bddb13f145610ea2fa66b556bf7e",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "230783c05ef55ae9fbd276559b4d8f7dd4a62abda9291508bec9f52a3a47257f",
+      "sha256": "8f469eecceb70f1deefe8dc395fd027bed08372c8859609acbadb5ec4d0bca84",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1627,15 +1647,15 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "89a83f27d570bfc094b8e520bf6a570b5a95221e95bbd9eb1e8ca37e5a65b312",
+      "sha256": "3007a23bf863583920b147183afbea7d0e42f5a5e1cf4ff3f698fd96058e687e",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "aad1301c58a235935ffb2e2b4b29561594b97856165454bc2f2101740ae8ebdc",
+      "sha256": "0ce99961f825dbfcf46b85ed4fca1112c8a4027c9e8a35ea932bff9510828ff6",
       "mode": 420
     },
     "agents/hugues-agent.md": {
-      "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26",
+      "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3",
       "mode": 420
     },
     "agents/hugues-comment-sicko.md": {
@@ -1734,6 +1754,18 @@
       "sha256": "207366fe6e5ebe7d8661206c66a30773731c1859b52889fba83309f598dc4406",
       "mode": 420
     },
+    "skills/deslop/LICENSE": {
+      "sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "mode": 420
+    },
+    "skills/deslop/SKILL.md": {
+      "sha256": "ff8ccbd185c955b869640eb1e65bb71286a21faea5c164c06607379724a386d5",
+      "mode": 420
+    },
+    "skills/deslop/agents/openai.yaml": {
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": 420
+    },
     "skills/figure-it-out/SKILL.md": {
       "sha256": "78da6777e5b688acf67e70bfb200462948e4fd24144dcea11f67aea0c46eaf10",
       "mode": 420
@@ -1759,7 +1791,7 @@
       "mode": 420
     },
     "skills/hugues-help/SKILL.md": {
-      "sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c",
+      "sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416",
       "mode": 420
     },
     "skills/hugues-help/agents/openai.yaml": {
@@ -1775,7 +1807,7 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "4f12659c54a4f415eb045a144ed7ef569af90c18c25c3ac2bc8669928b89e409",
+      "sha256": "08ad56976448cba11a9e7be228d3cb46821bff37df0e12833ed6604235d29eae",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {
@@ -1791,11 +1823,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-full.md": {
-      "sha256": "9749ad2a1172fb38106777c5324819600f44f102780a419b039778c69e0aecf8",
+      "sha256": "9749abd1c710cd24983e42e7b8d3ad7e7f234fb606032823e82506ab96327a7c",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/autopilot-stack.md": {
-      "sha256": "bc71a1537acd4832de27065981ef9b4cadd220e323f65ca2002b6cdd176ff262",
+      "sha256": "acaf04c6aafcb43ba18b16f6828f8a885fc361894b58f94a0b96392917c8fb97",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/babysit.md": {
@@ -1839,11 +1871,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
-      "sha256": "32836265dfcb7a9d670dc15fd138577c51121884f31419984901519b8a9a9afd",
+      "sha256": "3c96c54ade61790ba7a4e72c46b60b459acb8bc1f63e76a8f59173508d877daa",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/opening-a-pr.md": {
-      "sha256": "17f822dc631f5d9492f3f665d4b3e8ca851fe48dc234ca25b92b10c3cda2d282",
+      "sha256": "175956e55c922bc8a31e452d1fd912914eebf5729469f8ab4e7a01f92ca00200",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/orchestrate.md": {
@@ -1927,7 +1959,7 @@
       "mode": 493
     },
     "skills/hugues-mode/scripts/check-plan.test.ts": {
-      "sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
+      "sha256": "7b3149e06ccb2aaa31fae200127727241e0deb198c4366d9f6ff1b986ca8dba2",
       "mode": 420
     },
     "skills/hugues-mode/scripts/orch/orch.test.ts": {
@@ -1959,19 +1991,19 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/github.test.ts": {
-      "sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
+      "sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/github.ts": {
-      "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+      "sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/policy.test.ts": {
-      "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
+      "sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/policy.ts": {
-      "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
+      "sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/render.ts": {
@@ -1987,7 +2019,7 @@
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/types.ts": {
-      "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
+      "sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8",
       "mode": 420
     },
     "skills/hugues-mode/scripts/watch-pr/watch-pr": {

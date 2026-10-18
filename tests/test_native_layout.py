@@ -141,7 +141,7 @@ class NativeIntegrity(unittest.TestCase):
 
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
-        self.assertEqual(result['active_skills'], 54)
+        self.assertEqual(result['active_skills'], 55)
         self.assertEqual(result['upstream_archive_files'], 169)
 
     def test_missing_receipt_cannot_disable_integrity(self):
@@ -191,6 +191,64 @@ class NativeIntegrity(unittest.TestCase):
         path.write_text(path.read_text().replace('The host contract governs how this skill reaches any sibling dependency.', 'read any skill body'))
         seal_payload.seal(self.root, accept=['plugin/skills/architect/SKILL.md'])
         self.rejected()
+
+    def test_bundled_deslop_is_cursor_s_pinned_skill_plus_two_additions(self):
+        # deslop is not a pstack skill: no row of the pstack archive or ledger names it. It is
+        # bound to the exact cursor/plugins file it was copied from, with that repository's MIT
+        # notice, and the installed copy adds only the manual-only line and the host contract.
+        row = check_core.EXTERNAL_SKILLS['deslop']
+        receipt = json.loads((self.root / 'docs/upstream/consolidation.json').read_text())
+        self.assertEqual(receipt['external_skills'], {'deslop': row})
+        self.assertEqual(row['repository'], 'https://github.com/cursor/plugins')
+        self.assertEqual(row['license_holder'], 'Copyright (c) 2026 Cursor')
+        self.assertEqual([r['source'] for r in receipt['files'] if '/deslop/' in r['source']], [])
+        source = (self.root / row['source_copy']).read_bytes()
+        installed = (self.root / row['destination']).read_bytes()
+        self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
+        self.assertEqual(installed.decode(), check_core.external_installed(source.decode()))
+        self.assertEqual(installed.count(source.split(b'\n---\n\n', 1)[1]), 1)
+        self.assertTrue(check_core.native_frontmatter(installed.decode())['disable-model-invocation'])
+        self.assertIn('deslop', check_core.USER_ONLY)
+        self.assertEqual((self.root / row['license_copy']).read_bytes(),
+                         (self.root / row['license_destination']).read_bytes())
+        self.assertIn(b'Copyright (c) 2026 Cursor', (self.root / row['license_destination']).read_bytes())
+
+    def test_bundled_deslop_drift_cannot_be_approved_by_resealing(self):
+        row = check_core.EXTERNAL_SKILLS['deslop']
+        skill = self.root / row['destination']
+        yaml = skill.parent / 'agents/openai.yaml'
+        receipt = self.root / 'docs/upstream/consolidation.json'
+        installed = skill.read_text()
+        def edit_body():
+            skill.write_text(installed.replace('Keep behavior unchanged', 'Keep behavior mostly unchanged'))
+        def edit_source_copy():
+            copy = self.root / row['source_copy']
+            copy.write_text(copy.read_text().replace('Keep behavior unchanged', 'Keep behavior mostly unchanged'))
+            skill.write_text(installed.replace('Keep behavior unchanged', 'Keep behavior mostly unchanged'))
+        def edit_license_copy():
+            (self.root / row['license_destination']).write_text('MIT License\n')
+        def drop_license_copy():
+            (self.root / row['license_destination']).unlink()
+        def make_model_invocable():
+            skill.write_text(installed.replace('disable-model-invocation: true\n', ''))
+            yaml.write_text('policy:\n  allow_implicit_invocation: true\n')
+        def edit_receipt():
+            data = json.loads(receipt.read_text())
+            data['external_skills']['deslop']['revision'] = '0' * 40
+            receipt.write_text(json.dumps(data))
+        for name, mutate in [('body edit', edit_body), ('source copy edit', edit_source_copy),
+                             ('license edit', edit_license_copy), ('license removed', drop_license_copy),
+                             ('model-invocable', make_model_invocable), ('receipt edit', edit_receipt)]:
+            with self.subTest(change=name):
+                kept = {p: p.read_bytes() for p in [skill, yaml, receipt, self.root / row['source_copy'],
+                                                    self.root / row['license_destination']] if p.exists()}
+                mutate()
+                seal_payload.seal(self.root)
+                self.rejected()
+                for path, data in kept.items():
+                    path.write_bytes(data)
+                seal_payload.seal(self.root)
+                check_core.check(self.root)
 
     def test_native_policy_mutation_is_rejected_even_after_sealing(self):
         path = self.root / 'plugin/skills/setup-hstack/agents/openai.yaml'
@@ -365,7 +423,7 @@ class NativeIntegrity(unittest.TestCase):
         import measure_context
         measured = measure_context.measure(self.root)
         self.assertEqual(json.loads((self.root / 'docs/CONTEXT-BUDGET.json').read_text()), measured)
-        self.assertEqual(measured['public_skills'], 54)
+        self.assertEqual(measured['public_skills'], 55)
         self.assertLessEqual(measured['mode_initial_read_set']['candidate']['bytes'], 38000)
         self.assertLessEqual(measured['native_frontmatter']['candidate']['bytes'], 16000)
 
@@ -373,8 +431,9 @@ class NativeIntegrity(unittest.TestCase):
         # Skills added after 0.2.0 have no historical counterpart, so each is listed by name.
         # A new SKILL.md that is not listed, or a listed one that goes missing, still fails.
         self.assertEqual(sorted(measure_context.ADDED_AFTER_RELEASE),
-                         ['plugin/skills/hugues-help/SKILL.md', 'plugin/skills/in-your-own-words/SKILL.md',
-                          'plugin/skills/ketchup/SKILL.md', 'plugin/skills/sharpen/SKILL.md'])
+                         ['plugin/skills/deslop/SKILL.md', 'plugin/skills/hugues-help/SKILL.md',
+                          'plugin/skills/in-your-own-words/SKILL.md', 'plugin/skills/ketchup/SKILL.md',
+                          'plugin/skills/sharpen/SKILL.md'])
         unlisted = self.root / 'plugin/skills/unlisted/SKILL.md'
         unlisted.parent.mkdir()
         unlisted.write_text((self.root / 'plugin/skills/ketchup/SKILL.md').read_text())
@@ -482,9 +541,21 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertLessEqual(len(description), 243)
         self.assertIn('any mobile task (Swift/iOS, Kotlin/Android, KMP, CMP, simulator or emulator proof)', description)
         # Cursor-only concepts keep their wording; the host adapter translates them.
-        for concept in ['Bugbot', '`deslop` skill from the `cursor-team-kit` plugin', '`control-cli`',
+        for concept in ['Bugbot', '`control-cli`',
                         '`control-ui`', '**create-skill**', 'Cursor restart']:
             self.assertIn(concept, self.text)
+        # Bugbot keeps pstack's wording; the publication adapter says what it means here.
+        publication = ' '.join((ROOT / 'plugin/adapters/host-publication.md').read_text().split())
+        for marker in ['Claude Code Review', 'Claude GitHub Action review workflow',
+                       'Codex review (`chatgpt-codex-connector`)', 'Cursor Bugbot',
+                       '`bugbot-triage.md` applies to its comments unchanged',
+                       'setup installs nothing',
+                       '`Bugbot triage done. Not applicable. Reason no review bot.`',
+                       'never tick it as if triage happened']:
+            self.assertIn(marker, publication)
+        # deslop is bundled, so the router names it like its sibling bundled skills.
+        self.assertIn('- Before commit → the **deslop** skill (`/deslop`).', self.text)
+        self.assertNotIn('cursor-team-kit` plugin (`/deslop`)', self.text)
         for path in re.findall(r'`(playbooks/[\w-]+\.md)`', self.text):
             self.assertTrue((ROOT / 'plugin/skills/hugues-mode' / path).is_file(), path)
 
@@ -558,3 +629,50 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn("Spawn a fresh `hugues-agent` for each new task", description)
         self.assertIn("hugues-mode's Subagents section", description)
         self.assertIn('inline Principles index', description)
+
+    def test_hugues_agent_finds_the_mode_file_itself(self):
+        # Issue #48: owners whose brief carried no hugues-mode path never read a bundled
+        # skill. pstack's poteto-agent finds its mode file on disk; hugues-agent does the same
+        # in Claude Code terms, in this order, and keeps the preload.
+        agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
+        self.assertRegex(agent, r'(?m)^skills:\n  - hstack:hugues-mode$')
+        flat = ' '.join(agent.split())
+        order = ['the absolute path to the `hugues-mode` SKILL.md that your parent gave you',
+                 '"Base directory for this skill" that Claude Code shows with the preloaded `hugues-mode` skill',
+                 'search the installed plugins under the Claude config directory',
+                 'a file whose path ends in `skills/hugues-mode/SKILL.md`',
+                 'stop and tell your parent']
+        positions = [flat.find(step) for step in order]
+        self.assertNotIn(-1, positions, dict(zip(order, positions)))
+        self.assertEqual(positions, sorted(positions))
+
+    def test_bundled_user_only_skills_are_files_never_skill_tool_calls(self):
+        # Issue #48: Claude Code's Skill tool refuses a user-only skill and tells the model to
+        # take no other route, and five owners stopped there. The rule lives in the adapter and
+        # in the agent header, and the playbooks keep their inherited wording.
+        for path in ['plugin/adapters/host.md', 'plugin/agents/hugues-agent.md']:
+            flat = ' '.join((ROOT / path).read_text().split())
+            for phrase in ['On Claude Code, never call the Skill tool for one.',
+                           '`/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`',
+                           'file-read tool']:
+                with self.subTest(path=path, phrase=phrase):
+                    self.assertIn(phrase, flat)
+        # Native-only skills keep their native route.
+        self.assertIn('Reach `hugues-mode`, `setup-hstack` and each consumer or external skill',
+                      ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split()))
+
+    def test_playbook_headers_no_longer_hold_a_step_on_invocation(self):
+        # Issue #48: pstack's playbooks have no "never a path to read" clause. The three hStack
+        # headers keep read-workflow and plan-check (issue #78) and lose the clause.
+        for name in ['autopilot-full', 'autopilot-stack', 'multi-phase-plan']:
+            text = (ROOT / 'plugin/skills/hugues-mode/playbooks' / (name + '.md')).read_text()
+            header = ' '.join(text.split('\n\n', 1)[0].split())
+            with self.subTest(playbook=name):
+                self.assertNotIn('never a path to read', header)
+                self.assertNotIn('Unavailable or denied invocation holds that step', header)
+                self.assertIn('bound `read-workflow`', header)
+                self.assertIn('`plan-check` for validation', header)
+                self.assertIn('reach each skill as [host.md](../../../adapters/host.md) directs.', header)
+        tools = ' '.join((ROOT / 'plugin/adapters/host-tools.md').read_text().split())
+        self.assertNotIn('never a path to read', tools)
+        self.assertIn('a plan names the skill to apply, and the agent resolves the path', tools)

@@ -151,17 +151,17 @@
     },
     {
       "path": "adapters/host-publication.md",
-      "sha256": "b70e313e59671017284bcce9e67a60c1b76f4cec645d41d0e780fed1e1e0d6c3",
+      "sha256": "37161ce9490159d42c117320775ce43230d9d7520c4a573a8d6febf531f01c01",
       "mode": "100644"
     },
     {
       "path": "adapters/host-special-skills.md",
-      "sha256": "01a061e914060a66a47eb7a152efe7e5c5372b709027ef4fdc932a0a5c7a2f6b",
+      "sha256": "066ecac3fbb118b6a54d08581fc4b1a3dc7c4dcc0ac958c3ece5406b0c085666",
       "mode": "100644"
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "09046bc53efbb29fcf80607369a2a7bd3a9e12e787815ddab4610769d1b8db79",
+      "sha256": "01b14db49c87c1d6e6531221bfc926ebe6455b776b46e98482db942a681bdeaa",
       "mode": "100644"
     },
     {
@@ -181,7 +181,7 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "cae7f088ef77c806620f19ddcb53439a78879f364c3bbf47a5b080878b9bacc5",
+      "sha256": "a845ebaa90c67dfb9e681187abf68652b1a1bddb13f145610ea2fa66b556bf7e",
       "mode": "100644"
     },
     {
@@ -211,7 +211,7 @@
     },
     {
       "path": "agents/hugues-agent.md",
-      "sha256": "fc0dd1ae93d7cbdf5c2558e2a4d8d53b0f59903146f8cc149863a4c3b6a29f26",
+      "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3",
       "mode": "100644"
     },
     {
@@ -335,6 +335,21 @@
       "mode": "100644"
     },
     {
+      "path": "skills/deslop/LICENSE",
+      "sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/deslop/SKILL.md",
+      "sha256": "ff8ccbd185c955b869640eb1e65bb71286a21faea5c164c06607379724a386d5",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/deslop/agents/openai.yaml",
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644"
+    },
+    {
       "path": "skills/figure-it-out/SKILL.md",
       "sha256": "78da6777e5b688acf67e70bfb200462948e4fd24144dcea11f67aea0c46eaf10",
       "mode": "100644"
@@ -366,7 +381,7 @@
     },
     {
       "path": "skills/hugues-help/SKILL.md",
-      "sha256": "79728fa866dc6a3b9544ffc525b988f83c6fbcc10ee7ce328748d008f699a66c",
+      "sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416",
       "mode": "100644"
     },
     {
@@ -386,7 +401,7 @@
     },
     {
       "path": "skills/hugues-mode/SKILL.md",
-      "sha256": "4f12659c54a4f415eb045a144ed7ef569af90c18c25c3ac2bc8669928b89e409",
+      "sha256": "08ad56976448cba11a9e7be228d3cb46821bff37df0e12833ed6604235d29eae",
       "mode": "100644"
     },
     {
@@ -406,12 +421,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-full.md",
-      "sha256": "9749ad2a1172fb38106777c5324819600f44f102780a419b039778c69e0aecf8",
+      "sha256": "9749abd1c710cd24983e42e7b8d3ad7e7f234fb606032823e82506ab96327a7c",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/autopilot-stack.md",
-      "sha256": "bc71a1537acd4832de27065981ef9b4cadd220e323f65ca2002b6cdd176ff262",
+      "sha256": "acaf04c6aafcb43ba18b16f6828f8a885fc361894b58f94a0b96392917c8fb97",
       "mode": "100644"
     },
     {
@@ -466,12 +481,12 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/multi-phase-plan.md",
-      "sha256": "32836265dfcb7a9d670dc15fd138577c51121884f31419984901519b8a9a9afd",
+      "sha256": "3c96c54ade61790ba7a4e72c46b60b459acb8bc1f63e76a8f59173508d877daa",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/playbooks/opening-a-pr.md",
-      "sha256": "17f822dc631f5d9492f3f665d4b3e8ca851fe48dc234ca25b92b10c3cda2d282",
+      "sha256": "175956e55c922bc8a31e452d1fd912914eebf5729469f8ab4e7a01f92ca00200",
       "mode": "100644"
     },
     {
@@ -576,7 +591,7 @@
     },
     {
       "path": "skills/hugues-mode/scripts/check-plan.test.ts",
-      "sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
+      "sha256": "7b3149e06ccb2aaa31fae200127727241e0deb198c4366d9f6ff1b986ca8dba2",
       "mode": "100644"
     },
     {
@@ -616,22 +631,22 @@
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/github.test.ts",
-      "sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
+      "sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/github.ts",
-      "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+      "sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/policy.test.ts",
-      "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
+      "sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/policy.ts",
-      "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
+      "sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371",
       "mode": "100644"
     },
     {
@@ -651,7 +666,7 @@
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/types.ts",
-      "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
+      "sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8",
       "mode": "100644"
     },
     {

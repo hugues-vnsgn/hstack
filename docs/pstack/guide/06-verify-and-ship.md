@@ -125,6 +125,15 @@ Babysit watches the PR with a bundled watcher and takes blockers in order: confl
 
 Babysit stops at merge-ready. It never merges, even with everything green, because merging is a different decision.
 
+pstack's triage assumes a review bot is commenting on the PR, which its text calls Bugbot. On Claude Code and Codex that means whichever bot your repository has. hStack installs none, so you turn one on, following each vendor's docs:
+
+- Claude Code Review: an owner of your Claude organization turns it on. It needs a Team or Enterprise plan.
+- Claude GitHub Action: run `/install-github-app` in Claude Code and pick the review workflow.
+- Codex: turn on Automatic review for the repository in Codex settings, or comment `@codex review` on a PR.
+- Cursor Bugbot: turn it on in the Cursor dashboard.
+
+With none installed, a plan's "Bugbot triage done." box reads "Not applicable. Reason no review bot." and stays unticked. The watcher finds each bot's threads by its GitHub login. No hStack PR has been reviewed by any of these bots yet, and Claude's login (`claude`) is the one still unconfirmed.
+
 ## Land the stack with Shipping
 
 Green is not the same as safe. When you're ready to land, say so:

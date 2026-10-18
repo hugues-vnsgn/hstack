@@ -11,6 +11,10 @@ Recorded limitations of the lint (not hidden by the corpus):
   * It does not read negation. "Never invoke tdd natively" is flagged exactly like "invoke tdd
     natively", because both name a skill beside a reach word. A true statement of that shape is
     rewritten, or becomes the one reviewed entry in NATIVE_REACH_ALLOWLIST.
+  * "Never call the Skill tool for a bundled user-only skill" is flagged for the same reason. The
+    rule in host.md and in the hugues-agent header says "Never call the Skill tool for one" in the
+    sentence after the one that names the class, so the clause that holds the tool names no skill
+    and passes. A reworded rule that names the class in that clause fails and is rewritten.
   * A prohibition that names no skill and no class is not caught: "never substitute direct body
     reads for unavailable or denied invocation", alone in its clause, is correct for a consumer
     project skill (create-verification-skill's template) and for host.md's "for those skills"
@@ -136,6 +140,11 @@ CONTRADICTIONS = [
      'The host auto-loads unslop whenever you write prose.'),
     ('paraphrase leaf dependencies by native invocation',
      'Each leaf dependency is reached by native invocation.'),
+    # Issue #48: Claude Code's Skill tool refuses a user-only skill, so a call is a dead end.
+    ('issue 48 call the Skill tool on no-comments',
+     'Before the PR opens, call the Skill tool on `no-comments` and follow its steps.'),
+    ('issue 48 call the Skill tool for each bundled skill',
+     'Call the Skill tool for each bundled skill the plan names.'),
 ]
 
 # Sentences that name a native-reach word and a skill, or a class word, and are correct.
@@ -184,4 +193,18 @@ CLEAN = [
      'Ask why the host did not invoke the tool, then check the log.'),
     ('read, never invoke',
      "Read arena's SKILL.md in full as the scoped bundled reference; never substitute a consumer or external fallback for it."),
+    # Issue #48: the prohibition names the tool and no skill in its own clause, and the
+    # translation of `/<name>` names no skill either.
+    ('host.md: never call the Skill tool for a user-only skill',
+     'Every other\n'
+     'bundled skill, including each `principle-*`, is user-only: the owner can still\n'
+     'type it by name. On Claude Code, never call the Skill tool for one. In a\n'
+     'playbook, `/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`.\n'
+     'An agent reads its SKILL.md in full as the scoped bundled reference.'),
+    ('hugues-agent header: never call the Skill tool for a user-only skill',
+     "A bundled user-only skill is the router's reference instead: read its own SKILL.md in\n"
+     'full, resolved from the owning file or the mode root, never a parent\'s claim\n'
+     'of having read it. On Claude Code, never call the Skill tool for one. In a\n'
+     'brief or a playbook, `/<name>` and "the **<name>** skill" mean reading\n'
+     '`../<name>/SKILL.md` in full with the file-read tool.'),
 ]

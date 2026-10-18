@@ -5,12 +5,13 @@ hStack gives Claude Code and Codex a set of workflows for investigating, changin
 Version **0.4.0** renames the project from huguesStack to hStack. The plugin is
 `hstack`, its commands start with `/hstack:` and the setup skill is `setup-hstack`;
 the [0.4.0 release notes](docs/RELEASE-0.4.0.md) list the renames and how to
-migrate. It has 54 public skills, 23 generic playbooks, two agents and four mobile
-playbooks. Each skill owns one canonical `SKILL.md`. Against 0.3.0's 50 skills, it
-merges pstack 0.15.25 and adds four user-only skills. Exact pstack
-source remains in a provenance archive outside runtime discovery. Only
-`hugues-mode` and `setup-hstack` appear in the host's skill list; the router
-reads the other skills as files. The published 0.1.0, 0.2.0 and 0.3.0 releases and
+migrate. It has 55 public skills, 23 generic playbooks, two agents and four mobile
+playbooks. Each skill owns one canonical `SKILL.md`. Against 0.3.0's 50 skills, 0.4.0
+merges pstack 0.15.25 and adds four user-only skills. The 55th, `deslop`, came after
+0.4.0. It is a copy of Cursor's `cursor-team-kit` skill, which pstack's text calls
+but does not ship. Exact pstack source remains in a provenance archive outside
+runtime discovery. Only `hugues-mode` and `setup-hstack` appear in the host's
+skill list; the router reads the other skills as files. The published 0.1.0, 0.2.0 and 0.3.0 releases and
 their evidence are unchanged.
 
 ## Start with Claude Code
@@ -64,4 +65,4 @@ python3 scripts/check_whitespace.py
 [Source maintenance CI](.github/workflows/maintenance.yml) runs these commands on
 pull requests and pushes to main. Native host and device proofs run separately.
 
-The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT; see [pstack's notice](PSTACK-LICENSE) and the [upstream pin and ledger](docs/upstream/README.md).
+The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT; see [pstack's notice](PSTACK-LICENSE), [Cursor's notice for `deslop`](plugin/skills/deslop/LICENSE) and the [upstream pin and ledger](docs/upstream/README.md).

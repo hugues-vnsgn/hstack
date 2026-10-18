@@ -13,8 +13,8 @@ description entered the host's per-turn skill list. The skill-list-budget work
 reverses that: it returns to pstack's own router design, where only
 `poteto-mode` (here `hugues-mode`) was model-invocable and read every other
 skill as a file. Only `hugues-mode` and `setup-hstack` stay
-model-invocable now; the other 52 bundled skills are user-only again, which is
-the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
+model-invocable now; the other 53 bundled skills are user-only (52 again, plus
+`deslop`, which was never anything else), which is the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
 This is an invocation-exposure change only: no upstream responsibility,
 destination or disposition moves.
 
@@ -200,3 +200,29 @@ of altered frontmatter. The checker binds all WP2 receipts and the present WP3
 generator's source fingerprints, adaptation disposition and ledger destinations
 to the complete inventory. It verifies bytes at every present verbatim ledger destination.
 The sync tool itself adds no skills or mobile app code.
+
+## A bundled skill that is not from pstack
+
+`deslop` is not a pstack skill, and no row of the pstack archive or the ledger
+names it. pstack's text tells the agent to run Cursor's `/deslop` before each
+commit, and hStack ships a copy so that step has a skill to run. It is
+`cursor-team-kit/skills/deslop/SKILL.md` from
+[cursor/plugins at `ccb5507`](https://github.com/cursor/plugins/tree/ccb5507cec1546dc88135c1139c811e6c59115ba/cursor-team-kit),
+which is MIT licensed, Copyright (c) 2026 Cursor.
+
+- The exact source bytes and Cursor's license file are kept in
+  [provenance/upstream/cursor-team-kit-ccb5507](../../provenance/upstream/cursor-team-kit-ccb5507/skills/deslop/SKILL.md),
+  outside runtime discovery.
+- The plugin ships the notice with the skill, at
+  [plugin/skills/deslop/LICENSE](../../plugin/skills/deslop/LICENSE).
+- [The installed skill](../../plugin/skills/deslop/SKILL.md) is that source plus
+  two additions: the `disable-model-invocation: true` frontmatter line and the
+  host invocation contract section every bundled skill carries. Its name,
+  description and body are unchanged.
+- The `external_skills` receipt in [consolidation.json](consolidation.json) and
+  `EXTERNAL_SKILLS` in `scripts/check_core.py` pin the repository, commit, blob
+  and SHA-256 of both source files. `check_core.py` rejects any difference
+  between the installed skill and that source beyond the two additions, and
+  rejects a skill that is not user-only.
+- Moving to a newer Cursor commit is a manual review: copy the new bytes into a
+  new provenance folder, then update both tables and reseal.

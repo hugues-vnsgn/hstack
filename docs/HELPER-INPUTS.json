@@ -33,10 +33,10 @@
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
       "source_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
-      "candidate_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
-      "same_bytes_as_upstream": true,
+      "candidate_sha256": "7b3149e06ccb2aaa31fae200127727241e0deb198c4366d9f6ff1b986ca8dba2",
+      "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "relocated plan-checker tests added at pstack 0.15.25; run with Bun against the hStack checker"
+      "scope": "plan-checker tests added at pstack 0.15.25 plus one hStack case for the not-applicable Bugbot box; run with Bun against the hStack checker"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
@@ -105,37 +105,37 @@
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts",
       "source_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
-      "candidate_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
       "source_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
-      "candidate_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts",
       "source_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
-      "candidate_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts",
       "source_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
-      "candidate_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/render.ts",
@@ -168,10 +168,10 @@
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/types.ts",
       "source_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
-      "candidate_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/watch-pr",
@@ -197,6 +197,7 @@
     "The disclosure-pass Bun/TypeScript run did not start because the harmless offline sandbox preflight returned EPERM. No containment bypass or retry occurred.",
     "A later review-fix run on a scratch install of this candidate observed Bun 1.4.2: bun install --frozen-lockfile through the session proxy, bun test orch watch-pr 52 of 52 passing and tsc --strict --noEmit (TypeScript 7.0.2) exiting 0 for watch-pr. Bound helper reads still passed with the installed node_modules present.",
     "The Node plan gate differs from upstream and passed current installed Node tests.",
-    "Python installed helpers changed during consolidation and are covered separately by current adapter tests. Progressive disclosure only changes their bound inventory/hash constants."
+    "Python installed helpers changed during consolidation and are covered separately by current adapter tests. Progressive disclosure only changes their bound inventory/hash constants.",
+    "The review-bot change adapts five watch-pr files and adds a plan-check test. They ran under Bun and tsc on a local install; recognition of the Claude and Codex logins is checked against synthetic GraphQL fixtures only, and no review bot has been observed on a PR here."
   ]
 }

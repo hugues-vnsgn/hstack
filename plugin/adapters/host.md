@@ -14,12 +14,14 @@ custom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mod
 `setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other
 public names are unchanged.
 
-Only `hugues-mode` and `setup-hstack` are model-invocable; their
-descriptions enter the host's skill list. Every other bundled skill, including
-each `principle-*`, is user-only: the owner can still type it by name. An agent
+Only `hugues-mode` and `setup-hstack` are model-invocable. Every other
+bundled skill, including each `principle-*`, is user-only: the owner can still
+type it by name. On Claude Code, never call the Skill tool for one. In a
+playbook, `/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`.
+An agent
 reads its SKILL.md in full as the scoped bundled reference, with the host's own
-file-read tool and resolved as an owned resource below. The installed helpers
-never read a skill body. A missing or unreadable path holds the dependent step.
+file-read tool. Helpers never read a skill body. A missing or unreadable path
+holds the dependent step.
 A native denial on such a skill does not stop the host's file read; the owner's real
 control over those skills is enabling or disabling the plugin as a whole.
 
@@ -78,7 +80,7 @@ references, not skill bodies or a native loader.
 | Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations | [Workflow tools](host-workflow-tools.md) |
 | Transcript-dependent skills, optional integrations or consumer skill placement | [Special skills](host-special-skills.md) |
 | Reading or editing TypeScript files | [TypeScript scope](host-typescript.md) |
-| Skill authoring, commits, review, PR preparation/publication or missing control/writing capability reports | [Publication](host-publication.md) |
+| Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports | [Publication](host-publication.md) |
 
 Apply [mobile applicability](mobile.md#applicability) before selecting a route.
 Do not load a phase reference merely because it is listed here.
