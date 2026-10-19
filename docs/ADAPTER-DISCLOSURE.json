@@ -41,8 +41,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "908ea1518bf2e2bf893ef33822c075be8abaa1985e4cac31015f17c813a3acfa",
       "disposition": "replaced",
-      "reason": "The opening sentence scoped native invocation to every bundled skill too, which disable-model-invocation: true makes impossible for a user-only bundled skill; PR 1 fix round 1 narrowed it to consumer and external skills only, and round 3 names the whole native-only set (hugues-mode, setup-hstack (then setup-huguesstack), consumer and external skills) and states the rule once, so reading their files stays no substitute.",
-      "replacement": "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\nnative-only skills) only through the host's supported native mechanism. Respect\nmanual-only selection, owner-disabled entries and native denials; for those skills, never use a file read as an invocation fallback."
+      "reason": "The opening sentence scoped native invocation to every bundled skill too, which disable-model-invocation: true makes impossible for a user-only bundled skill; PR 1 fix round 1 narrowed it to consumer and external skills only, and round 3 names the whole native-only set (hugues-mode, setup-hstack (then setup-huguesstack), consumer and external skills) and states the rule once, so reading their files stays no substitute. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading.",
+      "replacement": "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\nnative-only skills) only through the host's supported native mechanism.\nOn Codex, select the enabled skill from the host-provided catalog and read\nits complete SKILL.md. No separate Skill tool exists.\nRespect manual-only selection, owner-disabled entries and native denials.\nOutside that mechanism, never use a file read as an invocation fallback."
     },
     {
       "paragraph": 4,
@@ -63,7 +63,10 @@
         886
       ],
       "destination": "plugin/adapters/host.md",
-      "sha256": "042531ad133d16a1fdd8709a346d40c2c320dadfdc2ace3095c994aee1e222dc"
+      "sha256": "042531ad133d16a1fdd8709a346d40c2c320dadfdc2ace3095c994aee1e222dc",
+      "disposition": "replaced",
+      "replacement": "If explicit user invocation is required, give the exact native command and wait.\nPrinted slash or dollar commands do not prove native invocation.\nAn available file or a successful binding check establishes no skill permission.\nRead owned references only when needed by their phase. Resolve relative paths\nfrom the owning file or mode root, never the consumer cwd. Do not recursively\ntraverse links or eagerly invoke linked skills.",
+      "reason": "Keep the same conditional user handoff, command-evidence limit, file-permission boundary and phase-scoped resource rules in fewer words so the Codex mechanism fits the existing context limits."
     },
     {
       "paragraph": 4,
@@ -75,7 +78,7 @@
       "sha256": "0d6cb1863a1d6b3e8b8c0f261e9eed602a7c4a312b5d60b0113fd7e473566aee",
       "disposition": "replaced",
       "reason": "A blanket override of inherited raw sibling-read wording is false for bundled user-only skills, which keep that wording; PR 1 fix round 1 scoped the override to consumer and external skills, and round 3 scopes it to the native-only skills and points back at the one statement of the user-only read instead of restating it.",
-      "replacement": "This native-mechanism requirement overrides inherited\nraw sibling-read wording for the native-only skills alone; a bundled user-only\nskill keeps that read wording (the scoped bundled reference above)."
+      "replacement": "For native-only skills, this rule overrides inherited sibling reads; bundled\nuser-only skills keep their scoped read above."
     },
     {
       "paragraph": 4,
@@ -86,8 +89,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "74195c3c6c409ed21724d998466d87b7355c4758c735a52616d2762161501cda",
       "disposition": "replaced",
-      "reason": "A figure-it-out principles consultation naming 'a supported native invocation scoped to principles only' and a fresh worker needing to 'obtain its own native context' both assumed principles stay model-invocable, which disable-model-invocation: true now forbids; PR 1 fix round 2 read the principle's SKILL.md in full instead, and round 3 splits the fresh-worker sentence so the read of a bundled skill and the native invocation of a native-only skill are separate duties, with no unscoped 'native context'; round 4 limits that read to bundled user-only skills, because hugues-mode and setup-hstack (then setup-huguesstack) are bundled but native-only.",
-      "replacement": "For a principles consultation from figure-it-out, use already-loaded mode context\nor read the needed principle's SKILL.md in full: never restart task routing.\nA fresh worker reads any bundled user-only skill itself. It starts its own native\ninvocation of any native-only skill; a parent's claim of permission is\ninsufficient. Missing capability holds the phase without scanning user settings."
+      "reason": "A figure-it-out principles consultation naming 'a supported native invocation scoped to principles only' and a fresh worker needing to 'obtain its own native context' both assumed principles stay model-invocable, which disable-model-invocation: true now forbids; PR 1 fix round 2 read the principle's SKILL.md in full instead, and round 3 splits the fresh-worker sentence so the read of a bundled skill and the native invocation of a native-only skill are separate duties, with no unscoped 'native context'; round 4 limits that read to bundled user-only skills, because hugues-mode and setup-hstack (then setup-huguesstack) are bundled but native-only. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading.",
+      "replacement": "For a principles consultation from figure-it-out, use already-loaded mode context\nor read the needed principle's SKILL.md in full: never restart task routing.\nA fresh worker reads any bundled user-only skill itself. It loads any native-only\nskill itself through the host-specific mechanism above; a parent's claim of\npermission is insufficient. Missing capability holds the phase without scanning user settings."
     },
     {
       "paragraph": 5,
@@ -194,8 +197,8 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "7543ba3540e4939253edfa7c2c8e60a910c7cd23a5c5a4bac29af5d4b5923abf",
       "disposition": "replaced",
-      "reason": "Obtaining applicable principles through native invocation is impossible once every principle-* skill is user-only; PR 1 fix round 1 reads each one's SKILL.md in full as the scoped bundled reference instead.",
-      "replacement": "Obtain the mode through supported native invocation before work; read each\napplicable principle's SKILL.md in full as the scoped bundled reference below.\nIf the host cannot preserve required context isolation or parallelism, mark\nthat phase blocked."
+      "reason": "Obtaining applicable principles through native invocation is impossible once every principle-* skill is user-only; PR 1 fix round 1 reads each one's SKILL.md in full as the scoped bundled reference instead. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading.",
+      "replacement": "Before work, load the mode per [host.md](host.md). On Codex, select its enabled\ncatalog entry and read the complete SKILL.md yourself. Read each applicable\nprinciple's SKILL.md in full as the scoped bundled reference below.\nIf the host cannot preserve required context isolation or parallelism, mark\nthat phase blocked."
     },
     {
       "paragraph": 11,

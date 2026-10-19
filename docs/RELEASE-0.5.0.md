@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Codex native skill loading is explicit.** The host adapters define selection of an enabled catalog skill followed by a complete SKILL.md read as Codex native loading. Native-only holds, Claude Code rules and general-purpose worker rules remain. One source-contract regression covers the wording. Fresh-host behavior after this change remains unobserved.
+
 - **Project skill paths and agent stores use native locations** ([#34](https://github.com/hugues-vnsgn/hstack/issues/34)). The host adapters preserve existing supported project layouts and update targets, with `.claude/skills` for new Claude Code projects and `.agents/skills` for new Codex projects. Categories and verification feature maps stay with their skills. A named or existing program store wins; otherwise the agent store is `~/hstack-evidence/<date>-<task>/`. Existing store arguments and pstack's internal layout stay unchanged. Existing worker-role and gh/Origin mappings are retained; no runtime was added.
 
 - **Mobile proof starts with a preflight** ([#75](https://github.com/hugues-vnsgn/hstack/issues/75)). Before planning lanes, the procedure records sandbox state, host, OS and tool versions, then checks each required proof tool with a real harmless operation. A blocked tool drops or replaces its lane as a gap. Before changing agent settings, the same operation runs as a host baseline. A failing baseline is a host blocker and stops settings iteration; a passing baseline routes to build-doctor. A passing step requires evidence that it was reached. These are procedure changes; host and device behavior need separate observed evidence.
