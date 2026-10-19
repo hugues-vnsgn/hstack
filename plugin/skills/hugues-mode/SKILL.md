@@ -7,8 +7,8 @@ description: "Router for any mobile task (Swift/iOS, Kotlin/Android, KMP, CMP, s
 
 ## Host invocation contract
 
-Before these workflow steps, apply the [host contract](../../adapters/host.md)
-and [mobile applicability](../../adapters/mobile.md#applicability).
+Before tools, read [host contract](../../adapters/host.md)
+and [mobile applicability](../../adapters/mobile.md#applicability) in full, then apply.
 The host contract governs how this skill reaches any sibling dependency.
 
 Bundled skills live at `../<name>/SKILL.md` from this file, so put this file's absolute path in every `hugues-agent` prompt.

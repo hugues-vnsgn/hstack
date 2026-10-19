@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Skills explicitly require the host contract read.** All 33 host invocation blocks require reading the host contract and mobile applicability in full before the first tool call, then applying them. The source constant enforces the same sentence. Fresh Claude Code behavior remains unobserved at this commit.
+
 - **Hosts without a todo tool use a Markdown checklist.** The host adapter puts the playbook's verbatim steps in the task's agent store before step one, records done or skip status as work proceeds, and names the file in the reply. This translates the existing todo rule. One source-contract test covers the instructions. Fresh-host adoption remains unobserved.
 
 - **Codex native skill loading is explicit.** The host adapters define selection of an enabled catalog skill followed by a complete SKILL.md read as Codex native loading. Native-only holds, Claude Code rules and general-purpose worker rules remain. One source-contract regression covers the wording. Fresh-host behavior after this change remains unobserved.
