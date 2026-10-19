@@ -1,0 +1,16 @@
+e: file:///private/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-gradle-capture-sdu4pofp/gradle-kotlin-error/src/commonMain/kotlin/NativeError.kt:1:24 Unresolved reference 'missingNativeSymbol'.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileKotlinJvm'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 6s

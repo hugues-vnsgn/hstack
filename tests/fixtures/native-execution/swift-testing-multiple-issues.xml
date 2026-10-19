@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="1" failures="2" skipped="0" time="0.001089208">
+    <testcase classname="ReviewTests" name="multipleIssues()" time="0.000929292" >
+      <failure message="Expectation failed: 1 == 2 (error)" />
+      <failure message="Expectation failed: 3 == 4 (error)" />
+    </testcase>
+  </testsuite>
+</testsuites>

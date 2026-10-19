@@ -1,0 +1,41 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.13/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :compileJava NO-SOURCE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+> Task :test FAILED
+
+NativeFailureTest > testFailure10 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:13
+
+NativeFailureTest > testFailure1 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:4
+
+NativeFailureTest > testFailure2 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:5
+
+NativeFailureTest > testFailure3 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:6
+
+NativeFailureTest > testFailure4 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:7
+
+NativeFailureTest > testFailure5 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:8
+
+NativeFailureTest > testFailure6 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:9
+
+NativeFailureTest > testFailure7 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:10
+
+NativeFailureTest > testFailure8 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:11
+
+NativeFailureTest > testFailure9 FAILED
+    java.lang.AssertionError at NativeFailureTest.java:12
+2 actionable tasks: 2 executed

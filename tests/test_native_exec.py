@@ -13,6 +13,7 @@ from test_host_adapters import InstalledFixture
 
 
 ROOT = Path(__file__).resolve().parents[1]
+NATIVE = ROOT / 'tests/fixtures/native-execution'
 
 
 class NativeExecution(unittest.TestCase):
@@ -149,6 +150,7 @@ class NativeExecution(unittest.TestCase):
             with self.subTest(tool=tool):
                 result, _ = self.result(tool, self.request(tool, operation='build'))
                 self.assertEqual(result['interpretation_status'], 'build_only')
+                self.assertEqual(result['outcome'], 'passed')
                 self.assertEqual(result['target_verification'], 'unverified')
                 self.assertEqual(result['counts'], {'executed': None, 'failed': None, 'skipped': None})
 
@@ -334,6 +336,7 @@ class NativeExecution(unittest.TestCase):
         result, attempt = self.result('swiftpm', request, 2)
         self.assertEqual(result['command_status'], 'timed_out')
         self.assertEqual(result['outcome'], 'incomplete')
+        self.assertEqual(result['interpretation_status'], 'incomplete')
         self.assertEqual((attempt / 'stdout.log').read_bytes(), b'running\n')
 
     def test_interrupt_retains_attempt(self):
@@ -357,6 +360,7 @@ class NativeExecution(unittest.TestCase):
         result = json.loads(stdout)
         self.assertEqual(result['command_status'], 'interrupted')
         self.assertEqual(result['outcome'], 'incomplete')
+        self.assertEqual(result['interpretation_status'], 'incomplete')
         self.assertEqual((Path(result['attempt']) / 'stdout.log').read_bytes(), b'ready\n')
 
     def xcode(self, device='OWNED-SIM', failed=0):
@@ -364,9 +368,9 @@ class NativeExecution(unittest.TestCase):
                   "Path('inspector-observed.json').write_text(json.dumps({'argv':sys.argv,'cwd':os.getcwd()}))\n"
                   "print(json.dumps(%r))\n" % {
             'title': 'Test - My App', 'result': 'Failed' if failed else 'Passed',
-            'passedTests': 2 - failed, 'failedTests': failed, 'skippedTests': 1,
+            'passedTests': 2 - failed, 'failedTests': failed, 'skippedTests': 1, 'expectedFailures': 0,
             'totalTestCount': 3, 'devicesAndConfigurations': [{'device': {'deviceId': device}}],
-            'testFailures': [{'failureText': 'Expected greeting'}] if failed else []})
+            'testFailures': [{'testName': 'testGreeting()', 'failureText': 'Expected greeting'}] if failed else []})
         return self.request('xcodebuild', "from pathlib import Path\nPath('result.xcresult').mkdir()\nPath('result.xcresult/Data').write_bytes(b'native bundle')\n")
 
     def test_xcode_native_summary_and_bundle_retention(self):
@@ -376,7 +380,7 @@ class NativeExecution(unittest.TestCase):
         self.assertEqual(result['outcome'], 'passed')
         self.assertEqual(result['target_verification'], 'native_device')
         reports = json.loads((attempt / 'reports.json').read_text())
-        inspection_argv = ['xcrun', 'xcresulttool', 'get', 'test-results', 'summary', '--path',
+        inspection_argv = ['xcrun', 'xcresulttool', 'get', 'test-results', 'summary', '--schema-version', '0.4.0', '--path',
                            str(attempt / reports[0]['retained']), '--compact']
         self.assertEqual(json.loads((attempt / 'inspection.json').read_text()),
                          {'argv': inspection_argv, 'cwd': str(self.consumer), 'exit_code': 0})
@@ -397,7 +401,7 @@ class NativeExecution(unittest.TestCase):
                 request = self.xcode()
                 self.tool('xcrun', 'import json\nprint(json.dumps(%r))\n' % {
                     'title': title, 'result': outcome, 'passedTests': 2, 'failedTests': 0,
-                    'skippedTests': 1, 'totalTestCount': 3,
+                    'skippedTests': 1, 'expectedFailures': 0, 'totalTestCount': 3,
                     'devicesAndConfigurations': [{'device': {'deviceId': 'OWNED-SIM'}}], 'testFailures': []})
                 result, _ = self.result('xcodebuild', request, 2)
                 self.assertEqual(result['interpretation_status'], status)
@@ -407,13 +411,304 @@ class NativeExecution(unittest.TestCase):
     def test_xcode_failure_diagnostic(self):
         result, _ = self.result('xcodebuild', self.xcode(failed=1), 1)
         self.assertEqual(result['counts'], {'executed': 2, 'failed': 1, 'skipped': 1})
-        self.assertIn('Expected greeting', result['diagnostics'])
+        self.assertIn('testGreeting(): Expected greeting', result['diagnostics'])
 
     def test_missing_xcresult_inspector_is_explicit(self):
         request = self.xcode()
         self.tool('xcrun', 'raise SystemExit(69)\n')
         result, _ = self.result('xcodebuild', request, 2)
         self.assertEqual(result['interpretation_status'], 'unsupported')
+
+    def test_xcode_timing_flag_does_not_consume_test_action(self):
+        for flag in ['-showBuildTimingSummary', '-parallelizeTargets', '-json']:
+            with self.subTest(flag=flag):
+                request = self.xcode()
+                request['argv'].remove('test')
+                request['argv'] += [flag, 'test']
+                result, _ = self.result('xcodebuild', request)
+                self.assertEqual(result['outcome'], 'passed')
+                self.assertEqual(result['interpretation_status'], 'complete')
+                shutil.rmtree(self.consumer / 'result.xcresult')
+
+    def test_xcode_switches_cannot_hide_clean_or_option_values_become_actions(self):
+        request = self.request('xcodebuild', operation='build')
+        request['argv'].remove('build')
+        request['argv'] += ['-json', 'clean']
+        result, _ = self.result('xcodebuild', request, 2)
+        self.assertEqual(result['command_status'], 'not_started')
+        self.assertEqual(result['interpretation_status'], 'prerequisite')
+        for flag in ['-configuration', '-testPlan', '-target']:
+            with self.subTest(flag=flag):
+                request = self.xcode()
+                request['argv'].remove('test')
+                request['argv'] += [flag, 'test']
+                result, _ = self.result('xcodebuild', request, 2)
+                self.assertEqual(result['command_status'], 'not_started')
+                self.assertEqual(result['interpretation_status'], 'prerequisite')
+
+    def test_forwarded_clang_directory_spelling_preserves_exact_argv(self):
+        body = "import json,sys\nfrom pathlib import Path\nPath('observed.json').write_text(json.dumps(sys.argv))\n"
+        request = self.request(body=body, operation='build')
+        request['argv'] += ['-Xcc', '-C', '-Xcc', '-E']
+        result, _ = self.result('swiftpm', request)
+        self.assertEqual(result['outcome'], 'passed')
+        self.assertEqual(json.loads((self.consumer / 'observed.json').read_text()), request['argv'])
+
+    def test_xcode_non_build_modes_never_satisfy_build(self):
+        for flag in ['-showBuildSettings', '-list', '-version', '-resolvePackageDependencies', '-enumerate-tests']:
+            with self.subTest(flag=flag):
+                request = self.request('xcodebuild', "from pathlib import Path\nPath('should-not-run').touch()\n", 'build')
+                request['argv'].remove('build')
+                request['argv'].append(flag)
+                result, _ = self.result('xcodebuild', request, 2)
+                self.assertEqual(result['command_status'], 'not_started')
+                self.assertEqual(result['interpretation_status'], 'prerequisite')
+                self.assertEqual(result['outcome'], 'incomplete')
+                self.assertFalse((self.consumer / 'should-not-run').exists())
+
+    def test_target_directory_redirection_is_rejected_before_execution(self):
+        for tool, flag in [('swiftpm', '-C'), ('swiftpm', '--chdir'),
+                           ('swiftpm', '-Celsewhere'), ('swiftpm', '--chdir=elsewhere'),
+                           ('gradle', '-p'), ('gradle', '--project-dir'),
+                           ('gradle', '-pelsewhere'), ('gradle', '--project-dir=elsewhere')]:
+            with self.subTest(tool=tool, flag=flag):
+                request = self.request(tool, "from pathlib import Path\nPath('should-not-run').touch()\n", 'build')
+                request['argv'] += [flag] + (['elsewhere'] if flag in {'-C', '--chdir', '-p', '--project-dir'} else [])
+                result, _ = self.result(tool, request, 2)
+                self.assertEqual(result['command_status'], 'not_started')
+                self.assertEqual(result['interpretation_status'], 'prerequisite')
+                self.assertEqual(result['outcome'], 'incomplete')
+                self.assertFalse((self.consumer / 'should-not-run').exists())
+
+    def test_gradle_failure_xml_is_decisive_with_green_process(self):
+        request = self.request('gradle', self.xml_child(self.xml(2, failed=True), 'gradle'))
+        result, _ = self.result('gradle', request, 1)
+        self.assertEqual(result['exit_code'], 0)
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['counts'], {'executed': 2, 'failed': 1, 'skipped': 0})
+        self.assertIn('AppTests.test0: expected greeting', result['diagnostics'])
+
+    def test_gradle_report_needs_observed_task_and_matching_report_dir(self):
+        request = self.request('gradle', self.xml_child(self.xml(), 'gradle').replace("print('> Task :app:testDebugUnitTest')", ''))
+        result, _ = self.result('gradle', request, 2)
+        self.assertEqual(result['interpretation_status'], 'incomplete')
+        self.assertEqual(result['outcome'], 'incomplete')
+        self.assertIn('Gradle task execution not observed for report mapping', result['diagnostics'])
+        shutil.rmtree(request['reports'][0])
+        request['target']['report_dir'] = 'different/reports'
+        result, _ = self.result('gradle', request, 2)
+        self.assertEqual(result['command_status'], 'not_started')
+        self.assertEqual(result['interpretation_status'], 'prerequisite')
+        self.assertEqual(result['outcome'], 'incomplete')
+
+    def test_xml_report_set_has_an_aggregate_parse_limit(self):
+        body = ("from pathlib import Path\np = Path('app/build/test-results/testDebugUnitTest')\n"
+                "p.mkdir(parents=True)\n"
+                "for name in ['first', 'second']:\n"
+                "    (p / (name + '.xml')).write_text('<testsuite>' + ' ' * (17 * 1024 * 1024) + '</testsuite>')\n"
+                "print('> Task :app:testDebugUnitTest')\n")
+        result, attempt = self.result('gradle', self.request('gradle', body), 2)
+        self.assertEqual(result['interpretation_status'], 'unsupported')
+        self.assertEqual(result['outcome'], 'incomplete')
+        self.assertIn('XML report set exceeds 32 MiB interpretation limit', result['diagnostics'])
+        reports = json.loads((attempt / 'reports.json').read_text())
+        self.assertEqual(set(reports[0]['files']), {'first.xml', 'second.xml'})
+
+    def test_ten_native_failures_flag_omitted_diagnostics(self):
+        cases = ''.join('<testcase classname="Failures" name="test%d"><failure message="failure %d"/></testcase>' % (i, i)
+                        for i in range(10))
+        result, _ = self.result('swiftpm', self.request(body=self.xml_child('<testsuite tests="10" failures="10">' + cases + '</testsuite>')), 1)
+        self.assertEqual(result['counts'], {'executed': 10, 'failed': 10, 'skipped': 0})
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['details_omitted'], True)
+        self.assertIn('Failures.test0: failure 0', result['diagnostics'])
+        self.assertIn('Failures.test9: failure 9', result['diagnostics'])
+
+    def test_passing_run_diagnostics_exclude_zero_failure_noise(self):
+        body = self.xml_child(self.xml()) + "print('Executed 1 test, with 0 failures (0 unexpected) in 0.001 seconds')\n"
+        result, _ = self.result('swiftpm', self.request(body=body))
+        self.assertEqual(result['outcome'], 'passed')
+        self.assertEqual(result['diagnostics'], [])
+
+    def captured_child(self, name, report=True, log='stdout', tool='swiftpm'):
+        body = ''
+        if report:
+            body += self.xml_child((NATIVE / (name + '.xml')).read_text(), tool)
+        path = NATIVE / (name + '.' + log + '.txt')
+        if path.exists():
+            body += 'import sys\nsys.%s.buffer.write(%r)\n' % (log, path.read_bytes())
+        return body
+
+    def test_real_parallel_xctest_skip_reconciles_terminal_case_result(self):
+        body = self.captured_child('xctest-skipped-verbose')
+        request = self.request(body=body)
+        request['argv'] += ['--parallel', '--verbose']
+        result, _ = self.result('swiftpm', request, 2)
+        self.assertEqual(result['interpretation_status'], 'zero_tests')
+        self.assertEqual(result['outcome'], 'incomplete')
+        self.assertEqual(result['counts'], {'executed': 0, 'failed': 0, 'skipped': 1})
+
+    def test_real_parallel_xctest_without_skip_visibility_stays_incomplete(self):
+        request = self.request(body=self.captured_child('xctest-skipped'))
+        request['argv'] += ['--parallel']
+        result, _ = self.result('swiftpm', request, 2)
+        self.assertEqual(result['interpretation_status'], 'incomplete')
+        self.assertEqual(result['outcome'], 'incomplete')
+        self.assertEqual(result['counts'], {'executed': None, 'failed': 0, 'skipped': None})
+        self.assertIn('XCTest skip counts require matching terminal case results; use swift test --parallel --verbose', result['diagnostics'])
+
+    def test_xctest_terminal_results_must_match_identity_and_xml(self):
+        original = (NATIVE / 'xctest-skipped-verbose.stdout.txt').read_text()
+        for output in [original.replace('NativeCaptureTests.NativeCaptureTests testSkipped', 'OtherTests testSkipped'),
+                       original.replace("skipped (0.001 seconds)", "failed (0.001 seconds)"),
+                       original + "Test Case '-[NativeCaptureTests.NativeCaptureTests testSkipped]' passed (0.001 seconds).\n"]:
+            with self.subTest(output=output[-100:]):
+                body = self.xml_child((NATIVE / 'xctest-skipped-verbose.xml').read_text())
+                body += 'print(%r)\n' % output
+                result, _ = self.result('swiftpm', self.request(body=body), 2)
+                self.assertEqual(result['interpretation_status'], 'incomplete')
+                self.assertEqual(result['outcome'], 'incomplete')
+                (self.consumer / 'result.xml').unlink()
+
+    def test_real_parallel_xctest_pass_and_manifest_literal(self):
+        request = self.request(body=self.captured_child('xctest-passed-verbose'))
+        request['argv'] += ['--parallel', '--verbose']
+        result, attempt = self.result('swiftpm', request)
+        self.assertEqual(result['interpretation_status'], 'complete')
+        self.assertEqual(result['outcome'], 'passed')
+        self.assertEqual(result['counts'], {'executed': 1, 'failed': 0, 'skipped': 0})
+        reports = json.loads((attempt / 'reports.json').read_text())
+        self.assertEqual(reports, [
+            {'source': str(self.consumer / 'result.xml'), 'retained': 'reports/0/result.xml', 'status': 'retained',
+             'files': {'result.xml': {'sha256': 'b2aec561e9857bff5d38e4386954f963404d1bf1965e59ca84f2f958028badf9', 'bytes': 274}}},
+            {'source': str(self.consumer / 'result-swift-testing.xml'), 'retained': None, 'status': 'missing', 'files': {}}])
+        shutil.rmtree(self.consumer)
+        self.assertEqual((attempt / 'reports/0/result.xml').read_bytes(), (NATIVE / 'xctest-passed-verbose.xml').read_bytes())
+
+    def test_real_swift_testing_primary_path_and_disabled_count_convention(self):
+        for name, status, counts, code in [
+                ('swift-testing-primary', 'complete', {'executed': 1, 'failed': 0, 'skipped': 0}, 0),
+                ('swift-testing-disabled', 'zero_tests', {'executed': 0, 'failed': 0, 'skipped': 1}, 2)]:
+            with self.subTest(name=name):
+                request = self.request(body=self.captured_child(name))
+                request['argv'].remove('--disable-swift-testing')
+                request['argv'] += ['--disable-xctest']
+                result, _ = self.result('swiftpm', request, code)
+                self.assertEqual(result['interpretation_status'], status)
+                self.assertEqual(result['outcome'], 'passed' if code == 0 else 'incomplete')
+                self.assertEqual(result['counts'], counts)
+                (self.consumer / 'result.xml').unlink()
+
+    def test_both_swift_runners_keep_separate_count_conventions(self):
+        body = self.captured_child('xctest-passed-verbose')
+        body += "from pathlib import Path\nPath('result-swift-testing.xml').write_text(%r)\n" % (NATIVE / 'swift-testing-disabled.xml').read_text()
+        request = self.request(body=body)
+        request['argv'].remove('--disable-swift-testing')
+        result, _ = self.result('swiftpm', request)
+        self.assertEqual(result['interpretation_status'], 'complete')
+        self.assertEqual(result['outcome'], 'passed')
+        self.assertEqual(result['counts'], {'executed': 1, 'failed': 0, 'skipped': 1})
+
+    def test_swift_testing_skip_convention_does_not_weaken_gradle_counts(self):
+        request = self.request('gradle', self.xml_child((NATIVE / 'swift-testing-disabled.xml').read_text(), 'gradle'))
+        result, _ = self.result('gradle', request, 2)
+        self.assertEqual(result['interpretation_status'], 'incomplete')
+        self.assertEqual(result['outcome'], 'incomplete')
+        self.assertIn('native XML declared tests differs from cases', result['diagnostics'])
+
+    def test_real_swift_testing_multiple_issues_are_one_failed_test(self):
+        request = self.request(body=self.xml_child((NATIVE / 'swift-testing-multiple-issues.xml').read_text()))
+        request['argv'].remove('--disable-swift-testing')
+        request['argv'] += ['--disable-xctest']
+        result, _ = self.result('swiftpm', request, 1)
+        self.assertEqual(result['interpretation_status'], 'complete')
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['counts'], {'executed': 1, 'failed': 1, 'skipped': 0})
+        self.assertIn('ReviewTests.multipleIssues(): Expectation failed: 1 == 2 (error)', result['diagnostics'])
+        self.assertIn('ReviewTests.multipleIssues(): Expectation failed: 3 == 4 (error)', result['diagnostics'])
+
+    def test_real_xcresult_expected_failures_and_test_name(self):
+        request = self.xcode()
+        request['argv'][request['argv'].index('-scheme') + 1] = 'SetupProof'
+        request['argv'][request['argv'].index('-destination') + 1] = 'id=2FA5430F-801F-41A4-A0F8-EE459354F82C'
+        request['target'] = {'scheme': 'SetupProof', 'destination': 'id=2FA5430F-801F-41A4-A0F8-EE459354F82C'}
+        self.tool('xcrun', 'import sys\nsys.stdout.buffer.write(%r)\n' % (NATIVE / 'xcresult-expected-failure.json').read_bytes())
+        result, _ = self.result('xcodebuild', request, 1)
+        self.assertEqual(result['interpretation_status'], 'complete')
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['counts'], {'executed': 3, 'failed': 1, 'skipped': 0})
+        self.assertIn('testFailure(): XCTAssertEqual failed: ("1") is not equal to ("2") - captured failure diagnostic', result['diagnostics'])
+
+    def test_real_gradle_failure_xml_keeps_first_tail_and_omission_flag(self):
+        request = self.request('gradle', self.captured_child('gradle-jvm-failure', tool='gradle'))
+        result, _ = self.result('gradle', request, 1)
+        self.assertEqual(result['interpretation_status'], 'complete')
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['counts'], {'executed': 10, 'failed': 10, 'skipped': 0})
+        self.assertEqual(result['details_omitted'], True)
+        self.assertIn('NativeFailureTest.testFailure10: java.lang.AssertionError: native failure 10 expected:<1> but was:<2>', result['diagnostics'])
+        self.assertIn('NativeFailureTest.testFailure9: java.lang.AssertionError: native failure 9 expected:<1> but was:<2>', result['diagnostics'])
+
+    def test_real_kotlin_error_and_gradle_offline_cause_survive(self):
+        for name, expected in [
+                ('gradle-kotlin-error', "Unresolved reference 'missingNativeSymbol'."),
+                ('gradle-offline-missing-dependency', 'No cached version of org.hstack.capture:offline-only-missing:1.0 available for offline mode.')]:
+            with self.subTest(name=name):
+                body = self.captured_child(name, report=False, log='stderr', tool='gradle') + 'raise SystemExit(1)\n'
+                result, _ = self.result('gradle', self.request('gradle', body, 'build'), 1)
+                self.assertEqual(result['outcome'], 'failed')
+                self.assertTrue(any(expected in line for line in result['diagnostics']), result['diagnostics'])
+
+    def test_real_multi_error_logs_keep_first_error_and_strip_ansi(self):
+        for name, log in [('swift-build-five-errors', 'stderr'), ('swift-build-five-errors-color', 'pty')]:
+            with self.subTest(name=name):
+                content = (NATIVE / (name + '.' + log + '.txt')).read_bytes()
+                body = 'import sys\nsys.stderr.buffer.write(%r)\nraise SystemExit(1)\n' % content
+                result, attempt = self.result('swiftpm', self.request(body=body, operation='build'), 1)
+                self.assertEqual(result['outcome'], 'failed')
+                self.assertEqual(result['details_omitted'], True)
+                self.assertTrue(any('NativeCapture.swift:1:26:' in line for line in result['diagnostics']), result['diagnostics'])
+                self.assertTrue(any('NativeCapture.swift:5:26:' in line for line in result['diagnostics']), result['diagnostics'])
+                self.assertNotIn('\x1b', ''.join(result['diagnostics']))
+                self.assertEqual((attempt / 'stderr.log').read_bytes(), content)
+
+    def test_styled_diagnostic_clipping_and_metadata_omissions_are_explicit(self):
+        content = '\x1b[31me: Native.kt:1: ' + 'x' * 500 + ' Unresolved reference\x1b[0m\n'
+        request = self.request('gradle', 'import sys\nsys.stderr.write(%r)\nraise SystemExit(1)\n' % content, 'build')
+        result, attempt = self.result('gradle', request, 1)
+        self.assertEqual(result['details_omitted'], True)
+        self.assertNotIn('\x1b', ''.join(result['diagnostics']))
+        self.assertTrue(result['diagnostics'][0].startswith('e: Native.kt:1: '))
+        self.assertIn('Unresolved reference', result['diagnostics'][0])
+        self.assertEqual((attempt / 'stderr.log').read_text(), content)
+        request = self.request(operation='build')
+        request['argv'] += ['x' * 20000]
+        result, _ = self.result('swiftpm', request)
+        self.assertEqual(result['details_omitted'], True)
+
+    def test_xcresult_inspection_timeout_uses_request_timeout_and_keeps_partial_output(self):
+        request = self.xcode()
+        request['timeout_seconds'] = 0.5
+        self.tool('xcrun', "import time\nprint('partial inspector output', flush=True)\ntime.sleep(30)\n")
+        result, attempt = self.result('xcodebuild', request, 2)
+        self.assertEqual(result['command_status'], 'exited')
+        self.assertEqual(result['interpretation_status'], 'unsupported')
+        self.assertEqual(result['outcome'], 'incomplete')
+        self.assertEqual((attempt / 'inspection.stdout').read_bytes(), b'partial inspector output\n')
+
+    def test_unicode_diagnostics_converge_under_byte_budget_with_large_metadata(self):
+        output = ''.join('error: %d ' % i + '\U0001f600' * 90 + '\n' for i in range(6))
+        body = 'import sys\nsys.stderr.write(%r)\nraise SystemExit(1)\n' % output
+        request = self.request(body=body, operation='build')
+        request['argv'].append('a' * 1300)
+        request['target']['context'] = 'b' * 1200
+        result, attempt = self.result('swiftpm', request, 1)
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['details_omitted'], True)
+        self.assertEqual(len(result['diagnostics']), 6)
+        self.assertTrue(result['diagnostics'][0].startswith('error: 0 '))
+        self.assertTrue(result['diagnostics'][-1].startswith('error: 5 '))
+        self.assertEqual((attempt / 'stderr.log').read_text(), output)
 
     def test_conflicting_target_is_prerequisite_and_child_is_unrun(self):
         request = self.request(body="from pathlib import Path\nPath('should-not-run').touch()\n", operation='build')

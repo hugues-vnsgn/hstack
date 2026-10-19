@@ -224,7 +224,7 @@ inventory plus the host selection row's measured 97 bytes, currently
 146,366 bytes. The row itself may not exceed 128 bytes. No runtime token saving or
 execution speedup follows from these source counts.
 
-Issue #105 adds a conditional native-execution reference of 7,561 source bytes.
+Issue #105 adds a conditional native-execution reference of 9,245 source bytes.
 It is loaded for native build/test execution and is outside these non-mobile
 scenario inventories. Python helper source is not instruction footprint. The
 8,192-byte stdout bound is an execution-output contract tested separately; it

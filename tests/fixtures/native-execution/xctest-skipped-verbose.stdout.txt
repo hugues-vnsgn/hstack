@@ -1,0 +1,21 @@
+[1/1] Testing NativeCaptureTests.NativeCaptureTests/testSkipped
+Test Suite 'Selected tests' started at 2026-10-19 17:11:46.820.
+Test Suite 'NativeCaptureTests.xctest' started at 2026-10-19 17:11:46.820.
+Test Suite 'NativeCaptureTests' started at 2026-10-19 17:11:46.820.
+Test Case '-[NativeCaptureTests.NativeCaptureTests testSkipped]' started.
+/private/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-swift-verbose-3r4fmaml/xctest-skipped/Tests/NativeCaptureTests/NativeCaptureTests.swift:2: -[NativeCaptureTests.NativeCaptureTests testSkipped] : Test skipped - captured skip
+Test Case '-[NativeCaptureTests.NativeCaptureTests testSkipped]' skipped (0.001 seconds).
+Test Suite 'NativeCaptureTests' passed at 2026-10-19 17:11:46.822.
+	 Executed 1 test, with 1 test skipped and 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'NativeCaptureTests.xctest' passed at 2026-10-19 17:11:46.822.
+	 Executed 1 test, with 1 test skipped and 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'Selected tests' passed at 2026-10-19 17:11:46.822.
+	 Executed 1 test, with 1 test skipped and 0 failures (0 unexpected) in 0.001 (0.002) seconds
+
+◇ Test run started.
+↳ Swift Standard Library Version: 6.4
+↳ Swift Compiler Version: 6.4
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+↳ OS Version: 27.0.1 (26A434)
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

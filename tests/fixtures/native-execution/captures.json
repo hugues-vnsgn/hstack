@@ -1,0 +1,435 @@
+{
+  "captured_at": "2026-10-19",
+  "toolchain": {
+    "swift": "Apple Swift version 6.4",
+    "xcode": "Xcode 27.0, build 27A266a",
+    "xcresult_schema": "0.4.0"
+  },
+  "captures": {
+    "xctest-skipped": {
+      "command": {
+        "argv": [
+          "swift",
+          "test",
+          "--parallel",
+          "--xunit-output",
+          "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/captures/xctest-skipped/native.xml"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-native-capture-qkg0b7hp/xctest-skipped",
+        "env": {},
+        "exit_code": 0
+      },
+      "files": {
+        "xctest-skipped.xml": {
+          "sha256": "5288c14496b20eb04724b0f378bef2375320f032f41a111fa7012a80247c6b37",
+          "bytes": 275
+        },
+        "xctest-skipped.stdout.txt": {
+          "sha256": "3bb8caf4c759142c92ee5dca6ee209f5eef528070e8d15826033f7f01a6a177c",
+          "bytes": 230
+        }
+      }
+    },
+    "xctest-skipped-verbose": {
+      "command": {
+        "argv": [
+          "swift",
+          "test",
+          "--verbose",
+          "--parallel",
+          "--xunit-output",
+          "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/captures/xctest-skipped-verbose/native.xml"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-swift-verbose-3r4fmaml/xctest-skipped",
+        "env": {},
+        "exit_code": 0
+      },
+      "files": {
+        "xctest-skipped-verbose.xml": {
+          "sha256": "885c2525d765b183c29d480f9b5165b0c77b9096dc64cd2e784bcb8520a43e41",
+          "bytes": 275
+        },
+        "xctest-skipped-verbose.stdout.txt": {
+          "sha256": "7b526905eba275d6df1cf89b54f290a0fcf9ba8d0112bfda2316949464595231",
+          "bytes": 1431
+        }
+      }
+    },
+    "xctest-passed-verbose": {
+      "command": {
+        "argv": [
+          "swift",
+          "test",
+          "--verbose",
+          "--parallel",
+          "--xunit-output",
+          "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/captures/xctest-passed-verbose/native.xml"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-swift-verbose-3r4fmaml/xctest-passed",
+        "env": {},
+        "exit_code": 0
+      },
+      "files": {
+        "xctest-passed-verbose.xml": {
+          "sha256": "b2aec561e9857bff5d38e4386954f963404d1bf1965e59ca84f2f958028badf9",
+          "bytes": 274
+        },
+        "xctest-passed-verbose.stdout.txt": {
+          "sha256": "ea84ef11803ee15f444135b5b42169827458e436013d60a513acd1976182458e",
+          "bytes": 1131
+        }
+      }
+    },
+    "swift-testing-primary": {
+      "command": {
+        "argv": [
+          "swift",
+          "test",
+          "--parallel",
+          "--disable-xctest",
+          "--xunit-output",
+          "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/captures/swift-testing-primary/native.xml"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-native-capture-qkg0b7hp/swift-testing-primary",
+        "env": {},
+        "exit_code": 0
+      },
+      "files": {
+        "swift-testing-primary.xml": {
+          "sha256": "7758870ff7e3a819053f1ea620332ff648be80107e3d1030e7fe4eba20dba1c5",
+          "bytes": 266
+        },
+        "swift-testing-primary.stdout.txt": {
+          "sha256": "50880bce2812c55ad9316fa0eeb4bd3770357bbf5b8d7a720ca8ec5e319c0fe2",
+          "bytes": 246
+        }
+      }
+    },
+    "swift-testing-disabled": {
+      "command": {
+        "argv": [
+          "swift",
+          "test",
+          "--parallel",
+          "--disable-xctest",
+          "--xunit-output",
+          "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/captures/swift-testing-disabled/native.xml"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-native-capture-qkg0b7hp/swift-testing-disabled",
+        "env": {},
+        "exit_code": 0
+      },
+      "files": {
+        "swift-testing-disabled.xml": {
+          "sha256": "adeb26a0c309dcbc9cd879abcb5455a4bad45806e2fb64a2d969c42e2664bc34",
+          "bytes": 307
+        },
+        "swift-testing-disabled.stdout.txt": {
+          "sha256": "7b7183e10871a321c39e3d244364963f79a370dd766290d7e98edde638c70ffe",
+          "bytes": 218
+        }
+      }
+    },
+    "mixed": {
+      "command": {
+        "argv": [
+          "swift",
+          "test",
+          "--parallel",
+          "--xunit-output",
+          "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/captures/mixed/native.xml"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-native-capture-qkg0b7hp/mixed",
+        "env": {},
+        "exit_code": 0
+      },
+      "files": {
+        "mixed.xml": {
+          "sha256": "2b98b05fc6060171ed8805f258648afc63ae607fa9bfdf2af2ced13207671c4d",
+          "bytes": 274
+        },
+        "mixed-swift-testing.xml": {
+          "sha256": "55d20a2221bcd3650d3fc3599de733c1068dc435d4ff4c84e3daa4d9a3492233",
+          "bytes": 272
+        },
+        "mixed.stdout.txt": {
+          "sha256": "3163fb5c54f937c5a84b97fa92bd4dd688b21c6f673936dfd11dffcbe1dfa9a2",
+          "bytes": 321
+        }
+      }
+    },
+    "swift-build-five-errors": {
+      "command": {
+        "argv": [
+          "swift",
+          "build",
+          "-Xswiftc",
+          "-color-diagnostics"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-native-capture-qkg0b7hp/swift-build-five-errors",
+        "env": {},
+        "exit_code": 1
+      },
+      "files": {
+        "swift-build-five-errors.stderr.txt": {
+          "sha256": "eb26f45f9944ec959b6a7bfa8cff1b4d6059f3a2603ad372858a85d1e613e1fe",
+          "bytes": 9082
+        }
+      }
+    },
+    "swift-build-five-errors-color": {
+      "command": {
+        "argv": [
+          "swift",
+          "build",
+          "-Xswiftc",
+          "-color-diagnostics"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-offline-color-4hi7i8vi/swift-build-five-errors",
+        "env": {
+          "TERM": "xterm-256color",
+          "CLICOLOR_FORCE": "1"
+        },
+        "exit_code": 1,
+        "transport": "PTY combines stdout and stderr"
+      },
+      "files": {
+        "swift-build-five-errors-color.pty.txt": {
+          "sha256": "1845774d05b52e4a29bcaefc7f9c8733daef2b7be820777e67f2f3165f522857",
+          "bytes": 9187
+        }
+      }
+    },
+    "gradle-jvm-failure": {
+      "command": {
+        "argv": [
+          "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-gradle-capture-sdu4pofp/gradle-jvm-failure/gradlew",
+          ":test",
+          "--offline",
+          "--console=plain",
+          "--no-daemon"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-gradle-capture-sdu4pofp/gradle-jvm-failure",
+        "env": {},
+        "exit_code": 1
+      },
+      "files": {
+        "gradle-jvm-failure.xml": {
+          "sha256": "2c4c3677b08d2cf2dc59913de068cbb357123a701885cf31916b519e3d574bc2",
+          "bytes": 40967
+        },
+        "gradle-jvm-failure.stdout.txt": {
+          "sha256": "acbe28c3c3ab5b28142f50fc6a0716a6799c439e7ef131386e3a1d1da39fad23",
+          "bytes": 1492
+        },
+        "gradle-jvm-failure.stderr.txt": {
+          "sha256": "f16bb777fd5aa7c469102d9cc6c9a80c51bd49bb82dd859c6a0fde1ce45df5ac",
+          "bytes": 393
+        }
+      }
+    },
+    "gradle-kotlin-error": {
+      "command": {
+        "argv": [
+          "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-gradle-capture-sdu4pofp/gradle-kotlin-error/gradlew",
+          ":compileKotlinJvm",
+          "--offline",
+          "--console=plain",
+          "--no-daemon"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-gradle-capture-sdu4pofp/gradle-kotlin-error",
+        "env": {},
+        "exit_code": 1
+      },
+      "files": {
+        "gradle-kotlin-error.stderr.txt": {
+          "sha256": "b01998e5516ce3c12ab372b168699a0bcf4d4b4e4ae52bc810e2682f661705a3",
+          "bytes": 697
+        }
+      }
+    },
+    "gradle-offline-missing-dependency": {
+      "command": {
+        "argv": [
+          "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-offline-color-4hi7i8vi/kmp-compose-ios-pilot/gradlew",
+          ":composeApp:compileKotlinIosSimulatorArm64",
+          "--offline",
+          "--console=plain",
+          "--no-daemon"
+        ],
+        "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-offline-color-4hi7i8vi/kmp-compose-ios-pilot",
+        "env": {},
+        "exit_code": 1
+      },
+      "files": {
+        "gradle-offline-missing-dependency.stderr.txt": {
+          "sha256": "ebe735fb0e38d26f3c8878984431e41bf0266cb436ff252e2282833302d0865f",
+          "bytes": 776
+        }
+      }
+    },
+    "xcresult-expected-failure": {
+      "commands": [
+        {
+          "argv": [
+            "xcrun",
+            "simctl",
+            "list",
+            "runtimes",
+            "-j"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-0.stdout",
+          "stderr": "native-0.stderr"
+        },
+        {
+          "argv": [
+            "xcrun",
+            "simctl",
+            "create",
+            "hstack-worker-2-issue-105",
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro",
+            "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-1.stdout",
+          "stderr": "native-1.stderr"
+        },
+        {
+          "argv": [
+            "xcrun",
+            "simctl",
+            "boot",
+            "2FA5430F-801F-41A4-A0F8-EE459354F82C"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-2.stdout",
+          "stderr": "native-2.stderr"
+        },
+        {
+          "argv": [
+            "xcrun",
+            "simctl",
+            "bootstatus",
+            "2FA5430F-801F-41A4-A0F8-EE459354F82C",
+            "-b"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-3.stdout",
+          "stderr": "native-3.stderr"
+        },
+        {
+          "argv": [
+            "xcodegen",
+            "generate",
+            "--spec",
+            "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g/ios/project.json",
+            "--project",
+            "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g/ios"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g/ios",
+          "exit_code": 0,
+          "stdout": "native-4.stdout",
+          "stderr": "native-4.stderr"
+        },
+        {
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/hugues_mini/Codes/hstack.worktrees/feat/native-execution-helpers/plugin/adapters/native_exec.py",
+            "xcodebuild",
+            "--request",
+            "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/xcode/xcodebuild-native-request.json",
+            "--store",
+            "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/xcode/native-attempts"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g/ios",
+          "exit_code": 1,
+          "stdout": "native-5.stdout",
+          "stderr": "native-5.stderr"
+        },
+        {
+          "argv": [
+            "xcrun",
+            "xcresulttool",
+            "get",
+            "test-results",
+            "summary",
+            "--schema-version",
+            "0.4.0",
+            "--path",
+            "/Users/hugues_mini/Codes/hstack.worktrees/_notes/issue-105/worker-2-evidence/round-2/xcode/native-attempts/attempt-2jep8v8j/reports/0/Greeting.xcresult",
+            "--compact"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-6.stdout",
+          "stderr": "native-6.stderr"
+        },
+        {
+          "argv": [
+            "xcrun",
+            "simctl",
+            "shutdown",
+            "2FA5430F-801F-41A4-A0F8-EE459354F82C"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-7.stdout",
+          "stderr": "native-7.stderr"
+        },
+        {
+          "argv": [
+            "xcrun",
+            "simctl",
+            "delete",
+            "2FA5430F-801F-41A4-A0F8-EE459354F82C"
+          ],
+          "cwd": "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-worker-2-native-9lgjw_8g",
+          "exit_code": 0,
+          "stdout": "native-8.stdout",
+          "stderr": "native-8.stderr"
+        }
+      ],
+      "files": {
+        "xcresult-expected-failure.json": {
+          "sha256": "b291e22770b5acc68d97682c9d982a61c53a873e39a08e96babbbb1c46fa777e",
+          "bytes": 1069
+        }
+      }
+    },
+    "swift-testing-multiple-issues": {
+      "command": {
+        "argv": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/hugues_mini/Codes/hstack.worktrees/feat/native-execution-helpers/plugin/adapters/native_exec.py",
+          "swiftpm",
+          "--request",
+          "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-review-b-swift-g0u1m772/multiple-request.json",
+          "--store",
+          "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-review-b-swift-g0u1m772/store"
+        ],
+        "cwd": "/Users/hugues_mini/Codes/hstack.worktrees/feat/native-execution-helpers",
+        "helper_exit": 1,
+        "native_argv": [
+          "swift",
+          "test",
+          "--parallel",
+          "--disable-xctest",
+          "--xunit-output",
+          "/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-review-b-swift-g0u1m772/multiple.xml"
+        ],
+        "native_cwd": "/private/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-review-b-swift-g0u1m772/consumer"
+      },
+      "files": {
+        "swift-testing-multiple-issues.xml": {
+          "sha256": "cae305a9fc6bab831a148afeed985fb7f918f460095d9ff5d4c02a7562905877",
+          "bytes": 404
+        }
+      }
+    }
+  }
+}

@@ -16,6 +16,51 @@ import xml.etree.ElementTree as ET
 
 SUMMARY_BYTES = 8192
 UNKNOWN = {'executed': None, 'failed': None, 'skipped': None}
+ANSI = re.compile(r'\x1b\[[0-?]*[ -/]*[@-~]|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)')
+
+
+@dataclass(frozen=True)
+class XmlReport:
+    path: Path
+    runner: str
+
+
+class Diagnostics:
+    def __init__(self):
+        self.lines = []
+        self.omitted = False
+
+    def add(self, value):
+        line = ANSI.sub('', str(value)).strip()
+        if not line:
+            return
+        if len(line) > 400:
+            line = line[:197] + ' ... ' + line[-198:]
+            self.omitted = True
+        if line in self.lines:
+            return
+        self.lines.append(line)
+        if len(self.lines) > 6:
+            self.lines.pop(3)
+            self.omitted = True
+
+    def extend(self, lines):
+        for line in lines:
+            self.add(line)
+
+
+def summary_diagnostics(native, logs):
+    lines = list(dict.fromkeys(native.lines + logs.lines))
+    omitted = native.omitted or logs.omitted or len(lines) > 6
+    if len(lines) > 6 and native.lines and logs.lines:
+        protected = {lines.index(native.lines[0]), lines.index(native.lines[-1]),
+                     lines.index(logs.lines[0]), lines.index(logs.lines[-1])}
+        for index in range(len(lines)):
+            if len(protected) == 6:
+                break
+            protected.add(index)
+        lines = [line for index, line in enumerate(lines) if index in protected]
+    return lines, omitted
 
 
 @dataclass(frozen=True)
@@ -86,16 +131,44 @@ def option(argv, name, default=None):
 
 def xcode_actions(command):
     actions, index = [], 1
-    no_value = {'-quiet', '-verbose', '-dry-run', '-hideShellScriptEnvironment',
-                '-allowProvisioningUpdates', '-allowProvisioningDeviceRegistration',
-                '-disableAutomaticPackageResolution', '-onlyUsePackageVersionsFromResolvedFile',
-                '-skipPackageUpdates', '-skipPackagePluginValidation', '-skipMacroValidation'}
+    non_build_modes = {
+        '-usage', '-help', '--help', '-h', '-license', '-checkFirstLaunchStatus', '-runFirstLaunch',
+        '-downloadAllPlatforms', '-prepareDeviceSupport', '-downloadPlatform', '-importPlatform',
+        '-downloadComponent', '-importComponent', '-deleteComponent', '-showComponent', '-showsdks',
+        '-showdestinations', '-showTestPlans', '-showBuildSettings', '-showBuildSettingsForIndex',
+        '-list', '-convert-project', '-find-executable', '-find-library', '-version', '-exportArchive',
+        '-exportNotarizedApp', '-exportLocalizations', '-importLocalizations',
+        '-resolvePackageDependencies', '-create-xcframework', '-enumerate-tests', '-dry-run'}
+    value_options = {
+        '-project', '-workspace', '-scheme', '-target', '-configuration', '-xcconfig', '-arch',
+        '-sdk', '-toolchain', '-destination', '-destination-timeout', '-jobs',
+        '-maximum-concurrent-test-device-destinations', '-maximum-concurrent-test-simulator-destinations',
+        '-parallel-testing-enabled', '-parallel-testing-worker-count', '-maximum-parallel-testing-workers',
+        '-convert-project', '-find-executable', '-find-library', '-enableAddressSanitizer',
+        '-enableThreadSanitizer', '-enableUndefinedBehaviorSanitizer', '-resultBundlePath',
+        '-resultStreamPath', '-resultBundleVersion', '-clonedSourcePackagesDirPath', '-derivedDataPath',
+        '-archivePath', '-exportOptionsPlist', '-enableCodeCoverage', '-enableCodesizeProfile',
+        '-codesizeProfileOutputDir', '-exportPath', '-importPath', '-localizationPath', '-exportLanguage',
+        '-defaultLanguage', '-xctestrun', '-testProductsPath', '-enablePerformanceTestsDiagnostics',
+        '-testPlan', '-only-testing', '-skip-testing', '-test-timeouts-enabled',
+        '-default-test-execution-time-allowance', '-maximum-test-execution-time-allowance',
+        '-test-iterations', '-test-repetition-relaunch-enabled', '-only-test-configuration',
+        '-skip-test-configuration', '-collect-test-diagnostics', '-testLanguage', '-testRegion',
+        '-test-enumeration-style', '-test-enumeration-format', '-test-enumeration-output-path',
+        '-packageCachePath', '-packageAuthorizationProvider', '-defaultPackageRegistryURL',
+        '-packageDependencySCMToRegistryTransformation', '-packageFingerprintPolicy',
+        '-packageSigningEntityPolicy', '-authenticationKeyPath', '-authenticationKeyID',
+        '-authenticationKeyIssuerID', '-scmProvider', '-platform', '-osVersion', '-modelCode',
+        '-architecture', '-downloadPlatform', '-importPlatform', '-downloadComponent',
+        '-importComponent', '-deleteComponent', '-showComponent'}
     names = {'build', 'build-for-testing', 'test', 'test-without-building', 'clean',
              'analyze', 'archive', 'install', 'installhdrs', 'installsrc'}
     while index < len(command):
         token = command[index]
+        if token in non_build_modes:
+            raise EvidenceError('prerequisite', 'Xcode command selects a non-build operation: ' + token)
         if token.startswith('-'):
-            index += 1 if ':' in token or '=' in token or token in no_value else 2
+            index += 2 if token in value_options else 1
             continue
         if token in names:
             actions.append(token)
@@ -124,6 +197,14 @@ def validate_target(invocation):
         if invocation.operation == 'test' and not re.search(r'(?:^|,)id=[^,]+', target['destination']):
             raise EvidenceError('prerequisite', 'test destination needs explicit device id')
     elif invocation.tool == 'swiftpm':
+        forwarded = False
+        for argument in command[1:]:
+            if forwarded:
+                forwarded = False
+            elif argument in {'-Xcc', '-Xcxx', '-Xswiftc', '-Xlinker', '-Xmanifest'}:
+                forwarded = True
+            elif argument.startswith('-C') or argument == '--chdir' or argument.startswith('--chdir='):
+                raise EvidenceError('prerequisite', 'Swift directory redirection is unsupported; set cwd and target.package explicitly')
         if (not target.get('package') or absolute(invocation, option(command, '--package-path', '.')).resolve()
                 != absolute(invocation, target['package']).resolve()):
             raise EvidenceError('prerequisite', 'unresolved or conflicting Swift package')
@@ -131,6 +212,8 @@ def validate_target(invocation):
             raise EvidenceError('prerequisite', 'operation must match SwiftPM command')
         report = option(command, '--xunit-output')
     else:
+        if any(a.startswith('-p') or a == '--project-dir' or a.startswith('--project-dir=') for a in command[1:]):
+            raise EvidenceError('prerequisite', 'Gradle project directory redirection is unsupported; use the consumer cwd')
         task = target.get('task')
         if not isinstance(task, str) or not task.startswith(':') or task not in command[1:]:
             raise EvidenceError('prerequisite', 'resolve explicit fully qualified Gradle task')
@@ -198,28 +281,72 @@ def execute(invocation, attempt, environment):
     return status, code, diagnostics
 
 
-def log_diagnostics(attempt):
-    errors, tail = [], []
+def log_lines(attempt):
     for name in ['stdout.log', 'stderr.log']:
         with (attempt / name).open('rb') as stream:
             while chunk := stream.readline(65536):
-                line = chunk.decode('utf-8', errors='replace').strip()
-                if not line:
-                    continue
-                short = line[:400]
-                tail = (tail + [short])[-2:]
-                if re.search(r'error:|fatal|exception|failed|failure', line, re.I):
-                    errors = (errors + [short])[-4:]
-    return errors or tail
+                first, last = chunk, chunk
+                clipped = not chunk.endswith(b'\n') and len(chunk) == 65536
+                if clipped:
+                    while last and not last.endswith(b'\n'):
+                        following = stream.readline(65536)
+                        if not following:
+                            break
+                        last = following
+                    chunk = first[:32768] + b' ... ' + last[-32768:]
+                yield ANSI.sub('', chunk.decode('utf-8', errors='replace')).strip(), clipped
+
+
+def log_diagnostics(attempt, fallback=False):
+    errors, tail = Diagnostics(), Diagnostics()
+    block = None
+    for line, clipped in log_lines(attempt):
+        errors.omitted |= clipped
+        if not line:
+            continue
+        if block is not None and line.startswith('* '):
+            errors.add('\n'.join(block.lines))
+            errors.omitted |= block.omitted
+            block = None
+        if line == '* What went wrong:':
+            block = Diagnostics()
+        if block is not None:
+            block.add(line)
+            continue
+        if (re.search(r'\b0 failures?\b', line) and not re.search(r'error:|^e: ', line)
+                or line.startswith('|') or re.search(r'^(?:BUILD FAILED|FAILURE: Build failed)', line)
+                or re.search(r'^\S+ > .* FAILED$', line)):
+            continue
+        tail.add(line)
+        if re.search(r'error:|fatal|exception|failed|failure|^e:\s', line, re.I):
+            errors.add(line)
+    if block is not None:
+        errors.add('\n'.join(block.lines))
+        errors.omitted |= block.omitted
+    if not errors.lines and fallback:
+        errors.extend(tail.lines[-2:])
+        errors.omitted |= tail.omitted
+    return errors
 
 
 def matching_log_lines(attempt, pattern):
-    for name in ['stdout.log', 'stderr.log']:
-        with (attempt / name).open('rb') as stream:
-            while chunk := stream.readline(65536):
-                match = re.search(pattern, chunk.decode('utf-8', errors='replace').strip())
-                if match:
-                    yield match
+    for line, _ in log_lines(attempt):
+        match = re.search(pattern, line)
+        if match:
+            yield match
+
+
+def xctest_terminals(attempt, identities):
+    states, unexpected = {}, False
+    for match in matching_log_lines(attempt, r"^Test Case '(.+)' (passed|failed|skipped) \("):
+        name, state = match.groups()
+        parts = re.fullmatch(r'-\[(.+) (.+)\]', name)
+        identity = '.'.join(parts.groups()) if parts else name
+        if identity not in identities:
+            unexpected = True
+        else:
+            states[identity] = 'ambiguous' if identity in states else state
+    return states, unexpected
 
 
 def tree_receipt(path):
@@ -270,11 +397,12 @@ def retain_reports(sources, stale, attempt):
     return records, retained
 
 
-def xml_counts(paths, pattern):
-    counts, diagnostics, identities = {'executed': 0, 'failed': 0, 'skipped': 0}, [], set()
-    for path in paths:
-        if path.stat().st_size > 32 * 1024 * 1024:
-            raise EvidenceError('unsupported', 'XML report exceeds 32 MiB interpretation limit')
+def xml_counts(reports, pattern, attempt, diagnostics):
+    counts, identities, xctest = {'executed': 0, 'failed': 0, 'skipped': 0}, set(), {}
+    if sum(report.path.stat().st_size for report in reports) > 32 * 1024 * 1024:
+        raise EvidenceError('unsupported', 'XML report set exceeds 32 MiB interpretation limit')
+    for report in reports:
+        path = report.path
         try:
             root = ET.parse(path).getroot()
         except (OSError, ET.ParseError) as error:
@@ -293,10 +421,12 @@ def xml_counts(paths, pattern):
             if node.tag not in {'testsuite', 'testsuites'}:
                 continue
             cases = list(node.iter('testcase'))
-            declared = {'tests': len(cases),
-                        'failures': sum(case.find('failure') is not None for case in cases),
+            skipped = sum(case.find('skipped') is not None for case in cases)
+            declared = {'tests': len(cases) - (skipped if report.runner == 'swift_testing' else 0),
+                        'failures': sum(len(case.findall('failure')) if report.runner == 'swift_testing'
+                                        else case.find('failure') is not None for case in cases),
                         'errors': sum(case.find('error') is not None for case in cases),
-                        'skipped': sum(case.find('skipped') is not None for case in cases)}
+                        'skipped': skipped}
             for field, actual in declared.items():
                 if field in node.attrib and int(node.attrib[field]) != actual:
                     raise EvidenceError('incomplete', 'native XML declared ' + field + ' differs from cases')
@@ -319,18 +449,39 @@ def xml_counts(paths, pattern):
                         or case.find('rerunFailure') is not None):
                     raise EvidenceError('incomplete', 'conflicting or retried native test result: ' + identity)
                 counts['skipped' if skipped else 'executed'] += 1
+                if report.runner == 'xctest':
+                    xctest[identity] = (bool(failures), skipped, 'skipped' in suite.attrib)
                 if failures:
                     counts['failed'] += 1
-                    failure = failures[0]
-                    diagnostics.append(identity + ': ' + (failure.get('message') or failure.text or 'test failed'))
-    return counts, diagnostics
+                    for failure in failures:
+                        diagnostics.add(identity + ': ' + (failure.get('message') or failure.text or 'test failed'))
+    if xctest:
+        terminals, uncertain = xctest_terminals(attempt, xctest)
+        for identity, (failed, skipped, skip_declared) in xctest.items():
+            terminal = terminals.get(identity)
+            if terminal is not None and (terminal == 'ambiguous' or (terminal == 'failed') != failed
+                                         or skipped and terminal != 'skipped'
+                                         or skip_declared and (terminal == 'skipped') != skipped):
+                uncertain = True
+            if not skip_declared and not skipped and not failed:
+                if terminal not in {'passed', 'failed', 'skipped'}:
+                    uncertain = True
+                elif terminal == 'skipped' and not failed:
+                    counts['executed'] -= 1
+                    counts['skipped'] += 1
+        if uncertain:
+            counts.update(executed=None, skipped=None)
+            diagnostics.add('XCTest skip counts require matching terminal case results; use swift test --parallel --verbose')
+    return counts
 
 
-def interpret_xcode(invocation, retained, attempt, environment):
-    argv = ['xcrun', 'xcresulttool', 'get', 'test-results', 'summary', '--path', str(retained[0][1]), '--compact']
+def interpret_xcode(invocation, retained, attempt, environment, diagnostics):
+    argv = ['xcrun', 'xcresulttool', 'get', 'test-results', 'summary', '--schema-version', '0.4.0',
+            '--path', str(retained[0][1]), '--compact']
     record = {'argv': argv, 'cwd': str(invocation.cwd), 'exit_code': None}
     try:
-        result = subprocess.run(argv, cwd=invocation.cwd, env=environment, capture_output=True, timeout=30)
+        result = subprocess.run(argv, cwd=invocation.cwd, env=environment, capture_output=True,
+                                timeout=invocation.timeout_seconds)
         record['exit_code'] = result.returncode
         (attempt / 'inspection.stdout').write_bytes(result.stdout)
         (attempt / 'inspection.stderr').write_bytes(result.stderr)
@@ -339,8 +490,8 @@ def interpret_xcode(invocation, retained, attempt, environment):
         value = json.loads(result.stdout)
         if not isinstance(value, dict):
             raise EvidenceError('unsupported', 'xcresult summary must be an object')
-        fields = [value.get(k) for k in ['passedTests', 'failedTests', 'skippedTests', 'totalTestCount']]
-        if any(type(n) is not int or n < 0 for n in fields) or sum(fields[:3]) != fields[3]:
+        fields = [value.get(k) for k in ['passedTests', 'failedTests', 'skippedTests', 'expectedFailures', 'totalTestCount']]
+        if any(type(n) is not int or n < 0 for n in fields) or sum(fields[:4]) != fields[4]:
             raise EvidenceError('unsupported', 'unsupported or inconsistent xcresult summary counts')
         expected = re.search(r'(?:^|,)id=([^,]+)', invocation.target['destination']).group(1)
         devices = {row['device']['deviceId'] for row in value['devicesAndConfigurations']}
@@ -348,41 +499,41 @@ def interpret_xcode(invocation, retained, attempt, environment):
             raise EvidenceError('target_mismatch', 'xcresult destination differs from requested device')
         failures = value.get('testFailures', [])
         if (not isinstance(failures, list) or any(not isinstance(row, dict)
-                or not isinstance(row.get('failureText', 'native test failed'), str) for row in failures)):
+                or not isinstance(row.get('failureText'), str)
+                or not isinstance(row.get('testName'), str) for row in failures)):
             raise EvidenceError('unsupported', 'unsupported xcresult failure details')
         if not isinstance(value.get('title'), str) or value.get('result') not in {'Passed', 'Failed', 'Skipped', 'Expected Failure'}:
             raise EvidenceError('unsupported', 'xcresult scheme or result is unavailable')
         if value['title'] != 'Test - ' + invocation.target['scheme']:
             raise EvidenceError('target_mismatch', 'xcresult scheme differs from requested scheme')
         if (value['result'] == 'Failed' and fields[1] == 0
-                or value['result'] == 'Skipped' and fields[0] + fields[1] > 0):
+                or value['result'] == 'Skipped' and fields[0] + fields[1] + fields[3] > 0):
             raise EvidenceError('incomplete', 'xcresult outcome contradicts test counts')
-        return {'executed': fields[0] + fields[1], 'failed': fields[1], 'skipped': fields[2]}, [
-            row.get('failureText', 'native test failed') for row in failures]
-    except (OSError, subprocess.TimeoutExpired, ValueError, KeyError, TypeError) as error:
+        diagnostics.extend(row['testName'] + ': ' + row['failureText'] for row in failures)
+        return {'executed': fields[0] + fields[1] + fields[3], 'failed': fields[1], 'skipped': fields[2]}
+    except subprocess.TimeoutExpired as error:
+        (attempt / 'inspection.stdout').write_bytes(error.output or b'')
+        (attempt / 'inspection.stderr').write_bytes(error.stderr or b'')
+        raise EvidenceError('unsupported', 'xcresult summary inspection timed out') from error
+    except (OSError, ValueError, KeyError, TypeError) as error:
         raise EvidenceError('unsupported', 'xcresult summary unavailable or unsupported: ' + str(error)) from error
     finally:
         write_json(attempt / 'inspection.json', record)
 
 
-def interpret(invocation, records, retained, attempt, environment):
+def interpret(invocation, records, retained, attempt, environment, diagnostics):
     if invocation.operation == 'build':
-        return 'build_only', dict(UNKNOWN), []
+        return 'build_only', dict(UNKNOWN)
     for row in records:
         if row['status'] not in {'retained', 'missing'}:
             raise EvidenceError(row['status'], row.get('diagnostic', 'native report ' + row['status']))
     if not retained:
         raise EvidenceError('missing', 'native report missing for this invocation')
     if invocation.tool == 'xcodebuild':
-        counts, diagnostics = interpret_xcode(invocation, retained, attempt, environment)
+        counts = interpret_xcode(invocation, retained, attempt, environment, diagnostics)
     else:
-        paths = []
-        for source, path in retained:
-            paths.extend(sorted(path.rglob('*.xml')) if path.is_dir() else [path])
-        if not paths:
-            raise EvidenceError('missing', 'native XML report set is empty')
-        counts, diagnostics = xml_counts(paths, invocation.target.get('suite_pattern'))
         if invocation.tool == 'gradle':
+            roles = {source: 'gradle' for source, _ in retained}
             task = re.escape(invocation.target['task'])
             matches = [m.group(1) or '' for m in matching_log_lines(attempt, r'^> Task ' + task + r'(?: (.*))?$')]
             if not matches:
@@ -390,32 +541,52 @@ def interpret(invocation, records, retained, attempt, environment):
             if any(re.search(r'UP-TO-DATE|FROM-CACHE|SKIPPED|NO-SOURCE', state) for state in matches):
                 raise EvidenceError('not_executed', 'Gradle requested task did not execute fresh tests')
         else:
+            xctest_enabled = '--disable-xctest' not in invocation.argv
+            swift_enabled = '--disable-swift-testing' not in invocation.argv
+            if not xctest_enabled and not swift_enabled:
+                raise EvidenceError('incomplete', 'both Swift test runners are disabled')
             primary = records[0]['status'] == 'retained'
-            swift_testing = records[1]['status'] == 'retained'
-            if '--disable-xctest' not in invocation.argv and not primary:
+            swift_testing = records[1 if xctest_enabled else 0]['status'] == 'retained'
+            if xctest_enabled and not primary:
                 totals = [m.group(1) for m in matching_log_lines(attempt, r'Executed (\d+) tests?, with')]
                 if not totals or int(totals[-1]) != 0:
                     raise EvidenceError('incomplete', 'enabled XCTest report missing without observed zero tests')
-            if '--disable-swift-testing' not in invocation.argv and not swift_testing:
+            if swift_enabled and not swift_testing:
                 totals = [m.group(1) for m in matching_log_lines(attempt, r'Test run with (\d+) tests?')]
                 if not totals or int(totals[-1]) != 0:
                     raise EvidenceError('incomplete', 'enabled Swift Testing report missing without observed zero tests')
-    return ('zero_tests' if counts['executed'] == 0 else 'complete'), counts, diagnostics
+            sources = report_sources(invocation)
+            roles = {sources[0]: 'xctest' if xctest_enabled else 'swift_testing'}
+            if xctest_enabled and swift_enabled:
+                roles[sources[1]] = 'swift_testing'
+        reports = [XmlReport(file, roles[source]) for source, path in retained if source in roles
+                   for file in (sorted(path.rglob('*.xml')) if path.is_dir() else [path])]
+        if not reports:
+            raise EvidenceError('missing', 'native XML report set is empty')
+        counts = xml_counts(reports, invocation.target.get('suite_pattern'), attempt, diagnostics)
+    return ('incomplete' if counts['executed'] is None else 'zero_tests' if counts['executed'] == 0 else 'complete'), counts
 
 
 def bounded_summary(summary):
     for field in ['argv', 'cwd', 'target']:
         if len(json.dumps(summary[field]).encode()) > 1600:
             summary[field] = {'omitted': True, 'artifact': 'invocation.json'}
-    summary['diagnostics'] = [str(line)[:400] for line in summary['diagnostics'][:6]]
+            summary['details_omitted'] = True
     encoded = json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
     while len(encoded.encode()) > SUMMARY_BYTES and summary['diagnostics']:
-        summary['diagnostics'].pop()
+        lines = summary['diagnostics']
+        index = max(range(len(lines)), key=lambda i: len(json.dumps(lines[i])))
+        if len(lines[index]) > 80:
+            size = len(lines[index]) // 4
+            lines[index] = lines[index][:size] + ' ... ' + lines[index][-size:]
+        else:
+            lines.pop(len(lines) // 2)
         summary['details_omitted'] = True
         encoded = json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
     if len(encoded.encode()) > SUMMARY_BYTES:
         for field in ['argv', 'cwd', 'target']:
             summary[field] = {'omitted': True, 'artifact': 'invocation.json'}
+        summary['details_omitted'] = True
         encoded = json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
     if len(encoded.encode()) > SUMMARY_BYTES:
         raise ValueError('evidence path exceeds summary capacity')
@@ -438,7 +609,7 @@ def run(invocation, store):
     write_json(attempt / 'invocation.json', record)
     for name in ['stdout.log', 'stderr.log']:
         (attempt / name).touch()
-    counts, diagnostics, interpretation = dict(UNKNOWN), [], 'prerequisite'
+    counts, diagnostics, interpretation = dict(UNKNOWN), Diagnostics(), 'prerequisite'
     status, code = 'not_started', None
     environment = dict(os.environ, **invocation.env)
     try:
@@ -448,29 +619,31 @@ def run(invocation, store):
         if stale:
             retain_reports(sources, stale, attempt)
             raise EvidenceError('stale', 'native report roots must be absent before execution; prepare a fresh output in the consumer recipe')
-        status, code, diagnostics = execute(invocation, attempt, environment)
+        status, code, process_diagnostics = execute(invocation, attempt, environment)
+        diagnostics.extend(process_diagnostics)
         records, retained = retain_reports(sources, stale, attempt)
-        interpretation, counts, native_diagnostics = interpret(invocation, records, retained, attempt, environment)
-        diagnostics += native_diagnostics
+        interpretation, counts = interpret(invocation, records, retained, attempt, environment, diagnostics)
+        if invocation.operation == 'build' and status != 'exited':
+            interpretation = 'incomplete'
     except (EvidenceError, OSError, ValueError) as error:
         interpretation = error.status if isinstance(error, EvidenceError) else 'unreadable'
-        diagnostics.append(str(error))
+        diagnostics.add(str(error))
     if not (attempt / 'reports.json').exists():
         write_json(attempt / 'reports.json', [])
-    diagnostics += log_diagnostics(attempt)
     if status in {'exited', 'signalled'} and code != 0 or counts['failed'] is not None and counts['failed'] > 0:
         outcome = 'failed'
     elif status == 'exited' and code == 0 and interpretation in {'build_only', 'complete'}:
         outcome = 'passed'
     else:
         outcome = 'incomplete'
+    diagnostic_lines, omitted = summary_diagnostics(diagnostics, log_diagnostics(attempt, fallback=outcome != 'passed'))
     summary = {'schema_version': 1, 'attempt': str(attempt), 'tool': invocation.tool,
                'operation': invocation.operation, 'argv': invocation.argv, 'cwd': str(invocation.cwd),
                'target': invocation.target, 'command_status': status, 'exit_code': code,
                'interpretation_status': interpretation, 'outcome': outcome, 'counts': counts,
                'target_verification': ('native_device' if invocation.tool == 'xcodebuild'
                                        else 'invocation_and_fresh_reports') if interpretation == 'complete' else 'unverified',
-               'diagnostics': list(dict.fromkeys(diagnostics)),
+               'diagnostics': diagnostic_lines, 'details_omitted': omitted,
                'artifacts': {'invocation': 'invocation.json', 'stdout': 'stdout.log',
                              'stderr': 'stderr.log', 'reports': 'reports.json'}}
     record['finished_at'] = datetime.now(timezone.utc).isoformat()
