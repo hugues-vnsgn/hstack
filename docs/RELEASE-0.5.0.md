@@ -30,8 +30,8 @@ This release also bundles terminal and browser control procedures, resolves help
    On Claude Code, refresh the configured marketplace and update the plugin:
 
    ```sh
-	claude plugin marketplace update hstack
-	claude plugin update hstack@hstack
+   claude plugin marketplace update hstack
+   claude plugin update hstack@hstack
    ```
 
    For a new install from that configured marketplace, use `claude plugin install hstack@hstack`. A session-only checkout uses the `v0.5.0` tree with `claude --plugin-dir "/absolute/path/to/hstack/plugin"`.
@@ -39,8 +39,8 @@ This release also bundles terminal and browser control procedures, resolves help
    On Codex, refresh the configured marketplace, then install its current plugin payload:
 
    ```sh
-	codex plugin marketplace upgrade hstack
-	codex plugin add hstack@hstack
+   codex plugin marketplace upgrade hstack
+   codex plugin add hstack@hstack
    ```
 
    Check that the resolved payload reports 0.5.0. These command forms are present in the local CLI help. An update to a version-bumped release remains unobserved. In the pretest, a same-version `claude plugin update` retained the old commit. That result prompted this version bump. The commands above do not yet have observed 0.5.0 update evidence. If your host retains an older copy, use its supported reinstall controls and preserve the complete resource layout. Confirm native discovery before invoking `$hugues-mode` or `/hstack:hugues-mode`.
@@ -48,7 +48,7 @@ This release also bundles terminal and browser control procedures, resolves help
 2. Before using `watch-pr` or `orch` from a newly installed copy, prepare its Bun dependencies once. Use a session authorized to install packages and write that copy's scripts directory. Expand `<plugin>` to the absolute root of the copy actually loaded:
 
    ```sh
-	cd "<plugin>/skills/hugues-mode/scripts" && bun install --frozen-lockfile && bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" --help
+   cd "<plugin>/skills/hugues-mode/scripts" && bun install --frozen-lockfile && bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" --help
    ```
 
    Standard roots are `~/.claude/plugins/cache/hstack/hstack/0.5.0` and `~/.codex/plugins/cache/hstack/hstack/0.5.0`. A custom loaded root takes precedence. Require exit 0 and inspect `node_modules/commander/package.json` and `node_modules/.poteto-mode-tools-install-key`. The key must equal SHA-256 of `package.json`, a NUL byte, and `bun.lock`, in that order. The help call lets the bootstrap write that key. A standalone frozen install does not write it. If setup lacks authority or the directory is not writable, hold the dependent step and report the exact expanded command. This setup does not widen the consumer sandbox.
