@@ -1,8 +1,9 @@
-# Use hStack 0.4.0
+# Use hStack 0.5.0
 
-This guide is for version 0.4.0, which renames 0.3.0's native layout to hStack. Your app
-stays in its own repository. Skills are instruction files for specific jobs; playbooks order the
-steps of a larger task. Start with `hugues-mode` and describe the result you want.
+This guide is for version 0.5.0. It restores pstack's workflow rules and adds
+bundled control procedures and native host fixes. The hStack rename shipped in
+0.4.0. Your app stays in its own repository. Skills are instruction files for
+specific jobs. Playbooks order the steps of a larger task. Start with `hugues-mode` and describe the result you want.
 It retains the generic workflows and applicable Swift/iOS, Kotlin/Android,
 KMP and CMP proof rules.
 
@@ -17,8 +18,11 @@ performs no installation or authentication setup.
 
 ## Install in Claude Code
 
-Version 0.4.0 loads for one session from a checkout of its `v0.4.0` tag. Keep an
-existing 0.3.0 install while you check it. Start from your app directory:
+Version 0.5.0 can load for one session from a checkout of its `v0.5.0` tag.
+Keep an active task on its recorded 0.4.x copy until you reconcile its binding.
+A version-bumped marketplace update remains unobserved. Follow the
+[upgrade instructions](RELEASE-0.5.0.md#upgrade-from-04x) for persistent installs.
+Start from your app directory:
 
 ```sh
 claude --plugin-dir "/absolute/path/to/hstack/plugin"
@@ -31,14 +35,16 @@ settings to force discovery or bypass an owner-disabled skill.
 For an earlier release, use its release notes ([0.2.0](RELEASE-0.2.0.md),
 [0.3.0](RELEASE-0.3.0.md)) and the instructions at that tag. Their historical
 instructions use the earlier names and do not apply to this version. The
-[0.4.0 release notes](RELEASE-0.4.0.md) list the renames, how to migrate from
-0.3.0 and what is unobserved.
+[0.5.0 release notes](RELEASE-0.5.0.md) describe the current upgrade and its
+limits. The [0.4.0 notes](RELEASE-0.4.0.md) retain the historical rename and
+migration from 0.3.0.
 
 ## Use Codex
 
 Codex supports explicit skill invocation and project-native discovery. This
 version supplies canonical skills plus `agents/openai.yaml` invocation metadata.
-Its exact package installation route has not been validated in a live Codex session.
+The 0.5.0 pretest used an installed Codex copy on CLI 0.163.0. A marketplace
+update to the version-bumped release remains unobserved.
 Use your host's supported native discovery route, and check that `hugues-mode`
 is available before invoking `$hugues-mode`. Keep the complete resource layout.
 
@@ -141,6 +147,10 @@ host trials were blocked before complete planning/invocation. Three bounded
 receipts cover this layout: the [skill-list host validation](skill-list-host-validation.md),
 the [router eval](hugues-mode-router-eval.md) and the [router interactive
 check](router-interactive-check.md), whose one Claude Code session fired the
-router and spawned arena candidates but stopped before any finished. Complete
-workflow execution, native runtime parity, persisted-transcript coverage, mobile
-devices and live forge/cloud/loop workflows remain unverified.
+router and spawned arena candidates but stopped before any finished.
+The [0.5.0 validation](RELEASE-0.5.0.md#validation) records later bounded
+bug-fix runs on Codex and Claude Code, plus helper and Chrome checks. Both final
+workflows wrote their todos late. Claude used headless bypassPermissions with
+hooks off. Interactive normal-permission completion, native runtime parity,
+persisted-transcript coverage, complete mobile journeys and live forge/cloud/loop
+workflows remain unverified.
