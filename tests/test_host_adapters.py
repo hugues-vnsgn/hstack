@@ -221,6 +221,33 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
                 self.assertIn('invalid choice', result.stderr)
                 self.assertEqual(result.stdout, '')
 
+    def test_bun_helper_setup_holds_unwritable_installation(self):
+        tools = ' '.join((ROOT / 'plugin/adapters/host-helper-setup.md').read_text().split())
+        setup = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        for host in ['.claude', '.codex']:
+            self.assertIn(f'{host}/plugins/cache/hstack/hstack/<loaded-version>/skills/hugues-mode/scripts', tools)
+        for contract in [
+                'cd "<plugin>/skills/hugues-mode/scripts" && bun install --frozen-lockfile',
+                'bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" --help',
+                'node_modules/commander/package.json',
+                'node_modules/.poteto-mode-tools-install-key',
+                'SHA-256 of package.json, a NUL byte, and bun.lock',
+                'owner-approved', 'cache is not writable', 'hold the dependent step',
+                'Report the exact expanded setup command as the gap',
+                'Do not retry the helper or silently skip the step']:
+            with self.subTest(contract=contract):
+                self.assertIn(contract, tools)
+        self.assertIn('[helper setup](host-helper-setup.md) in full', setup)
+        workflow = ' '.join((ROOT / 'plugin/adapters/host-workflow-tools.md').read_text().split())
+        for contract in [
+                '[helper setup](host-helper-setup.md) in full',
+                'Missing runtimes, dependencies, cloud workers, forge APIs or loop primitives',
+                'hold their operation, preserve its intended gate and report the gap',
+                'Native local workers substitute for cloud only where the core permits local execution',
+                'Never simulate a race sequentially']:
+            with self.subTest(contract=contract):
+                self.assertIn(contract, workflow)
+
     def test_public_bridges_route_actual_adapter(self):
         for name in ['multi-phase-plan', 'autopilot-full', 'autopilot-stack']:
             self.assertIn('read-workflow', (self.plugin / f'skills/hugues-mode/playbooks/{name}.md').read_text())

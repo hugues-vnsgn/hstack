@@ -288,7 +288,10 @@
       "paragraph": 18,
       "slice": null,
       "destination": "plugin/adapters/host-workflow-tools.md",
-      "sha256": "715c8801587cbccaf6c5bb7a236b687cb5cda08c482f06daf4f26317878e1f51"
+      "sha256": "715c8801587cbccaf6c5bb7a236b687cb5cda08c482f06daf4f26317878e1f51",
+      "disposition": "replaced",
+      "reason": "F3 moves Bun dependency setup behind a mandatory helper-specific reference. The phase paragraph preserves installation authority, missing-capability operation holds, intended gates and gap reporting, native local workers substituting for cloud only where the core permits local execution, real race execution and remote-action scope.",
+      "replacement": "Before Bun helpers, read [helper setup](host-helper-setup.md) in full.\nThe bootstrap can install dependencies.\nDo not execute it without installation authority. Missing runtimes, dependencies,\ncloud workers, forge APIs or loop primitives hold their operation, preserve its\nintended gate and report the gap. Native local workers substitute for cloud only\nwhere the core permits local execution. Never simulate a race sequentially.\nRemote actions require explicit scope."
     },
     {
       "paragraph": 19,
