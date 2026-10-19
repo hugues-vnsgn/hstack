@@ -641,6 +641,20 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn("preserve `generalPurpose` and the workflow's own prompt", workers)
         self.assertIn('without a mode persona', workers)
 
+    def test_held_publication_keeps_the_prescribed_local_pr_artifacts(self):
+        publication = ' '.join((ROOT / 'plugin/adapters/host-publication.md').read_text().split())
+        for phrase in [
+                'With publication held or no remote or forge, save local PR title and body separately.',
+                'Report paths and hold.',
+                "Check Opening a PR's format, section order, Scope and verification.",
+                'Skip only forge writes.',
+                'Drafts grant no authority.',
+                'Missing writing-for-agents is reported as a capability gap, never silently marked performed.',
+                'Without a bot, record the plan box "Bugbot triage done." as',
+                "The watcher's match on Claude's login, `claude`, is unconfirmed until a Claude review is seen on a PR."]:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, publication)
+
     def test_worker_definition_uses_the_native_names(self):
         agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
         description = re.search(r'^description: (.+)$', agent, re.M).group(1)

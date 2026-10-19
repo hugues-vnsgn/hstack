@@ -299,8 +299,8 @@
       "destination": "plugin/adapters/host-publication.md",
       "sha256": "8ef5a187b0ccf33a527a68f56dee5ed5416fdd3c78ddee8d926d331552312503",
       "disposition": "replaced",
-      "reason": "hStack bundles deslop, control-cli and control-ui from Cursor's cursor-team-kit. Their named steps resolve to the bundled skills, so only writing-for-agents remains an external capability in this sentence.",
-      "replacement": "Cursor create-skill translates to an available agent-writing skill plus this\nrepository's package checks. Before commits, use the bundled deslop\nand the pinned unslop and technical-writing skills; retain no-comments before\nreview. Control steps use the bundled control-cli and control-ui skills.\nMissing external writing-for-agents is reported as a capability gap, never\nsilently marked performed."
+      "reason": "hStack bundles deslop, control-cli and control-ui from Cursor's cursor-team-kit. Their named steps resolve to the bundled skills, so only writing-for-agents remains an external capability in this sentence. The held-publication fix keeps these writing, review and control dependencies in fewer words while retaining the capability-gap report and the prohibition on silently marking it performed.",
+      "replacement": "Cursor create-skill uses agent-writing and package checks.\nBefore commits use bundled deslop, unslop and technical-writing, before review\nno-comments, and for control bundled control-cli or control-ui.\nMissing writing-for-agents is reported as a capability gap, never silently marked performed."
     },
     {
       "paragraph": 19,

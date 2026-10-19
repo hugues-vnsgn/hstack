@@ -1631,7 +1631,7 @@
       "mode": 420
     },
     "adapters/host-publication.md": {
-      "sha256": "21908beb7b20af5354d5aacda04dcf23ae00a79638f1595c2ebbae68242a8f61",
+      "sha256": "a23763fb3fa696ce8cca51b7d9244a5e0fadf92892aeeae2a4274d24cfceffb6",
       "mode": 420
     },
     "adapters/host-special-skills.md": {
@@ -1659,7 +1659,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "3b95aff3506e2dc64904c3881326ab5e84e4a69e3ca16ba2255e84288ebde191",
+      "sha256": "f9388d8a21e80bfd81beaa118ba833a3740ec350f4f6f33cb5676c4284e292c9",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1683,11 +1683,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "8af978f6d13d3d40136078fb28e03a51ac036f72b1598c66451533c71543cd33",
+      "sha256": "79c8e1d4895931a347438e64a0872a4a44f0bc5b981f812f9c8aba1dc675cc6a",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "eb2efcf525eca9bff45ce67d796568dffb6c8fab4f1b750bde9b9c77f8e50a06",
+      "sha256": "cd63bf3f5107251ddcb791869f192134c428a232dba1cd10126aebd738d28f55",
       "mode": 420
     },
     "agents/hugues-agent.md": {
