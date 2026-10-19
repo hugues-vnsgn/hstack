@@ -2,11 +2,12 @@
 
 hStack gives Claude Code and Codex a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.4.0** renames the project from huguesStack to hStack. The plugin is
-`hstack`, its commands start with `/hstack:` and the setup skill is `setup-hstack`;
-the [0.4.0 release notes](docs/RELEASE-0.4.0.md) list the renames and how to
-migrate. The current candidate has 57 public skills, 23 generic playbooks, two
-agents and four mobile playbooks. Each skill owns one canonical `SKILL.md`.
+Version **0.5.0** restores pstack 0.15.25's workflow rules, bundles terminal and
+browser procedures, and fixes native skill loading and held-publication handoffs.
+The [0.5.0 release notes](docs/RELEASE-0.5.0.md) describe the changes, upgrade
+steps, observed host runs, and remaining gaps. The plugin remains `hstack`, its
+commands start with `/hstack:`, and the setup skill is `setup-hstack`.
+The release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks. Each skill owns one canonical `SKILL.md`.
 Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
 Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
@@ -27,14 +28,17 @@ claude --plugin-dir "/absolute/path/to/hstack/plugin"
 Confirm native discovery, then invoke `/hstack:hugues-mode` with a small
 read-only request. Session-only package loading is documented host behavior, and
 one interactive session of this layout loaded the plugin that way and fired the
-router. Complete execution of a workflow has not been observed; see the
-[interactive check](docs/router-interactive-check.md).
+router. The [interactive check](docs/router-interactive-check.md) records that session.
+The [0.5.0 validation](docs/RELEASE-0.5.0.md#validation) adds a bounded headless
+bug-fix run with hooks off and bypassPermissions. Interactive workflow completion
+under normal permissions remains unobserved.
 
 ## Start with Codex
 
 Use a supported native discovery/invocation route and confirm that `hugues-mode`
-appears before using `$hugues-mode`. Package-specific native installation remains
-unverified. If it is unavailable or disabled, stop; direct-reading its body is
+appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
+Codex copy. Updating to the version-bumped release remains unobserved. If
+`hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
 explains the boundary and a first-task workflow.
 
@@ -42,7 +46,10 @@ explains the boundary and a first-task workflow.
 
 The workflows ask the agent to inspect the project, keep a task checklist, use focused workers where required, verify the result and report missing evidence. Mobile changes need checks on the affected targets. hStack does not supply Xcode, Android tooling, model access or device control.
 
-The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete planning was blocked by isolated host startup/authentication. It did not establish full Claude/Codex workflow execution, native transcript compatibility, mobile behavior or unattended cleanup. Read the [0.4.0 release notes](docs/RELEASE-0.4.0.md), the [0.3.0 release notes](docs/RELEASE-0.3.0.md) and the [0.2.0 release notes](docs/RELEASE-0.2.0.md) for the evidence and limits.
+The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete planning was blocked by isolated host startup/authentication. It did not establish full Claude/Codex workflow execution, native transcript compatibility, mobile behavior or unattended cleanup. The [0.5.0 pretest](docs/RELEASE-0.5.0.md#validation) records later Codex and
+Claude Code bug-fix runs, including late checklists and the Claude permission
+limits. It establishes no complete mobile journey. Read the
+[0.4.0 release notes](docs/RELEASE-0.4.0.md), the [0.3.0 release notes](docs/RELEASE-0.3.0.md) and the [0.2.0 release notes](docs/RELEASE-0.2.0.md) for the evidence and limits.
 
 ## Reference and maintenance
 
