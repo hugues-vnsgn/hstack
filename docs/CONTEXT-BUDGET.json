@@ -1101,9 +1101,9 @@
         "plugin/skills/why/SKILL.md"
       ],
       "unique_files": 59,
-      "bytes": 226693,
-      "characters": 226600,
-      "estimated_tokens_characters_divided_by_4": 56650.0,
+      "bytes": 226914,
+      "characters": 226821,
+      "estimated_tokens_characters_divided_by_4": 56705.25,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1314,8 +1314,8 @@
           "sha256": "488b8fd03f975b28a7bd719059d9bf8ded67cbb964978da0361b50a044ad49c7"
         },
         "plugin/skills/swift-best-practices/SKILL.md": {
-          "bytes": 3433,
-          "sha256": "d47fd4833deea82ced48590fe5c07429c11d9fb0588ca7d3409476921f3be398"
+          "bytes": 3654,
+          "sha256": "1f1323b9b138d0f7e7475061fc06434e5c22b3552e3fc5017c274a602112f334"
         },
         "plugin/skills/tdd/SKILL.md": {
           "bytes": 3393,
@@ -1349,9 +1349,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 210558,
-      "characters": 210466,
-      "estimated_tokens_characters_divided_by_4": 52616.5
+      "bytes": 210779,
+      "characters": 210687,
+      "estimated_tokens_characters_divided_by_4": 52671.75
     },
     "mode_full_file": {
       "paths": [
@@ -1467,9 +1467,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 5,
-        "bytes": 33818,
-        "characters": 33778,
-        "estimated_tokens_characters_divided_by_4": 8444.5,
+        "bytes": 33931,
+        "characters": 33891,
+        "estimated_tokens_characters_divided_by_4": 8472.75,
         "inputs": {
           "plugin/adapters/host.md": {
             "bytes": 5452,
@@ -1484,8 +1484,8 @@
             "sha256": "b10089941bdabd898275b68e16d66479e876d35db217d8102c2ec62c67c1294e"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
-            "bytes": 2484,
-            "sha256": "f1b0d6b7aef90a38e52742833f1a35ef83f204a424978540c9a35fda07567799"
+            "bytes": 2597,
+            "sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739"
           },
           "plugin/skills/unslop/SKILL.md": {
             "bytes": 6077,
@@ -2035,9 +2035,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 35,
-        "bytes": 134552,
-        "characters": 134484,
-        "estimated_tokens_characters_divided_by_4": 33621.0,
+        "bytes": 134665,
+        "characters": 134597,
+        "estimated_tokens_characters_divided_by_4": 33649.25,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2084,8 +2084,8 @@
             "sha256": "b10089941bdabd898275b68e16d66479e876d35db217d8102c2ec62c67c1294e"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
-            "bytes": 2484,
-            "sha256": "f1b0d6b7aef90a38e52742833f1a35ef83f204a424978540c9a35fda07567799"
+            "bytes": 2597,
+            "sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739"
           },
           "plugin/skills/hugues-mode/playbooks/opening-a-pr.md": {
             "bytes": 5646,
@@ -3221,9 +3221,9 @@
         "plugin/skills/swift-best-practices/references/uikit.md"
       ],
       "unique_files": 11,
-      "bytes": 25546,
-      "characters": 25546,
-      "estimated_tokens_characters_divided_by_4": 6386.5,
+      "bytes": 26050,
+      "characters": 26050,
+      "estimated_tokens_characters_divided_by_4": 6512.5,
       "inputs": {
         "plugin/adapters/host-mobile-languages.md": {
           "bytes": 3389,
@@ -3254,16 +3254,16 @@
           "sha256": "bf0d95ae8fa95571cbfa69ebcc7c578ad5c56cde499bd0f2cfb95ff5061f4ca1"
         },
         "plugin/skills/kotlin-best-practices/references/native-interop.md": {
-          "bytes": 1707,
-          "sha256": "58077fb26ed9a507e36ea6bc84593e02d47fed460cd03efc837a34b0ade3e90a"
+          "bytes": 1972,
+          "sha256": "2094b6d1c56a223495e0c94145486773f08966c91722262a790798896d62c25b"
         },
         "plugin/skills/swift-best-practices/SKILL.md": {
-          "bytes": 3433,
-          "sha256": "d47fd4833deea82ced48590fe5c07429c11d9fb0588ca7d3409476921f3be398"
+          "bytes": 3654,
+          "sha256": "1f1323b9b138d0f7e7475061fc06434e5c22b3552e3fc5017c274a602112f334"
         },
         "plugin/skills/swift-best-practices/references/swiftui.md": {
-          "bytes": 1466,
-          "sha256": "1686d5e3e4f0de4dbc7c2faa7846d76664ba2211e8b9804f55e28f42d2b2aecf"
+          "bytes": 1484,
+          "sha256": "f33dc5b7a4d788600c61e1b4f53ae64037c70e4c8cf50c3117590be92aa23bb9"
         },
         "plugin/skills/swift-best-practices/references/uikit.md": {
           "bytes": 1591,

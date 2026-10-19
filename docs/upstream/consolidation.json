@@ -603,7 +603,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/bug-fix.md",
       "disposition": "canonical",
-      "destination_sha256": "f1b0d6b7aef90a38e52742833f1a35ef83f204a424978540c9a35fda07567799"
+      "destination_sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/eval.md",
@@ -1671,11 +1671,11 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "44eaeb5e47630f736fd5d5ca199a8ffd91bdee87540412de9af40acd4d69944c",
+      "sha256": "9e78d51c5656f63a5ab9fb56ac0a7463f3f22ee37a800479d5729f88149ca2d8",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
-      "sha256": "78a2b92f8e5a14d020471914dbe13ac69a429c4dee6ed51833238295bb7ea7f1",
+      "sha256": "fe8df67bab5a6d2565e0dc27217e21be8ac57b6da344ffb575445b3606eee164",
       "mode": 420
     },
     "adapters/mobile.md": {
@@ -1695,11 +1695,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "b703d0c9c3f186452bfdb35654042d1f168a0d7a4260f358b470783cf50735cf",
+      "sha256": "bf00cc7d2b4fcfb99bf69c0e48340cf0c3c15f6873cc5a522e3d3c727d203262",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "49422be6da90d4bdbb055708a6c4ab280b99382ab8098eec16276ced59e716f7",
+      "sha256": "5ca88b6f756b99aee93937f88d20d0663ea6f5f72a2d4a39c45a32101d9f86cb",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1907,7 +1907,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/bug-fix.md": {
-      "sha256": "f1b0d6b7aef90a38e52742833f1a35ef83f204a424978540c9a35fda07567799",
+      "sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/build-doctor.md": {
@@ -2167,7 +2167,7 @@
       "mode": 420
     },
     "skills/kotlin-best-practices/references/native-interop.md": {
-      "sha256": "58077fb26ed9a507e36ea6bc84593e02d47fed460cd03efc837a34b0ade3e90a",
+      "sha256": "2094b6d1c56a223495e0c94145486773f08966c91722262a790798896d62c25b",
       "mode": 420
     },
     "skills/maintain-verification-skill/SKILL.md": {
@@ -2459,7 +2459,7 @@
       "mode": 420
     },
     "skills/swift-best-practices/SKILL.md": {
-      "sha256": "d47fd4833deea82ced48590fe5c07429c11d9fb0588ca7d3409476921f3be398",
+      "sha256": "1f1323b9b138d0f7e7475061fc06434e5c22b3552e3fc5017c274a602112f334",
       "mode": 420
     },
     "skills/swift-best-practices/agents/openai.yaml": {
@@ -2467,7 +2467,7 @@
       "mode": 420
     },
     "skills/swift-best-practices/references/swiftui.md": {
-      "sha256": "1686d5e3e4f0de4dbc7c2faa7846d76664ba2211e8b9804f55e28f42d2b2aecf",
+      "sha256": "f33dc5b7a4d788600c61e1b4f53ae64037c70e4c8cf50c3117590be92aa23bb9",
       "mode": 420
     },
     "skills/swift-best-practices/references/uikit.md": {

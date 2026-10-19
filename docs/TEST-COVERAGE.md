@@ -313,13 +313,16 @@ The F3 helper-setup source contract adds one installed-adapter case. Collection 
 
 The F4 no-todo-tool translation adds one native-layout source-contract case. Collection on the rebased branch gives 436 top-level cases, with 57 in test_native_layout and 78 in test_host_adapters. It checks the conditional Markdown checklist, agent-store rule, verbatim steps before step one, ongoing done or skip records, and the filename in the reply. These are delivered-instruction checks. Fresh-host adoption remains unobserved.
 
-Issue #105 worker-1 adds six installed mobile-guidance and inventory cases. Collection
+Issue #105 adds six installed mobile-guidance and inventory cases. Collection
 gives 442 top-level cases. The nine selection contexts are instruction contracts
 through an installed plugin in an external consumer, not observations of native
 host loading. Reseal mutations reject missing authored inventory, model-invocable
 metadata, changed path scopes and implicit invocation. The current tolerance
 matrix covers 59 skills and 2,080 subtests. Frozen archives remain unchanged.
-The disclosure test now uses explicit scenario source caps of 38,000, 140,000 and
-150,000 bytes. Historical measurements remain unchanged. Mobile guidance adds a
-small always-present selection pointer, so a blanket claim that every current
-workflow must be smaller than the historical version no longer applies.
+The disclosure test keeps initial routing and the CLI bug fix strictly below
+their historical source inventories. The TypeScript feature is bounded by its
+historical inventory plus the measured host selection row, at most 128 bytes.
+Installed contracts also check that mobile plans load lane scenarios and the
+review lens before step 4 writes live lanes, and that bug-fix step 6 supplies the
+lens to Opening a PR's interrogate review, including top-level PR authors. Historical measurements and test
+counts remain unchanged.

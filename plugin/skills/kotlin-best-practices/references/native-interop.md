@@ -16,7 +16,9 @@ required executor. See [Swift and Objective-C interoperability](https://kotlinla
 
 Trace Swift closures, Kotlin objects and native delegates as one ownership graph.
 ARC release and Kotlin GC happen at different times. Mixed cycles can retain
-objects. Check disposal, callback unregister and long-lived references. Deinit
+objects. Break retain cycles on the Swift or Objective-C side with weak or
+unowned references, as the [ARC integration guidance](https://kotlinlang.org/docs/native-arc-integration.html#retain-cycles) documents. Use unowned only when the referenced object outlives its user.
+Check disposal, callback unregister and long-lived references. Deinit
 thread behavior depends on where objects enter Kotlin and runtime settings.
 Do not put required main-thread cleanup in a deinitializer based on an assumed
 collection thread. See [ARC integration](https://kotlinlang.org/docs/native-arc-integration.html).

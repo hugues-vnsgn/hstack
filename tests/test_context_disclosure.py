@@ -183,9 +183,17 @@ class ContextDisclosure(unittest.TestCase):
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
         self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
                         measured['native_frontmatter']['native_before']['bytes'])
-        limits = {'initial_mode_routing': 38000, 'bug_fix': 140000, 'larger_feature': 150000}
-        for name, profile in measured['scenarios'].items():
-            self.assertLessEqual(profile['candidate']['bytes'], limits[name])
+        for name in ['initial_mode_routing', 'bug_fix']:
+            profile = measured['scenarios'][name]
+            self.assertLess(profile['candidate']['bytes'], profile['native_before']['bytes'])
+        host = (ROOT / 'plugin/adapters/host.md').read_text()
+        selection_row = next(line for line in host.splitlines(keepends=True)
+                             if '[Mobile language scope](host-mobile-languages.md)' in line)
+        selection_growth = len(selection_row.encode())
+        self.assertLessEqual(selection_growth, 128)
+        feature = measured['scenarios']['larger_feature']
+        self.assertLessEqual(feature['candidate']['bytes'],
+                             feature['native_before']['bytes'] + selection_growth)
         routing = measured['scenarios']['initial_mode_routing']
         self.assertLess(routing['candidate']['bytes'], routing['native_before']['bytes'] * .8)
 

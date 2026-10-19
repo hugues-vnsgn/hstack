@@ -44,6 +44,13 @@ before capture and translate the existing steps on the matching runtime.
 
 ## Evidence and scope
 
+For mobile multi-phase plans, before step 4 of the selected
+[multi-phase plan](../skills/hugues-mode/playbooks/multi-phase-plan.md) writes
+the live lanes, read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)
+and the [mobile review lens](../skills/hugues-mode/references/mobile-review.md).
+Choose scenarios within the existing ten lanes and carry applicable risks into
+their actions and pass predicates. Keep the ten-lane rule unchanged.
+
 Read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md),
 [evidence guide](../skills/hugues-mode/references/evidence-guide.md), and
 [jev drive](../skills/hugues-mode/references/jev-drive.md) at the relevant proof

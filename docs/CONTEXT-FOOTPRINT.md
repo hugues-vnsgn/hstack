@@ -36,11 +36,11 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (59 in the current candidate) | 3,940.25 | 3,700 | 3,945 | 14,803 → 15,781 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,444.5 | 45,289 → 33,818 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,621 | 135,888 → 134,552 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,472.75 | 45,289 → 33,931 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,649.25 | 135,888 → 134,665 |
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,573.5 | 146,269 → 146,362 |
 
-The routing inventory falls about 25.3% from the previous native candidate.
+The routing inventory falls about 25.1% from the previous native candidate.
 Complete bundled workflow inventories also count worker dispatch, verification
 and publication instructions. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -68,7 +68,7 @@ fix round 1's reworded host-contract marker ("The host contract governs how this
 skill reaches any sibling dependency.", replacing wording that read as a blanket
 override of the scoped bundled-reference rule) touches every one of the 26. The
 nine skills added after the release carry the marker too. All 59 skill files
-total 226,693 bytes; bodies excluding frontmatter and delimiters total 210,558
+total 226,914 bytes; bodies excluding frontmatter and delimiters total 210,779
 bytes. The mode file is 19,261 bytes, including its 18,984-byte body.
 
 History, not current counts: until the pstack 0.15.25 re-pin, all 24
@@ -212,12 +212,14 @@ identity and old helper passes do not establish current runtime parity. See
 The two authored baselines and six conditional platform references join the
 language-selection adapter, mobile review lens and native-forensics reference.
 The separate `mobile_guidance` inventory contains 11 files and
-25,546 source bytes, about 6,386.5 estimated tokens.
+26,050 source bytes, about 6,512.5 estimated tokens.
 It measures every new guidance file once. It is neither a task's loading cost
 nor observed runtime output or execution cost. Conditional branches load only
 when applicable. The generic scenario inventories exclude these skill bodies
 and references while counting the short selection pointer in the host adapter.
-The fixed source caps are 38,000 bytes for initial routing, 140,000 for the CLI
-bug fix and 150,000 for the TypeScript feature. The TypeScript candidate now
-exceeds its historical source inventory slightly. No runtime token saving or
+Initial routing and the CLI bug fix must remain strictly below their historical
+source inventories. The TypeScript feature measures 146,362 bytes against
+146,269 historical bytes, an increase of 93 bytes. Its bound is the historical
+inventory plus the host selection row's measured 97 bytes, currently
+146,366 bytes. The row itself may not exceed 128 bytes. No runtime token saving or
 execution speedup follows from these source counts.

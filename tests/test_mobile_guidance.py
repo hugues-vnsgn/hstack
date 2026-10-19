@@ -109,6 +109,13 @@ class InstalledMobileGuidance(InstalledFixture, unittest.TestCase):
         for phase in ['bug-fix', 'kmp-bridge-change', 'cmp-two-target-change']:
             text = self.read(f'skills/hugues-mode/playbooks/{phase}.md')
             self.assertIn('[mobile review lens](../references/mobile-review.md)', text)
+        bug_fix = self.read('skills/hugues-mode/playbooks/bug-fix.md')
+        self.assertIn('6. Run **Opening a PR**.', bug_fix)
+        self.assertIn('run **interrogate** with the [mobile review lens]', bug_fix)
+        self.assertIn('even when you open the PR yourself.', bug_fix)
+        self.assertIn('Reuse this review when Opening a PR already requires `interrogate`.', bug_fix)
+        opening = self.read('skills/hugues-mode/playbooks/opening-a-pr.md')
+        self.assertIn('A subagent that opens a PR runs `interrogate`', opening)
         review = self.read('skills/hugues-mode/references/mobile-review.md')
         for risk in ['Lifecycle and process restoration', 'Main-thread safety', 'Cancellation',
                      'Resource release', 'Offline, error and retry', 'Accessibility and text scaling',
@@ -123,6 +130,15 @@ class InstalledMobileGuidance(InstalledFixture, unittest.TestCase):
             self.assertIn(phrase, native)
 
     def test_lane_selection_preserves_ten_lanes_and_optional_supplements(self):
+        workflow = self.read('adapters/mobile-workflows.md')
+        planning = workflow.split('For mobile multi-phase plans, before step 4', 1)[1]
+        planning = planning.split('Read [mobile lanes]', 1)[0]
+        self.assertIn('writes\nthe live lanes', planning)
+        self.assertIn('[mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)', planning)
+        self.assertIn('[mobile review lens](../skills/hugues-mode/references/mobile-review.md)', planning)
+        plan = self.read('skills/hugues-mode/playbooks/multi-phase-plan.md')
+        self.assertIn('4. Copy the skeleton below into the plan file and fill every placeholder.', plan)
+        self.assertIn('Ten lanes at the PR head drive the real surface', plan)
         lanes = self.read('skills/hugues-mode/references/mobile-lanes.md')
         self.assertIn("Preserve the selected multi-phase plan's ten-lane rule.", lanes)
         self.assertIn('An inapplicable risk needs a reason', lanes)
