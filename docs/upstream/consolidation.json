@@ -603,7 +603,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/bug-fix.md",
       "disposition": "canonical",
-      "destination_sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739"
+      "destination_sha256": "8051d0a344a61685e2128cba7e49caa8d64d27f825b8998d8f17247e9fc38498"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/eval.md",
@@ -1671,15 +1671,23 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "9e78d51c5656f63a5ab9fb56ac0a7463f3f22ee37a800479d5729f88149ca2d8",
+      "sha256": "dc3eba2f1d603190d61f5f62c8aeb999829cdac8780094b010facfc3f0f81348",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
-      "sha256": "fe8df67bab5a6d2565e0dc27217e21be8ac57b6da344ffb575445b3606eee164",
+      "sha256": "b2cfc64606931a166a34ceb618e09d6b31691d22f52836be736c698e4393e582",
       "mode": 420
     },
     "adapters/mobile.md": {
       "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825",
+      "mode": 420
+    },
+    "adapters/native-execution.md": {
+      "sha256": "4345323fdc08186e9adc6002352213e2c7165a70fff9be1a19a889e95d1db24e",
+      "mode": 420
+    },
+    "adapters/native_exec.py": {
+      "sha256": "c0db5c3db54abfa0f43359ab1cc5e97b0fcfb4c01facd0f3b1448d5a3111ef04",
       "mode": 420
     },
     "adapters/runtime/__init__.py": {
@@ -1695,11 +1703,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "bf00cc7d2b4fcfb99bf69c0e48340cf0c3c15f6873cc5a522e3d3c727d203262",
+      "sha256": "be994f7bc3bd4aa2c37222b5d6afb3ac618dce8093c49b8fe56366de92821cad",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "5ca88b6f756b99aee93937f88d20d0663ea6f5f72a2d4a39c45a32101d9f86cb",
+      "sha256": "2bc9e8f9d9431e06a92cdb56e2deb4e293dd196995cd1b9f75ddce16d7b07503",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1907,11 +1915,11 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/bug-fix.md": {
-      "sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739",
+      "sha256": "8051d0a344a61685e2128cba7e49caa8d64d27f825b8998d8f17247e9fc38498",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/build-doctor.md": {
-      "sha256": "270a52a45c975ea02e62cb787722173e36ffacd7ffd84d2dd5b0bfe90ae2195d",
+      "sha256": "7562182efdb4051a63d839b0566957b433b7853f099c0d349434469b1863598c",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/cmp-two-target-change.md": {
@@ -1939,7 +1947,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/mobile-proof.md": {
-      "sha256": "b16f2b4ab03f4926584c1cece526490b26b622aae99ed9a6a2c285c17889d55c",
+      "sha256": "1a839aebb0a94059a531178084fd4409002beaed6e4ff5fc174c183b26ad50bc",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
@@ -1999,11 +2007,11 @@
       "mode": 420
     },
     "skills/hugues-mode/references/evidence-guide.md": {
-      "sha256": "c5396dccacc20005938b4dd938d4b5a400093a45c682948cda3350a4d136befc",
+      "sha256": "e0bda236ed71e62734527dbd899c522a7fe4a1dfad05a96a3b74e7635c8ac6d7",
       "mode": 420
     },
     "skills/hugues-mode/references/evidence-template.md": {
-      "sha256": "fade95b6f1f98a465a8a4ca9f0fc5b16cfd8d2f025e4d0e48bc9de68efaab5e1",
+      "sha256": "d1d0e1b484b02006f05d0ea95294b367819c079b2d1d73fbda9b9d8d9c9aa649",
       "mode": 420
     },
     "skills/hugues-mode/references/host-notes.md": {

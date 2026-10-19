@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **442 top-level unittest cases**. One is a driver that
+The current candidate collects **502 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -17,7 +17,8 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,080 cases (355 `read-workflow`, 1,666 `translate-plan` and 59 in-plan cases) over all 59 bundled skills, the legacy aliases of the 54 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current setup-to-proof contracts | 9 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These nine cases check source/commands and evidence parsing, not host or device execution. |
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
-| Total collected | 442 | Current, mixed and historical scopes remain distinct |
+| Current native execution helpers | 60 | test_native_exec; 58 controlled installed CLI cases and two installed workflow/evidence contracts. Native project observations run separately. |
+| Total collected | 502 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
@@ -326,3 +327,28 @@ Installed contracts also check that mobile plans load lane scenarios and the
 review lens before step 4 writes live lanes, and that bug-fix step 6 supplies the
 lens to Opening a PR's interrogate review, including top-level PR authors. Historical measurements and test
 counts remain unchanged.
+
+Issue #105's native execution helpers add 35 cases. Collection on this branch
+reports 477 top-level cases before round 2. The public installed CLI cases pin exact argv,
+cwd and environment overrides, raw output bytes, process states, literal test
+counts, failure diagnostics, zero/all-skipped results, report gaps and target
+mismatches, independent retry attempts, bounded output, native inspection and
+post-cleanup retention. Two installed resource contracts check workflow wiring,
+artifact identity and the impractical-test exception. These contracts do not
+observe a host following those instructions.
+
+Separate local observations exercised SwiftPM with one passing test, Xcode with
+one passing iOS UI test and the KMP fixture's Gradle task with three passing
+native tests. The owned simulator was deleted and retained reports reopened
+after scratch cleanup. These are helper observations, not fresh Claude Code or
+Codex consumer journeys. The host/domain matrix and an observed consumer
+impractical-test journey remain gaps for the later #105 phase.
+
+Issue #105 round 2 adds 25 installed public CLI cases. Collection on main's
+merged language-guidance base reports 502 top-level cases, including 60 native
+helper cases. Captured native XML, JSON and logs pin XCTest skip visibility,
+Swift Testing primary/disabled/multiple-issue counts, expected xcresult failures,
+compiler and Gradle causes, explicit omission flags and report manifests. Other
+cases cover argument ownership, Xcode actions and metadata modes, XML aggregate
+limits, interrupted builds and Unicode output-budget convergence. These are helper-boundary tests. Fresh native
+host/domain workflow evidence remains deferred.

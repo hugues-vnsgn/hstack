@@ -1,0 +1,13 @@
+
+10 tests completed, 10 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///private/var/folders/lj/5tr1mkbx1c5_xkr73lmzn3840000gn/T/hstack-gradle-capture-sdu4pofp/gradle-jvm-failure/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 3s

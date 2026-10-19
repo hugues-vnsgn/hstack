@@ -69,6 +69,14 @@ regression. Preserve the core TDD impractical-test exception with a concrete
 reason and real surface proof. For shared changes, cover affected Android and iOS
 surfaces. Missing proof is blocked or inconclusive, never a pass.
 
+For native build and test commands, read [native execution](native-execution.md)
+in full and use its helpers with the consumer-selected argv and task evidence
+store. During iteration choose the narrowest relevant supported tests. Retain
+separate RED and GREEN attempts on the same regression, including actual test
+counts and failures. Keep the impractical-test reason and executable runtime
+reproduction when that exception applies. Final integration, native callers and
+runtime proof still follow the consumer recipe; a helper pass does not replace them.
+
 For mobile arena work, give candidates fresh contexts containing only the sanitized candidate
 brief and isolated write paths. Keep the rubric and parent preference out. After
 candidates finish, give the fresh read-only judge only neutral artifacts and the
