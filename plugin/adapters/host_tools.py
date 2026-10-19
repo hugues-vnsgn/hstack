@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
-    "payload.py": "0ce99961f825dbfcf46b85ed4fca1112c8a4027c9e8a35ea932bff9510828ff6"
+    "payload.py": "2da1dcc8d42665c51d24d4427e990b1da04fa92b1a5938a9f4ab499f5c295e3a"
 }
 
 
@@ -110,6 +110,18 @@ def main(argv=None):
             if not node:
                 raise ValueError('Node unavailable; plan validation gate blocked')
             helper = payload.checked_file(root, 'skills/hugues-mode/scripts/check-plan.mjs')
+            commit = None
+            try:
+                subprocess.run(['git', '-C', str(root), 'ls-files', '--error-unmatch', str(helper)],
+                               check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                commit = subprocess.run(['git', '-C', str(root), 'rev-parse', 'HEAD'],
+                                        check=True, capture_output=True, text=True).stdout.strip()
+            except (OSError, subprocess.CalledProcessError):
+                pass
+            print(json.dumps({'checker_path': str(helper),
+                              'checker_sha256': hashlib.sha256(helper.read_bytes()).hexdigest(),
+                              'payload_sha256': payload.MANIFEST_SHA256,
+                              'plugin_commit': commit}), file=sys.stderr, flush=True)
             return subprocess.run([node, str(helper), str(Path(args.plan).resolve())], check=False).returncode
         elif args.verb == 'worktree-audit':
             result = activity.audit(args.repo.resolve(), args.sources, args.pr_snapshot, args.base)

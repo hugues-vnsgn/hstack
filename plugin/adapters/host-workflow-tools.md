@@ -1,5 +1,37 @@
 # Planning, cleanup and executable helpers
 
+## Resolve bundled commands on both hosts
+
+Use the absolute loaded `skills/hugues-mode/SKILL.md` found by
+`hugues-agent` as [host.md](host.md) directs. Its grandparent's parent is
+`<plugin>`. Keep that root for this run, including helpers and subagents.
+On Codex, the available skills list supplies the absolute `hugues-mode` path.
+On Claude Code, the loaded skill's base directory supplies it. A known loaded
+path wins over discovery, even when that path is a maintainer checkout.
+Never replace it with a newer checkout or another cached version.
+
+Translate each bundled command before execution. Quote the resulting absolute
+script path and keep the consumer working directory and arguments. Resolve
+consumer plans, stores and log files against that directory.
+
+| Canonical operand and caller | Installed command |
+|---|---|
+| `node skills/hugues-mode/scripts/check-plan.mjs <plan.md>` in multi-phase-plan | `python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin-binding.json" "<absolute-consumer-plan.md>"` |
+| `scripts/watch-pr/watch-pr` in babysit and shipping, including `--queued-stack` | `bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" <same arguments>` |
+| `bun scripts/orch/orch.ts` and its `orch` shorthand in orchestrate | `bun "<plugin>/skills/hugues-mode/scripts/orch/orch.ts" <same arguments>` |
+| `scripts/log.sh` in show-me-your-work | `bash "<plugin>/skills/show-me-your-work/scripts/log.sh" <same arguments>` |
+| Worktree-cleanup's upstream audit script | `worktree-audit` through the installed host tools below |
+
+The same rule covers a bundled script named from its owning skill directory.
+The example `scripts/snapshot.sh` in a decision-log row is consumer evidence,
+not a bundled helper. Consumer commands retain their own paths.
+An absent loaded root or script holds the dependent step. Do not search the
+consumer or another plugin copy to fill it. Worker dispatch carries the loaded
+mode path through [workers and models](host-workers.md); a helper resolves this
+table itself, without a hand-written script path in its brief.
+
+## Planning and audit translations
+
 For executable operands in planning and cleanup, use the installed
 [host tools](host-tools.md) and [entrypoint](host_tools.py). In multi-phase-plan,
 replace the consumer-relative Node command with `plan-check`. Translate bundled

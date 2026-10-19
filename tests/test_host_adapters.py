@@ -1,5 +1,6 @@
 """Actual installed entrypoints in external consumer repos; synthetic history only."""
 from datetime import datetime, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -172,6 +173,44 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         result = self.bound('plan-check', self.consumer / 'plan.md', env=dict(os.environ, PATH=''))
         self.assertEqual(result.returncode, 2)
         self.assertIn('Node unavailable', result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_identifies_gitless_install_and_ignores_consumer_decoy(self):
+        plan = self.consumer / 'plan.md'
+        plan.write_text((ROOT / 'tests/fixtures/adapter-plan.md').read_text())
+        decoy = self.consumer / 'skills/hugues-mode/scripts/check-plan.mjs'
+        decoy.parent.mkdir(parents=True)
+        decoy.write_text('console.error("CONSUMER DECOY"); process.exit(99);\n')
+        subprocess.run(['git', 'init', '-q', str(self.consumer)], check=True)
+        subprocess.run(['git', '-C', str(self.consumer), 'add', '.'], check=True)
+        subprocess.run(['git', '-C', str(self.consumer), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'consumer'], check=True)
+        result = self.bound('plan-check', plan)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        identity = json.loads(result.stderr.splitlines()[0])
+        self.assertEqual(identity['checker_path'], str(self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs'))
+        self.assertEqual(identity['plugin_commit'], None)
+        self.assertEqual(identity['payload_sha256'], json.loads(self.binding.read_text())['payload_sha256'])
+        self.assertEqual(identity['checker_sha256'], hashlib.sha256(
+            (self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs').read_bytes()).hexdigest())
+        self.assertIn('1 PR sections, 0 problems', result.stdout)
+        self.assertNotIn('CONSUMER DECOY', result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_identifies_tracked_plugin_on_failure(self):
+        subprocess.run(['git', 'init', '-q', str(self.area)], check=True)
+        subprocess.run(['git', '-C', str(self.area), 'add', self.plugin.name], check=True)
+        subprocess.run(['git', '-C', str(self.area), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'plugin'], check=True)
+        commit = subprocess.check_output(['git', '-C', str(self.area), 'rev-parse', 'HEAD'], text=True).strip()
+        plan = self.consumer / 'plan.md'
+        plan.write_text('# Invalid plan\n')
+        result = self.bound('plan-check', plan)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        identity = json.loads(result.stderr.splitlines()[0])
+        self.assertEqual(identity['plugin_commit'], commit)
+        self.assertEqual(identity['checker_path'], str(self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs'))
+        self.assertIn('no "## Program checklist" section', result.stderr)
 
     def test_withdrawn_verbs_are_unknown(self):
         for verb in ['payload-policy', 'helper-ready', 'program-check', 'artifact-hash',

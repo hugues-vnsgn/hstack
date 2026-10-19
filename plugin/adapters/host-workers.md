@@ -7,6 +7,10 @@ same assignment. A core `poteto-agent` call uses the registered hugues-agent in
 Claude Code; Codex uses the role instructions through its supported fresh-worker mechanism. Supply absolute paths
 to the public mode, plugin skills directory and the host adapter and applicable mobile adapter,
 the exact base/head, writable scope, success predicate and evidence destination.
+Carry the loaded mode's absolute path into every fresh worker, including
+general-purpose helpers. Derive it from the current loaded skill, so dispatch
+needs no operator-supplied script path. Workers keep that root for executable
+helpers and pass it on to their own children; see [workflow tools](host-workflow-tools.md).
 Obtain the mode through supported native invocation before work; read each
 applicable principle's SKILL.md in full as the scoped bundled reference below.
 If the host cannot preserve required context isolation or parallelism, mark
