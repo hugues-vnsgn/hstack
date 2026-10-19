@@ -1623,7 +1623,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "0e430b44d380f85410daadbf1ed7e6c0959aafced2f4b9ace036518082f777f5",
+      "sha256": "d656c7d098d8c6d2bb25060bed74af58d398bb0e293f5ce23015f69a5cb6b599",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1647,11 +1647,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "3067c23d62c994b5e691556cefdbf697106382c0609cf748c8d627283a51d2d0",
+      "sha256": "c98751836125e6599a2800a872e70c2cc18eb32d5cdcba482d727259b498d556",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "a51bc295528bae18fcb8391353430910e9115b208ad235e66417a6aa4c784743",
+      "sha256": "8d3140000338194f96488dce4993146dd4cb137036233af1c93302d6d23763c5",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1867,7 +1867,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/mobile-proof.md": {
-      "sha256": "2d290f817c7b3464b090bd6c04b55f15fbeaf147bf5ad10b5a5a457e17352762",
+      "sha256": "b16f2b4ab03f4926584c1cece526490b26b622aae99ed9a6a2c285c17889d55c",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/multi-phase-plan.md": {
