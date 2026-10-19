@@ -4,6 +4,12 @@ source: Conceptual adaptation of hstack-alpha (retired predecessor; GitHub osxsy
 
 Diagnose first. Repair only within explicit authority.
 
+For Xcode, SwiftPM and consumer Gradle reproduction or verification, read
+[native execution](../../../adapters/native-execution.md) and run its helper
+with the explicit consumer command, context and target. Resolve missing identity
+before execution. Retain each attempt's bounded summary, raw logs and native
+reports; distinguish command failure from unavailable tools or incomplete results.
+
 ## Steps
 
 1. Capture the failing argv, exit code, relevant output, environment, selected target and expected artifact. Read repository instructions, [mobile lanes](../references/mobile-lanes.md) and the [evidence guide](../references/evidence-guide.md) before choosing experiments. Capture tool calls as tool calls, with their real response status.

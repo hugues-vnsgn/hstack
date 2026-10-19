@@ -32,7 +32,10 @@ Copy this plain Markdown outline into the private task evidence folder. Replace 
 - Command argv array and environment changes, OR actual tool name/structured arguments: <facts, secrets redacted>
 - Exit code for a process, OR tool result/status: <actual value; absent if unrun>
 - Original logs, reports and response files: <separate paths for every result file>
+- Native helper attempt and summary: <exact retained invocation, raw logs, native copies and report manifest; command status separate from interpretation; unknown counts preserved>
+- Regression phase: <independently observed RED/GREEN on the same regression, or concrete impractical-test reason and executable runtime reproduction; no automated RED/GREEN claim for the exception>
 - App/APK/framework identity and installed/launched artifact association: <path/hash>
+- Current artifact/target check: <comparison with the built artifact and explicit target; stale or wrong-target results excluded>
 - Tests: <relevant executed assertions, failures, skips, retries, suite/test identities and target provenance>
 - User actions and observed checkpoints/native callers: <observations and paths>
 - Screen/semantics/text-scaling artifacts: <paths and conditions>

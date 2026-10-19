@@ -36,11 +36,11 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (59 in the current candidate) | 3,940.25 | 3,700 | 3,945 | 14,803 → 15,781 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,472.75 | 45,289 → 33,931 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,649.25 | 135,888 → 134,665 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,609.5 | 45,289 → 34,478 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,786 | 135,888 → 135,212 |
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,573.5 | 146,269 → 146,362 |
 
-The routing inventory falls about 25.1% from the previous native candidate.
+The routing inventory falls about 23.9% from the previous native candidate.
 Complete bundled workflow inventories also count worker dispatch, verification
 and publication instructions. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -223,3 +223,9 @@ source inventories. The TypeScript feature measures 146,362 bytes against
 inventory plus the host selection row's measured 97 bytes, currently
 146,366 bytes. The row itself may not exceed 128 bytes. No runtime token saving or
 execution speedup follows from these source counts.
+
+Issue #105 adds a conditional native-execution reference of 7,561 source bytes.
+It is loaded for native build/test execution and is outside these non-mobile
+scenario inventories. Python helper source is not instruction footprint. The
+8,192-byte stdout bound is an execution-output contract tested separately; it
+is not a measured context or build-time saving.

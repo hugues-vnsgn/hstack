@@ -4,6 +4,13 @@ source: Conceptual adaptation of hstack-alpha (retired predecessor; GitHub osxsy
 
 Select the changed domain's proof and report what actually ran.
 
+Run Xcode, SwiftPM and consumer Gradle build/test commands through the
+[native execution helpers](../../../adapters/native-execution.md). Preserve the
+recipe's explicit command and selectors, and inspect actual counts and native
+reports. Zero selected tests, stale artifacts or a different target cannot pass.
+During iteration use focused checks; final proof still covers the required
+integration and runtime behavior on each affected native boundary.
+
 ## Steps
 
 1. Run the preflight before planning lanes. Read [mobile lanes](../references/mobile-lanes.md#proof-tool-preflight), repository instructions and the [evidence guide](../references/evidence-guide.md). Establish the authorized consumer and discover its required proof tools through the project's native verification recipe and current configuration. Hold dependent checks if that recipe or execution authority is unavailable. Create the task evidence folder before any probe. Record whether the Bash sandbox is on or off, host/version, OS and tool versions. Run one real, harmless operation per required proof tool under the active settings. Record argv, exit code, output and a `works` or `blocked` verdict for each. A blocked tool drops or replaces its lane up front, recorded as a gap. After a blocked result, obtain the [host baseline](../references/mobile-lanes.md#host-baseline) before changing agent settings. With the sandbox off, the agent's shell counts and is labelled as such. With it on, print the same command for the owner to run outside the agent in a plain terminal. Record versions, time and the last good run from earlier evidence, or `unknown`. A failing baseline is a host blocker reported to the owner; stop iterating on agent settings. A passing baseline routes to [build-doctor](build-doctor.md). An unrun baseline remains blocked.

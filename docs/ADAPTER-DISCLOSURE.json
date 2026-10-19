@@ -258,7 +258,7 @@
       "sha256": "1a0c39ffe445cc11c913d832f7962feeec220a32870e15299c9ff2448a2b8e29",
       "disposition": "replaced",
       "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md.",
-      "replacement": "`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate\n→ write → confirm → optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
+      "replacement": "`setup-hstack` uses the pinned detect \u2192 load \u2192 budget/map/confirm \u2192 validate\n\u2192 write \u2192 confirm \u2192 optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
     },
     {
       "paragraph": 16,
@@ -355,6 +355,16 @@
       "disposition": "replaced",
       "reason": "Issue #105 makes personal expert skills optional supplements to the shipped baseline, while keeping consumer apps outside the plugin.",
       "replacement": "Use the bundled language baselines and applicable platform references. Optional\nexpert skills add depth without becoming baseline prerequisites. Keep consumer\napps outside this plugin."
+    },
+    {
+      "slice": [
+        3023,
+        3553
+      ],
+      "sha256": "a79f7842c9a2c3c9e53a26a1a3a282ea04774afa247a516382f593dc9775ef61",
+      "disposition": "replaced",
+      "reason": "Issue #105 discloses native execution helpers before the existing arena guidance, preserving the original arena and regression requirements.",
+      "replacement": "For native build and test commands, read [native execution](native-execution.md)\nin full and use its helpers with the consumer-selected argv and task evidence\nstore. During iteration choose the narrowest relevant supported tests. Retain\nseparate RED and GREEN attempts on the same regression, including actual test\ncounts and failures. Keep the impractical-test reason and executable runtime\nreproduction when that exception applies. Final integration, native callers and\nruntime proof still follow the consumer recipe; a helper pass does not replace them.\n\nFor mobile arena work, give candidates fresh contexts containing only the sanitized candidate\nbrief and isolated write paths. Keep the rubric and parent preference out. After\ncandidates finish, give the fresh read-only judge only neutral artifacts and the\nrubric. Inspect actual isolation capability. If unavailable, block blind judging;\ndo not claim blind review. The coordinator reads and scores actual artifacts and\nverifies the synthesized result. This strengthens isolation and preserves core\nmodel selection and phase order."
     },
     {
       "slice": [

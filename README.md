@@ -67,6 +67,11 @@ Runtime forensics adds [native capture and hypothesis probes](plugin/skills/hugu
 Installed source contracts verify delivery and wiring. Fresh native host and
 mobile journeys for this upgrade remain a later phase of [issue #105](https://github.com/hugues-vnsgn/hstack/issues/105).
 
+Native build/test helpers run explicit Xcode, SwiftPM and consumer Gradle
+commands, retain each attempt's full logs and native reports, and return bounded
+summaries. See the [execution contract](plugin/adapters/native-execution.md).
+Helper checks complement the consumer's required native runtime proof.
+
 ## Reference and maintenance
 
 - [Daily workflow](docs/WORKFLOW.md)

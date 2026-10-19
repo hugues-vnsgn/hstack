@@ -18,6 +18,24 @@ For builds, tie the app/APK/framework path and hash to the artifact installed or
 
 For runtime proof, capture the action sequence and resulting state, not just a final screenshot. Inspect required native callers on each side of a shared boundary. Record screenshots, hierarchy/semantics observations and text-scaling conditions per target where required. Keep screen-text verdicts separate from visual layout observations; jev judges text and does not certify clipping or pixel layout.
 
+## Build/test helper attempts and artifact identity
+
+Run selected Xcode, SwiftPM and consumer Gradle checks through the
+[native helpers](../../../adapters/native-execution.md). Keep the bounded summary,
+invocation, raw logs, native copies and report manifest for every attempt.
+Unknown counts stay unknown; zero selected tests cannot pass. Keep failed RED,
+GREEN and retry attempts separate, even after a later pass. If automated testing
+is impractical, retain its specific reason and executable runtime reproduction
+without claiming automated RED/GREEN.
+
+Before installing, compare the current built artifact's path and hash with the
+installed/launched artifact receipt and explicit target. A stale artifact or
+different target invalidates the claimed proof. Record each action and resulting
+state with assertions or native caller observations. Keep functional observations
+separate from screenshots and hierarchy/semantics evidence. One CMP runtime or a
+JVM test cannot satisfy the other required native boundary. After task-owned
+cleanup, reopen the helper's retained copies and the runtime artifacts.
+
 ## Judge and retain
 
 A step counts as passed only with evidence that it was reached. The absence of an error that would appear later is not proof that an earlier step passed. Retain that step's command output or tool response and its actual result.
