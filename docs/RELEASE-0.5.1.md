@@ -79,6 +79,8 @@ Earlier Xcode attempts remain in `xcode-green/`. One timed out during diagnostic
 
 Controlled public CLI regressions cover unavailable tools, interruption, timeout, wrong targets, stale or missing reports, metadata-only Xcode commands, aggregate XML limits, styled diagnostics and summary clipping. Native compiler errors on this machine were uncolored. ANSI diagnostic handling is established by controlled styled-error regressions. These cases are static/local contract evidence, not additional native runs.
 
+An independent Claude Sonnet verifier reviewed the final helper at `473726b` and returned [PASS+NOTES](https://github.com/hugues-vnsgn/hstack/pull/107#issuecomment-6268399394). It ran real `swift build` and `swift test`, macOS `xcodebuild test` with `XCTExpectFailure` (3 executed, 1 failed), Gradle compile and offline failures, and controlled `gradlew` cases. The verdict does not cover fresh Claude Code or Codex mobile journeys.
+
 No Swift/iOS, Kotlin/Android, KMP or CMP cell in the Claude Code and Codex workflow matrix is established by these helper observations. [#105](https://github.com/hugues-vnsgn/hstack/issues/105) remains open for those journeys.
 
 ## Known gaps
@@ -96,5 +98,4 @@ No Swift/iOS, Kotlin/Android, KMP or CMP cell in the Claude Code and Codex workf
 - Gradle `-b` / `--build-file` and `-c` / `--settings-file` are not rejected by the helper. These options were removed in Gradle 9. Use the intended consumer build and settings files explicitly when selecting commands.
 - Parameterized Swift Testing cases count once per function because native xunit records them that way. Failing xcodebuild diagnostics can include `RegisterExecutionPolicyException` noise.
 - Native nonverbose XCTest output can omit skip visibility. Use the documented `--parallel --verbose` recipe. Ambiguous XML-only results remain incomplete. Hostile descendant-process cleanup remains unobserved.
-- The final one-line summary-budget correction has regression, full-suite and all 11 native-run evidence. The independent domain verifier reviewed the preceding helper version, so no fresh independent domain-verifier pass is claimed for that final line.
 - A standalone all-disabled Swift Testing run and a Swift build with multiple compiler errors are absent from the 11 final-source native observations. Captured and controlled regressions cover related parsing and diagnostics. Final Gradle observations exercise JVM tests, not a KMP native target. The earlier native KMP run remains historical evidence.
