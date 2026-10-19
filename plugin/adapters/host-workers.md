@@ -11,8 +11,9 @@ Carry the loaded mode's absolute path into every fresh worker, including
 general-purpose helpers. Derive it from the current loaded skill, so dispatch
 needs no operator-supplied script path. Workers keep that root for executable
 helpers and pass it on to their own children; see [workflow tools](host-workflow-tools.md).
-Obtain the mode through supported native invocation before work; read each
-applicable principle's SKILL.md in full as the scoped bundled reference below.
+Before work, load the mode per [host.md](host.md). On Codex, select its enabled
+catalog entry and read the complete SKILL.md yourself. Read each applicable
+principle's SKILL.md in full as the scoped bundled reference below.
 If the host cannot preserve required context isolation or parallelism, mark
 that phase blocked.
 

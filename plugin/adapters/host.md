@@ -33,25 +33,25 @@ are role defaults to resolve against models the native tool exposes. Read
 `hugues-agent`, before the dispatch itself.
 
 Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the
-native-only skills) only through the host's supported native mechanism. Respect
-manual-only selection, owner-disabled entries and native denials; for those skills, never use a file read as an invocation fallback.
+native-only skills) only through the host's supported native mechanism.
+On Codex, select the enabled skill from the host-provided catalog and read
+its complete SKILL.md. No separate Skill tool exists.
+Respect manual-only selection, owner-disabled entries and native denials.
+Outside that mechanism, never use a file read as an invocation fallback.
 For a native-only skill, unavailable, disabled, denied or unknown invocation stops
 the dependent step.
-When supported execution requires explicit user invocation, provide the exact
-native command and wait; do not imply this handoff is always required. A model's
-printed slash or dollar command is not proof that a native invocation occurred.
+If explicit user invocation is required, give the exact native command and wait.
+Printed slash or dollar commands do not prove native invocation.
 An available file or a successful binding check establishes no skill permission.
-Read ordinary references owned by the invoked skill only when its phase needs them.
-Resolve relative resources from their owning file or the stated mode root, never
-from the consumer cwd. Do not recursively traverse navigation links or eagerly
-invoke all linked skills. This native-mechanism requirement overrides inherited
-raw sibling-read wording for the native-only skills alone; a bundled user-only
-skill keeps that read wording (the scoped bundled reference above).
+Read owned references only when needed by their phase. Resolve relative paths
+from the owning file or mode root, never the consumer cwd. Do not recursively
+traverse links or eagerly invoke linked skills. For native-only skills, this rule overrides inherited sibling reads; bundled
+user-only skills keep their scoped read above.
 For a principles consultation from figure-it-out, use already-loaded mode context
 or read the needed principle's SKILL.md in full: never restart task routing.
-A fresh worker reads any bundled user-only skill itself. It starts its own native
-invocation of any native-only skill; a parent's claim of permission is
-insufficient. Missing capability holds the phase without scanning user settings.
+A fresh worker reads any bundled user-only skill itself. It loads any native-only
+skill itself through the host-specific mechanism above; a parent's claim of
+permission is insufficient. Missing capability holds the phase without scanning user settings.
 
 Bundled commands use [workflow tools](host-workflow-tools.md) in every worker.
 

@@ -36,13 +36,13 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (57 in the current candidate) | 3,940.25 | 3,700 | 3,843 | 14,803 → 15,373 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,409.25 | 45,289 → 33,677 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,566.25 | 135,888 → 134,333 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,549.75 | 146,269 → 146,267 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,388.75 | 45,289 → 33,595 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,563.25 | 135,888 → 134,321 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,546.75 | 146,269 → 146,255 |
 
-The routing inventory falls about 25.6% from the previous native candidate.
-Complete bundled workflow inventories fall less, because worker dispatch,
-verification and publication instructions still apply. The bug-fix profile
+The routing inventory falls about 25.8% from the previous native candidate.
+Complete bundled workflow inventories also count worker dispatch, verification
+and publication instructions. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
 closing skills, specialized agents and applicable principles. The feature
 profile includes complex how, architect, arena, swarm, design references,
@@ -124,8 +124,8 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,240 bytes,
-about 6,300.5 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 25,158 bytes,
+about 6,280 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
@@ -134,7 +134,8 @@ bytes under `main`. Later adapter edits, including the shorter host-adapter
 wording, left it 264 bytes under that baseline, restoring pstack's router
 wording (#83) left it 852 bytes under, and the bundled deslop and the #48 reach
 rule left it 817 bytes under. The executable-helper resolution rule (#44)
-left it 737 bytes under. Bundling the control skills leaves it 740 bytes under. The fix round restored the scope words the rewrite had
+left it 737 bytes under. Bundling the control skills left it 740 bytes under. The Codex loading
+clarification leaves it 822 bytes under. The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes
@@ -153,8 +154,8 @@ workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
 agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 9,077.5 estimated tokens for the bug-fix worker, and from 75,228 to
-72,620.0 for the eight feature workers. The model-defaults paragraph and the
+9,403.5 to 9,074.5 estimated tokens for the bug-fix worker, and from 75,228 to
+72,596 for the eight feature workers. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
 also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
 to this floor at the router rewrite. That historical delta is 8,410.75 minus

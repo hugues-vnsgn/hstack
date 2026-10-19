@@ -621,6 +621,26 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn('\n# Hugues subagent\n', agent)
         self.assertNotIn('Poteto', agent)
 
+    def test_codex_native_loading_uses_enabled_catalog_and_complete_skill_read(self):
+        host = ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split())
+        for phrase in [
+                'On Codex, select the enabled skill from the host-provided catalog and read its complete SKILL.md.',
+                'No separate Skill tool exists.',
+                'Outside that mechanism, never use a file read as an invocation fallback.',
+                'Respect manual-only selection, owner-disabled entries and native denials.',
+                'For a native-only skill, unavailable, disabled, denied or unknown invocation stops the dependent step.',
+                'An available file or a successful binding check establishes no skill permission.',
+                'It loads any native-only skill itself through the host-specific mechanism above;',
+                "On Claude Code, never call the Skill tool for one."]:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, host)
+        self.assertNotIn('for those skills, never use a file read as an invocation fallback', host)
+        workers = ' '.join(self.workers.split())
+        self.assertIn('Before work, load the mode per [host.md](host.md).', workers)
+        self.assertIn('On Codex, select its enabled catalog entry and read the complete SKILL.md yourself.', workers)
+        self.assertIn("preserve `generalPurpose` and the workflow's own prompt", workers)
+        self.assertIn('without a mode persona', workers)
+
     def test_worker_definition_uses_the_native_names(self):
         agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
         description = re.search(r'^description: (.+)$', agent, re.M).group(1)
