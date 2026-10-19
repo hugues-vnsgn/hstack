@@ -52,6 +52,14 @@ _Avoid_: mobile-mode, the orchestrator
 The build, target tests and screen check selected for one changed mobile domain, plus the evidence folder that records them. Implemented by the `mobile-proof` playbook.
 _Avoid_: Verification pipeline, CI
 
+**Host baseline**:
+The same operation outside the agent, used to split host faults from agent-environment faults.
+_Avoid_: Agent settings check, device proof
+
+**Proof-tool check**:
+One real operation per required proof tool under the active settings, before lanes are planned.
+_Avoid_: Version listing, build proof
+
 **Cross-host review**:
 An `interrogate` run in the host that did not produce the diff: Claude Code reviews a Codex diff or the reverse. The only model-independent review available when each host's subagents are single-vendor.
 _Avoid_: Multi-model panel, second opinion from the same host

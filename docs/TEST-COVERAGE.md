@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **427 top-level unittest cases**. One is a driver that
+The current candidate collects **430 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -15,12 +15,12 @@ native workflow proof. Subtests are not added to case totals.
 | Current native-layout contracts | 54 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the bundled non-pstack `deslop` skill (its pinned Cursor source, notice and two allowed additions, and six drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 47 reviewed contradictions in five line shapes each, 18 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,000 cases (335 `read-workflow`, 1,610 `translate-plan` and 55 in-plan cases) over all 55 bundled skills, the legacy aliases of the 54 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
-| Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
-| Total collected | 427 | Current, mixed and historical scopes remain distinct |
+| Current setup-to-proof contracts | 9 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These nine cases check source/commands and evidence parsing, not host or device execution. |
+| Total collected | 430 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-427 Python cases. The opt-in CI workflow requires a provisioned native runner.
+430 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -284,3 +284,9 @@ above, so the total at that merge was 425.
 Issue #44 adds two installed plan-check cases. They verify checker identity from a
 Gitless install with a consumer decoy and a real consumer commit, and from a tracked
 plugin checkout on validation failure. The collected total is 427.
+
+Issue #75 adds three installed procedure-contract cases, bringing the collected
+total to 430 after the #44 merge. They read the bound mobile workflows and references through the
+public helper and check preflight ordering and records, both host-baseline
+branches, tool examples and reached-step evidence. These check installed
+instructions, not host or device behavior.

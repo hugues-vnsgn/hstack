@@ -67,6 +67,53 @@ class SetupProofContract(unittest.TestCase):
 
 
 class SetupProofInstalled(InstalledFixture, unittest.TestCase):
+    def test_mobile_preflight_is_first_and_blocks_lanes_up_front(self):
+        result = self.bound('read-workflow', 'skills/hugues-mode/playbooks/mobile-proof.md')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        steps = re.findall(r'^(\d+)\. (.*)$', result.stdout, re.M)
+        self.assertEqual([number for number, _ in steps], ['1', '2', '3', '4', '5', '6'])
+        preflight = steps[0][1]
+        for required in ('preflight before planning lanes', 'Bash sandbox is on or off',
+                         'host/version, OS and tool versions',
+                         'one real, harmless operation per required proof tool under the active settings',
+                         'argv, exit code, output', '`works` or `blocked`',
+                         'drops or replaces its lane up front, recorded as a gap'):
+            with self.subTest(required=required):
+                self.assertIn(required, preflight)
+        self.assertNotIn('payload-protection', result.stdout)
+        self.assertIn('Invoke the existing project `verify-<app>`', steps[1][1])
+
+    def test_both_mobile_routes_require_the_host_baseline(self):
+        for route, step in (('mobile-proof', '1'), ('build-doctor', '2')):
+            with self.subTest(route=route):
+                result = self.bound('read-workflow', f'skills/hugues-mode/playbooks/{route}.md')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                body = dict(re.findall(r'^(\d+)\. (.*)$', result.stdout, re.M))[step]
+                for required in ('host baseline', 'before changing agent settings',
+                                 "the agent's shell counts and is labelled as such",
+                                 'owner', 'plain terminal', 'versions, time and the last good run',
+                                 'host blocker', 'stop iterating on agent settings'):
+                    self.assertIn(required.lower(), body.lower())
+                self.assertRegex(body, r'(?i)pass(?:ing|es).*?(?:build-doctor|investigate)')
+                self.assertIn('unrun', body)
+
+    def test_preflight_examples_and_reached_step_evidence_are_installed(self):
+        lanes = self.bound('read-workflow', 'skills/hugues-mode/references/mobile-lanes.md')
+        self.assertEqual(lanes.returncode, 0, lanes.stderr)
+        for required in ('Gradle wrapper\'s `help` task', '`adb devices`',
+                         '`xcrun simctl list devices available`', 'selected booted device',
+                         "program's own emulator boot helper", 'XcodeBuildMCP CLI call',
+                         '`gh api user`', 'same operation outside the agent'):
+            self.assertIn(required, lanes.stdout)
+        guide = self.bound('read-workflow', 'skills/hugues-mode/references/evidence-guide.md')
+        self.assertEqual(guide.returncode, 0, guide.stderr)
+        self.assertIn('A step counts as passed only with evidence that it was reached.', guide.stdout)
+        self.assertIn('absence of an error that would appear later is not proof', guide.stdout)
+        template = self.bound('read-workflow', 'skills/hugues-mode/references/evidence-template.md')
+        self.assertEqual(template.returncode, 0, template.stderr)
+        self.assertIn('## Preflight', template.stdout)
+        self.assertIn('Baseline versions, time and last good run', template.stdout)
+
     def test_router_mobile_proof_resolves_from_external_consumer(self):
         router = (self.plugin / 'skills/hugues-mode/SKILL.md').read_text()
         self.assertIn('relative to this SKILL.md', router)

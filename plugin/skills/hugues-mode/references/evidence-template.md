@@ -11,6 +11,15 @@ Copy this plain Markdown outline into the private task evidence folder. Replace 
 - Devices: <per-target UDID/serial, runtime/API, dimensions and text-scale conditions>
 - Evidence folder and artifact privacy boundary: <local path>
 
+## Preflight
+
+- Bash sandbox on/off; host/version; OS; tool versions: <observed values>
+- Proof-tool checks before lane planning: <one real harmless operation per required tool, argv or structured arguments, exit code or response status, output paths, works/blocked>
+- Dropped or replaced lanes and gaps: <blocked tool and affected lane>
+- Host baseline after a blocked result: <same operation, target and working directory outside the agent; label sandbox-off agent shell or owner's plain terminal>
+- Baseline versions, time and last good run: <facts from earlier evidence, or unknown>
+- Baseline outcome: <host blocker reported to owner and settings iteration stopped; passing baseline routed to build-doctor; or blocked pending result>
+
 ## Baseline
 
 <Original behavior, target/device, build identity and observations. For a bug, link the pre-fix failing observation. Distinguish source findings from reproduced behavior.>
