@@ -44,16 +44,6 @@ pstack spends extra tokens on subagents and review panels. That's the price of t
 - Shorten a panel list. Each entry runs one subagent.
 - Save `/hugues-mode` for work that needs rigor. A small, obvious edit doesn't.
 
-## Prepare an unattended Claude stack
-
-If you plan to use `autopilot-stack` in Claude Code auto mode, ask
-`/setup-hstack` to prepare its stack permissions. It shows a rule for the
-repository and child branches you approve, then checks Claude's effective
-configuration. The [permission recipe](../../../plugin/adapters/claude-stack-permissions.md)
-keeps pstack's rebase workflow and its operator landing gates. Approval applies
-throughout that recorded scope; adding branches needs a new scope ruling.
-Model-only setup and other hosts keep their existing behavior.
-
 ## Run your first task
 
 Pick something real but small, and describe it the way you'd describe it to a colleague:

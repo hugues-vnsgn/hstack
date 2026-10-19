@@ -24,19 +24,19 @@
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
       "source_sha256": "e58c3d871b09d477be00628d69dd23ffa6c2e3a1728f5b867a841baa8e90278b",
-      "candidate_sha256": "d38b7267bdabce2424f9d2a88562e82865d9bba61fafde2137ee432d28a76a26",
+      "candidate_sha256": "c10fbf68eea64f8a2168d9f67687471c7aa5df14faaa07c865df1235afaa0900",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted plan checker; installed Python/Node tests cover operator-rule protection and approved risk-based mobile coverage; native/mobile trials deferred"
+      "scope": "adapted plan checker; differs from upstream only by accepting a bound read-workflow command as the trunk read; installed Python/Node integration tests cover it"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
       "source_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
-      "candidate_sha256": "e4e1079b2decc164f01809d5bfb02752539c370f519c0d6346a2b3229c2e96e5",
+      "candidate_sha256": "7b3149e06ccb2aaa31fae200127727241e0deb198c4366d9f6ff1b986ca8dba2",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted plan-checker tests added at pstack 0.15.25; run with Bun against the hStack checker"
+      "scope": "plan-checker tests added at pstack 0.15.25 plus one hStack case for the not-applicable Bugbot box; run with Bun against the hStack checker"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",

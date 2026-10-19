@@ -7,7 +7,7 @@ Code/Codex worker journeys and external-tool write restrictions were not observe
 Under test: branch `fix/approved-proof`, based on
 `92ee775ffbdf08d05b246bbbdc88d758f28f932a`, with the working-tree changes for
 issues #31, #36, #37 and #38. The oracle is the owner's requested fixes 1 and 2
-and the [acceptance checklist](../../docs/approved-proof.md). No consumer app was
+and the [acceptance checklist](https://github.com/hugues-vnsgn/hstack/blob/c2a8438815e0645c336a5fccfb339eadb62cc3cc/docs/approved-proof.md). No consumer app was
 changed. All consumers/designs/builds/observations in these tests are synthetic.
 
 Raw logs, coverage inputs/results and the tested plugin binding are retained at

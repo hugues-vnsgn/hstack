@@ -126,10 +126,61 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertEqual(bad.returncode, 1)
         self.assertIn('Verify, live. does not open with the rule', bad.stderr)
 
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_holds_pstack_fixed_ten_lane_rule(self):
+        plan = self.consumer / 'plan.md'
+        ten = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+        # Frontmatter is skipped, as in pstack: no profile field selects another live rule.
+        for text in [ten, '---\nverification_profile: custom\n---\n' + ten]:
+            with self.subTest(plan=text[:40]):
+                plan.write_text(text)
+                result = self.bound('plan-check', plan)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('verify-live=10', result.stdout)
+        extra = '- [ ] Lane 11. Extra. Save `lane-11.png`. Pass when visible.\n'
+        for text, message in [
+                (ten.replace('**Verify, perf.**', extra + '**Verify, perf.**'), 'expected 1 to 10'),
+                (ten.replace('Ten lanes on', 'Risk-based lanes on'),
+                 'Verify, live lacks "Ten lanes on `<swarm workers model>` at the PR head" with the model filled in')]:
+            with self.subTest(message=message):
+                plan.write_text(text)
+                result = self.bound('plan-check', plan)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(message, result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
+    def test_plan_check_accepts_verdict_without_contract_box(self):
+        plan = self.consumer / 'plan.md'
+        fixture = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+        self.assertEqual(fixture.count('### Verdict and merge\n### Boot recipe\n'), 1)
+        # The Verdict and merge boxes of pstack 0.15.25's plan skeleton, renamed only.
+        verdict = ('### Verdict and merge\n'
+                   '- [ ] A full swarm runs once, at the code-ready head. Run each full swarm per the '
+                   '`swarm` skill. One gates lane. The ten live lanes from the PR\'s **Verify, live** block.\n'
+                   '- [ ] Clean only when every lane is `PASS`. Findings go back to the owner.\n'
+                   '### Boot recipe\n')
+        text = fixture.replace('### Verdict and merge\n### Boot recipe\n', verdict)
+        self.assertIn('- [ ] Clean only when every lane is `PASS`.', text)
+        for marker in ['verification-contract', 'plan-compare', 'operator ruling']:
+            self.assertNotIn(marker, text)
+        plan.write_text(text)
+        result = self.bound('plan-check', plan)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('1 PR sections, 0 problems', result.stdout)
+
     def test_missing_node_is_explicit_block(self):
         result = self.bound('plan-check', self.consumer / 'plan.md', env=dict(os.environ, PATH=''))
         self.assertEqual(result.returncode, 2)
         self.assertIn('Node unavailable', result.stderr)
+
+    def test_withdrawn_verbs_are_unknown(self):
+        for verb in ['payload-policy', 'helper-ready', 'program-check', 'artifact-hash',
+                     'decode-design', 'worker-run', 'run-control', 'run-wait', 'plan-compare']:
+            with self.subTest(verb=verb):
+                result = self.bound(verb)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('invalid choice', result.stderr)
+                self.assertEqual(result.stdout, '')
 
     def test_public_bridges_route_actual_adapter(self):
         for name in ['multi-phase-plan', 'autopilot-full', 'autopilot-stack']:

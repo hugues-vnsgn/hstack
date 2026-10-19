@@ -14,7 +14,7 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "571635456034ac994641e3445f29dc01e26f776e917b5fa019589648906cea02",
       "disposition": "replaced",
-      "reason": "Shorten equivalent authority and phase guidance so the deferred new-program proof pointer preserves the initial-read budget. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint.",
+      "reason": "Shorten equivalent authority and phase guidance to keep the initial read set small. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint.",
       "replacement": "Apply this adapter and mobile applicability before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
     },
     {
@@ -286,37 +286,41 @@
     },
     {
       "paragraph": 19,
-      "slice": null,
+      "slice": [
+        0,
+        380
+      ],
       "destination": "plugin/adapters/host-publication.md",
-      "sha256": "0c91ccbec3761664db9089bb8b9cb471d0a3d357510608995c2a7dd240407146",
+      "sha256": "8ef5a187b0ccf33a527a68f56dee5ed5416fdd3c78ddee8d926d331552312503",
       "disposition": "replaced",
       "reason": "hStack now bundles the deslop skill (a copy of Cursor's cursor-team-kit deslop), so the sentence no longer asks for an available equivalent and no longer lists deslop among the missing external capabilities. control-cli, control-ui and writing-for-agents stay external.",
-      "replacement": "Cursor create-skill translates to an available agent-writing skill plus this\nrepository's package checks. Before commits, use the bundled deslop\nand the pinned unslop and technical-writing skills; retain no-comments before\nreview. Missing external control-cli, control-ui or writing-for-agents is\nreported as a capability gap, never silently marked performed. The bundled pinned\nunslop remains the prose contract; an owner's differently worded skill is an\nadditional style preference, not a source-equivalent replacement."
+      "replacement": "Cursor create-skill translates to an available agent-writing skill plus this\nrepository's package checks. Before commits, use the bundled deslop\nand the pinned unslop and technical-writing skills; retain no-comments before\nreview. Missing external control-cli, control-ui or writing-for-agents is\nreported as a capability gap, never silently marked performed."
+    },
+    {
+      "paragraph": 19,
+      "slice": [
+        380,
+        541
+      ],
+      "destination": "plugin/adapters/host-publication.md",
+      "sha256": "1c5aef9ad0beec66762d764a897f0fbe6da14b2b6c51969ff3f0fc75d49893fb",
+      "disposition": "replaced",
+      "reason": "The owner's ruling 4 on #78 removes the clause that called an owner's differently worded skill an additional style preference rather than a source-equivalent replacement. pstack 0.15.25 has no such clause. The bundled pinned unslop stays the prose contract.",
+      "replacement": "The bundled pinned\nunslop remains the prose contract."
     },
     {
       "paragraph": 20,
       "slice": null,
       "destination": "plugin/adapters/host-publication.md",
       "sha256": "58187cbd9efb9e4cef51caf5e1959f7ad4f88d42be244eeda09bdcdfcd930624",
-      "disposition": "replaced",
-      "reason": "0.4.0 renamed the project to hStack: the repository named in this sentence is the hStack repository.",
-      "replacement": "Opening a PR retains the core's ready-PR and stack/base mechanics. Local commits\nand a PR-ready body can be prepared under local-work authority. Publication waits\nfor explicit scope. Only this hStack repository’s AGENTS.md activates its\nAstra High PR profile. Installing the plugin does not impose it on consumers.\nConsumer policies and generic interrogate defaults remain in force."
+      "disposition": "removed",
+      "reason": "Issue #83 removes this paragraph; pstack 0.15.25 has none of it. Besides scoping hStack's own Astra High PR review policy to this repository, it carried hStack's publication-scope rule: local commits and a PR-ready body under local-work authority, and publication only after explicit scope. The owner's ruling 3 on #78 keeps that rule removed, because this repository's AGENTS.md covers its own publication. Its restatements of the core's ready-PR and stack/base mechanics, consumer PR policy and interrogate's defaults were not rules of their own: the opening-a-pr playbook, host.md and the interrogate skill still carry them."
     }
   ],
   "mobile_source": "plugin/adapters/mobile.md",
   "mobile_destination": "plugin/adapters/mobile-workflows.md",
   "mobile_sha256": "11a718eeaa16d23528b72f2791e5b80e360398c5fa85069af6b03904c2c5f228",
   "mobile_fragments": [
-    {
-      "slice": [
-        1847,
-        1870
-      ],
-      "sha256": "045ae00a4c16fffc2a18e261d080bf66ce1a72eddb981deec06668867ea33344",
-      "disposition": "replaced",
-      "reason": "Owner-approved issue30 adds a conditional mobile-risk-v1 coverage reference; the existing mobile proof rules remain intact and non-mobile plans retain their default contract.",
-      "replacement": "## Evidence and scope\n\nFor operator-approved mobile programs, apply\n[mobile coverage](../skills/hugues-mode/references/mobile-coverage.md) when selecting\nand dispatching verification. Its explicit profile replaces the fixed live-check\ncount, preserving other pstack phases and reviews. Legacy/non-mobile plans retain\ntheir default contract; profile migration requires the operator's ruling.\n\n"
-    },
     {
       "slice": [
         4086,

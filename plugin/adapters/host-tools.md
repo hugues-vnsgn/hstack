@@ -1,16 +1,10 @@
-# Installed planning, proof and worktree commands
-
-New-program scheduling, progress and runtime waiting use `run-control` and
-`run-wait`; the controller loads [program control](program-control.md) at dispatch
-or pickup. They record/check state and grant no native dispatch permission.
+# Installed planning and worktree audit commands
 
 These are mechanical translations of bundled operands in the canonical playbooks.
 Reach the selected skill first, as [host.md](host.md) directs, and preserve its todo order,
 verification rules, explicit execution go and active/pinned-chat gate. Python 3 and Git must already
 be available; plan validation also needs Node. Missing tools block the gate.
-The adapters do not install dependencies, fetch or query a forge. `worker-run`
-executes authorized worker argv within its write scope. `run-control` writes the
-protected progress store; the remaining commands read inputs and print results.
+The adapters do not install dependencies, fetch, query a forge or delete anything.
 
 ## Bind and reread the approved installed payload
 
@@ -113,20 +107,10 @@ required-file drift blocks rereading or validation. Reconcile changed payloads
 with the operator; never silently rebind a live program. These commands do not
 arm loops or start implementation.
 
-## Compare a PR's verification contract
-
-Use bound `plan-compare` with a consumer repository, repository-relative plan path,
-exact PR section heading, and full main/head commit SHAs. It executes the installed
-comparison helper only after the existing payload binding passes. See the
-[verification contract](../skills/hugues-mode/references/verification-contract.md)
-for the command, ruling record and verdict gate. The comparison is read-only;
-exit 0 clears only the rule-change gate, and exit 2 holds. The root authenticates
-the operator ruling separately. Source tests do not establish host writer isolation.
-
 ## Integrity trust boundary
 
 The trusted entrypoint is `adapters/host_tools.py`, including its approved runtime
-hash table. It verifies all five runtime source buffers before executing any,
+hash table. It verifies all four runtime source buffers before executing any,
 checks saved runtime/bootstrap binding data for bound commands, and executes those
 same buffers without reopening them. Package checks reject a runtime/hash-table
 mismatch. Python bytecode caches are not executed. The saved binding then checks
@@ -138,13 +122,6 @@ lie; it cannot authenticate itself. Initial `bind` is the owner's approval point
 for the installed non-core files, not an external signature service. These checks
 detect drift; they do not promise protection against an adversary concurrently
 rewriting every workflow or external helper during later reads/execution.
-
-## Approved program proof and scoped workers
-
-Before a new program's first build, read [program proof](program-proof.md)
-for its four additive commands and [record format](program-records.md) for JSON
-inputs. Keep `plan-check` and existing gates. Changed installations require
-explicit migration; never replace a live binding silently.
 
 ## Audit explicit authorized native activity sources
 

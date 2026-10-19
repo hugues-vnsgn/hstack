@@ -15,9 +15,6 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 ### PR mechanics
 status message
 ### Verdict and merge
-
-- [ ] Apply `../references/verification-contract.md` through bound `read-workflow`. Use bound `plan-compare` and record the operator ruling before the verdict.
-
 ### Boot recipe
 
 ## PR 1

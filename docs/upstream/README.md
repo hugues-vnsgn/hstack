@@ -24,13 +24,14 @@ in the ledger. The title reads "Hugues mode" with the host invocation contract
 beneath it, and the four Cursor-only frontmatter fields (`mode`, `icon`,
 `color`, `reminder`) are gone. `AskQuestion` is now Claude Code's
 `AskUserQuestion` (Codex's question tool is unobserved), `Task` is the host's
-agent tool and `poteto-agent` is `hugues-agent`. The full-autonomy grant policy
-moved under Autonomy, the four mobile routes joined the Playbooks list, many
-rules are stated as the behavior to do, and the model-defaults paragraph now lives in
+agent tool and `poteto-agent` is `hugues-agent`. The four mobile routes joined
+the Playbooks list, and the model-defaults paragraph now lives in
 [the worker reference](../../plugin/adapters/host-workers.md#model-defaults-and-role-labels).
-Section names, the Principles index and its trigger sentences, and the markers
-`scripts/check_core.py` requires are kept. The next upstream sync of this file
-is a manual merge against this body, not a line-by-line port.
+The rewrite also restated many rules as the behavior to do. Issue #83 put
+pstack 0.15.25's wording back in all of them, so the body now differs from
+upstream only by these renames, the host translation and the mobile routes.
+The next upstream sync of this file is a manual merge against this body, not
+a line-by-line port.
 
 ## pstack 0.15.25 merge
 
@@ -43,10 +44,9 @@ Four skills are new: `ketchup`, `sharpen`, `in-your-own-words` and
 so the per-turn skill list does not grow. Upstream's model defaults (Opus,
 Grok, Sol) do not apply; hStack keeps its own defaults and takes only the
 rule that moves effort to fit the job. Upstream's Agent Plugins root manifest
-stays in provenance. Two upstream changes are known gaps: the audit helper
+stays in provenance. One upstream change is a known gap: the audit helper
 still defaults its MERGED base to `origin/main` (pass `--base` otherwise),
-where upstream's script now detects the default branch; and `plan-check` now
-accepts fenced code, which `plan-compare` still holds for manual review.
+where upstream's script now detects the default branch.
 Changed and added rows carry the release target
 `unreleased-pstack-0.15.25` until a release ships them.
 

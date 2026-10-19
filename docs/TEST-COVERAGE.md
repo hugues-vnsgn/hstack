@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **546 top-level unittest cases**. One is a driver that
+The current candidate collects **425 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -11,20 +11,16 @@ native workflow proof. Subtests are not added to case totals.
 | Current checker, historical 0.1.0 fixtures | 27 | Explicit historical validation mode and package mutations |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
-| Current installed adapters and regressions | 97 | test_host_adapters (72), test_review_regressions (12), test_rereview_regressions (13) |
-| Current native-layout contracts | 56 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the bundled non-pstack `deslop` skill (its pinned Cursor source, notice and two allowed additions, and six drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 47 reviewed contradictions in five line shapes each, 18 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and seven read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, autonomy placement, single-source model defaults, the scope of restated obligations, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
+| Current installed adapters and regressions | 100 | test_host_adapters (75), test_review_regressions (12), test_rereview_regressions (13) |
+| Current native-layout contracts | 54 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the bundled non-pstack `deslop` skill (its pinned Cursor source, notice and two allowed additions, and six drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 47 reviewed contradictions in five line shapes each, 18 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 13 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,000 cases (335 `read-workflow`, 1,610 `translate-plan` and 55 in-plan cases) over all 55 bundled skills, the legacy aliases of the 54 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
-| Current verification-contract gate | 19 | test_verification_contract; installed bound comparison of committed plans, both field regressions, exact rulings, absent baselines, receipt-only edits, malformed inputs and checker drift; no host isolation or mobile proof |
 | Current setup-to-proof contracts | 6 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These six cases check source/commands and evidence parsing, not host or device execution. |
-| Current approved requirements/proof | 46 | test_program_proof; installed JSON checks, artifact/build identities, safe design decoding, workflow reach, macOS process write isolation and rejection of the two withdrawn host-tool verbs |
-| Current program scheduling/recovery | 38 | test_program_control; installed policy gates, whole-group dispatch, saved progress, usage coverage, process groups, device receipts, concurrent writers and runtime waiting |
-| Current mobile coverage | 19 | test_mobile_coverage; installed risk coverage, exemptions, profile/default compatibility, operator rulings and integrity drift; synthetic plan fixtures, no native/mobile behavior claim |
-| Total collected | 546 | Current, mixed and historical scopes remain distinct |
+| Total collected | 425 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-546 Python cases. The opt-in CI workflow requires a provisioned native runner.
+425 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -93,8 +89,8 @@ and mobile observations remain separate gaps.
 
 Current adapter cases execute the public installed Python entrypoint in disposable
 external consumer directories, including Node plan validation when available.
-Bindings cover canonical files, metadata, adapters, policies, runtime code and
-permission modes. Tests reject missing/extra files, symlinks, world-writable files,
+Bindings cover canonical files, metadata, adapters, runtime code and permission
+modes. Tests reject missing/extra files, symlinks, world-writable files,
 changed executable bits, bootstrap execution before verification, poisoned
 bytecode caches, consumer path ownership errors and unsupported shell shapes.
 No SKILL.md is returned by `read-workflow` or translated by `translate-plan`:
@@ -224,6 +220,39 @@ installed plugin root and still rejects one over the owner control directory,
 and the approved-roots case no longer lists the plugin file or the binding as
 protected. The binding, guarded-read and drift cases are unchanged.
 
+On 2026-10-17, issue #80 removes approved proof, the `worker-run` sandbox and
+program control. The 46 approved-proof cases, including issue #30's three
+plan/proof integration cases, and the 38 program scheduling/recovery cases go
+with the `program-check`, `artifact-hash`, `decode-design`, `worker-run`,
+`run-control` and `run-wait` verbs they covered. Issue #77's case that rejects the
+withdrawn payload-protection verbs moves to test_host_adapters and now also
+checks that the bound CLI rejects the six removed verbs as unknown, bringing the
+current total to 458. Remaining runtime drift, bytecode and binding cases still
+cover the four runtime modules that stay.
+
+On 2026-10-17, issue #81 removes risk-based mobile coverage and returns plan
+validation to pstack's fixed rule of ten live lanes. The nineteen risk-coverage
+cases go with the validator, risk catalog and selection guide they covered. One
+new installed-command case in test_host_adapters checks that the bound
+`plan-check` accepts a ten-lane plan, with or without frontmatter, and rejects an
+eleventh lane or a risk-based live heading, bringing the current total to 440.
+
+On 2026-10-17, issue #82 removes the verification-contract gate. The nineteen
+verification-contract cases go with the `plan-compare` verb, its comparison
+helper and the contract reference they covered. The test_host_adapters case that
+rejects withdrawn verbs now also checks that the bound CLI rejects `plan-compare`
+as unknown. One new installed-command case checks that the bound `plan-check`
+accepts a plan whose Verdict and merge section holds pstack's own boxes and no
+verification-contract box, bringing the current total to 422.
+
+On 2026-10-17, issue #83 removes the Claude stack-permission preflight and the
+Astra High PR review policy, and puts pstack 0.15.25's wording back in the
+router. The two router cases that pinned the rewrite's own wording, autonomy
+placement and the scope of restated obligations, go with it, bringing the
+current total to 420. The Principles index case now checks pstack's naming
+rule, a bold title in kebab case or a given name. The installed-binding drift
+cases no longer list the deleted policy file.
+
 The bundled `deslop` skill is a copy of Cursor's `cursor-team-kit` skill, not a
 pstack skill, and adds two native-layout cases. One binds the installed skill to
 its pinned Cursor source, the license notice and the two allowed additions. The
@@ -237,7 +266,7 @@ the new skill, which has no legacy `pstack/skills/...` path. These are source
 checks of files and wiring. They do not show that a host lists, loads or runs
 `/deslop`.
 
-Issue #48 adds three native-layout cases, bringing the current total to 546.
+Issue #48 adds three native-layout cases.
 One checks that `hugues-agent` keeps its preload and finds `hugues-mode/SKILL.md`
 in order: the parent's path, the base directory Claude Code shows, then a search
 of the installed plugins. One checks that `host.md` and the agent header both say a
@@ -248,3 +277,6 @@ that held a step on denied invocation while keeping `read-workflow` and
 `no-comments`, and on each bundled skill) and two correct sentences (the rule as
 `host.md` and the agent header word it). These are source checks of wording. They
 do not show how Claude Code behaves with it.
+
+Merging `main` into the #78 branch brings in the deslop cases and the three #48 cases
+above, so the current total is 425.

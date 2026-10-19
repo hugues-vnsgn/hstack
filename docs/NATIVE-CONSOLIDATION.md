@@ -90,8 +90,8 @@ literal shapes. It does not become a host dispatcher or shell interpreter.
 
 ## Integrity and cleanup
 
-The installed manifest covers canonical instructions, metadata, helpers, adapters
-and policies, with complete file inventory and permission modes. Three linked
+The installed manifest covers canonical instructions, metadata, helpers and
+adapters, with complete file inventory and permission modes. Three linked
 trust anchors avoid a circular self-hash: the bootstrap verifies runtime source,
 the verifier binds the manifest, and the saved binding records every plugin file
 including those anchors. A changed install, file, permission or inventory holds.
