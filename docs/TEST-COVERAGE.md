@@ -22,7 +22,7 @@ native workflow proof. Subtests are not added to case totals.
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-442 Python cases. The opt-in CI workflow requires a provisioned native runner.
+502 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
