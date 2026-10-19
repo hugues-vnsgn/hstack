@@ -11,9 +11,32 @@ Benny is a separate nested service bundle and is not a top-level skill or agent.
 Its source is preserved only in the nondiscoverable upstream provenance archive;
 it is not a supported native service or helper.
 
-Translate Cursor skill placement to the consumer's established `.agents/skills`
-or `.claude/skills` convention. Preserve existing personal-mode categories and
-user edits; global placement or configuration needs explicit scope. Use only the
+## Project skill paths
+
+Translate every inherited `.cursor/skills` project discovery, output and update
+path to the consumer's existing supported layout. With no established layout,
+default to `.claude/skills` on Claude Code and `.agents/skills` on Codex.
+Resolve the project root from the consumer's instructions and actual layout.
+Preserve categories and user edits. Updates keep the exact existing skill target;
+selecting the native default does not migrate an existing skill.
+
+Apply this rule to automate-me's recursive mode discovery and categorized output,
+create-verification-skill's generated `verify-<app>/SKILL.md` and
+`features/README.md` plus its feature files, and maintain-verification-skill's
+target lookup. Keep the feature map beside its skill and preserve the whole-map
+maintenance and existing edit-scope rules. Preserve the multiple-candidate and
+missing-target gates. Personal/global placement or configuration needs explicit
+scope; use only the host's supported, authorized personal locations.
+
+Reflect's divergent, tooling and judgment reviewers recognize the actual host
+skill paths and tool events under the same used-skill and missed-trigger criteria.
+A path on disk alone is not evidence of use. Approved updates retain their exact
+targets; approved new skills use the same project placement rule. Keep the invocation and
+file-read rules in [host.md](host.md).
+
+## Scoped history
+
+Use only the
 active workspace's supplied transcript paths, never unrelated project history.
 Without an authorized transcript source, automate-me history mining remains blocked;
 do not fabricate preferences or claim personal-mode execution from a routing check.

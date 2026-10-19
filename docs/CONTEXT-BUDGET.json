@@ -1986,9 +1986,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 34,
-        "bytes": 128562,
-        "characters": 128494,
-        "estimated_tokens_characters_divided_by_4": 32123.5,
+        "bytes": 129684,
+        "characters": 129616,
+        "estimated_tokens_characters_divided_by_4": 32404.0,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1250,
@@ -1999,8 +1999,8 @@
             "sha256": "bd262f4c2fed1265f35beba50b11dd58cc07c58912600278aaa6bfb889ee7db2"
           },
           "plugin/adapters/host-workflow-tools.md": {
-            "bytes": 3575,
-            "sha256": "cb8dee113e5b106c3ef34f6214838c8609b52633d465d2a2c6c7d1ed7a828df8"
+            "bytes": 4697,
+            "sha256": "ff9d4920707f335787a664ee950db39e3d3f8b008f7d0b3a6e486e1055c3748b"
           },
           "plugin/adapters/host.md": {
             "bytes": 5435,
@@ -2805,9 +2805,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 44,
-        "bytes": 140496,
-        "characters": 140428,
-        "estimated_tokens_characters_divided_by_4": 35107.0,
+        "bytes": 141618,
+        "characters": 141550,
+        "estimated_tokens_characters_divided_by_4": 35387.5,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1250,
@@ -2822,8 +2822,8 @@
             "sha256": "bd262f4c2fed1265f35beba50b11dd58cc07c58912600278aaa6bfb889ee7db2"
           },
           "plugin/adapters/host-workflow-tools.md": {
-            "bytes": 3575,
-            "sha256": "cb8dee113e5b106c3ef34f6214838c8609b52633d465d2a2c6c7d1ed7a828df8"
+            "bytes": 4697,
+            "sha256": "ff9d4920707f335787a664ee950db39e3d3f8b008f7d0b3a6e486e1055c3748b"
           },
           "plugin/adapters/host.md": {
             "bytes": 5435,
