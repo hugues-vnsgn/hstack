@@ -13,10 +13,12 @@ description entered the host's per-turn skill list. The skill-list-budget work
 reverses that: it returns to pstack's own router design, where only
 `poteto-mode` (here `hugues-mode`) was model-invocable and read every other
 skill as a file. Only `hugues-mode` and `setup-hstack` stay
-model-invocable now; the other 55 bundled skills are user-only (52 from pstack, plus
-`deslop`, `control-cli` and `control-ui` from Cursor's `cursor-team-kit`), which is the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
-This is an invocation-exposure change only: no upstream responsibility,
-destination or disposition moves.
+model-invocable now; the other 57 bundled skills are user-only (52 from pstack, three from Cursor's
+`cursor-team-kit`, and the two hStack-authored Swift and Kotlin baselines), which is the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
+The invocation-exposure change moves no upstream responsibility or destination.
+Issue #105 adds hStack-authored mobile baselines in the separate authored inventory.
+Its conditional native-forensics pointer changes that playbook's disposition to
+`port with adaptation` while preserving the five upstream steps.
 
 The router rewrite (issue #22) then moves `plugin/skills/hugues-mode/SKILL.md`
 further from pstack's `poteto-mode/SKILL.md`, which stays `port with adaptation`

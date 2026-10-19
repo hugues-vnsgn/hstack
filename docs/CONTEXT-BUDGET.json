@@ -32,13 +32,13 @@
       "estimated_tokens_characters_divided_by_4": 6485.0
     },
     "candidate": {
-      "bytes": 25160,
-      "characters": 25122,
-      "estimated_tokens_characters_divided_by_4": 6280.5
+      "bytes": 25257,
+      "characters": 25219,
+      "estimated_tokens_characters_divided_by_4": 6304.75
     }
   },
   "native_frontmatter": {
-    "scope": "All 57 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. baseline and native_before cover the 50 skills declared at 0.2.0; candidate adds the 7 listed in added_after_release, which have no historical counterpart.",
+    "scope": "All 59 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. baseline and native_before cover the 50 skills declared at 0.2.0; candidate adds the 9 listed in added_after_release, which have no historical counterpart.",
     "baseline": {
       "bytes": 15764,
       "characters": 15761,
@@ -50,9 +50,9 @@
       "estimated_tokens_characters_divided_by_4": 3700.0
     },
     "candidate": {
-      "bytes": 15373,
-      "characters": 15372,
-      "estimated_tokens_characters_divided_by_4": 3843.0
+      "bytes": 15781,
+      "characters": 15780,
+      "estimated_tokens_characters_divided_by_4": 3945.0
     },
     "candidate_original_skills": {
       "bytes": 13829,
@@ -66,7 +66,9 @@
       "plugin/skills/hugues-help/SKILL.md",
       "plugin/skills/in-your-own-words/SKILL.md",
       "plugin/skills/ketchup/SKILL.md",
-      "plugin/skills/sharpen/SKILL.md"
+      "plugin/skills/kotlin-best-practices/SKILL.md",
+      "plugin/skills/sharpen/SKILL.md",
+      "plugin/skills/swift-best-practices/SKILL.md"
     ],
     "paths": [
       "plugin/skills/architect/SKILL.md",
@@ -87,6 +89,7 @@
       "plugin/skills/in-your-own-words/SKILL.md",
       "plugin/skills/interrogate/SKILL.md",
       "plugin/skills/ketchup/SKILL.md",
+      "plugin/skills/kotlin-best-practices/SKILL.md",
       "plugin/skills/maintain-verification-skill/SKILL.md",
       "plugin/skills/make-bot-ui/SKILL.md",
       "plugin/skills/no-comments/SKILL.md",
@@ -120,6 +123,7 @@
       "plugin/skills/sharpen/SKILL.md",
       "plugin/skills/show-me-your-work/SKILL.md",
       "plugin/skills/swarm/SKILL.md",
+      "plugin/skills/swift-best-practices/SKILL.md",
       "plugin/skills/tdd/SKILL.md",
       "plugin/skills/teach/SKILL.md",
       "plugin/skills/technical-writing/SKILL.md",
@@ -410,6 +414,7 @@
         "plugin/skills/in-your-own-words/agents/openai.yaml",
         "plugin/skills/interrogate/agents/openai.yaml",
         "plugin/skills/ketchup/agents/openai.yaml",
+        "plugin/skills/kotlin-best-practices/agents/openai.yaml",
         "plugin/skills/maintain-verification-skill/agents/openai.yaml",
         "plugin/skills/make-bot-ui/agents/openai.yaml",
         "plugin/skills/no-comments/agents/openai.yaml",
@@ -443,6 +448,7 @@
         "plugin/skills/sharpen/agents/openai.yaml",
         "plugin/skills/show-me-your-work/agents/openai.yaml",
         "plugin/skills/swarm/agents/openai.yaml",
+        "plugin/skills/swift-best-practices/agents/openai.yaml",
         "plugin/skills/tdd/agents/openai.yaml",
         "plugin/skills/teach/agents/openai.yaml",
         "plugin/skills/technical-writing/agents/openai.yaml",
@@ -450,10 +456,10 @@
         "plugin/skills/unslop/agents/openai.yaml",
         "plugin/skills/why/agents/openai.yaml"
       ],
-      "unique_files": 57,
-      "bytes": 2449,
-      "characters": 2449,
-      "estimated_tokens_characters_divided_by_4": 612.25,
+      "unique_files": 59,
+      "bytes": 2535,
+      "characters": 2535,
+      "estimated_tokens_characters_divided_by_4": 633.75,
       "inputs": {
         "plugin/skills/architect/agents/openai.yaml": {
           "bytes": 43,
@@ -524,6 +530,10 @@
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
         "plugin/skills/ketchup/agents/openai.yaml": {
+          "bytes": 43,
+          "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+        },
+        "plugin/skills/kotlin-best-practices/agents/openai.yaml": {
           "bytes": 43,
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
@@ -656,6 +666,10 @@
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
         "plugin/skills/swarm/agents/openai.yaml": {
+          "bytes": 43,
+          "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+        },
+        "plugin/skills/swift-best-practices/agents/openai.yaml": {
           "bytes": 43,
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
@@ -1044,6 +1058,7 @@
         "plugin/skills/in-your-own-words/SKILL.md",
         "plugin/skills/interrogate/SKILL.md",
         "plugin/skills/ketchup/SKILL.md",
+        "plugin/skills/kotlin-best-practices/SKILL.md",
         "plugin/skills/maintain-verification-skill/SKILL.md",
         "plugin/skills/make-bot-ui/SKILL.md",
         "plugin/skills/no-comments/SKILL.md",
@@ -1077,6 +1092,7 @@
         "plugin/skills/sharpen/SKILL.md",
         "plugin/skills/show-me-your-work/SKILL.md",
         "plugin/skills/swarm/SKILL.md",
+        "plugin/skills/swift-best-practices/SKILL.md",
         "plugin/skills/tdd/SKILL.md",
         "plugin/skills/teach/SKILL.md",
         "plugin/skills/technical-writing/SKILL.md",
@@ -1084,10 +1100,10 @@
         "plugin/skills/unslop/SKILL.md",
         "plugin/skills/why/SKILL.md"
       ],
-      "unique_files": 57,
-      "bytes": 219769,
-      "characters": 219676,
-      "estimated_tokens_characters_divided_by_4": 54919.0,
+      "unique_files": 59,
+      "bytes": 226914,
+      "characters": 226821,
+      "estimated_tokens_characters_divided_by_4": 56705.25,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1160,6 +1176,10 @@
         "plugin/skills/ketchup/SKILL.md": {
           "bytes": 5929,
           "sha256": "032b92e2f82c41c299ebefbfa3370ddb5db13fc84d960f2d39ad51f8f3eba5e7"
+        },
+        "plugin/skills/kotlin-best-practices/SKILL.md": {
+          "bytes": 3491,
+          "sha256": "319980eb8ba6205d2d015213f46f3ff1d01d981affd6a724375ac6830661b443"
         },
         "plugin/skills/maintain-verification-skill/SKILL.md": {
           "bytes": 5209,
@@ -1293,6 +1313,10 @@
           "bytes": 3421,
           "sha256": "488b8fd03f975b28a7bd719059d9bf8ded67cbb964978da0361b50a044ad49c7"
         },
+        "plugin/skills/swift-best-practices/SKILL.md": {
+          "bytes": 3654,
+          "sha256": "1f1323b9b138d0f7e7475061fc06434e5c22b3552e3fc5017c274a602112f334"
+        },
         "plugin/skills/tdd/SKILL.md": {
           "bytes": 3393,
           "sha256": "092ff29007719d1b8ea580159ab2e34d8a18a52ee436973ca4415a7fb549c987"
@@ -1325,9 +1349,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 204054,
-      "characters": 203962,
-      "estimated_tokens_characters_divided_by_4": 50990.5
+      "bytes": 210779,
+      "characters": 210687,
+      "estimated_tokens_characters_divided_by_4": 52671.75
     },
     "mode_full_file": {
       "paths": [
@@ -1443,13 +1467,13 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 5,
-        "bytes": 33597,
-        "characters": 33557,
-        "estimated_tokens_characters_divided_by_4": 8389.25,
+        "bytes": 33931,
+        "characters": 33891,
+        "estimated_tokens_characters_divided_by_4": 8472.75,
         "inputs": {
           "plugin/adapters/host.md": {
-            "bytes": 5355,
-            "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
+            "bytes": 5452,
+            "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -1460,8 +1484,8 @@
             "sha256": "b10089941bdabd898275b68e16d66479e876d35db217d8102c2ec62c67c1294e"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
-            "bytes": 2360,
-            "sha256": "e81578c9750544c1b07818a8818725a0ae50f660d071c0f6b7a5b7473f31d7a6"
+            "bytes": 2597,
+            "sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739"
           },
           "plugin/skills/unslop/SKILL.md": {
             "bytes": 6077,
@@ -1556,17 +1580,17 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 36424,
-          "characters": 36374,
-          "estimated_tokens_characters_divided_by_4": 9093.5,
+          "bytes": 36521,
+          "characters": 36471,
+          "estimated_tokens_characters_divided_by_4": 9117.75,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8405,
               "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5355,
-              "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
+              "bytes": 5452,
+              "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
@@ -2011,9 +2035,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 35,
-        "bytes": 134331,
-        "characters": 134263,
-        "estimated_tokens_characters_divided_by_4": 33565.75,
+        "bytes": 134665,
+        "characters": 134597,
+        "estimated_tokens_characters_divided_by_4": 33649.25,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2028,8 +2052,8 @@
             "sha256": "8eb6b7029b695409f96f4c766bd5acc6b54784f3ac5efbdc04845e9fa655bdff"
           },
           "plugin/adapters/host.md": {
-            "bytes": 5355,
-            "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
+            "bytes": 5452,
+            "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -2060,8 +2084,8 @@
             "sha256": "b10089941bdabd898275b68e16d66479e876d35db217d8102c2ec62c67c1294e"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
-            "bytes": 2360,
-            "sha256": "e81578c9750544c1b07818a8818725a0ae50f660d071c0f6b7a5b7473f31d7a6"
+            "bytes": 2597,
+            "sha256": "884cd2bd3e57426981eab92370c5ef83afc0476d88e864690dbcd55469489739"
           },
           "plugin/skills/hugues-mode/playbooks/opening-a-pr.md": {
             "bytes": 5646,
@@ -2270,17 +2294,17 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 36424,
-          "characters": 36374,
-          "estimated_tokens_characters_divided_by_4": 9093.5,
+          "bytes": 36521,
+          "characters": 36471,
+          "estimated_tokens_characters_divided_by_4": 9117.75,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8405,
               "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5355,
-              "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
+              "bytes": 5452,
+              "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
@@ -2296,8 +2320,8 @@
             }
           },
           "mode_workers": 1,
-          "repeated_bytes_floor": 36424,
-          "repeated_estimated_tokens_floor": 9093.5
+          "repeated_bytes_floor": 36521,
+          "repeated_estimated_tokens_floor": 9117.75
         }
       },
       "complete_execution_tokens": null,
@@ -2835,9 +2859,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 45,
-        "bytes": 146265,
-        "characters": 146197,
-        "estimated_tokens_characters_divided_by_4": 36549.25,
+        "bytes": 146362,
+        "characters": 146294,
+        "estimated_tokens_characters_divided_by_4": 36573.5,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2856,8 +2880,8 @@
             "sha256": "8eb6b7029b695409f96f4c766bd5acc6b54784f3ac5efbdc04845e9fa655bdff"
           },
           "plugin/adapters/host.md": {
-            "bytes": 5355,
-            "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
+            "bytes": 5452,
+            "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -3139,17 +3163,17 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 36424,
-          "characters": 36374,
-          "estimated_tokens_characters_divided_by_4": 9093.5,
+          "bytes": 36521,
+          "characters": 36471,
+          "estimated_tokens_characters_divided_by_4": 9117.75,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8405,
               "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5355,
-              "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
+              "bytes": 5452,
+              "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
@@ -3165,8 +3189,8 @@
             }
           },
           "mode_workers": 8,
-          "repeated_bytes_floor": 291392,
-          "repeated_estimated_tokens_floor": 72748.0
+          "repeated_bytes_floor": 292168,
+          "repeated_estimated_tokens_floor": 72942.0
         }
       },
       "complete_execution_tokens": null,
@@ -3180,7 +3204,75 @@
     }
   },
   "worker_accounting": "Unique inventory deduplicates paths across contexts; it is not a workflow token total. Record fixed worker counts separately and a floor for the mandatory fresh mode-worker read set. This floor excludes their additional skills, role inputs and generated evidence, and is not additive to the unique inventory.",
-  "public_skills": 57,
+  "mobile_guidance": {
+    "scope": "Candidate bundled mobile guidance source inventory only, not a task closure, runtime output or execution cost. Conditional references load only when applicable.",
+    "candidate": {
+      "paths": [
+        "plugin/adapters/host-mobile-languages.md",
+        "plugin/skills/hugues-mode/references/mobile-forensics.md",
+        "plugin/skills/hugues-mode/references/mobile-review.md",
+        "plugin/skills/kotlin-best-practices/SKILL.md",
+        "plugin/skills/kotlin-best-practices/references/android-compose.md",
+        "plugin/skills/kotlin-best-practices/references/cmp.md",
+        "plugin/skills/kotlin-best-practices/references/kmp.md",
+        "plugin/skills/kotlin-best-practices/references/native-interop.md",
+        "plugin/skills/swift-best-practices/SKILL.md",
+        "plugin/skills/swift-best-practices/references/swiftui.md",
+        "plugin/skills/swift-best-practices/references/uikit.md"
+      ],
+      "unique_files": 11,
+      "bytes": 26050,
+      "characters": 26050,
+      "estimated_tokens_characters_divided_by_4": 6512.5,
+      "inputs": {
+        "plugin/adapters/host-mobile-languages.md": {
+          "bytes": 3389,
+          "sha256": "6bf8401a774c077a7ef81aef9d47c0c1cda58c06d56a89e8d481874ec6c2d405"
+        },
+        "plugin/skills/hugues-mode/references/mobile-forensics.md": {
+          "bytes": 3025,
+          "sha256": "65e6df5186eee855d9f0bf80e4c0421cb9854add6fd3a2938060ea09cb485fea"
+        },
+        "plugin/skills/hugues-mode/references/mobile-review.md": {
+          "bytes": 2703,
+          "sha256": "20911bf29ce549097ba47bbdb6a35bf2773068fd9ba71e5b731fa3e6777e70c9"
+        },
+        "plugin/skills/kotlin-best-practices/SKILL.md": {
+          "bytes": 3491,
+          "sha256": "319980eb8ba6205d2d015213f46f3ff1d01d981affd6a724375ac6830661b443"
+        },
+        "plugin/skills/kotlin-best-practices/references/android-compose.md": {
+          "bytes": 1545,
+          "sha256": "ad8391cd5df3f653fcf695a3f547de774bac33559ad5f522eef55b37bff537dd"
+        },
+        "plugin/skills/kotlin-best-practices/references/cmp.md": {
+          "bytes": 1823,
+          "sha256": "5a4c3e40019dc543ac4eadfd29879f2b7ad5a5bd018ab5f8d2e05072cf8f96df"
+        },
+        "plugin/skills/kotlin-best-practices/references/kmp.md": {
+          "bytes": 1373,
+          "sha256": "bf0d95ae8fa95571cbfa69ebcc7c578ad5c56cde499bd0f2cfb95ff5061f4ca1"
+        },
+        "plugin/skills/kotlin-best-practices/references/native-interop.md": {
+          "bytes": 1972,
+          "sha256": "2094b6d1c56a223495e0c94145486773f08966c91722262a790798896d62c25b"
+        },
+        "plugin/skills/swift-best-practices/SKILL.md": {
+          "bytes": 3654,
+          "sha256": "1f1323b9b138d0f7e7475061fc06434e5c22b3552e3fc5017c274a602112f334"
+        },
+        "plugin/skills/swift-best-practices/references/swiftui.md": {
+          "bytes": 1484,
+          "sha256": "f33dc5b7a4d788600c61e1b4f53ae64037c70e4c8cf50c3117590be92aa23bb9"
+        },
+        "plugin/skills/swift-best-practices/references/uikit.md": {
+          "bytes": 1591,
+          "sha256": "65e5ab14ee296579529680f9770e985239eb482158045cc772567a5de222a637"
+        }
+      }
+    }
+  },
+  "public_skills": 59,
   "limits": [
     "No runtime host, tokenizer, prompt framing, cache or native invocation observation.",
     "Required transitive bundled reads are included for the stated scenarios even if invocation would hold.",

@@ -50,14 +50,25 @@ Select an action route from intent even while evidence is missing: a toolchain d
 
 ## Required lanes
 
-| Domain | Build and tests | Behavior proof | Relevant installed owner skills |
+| Domain | Build and tests | Behavior proof | Bundled guidance |
 | --- | --- | --- | --- |
-| Swift/iOS | Repository-selected Xcode build and relevant XCTest slice on the explicit simulator destination. Preserve xcodebuild logs and xcresult. | Drive the changed user path on that iOS simulator and retain screenshots/verdict. For a bug, preserve the failing path before the fix. | `ios-tdd-practitioner`, `swiftui-expert-skill`, `uikit-expert` |
-| Kotlin/Android | Wrapper-selected unit tests, relevant instrumentation tests for affected platform behavior, and selected APK variant. Preserve Gradle/JUnit reports and APK identity for the repository-selected variant. | Install that APK and drive the changed path on the explicit Android emulator. For a bug, preserve the failing path before the fix. | Repository's Kotlin/Android guidance and test skills |
-| KMP shared logic | Execute common tests on each Android and iOS target, plus affected platform tests and native builds. Preserve each target's result and exported API identity. | Exercise at least one Android native caller and one iOS native caller of the changed shared contract. Check affected export, threading, cancellation, lifecycle and error behavior. | `kmp-boundaries`, `kmp-ios-integration`, `kmp-test-seams`, `tdd-kmp`; `kmp-ktor` for networking |
-| CMP shared UI | Build/test affected targets and native hosts; retain separate Android and iOS results. | Drive the changed shared UI on an Android emulator and an iOS simulator. Preserve screenshots and one explicit semantics or text-scaling observation, accounting for both runtimes and affected interop. | `compose-multiplatform-ui` plus relevant native and KMP skills |
+| Swift/iOS | Repository-selected Xcode build and relevant XCTest slice on the explicit simulator destination. Preserve xcodebuild logs and xcresult. | Drive the changed user path on that iOS simulator and retain screenshots/verdict. For a bug, preserve the failing path before the fix. | [Swift baseline](../../swift-best-practices/SKILL.md) and applicable SwiftUI or UIKit reference |
+| Kotlin/Android | Wrapper-selected unit tests, relevant instrumentation tests for affected platform behavior, and selected APK variant. Preserve Gradle/JUnit reports and APK identity for the repository-selected variant. | Install that APK and drive the changed path on the explicit Android emulator. For a bug, preserve the failing path before the fix. | [Kotlin baseline](../../kotlin-best-practices/SKILL.md) and Android Compose reference |
+| KMP shared logic | Execute common tests on each Android and iOS target, plus affected platform tests and native builds. Preserve each target's result and exported API identity. | Exercise at least one Android native caller and one iOS native caller of the changed shared contract. Check affected export, threading, cancellation, lifecycle and error behavior. | [Kotlin baseline](../../kotlin-best-practices/SKILL.md), KMP and applicable native interop reference |
+| CMP shared UI | Build/test affected targets and native hosts; retain separate Android and iOS results. | Drive the changed shared UI on an Android emulator and an iOS simulator. Preserve screenshots and one explicit semantics or text-scaling observation, accounting for both runtimes and affected interop. | [Kotlin baseline](../../kotlin-best-practices/SKILL.md), CMP and affected native references |
 
-Load an installed owner skill only at its relevant decision point. These skills are external prerequisites, not shipped files; if one is absent, disclose the gap and use the consumer's documented guidance within authority. A missing leaf is never a successful invocation.
+Apply [mobile language scope](../../../adapters/host-mobile-languages.md) before source reads and load only the references the affected behavior requires. These baselines ship with hStack. Personal expert skills such as `ios-tdd-practitioner`, `kmp-*`, `compose-multiplatform-ui` and `tdd-kmp` are optional supplements, reached through native invocation controls. Their absence does not block bundled guidance. The consumer's required verification recipe stays required.
+
+## Scenario choices within ten lanes
+
+Preserve the selected multi-phase plan's ten-lane rule. Choose concrete scenarios
+from the [mobile review lens](mobile-review.md) within those lanes. For affected
+behavior, include restoration after owner recreation or process loss, cancellation
+during navigation, callback delivery to UI, release on disposal, offline failure
+and retry, and accessibility or enlarged text. Give each scenario an action and
+an expected state on an identified target. A lane can cover several related risks.
+An inapplicable risk needs a reason, while an applicable unrun risk remains a gap.
+This selection changes neither lane cardinality nor other pstack gates.
 
 For changes spanning domains, select every affected lane. A linked framework is build proof; it does not prove a native caller ran. JVM tests do not establish iOS behavior. A simulator screenshot does not establish physical-device performance.
 

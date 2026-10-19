@@ -7,7 +7,8 @@ browser procedures, and fixes native skill loading and held-publication handoffs
 The [0.5.0 release notes](docs/RELEASE-0.5.0.md) describe the changes, upgrade
 steps, observed host runs, and remaining gaps. The plugin remains `hstack`, its
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
-The release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks. Each skill owns one canonical `SKILL.md`.
+The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
+The current candidate adds two authored user-only language skills for 59 total. Each skill owns one canonical `SKILL.md`.
 Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
 Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
@@ -50,6 +51,21 @@ The earlier 0.2.0 bounded trial confirmed Claude command discovery, but complete
 Claude Code bug-fix runs, including late checklists and the Claude permission
 limits. It establishes no complete mobile journey. Read the
 [0.4.0 release notes](docs/RELEASE-0.4.0.md), the [0.3.0 release notes](docs/RELEASE-0.3.0.md) and the [0.2.0 release notes](docs/RELEASE-0.2.0.md) for the evidence and limits.
+
+## Bundled mobile guidance
+
+The current candidate includes `swift-best-practices` and `kotlin-best-practices`.
+Before source reads, the router and fresh workers read the relevant baseline in
+full. Source declarations and consumer configuration select SwiftUI, UIKit,
+Android Compose, KMP native-boundary and CMP wrapper references as needed.
+Kotlin build scripts load no application framework guidance on their own.
+Personal expert skills are optional. Existing consumer verification recipes
+remain required. See [language selection](plugin/adapters/host-mobile-languages.md).
+
+The existing review phase adds a [mobile review lens](plugin/skills/hugues-mode/references/mobile-review.md).
+Runtime forensics adds [native capture and hypothesis probes](plugin/skills/hugues-mode/references/mobile-forensics.md).
+Installed source contracts verify delivery and wiring. Fresh native host and
+mobile journeys for this upgrade remain a later phase of [issue #105](https://github.com/hugues-vnsgn/hstack/issues/105).
 
 ## Reference and maintenance
 

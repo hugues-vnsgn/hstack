@@ -116,8 +116,8 @@
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "2b022e09b00727d9ace0a7c6be32d67d6b2c6782c25c1094300c4c118df0ffa5",
       "disposition": "replaced",
-      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54. hStack also bundles deslop, a copy of Cursor's cursor-team-kit skill that is not part of pstack, so the registered count moves from 54 to 55. Bundling control-cli and control-ui from the same Cursor pin brings the current count to 57.",
-      "replacement": "All 57 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
+      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54. hStack also bundles deslop, a copy of Cursor's cursor-team-kit skill that is not part of pstack, so the registered count moves from 54 to 55. Bundling control-cli and control-ui from the same Cursor pin brings the current count to 57. Issue #105 adds two hStack-authored mobile language baselines, bringing the candidate to 59.",
+      "replacement": "All 59 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
     },
     {
       "paragraph": 7,
@@ -336,6 +336,26 @@
   "mobile_destination": "plugin/adapters/mobile-workflows.md",
   "mobile_sha256": "11a718eeaa16d23528b72f2791e5b80e360398c5fa85069af6b03904c2c5f228",
   "mobile_fragments": [
+    {
+      "slice": [
+        1847,
+        1868
+      ],
+      "sha256": "6d7898797538c243c4f157ad7502679984981b803818dec7efd42aaa01e20811",
+      "disposition": "replaced",
+      "reason": "Issue #105 adds conditional bundled language guidance, a lens at the existing review phase and native runtime-forensics translation without changing core phases. Mobile plan step 4 reads lane scenarios and the review lens before writing its ten live lanes.",
+      "replacement": "## Language, review and diagnosis guidance\n\nBefore reading or editing Swift or Kotlin source, apply [mobile language scope](host-mobile-languages.md).\nThe bundled baselines and their conditional references supply essential guidance.\nPersonal expert skills are optional supplements, reached through native controls.\nThe consumer's required verification recipe remains required.\n\nAt the selected action's existing review phase, read the [mobile review lens](../skills/hugues-mode/references/mobile-review.md)\nand give it to the independent reviewer. Carry each applicable risk into proof as\ncovered with evidence or as a named gap. This adds no phase or review panel.\nFor mobile Runtime forensics, read [native forensics](../skills/hugues-mode/references/mobile-forensics.md)\nbefore capture and translate the existing steps on the matching runtime.\n\n## Evidence and scope\n\nFor mobile multi-phase plans, before step 4 of the selected\n[multi-phase plan](../skills/hugues-mode/playbooks/multi-phase-plan.md) writes\nthe live lanes, read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)\nand the [mobile review lens](../skills/hugues-mode/references/mobile-review.md).\nChoose scenarios within the existing ten lanes and carry applicable risks into\ntheir actions and pass predicates. Keep the ten-lane rule unchanged."
+    },
+    {
+      "slice": [
+        2417,
+        2545
+      ],
+      "sha256": "3d33939e6e687eb0868b89a2e7a39e78ad587ccc5017519447fa659fec447e1d",
+      "disposition": "replaced",
+      "reason": "Issue #105 makes personal expert skills optional supplements to the shipped baseline, while keeping consumer apps outside the plugin.",
+      "replacement": "Use the bundled language baselines and applicable platform references. Optional\nexpert skills add depth without becoming baseline prerequisites. Keep consumer\napps outside this plugin."
+    },
     {
       "slice": [
         4086,

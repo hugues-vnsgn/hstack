@@ -29,7 +29,27 @@ These four are explicit extension routes. Large, cross-cutting, unmatched and
 standing-program work still follows the core fallback before a narrow mobile
 route. Add applicable target proof as a phase in that designed workflow.
 
+## Language, review and diagnosis guidance
+
+Before reading or editing Swift or Kotlin source, apply [mobile language scope](host-mobile-languages.md).
+The bundled baselines and their conditional references supply essential guidance.
+Personal expert skills are optional supplements, reached through native controls.
+The consumer's required verification recipe remains required.
+
+At the selected action's existing review phase, read the [mobile review lens](../skills/hugues-mode/references/mobile-review.md)
+and give it to the independent reviewer. Carry each applicable risk into proof as
+covered with evidence or as a named gap. This adds no phase or review panel.
+For mobile Runtime forensics, read [native forensics](../skills/hugues-mode/references/mobile-forensics.md)
+before capture and translate the existing steps on the matching runtime.
+
 ## Evidence and scope
+
+For mobile multi-phase plans, before step 4 of the selected
+[multi-phase plan](../skills/hugues-mode/playbooks/multi-phase-plan.md) writes
+the live lanes, read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)
+and the [mobile review lens](../skills/hugues-mode/references/mobile-review.md).
+Choose scenarios within the existing ten lanes and carry applicable risks into
+their actions and pass predicates. Keep the ten-lane rule unchanged.
 
 Read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md),
 [evidence guide](../skills/hugues-mode/references/evidence-guide.md), and
@@ -38,8 +58,9 @@ phase. Establish language, native/shared ownership, exact target identity and
 runner from independent source reads and the request. Preserve unknown components
 instead of guessing. A build does not prove behavior; one target does not prove
 the other. Record revision, actual command/exit, target and surviving artifacts.
-Use available Swift/iOS, Kotlin/Android, KMP and CMP expertise by name when needed;
-do not copy a consumer app into this plugin.
+Use the bundled language baselines and applicable platform references. Optional
+expert skills add depth without becoming baseline prerequisites. Keep consumer
+apps outside this plugin.
 
 For mobile bug fixes, assign a fresh scoped regression-test worker before the production
 worker. Independently observe RED against unfixed production, then give a separate

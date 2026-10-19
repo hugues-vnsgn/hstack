@@ -515,9 +515,9 @@ class SkillBodyRejectionMatrix(InstalledFixture, unittest.TestCase):
         self.assertNotIn('standalone guarded read', str(caught.exception))
 
     def test_the_fixture_covers_every_bundled_skill_and_alias(self):
-        self.assertEqual(len(self.bundled), 57)
+        self.assertEqual(len(self.bundled), 59)
         self.assertEqual(len(self.legacy), 54)
-        self.assertEqual(set(self.legacy.values()) | {f'skills/{name}/SKILL.md' for name in ['control-cli', 'control-ui', 'deslop']},
+        self.assertEqual(set(self.legacy.values()) | {f'skills/{name}/SKILL.md' for name in ['control-cli', 'control-ui', 'deslop', 'swift-best-practices', 'kotlin-best-practices']},
                          {f'skills/{name}/SKILL.md' for name in self.bundled})
 
     def test_read_workflow_refuses_every_skill_body_spelling(self):
