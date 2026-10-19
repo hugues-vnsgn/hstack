@@ -124,7 +124,7 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,158 bytes,
+adapters, before a reply or task. That narrower read set is now 25,160 bytes,
 about 6,280 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
@@ -135,7 +135,7 @@ wording, left it 264 bytes under that baseline, restoring pstack's router
 wording (#83) left it 852 bytes under, and the bundled deslop and the #48 reach
 rule left it 817 bytes under. The executable-helper resolution rule (#44)
 left it 737 bytes under. Bundling the control skills left it 740 bytes under. The Codex loading
-clarification leaves it 822 bytes under. The fix round restored the scope words the rewrite had
+clarification left it 822 bytes under. Later host edits leave it 820 bytes under. The explicit read-before-tools sentence keeps the previous sentence's byte count. The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes
@@ -154,8 +154,8 @@ workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
 agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 9,074.5 estimated tokens for the bug-fix worker, and from 75,228 to
-72,596 for the eight feature workers. The model-defaults paragraph and the
+9,403.5 to 9,093.5 estimated tokens for the bug-fix worker, and from 75,228 to
+72,748 for the eight feature workers. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
 also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
 to this floor at the router rewrite. That historical delta is 8,410.75 minus

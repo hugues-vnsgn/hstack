@@ -99,8 +99,8 @@ EXTERNAL_SKILLS = {
 EXTERNAL_MANUAL_ONLY = 'disable-model-invocation: true\n'
 EXTERNAL_HOST_CONTRACT = (
     '## Host invocation contract\n\n'
-    'Before these workflow steps, apply the [host contract](../../adapters/host.md)\n'
-    'and [mobile applicability](../../adapters/mobile.md#applicability).\n'
+    'Before tools, read [host contract](../../adapters/host.md)\n'
+    'and [mobile applicability](../../adapters/mobile.md#applicability) in full, then apply.\n'
     'The host contract governs how this skill reaches any sibling dependency.\n\n')
 # Cursor fields that neither Claude Code nor Codex reads from a skill's frontmatter.
 # The router carried them until the router rewrite; no skill may bring them back.
