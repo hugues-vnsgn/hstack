@@ -65,8 +65,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "042531ad133d16a1fdd8709a346d40c2c320dadfdc2ace3095c994aee1e222dc",
       "disposition": "replaced",
-      "replacement": "If explicit user invocation is required, give the exact native command and wait.\nPrinted slash or dollar commands do not prove native invocation.\nAn available file or a successful binding check establishes no skill permission.\nRead owned references only when needed by their phase. Resolve relative paths\nfrom the owning file or mode root, never the consumer cwd. Do not recursively\ntraverse links or eagerly invoke linked skills.",
-      "reason": "Keep the same conditional user handoff, command-evidence limit, file-permission boundary and phase-scoped resource rules in fewer words so the Codex mechanism fits the existing context limits."
+      "replacement": "If user invocation is required, give the exact native command and wait.\nPrinted commands do not prove native invocation.\nAn available file or a successful binding check establishes no skill permission.\nRead owned references only as the phase needs. Base relative paths on the owning file or mode root, never consumer cwd. Never traverse links recursively or\ninvoke linked skills eagerly.",
+      "reason": "Keep the same conditional user handoff, command-evidence limit, file-permission boundary and phase-scoped resource rules in fewer words so the Codex mechanism fits the existing context limits. F4 shortens equivalent user-handoff, command-evidence and owned-reference guidance to fit the checklist translation without changing those rules."
     },
     {
       "paragraph": 4,
@@ -102,7 +102,10 @@
       "paragraph": 6,
       "slice": null,
       "destination": "plugin/adapters/host.md",
-      "sha256": "4ee3bf6f9c8991310ae0c75b4ef04b9b3cee7cf3c5683409b9106f3b9dfe92e7"
+      "sha256": "4ee3bf6f9c8991310ae0c75b4ef04b9b3cee7cf3c5683409b9106f3b9dfe92e7",
+      "disposition": "replaced",
+      "replacement": "Use figure-it-out for large, cross-cutting or unmatched work and Orchestrate for\nstanding programs. Read the full canonical playbook. Copy its ordered todos verbatim.\nKeep skipped todos with reasons.",
+      "reason": "F4 shortens equivalent routing and playbook-read wording to fit the host checklist translation. Keep large, unmatched and standing-program routes, full canonical reads, ordered verbatim todos and skipped-item reasons unchanged."
     },
     {
       "paragraph": 7,
@@ -272,8 +275,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
-      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name.",
-      "replacement": "Translate `AskUserQuestion` (`AskQuestion` in inherited Cursor wording), todos,\nfilesystem and Git operations to actual host tools. Codex's equivalent is\nunobserved here, so use the question tool it exposes."
+      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit.",
+      "replacement": "Map `AskUserQuestion` (Cursor `AskQuestion`), todos, filesystem and Git to host tools.\nCodex's equivalent is unobserved here. Use its question tool."
     },
     {
       "paragraph": 17,
@@ -282,7 +285,10 @@
         400
       ],
       "destination": "plugin/adapters/host.md",
-      "sha256": "b36a8a532282cbd2ecf316a167aa88ecbaf2c44e207a6e90bd67857eba54a809"
+      "sha256": "b36a8a532282cbd2ecf316a167aa88ecbaf2c44e207a6e90bd67857eba54a809",
+      "disposition": "replaced",
+      "replacement": "No translation grants new authority. User scope governs consumer runs and edits,\nnetwork sends, installs, credentials, system settings, pushes, PR publication,\nmerges and releases. Hold actions without authority or capability. Continue independent work.",
+      "reason": "F4 shortens equivalent authority wording to fit the host checklist translation. Preserve every scoped operation, no new authority, holds on absent authority or capability, and continued independent work."
     },
     {
       "paragraph": 18,

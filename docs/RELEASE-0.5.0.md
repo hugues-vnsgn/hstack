@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Hosts without a todo tool use a Markdown checklist.** The host adapter puts the playbook's verbatim steps in the task's agent store before step one, records done or skip status as work proceeds, and names the file in the reply. This translates the existing todo rule. One source-contract test covers the instructions. Fresh-host adoption remains unobserved.
+
 - **Codex native skill loading is explicit.** The host adapters define selection of an enabled catalog skill followed by a complete SKILL.md read as Codex native loading. Native-only holds, Claude Code rules and general-purpose worker rules remain. One source-contract regression covers the wording. Fresh-host behavior after this change remains unobserved.
 
 - **A publication hold keeps the PR draft.** The publication adapter requires separate local title and body artifacts, checked against Opening a PR, when publication is held or no remote or forge is available. Only forge writes are skipped. One source-contract regression covers the wording. Fresh-host behavior after this change remains unobserved.

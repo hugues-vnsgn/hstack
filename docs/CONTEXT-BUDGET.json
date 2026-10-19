@@ -32,9 +32,9 @@
       "estimated_tokens_characters_divided_by_4": 6485.0
     },
     "candidate": {
-      "bytes": 25158,
-      "characters": 25120,
-      "estimated_tokens_characters_divided_by_4": 6280.0
+      "bytes": 25160,
+      "characters": 25122,
+      "estimated_tokens_characters_divided_by_4": 6280.5
     }
   },
   "native_frontmatter": {
@@ -1443,13 +1443,13 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 5,
-        "bytes": 33595,
-        "characters": 33555,
-        "estimated_tokens_characters_divided_by_4": 8388.75,
+        "bytes": 33597,
+        "characters": 33557,
+        "estimated_tokens_characters_divided_by_4": 8389.25,
         "inputs": {
           "plugin/adapters/host.md": {
-            "bytes": 5353,
-            "sha256": "afe54788b13b4be18f59cd8600072a815af33dc3efc08005bece74a5953604f0"
+            "bytes": 5355,
+            "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -1556,17 +1556,17 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 36422,
-          "characters": 36372,
-          "estimated_tokens_characters_divided_by_4": 9093.0,
+          "bytes": 36424,
+          "characters": 36374,
+          "estimated_tokens_characters_divided_by_4": 9093.5,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8405,
               "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5353,
-              "sha256": "afe54788b13b4be18f59cd8600072a815af33dc3efc08005bece74a5953604f0"
+              "bytes": 5355,
+              "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
@@ -2011,9 +2011,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 35,
-        "bytes": 134329,
-        "characters": 134261,
-        "estimated_tokens_characters_divided_by_4": 33565.25,
+        "bytes": 134331,
+        "characters": 134263,
+        "estimated_tokens_characters_divided_by_4": 33565.75,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2028,8 +2028,8 @@
             "sha256": "8eb6b7029b695409f96f4c766bd5acc6b54784f3ac5efbdc04845e9fa655bdff"
           },
           "plugin/adapters/host.md": {
-            "bytes": 5353,
-            "sha256": "afe54788b13b4be18f59cd8600072a815af33dc3efc08005bece74a5953604f0"
+            "bytes": 5355,
+            "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -2270,17 +2270,17 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 36422,
-          "characters": 36372,
-          "estimated_tokens_characters_divided_by_4": 9093.0,
+          "bytes": 36424,
+          "characters": 36374,
+          "estimated_tokens_characters_divided_by_4": 9093.5,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8405,
               "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5353,
-              "sha256": "afe54788b13b4be18f59cd8600072a815af33dc3efc08005bece74a5953604f0"
+              "bytes": 5355,
+              "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
@@ -2296,8 +2296,8 @@
             }
           },
           "mode_workers": 1,
-          "repeated_bytes_floor": 36422,
-          "repeated_estimated_tokens_floor": 9093.0
+          "repeated_bytes_floor": 36424,
+          "repeated_estimated_tokens_floor": 9093.5
         }
       },
       "complete_execution_tokens": null,
@@ -2835,9 +2835,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 45,
-        "bytes": 146263,
-        "characters": 146195,
-        "estimated_tokens_characters_divided_by_4": 36548.75,
+        "bytes": 146265,
+        "characters": 146197,
+        "estimated_tokens_characters_divided_by_4": 36549.25,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2856,8 +2856,8 @@
             "sha256": "8eb6b7029b695409f96f4c766bd5acc6b54784f3ac5efbdc04845e9fa655bdff"
           },
           "plugin/adapters/host.md": {
-            "bytes": 5353,
-            "sha256": "afe54788b13b4be18f59cd8600072a815af33dc3efc08005bece74a5953604f0"
+            "bytes": 5355,
+            "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
           },
           "plugin/adapters/mobile.md": {
             "bytes": 544,
@@ -3139,17 +3139,17 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 36422,
-          "characters": 36372,
-          "estimated_tokens_characters_divided_by_4": 9093.0,
+          "bytes": 36424,
+          "characters": 36374,
+          "estimated_tokens_characters_divided_by_4": 9093.5,
           "inputs": {
             "plugin/adapters/host-workers.md": {
               "bytes": 8405,
               "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5"
             },
             "plugin/adapters/host.md": {
-              "bytes": 5353,
-              "sha256": "afe54788b13b4be18f59cd8600072a815af33dc3efc08005bece74a5953604f0"
+              "bytes": 5355,
+              "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62"
             },
             "plugin/adapters/mobile.md": {
               "bytes": 544,
@@ -3165,8 +3165,8 @@
             }
           },
           "mode_workers": 8,
-          "repeated_bytes_floor": 291376,
-          "repeated_estimated_tokens_floor": 72744.0
+          "repeated_bytes_floor": 291392,
+          "repeated_estimated_tokens_floor": 72748.0
         }
       },
       "complete_execution_tokens": null,

@@ -601,7 +601,7 @@ class HuguesModeRouter(unittest.TestCase):
         flat = ' '.join(host.split())
         # The router names `AskUserQuestion`; the adapter keys its translation on it, keeps the
         # Cursor spelling for inherited wording, and claims no observed Codex tool name.
-        self.assertIn('Translate `AskUserQuestion` (`AskQuestion` in inherited Cursor wording)', flat)
+        self.assertIn('Map `AskUserQuestion` (Cursor `AskQuestion`), todos, filesystem and Git to host tools.', flat)
         self.assertIn("Codex's equivalent is unobserved here", flat)
         self.assertNotIn('Translate AskQuestion', host)
         # host.md points at the one per-host line; the line is keyed on `hugues-agent` and keeps
@@ -620,6 +620,22 @@ class HuguesModeRouter(unittest.TestCase):
         agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
         self.assertIn('\n# Hugues subagent\n', agent)
         self.assertNotIn('Poteto', agent)
+
+    def test_hosts_without_todo_tool_keep_a_checklist_in_the_agent_store(self):
+        host = (ROOT / 'plugin/adapters/host.md').read_text()
+        tools = ' '.join(check_core.section(host, 'Tools and authority').split())
+        for phrase in [
+                'Without a todo tool', 'Markdown checklist',
+                "task's [agent store](host-workflow-tools.md#agent-store-translation)",
+                'Copy playbook steps verbatim before step 1',
+                'Mark each done or `skip: <reason>` as you go',
+                'Name the file in your reply']:
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, tools)
+        store = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
+        self.assertIn('## Agent-store translation', store)
+        self.assertIn('use the operator-named directory', store)
+        self.assertIn('Resume the recorded store', store)
 
     def test_codex_native_loading_uses_enabled_catalog_and_complete_skill_read(self):
         host = ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split())

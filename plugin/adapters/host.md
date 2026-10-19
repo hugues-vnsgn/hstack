@@ -40,12 +40,11 @@ Respect manual-only selection, owner-disabled entries and native denials.
 Outside that mechanism, never use a file read as an invocation fallback.
 For a native-only skill, unavailable, disabled, denied or unknown invocation stops
 the dependent step.
-If explicit user invocation is required, give the exact native command and wait.
-Printed slash or dollar commands do not prove native invocation.
+If user invocation is required, give the exact native command and wait.
+Printed commands do not prove native invocation.
 An available file or a successful binding check establishes no skill permission.
-Read owned references only when needed by their phase. Resolve relative paths
-from the owning file or mode root, never the consumer cwd. Do not recursively
-traverse links or eagerly invoke linked skills. For native-only skills, this rule overrides inherited sibling reads; bundled
+Read owned references only as the phase needs. Base relative paths on the owning file or mode root, never consumer cwd. Never traverse links recursively or
+invoke linked skills eagerly. For native-only skills, this rule overrides inherited sibling reads; bundled
 user-only skills keep their scoped read above.
 For a principles consultation from figure-it-out, use already-loaded mode context
 or read the needed principle's SKILL.md in full: never restart task routing.
@@ -55,20 +54,21 @@ permission is insufficient. Missing capability holds the phase without scanning 
 
 Bundled commands use [workflow tools](host-workflow-tools.md) in every worker.
 
-The mode applies the pinned router, including figure-it-out for large,
-cross-cutting or unmatched work and Orchestrate for standing programs. For a
-selected playbook, read its canonical file in full. Copy its ordered todos verbatim.
-Keep every skipped todo with its reason.
+Use figure-it-out for large, cross-cutting or unmatched work and Orchestrate for
+standing programs. Read the full canonical playbook. Copy its ordered todos verbatim.
+Keep skipped todos with reasons.
 
 ## Tools and authority
 
-Translate `AskUserQuestion` (`AskQuestion` in inherited Cursor wording), todos,
-filesystem and Git operations to actual host tools. Codex's equivalent is
-unobserved here, so use the question tool it exposes.
-No translation grants new authority. Consumer execution/edits, network data
-transmission, installations, credentials, system settings, pushing, PR publication,
-merging and releases use the user's current scope. Stop the dependent action when
-authority or a necessary capability is absent and continue independent work.
+Map `AskUserQuestion` (Cursor `AskQuestion`), todos, filesystem and Git to host tools.
+Codex's equivalent is unobserved here. Use its question tool.
+No translation grants new authority. User scope governs consumer runs and edits,
+network sends, installs, credentials, system settings, pushes, PR publication,
+merges and releases. Hold actions without authority or capability. Continue independent work.
+
+Without a todo tool, use a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation).
+Copy playbook steps verbatim before step 1. Mark each done or `skip: <reason>`
+as you go. Name the file in your reply.
 
 ## Required phase guidance
 
