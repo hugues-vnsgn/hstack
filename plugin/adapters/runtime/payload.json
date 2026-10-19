@@ -441,7 +441,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/build-doctor.md",
-      "sha256": "ff2cc8b79cf1e9c92633fc311345accc29527b76bfb03b2bd7653443920ba8ee",
+      "sha256": "270a52a45c975ea02e62cb787722173e36ffacd7ffd84d2dd5b0bfe90ae2195d",
       "mode": "100644"
     },
     {
@@ -476,7 +476,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/mobile-proof.md",
-      "sha256": "00ded56505fb6b1c19fa78bbc00062c6b62072d91a571fd6456995293c48b76e",
+      "sha256": "b16f2b4ab03f4926584c1cece526490b26b622aae99ed9a6a2c285c17889d55c",
       "mode": "100644"
     },
     {
@@ -551,12 +551,12 @@
     },
     {
       "path": "skills/hugues-mode/references/evidence-guide.md",
-      "sha256": "71ed308d9c6ece14715efc89498c026c3402c007ee184e747125512dc836fd4d",
+      "sha256": "c5396dccacc20005938b4dd938d4b5a400093a45c682948cda3350a4d136befc",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/references/evidence-template.md",
-      "sha256": "c8a88d7af0548223fdad542c50dcc6de08541dd1b92ec02d39460b18c87d5cff",
+      "sha256": "fade95b6f1f98a465a8a4ca9f0fc5b16cfd8d2f025e4d0e48bc9de68efaab5e1",
       "mode": "100644"
     },
     {
@@ -571,7 +571,7 @@
     },
     {
       "path": "skills/hugues-mode/references/mobile-lanes.md",
-      "sha256": "9946a4dbea105ee27372b41e748a9af33b4f61673e8f6db7cc48e2f37cb48936",
+      "sha256": "792de0b515b8bc05a41ea23d4a0cbf7529c6750b358f36982b7704cff5453181",
       "mode": "100644"
     },
     {

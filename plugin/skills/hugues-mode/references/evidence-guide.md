@@ -20,6 +20,8 @@ For runtime proof, capture the action sequence and resulting state, not just a f
 
 ## Judge and retain
 
+A step counts as passed only with evidence that it was reached. The absence of an error that would appear later is not proof that an earlier step passed. Retain that step's command output or tool response and its actual result.
+
 Use the [mobile lane outcome rules](mobile-lanes.md#evidence-and-outcomes). Report failed attempts and flaky assertions even after a later pass. A different target's result supplies no proof for the missing target. A tool denial or missing permitted capability is a named blocker, not authority to bypass it.
 
 Record the actual jev verdict, reason code, decisive checkpoint and report path. If no judged verdict exists, label **no judged verdict** and state what the alternative directly observed. Keep build/test/runtime outcomes separate and disclose unrun checks. Record reviewed revision, reviewer host/model, findings and their resolution separately from mobile proof.

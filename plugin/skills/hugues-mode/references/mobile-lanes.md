@@ -12,6 +12,25 @@ Read the consumer's AGENTS.md and build configuration before selecting argv. Ide
 
 Keep SDK/JDK selection process-local when authorized. Missing tools, licenses, signing, credentials or system changes are blockers to name, not implied repair authority. Serialize simulator and emulator runs when local resource contention would mix evidence. Allocate, boot, install or stop a runtime only within the owner's scope; retained artifacts must survive cleanup.
 
+## Proof-tool preflight
+
+Before planning lanes, run the first step of [mobile-proof](../playbooks/mobile-proof.md). Record the Bash sandbox as on or off, host/version, OS and tool versions. Reconcile prospective tools with the authorized project's native verification recipe and current configuration. Use one real, harmless operation per required tool under the active settings. A version or help listing alone does not establish a device operation. Examples, only where the prospective lane needs them:
+
+- Run the Gradle wrapper's `help` task.
+- Run `adb devices`.
+- Run `xcrun simctl list devices available` plus one read-only command on the selected booted device.
+- Run the program's own emulator boot helper when an Android runtime is needed, within the owner's runtime authority.
+- Make one XcodeBuildMCP CLI call when an iOS measurement needs it.
+- Run `gh api user`.
+
+Retain argv, exit code, output and a `works` or `blocked` verdict for each tool. An unavailable executable is blocked; an unrun operation has no exit code. For MCP calls, retain structured arguments and response status instead of inventing argv or an exit code. A blocked tool drops or replaces its lane up front and remains a named gap. Use the host baseline before changing settings after a blocked result.
+
+## Host baseline
+
+After a blocked proof-tool check, run the same operation outside the agent before changing agent settings. Keep the same target and working directory. With the Bash sandbox off, the agent's shell counts as the baseline and must be labelled as such. With it on, print the exact command for the owner to run in a plain terminal outside the agent and retain the returned output. A missing owner result leaves the baseline blocked.
+
+Record tool versions, time and the last good run from earlier evidence, or `unknown` when none is available. If the baseline fails too, report a host blocker to the owner and stop iterating on agent settings. If it passes, route the agent-environment defect to [build-doctor](../playbooks/build-doctor.md). Preserve both results. A baseline alone does not prove the consumer build, tests or user journey.
+
 ## Lane evidence
 
 Before selecting a lane, record each dimension separately. Use `unresolved` for missing evidence. Cite an explicit phrase in the current request or a path and relevant declaration from source actually read. A filename, historical app selection or routing example is discovery context, not a source observation.
