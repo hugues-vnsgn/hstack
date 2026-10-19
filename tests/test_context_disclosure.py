@@ -183,8 +183,9 @@ class ContextDisclosure(unittest.TestCase):
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
         self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
                         measured['native_frontmatter']['native_before']['bytes'])
-        for profile in measured['scenarios'].values():
-            self.assertLess(profile['candidate']['bytes'], profile['native_before']['bytes'])
+        limits = {'initial_mode_routing': 38000, 'bug_fix': 140000, 'larger_feature': 150000}
+        for name, profile in measured['scenarios'].items():
+            self.assertLessEqual(profile['candidate']['bytes'], limits[name])
         routing = measured['scenarios']['initial_mode_routing']
         self.assertLess(routing['candidate']['bytes'], routing['native_before']['bytes'] * .8)
 

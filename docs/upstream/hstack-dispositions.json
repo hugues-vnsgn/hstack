@@ -2021,8 +2021,8 @@
       "blob_sha": "6bf64240d1a890df290b98c632ad374d20ca9fd4",
       "size": 1314,
       "sha256": "3463372b578c28f27c236f2627f09b5c5b1e85e86db7399fb984f3892fb450f5",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Issue #105 adds a conditional native-forensics reference before capture for explicit mobile tasks. The pinned five-step diagnosis procedure remains intact.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/runtime-forensics.md"

@@ -35,12 +35,12 @@ assumptions and mandatory transitive inputs are in the
 
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
-| Declared startup metadata, every frontmatter block (57 in the current candidate) | 3,940.25 | 3,700 | 3,843 | 14,803 → 15,373 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,389.25 | 45,289 → 33,597 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,565.75 | 135,888 → 134,331 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,549.25 | 146,269 → 146,265 |
+| Declared startup metadata, every frontmatter block (59 in the current candidate) | 3,940.25 | 3,700 | 3,945 | 14,803 → 15,781 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,444.5 | 45,289 → 33,818 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,621 | 135,888 → 134,552 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,573.5 | 146,269 → 146,362 |
 
-The routing inventory falls about 25.8% from the previous native candidate.
+The routing inventory falls about 25.3% from the previous native candidate.
 Complete bundled workflow inventories also count worker dispatch, verification
 and publication instructions. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -67,8 +67,8 @@ with project-local `.hstack/models.md` and `inherit-parent` defaults; and PR 1
 fix round 1's reworded host-contract marker ("The host contract governs how this
 skill reaches any sibling dependency.", replacing wording that read as a blanket
 override of the scoped bundled-reference rule) touches every one of the 26. The
-seven skills added after the release carry the marker too. All 57 skill files
-total 219,769 bytes; bodies excluding frontmatter and delimiters total 204,054
+nine skills added after the release carry the marker too. All 59 skill files
+total 226,693 bytes; bodies excluding frontmatter and delimiters total 210,558
 bytes. The mode file is 19,261 bytes, including its 18,984-byte body.
 
 History, not current counts: until the pstack 0.15.25 re-pin, all 24
@@ -105,7 +105,7 @@ the actual commit this restoration branched from and the exact revision the
 Issue's Problem Statement cites (46 model-invocable skills, 9,844 description
 characters, close to but not forced to equal the owner's earlier informally
 recorded 9,869, since that number was recorded rather than recomputed from
-pinned bytes). The other 55 skills are user-only: the owner types one by
+pinned bytes). The other 57 skills are user-only: the owner types one by
 name, and the mode reads it in full as its router reference. The agent never
 invokes one natively; the owner still can. [Host validation](skill-list-host-validation.md) observed, at
 code commit `ae51493`, that Claude Code's attached skill list grows by exactly
@@ -116,7 +116,7 @@ router's then 312-character description at 243 characters; the owner's reordered
 [addendum](skill-list-host-validation.md#addendum-the-reordered-router-description-on-codex)),
 and that `tdd`, a user-only skill, still runs when typed by name. It leaves the router description in
 Claude's list and a typed `principle-*` skill unobserved, and it establishes
-those claims, not the byte/character counts themselves. A user-only skill's frontmatter still counts toward the all-57
+those claims, not the byte/character counts themselves. A user-only skill's frontmatter still counts toward the all-59
 upper bound above regardless, since that bound is deliberately over every
 declared skill, not only what a host happens to expose. The reduction comes from avoiding unrelated adapter reads,
 not shrinking or omitting the procedures. Reducing the mode further by making
@@ -124,8 +124,8 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,160 bytes,
-about 6,280 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 25,257 bytes,
+about 6,304.75 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
@@ -146,7 +146,7 @@ includes the selected bug-fix playbook and mandatory unslop dependency.
 Startup metadata is unchanged by this phase split. The table counts all declared
 frontmatter as an upper bound; actual host exposure, suppression and framing
 remain unobserved. Codex policy files add 2,149 source bytes at `7db3e80`
-versus 2,449 now across 57 skills, not assumed to enter model context either way. Startup and full-body numbers
+versus 2,535 now across 59 skills, not assumed to enter model context either way. Startup and full-body numbers
 overlap and must not be added as though they were independent reads.
 
 The workflow rows count each bundled path once across all participants. Fresh
@@ -154,8 +154,8 @@ workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
 agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 9,093.5 estimated tokens for the bug-fix worker, and from 75,228 to
-72,748 for the eight feature workers. The model-defaults paragraph and the
+9,403.5 to 9,117.75 estimated tokens for the bug-fix worker, and from 75,228 to
+72,942 for the eight feature workers. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
 also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
 to this floor at the router rewrite. That historical delta is 8,410.75 minus
@@ -206,3 +206,18 @@ Python adapter behavior changed during consolidation and has its own current
 tests. This disclosure pass updates its bound inventory/hash constants. Source
 identity and old helper passes do not establish current runtime parity. See
 [test accounting](TEST-COVERAGE.md) for current versus frozen coverage.
+
+## Issue #105 mobile guidance inventory
+
+The two authored baselines and six conditional platform references join the
+language-selection adapter, mobile review lens and native-forensics reference.
+The separate `mobile_guidance` inventory contains 11 files and
+25,546 source bytes, about 6,386.5 estimated tokens.
+It measures every new guidance file once. It is neither a task's loading cost
+nor observed runtime output or execution cost. Conditional branches load only
+when applicable. The generic scenario inventories exclude these skill bodies
+and references while counting the short selection pointer in the host adapter.
+The fixed source caps are 38,000 bytes for initial routing, 140,000 for the CLI
+bug fix and 150,000 for the TypeScript feature. The TypeScript candidate now
+exceeds its historical source inventory slightly. No runtime token saving or
+execution speedup follows from these source counts.

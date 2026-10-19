@@ -20,7 +20,7 @@ activity, unknown PR state and unsupported inputs retain conservative exit-2
 holds; the active/pinned-chat gate is separate and no helper deletes anything.
 The bootstrap executes verified source buffers, not bytecode caches.
 
-The current candidate collects 436 tests, including one driver for 50 historical 0.2.0 cases.
+The current candidate collects 442 tests, including one driver for 50 historical 0.2.0 cases.
 Current and historical suite totals are maintained in [test accounting](TEST-COVERAGE.md).
 The 0.1.0 archive and its tests are unchanged. The 50 old restoration-contract
 cases also run against a hash-bound 0.2.0 archive and are historical only.

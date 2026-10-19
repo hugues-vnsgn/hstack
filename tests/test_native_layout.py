@@ -141,7 +141,7 @@ class NativeIntegrity(unittest.TestCase):
 
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
-        self.assertEqual(result['active_skills'], 57)
+        self.assertEqual(result['active_skills'], 59)
         self.assertEqual(result['upstream_archive_files'], 169)
 
     def test_missing_receipt_cannot_disable_integrity(self):
@@ -422,7 +422,7 @@ class NativeIntegrity(unittest.TestCase):
         import measure_context
         measured = measure_context.measure(self.root)
         self.assertEqual(json.loads((self.root / 'docs/CONTEXT-BUDGET.json').read_text()), measured)
-        self.assertEqual(measured['public_skills'], 57)
+        self.assertEqual(measured['public_skills'], 59)
         self.assertLessEqual(measured['mode_initial_read_set']['candidate']['bytes'], 38000)
         self.assertLessEqual(measured['native_frontmatter']['candidate']['bytes'], 16000)
 
@@ -433,7 +433,8 @@ class NativeIntegrity(unittest.TestCase):
                          ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/control-ui/SKILL.md',
                           'plugin/skills/deslop/SKILL.md', 'plugin/skills/hugues-help/SKILL.md',
                           'plugin/skills/in-your-own-words/SKILL.md', 'plugin/skills/ketchup/SKILL.md',
-                          'plugin/skills/sharpen/SKILL.md'])
+                          'plugin/skills/kotlin-best-practices/SKILL.md',
+                          'plugin/skills/sharpen/SKILL.md', 'plugin/skills/swift-best-practices/SKILL.md'])
         unlisted = self.root / 'plugin/skills/unlisted/SKILL.md'
         unlisted.parent.mkdir()
         unlisted.write_text((self.root / 'plugin/skills/ketchup/SKILL.md').read_text())

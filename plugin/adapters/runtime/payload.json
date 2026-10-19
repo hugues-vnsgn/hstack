@@ -155,13 +155,18 @@
       "mode": "100644"
     },
     {
+      "path": "adapters/host-mobile-languages.md",
+      "sha256": "6bf8401a774c077a7ef81aef9d47c0c1cda58c06d56a89e8d481874ec6c2d405",
+      "mode": "100644"
+    },
+    {
       "path": "adapters/host-publication.md",
       "sha256": "a23763fb3fa696ce8cca51b7d9244a5e0fadf92892aeeae2a4274d24cfceffb6",
       "mode": "100644"
     },
     {
       "path": "adapters/host-special-skills.md",
-      "sha256": "079a596f41645d584ef577e490cd8032ebb40be3563bd2d7c5ff6a3aba2981c2",
+      "sha256": "d99021e398c8da0979a823db610ea46b7fd98bd3c8c32f9574b76753dd603837",
       "mode": "100644"
     },
     {
@@ -186,12 +191,12 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "df325169964263ac5b6ad317ef99bea922c6cbea93367a5a1582cff8d989ed62",
+      "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1",
       "mode": "100644"
     },
     {
       "path": "adapters/mobile-workflows.md",
-      "sha256": "abc5b2ad7013f898a551f5c9aee131807d9fec371cf3cf4ce773a3d0d1780c4a",
+      "sha256": "78a2b92f8e5a14d020471914dbe13ac69a429c4dee6ed51833238295bb7ea7f1",
       "mode": "100644"
     },
     {
@@ -471,7 +476,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/bug-fix.md",
-      "sha256": "e81578c9750544c1b07818a8818725a0ae50f660d071c0f6b7a5b7473f31d7a6",
+      "sha256": "f1b0d6b7aef90a38e52742833f1a35ef83f204a424978540c9a35fda07567799",
       "mode": "100644"
     },
     {
@@ -481,7 +486,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/cmp-two-target-change.md",
-      "sha256": "239b8b10bd792678dc66ebca7ffa2d20c4d1401fd8294a09c0800a4a45418ec5",
+      "sha256": "9fab7478241aaffca95e8a7e008b65b686796cd277dac6288911e07b541de41d",
       "mode": "100644"
     },
     {
@@ -506,7 +511,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/kmp-bridge-change.md",
-      "sha256": "628c7ad15c7751830d1b4f66cf2a5b5251bbf936bba5e39f0032c8701aba6d22",
+      "sha256": "634067508f0108729697cf69d069546e42fe6e264fca1855e752ae12b9aba4b4",
       "mode": "100644"
     },
     {
@@ -551,7 +556,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/runtime-forensics.md",
-      "sha256": "3463372b578c28f27c236f2627f09b5c5b1e85e86db7399fb984f3892fb450f5",
+      "sha256": "13cf1949da92b2317d2f757603a4a5744bb49e72c10e1ca0b8a797c77ec1c99c",
       "mode": "100644"
     },
     {
@@ -605,8 +610,18 @@
       "mode": "100644"
     },
     {
+      "path": "skills/hugues-mode/references/mobile-forensics.md",
+      "sha256": "65e6df5186eee855d9f0bf80e4c0421cb9854add6fd3a2938060ea09cb485fea",
+      "mode": "100644"
+    },
+    {
       "path": "skills/hugues-mode/references/mobile-lanes.md",
-      "sha256": "792de0b515b8bc05a41ea23d4a0cbf7529c6750b358f36982b7704cff5453181",
+      "sha256": "d4b575cbff1ca1b8d2c60f578eae0ede08777ffeb5ed5b9f3a314f254f47e06b",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/hugues-mode/references/mobile-review.md",
+      "sha256": "20911bf29ce549097ba47bbdb6a35bf2773068fd9ba71e5b731fa3e6777e70c9",
       "mode": "100644"
     },
     {
@@ -757,6 +772,36 @@
     {
       "path": "skills/ketchup/agents/openai.yaml",
       "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/kotlin-best-practices/SKILL.md",
+      "sha256": "319980eb8ba6205d2d015213f46f3ff1d01d981affd6a724375ac6830661b443",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/kotlin-best-practices/agents/openai.yaml",
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/kotlin-best-practices/references/android-compose.md",
+      "sha256": "ad8391cd5df3f653fcf695a3f547de774bac33559ad5f522eef55b37bff537dd",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/kotlin-best-practices/references/cmp.md",
+      "sha256": "5a4c3e40019dc543ac4eadfd29879f2b7ad5a5bd018ab5f8d2e05072cf8f96df",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/kotlin-best-practices/references/kmp.md",
+      "sha256": "bf0d95ae8fa95571cbfa69ebcc7c578ad5c56cde499bd0f2cfb95ff5061f4ca1",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/kotlin-best-practices/references/native-interop.md",
+      "sha256": "58077fb26ed9a507e36ea6bc84593e02d47fed460cd03efc837a34b0ade3e90a",
       "mode": "100644"
     },
     {
@@ -1117,6 +1162,26 @@
     {
       "path": "skills/swarm/agents/openai.yaml",
       "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/swift-best-practices/SKILL.md",
+      "sha256": "d47fd4833deea82ced48590fe5c07429c11d9fb0588ca7d3409476921f3be398",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/swift-best-practices/agents/openai.yaml",
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/swift-best-practices/references/swiftui.md",
+      "sha256": "1686d5e3e4f0de4dbc7c2faa7846d76664ba2211e8b9804f55e28f42d2b2aecf",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/swift-best-practices/references/uikit.md",
+      "sha256": "65e5ab14ee296579529680f9770e985239eb482158045cc772567a5de222a637",
       "mode": "100644"
     },
     {

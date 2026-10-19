@@ -19,7 +19,9 @@ ADDED_AFTER_RELEASE = (
     'plugin/skills/hugues-help/SKILL.md',
     'plugin/skills/in-your-own-words/SKILL.md',
     'plugin/skills/ketchup/SKILL.md',
+    'plugin/skills/kotlin-best-practices/SKILL.md',
     'plugin/skills/sharpen/SKILL.md',
+    'plugin/skills/swift-best-practices/SKILL.md',
 )
 
 # Skills renamed after the frozen archives were cut. The archive bytes stay as published; only
@@ -247,6 +249,14 @@ def measure(root=ROOT):
             'mode_workflow_body_only': metrics([current['plugin/skills/hugues-mode/SKILL.md'].split('---', 2)[2]]),
             'unchanged_files': sum(before[p] == current[p] for p in original_declarations)},
         'scenarios': scenarios, 'worker_accounting': spec['worker_accounting'],
+        'mobile_guidance': {
+            'scope': 'Candidate bundled mobile guidance source inventory only, not a task closure, runtime output or execution cost. Conditional references load only when applicable.',
+            'candidate': inventory(current, sorted(p for p in current if
+                p.startswith(('plugin/skills/swift-best-practices/', 'plugin/skills/kotlin-best-practices/'))
+                and p.endswith('.md') or p in {
+                    'plugin/adapters/host-mobile-languages.md',
+                    'plugin/skills/hugues-mode/references/mobile-review.md',
+                    'plugin/skills/hugues-mode/references/mobile-forensics.md'}))},
         'public_skills': len(declaration_paths),
         'limits': ['No runtime host, tokenizer, prompt framing, cache or native invocation observation.',
                    'Required transitive bundled reads are included for the stated scenarios even if invocation would hold.',

@@ -81,6 +81,7 @@ references, not skill bodies or a native loader.
 | Worker dispatch, worker execution, role selection or setup-hstack | [Workers and models](host-workers.md) |
 | Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations | [Workflow tools](host-workflow-tools.md) |
 | Transcript-dependent skills, optional integrations or consumer skill placement | [Special skills](host-special-skills.md) |
+| Reading or editing Swift or Kotlin files | [Mobile language scope](host-mobile-languages.md) |
 | Reading or editing TypeScript files | [TypeScript scope](host-typescript.md) |
 | Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports | [Publication](host-publication.md) |
 

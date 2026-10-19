@@ -39,6 +39,7 @@ USER_ONLY = {
     'principle-test-behavior-not-implementation', 'principle-type-system-discipline',
     'recall', 'reflect', 'sharpen', 'show-me-your-work', 'swarm', 'tdd', 'teach',
     'technical-writing',
+    'swift-best-practices', 'kotlin-best-practices',
     'typescript-best-practices', 'unslop', 'why',
 }
 # Skills hStack bundles from a source other than pstack. The pstack archive and the upstream
@@ -95,6 +96,10 @@ EXTERNAL_SKILLS = {
         'destination': 'plugin/skills/deslop/SKILL.md',
         'license_destination': 'plugin/skills/deslop/LICENSE',
     },
+}
+AUTHORED_SKILLS = {
+    'swift-best-practices': {'paths': '["**/*.swift"]'},
+    'kotlin-best-practices': {'paths': '["**/*.kt", "**/*.kts"]'},
 }
 EXTERNAL_MANUAL_ONLY = 'disable-model-invocation: true\n'
 EXTERNAL_HOST_CONTRACT = (
@@ -157,6 +162,7 @@ PHASE_GUIDANCE = {
     'host-workers.md': 'Worker dispatch, worker execution, role selection or setup-hstack',
     'host-workflow-tools.md': 'Installed planning or audit commands, workflow ticks, other installed helpers, Bun bootstrap, cloud/loop/forge operations',
     'host-special-skills.md': 'Transcript-dependent skills, optional integrations or consumer skill placement',
+    'host-mobile-languages.md': 'Reading or editing Swift or Kotlin files',
     'host-typescript.md': 'Reading or editing TypeScript files',
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
@@ -333,7 +339,7 @@ def adapter_errors(texts):
                      'Supply absolute paths',
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
-                     'All 57 top-level skills are registered',
+                     'All 59 top-level skills are registered',
                      'preserve `generalPurpose`', 'Do not replace these workers with `hugues-agent`',
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',
@@ -629,7 +635,8 @@ def check(root=ROOT):
     names = {ALIASES.get(Path(name).parts[2], Path(name).parts[2]) for name in expected
              if len(Path(name).parts) == 4 and name.endswith('/SKILL.md')}
     require(len(names) == 54 and not names & set(EXTERNAL_SKILLS), 'pstack skill inventory differs')
-    names |= set(EXTERNAL_SKILLS)
+    names |= set(EXTERNAL_SKILLS) | set(AUTHORED_SKILLS)
+    require(receipt.get('authored_skills') == AUTHORED_SKILLS, 'authored skill inventory differs')
     require(set(receipt['public_skills']) == names, 'public skill inventory differs')
     external_errors = external_skill_errors(root, receipt, upstream)
     require(not external_errors, '; '.join(external_errors))
@@ -646,8 +653,13 @@ def check(root=ROOT):
         manual = fields['disable-model-invocation']
         require(not DEAD_FRONTMATTER & fields.keys(), 'dead frontmatter field: ' + name)
         upstream_name = next((old for old, new in ALIASES.items() if new == name), name)
-        original_fields = {} if name in EXTERNAL_SKILLS else native_frontmatter(
-            original_bodies[f'pstack/skills/{upstream_name}/SKILL.md'].decode())
+        if name in AUTHORED_SKILLS:
+            original_fields = AUTHORED_SKILLS[name]
+        elif name in EXTERNAL_SKILLS:
+            original_fields = {}
+        else:
+            original_fields = native_frontmatter(
+                original_bodies[f'pstack/skills/{upstream_name}/SKILL.md'].decode())
         require(manual == (name in USER_ONLY), 'host invocation table differs: ' + name)
         require(fields.get('paths') == original_fields.get('paths'), 'native path scope differs: ' + name)
         require((path.parent / 'agents/openai.yaml').read_text() ==
