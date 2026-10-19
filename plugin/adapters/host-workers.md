@@ -80,6 +80,8 @@ skill's confirmation and current filesystem authority. Keep every role and panel
 the four budget choices and availability validation. This file is guidance;
 restoring the plugin does not execute setup or change any user's configuration.
 
+For Bun helper setup, read [helper setup](host-helper-setup.md) in full.
+
 ## Model defaults and role labels
 
 **Defaults for every agent-tool call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers instead of inlined context, and an explicit model and effort per role. The defaults are `inherit-parent xhigh` for code and `inherit-parent max` for prose and judgment, and `/setup-hstack` configures them.

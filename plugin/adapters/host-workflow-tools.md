@@ -63,10 +63,10 @@ The supported native hosts are Claude Code and Codex. Ignore Cursor transcript
 sources without reading them or counting them as supported-host coverage.
 These are mechanical operand translations, not new execution or deletion scope.
 
-The pinned Bun helpers include a bootstrap that can install dependencies.
-Do not execute it without installation authority. First inspect local runtime and
-cached dependencies. A missing runtime, dependency, cloud worker, forge API or
-loop primitive blocks that operation; preserve its intended gate and report the
-gap. Native local workers substitute for cloud only where the core permits local
-execution; do not simulate a race sequentially. Nothing in Babysit, Shipping or
-Orchestrate arms a remote action without explicit scope.
+Before Bun helpers, read [helper setup](host-helper-setup.md) in full.
+The bootstrap can install dependencies.
+Do not execute it without installation authority. Missing runtimes, dependencies,
+cloud workers, forge APIs or loop primitives hold their operation, preserve its
+intended gate and report the gap. Native local workers substitute for cloud only
+where the core permits local execution. Never simulate a race sequentially.
+Remote actions require explicit scope.
