@@ -37,8 +37,8 @@ assumptions and mandatory transitive inputs are in the
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (55 after disclosure) | 3,940.25 | 3,700 | 3,705 | 14,803 → 14,821 |
 | Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,410 | 45,289 → 33,680 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 32,123.5 | 135,888 → 128,562 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 35,107 | 146,269 → 140,496 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 32,404 | 135,888 → 129,684 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 35,387.5 | 146,269 → 141,618 |
 
 The routing inventory falls about 25.6% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,

@@ -30,6 +30,25 @@ consumer or another plugin copy to fill it. Worker dispatch carries the loaded
 mode path through [workers and models](host-workers.md); a helper resolves this
 table itself, without a hand-written script path in its brief.
 
+## Agent-store translation
+
+Before a plan, program or decision trail needs the inherited "agent store",
+use the operator-named directory or the existing program's recorded directory,
+including an explicit `--store` or `ORCH_STORE` binding. Preserve the existing
+flag/environment precedence. With none established, use
+`~/hstack-evidence/<date>-<task>/`. Resolve that choice once to an absolute path
+and carry it into briefs, helpers, pickup notes and replacement coordinators.
+Resume the recorded store rather than creating a new dated directory.
+
+Keep pstack's relative layout: plans under `docs/`, programs under
+`orchestrate/<project-slug>/`, and their decision trails, agent registers,
+receipts and recovery files. Explicit plan and log targets still win. Pass the
+actual orchestration program directory through the existing `--store` or
+`ORCH_STORE`, preserving a bound program path without appending another program
+subdirectory. Pass the complete log-file path to `log.sh`. Keep all state outside
+the installed plugin. This is a path translation, not a new runtime or permission
+to access another program's state.
+
 ## Planning and audit translations
 
 For executable operands in planning and cleanup, use the installed

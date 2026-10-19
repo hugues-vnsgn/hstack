@@ -301,6 +301,47 @@ class ContextDisclosure(unittest.TestCase):
 
 
 class InstalledPhaseGuidance(InstalledFixture, unittest.TestCase):
+    def test_native_project_skill_paths_cover_discovery_updates_and_feature_maps(self):
+        result = self.bound('read-workflow', 'adapters/host-special-skills.md')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        body = ' '.join(result.stdout.split())
+        for required in (
+            "consumer's existing supported layout",
+            '`.claude/skills` on Claude Code and `.agents/skills` on Codex',
+            'Preserve categories and user edits',
+            'Updates keep the exact existing skill target',
+            "automate-me's recursive mode discovery and categorized output",
+            "create-verification-skill's generated `verify-<app>/SKILL.md`",
+            '`features/README.md` plus its feature files',
+            "maintain-verification-skill's target lookup",
+            'multiple-candidate and missing-target gates',
+            'Personal/global placement or configuration needs explicit scope',
+            "Reflect's divergent, tooling and judgment reviewers",
+            'A path on disk alone is not evidence of use',
+        ):
+            with self.subTest(required=required):
+                self.assertIn(required, body)
+
+    def test_native_agent_store_preserves_existing_programs_and_helper_arguments(self):
+        result = self.bound('read-workflow', 'adapters/host-workflow-tools.md')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        body = ' '.join(result.stdout.split())
+        for required in (
+            "operator-named directory or the existing program's recorded directory",
+            'explicit `--store` or `ORCH_STORE` binding',
+            'existing flag/environment precedence',
+            '`~/hstack-evidence/<date>-<task>/`',
+            'Resolve that choice once to an absolute path',
+            'Resume the recorded store rather than creating a new dated directory',
+            'plans under `docs/`, programs under `orchestrate/<project-slug>/`',
+            'Explicit plan and log targets still win',
+            'preserving a bound program path without appending another program subdirectory',
+            'complete log-file path to `log.sh`',
+            'Keep all state outside the installed plugin',
+        ):
+            with self.subTest(required=required):
+                self.assertIn(required, body)
+
     def test_deferred_guidance_is_readable_and_integrity_bound(self):
         for relative in check_core.ADAPTER_RESOURCES:
             name = relative.removeprefix('plugin/')
