@@ -110,8 +110,8 @@
       "destination": "plugin/adapters/host-special-skills.md",
       "sha256": "2b022e09b00727d9ace0a7c6be32d67d6b2c6782c25c1094300c4c118df0ffa5",
       "disposition": "replaced",
-      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54. hStack also bundles deslop, a copy of Cursor's cursor-team-kit skill that is not part of pstack, so the registered count moves from 54 to 55.",
-      "replacement": "All 55 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
+      "reason": "The pstack 0.15.25 merge registers four more user-only skills (hugues-help, in-your-own-words, ketchup, sharpen), so the registered top-level count moves from 50 to 54. hStack also bundles deslop, a copy of Cursor's cursor-team-kit skill that is not part of pstack, so the registered count moves from 54 to 55. Bundling control-cli and control-ui from the same Cursor pin brings the current count to 57.",
+      "replacement": "All 57 top-level skills are registered, including automate-me, make-bot-ui and\ntypescript-best-practices."
     },
     {
       "paragraph": 7,
@@ -296,8 +296,8 @@
       "destination": "plugin/adapters/host-publication.md",
       "sha256": "8ef5a187b0ccf33a527a68f56dee5ed5416fdd3c78ddee8d926d331552312503",
       "disposition": "replaced",
-      "reason": "hStack now bundles the deslop skill (a copy of Cursor's cursor-team-kit deslop), so the sentence no longer asks for an available equivalent and no longer lists deslop among the missing external capabilities. control-cli, control-ui and writing-for-agents stay external.",
-      "replacement": "Cursor create-skill translates to an available agent-writing skill plus this\nrepository's package checks. Before commits, use the bundled deslop\nand the pinned unslop and technical-writing skills; retain no-comments before\nreview. Missing external control-cli, control-ui or writing-for-agents is\nreported as a capability gap, never silently marked performed."
+      "reason": "hStack bundles deslop, control-cli and control-ui from Cursor's cursor-team-kit. Their named steps resolve to the bundled skills, so only writing-for-agents remains an external capability in this sentence.",
+      "replacement": "Cursor create-skill translates to an available agent-writing skill plus this\nrepository's package checks. Before commits, use the bundled deslop\nand the pinned unslop and technical-writing skills; retain no-comments before\nreview. Control steps use the bundled control-cli and control-ui skills.\nMissing external writing-for-agents is reported as a capability gap, never\nsilently marked performed."
     },
     {
       "paragraph": 19,

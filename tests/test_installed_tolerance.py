@@ -515,10 +515,9 @@ class SkillBodyRejectionMatrix(InstalledFixture, unittest.TestCase):
         self.assertNotIn('standalone guarded read', str(caught.exception))
 
     def test_the_fixture_covers_every_bundled_skill_and_alias(self):
-        # deslop is bundled from outside pstack, so it has no legacy pstack path.
-        self.assertEqual(len(self.bundled), 55)
+        self.assertEqual(len(self.bundled), 57)
         self.assertEqual(len(self.legacy), 54)
-        self.assertEqual(set(self.legacy.values()) | {'skills/deslop/SKILL.md'},
+        self.assertEqual(set(self.legacy.values()) | {f'skills/{name}/SKILL.md' for name in ['control-cli', 'control-ui', 'deslop']},
                          {f'skills/{name}/SKILL.md' for name in self.bundled})
 
     def test_read_workflow_refuses_every_skill_body_spelling(self):

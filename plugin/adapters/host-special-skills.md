@@ -1,6 +1,6 @@
 # Personal history, integrations and consumer skill placement
 
-All 55 top-level skills are registered, including automate-me, make-bot-ui and
+All 57 top-level skills are registered, including automate-me, make-bot-ui and
 typescript-best-practices. Resolve recall's habit-to-skill handoff by reading automate-me's SKILL.md in
 full as the scoped bundled reference. Registration grants no permission to process personal transcripts,
 author a personal mode, create bot/webhook integrations, transmit data, request

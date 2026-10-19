@@ -23,7 +23,7 @@ ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto
 # SKILL.md in full (the scoped host adapter rule), never by native invocation.
 USER_ONLY = {
     'architect', 'arena', 'automate-me', 'benchmark-checklist', 'blast-radius', 'bro',
-    'correct', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help',
+    'control-cli', 'control-ui', 'correct', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help',
     'in-your-own-words', 'interrogate', 'ketchup',
     'maintain-verification-skill', 'make-bot-ui', 'no-comments',
     'principle-attack-the-premise', 'principle-boundary-discipline', 'principle-build-the-lever',
@@ -47,6 +47,38 @@ USER_ONLY = {
 # that file and the installed one (see external_skill_errors). consolidation.json carries the
 # same table as a reviewable receipt, and the two must agree.
 EXTERNAL_SKILLS = {
+    'control-cli': {
+        'repository': 'https://github.com/cursor/plugins',
+        'revision': 'ccb5507cec1546dc88135c1139c811e6c59115ba',
+        'source': 'cursor-team-kit/skills/control-cli/SKILL.md',
+        'source_blob_sha': '69289ac517e8a28380c8eca5c6692e8a601fa62c',
+        'source_sha256': '13ac93e595bbda2000849bdb815d5f2ca03f7c2ca63788c8335f9212b9b422a2',
+        'source_copy': 'provenance/upstream/cursor-team-kit-ccb5507/skills/control-cli/SKILL.md',
+        'license': 'MIT',
+        'license_holder': 'Copyright (c) 2026 Cursor',
+        'license_source': 'cursor-team-kit/LICENSE',
+        'license_blob_sha': 'ca2bba771cd39dbef6acf96b52481133983451f3',
+        'license_sha256': '702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0',
+        'license_copy': 'provenance/upstream/cursor-team-kit-ccb5507/LICENSE',
+        'destination': 'plugin/skills/control-cli/SKILL.md',
+        'license_destination': 'plugin/skills/control-cli/LICENSE',
+    },
+    'control-ui': {
+        'repository': 'https://github.com/cursor/plugins',
+        'revision': 'ccb5507cec1546dc88135c1139c811e6c59115ba',
+        'source': 'cursor-team-kit/skills/control-ui/SKILL.md',
+        'source_blob_sha': '68484fd5418cc893a6bf40e0db45b3001dcf5947',
+        'source_sha256': '410cae25bdb1e5d2323b126abc5047b0213be7fdb0195710213fa8de8a751871',
+        'source_copy': 'provenance/upstream/cursor-team-kit-ccb5507/skills/control-ui/SKILL.md',
+        'license': 'MIT',
+        'license_holder': 'Copyright (c) 2026 Cursor',
+        'license_source': 'cursor-team-kit/LICENSE',
+        'license_blob_sha': 'ca2bba771cd39dbef6acf96b52481133983451f3',
+        'license_sha256': '702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0',
+        'license_copy': 'provenance/upstream/cursor-team-kit-ccb5507/LICENSE',
+        'destination': 'plugin/skills/control-ui/SKILL.md',
+        'license_destination': 'plugin/skills/control-ui/LICENSE',
+    },
     'deslop': {
         'repository': 'https://github.com/cursor/plugins',
         'revision': 'ccb5507cec1546dc88135c1139c811e6c59115ba',
@@ -301,7 +333,7 @@ def adapter_errors(texts):
                      'Supply absolute paths',
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
-                     'All 55 top-level skills are registered',
+                     'All 57 top-level skills are registered',
                      'preserve `generalPurpose`', 'Do not replace these workers with `hugues-agent`',
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',

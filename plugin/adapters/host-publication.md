@@ -3,8 +3,9 @@
 Cursor create-skill translates to an available agent-writing skill plus this
 repository's package checks. Before commits, use the bundled deslop
 and the pinned unslop and technical-writing skills; retain no-comments before
-review. Missing external control-cli, control-ui or writing-for-agents is
-reported as a capability gap, never silently marked performed. The bundled pinned
+review. Control steps use the bundled control-cli and control-ui skills.
+Missing external writing-for-agents is reported as a capability gap, never
+silently marked performed. The bundled pinned
 unslop remains the prose contract.
 
 On Claude Code and Codex, "Bugbot" in pstack's text means the review bot installed
