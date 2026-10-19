@@ -102,7 +102,12 @@ fragment processing. This translator enforces a plan contract, not a shell
 sandbox; host permissions remain the execution boundary.
 
 The installed Node helper validates the absolute consumer plan path
-and preserves its exit code and diagnostics. Any binding, hash, mode or
+and preserves its exit code and diagnostics. Before execution, stderr reports a JSON
+identity record with `checker_path`, `checker_sha256`, `payload_sha256` and
+`plugin_commit`. Save it with the verdict. The commit is the installed tracked
+checkout's HEAD, or null when Git metadata is unavailable; it is never the
+consumer's commit. The file and payload digests identify uncommitted or Gitless
+bytes. Any binding, hash, mode or
 required-file drift blocks rereading or validation. Reconcile changed payloads
 with the operator; never silently rebind a live program. These commands do not
 arm loops or start implementation.

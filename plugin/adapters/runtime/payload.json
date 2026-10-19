@@ -161,7 +161,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "01b14db49c87c1d6e6531221bfc926ebe6455b776b46e98482db942a681bdeaa",
+      "sha256": "1d037f5795b4f355a28c6b07091b0afce15be4dabf2a59dc059fedf6e8cb4bf1",
       "mode": "100644"
     },
     {
@@ -171,17 +171,17 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "db9bdde6ca24186314440d370f2a90b40a46ead4f00c6843eea3a5e225e91c72",
+      "sha256": "bd262f4c2fed1265f35beba50b11dd58cc07c58912600278aaa6bfb889ee7db2",
       "mode": "100644"
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "12e7e9fb6ab8e20dc8f4020fe8ab30a0ead91e0ee08349d3230c4689295cc9af",
+      "sha256": "cb8dee113e5b106c3ef34f6214838c8609b52633d465d2a2c6c7d1ed7a828df8",
       "mode": "100644"
     },
     {
       "path": "adapters/host.md",
-      "sha256": "a845ebaa90c67dfb9e681187abf68652b1a1bddb13f145610ea2fa66b556bf7e",
+      "sha256": "ccae6305b0a5f43cac7cbc3c053b4232953e294f1e10b6ff9a9e61fcae22beee",
       "mode": "100644"
     },
     {
@@ -211,7 +211,7 @@
     },
     {
       "path": "agents/hugues-agent.md",
-      "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3",
+      "sha256": "076ead5cb6903b9ddb96fed6fdb58b64b16484ce4af5d184fa11cff2f3de396d",
       "mode": "100644"
     },
     {

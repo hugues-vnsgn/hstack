@@ -51,7 +51,7 @@
       "source_mode": 420,
       "destination": "plugin/agents/hugues-agent.md",
       "disposition": "canonical",
-      "destination_sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3"
+      "destination_sha256": "076ead5cb6903b9ddb96fed6fdb58b64b16484ce4af5d184fa11cff2f3de396d"
     },
     {
       "source": "pstack/assets/logo.png",
@@ -1603,7 +1603,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "01b14db49c87c1d6e6531221bfc926ebe6455b776b46e98482db942a681bdeaa",
+      "sha256": "1d037f5795b4f355a28c6b07091b0afce15be4dabf2a59dc059fedf6e8cb4bf1",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1611,19 +1611,19 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "db9bdde6ca24186314440d370f2a90b40a46ead4f00c6843eea3a5e225e91c72",
+      "sha256": "bd262f4c2fed1265f35beba50b11dd58cc07c58912600278aaa6bfb889ee7db2",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "12e7e9fb6ab8e20dc8f4020fe8ab30a0ead91e0ee08349d3230c4689295cc9af",
+      "sha256": "cb8dee113e5b106c3ef34f6214838c8609b52633d465d2a2c6c7d1ed7a828df8",
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "a845ebaa90c67dfb9e681187abf68652b1a1bddb13f145610ea2fa66b556bf7e",
+      "sha256": "ccae6305b0a5f43cac7cbc3c053b4232953e294f1e10b6ff9a9e61fcae22beee",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "8f469eecceb70f1deefe8dc395fd027bed08372c8859609acbadb5ec4d0bca84",
+      "sha256": "d08c67402c872f04caebdbc3db1aa190164e7b49b4089faf820bb46e7b111aca",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1647,15 +1647,15 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "3007a23bf863583920b147183afbea7d0e42f5a5e1cf4ff3f698fd96058e687e",
+      "sha256": "80faf9019f0dc436780238a94753ac6e3f375f1a6cf5e2ce7b7b248053592ae1",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "0ce99961f825dbfcf46b85ed4fca1112c8a4027c9e8a35ea932bff9510828ff6",
+      "sha256": "2da1dcc8d42665c51d24d4427e990b1da04fa92b1a5938a9f4ab499f5c295e3a",
       "mode": 420
     },
     "agents/hugues-agent.md": {
-      "sha256": "579f8e532af4eb0a41222199eb6b15a72ff2328265a4462fc087d80e3276f1e3",
+      "sha256": "076ead5cb6903b9ddb96fed6fdb58b64b16484ce4af5d184fa11cff2f3de396d",
       "mode": 420
     },
     "agents/hugues-comment-sicko.md": {

@@ -53,6 +53,8 @@ A fresh worker reads any bundled user-only skill itself. It starts its own nativ
 invocation of any native-only skill; a parent's claim of permission is
 insufficient. Missing capability holds the phase without scanning user settings.
 
+Bundled commands use [workflow tools](host-workflow-tools.md) in every worker.
+
 The mode applies the pinned router, including figure-it-out for large,
 cross-cutting or unmatched work and Orchestrate for standing programs. For a
 selected playbook, read its canonical file in full. Copy its ordered todos verbatim.

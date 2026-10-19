@@ -69,8 +69,9 @@ filesystem security boundary or proof of every possible runtime trace.
 
 The shared contract now loads specialized adapter references only before their
 named phases. Mobile applicability is a small separate entry; explicit mobile
-work must load the complete mobile rules before routing or execution. All prior
-adapter requirements are retained. See [progressive disclosure](CONTEXT-FOOTPRINT.md)
+work must load the complete mobile rules before routing or execution. The partition
+receipt accounts for every prior adapter requirement as kept, replaced or removed,
+with a recorded reason for each change. See [progressive disclosure](CONTEXT-FOOTPRINT.md)
 for the partition and comparable required-read inventories.
 
 The installed `read-workflow` helper refuses every `SKILL.md`, bundled or not,

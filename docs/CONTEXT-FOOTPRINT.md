@@ -36,11 +36,11 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (55 after disclosure) | 3,940.25 | 3,700 | 3,705 | 14,803 → 14,821 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,390 | 45,289 → 33,600 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 31,386 | 135,888 → 125,612 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 34,369.5 | 146,269 → 137,546 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,410 | 45,289 → 33,680 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 32,123.5 | 135,888 → 128,562 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 35,107 | 146,269 → 140,496 |
 
-The routing inventory falls about 25.8% from the previous native candidate.
+The routing inventory falls about 25.6% from the previous native candidate.
 Complete bundled workflow inventories fall less, because worker dispatch,
 verification and publication instructions still apply. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -124,8 +124,8 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,163 bytes,
-about 6,281.25 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 25,243 bytes,
+about 6,301.25 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
@@ -133,7 +133,8 @@ adapter. The router rewrite and its fix round took 752 bytes back, which left it
 bytes under `main`. Later adapter edits, including the shorter host-adapter
 wording, left it 264 bytes under that baseline, restoring pstack's router
 wording (#83) left it 852 bytes under, and the bundled deslop and the #48 reach
-rule leave it 817 bytes under. The fix round restored the scope words the rewrite had
+rule left it 817 bytes under. The executable-helper resolution rule (#44)
+leaves it 737 bytes under. The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes
@@ -152,11 +153,13 @@ workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
 agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 8,872.75 estimated tokens for the bug-fix worker, and from 75,228 to
-70,982.0 for the eight feature workers. The model-defaults paragraph and the
+9,403.5 to 9,078.25 estimated tokens for the bug-fix worker, and from 75,228 to
+72,626.0 for the eight feature workers. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
 also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
-to this floor at the router rewrite. These partial floors exclude other worker
+to this floor at the router rewrite. That historical delta is 8,410.75 minus
+8,158.25, from the budget at `8b7127a` and the pre-rewrite budget at
+`4b13e5b`; it is not the difference from today's floor. These partial floors exclude other worker
 skills, role inputs and evidence; they are not additive to the unique inventories.
 
 External control and agent-writing instructions, consumer configuration,
