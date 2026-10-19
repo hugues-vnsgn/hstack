@@ -130,11 +130,12 @@ Close calls:
 - `/recall` rebuilds context across recent chats. `/ketchup` covers only this chat since the user's last message. Resuming one specific chat or branch is the Session pickup playbook.
 - `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.
 
+hStack bundles [`control-cli`](../control-cli/SKILL.md) and [`control-ui`](../control-ui/SKILL.md) from Cursor's `cursor-team-kit`. A playbook reaches them through the bundled-skill read rule. Their harnesses use available local terminal and browser tools; a missing driver remains an execution gap, not a missing skill.
+
 Not in hStack:
 
 - There is no `/orchestrate` skill. Orchestrate is a `/hugues-mode` playbook. If the skill menu shows `/orchestrate`, another plugin provides it.
 - There is no loop skill. Playbooks that loop use the host's loop primitive, and a host without one blocks that operation and reports the gap.
-- `control-cli` and `control-ui` come from Cursor's `cursor-team-kit` plugin, which hStack does not ship. Where a step names one and no equivalent is available, the run reports it as a missing capability per [publication rules](../../adapters/host-publication.md) instead of skipping it silently.
 
 ## Playbooks and principles
 

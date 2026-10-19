@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 # candidate covers all of them. Each addition is listed here by name: a new SKILL.md that is not
 # listed, or a listed one that appears in the release, still fails the inventory check below.
 ADDED_AFTER_RELEASE = (
+    'plugin/skills/control-cli/SKILL.md',
+    'plugin/skills/control-ui/SKILL.md',
     'plugin/skills/deslop/SKILL.md',
     'plugin/skills/hugues-help/SKILL.md',
     'plugin/skills/in-your-own-words/SKILL.md',
@@ -178,6 +180,9 @@ def measure(root=ROOT):
         for phase in phases:
             if '(' + Path(phase).name + ')' not in current['plugin/adapters/host.md']:
                 raise ValueError('phase reference not reachable from mandatory host guidance')
+        candidate_required = {row['path'] for row in profile.get('candidate_required', [])}
+        if len(candidate_required) != len(profile.get('candidate_required', [])):
+            raise ValueError('duplicate candidate-only input')
         paths = required | always
         mode_workers = sum(row['count'] for row in profile['workers'] if row['mode_context'])
         worker_floor = {'plugin/skills/hugues-mode/SKILL.md', 'plugin/agents/hugues-agent.md', *always}
@@ -193,7 +198,7 @@ def measure(root=ROOT):
         scenarios[name] = {'scenario': profile['scenario'],
             'published_0_2': inventory(release, release_paths(paths)),
             'native_before': inventory(before, paths),
-            'candidate': inventory(current, paths | phases),
+            'candidate': inventory(current, paths | phases | candidate_required),
             'workers': profile['workers'], 'fresh_mode_worker_floor': floor,
             'complete_execution_tokens': None,
             'unknown_inputs': spec['unknown_inputs']}

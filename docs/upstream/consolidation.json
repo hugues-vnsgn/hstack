@@ -531,7 +531,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-help/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416"
+      "destination_sha256": "bd1731a1dac422efd06dbfc4e7bf039c823fb9aea1d6472d48939d13295d7e12"
     },
     {
       "source": "pstack/skills/poteto-help/references/prompting.md",
@@ -555,7 +555,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "08ad56976448cba11a9e7be228d3cb46821bff37df0e12833ed6604235d29eae"
+      "destination_sha256": "49e4d370d5b11ef4c86a4157350314d69a6bcbe58763c0eed40d41915e418ef3"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -1365,6 +1365,8 @@
     "benchmark-checklist",
     "blast-radius",
     "bro",
+    "control-cli",
+    "control-ui",
     "correct",
     "create-verification-skill",
     "deslop",
@@ -1423,6 +1425,8 @@
       "benchmark-checklist",
       "blast-radius",
       "bro",
+      "control-cli",
+      "control-ui",
       "correct",
       "create-verification-skill",
       "deslop",
@@ -1561,6 +1565,38 @@
     }
   },
   "external_skills": {
+    "control-cli": {
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "ccb5507cec1546dc88135c1139c811e6c59115ba",
+      "source": "cursor-team-kit/skills/control-cli/SKILL.md",
+      "source_blob_sha": "69289ac517e8a28380c8eca5c6692e8a601fa62c",
+      "source_sha256": "13ac93e595bbda2000849bdb815d5f2ca03f7c2ca63788c8335f9212b9b422a2",
+      "source_copy": "provenance/upstream/cursor-team-kit-ccb5507/skills/control-cli/SKILL.md",
+      "license": "MIT",
+      "license_holder": "Copyright (c) 2026 Cursor",
+      "license_source": "cursor-team-kit/LICENSE",
+      "license_blob_sha": "ca2bba771cd39dbef6acf96b52481133983451f3",
+      "license_sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "license_copy": "provenance/upstream/cursor-team-kit-ccb5507/LICENSE",
+      "destination": "plugin/skills/control-cli/SKILL.md",
+      "license_destination": "plugin/skills/control-cli/LICENSE"
+    },
+    "control-ui": {
+      "repository": "https://github.com/cursor/plugins",
+      "revision": "ccb5507cec1546dc88135c1139c811e6c59115ba",
+      "source": "cursor-team-kit/skills/control-ui/SKILL.md",
+      "source_blob_sha": "68484fd5418cc893a6bf40e0db45b3001dcf5947",
+      "source_sha256": "410cae25bdb1e5d2323b126abc5047b0213be7fdb0195710213fa8de8a751871",
+      "source_copy": "provenance/upstream/cursor-team-kit-ccb5507/skills/control-ui/SKILL.md",
+      "license": "MIT",
+      "license_holder": "Copyright (c) 2026 Cursor",
+      "license_source": "cursor-team-kit/LICENSE",
+      "license_blob_sha": "ca2bba771cd39dbef6acf96b52481133983451f3",
+      "license_sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "license_copy": "provenance/upstream/cursor-team-kit-ccb5507/LICENSE",
+      "destination": "plugin/skills/control-ui/SKILL.md",
+      "license_destination": "plugin/skills/control-ui/LICENSE"
+    },
     "deslop": {
       "repository": "https://github.com/cursor/plugins",
       "revision": "ccb5507cec1546dc88135c1139c811e6c59115ba",
@@ -1595,11 +1631,11 @@
       "mode": 420
     },
     "adapters/host-publication.md": {
-      "sha256": "37161ce9490159d42c117320775ce43230d9d7520c4a573a8d6febf531f01c01",
+      "sha256": "21908beb7b20af5354d5aacda04dcf23ae00a79638f1595c2ebbae68242a8f61",
       "mode": 420
     },
     "adapters/host-special-skills.md": {
-      "sha256": "f496d02dfc8e91fd892b3c28a282bf9c963e888dcdd96e3942b1a3a6f66a9e70",
+      "sha256": "079a596f41645d584ef577e490cd8032ebb40be3563bd2d7c5ff6a3aba2981c2",
       "mode": 420
     },
     "adapters/host-tools.md": {
@@ -1623,7 +1659,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "bb145a2d59ad24928273b332cd64cc0b4844750af5a2edef94ee291e5357748f",
+      "sha256": "b59016388fba1928a6e92854f06834aeed8f1927608820ba50c6627ac63d7e4a",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1647,11 +1683,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "1c9c38bd63fe06d911081940f88bfea75725c4b7962f47ca2042f6839d9f3105",
+      "sha256": "4706571a202f4f8617de57a513ee7cb322c46e27838e1551458aa403bf3ac409",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "67f32c8b9d692c6234f387cfce86e5263c22cc25c3b0edbcfdfa0aa26b2e90b3",
+      "sha256": "d582982bdcea570d9101f47db3a53630a51a9eeea9458d4ca1d628a8b4c8a274",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1719,6 +1755,30 @@
       "mode": 420
     },
     "skills/bro/agents/openai.yaml": {
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": 420
+    },
+    "skills/control-cli/LICENSE": {
+      "sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "mode": 420
+    },
+    "skills/control-cli/SKILL.md": {
+      "sha256": "6a95e39b15e9f72ec4a72e5471f2b578220a05468531baf87986d843cbb94b6b",
+      "mode": 420
+    },
+    "skills/control-cli/agents/openai.yaml": {
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": 420
+    },
+    "skills/control-ui/LICENSE": {
+      "sha256": "702f5f331b56aff0e33d8c7826df5202559f894145eb70355c6477b55b5bb8a0",
+      "mode": 420
+    },
+    "skills/control-ui/SKILL.md": {
+      "sha256": "c3912683cf1b11278f5cff6ea3bccaf1d4f577910a5cc91656a2f6009cb55fb2",
+      "mode": 420
+    },
+    "skills/control-ui/agents/openai.yaml": {
       "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
       "mode": 420
     },
@@ -1791,7 +1851,7 @@
       "mode": 420
     },
     "skills/hugues-help/SKILL.md": {
-      "sha256": "9d0a7935653c467cae7e020952fb4d5edf6ac633495e9136a423ae2e44ec5416",
+      "sha256": "bd1731a1dac422efd06dbfc4e7bf039c823fb9aea1d6472d48939d13295d7e12",
       "mode": 420
     },
     "skills/hugues-help/agents/openai.yaml": {
@@ -1807,7 +1867,7 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "08ad56976448cba11a9e7be228d3cb46821bff37df0e12833ed6604235d29eae",
+      "sha256": "49e4d370d5b11ef4c86a4157350314d69a6bcbe58763c0eed40d41915e418ef3",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {

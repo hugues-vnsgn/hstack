@@ -140,11 +140,11 @@ class ContextDisclosure(unittest.TestCase):
         expected = {
             'initial_mode_routing': ['plugin/skills/unslop/SKILL.md',
                                     'plugin/skills/hugues-mode/playbooks/bug-fix.md'],
-            'bug_fix': ['plugin/skills/tdd/SKILL.md', 'plugin/skills/why/references/epistemics.md',
+            'bug_fix': ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/tdd/SKILL.md', 'plugin/skills/why/references/epistemics.md',
                         'plugin/skills/why/references/sources/code-archaeology.md',
                         'plugin/agents/hugues-comment-sicko.md', 'plugin/adapters/host-workers.md',
                         'plugin/skills/principle-subtract-before-you-add/SKILL.md'],
-            'larger_feature': ['plugin/skills/architect/references/design-red-flags.md',
+            'larger_feature': ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/architect/references/design-red-flags.md',
                                'plugin/skills/arena/SKILL.md', 'plugin/skills/swarm/SKILL.md',
                                'plugin/skills/typescript-best-practices/references/patterns.md',
                                'plugin/adapters/host-typescript.md',
@@ -181,10 +181,6 @@ class ContextDisclosure(unittest.TestCase):
         self.assertEqual(len(identical), 10)
         self.assertTrue(all(p.startswith('plugin/skills/principle-') for p in identical))
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
-        # native_before covers the 50 skills declared at 0.2.0, so the like-for-like candidate side
-        # is those same 50. Every skill added since, deslop the latest, has no `native_before`
-        # counterpart and adds its own frontmatter; the absolute cap on the
-        # whole set is asserted in test_native_layout.
         self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
                         measured['native_frontmatter']['native_before']['bytes'])
         for profile in measured['scenarios'].values():
