@@ -1,0 +1,8 @@
+WARNING: D8: Unexpected error during rewriting of Kotlin metadata for class 'org.u3.drafts.ComposableSingletons$MainActivityKt':
+	at com.android.tools.r8.D8.b(R8_8.11.18_94248c9a6fd57686ded562f231d18f14e8923ad1fe977e99b974a9bf901c8a48:29)
+	at com.android.tools.r8.D8.a(R8_8.11.18_94248c9a6fd57686ded562f231d18f14e8923ad1fe977e99b974a9bf901c8a48:126)
+	at com.android.tools.r8.D8.d(R8_8.11.18_94248c9a6fd57686ded562f231d18f14e8923ad1fe977e99b974a9bf901c8a48:136)
+	at com.android.tools.r8.D8.b(R8_8.11.18_94248c9a6fd57686ded562f231d18f14e8923ad1fe977e99b974a9bf901c8a48:1)
+	at com.android.tools.r8.D8.run(R8_8.11.18_94248c9a6fd57686ded562f231d18f14e8923ad1fe977e99b974a9bf901c8a48:11)
+	at com.android.builder.dexing.D8DexArchiveBuilder.convert(D8DexArchiveBuilder.java:129)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)

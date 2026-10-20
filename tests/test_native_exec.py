@@ -1,95 +1,20 @@
 import json
-import os
 from pathlib import Path
 import shutil
 import signal
 import subprocess
 import sys
-import tempfile
 import time
 import unittest
 
 from test_host_adapters import InstalledFixture
 
 
-ROOT = Path(__file__).resolve().parents[1]
-NATIVE = ROOT / 'tests/fixtures/native-execution'
+from native_exec_fixture import NATIVE, NativeExecutionFixture
 
 
-class NativeExecution(unittest.TestCase):
-    def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='native helper ')
-        self.addCleanup(self.temp.cleanup)
-        self.area = Path(self.temp.name).resolve()
-        self.consumer = self.area / 'consumer with spaces'
-        self.consumer.mkdir()
-        self.plugin = self.area / 'installed plugin'
-        shutil.copytree(ROOT / 'plugin', self.plugin, ignore=shutil.ignore_patterns('__pycache__'))
-        self.helper = self.plugin / 'adapters/native_exec.py'
-        self.store = self.area / 'retained evidence'
-        self.bin = self.area / 'tools'
-        self.bin.mkdir()
+class NativeExecution(NativeExecutionFixture):
 
-    def tool(self, name, body):
-        path = (self.consumer if name == 'gradlew' else self.bin) / name
-        path.write_text('#!' + sys.executable + '\n' + body)
-        path.chmod(0o755)
-        return str(path)
-
-    def request(self, tool='swiftpm', body='', operation='test'):
-        executable = self.tool({'swiftpm': 'swift', 'xcodebuild': 'xcodebuild',
-                                'gradle': 'gradlew'}[tool], body)
-        report = self.consumer / {'swiftpm': 'result.xml', 'xcodebuild': 'result.xcresult',
-                                  'gradle': 'app/build/test-results/testDebugUnitTest'}[tool]
-        if tool == 'swiftpm':
-            argv = [executable, operation, '--disable-swift-testing']
-            target = {'package': str(self.consumer)}
-            if operation == 'test':
-                argv += ['--xunit-output', str(report)]
-        elif tool == 'xcodebuild':
-            argv = [executable, operation, '-project', 'My App.xcodeproj', '-scheme', 'My App',
-                    '-destination', 'id=OWNED-SIM']
-            target = {'scheme': 'My App', 'destination': 'id=OWNED-SIM'}
-            if operation == 'test':
-                argv += ['-resultBundlePath', str(report)]
-        else:
-            argv = [executable, ':app:testDebugUnitTest' if operation == 'test' else ':app:assembleDebug']
-            target = {'task': argv[1], 'report_dir': str(report)}
-        return {'argv': argv, 'cwd': str(self.consumer), 'operation': operation,
-                'target': target, 'reports': [str(report)] if operation == 'test' else [],
-                'env': {'PATH': str(self.bin) + os.pathsep + os.environ['PATH']},
-                'timeout_seconds': 10}
-
-    def run_helper(self, tool, request):
-        path = self.area / 'request.json'
-        path.write_text(json.dumps(request))
-        return subprocess.run([sys.executable, str(self.helper), tool, '--request', str(path),
-                               '--store', str(self.store)], cwd=self.consumer,
-                              capture_output=True, timeout=20)
-
-    def result(self, tool, request, exit_code=0):
-        process = self.run_helper(tool, request)
-        self.assertEqual(process.returncode, exit_code, process.stderr.decode(errors='replace'))
-        self.assertLessEqual(len(process.stdout), 8192)
-        value = json.loads(process.stdout)
-        attempt = Path(value['attempt'])
-        self.assertEqual(json.loads((attempt / 'summary.json').read_text()), value)
-        return value, attempt
-
-    @staticmethod
-    def xml(tests=1, failed=False, skipped=False):
-        cases = ''.join('<testcase classname="AppTests" name="test%d">%s</testcase>' %
-                        (i, '<failure message="expected greeting" />' if failed and i == 0
-                         else '<skipped />' if skipped and i == tests - 1 else '')
-                        for i in range(tests))
-        return '<testsuite name="AppTests" tests="%d" failures="%d" errors="0" skipped="%d">%s</testsuite>' % (
-            tests, int(failed), int(skipped), cases)
-
-    def xml_child(self, xml, tool='swiftpm'):
-        relative = 'app/build/test-results/testDebugUnitTest/TEST-App.xml' if tool == 'gradle' else 'result.xml'
-        return ("from pathlib import Path\np = Path(%r)\np.parent.mkdir(parents=True, exist_ok=True)\n"
-                "p.write_text(%r)\n" % (relative, xml)
-                + ("print('> Task :app:testDebugUnitTest')\n" if tool == 'gradle' else ''))
 
     def test_exact_argv_context_and_raw_bytes_survive_cleanup(self):
         body = ("import os,sys,json\nfrom pathlib import Path\n"
@@ -105,7 +30,7 @@ class NativeExecution(unittest.TestCase):
         self.assertEqual(invocation['argv'], request['argv'])
         self.assertEqual(invocation['cwd'], str(self.consumer))
         self.assertEqual(invocation['env'], request['env'])
-        fixed = {key: value for key, value in invocation.items() if key not in {'started_at', 'finished_at'}}
+        fixed = {key: value for key, value in invocation.items() if key not in {'started_at', 'finished_at', 'revision', 'dirty', 'revision_reason'}}
         self.assertEqual(fixed, {'schema_version': 1, 'tool': 'swiftpm', 'argv': request['argv'],
                                 'cwd': str(self.consumer), 'operation': 'build', 'target': request['target'],
                                 'reports': [], 'env': request['env'], 'timeout_seconds': 10,
@@ -363,15 +288,6 @@ class NativeExecution(unittest.TestCase):
         self.assertEqual(result['interpretation_status'], 'incomplete')
         self.assertEqual((Path(result['attempt']) / 'stdout.log').read_bytes(), b'ready\n')
 
-    def xcode(self, device='OWNED-SIM', failed=0):
-        self.tool('xcrun', "import json,os,sys\nfrom pathlib import Path\n"
-                  "Path('inspector-observed.json').write_text(json.dumps({'argv':sys.argv,'cwd':os.getcwd()}))\n"
-                  "print(json.dumps(%r))\n" % {
-            'title': 'Test - My App', 'result': 'Failed' if failed else 'Passed',
-            'passedTests': 2 - failed, 'failedTests': failed, 'skippedTests': 1, 'expectedFailures': 0,
-            'totalTestCount': 3, 'devicesAndConfigurations': [{'device': {'deviceId': device}}],
-            'testFailures': [{'testName': 'testGreeting()', 'failureText': 'Expected greeting'}] if failed else []})
-        return self.request('xcodebuild', "from pathlib import Path\nPath('result.xcresult').mkdir()\nPath('result.xcresult/Data').write_bytes(b'native bundle')\n")
 
     def test_xcode_native_summary_and_bundle_retention(self):
         request = self.xcode()
@@ -514,13 +430,15 @@ class NativeExecution(unittest.TestCase):
         reports = json.loads((attempt / 'reports.json').read_text())
         self.assertEqual(set(reports[0]['files']), {'first.xml', 'second.xml'})
 
-    def test_ten_native_failures_flag_omitted_diagnostics(self):
+    def test_ten_native_failures_all_fit_without_omission(self):
         cases = ''.join('<testcase classname="Failures" name="test%d"><failure message="failure %d"/></testcase>' % (i, i)
                         for i in range(10))
         result, _ = self.result('swiftpm', self.request(body=self.xml_child('<testsuite tests="10" failures="10">' + cases + '</testsuite>')), 1)
         self.assertEqual(result['counts'], {'executed': 10, 'failed': 10, 'skipped': 0})
         self.assertEqual(result['outcome'], 'failed')
-        self.assertEqual(result['details_omitted'], True)
+        self.assertEqual(result['details_omitted'], False)
+        self.assertEqual(result['diagnostics_omitted'], 0)
+        self.assertEqual(len(result['diagnostics']), 10)
         self.assertIn('Failures.test0: failure 0', result['diagnostics'])
         self.assertIn('Failures.test9: failure 9', result['diagnostics'])
 
@@ -530,14 +448,6 @@ class NativeExecution(unittest.TestCase):
         self.assertEqual(result['outcome'], 'passed')
         self.assertEqual(result['diagnostics'], [])
 
-    def captured_child(self, name, report=True, log='stdout', tool='swiftpm'):
-        body = ''
-        if report:
-            body += self.xml_child((NATIVE / (name + '.xml')).read_text(), tool)
-        path = NATIVE / (name + '.' + log + '.txt')
-        if path.exists():
-            body += 'import sys\nsys.%s.buffer.write(%r)\n' % (log, path.read_bytes())
-        return body
 
     def test_real_parallel_xctest_skip_reconciles_terminal_case_result(self):
         body = self.captured_child('xctest-skipped-verbose')
@@ -639,13 +549,15 @@ class NativeExecution(unittest.TestCase):
         self.assertEqual(result['counts'], {'executed': 3, 'failed': 1, 'skipped': 0})
         self.assertIn('testFailure(): XCTAssertEqual failed: ("1") is not equal to ("2") - captured failure diagnostic', result['diagnostics'])
 
-    def test_real_gradle_failure_xml_keeps_first_tail_and_omission_flag(self):
+    def test_real_gradle_failure_xml_keeps_all_failures(self):
         request = self.request('gradle', self.captured_child('gradle-jvm-failure', tool='gradle'))
         result, _ = self.result('gradle', request, 1)
         self.assertEqual(result['interpretation_status'], 'complete')
         self.assertEqual(result['outcome'], 'failed')
         self.assertEqual(result['counts'], {'executed': 10, 'failed': 10, 'skipped': 0})
-        self.assertEqual(result['details_omitted'], True)
+        self.assertEqual(result['details_omitted'], False)
+        self.assertEqual(result['diagnostics_omitted'], 0)
+        self.assertEqual(sum(line.startswith('NativeFailureTest.') for line in result['diagnostics'][:10]), 10)
         self.assertIn('NativeFailureTest.testFailure10: java.lang.AssertionError: native failure 10 expected:<1> but was:<2>', result['diagnostics'])
         self.assertIn('NativeFailureTest.testFailure9: java.lang.AssertionError: native failure 9 expected:<1> but was:<2>', result['diagnostics'])
 
@@ -666,14 +578,14 @@ class NativeExecution(unittest.TestCase):
                 body = 'import sys\nsys.stderr.buffer.write(%r)\nraise SystemExit(1)\n' % content
                 result, attempt = self.result('swiftpm', self.request(body=body, operation='build'), 1)
                 self.assertEqual(result['outcome'], 'failed')
-                self.assertEqual(result['details_omitted'], True)
+                self.assertEqual(result['details_omitted'], False)
                 self.assertTrue(any('NativeCapture.swift:1:26:' in line for line in result['diagnostics']), result['diagnostics'])
                 self.assertTrue(any('NativeCapture.swift:5:26:' in line for line in result['diagnostics']), result['diagnostics'])
                 self.assertNotIn('\x1b', ''.join(result['diagnostics']))
                 self.assertEqual((attempt / 'stderr.log').read_bytes(), content)
 
     def test_styled_diagnostic_clipping_and_metadata_omissions_are_explicit(self):
-        content = '\x1b[31me: Native.kt:1: ' + 'x' * 500 + ' Unresolved reference\x1b[0m\n'
+        content = '\x1b[31me: Native.kt:1: ' + 'x' * 12000 + ' Unresolved reference\x1b[0m\n'
         request = self.request('gradle', 'import sys\nsys.stderr.write(%r)\nraise SystemExit(1)\n' % content, 'build')
         result, attempt = self.result('gradle', request, 1)
         self.assertEqual(result['details_omitted'], True)
@@ -705,10 +617,145 @@ class NativeExecution(unittest.TestCase):
         result, attempt = self.result('swiftpm', request, 1)
         self.assertEqual(result['outcome'], 'failed')
         self.assertEqual(result['details_omitted'], True)
-        self.assertEqual(len(result['diagnostics']), 6)
+        self.assertEqual(len(result['diagnostics']) + result['diagnostics_omitted'], 6)
+        self.assertGreater(result['diagnostics_omitted'], 0)
         self.assertTrue(result['diagnostics'][0].startswith('error: 0 '))
-        self.assertTrue(result['diagnostics'][-1].startswith('error: 5 '))
         self.assertEqual((attempt / 'stderr.log').read_text(), output)
+
+    def test_u3_decisive_assertion_survives_ranked_summary(self):
+        output = (NATIVE / 'u3-ios-red.txt').read_text()
+        request = self.request(body='print(%r)\nraise SystemExit(1)\n' % output, operation='build')
+        result, _ = self.result('swiftpm', request, 1)
+        self.assertTrue(any('("Home notes") is not equal to ("Work notes")' in line
+                            for line in result['diagnostics']), result['diagnostics'])
+        self.assertFalse(any('RegisterExecutionPolicyException' in line for line in result['diagnostics']))
+
+    def test_u3_passing_builds_have_no_scraped_diagnostics(self):
+        for name in ['u3-swiftpm-noise', 'u3-xcode-noise', 'u3-gradle-noise']:
+            with self.subTest(name=name):
+                output = (NATIVE / (name + '.txt')).read_text()
+                result, _ = self.result('swiftpm', self.request(body='print(%r)\n' % output, operation='build'))
+                self.assertEqual(result['outcome'], 'passed')
+                self.assertEqual(result['diagnostics'], [])
+
+    def test_every_xcresult_failure_precedes_scraped_logs(self):
+        request = self.xcode(failed=1)
+        failures = [{'testName': 'case%d' % i, 'failureText': 'native %d' % i} for i in range(20)]
+        self.tool('xcrun', 'import json\nprint(json.dumps(%r))\n' % {
+            'title': 'Test - My App', 'result': 'Failed', 'passedTests': 0, 'failedTests': 20,
+            'skippedTests': 0, 'expectedFailures': 0, 'totalTestCount': 20,
+            'devicesAndConfigurations': [{'device': {'deviceId': 'OWNED-SIM'}}], 'testFailures': failures})
+        result, _ = self.result('xcodebuild', request, 1)
+        self.assertEqual(result['diagnostics'], ['case%d: native %d' % (i, i) for i in range(20)])
+        self.assertEqual(result['diagnostics_omitted'], 0)
+
+    def test_budget_reports_exact_number_of_excluded_lines(self):
+        output = ''.join('error: line %03d %s\n' % (i, 'x' * 100) for i in range(200))
+        request = self.request(body='print(%r)\nraise SystemExit(1)\n' % output, operation='build')
+        result, _ = self.result('swiftpm', request, 1)
+        self.assertEqual(len(result['diagnostics']) + result['diagnostics_omitted'], 200)
+        self.assertGreater(result['diagnostics_omitted'], 100)
+        self.assertTrue(result['diagnostics'][0].startswith('error: line 000 '))
+        self.assertEqual(result['details_omitted'], True)
+
+    def test_native_failures_fill_budget_before_assertions_and_generic_logs(self):
+        xml = '<testsuite>' + ''.join('<testcase name="test%d"><failure message="native %d"/></testcase>'
+                                     % (i, i) for i in range(25)) + '</testsuite>'
+        body = self.xml_child(xml) + "print('exception generic')\nprint('error: expected assertion')\n"
+        result, _ = self.result('swiftpm', self.request(body=body), 1)
+        self.assertEqual(result['diagnostics'][:25], ['.test%d: native %d' % (i, i) for i in range(25)])
+        self.assertEqual(result['diagnostics'][25:], ['error: expected assertion', 'exception generic'])
+        self.assertEqual(result['diagnostics_omitted'], 0)
+
+    def test_git_revision_clean_dirty_and_non_repository(self):
+        request = self.request(operation='build')
+        result, attempt = self.result('swiftpm', request)
+        record = json.loads((attempt / 'invocation.json').read_text())
+        self.assertEqual(record['revision'], None)
+        self.assertEqual(record['dirty'], None)
+        self.assertTrue(record['revision_reason'])
+        (self.consumer / 'tracked.txt').write_text('baseline')
+        subprocess.run(['git', 'init', '-q', str(self.consumer)], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.consumer), 'add', '.'], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.consumer), '-c', 'user.name=Fixture', '-c',
+                        'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false', 'commit', '-qm', 'fixture'], check=True, capture_output=True)
+        revision = subprocess.check_output(['git', '-C', str(self.consumer), 'rev-parse', 'HEAD']).decode().strip()
+        subprocess.run(['git', '-C', str(self.consumer), 'config', 'status.showUntrackedFiles', 'no'],
+                       check=True, capture_output=True)
+        for dirty in [False, True]:
+            if dirty:
+                (self.consumer / 'dirty.txt').write_text('changed')
+            _, attempt = self.result('swiftpm', request)
+            record = json.loads((attempt / 'invocation.json').read_text())
+            self.assertEqual(record['revision'], revision)
+            self.assertEqual(record['dirty'], dirty)
+            self.assertEqual(record['revision_reason'], None)
+
+
+    def test_captured_adb_raw_pass_and_assertion_failure(self):
+        for name, code, counts in [('adb-pass', 0, {'executed': 1, 'failed': 0, 'skipped': 0}),
+                                   ('adb-failure', 1, {'executed': 1, 'failed': 1, 'skipped': 0})]:
+            with self.subTest(name=name):
+                output = (NATIVE / (name + '.txt')).read_text()
+                result, attempt = self.result('adb-instrument', self.instrument_request(output), code)
+                self.assertEqual(result['exit_code'], 0)
+                self.assertEqual(result['counts'], counts)
+                self.assertEqual(result['outcome'], 'passed' if code == 0 else 'failed')
+                self.assertEqual((attempt / 'stdout.log').read_text(), output + '\n')
+
+    def test_adb_crash_zero_and_truncated_output_never_pass(self):
+        for output in [(NATIVE / 'adb-crash.txt').read_text(),
+                       (NATIVE / 'adb-zero.txt').read_text(),
+                       'INSTRUMENTATION_STATUS_CODE: 1']:
+            with self.subTest(output=output):
+                result, _ = self.result('adb-instrument', self.instrument_request(output), 2)
+                self.assertEqual(result['outcome'], 'incomplete')
+
+    def test_adb_duplicate_missing_and_conflicting_terminals_never_pass(self):
+        passed = (NATIVE / 'adb-pass.txt').read_text()
+        for output in [passed.replace('INSTRUMENTATION_CODE: -1', ''),
+                       passed.replace('INSTRUMENTATION_STATUS_CODE: 0', 'INSTRUMENTATION_STATUS_CODE: 2'),
+                       passed + passed,
+                       passed.replace('numtests=1', 'numtests=2'),
+                       passed.replace('INSTRUMENTATION_STATUS_CODE: 1', 'INSTRUMENTATION_STATUS_CODE: 0'),
+                       passed + 'INSTRUMENTATION_RESULT: shortMsg=Process crashed.\n']:
+            with self.subTest(output=output[-120:]):
+                result, _ = self.result('adb-instrument', self.instrument_request(output), 2)
+                self.assertEqual(result['outcome'], 'incomplete')
+
+    def test_adb_observed_failure_survives_duplicate_passing_terminal(self):
+        passed = (NATIVE / 'adb-pass.txt').read_text()
+        terminal = passed[passed.index('INSTRUMENTATION_STATUS: class=', 10):passed.index('INSTRUMENTATION_RESULT:')]
+        output = passed.replace('INSTRUMENTATION_STATUS_CODE: 0',
+                                'INSTRUMENTATION_STATUS_CODE: -2') + terminal
+        result, _ = self.result('adb-instrument', self.instrument_request(output), 1)
+        self.assertEqual(result['outcome'], 'failed')
+        self.assertEqual(result['counts']['failed'], 1)
+        self.assertEqual(result['interpretation_status'], 'incomplete')
+
+    def test_adb_malformed_and_out_of_order_protocol_never_pass(self):
+        passed = (NATIVE / 'adb-pass.txt').read_text()
+        for output in [passed.replace('INSTRUMENTATION_CODE: -1', 'INSTRUMENTATION_STATUS_CODE: nonsense\nINSTRUMENTATION_CODE: -1'),
+                       'INSTRUMENTATION_CODE: -1\n' + passed.replace('INSTRUMENTATION_CODE: -1', '')]:
+            with self.subTest(output=output[-150:]):
+                result, _ = self.result('adb-instrument', self.instrument_request(output), 2)
+                self.assertEqual(result['outcome'], 'incomplete')
+
+    def test_adb_rejects_other_commands_and_unresolved_targets(self):
+        for change in ['command', 'serial', 'runner', 'build', 'reports']:
+            with self.subTest(change=change):
+                request = self.instrument_request((NATIVE / 'adb-pass.txt').read_text())
+                if change == 'command':
+                    request['argv'] = [request['argv'][0], 'install', 'app.apk']
+                elif change in {'serial', 'runner'}:
+                    request['target'][change] = 'different'
+                elif change == 'build':
+                    request['operation'] = 'build'
+                else:
+                    request['reports'] = ['invented.xml']
+                result, _ = self.result('adb-instrument', request, 2)
+                self.assertEqual(result['command_status'], 'not_started')
+                self.assertEqual(result['interpretation_status'], 'prerequisite')
 
     def test_conflicting_target_is_prerequisite_and_child_is_unrun(self):
         request = self.request(body="from pathlib import Path\nPath('should-not-run').touch()\n", operation='build')

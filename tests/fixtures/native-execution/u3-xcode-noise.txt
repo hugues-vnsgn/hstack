@@ -1,0 +1,12 @@
+    export RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES\=NO
+    export RUNTIME_EXCEPTION_ALLOW_JIT\=NO
+    export RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY\=NO
+    export RUNTIME_EXCEPTION_DEBUGGING_TOOL\=NO
+    export RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION\=NO
+    export RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION\=NO
+2026-10-20 00:12:34.678 xcodebuild[21570:1579365] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-20 00:12:34.678 xcodebuild[21570:1579365] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 00:12:43.164 xcodebuild[21570:1579365] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-20 00:12:43.164 xcodebuild[21570:1579365] [MT] IDELaunchParametersSnapshot: no debugger version
+2026-10-20 00:12:51.644 xcodebuild[21570:1579365] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-20 00:12:51.644 xcodebuild[21570:1579365] [MT] IDELaunchParametersSnapshot: no debugger version

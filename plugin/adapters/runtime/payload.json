@@ -206,12 +206,12 @@
     },
     {
       "path": "adapters/native-execution.md",
-      "sha256": "059228bfec2f18684a2c9401f6723eea72c255fa60965fe2a61a0bb1aaf114ff",
+      "sha256": "5d447990d939f26673f177563b91a760a3197409e0f16abc812bcb72c9e66a2c",
       "mode": "100644"
     },
     {
       "path": "adapters/native_exec.py",
-      "sha256": "c0db5c3db54abfa0f43359ab1cc5e97b0fcfb4c01facd0f3b1448d5a3111ef04",
+      "sha256": "94fc14895b920fba2356ac627baa3d4a1b5c86211a5cab3f5a87f59e3cf3d154",
       "mode": "100644"
     },
     {

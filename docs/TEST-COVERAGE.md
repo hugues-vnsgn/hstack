@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **514 top-level unittest cases**. One is a driver that
+The current candidate collects **540 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -18,12 +18,12 @@ native workflow proof. Subtests are not added to case totals.
 | Current setup-to-proof contracts | 9 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These nine cases check source/commands and evidence parsing, not host or device execution. |
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
-| Current native execution helpers | 60 | test_native_exec; 58 controlled installed CLI cases and two installed workflow/evidence contracts. Native project observations run separately. |
-| Total collected | 507 | Current, mixed and historical scopes remain distinct |
+| Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
+| Total collected | 540 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-507 Python cases. The opt-in CI workflow requires a provisioned native runner.
+540 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -374,3 +374,11 @@ Claude Code inheritance and post-merge U3 behavior remain unobserved here.
 Chief review of #113 extends the existing narrow-reading-list case to require
 the native execution adapter at its absolute installed path and helper use for
 regression-worker build/test commands. Recollection remains 514 top-level cases.
+
+Issue #109's helper PR contributes 26 cases, including 14 chief-review regression
+and accounting cases. Collection after the PR #113 rebase gives 540 total cases
+and 86 native execution cases. Current totals above are checked against discovery;
+the earlier 507-case wording-contract paragraph remains historical. Verbose native
+failure previews, ERROR/skip states, device errors, shell-sensitive target input,
+failed-run noise filtering, pass silence and Git status failure/timeout behavior
+are verified at the helper boundary. A device `@Ignore` observation remains a gap.

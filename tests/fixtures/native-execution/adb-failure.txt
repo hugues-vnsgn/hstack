@@ -1,0 +1,39 @@
+INSTRUMENTATION_STATUS: class=org.u3.drafts.AppTests
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=junit.framework.ComparisonFailure: Draft input matches expected:<[Milk
+Eggs
+Apples]> but was:<[]>
+	at junit.framework.Assert.assertEquals(Assert.java:85)
+	at org.u3.drafts.AppTests.assertDraft(AppTests.java:94)
+	at org.u3.drafts.AppTests.testDraftSurvivesActivityRecreation(AppTests.java:42)
+
+INSTRUMENTATION_STATUS: stream=
+Error in testDraftSurvivesActivityRecreation(org.u3.drafts.AppTests):
+junit.framework.ComparisonFailure: Draft input matches expected:<[Milk
+Eggs
+Apples]> but was:<[]>
+	at junit.framework.Assert.assertEquals(Assert.java:85)
+	at org.u3.drafts.AppTests.assertDraft(AppTests.java:94)
+	at org.u3.drafts.AppTests.testDraftSurvivesActivityRecreation(AppTests.java:42)
+
+INSTRUMENTATION_STATUS: test=testDraftSurvivesActivityRecreation
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 10.666
+There was 1 failure:
+1) testDraftSurvivesActivityRecreation(org.u3.drafts.AppTests)
+junit.framework.ComparisonFailure: Draft input matches expected:<[Milk
+Eggs
+Apples]> but was:<[]>
+	at junit.framework.Assert.assertEquals(Assert.java:85)
+	at org.u3.drafts.AppTests.assertDraft(AppTests.java:94)
+	at org.u3.drafts.AppTests.testDraftSurvivesActivityRecreation(AppTests.java:42)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

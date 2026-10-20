@@ -1,0 +1,13 @@
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project NotesApp.xcodeproj -scheme NotesApp -destination id=255DD73C-2D59-4463-BA7B-93D8CC416C0C -derivedDataPath /tmp/notebooks-selection-evidence-20261020/derived-data CODE_SIGNING_ALLOWED=NO -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /tmp/notebooks-selection-evidence-20261020/red.xcresult "-only-testing:AppUITests/NotesTests/testNotebookContentFollowsSelection"
+RegisterExecutionPolicyException /tmp/notebooks-selection-evidence-20261020/derived-data/Build/Products/Debug-iphonesimulator/AppUITests-Runner.app/PlugIns/AppUITests.xctest (in target 'AppUITests' from project 'NotesApp')
+    builtin-RegisterExecutionPolicyException /tmp/notebooks-selection-evidence-20261020/derived-data/Build/Products/Debug-iphonesimulator/AppUITests-Runner.app/PlugIns/AppUITests.xctest
+objc[74867]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.CaWrCs/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x105eb0398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.CaWrCs/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105fbc310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+/Users/hugues_mini/Codes/hstack-cells/ios-swiftui-codex/.worktrees/fix/notebook-content/GreetingTests.swift:25: error: -[AppUITests.NotesTests testNotebookContentFollowsSelection] : XCTAssertEqual failed: ("XCTWaiterResult(rawValue: 2)") is not equal to ("XCTWaiterResult(rawValue: 1)")
+/Users/hugues_mini/Codes/hstack-cells/ios-swiftui-codex/.worktrees/fix/notebook-content/GreetingTests.swift:26: error: -[AppUITests.NotesTests testNotebookContentFollowsSelection] : XCTAssertEqual failed: ("Home notes") is not equal to ("Work notes")
+Test Case '-[AppUITests.NotesTests testNotebookContentFollowsSelection]' failed (21.103 seconds).
+Test Suite 'NotesTests' failed at 2026-10-20 01:13:53.053.
+	 Executed 1 test, with 2 failures (0 unexpected) in 21.103 (21.106) seconds
+Test Suite 'AppUITests.xctest' failed at 2026-10-20 01:13:53.055.
+	 Executed 1 test, with 2 failures (0 unexpected) in 21.103 (21.107) seconds
+Test Suite 'Selected tests' failed at 2026-10-20 01:13:53.056.
+	 Executed 1 test, with 2 failures (0 unexpected) in 21.103 (21.109) seconds

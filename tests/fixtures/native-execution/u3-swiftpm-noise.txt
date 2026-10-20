@@ -1,0 +1,1 @@
+Register execution policy exception for CatalogClientTests.xctest
