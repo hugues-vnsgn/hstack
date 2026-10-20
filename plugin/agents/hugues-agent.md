@@ -2,6 +2,7 @@
 name: hugues-agent
 description: Delegate subagent for code-writing and helper tasks spawned during a `/hugues-mode` run. Use for delegates, not as the runner for `/hugues-mode` itself. Spawn a fresh `hugues-agent` for each new task, and resume one only in the strict cases that hugues-mode's Subagents section names. Starts with the `hugues-mode` skill loaded, including its inline Principles index. Substituting a general-purpose agent skips that context and drifts.
 background: true
+model: inherit
 skills:
   - hstack:hugues-mode
 ---

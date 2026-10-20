@@ -629,7 +629,9 @@ class HuguesModeRouter(unittest.TestCase):
                 'Without a todo tool', 'Markdown checklist',
                 "task's [agent store](host-workflow-tools.md#agent-store-translation)",
                 'Copy playbook steps verbatim before step 1',
-                'Mark each done or `skip: <reason>` as you go',
+                'A step includes its numbered line and all continuation text. Copy the whole step.',
+                'Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.',
+                'Never bulk-mark at the end.',
                 'Name the file in your reply']:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, tools)
@@ -637,6 +639,11 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn('## Agent-store translation', store)
         self.assertIn('use the operator-named directory', store)
         self.assertIn('Resume the recorded store', store)
+        playbooks = ' '.join(check_core.section(self.text, 'Playbooks').split())
+        for phrase in ['A step includes its numbered line and all continuation text. Copy the whole step.',
+                       'Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.',
+                       'Never bulk-mark at the end.']:
+            self.assertIn(phrase, playbooks)
 
     def test_codex_native_loading_uses_enabled_catalog_and_complete_skill_read(self):
         host = ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split())
@@ -653,10 +660,85 @@ class HuguesModeRouter(unittest.TestCase):
                 self.assertIn(phrase, host)
         self.assertNotIn('for those skills, never use a file read as an invocation fallback', host)
         workers = ' '.join(self.workers.split())
-        self.assertIn('Before work, load the mode per [host.md](host.md).', workers)
+        self.assertIn('Full-mode workers load the mode per [host.md](host.md) before work.', workers)
         self.assertIn('On Codex, select its enabled catalog entry and read the complete SKILL.md yourself.', workers)
         self.assertIn("preserve `generalPurpose` and the workflow's own prompt", workers)
         self.assertIn('without a mode persona', workers)
+
+    def test_mobile_regression_worker_has_only_the_narrow_reading_list(self):
+        for path in ['plugin/adapters/mobile-workflows.md',
+                     'plugin/skills/hugues-mode/playbooks/bug-fix.md']:
+            body = ' '.join((ROOT / path).read_text().split())
+            with self.subTest(path=path):
+                for phrase in [
+                        'general-purpose regression worker',
+                        'reads only the `tdd` SKILL.md, the matching language baseline at absolute installed paths, the native execution adapter at its absolute installed path, and the files named in its brief',
+                        'Include `<plugin>/adapters/native-execution.md` as an absolute installed path in the brief.',
+                        'Any build or test command the regression worker runs goes through the native helper.',
+                        'does not load the full mode or principles',
+                        "It overrides transitive skill reads and TDD's production-edit steps.",
+                        'The production worker is unchanged.']:
+                    self.assertIn(phrase, body)
+                self.assertRegex(body, r'impractical-test exception|If automated testing is impractical')
+        workers = ' '.join(self.workers.split())
+        self.assertIn('The mobile regression worker is a general-purpose native worker without a mode persona.', workers)
+        self.assertIn('Its reading list is limited by [mobile workflows](mobile-workflows.md).', workers)
+        self.assertIn('The mobile regression worker uses the general-purpose exception in', self.text)
+
+    def test_mobile_regression_stalls_keep_the_coordinator_out_of_the_test(self):
+        for path in ['plugin/adapters/mobile-workflows.md',
+                     'plugin/skills/hugues-mode/playbooks/bug-fix.md']:
+            body = ' '.join((ROOT / path).read_text().split())
+            with self.subTest(path=path):
+                for phrase in [
+                        'The coordinator never writes the regression test.',
+                        'On a stall, dispatch one fresh replacement with a narrower brief.',
+                        'A second stall marks the regression step blocked. State it in the final message.']:
+                    self.assertIn(phrase, body)
+
+    def test_forked_context_does_not_satisfy_mobile_worker_freshness(self):
+        for path in ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/host-workers.md']:
+            body = ' '.join((ROOT / path).read_text().split())
+            with self.subTest(path=path):
+                self.assertIn('A worker spawned with the coordinator\'s turns, `fork_turns: "all"` or the equivalent, is not fresh for either the regression or production role.', body)
+
+    def test_host_translation_table_covers_control_loop_and_source_attributions(self):
+        host = (ROOT / 'plugin/adapters/host.md').read_text()
+        table = check_core.section(host, 'Inherited wording translations')
+        rows = [line for line in table.splitlines() if line.startswith('| ')][1:]
+        self.assertEqual(len(rows), 6)
+        expected = [
+            ('CLI or TUI', '`control-cli`'),
+            ('Browser, Electron or web', '`control-ui`'),
+            ('iOS or Android', 'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
+            ('Claude Code', 'current local session', 'never a cloud schedule'),
+            ('Codex', 'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
+            ('cursor-team-kit', 'bundled `control-cli` / `control-ui`'),
+        ]
+        for row, markers in zip(rows, expected):
+            for marker in markers:
+                self.assertIn(marker, row)
+        self.assertIn('"control skill" / "matching control skill"', table)
+        self.assertIn("Cursor's `/loop`", table)
+        bug_fix = (ROOT / 'plugin/skills/hugues-mode/playbooks/bug-fix.md').read_text()
+        self.assertIn("Drive a long or stubborn hunt with Cursor's `/loop` command.", bug_fix)
+        plan = (ROOT / 'plugin/skills/hugues-mode/playbooks/multi-phase-plan.md').read_text()
+        self.assertIn('/loop 1h', plan)
+
+    def test_both_native_agents_explicitly_inherit_the_parent_model(self):
+        for name in ['hugues-agent', 'hugues-comment-sicko']:
+            body = (ROOT / f'plugin/agents/{name}.md').read_text()
+            frontmatter = body.split('---', 2)[1]
+            with self.subTest(name=name):
+                self.assertEqual(re.findall(r'^model: (.+)$', frontmatter, re.M), ['inherit'])
+
+    def test_worker_reply_discloses_requested_actual_and_lowered_effort(self):
+        reply = ' '.join(check_core.section(self.text, 'Writing the reply').split())
+        for phrase in ['Whenever a run spawned workers, include a Workers line',
+                       "each role's requested and actual model and effort",
+                       'any fallback or downgrade with its reason']:
+            self.assertIn(phrase, reply)
+        self.assertIn('Report deliberate effort lowering too, with its reason.', self.workers)
 
     def test_held_publication_keeps_the_prescribed_local_pr_artifacts(self):
         publication = ' '.join((ROOT / 'plugin/adapters/host-publication.md').read_text().split())

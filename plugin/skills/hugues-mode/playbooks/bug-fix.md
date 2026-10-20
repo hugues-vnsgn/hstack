@@ -12,6 +12,17 @@ Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspender
    This is the canonical **sequence-verifiable-units** principle skill, the failing test first and the fix on top.
 
    For mobile bugs, retain the adapter's separate regression and production workers.
+   Use a fresh general-purpose regression worker. It reads only the `tdd` SKILL.md,
+   the matching language baseline at absolute installed paths, the native execution
+   adapter at its absolute installed path, and the files named
+   in its brief. It does not load the full mode or principles. The production worker is unchanged.
+   Include `<plugin>/adapters/native-execution.md` as an absolute installed path in the brief.
+   Any build or test command the regression worker runs goes through the native helper.
+   Put this contract in the regression brief. It overrides transitive skill reads
+   and TDD's production-edit steps.
+   The coordinator never writes the regression test. On a stall, dispatch one fresh
+   replacement with a narrower brief. A second stall marks the regression step
+   blocked. State it in the final message.
    Run the same selected regression through the [native execution helper](../../../adapters/native-execution.md)
    before the production change and afterward. Independently inspect RED and GREEN,
    actual counts and the retained native reports. If automated testing is impractical,

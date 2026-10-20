@@ -67,8 +67,23 @@ network sends, installs, credentials, system settings, pushes, PR publication,
 merges and releases. Hold actions without authority or capability. Continue independent work.
 
 Without a todo tool, use a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation).
-Copy playbook steps verbatim before step 1. Mark each done or `skip: <reason>`
-as you go. Name the file in your reply.
+Copy playbook steps verbatim before step 1.
+A step includes its numbered line and all continuation text. Copy the whole step.
+Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.
+Never bulk-mark at the end. Name the file in your reply.
+
+## Inherited wording translations
+
+Keep pstack's playbook text. Resolve inherited wording by host and surface here.
+
+| Wording | Host or surface | Translation |
+|---|---|---|
+| "control skill" / "matching control skill" | CLI or TUI | Use bundled `control-cli`. |
+| "control skill" / "matching control skill" | Browser, Electron or web | Use bundled `control-ui`. |
+| "control skill" / "matching control skill" | iOS or Android | Use the repo's installed simulator-driving skill, such as `test-ios` or `test-android`, through the native mechanism. Otherwise use XCTest or UiAutomator through the native helper. A missing driver stays an execution gap. |
+| Cursor's `/loop` | Claude Code | Use `/loop` in the current local session, never a cloud schedule for work that needs local devices. |
+| Cursor's `/loop` | Codex | Use only active-session waits. Between-turn scheduling stays an unsatisfied gap, per #34 item 6. |
+| `cursor-team-kit` source attributions | Both hosts | Map to bundled `control-cli` / `control-ui`. |
 
 ## Required phase guidance
 

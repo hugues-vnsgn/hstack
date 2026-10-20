@@ -62,12 +62,26 @@ Use the bundled language baselines and applicable platform references. Optional
 expert skills add depth without becoming baseline prerequisites. Keep consumer
 apps outside this plugin.
 
-For mobile bug fixes, assign a fresh scoped regression-test worker before the production
+For mobile bug fixes, assign a fresh general-purpose regression worker before the production
 worker. Independently observe RED against unfixed production, then give a separate
 fresh production worker the failing regression and observe GREEN on that same
 regression. Preserve the core TDD impractical-test exception with a concrete
 reason and real surface proof. For shared changes, cover affected Android and iOS
 surfaces. Missing proof is blocked or inconclusive, never a pass.
+
+The regression worker reads only the `tdd` SKILL.md, the matching language baseline
+at absolute installed paths, the native execution adapter at its absolute installed
+path, and the files named in its brief. It does not load
+the full mode or principles. The production worker is unchanged.
+Include `<plugin>/adapters/native-execution.md` as an absolute installed path in the brief.
+Any build or test command the regression worker runs goes through the native helper.
+Put this contract in the regression brief. It overrides transitive skill reads
+and TDD's production-edit steps.
+The coordinator never writes the regression test. On a stall, dispatch one fresh
+replacement with a narrower brief. A second stall marks the regression step
+blocked. State it in the final message.
+A worker spawned with the coordinator's turns, `fork_turns: "all"` or the equivalent,
+is not fresh for either the regression or production role.
 
 For native build and test commands, read [native execution](native-execution.md)
 in full and use its helpers with the consumer-selected argv and task evidence

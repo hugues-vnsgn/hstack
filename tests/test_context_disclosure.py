@@ -14,6 +14,34 @@ from test_host_adapters import InstalledFixture
 
 
 class ContextDisclosure(unittest.TestCase):
+    def issue_110_guidance_bytes(self):
+        host = (ROOT / 'plugin/adapters/host.md').read_text()
+        mode = (ROOT / 'plugin/skills/hugues-mode/SKILL.md').read_text()
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        bug = (ROOT / 'plugin/skills/hugues-mode/playbooks/bug-fix.md').read_text()
+        tools = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
+        fidelity = host[host.index('A step includes'):host.index('Name the file in your reply.')]
+        additions = {
+            'plugin/adapters/host.md': check_core.section(host, 'Inherited wording translations') + fidelity,
+            'plugin/skills/hugues-mode/SKILL.md': (
+                mode[mode.index('A step includes'):mode.index('\n\nA large or cross-cutting')]
+                + next(line for line in mode.splitlines() if line.startswith('- Whenever a run spawned workers'))
+                + 'The mobile regression worker uses the general-purpose exception in [workers and models](../../adapters/host-workers.md).'),
+            'plugin/adapters/host-workers.md': (
+                workers[workers.index('The mobile regression worker is'):workers.index('\nAgent mode preserves')]
+                + 'Report deliberate effort lowering too, with its reason.'
+                + 'Full-mode workers load the mode per [host.md](host.md) before work.'),
+            'plugin/adapters/host-workflow-tools.md': check_core.section(tools, 'Codex sandbox'),
+            'plugin/skills/hugues-mode/playbooks/bug-fix.md': bug[bug.index('   Use a fresh general-purpose regression worker.'):bug.index('   Run the same selected regression')],
+            'plugin/agents/hugues-agent.md': 'model: inherit\n',
+            'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
+        }
+        limits = [1300, 550, 500, 750, 900, 15, 15]
+        sizes = {path: len(text.encode()) for path, text in additions.items()}
+        for (path, size), limit in zip(sizes.items(), limits):
+            self.assertLessEqual(size, limit, path)
+        return sizes
+
     def test_initial_adapters_do_not_eagerly_load_unrelated_phase_guidance(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         mobile = (ROOT / 'plugin/adapters/mobile.md').read_text()
@@ -23,7 +51,8 @@ class ContextDisclosure(unittest.TestCase):
         self.assertIn(scope, host)
         native_growth = len((native_row + scope).encode())
         self.assertLessEqual(native_growth, 240)
-        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth, 6000)
+        translated_guidance = self.issue_110_guidance_bytes()['plugin/adapters/host.md']
+        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - translated_guidance, 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
         # setup-hstack are reached only by native invocation, with denials respected, and
         # a file read is no substitute. The user-only read is stated once too, beside the tier.
@@ -202,19 +231,23 @@ class ContextDisclosure(unittest.TestCase):
         brief_growth = len(brief.encode())
         self.assertLessEqual(brief_growth, 560)
         required_growth = native_growth + brief_growth
+        issue_110 = self.issue_110_guidance_bytes()
         for name in ['initial_mode_routing', 'bug_fix']:
             profile = measured['scenarios'][name]
-            self.assertLess(profile['candidate']['bytes'] - required_growth,
+            guidance = sum(size for path, size in issue_110.items() if path in profile['candidate']['paths'])
+            self.assertLess(profile['candidate']['bytes'] - required_growth - guidance,
                             profile['native_before']['bytes'])
         selection_row = next(line for line in host.splitlines(keepends=True)
                              if '[Mobile language scope](host-mobile-languages.md)' in line)
         selection_growth = len(selection_row.encode())
         self.assertLessEqual(selection_growth, 128)
         feature = measured['scenarios']['larger_feature']
+        feature_guidance = sum(size for path, size in issue_110.items() if path in feature['candidate']['paths'])
         self.assertLessEqual(feature['candidate']['bytes'],
-                             feature['native_before']['bytes'] + selection_growth + required_growth)
+                             feature['native_before']['bytes'] + selection_growth + required_growth + feature_guidance)
         routing = measured['scenarios']['initial_mode_routing']
-        self.assertLess(routing['candidate']['bytes'], routing['native_before']['bytes'] * .8)
+        routing_guidance = sum(size for path, size in issue_110.items() if path in routing['candidate']['paths'])
+        self.assertLess(routing['candidate']['bytes'] - routing_guidance, routing['native_before']['bytes'] * .8)
 
     def test_skill_list_budget_is_at_most_2500_characters(self):
         measured = measure_context.measure(ROOT)
@@ -286,7 +319,9 @@ class ContextDisclosure(unittest.TestCase):
         before = sum(len(text.encode()) for text in main.values())
         self.assertEqual(read_set['candidate']['bytes'], candidate)
         self.assertEqual(read_set['pre_pr_main']['bytes'], before)
-        self.assertLess(candidate, before)
+        guidance = sum(size for path, size in self.issue_110_guidance_bytes().items()
+                       if path in read_set['candidate_paths'])
+        self.assertLess(candidate - guidance, before)
         router = 'plugin/skills/hugues-mode/SKILL.md'
         self.assertLess((ROOT / router).stat().st_size, len(main[router].encode()))
 
@@ -363,6 +398,21 @@ class InstalledPhaseGuidance(InstalledFixture, unittest.TestCase):
             'complete log-file path to `log.sh`',
             'Keep all state outside the installed plugin',
         ):
+            with self.subTest(required=required):
+                self.assertIn(required, body)
+
+    def test_codex_sandbox_guidance_preserves_the_store_and_direct_commands(self):
+        result = self.bound('read-workflow', 'adapters/host-workflow-tools.md')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        body = ' '.join(check_core.section(result.stdout, 'Codex sandbox').split())
+        for required in [
+                'codex --add-dir <evidence store> --add-dir <worktree root>',
+                "chief's 2026-10-20 observation", 'sandbox still on',
+                'Otherwise request per-command escalation.',
+                '`adb`', '`xcrun simctl`', 'CoreSimulator', 'Gradle wrapper',
+                '`swift build` / `swift test`', 'ModuleCache', '`git` index writes in a linked worktree',
+                'A `/tmp` fallback is allowed only when the final message names it.',
+                'Run commands directly. Never use a wrapper script that runs arbitrary arguments.']:
             with self.subTest(required=required):
                 self.assertIn(required, body)
 

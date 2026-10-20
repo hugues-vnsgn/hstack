@@ -49,6 +49,18 @@ subdirectory. Pass the complete log-file path to `log.sh`. Keep all state outsid
 the installed plugin. This is a path translation, not a new runtime or permission
 to access another program's state.
 
+## Codex sandbox
+
+Prefer launching with `codex --add-dir <evidence store> --add-dir <worktree root>`.
+The chief's 2026-10-20 observation confirmed writes under the added worktree root
+with the sandbox still on. It did not establish access to every native tool.
+Otherwise request per-command escalation.
+
+Known escalation needs include `adb`, `xcrun simctl` / CoreSimulator, the Gradle
+wrapper, `swift build` / `swift test` for ModuleCache, and `git` index writes in a linked worktree.
+Keep the resolved evidence store. A `/tmp` fallback is allowed only when the final message names it.
+Run commands directly. Never use a wrapper script that runs arbitrary arguments.
+
 ## Planning and audit translations
 
 For executable operands in planning and cleanup, use the installed
