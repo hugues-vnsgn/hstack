@@ -22,12 +22,13 @@ prerequisite. Consumer authority and native tool restrictions still apply.
 
 ## Run one selected check
 
-The Python standard-library helper has three entrypoints:
+The Python standard-library helper has four entrypoints:
 
 ```sh
 python3 "<plugin>/adapters/native_exec.py" xcodebuild --request /task/xcode.json --store /task/evidence
 python3 "<plugin>/adapters/native_exec.py" swiftpm --request /task/package.json --store /task/evidence
 python3 "<plugin>/adapters/native_exec.py" gradle --request /task/gradle.json --store /task/evidence
+python3 "<plugin>/adapters/native_exec.py" adb-instrument --request /task/instrument.json --store /task/evidence
 ```
 
 Resolve `<plugin>` from the loaded mode path through [workflow tools](host-workflow-tools.md).
@@ -59,6 +60,27 @@ timeout is 900 seconds; allowed values are greater than zero and at most 86,400.
 | `swiftpm` | `target.package` must match `--package-path` or `cwd`. XCTest needs `--parallel` to write xunit and `--verbose` to expose terminal case results for skip accounting on the observed Swift 6.4 toolchain. Tests need `--xunit-output` equal to the single report path. Keep configuration, triple, framework flags and filters in argv. Set `cwd` directly; `-C` and `--chdir` directory overrides are rejected. |
 | `gradle` | Use the consumer root's `gradlew`. `target.task` is an explicit fully qualified argv task. `target.report_dir` and the single report path name that task's native output root, established from consumer configuration. Preserve variant, source set and supported filters. Set `cwd` directly; `-p` and `--project-dir` directory overrides are rejected. |
 
+`adb-instrument` accepts only a test request with no external `reports`:
+
+```json
+{
+  "argv": ["adb", "-s", "emulator-5560", "shell", "am", "instrument", "-w", "-r", "org.example.app.test/androidx.test.runner.AndroidJUnitRunner"],
+  "cwd": "/work/My Android App",
+  "operation": "test",
+  "target": {
+    "serial": "emulator-5560",
+    "runner": "org.example.app.test/androidx.test.runner.AndroidJUnitRunner"
+  },
+  "reports": []
+}
+```
+
+The serial and runner must match the exact command. This entrypoint only runs
+tests. Install the application and test APKs first through the Gradle helper with
+`operation` `build`, empty `reports`, and the consumer's `installDebug` and
+`installDebugAndroidTest` tasks. Set `ANDROID_SERIAL` to the authorized device
+for installation. The helper never boots, wipes or creates a device.
+
 Resolve one target per attempt. Report roots must be absent, including SwiftPM's
 `-swift-testing.xml` sibling. Choose unused native output paths or authorize
 task-specific report cleanup in the consumer recipe. Existing reports are
@@ -72,11 +94,23 @@ Stdout is one JSON object of at most **8,192 UTF-8 bytes including newline**.
 It includes argv, cwd, target, command status, actual exit code, interpretation,
 outcome, counts, decisive diagnostics and the absolute attempt directory.
 Oversized argv, cwd or target fields explicitly say `omitted` and point to
-`invocation.json`. Diagnostics retain up to six entries with first and last
-errors, Kotlin compiler lines and Gradle's cause block. Styling is removed from
-the summary. Each entry keeps at most 400 characters; long entries retain both
-ends. `details_omitted` flags diagnostic, metadata and final byte-limit truncation.
-Full detail remains in retained files.
+`invocation.json`. Diagnostics fill the remaining byte budget in this order:
+
+1. Every native xcresult failure and JUnit failure or error, in report order.
+2. Assertion and compiler log lines, including `is not equal to`, `XCTAssert`,
+   `expected`, Kotlin `e:` and `error:`.
+3. Generic failure, exception and Gradle cause lines, then fallback context when
+   no diagnostic matched.
+
+Passing runs carry no log-scraped diagnostics. Failed and incomplete runs exclude
+policy-exception registration, `RUNTIME_EXCEPTION_*` exports,
+`IDELaunchParametersSnapshot` lookups and D8 warning frames. Summary styling is
+removed. There is no fixed entry count. Before any stack detail, each native failure
+receives one name and message-head preview capped at about 300 encoded bytes.
+Remaining space expands native details, then admits scraped diagnostics. Native
+detail keeps its message head; a shortened scraped line keeps both ends.
+`diagnostics_omitted` counts whole candidate entries left out of the summary. `details_omitted` also flags shortened
+lines, clipped log scanning and metadata omission. Full detail remains retained.
 
 Helper exit 0 means the requested check passed, 1 means an observed failure and
 2 means incomplete evidence or an invalid prerequisite. Inspect the summary.
@@ -91,7 +125,9 @@ has unknown test counts. Interrupted builds have incomplete interpretation.
 Zero selected or all skipped tests never pass.
 
 The summary's `target_verification` distinguishes `native_device`,
-`invocation_and_fresh_reports` and `unverified` association.
+`invocation_and_fresh_reports`, `explicit_adb_serial` and `unverified` association.
+The ADB association records the selected command serial; the raw protocol does
+not independently attest device identity.
 
 Xcode retains original `.xcresult` and queries the selected toolchain's modern
 `xcresulttool get test-results summary --schema-version 0.4.0`. The observed
@@ -124,6 +160,22 @@ up-to-date, skipped and no-source task results cannot establish fresh execution.
 Unknown native formats remain unsupported. JVM filtering does not imply that
 instrumentation or Kotlin/Native tasks support the same filter.
 
+Gradle connected tests such as `connectedDebugAndroidTest` remain an unobserved
+gap on this machine. The UTP host component
+`android-test-plugin-host-additional-test-output` is missing. The direct ADB
+instrumentation observation does not establish that the Gradle connected path works.
+
+`adb-instrument` derives test results from retained `-r` status bundles, not
+ADB's process exit code. Per-test `-1` and `-2` statuses establish failures.
+Passing evidence needs matching starts and terminal results, consistent test
+counts, a normal final instrumentation result and positive executed tests.
+Crashes, runner errors, duplicate or unfinished results, unknown protocol states
+and zero started tests cannot pass. Failure evidence survives incomplete protocol
+output. A device/transport error without native failure evidence is incomplete,
+even when ADB exits nonzero. Raw output stays in `stdout.log`; `reports.json` has
+no external reports. Ignored `-3` and assumption-failure `-4` bundles are covered
+by constructed parser tests. An on-device `@Ignore` run remains unobserved.
+
 XML commonly lacks platform/device identity. The discovered task/report mapping
 and fresh command associate these reports; they do not prove an emulator or
 iOS runtime. Optional `target.suite_pattern` matches `classname.name`; an
@@ -135,7 +187,14 @@ host run establishes mobile proof.
 Every invocation gets a new directory containing `invocation.json`, raw
 `stdout.log`, raw `stderr.log`, `reports.json`, native copies under `reports/`
 and `summary.json`. The invocation records exact argv, cwd, target, source report
-paths, explicit environment overrides, timeout and timestamps. The report
+paths, explicit environment overrides, timeout and timestamps. Before execution,
+it also records the consumer's `revision` from `git rev-parse HEAD` and `dirty`
+from `git --no-optional-locks -c core.fsmonitor=false status --porcelain --untracked-files=all`. This includes untracked files without optional Git locks
+or a consumer fsmonitor hook. `revision_reason` is
+null when inspection succeeds. Outside a Git repository, revision and dirty are
+null with a reason. Unavailable Git or failed inspection is recorded explicitly
+and does not become a clean-tree claim. Status failure or timeout preserves a
+known revision, sets dirty to null and supplies a nonempty reason. The report
 manifest records original paths, retained paths and file hashes. Every retry
 keeps its own logs and failures. There is no shared latest-result file.
 
@@ -154,4 +213,6 @@ replace final integration, native caller or UI proof in the consumer recipe.
 Native interfaces are documented by [SwiftPM](https://github.com/swiftlang/swift-package-manager/blob/main/Sources/PackageManagerDocs/Documentation.docc/SwiftTest.md),
 [Gradle](https://docs.gradle.org/current/userguide/java_testing.html) and
 [Xcode](https://developer.apple.com/documentation/xcode/running-tests-and-interpreting-results).
+The [Android instrumentation parser](https://android.googlesource.com/platform/tools/base/+/master/ddmlib/src/main/java/com/android/ddmlib/testrunner/InstrumentationResultParser.java)
+defines the raw status protocol.
 Verify version-sensitive flags against the consumer's installed tool help.

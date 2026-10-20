@@ -32,35 +32,12 @@ class Diagnostics:
 
     def add(self, value):
         line = ANSI.sub('', str(value)).strip()
-        if not line:
-            return
-        if len(line) > 400:
-            line = line[:197] + ' ... ' + line[-198:]
-            self.omitted = True
-        if line in self.lines:
-            return
-        self.lines.append(line)
-        if len(self.lines) > 6:
-            self.lines.pop(3)
-            self.omitted = True
+        if line:
+            self.lines.append(line)
 
     def extend(self, lines):
         for line in lines:
             self.add(line)
-
-
-def summary_diagnostics(native, logs):
-    lines = list(dict.fromkeys(native.lines + logs.lines))
-    omitted = native.omitted or logs.omitted or len(lines) > 6
-    if len(lines) > 6 and native.lines and logs.lines:
-        protected = {lines.index(native.lines[0]), lines.index(native.lines[-1]),
-                     lines.index(logs.lines[0]), lines.index(logs.lines[-1])}
-        for index in range(len(lines)):
-            if len(protected) == 6:
-                break
-            protected.add(index)
-        lines = [line for index, line in enumerate(lines) if index in protected]
-    return lines, omitted
 
 
 @dataclass(frozen=True)
@@ -179,9 +156,18 @@ def xcode_actions(command):
 def validate_target(invocation):
     argv, target = invocation.argv, invocation.target
     command = argv[1:] if Path(argv[0]).name == 'xcrun' else argv
-    expected = {'xcodebuild': 'xcodebuild', 'swiftpm': 'swift', 'gradle': 'gradlew'}[invocation.tool]
+    expected = {'xcodebuild': 'xcodebuild', 'swiftpm': 'swift', 'gradle': 'gradlew',
+                'adb-instrument': 'adb'}[invocation.tool]
     if not command or Path(command[0]).name != expected:
         raise EvidenceError('prerequisite', 'expected explicit ' + expected + ' invocation')
+    if invocation.tool == 'adb-instrument':
+        serial, runner = target.get('serial'), target.get('runner')
+        if (not isinstance(serial, str) or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_.:-]*', serial)
+                or not isinstance(runner, str) or not re.fullmatch(r'[A-Za-z0-9_.]+/[A-Za-z0-9_.]+', runner)
+                or argv[1:] != ['-s', serial, 'shell', 'am', 'instrument', '-w', '-r', runner]
+                or invocation.operation != 'test' or invocation.reports):
+            raise EvidenceError('prerequisite', 'adb-instrument requires test-only adb -s <serial> shell am instrument -w -r <runner> and no external reports')
+        return
     if invocation.tool == 'xcodebuild':
         for field, flag in [('scheme', '-scheme'), ('destination', '-destination')]:
             if not target.get(field) or option(command, flag) != target[field]:
@@ -298,15 +284,24 @@ def log_lines(attempt):
 
 
 def log_diagnostics(attempt, fallback=False):
-    errors, tail = Diagnostics(), Diagnostics()
+    assertions, errors, tail = Diagnostics(), Diagnostics(), []
     block = None
+    d8_warning = False
     for line, clipped in log_lines(attempt):
         errors.omitted |= clipped
         if not line:
+            d8_warning = False
+            continue
+        if line.startswith('WARNING: D8:'):
+            d8_warning = True
+            continue
+        if d8_warning and (line.startswith('at ') or line.startswith('Caused by:')):
+            continue
+        d8_warning = False
+        if re.search(r'RegisterExecutionPolicyException|Register execution policy exception|RUNTIME_EXCEPTION_|IDELaunchParametersSnapshot', line, re.I):
             continue
         if block is not None and line.startswith('* '):
             errors.add('\n'.join(block.lines))
-            errors.omitted |= block.omitted
             block = None
         if line == '* What went wrong:':
             block = Diagnostics()
@@ -317,16 +312,18 @@ def log_diagnostics(attempt, fallback=False):
                 or line.startswith('|') or re.search(r'^(?:BUILD FAILED|FAILURE: Build failed)', line)
                 or re.search(r'^\S+ > .* FAILED$', line)):
             continue
-        tail.add(line)
-        if re.search(r'error:|fatal|exception|failed|failure|^e:\s', line, re.I):
+        tail = (tail + [line])[-2:]
+        if re.search(r'is not equal to|XCTAssert|\bexpected\b|error:|^e:\s', line, re.I):
+            assertions.add(line)
+        elif re.search(r'fatal|exception|failed|failure', line, re.I):
             errors.add(line)
     if block is not None:
         errors.add('\n'.join(block.lines))
-        errors.omitted |= block.omitted
-    if not errors.lines and fallback:
-        errors.extend(tail.lines[-2:])
-        errors.omitted |= tail.omitted
-    return errors
+    assertions.extend(errors.lines)
+    assertions.omitted |= errors.omitted
+    if not assertions.lines and fallback:
+        assertions.extend(tail)
+    return assertions
 
 
 def matching_log_lines(attempt, pattern):
@@ -521,7 +518,102 @@ def interpret_xcode(invocation, retained, attempt, environment, diagnostics):
         write_json(attempt / 'inspection.json', record)
 
 
+def consumer_revision(cwd):
+    record = {'revision': None, 'dirty': None, 'revision_reason': None}
+    try:
+        revision = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=cwd, capture_output=True,
+                                  text=True, timeout=10)
+        if revision.returncode or not revision.stdout.strip():
+            record['revision_reason'] = revision.stderr.strip() or 'git revision unavailable'
+            return record
+        record['revision'] = revision.stdout.strip()
+    except (OSError, subprocess.TimeoutExpired) as error:
+        record['revision_reason'] = str(error) or 'git revision unavailable'
+        return record
+    try:
+        status = subprocess.run(['git', '--no-optional-locks', '-c', 'core.fsmonitor=false',
+                                 'status', '--porcelain', '--untracked-files=all'], cwd=cwd,
+                                capture_output=True, text=True, timeout=10)
+        if status.returncode:
+            record['revision_reason'] = status.stderr.strip() or 'git status unavailable'
+        else:
+            record['dirty'] = bool(status.stdout)
+    except (OSError, subprocess.TimeoutExpired) as error:
+        record['revision_reason'] = str(error) or 'git status unavailable'
+    return record
+
+
+def interpret_instrument(attempt, diagnostics):
+    bundle, starts, terminals, totals, final = {}, set(), {}, set(), []
+    failures = set()
+    uncertain, runner_error, key = False, False, None
+    for line, clipped in log_lines(attempt):
+        uncertain |= clipped
+        field = re.fullmatch(r'INSTRUMENTATION_STATUS: ([^=]+)=(.*)', line)
+        if field:
+            uncertain |= bool(final)
+            key, value = field.groups()
+            if key in bundle:
+                uncertain = True
+            bundle[key] = value
+            if key.lower() in {'error', 'shortmsg'}:
+                runner_error = True
+                diagnostics.add(value)
+            continue
+        code = re.fullmatch(r'INSTRUMENTATION_STATUS_CODE: (-?\d+)', line)
+        if code:
+            uncertain |= bool(final)
+            state = int(code[1])
+            identity = (bundle.get('class'), bundle.get('test'))
+            if 'numtests' in bundle:
+                try:
+                    totals.add(int(bundle['numtests']))
+                except ValueError:
+                    uncertain = True
+            if not all(identity):
+                uncertain = True
+            elif state == 1:
+                uncertain |= identity in starts or identity in terminals
+                starts.add(identity)
+            elif state in {0, -1, -2, -3, -4}:
+                uncertain |= identity in terminals
+                terminals[identity] = state
+                if state in {-1, -2}:
+                    failures.add(identity)
+                    diagnostics.add('.'.join(identity) + ': ' + bundle.get('stack', 'instrumentation test failed'))
+            elif state != 2:
+                uncertain = True
+            bundle, key = {}, None
+            continue
+        finish = re.fullmatch(r'INSTRUMENTATION_CODE: (-?\d+)', line)
+        if finish:
+            final.append(int(finish[1]))
+            key = None
+        elif re.match(r'INSTRUMENTATION_(?:FAILED|ABORTED):', line) or re.match(r'INSTRUMENTATION_RESULT: (?:shortMsg|Error)=', line):
+            runner_error = True
+            diagnostics.add(line)
+            key = None
+        elif line.startswith('INSTRUMENTATION_'):
+            uncertain |= not line.startswith('INSTRUMENTATION_RESULT: ')
+            key = None
+        elif key is not None:
+            bundle[key] += '\n' + line
+    failed = len(failures)
+    skipped = sum(state in {-3, -4} and identity not in failures for identity, state in terminals.items())
+    counts = {'executed': len(terminals) - skipped, 'failed': failed, 'skipped': skipped}
+    if final == [-1] and not terminals and not runner_error and not bundle and not uncertain and not starts:
+        return 'zero_tests', counts
+    if (runner_error or final != [-1] or bundle or uncertain
+            or totals != {len(terminals)} or not starts
+            or starts != {identity for identity, state in terminals.items() if state != -3}):
+        diagnostics.add('instrumentation protocol incomplete, crashed or inconsistent')
+        return 'incomplete', counts if terminals else dict(UNKNOWN)
+    return ('complete' if counts['executed'] else 'zero_tests'), counts
+
+
 def interpret(invocation, records, retained, attempt, environment, diagnostics):
+    if invocation.tool == 'adb-instrument':
+        return interpret_instrument(attempt, diagnostics)
     if invocation.operation == 'build':
         return 'build_only', dict(UNKNOWN)
     for row in records:
@@ -567,27 +659,87 @@ def interpret(invocation, records, retained, attempt, environment, diagnostics):
     return ('incomplete' if counts['executed'] is None else 'zero_tests' if counts['executed'] == 0 else 'complete'), counts
 
 
-def bounded_summary(summary):
+def bounded_summary(summary, native, logs):
+    def encode():
+        return json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
+
+    def fits():
+        return len(encode().encode()) <= SUMMARY_BYTES
+
+    def fit_detail(index, line, both_ends):
+        previous = summary['diagnostics'][index]
+        summary['diagnostics'][index] = line
+        if fits():
+            return
+        low, high = 0, len(line) // 2 if both_ends else len(line)
+        while low < high:
+            middle = (low + high + 1) // 2
+            summary['diagnostics'][index] = (line[:middle] + ' ... ' + line[-middle:]
+                                              if both_ends else line[:middle] + ' ...')
+            if fits():
+                low = middle
+            else:
+                high = middle - 1
+        if low >= 20:
+            summary['diagnostics'][index] = (line[:low] + ' ... ' + line[-low:]
+                                              if both_ends else line[:low] + ' ...')
+        else:
+            summary['diagnostics'][index] = previous
+
+    def native_head(line):
+        head = line.splitlines()[0]
+        if head == line and len(json.dumps(head).encode()) <= 300:
+            return head
+        low, high = 0, len(head)
+        while low < high:
+            middle = (low + high + 1) // 2
+            if len(json.dumps(head[:middle] + ' ...').encode()) <= 300:
+                low = middle
+            else:
+                high = middle - 1
+        return head[:low] + ' ...'
+
+    seen, scraped = set(native.lines), []
+    for line in logs.lines:
+        if line not in seen:
+            seen.add(line)
+            scraped.append(line)
+    candidates = native.lines + scraped
+    summary['details_omitted'] |= native.omitted or logs.omitted
+    summary['diagnostics'] = []
+    summary['diagnostics_omitted'] = len(candidates)
     for field in ['argv', 'cwd', 'target']:
         if len(json.dumps(summary[field]).encode()) > 1600:
             summary[field] = {'omitted': True, 'artifact': 'invocation.json'}
             summary['details_omitted'] = True
-    encoded = json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
-    while len(encoded.encode()) > SUMMARY_BYTES and summary['diagnostics']:
-        lines = summary['diagnostics']
-        index = max(range(len(lines)), key=lambda i: len(json.dumps(lines[i])))
-        if len(lines[index]) > 80:
-            size = len(lines[index]) // 4
-            lines[index] = lines[index][:size] + ' ... ' + lines[index][-size:]
-        else:
-            lines.pop(len(lines) // 2)
-        summary['details_omitted'] = True
-        encoded = json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
-    if len(encoded.encode()) > SUMMARY_BYTES:
+    if not fits():
         for field in ['argv', 'cwd', 'target']:
             summary[field] = {'omitted': True, 'artifact': 'invocation.json'}
         summary['details_omitted'] = True
-        encoded = json.dumps(summary, ensure_ascii=True, separators=(',', ':')) + '\n'
+    for line in native.lines:
+        summary['diagnostics'].append(native_head(line))
+        summary['diagnostics_omitted'] -= 1
+        if not fits():
+            summary['diagnostics'].pop()
+            summary['diagnostics_omitted'] += 1
+            break
+    for index, line in enumerate(native.lines[:len(summary['diagnostics'])]):
+        fit_detail(index, line, both_ends=False)
+    if len(summary['diagnostics']) == len(native.lines):
+        for line in scraped:
+            summary['diagnostics'].append(line)
+            summary['diagnostics_omitted'] -= 1
+            if fits():
+                continue
+            summary['diagnostics'][-1] = ''
+            fit_detail(len(summary['diagnostics']) - 1, line, both_ends=True)
+            if not summary['diagnostics'][-1]:
+                summary['diagnostics'].pop()
+                summary['diagnostics_omitted'] += 1
+            break
+    summary['details_omitted'] |= (summary['diagnostics_omitted'] > 0
+                                   or summary['diagnostics'] != candidates)
+    encoded = encode()
     if len(encoded.encode()) > SUMMARY_BYTES:
         raise ValueError('evidence path exceeds summary capacity')
     return encoded
@@ -605,7 +757,8 @@ def run(invocation, store):
     record = {'schema_version': 1, 'tool': invocation.tool, 'argv': invocation.argv,
               'cwd': str(invocation.cwd), 'operation': invocation.operation, 'target': invocation.target,
               'reports': invocation.reports, 'env': invocation.env, 'environment': 'inherited_with_explicit_overrides',
-              'timeout_seconds': invocation.timeout_seconds, 'started_at': datetime.now(timezone.utc).isoformat()}
+              'timeout_seconds': invocation.timeout_seconds, 'started_at': datetime.now(timezone.utc).isoformat(),
+              **consumer_revision(invocation.cwd)}
     write_json(attempt / 'invocation.json', record)
     for name in ['stdout.log', 'stderr.log']:
         (attempt / name).touch()
@@ -630,25 +783,29 @@ def run(invocation, store):
         diagnostics.add(str(error))
     if not (attempt / 'reports.json').exists():
         write_json(attempt / 'reports.json', [])
-    if status in {'exited', 'signalled'} and code != 0 or counts['failed'] is not None and counts['failed'] > 0:
+    if (invocation.tool == 'adb-instrument' and interpretation != 'complete'
+            and not (counts['failed'] is not None and counts['failed'] > 0)):
+        outcome = 'incomplete'
+    elif status in {'exited', 'signalled'} and code != 0 or counts['failed'] is not None and counts['failed'] > 0:
         outcome = 'failed'
     elif status == 'exited' and code == 0 and interpretation in {'build_only', 'complete'}:
         outcome = 'passed'
     else:
         outcome = 'incomplete'
-    diagnostic_lines, omitted = summary_diagnostics(diagnostics, log_diagnostics(attempt, fallback=outcome != 'passed'))
+    logs = log_diagnostics(attempt, fallback=True) if outcome != 'passed' else Diagnostics()
     summary = {'schema_version': 1, 'attempt': str(attempt), 'tool': invocation.tool,
                'operation': invocation.operation, 'argv': invocation.argv, 'cwd': str(invocation.cwd),
                'target': invocation.target, 'command_status': status, 'exit_code': code,
                'interpretation_status': interpretation, 'outcome': outcome, 'counts': counts,
                'target_verification': ('native_device' if invocation.tool == 'xcodebuild'
+                                       else 'explicit_adb_serial' if invocation.tool == 'adb-instrument'
                                        else 'invocation_and_fresh_reports') if interpretation == 'complete' else 'unverified',
-               'diagnostics': diagnostic_lines, 'details_omitted': omitted,
+               'diagnostics': [], 'details_omitted': False,
                'artifacts': {'invocation': 'invocation.json', 'stdout': 'stdout.log',
                              'stderr': 'stderr.log', 'reports': 'reports.json'}}
     record['finished_at'] = datetime.now(timezone.utc).isoformat()
     write_json(attempt / 'invocation.json', record)
-    output = bounded_summary(summary)
+    output = bounded_summary(summary, diagnostics, logs)
     write_json(attempt / 'summary.json', summary)
     sys.stdout.write(output)
     return {'passed': 0, 'failed': 1, 'incomplete': 2}[outcome]
@@ -656,7 +813,7 @@ def run(invocation, store):
 
 def main():
     parser = argparse.ArgumentParser(description='Execute one consumer-selected native command and retain its evidence.')
-    parser.add_argument('tool', choices=['xcodebuild', 'swiftpm', 'gradle'])
+    parser.add_argument('tool', choices=['xcodebuild', 'swiftpm', 'gradle', 'adb-instrument'])
     parser.add_argument('--request', type=Path, required=True)
     parser.add_argument('--store', type=Path, required=True)
     arguments = parser.parse_args()
