@@ -1,6 +1,10 @@
 import type * as T from "./types.ts";
 export const renderJson = (verdict: T.WatcherVerdict): string =>
   `${JSON.stringify(verdict)}\n`;
+function missingContextDetails(checks: readonly T.PendingCheck[]): string {
+  const missing = checks.filter((check) => check.reportedState === "MISSING");
+  return missing.length === 0 ? "" : `; ${missing.map((check) => `${check.name} (missing required context)`).join(", ")}`;
+}
 function ciCell(row: T.PrSnapshot): string {
   if (row.kind !== "open") return "\u2014";
   const was = row.ci.hadPreviousPassingCi ? ", was ✅" : "";
@@ -8,9 +12,9 @@ function ciCell(row: T.PrSnapshot): string {
     case "ci-clean":
       return "✅";
     case "ci-pending":
-      return `⏳ ${row.ci.pending.length} pending${was}`;
+      return `⏳ ${row.ci.pending.length} pending${was}${missingContextDetails(row.ci.pending)}`;
     case "ci-failing":
-      return `❌ ${row.ci.failed.length} failed${row.ci.pending.length ? `, ${row.ci.pending.length} pending` : ""}${was}`;
+      return `❌ ${row.ci.failed.length} failed${row.ci.pending.length ? `, ${row.ci.pending.length} pending` : ""}${was}${missingContextDetails(row.ci.pending)}`;
     case "ci-github-rejected":
       return `❌ GitHub reports failing checks${was}`;
     default: {
@@ -138,7 +142,7 @@ export function renderPretty(verdict: T.WatcherVerdict): string {
       return renderStatusTable(verdict.rows);
     case "WAITING":
       return verdict.reason.kind === "pending-checks"
-        ? `WAITING: frontier=#${verdict.frontier.number}; ${verdict.reason.pending.length} check${verdict.reason.pending.length === 1 ? "" : "s"} pending\n`
+        ? `WAITING: frontier=#${verdict.frontier.number}; ${verdict.reason.pending.length} check${verdict.reason.pending.length === 1 ? "" : "s"} pending${missingContextDetails(verdict.reason.pending)}\n`
         : `WAITING: frontier=#${verdict.frontier.number} is blocker-free; waiting for merge queue (${verdict.reason.unmergedCount} PR${verdict.reason.unmergedCount === 1 ? "" : "s"} unmerged)\n`;
     case "ADVANCE":
       return `ADVANCE: merged #${verdict.merged.number}; next=#${verdict.frontier.number}; remaining=${verdict.remaining}\n`;
@@ -157,7 +161,7 @@ export function renderPretty(verdict: T.WatcherVerdict): string {
       return `COMPLETE: queued stack merged (${verdict.queue.length} PR${verdict.queue.length === 1 ? "" : "s"})\n`;
     case "TIMEOUT":
       if (verdict.reason.kind === "pending-checks")
-        return "TIMEOUT: checks still pending\n";
+        return `TIMEOUT: checks still pending${missingContextDetails(verdict.reason.pending)}\n`;
       if (verdict.reason.kind === "status-unavailable")
         return "TIMEOUT: GitHub status remained unavailable\n";
       return `TIMEOUT: queued stack still has ${verdict.reason.unmergedCount} PR${verdict.reason.unmergedCount === 1 ? "" : "s"} unmerged; frontier=#${verdict.reason.frontier.number}\n`;

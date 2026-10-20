@@ -634,10 +634,28 @@ export class GhGitHubReader implements T.GitHubReader {
 
 export async function resolveChecks(
   reader: T.GitHubReader,
-  context: T.PrContext
+  context: T.PrContext,
+  requiredContexts: readonly string[] = []
 ): Promise<T.CheckRead> {
+  const withRequired = (checks: readonly T.Check[]): T.NonEmpty<T.Check> | null =>
+    nonEmpty([
+      ...checks,
+      ...[...new Set(requiredContexts)]
+        .filter((required) => !checks.some((check) =>
+          required.endsWith("/") ? check.name.startsWith(required) : check.name === required
+        ))
+        .map((name): T.PendingCheck => ({
+          kind: "pending",
+          name,
+          reportedState: "MISSING",
+          description: "Required status context has not been reported on the PR head",
+          link: "",
+          workflow: "",
+        })),
+    ]);
   const fast = await reader.checksFastPath(context);
-  const direct = fast.kind === "checks" ? nonEmpty(fast.checks) : null;
+  const direct = fast.kind === "checks" && fast.checks.length !== 0
+    ? withRequired(fast.checks) : null;
   if (direct !== null) return { source: "gh-pr-checks", checks: direct };
   const checks: T.Check[] = [];
   let after: string | null = null;
@@ -646,7 +664,7 @@ export async function resolveChecks(
     checks.push(...page.checks);
     after = page.endCursor;
   } while (after !== null);
-  const fallback = nonEmpty(checks);
+  const fallback = withRequired(checks);
   if (fallback !== null) return { source: "graphql-rollup", checks: fallback };
   const suffix =
     fast.kind === "unusable"

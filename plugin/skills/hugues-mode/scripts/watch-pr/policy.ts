@@ -69,6 +69,7 @@ export async function readSnapshot(args: {
   readonly context: T.PrContext;
   readonly pendingHistory: "include" | "omit";
   readonly allowDraft: boolean;
+  readonly requiredContexts?: readonly string[];
 }): Promise<T.PrSnapshot> {
   const facts = await args.reader.pullRequest(args.context);
   if (facts.state === "MERGED" || facts.mergedAt !== null)
@@ -76,7 +77,7 @@ export async function readSnapshot(args: {
   if (facts.state === "CLOSED")
     return { kind: "closed", context: args.context, facts };
   const threads = await resolveReviewThreads(args.reader, args.context);
-  const checks = await resolveChecks(args.reader, args.context);
+  const checks = await resolveChecks(args.reader, args.context, args.requiredContexts);
   const failed = nonEmpty(
     checks.checks.filter(
       (check): check is T.FailedCheck => check.kind === "failed"
@@ -140,6 +141,7 @@ export async function readSnapshot(args: {
     reviewAutomationRunning: checks.checks.some(
       (check) =>
         check.kind === "pending" &&
+        check.reportedState !== "MISSING" &&
         AUTOMATION_TOKENS.some((token) =>
           check.name.toLowerCase().includes(token)
         )
@@ -439,6 +441,7 @@ export async function runSimple(args: {
           context,
           pendingHistory: "include",
           allowDraft: args.options.allowDraft,
+          requiredContexts: args.options.requiredContexts,
         })
       );
     const complete = nonEmpty(rows);
@@ -752,6 +755,7 @@ export async function runQueued(args: {
       context,
       pendingHistory: "omit",
       allowDraft: args.options.allowDraft,
+      requiredContexts: args.options.requiredContexts,
     });
     const applied = applyQueueSnapshot(
       state,

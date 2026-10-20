@@ -29,6 +29,9 @@ workflow gates and invocation boundaries. Installed adapter tests exercise real
 Python/Node helpers in disposable consumers with synthetic activity only.
 
 The prior 52 Bun tests and strict watch-pr TypeScript result at `37eb703` remain
-historical evidence. Current helper checks must record their own run.
+historical evidence. On October 20, 2026, `bun test ./watch-pr` passed all 65
+watch-pr cases with Bun 1.3.14 for the required-context change. The nine new
+cases cover argument validation, missing contexts, prefix matching, and polling
+in single, stack, and queued modes. This run is separate from the Python suite.
 No installation, native host, device, cloud, forge or loop execution is implied.
 Source equality and passing static tests do not establish runtime parity.

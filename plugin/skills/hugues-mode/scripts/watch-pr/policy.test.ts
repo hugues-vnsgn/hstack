@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { WatcherQueryError } from "./github.ts";
+import { WatcherQueryError, mapRollupNode } from "./github.ts";
 import {
   applyQueueSnapshot,
   assessGitHubMerge,
@@ -41,7 +41,81 @@ const options = {
   timeout: 0,
   maxQueryErrors: 5,
   allowDraft: false,
+  requiredContexts: [],
 } satisfies PollingOptions;
+
+describe("required status contexts", () => {
+  async function snapshotFor(checks: readonly Check[], requiredContexts: readonly string[]) {
+    const snapshot = await readSnapshot({
+      reader: fakeReader({ fastPath: { kind: "checks", checks } }),
+      context: context(1),
+      pendingHistory: "include",
+      allowDraft: false,
+      requiredContexts,
+    });
+    if (snapshot.kind !== "open") throw new Error("expected open snapshot");
+    return snapshot;
+  }
+
+  it("reports zero checks as ci-pending with each missing context named", async () => {
+    const snapshot = await snapshotFor([], ["local-ci/lint", "local-ci/android"]);
+    expect(snapshot.ci.kind).toBe("ci-pending");
+    expect(classifyPr(snapshot)).toMatchObject({
+      kind: "waiting",
+      pending: [
+        { name: "local-ci/lint", reportedState: "MISSING" },
+        { name: "local-ci/android", reportedState: "MISSING" },
+      ],
+    });
+  });
+
+  it("does not count a required context that passed only on an older commit", async () => {
+    const snapshot = await readSnapshot({
+      reader: fakeReader({
+        fastPath: { kind: "checks", checks: [] },
+        commitRollups: [{ oid: "old", state: "SUCCESS" }],
+      }),
+      context: context(1),
+      pendingHistory: "include",
+      allowDraft: false,
+      requiredContexts: ["local-ci/lint"],
+    });
+    expect(snapshot).toMatchObject({
+      kind: "open",
+      ci: { kind: "ci-pending", hadPreviousPassingCi: true, pending: [{ name: "local-ci/lint", reportedState: "MISSING" }] },
+    });
+  });
+
+  it("accepts successful CheckRun names and StatusContext contexts as ci-clean", async () => {
+    for (const node of [
+      { __typename: "CheckRun", name: "local-ci/lint", status: "COMPLETED", conclusion: "SUCCESS" },
+      { __typename: "StatusContext", context: "local-ci/lint", state: "SUCCESS" },
+    ]) {
+      const check = mapRollupNode(node);
+      if (check === null) throw new Error("expected mapped check");
+      const snapshot = await snapshotFor([check], ["local-ci/lint"]);
+      expect(snapshot.ci.kind).toBe("ci-clean");
+      expect(classifyPr(snapshot).kind).toBe("ready");
+    }
+  });
+
+  it("matches a trailing slash as a prefix and other entries exactly", async () => {
+    const checks = [passingCheck("local-ci/android")];
+    expect((await snapshotFor(checks, ["local-ci/"])).ci.kind).toBe("ci-clean");
+    expect((await snapshotFor(checks, ["local-ci"])).ci.kind).toBe("ci-pending");
+    expect((await snapshotFor(checks, ["local-ci/ios"])).ci.kind).toBe("ci-pending");
+    expect((await snapshotFor([passingCheck("local-ci-other/android")], ["local-ci/"])).ci.kind).toBe("ci-pending");
+  });
+
+  it("keeps a failed required check ci-failing even with another requirement missing", async () => {
+    const snapshot = await snapshotFor([failedCheck("local-ci/lint")], ["local-ci/lint", "local-ci/ios"]);
+    expect(snapshot.ci.kind).toBe("ci-failing");
+    expect(classifyPr(snapshot)).toMatchObject({
+      kind: "blocker",
+      blocker: { kind: "failing-checks", ci: { failed: [{ name: "local-ci/lint" }], pending: [{ name: "local-ci/ios" }] } },
+    });
+  });
+});
 
 describe("readiness truth table", () => {
   it("covers every specified row and every UNKNOWN rollup value", () => {

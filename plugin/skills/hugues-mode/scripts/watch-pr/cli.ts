@@ -64,6 +64,10 @@ function stackPrList(value: string): T.NonEmpty<T.PrNumber> {
   if (parsed === null) throw new InvalidArgumentError("cannot be empty");
   return parsed;
 }
+function requiredContext(value: string, previous: readonly string[]): readonly string[] {
+  if (!value.trim()) throw new InvalidArgumentError("must not be empty");
+  return [...previous, value];
+}
 interface RawOptions {
   readonly owner?: string;
   readonly repo?: string;
@@ -77,6 +81,7 @@ interface RawOptions {
   readonly maxQueryErrors: number;
   readonly statusOnly: boolean;
   readonly allowDraft: boolean;
+  readonly requireContext: readonly string[];
   readonly pretty: boolean;
 }
 export function parseArgs(
@@ -128,6 +133,12 @@ export function parseArgs(
     )
     .option("--status-only", "print one status table and exit 0", false)
     .option("--allow-draft", "do not treat a draft as a merge gate", false)
+    .option(
+      "--require-context <name-or-prefix>",
+      "required check name; trailing / matches a prefix (repeatable)",
+      requiredContext,
+      []
+    )
     .option("--pretty", "render human text instead of JSON", false);
   program.parse(argv, { from: "user" });
   const raw = program.opts<RawOptions>();
@@ -147,6 +158,7 @@ export function parseArgs(
       timeout: raw.timeout,
       maxQueryErrors: raw.maxQueryErrors,
       allowDraft: raw.allowDraft,
+      requiredContexts: raw.requireContext,
     },
   };
 }

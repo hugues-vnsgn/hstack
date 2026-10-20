@@ -78,19 +78,19 @@
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/cli.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/cli.test.ts",
       "source_sha256": "a35592b4c6da96caf8d47987e9cd503fab6c7774ab87d11a43f24b4b5df2a9d1",
-      "candidate_sha256": "a35592b4c6da96caf8d47987e9cd503fab6c7774ab87d11a43f24b4b5df2a9d1",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "aa7d7cccc4b218616303af5da6c06261eaf20a3f79917c99d92e9c1557bb3425",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/cli.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/cli.ts",
       "source_sha256": "89c08863089181a232be782c4b2ed90a1552f44aeecb0dcb7aac2c623620e680",
-      "candidate_sha256": "89c08863089181a232be782c4b2ed90a1552f44aeecb0dcb7aac2c623620e680",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "f5507510531191faebafbaadd6a0306caaf374442e04a03f2823e366b96d60b5",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
@@ -114,37 +114,37 @@
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
       "source_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
-      "candidate_sha256": "2fd10659282bab945b9bf4d509513f1580f316d3aadc4138e94d6f69b61b9d98",
+      "candidate_sha256": "4881c6915310fc0daaba284cd992903797340c92ba40e6493e18a1fabee9c727",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts",
       "source_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
-      "candidate_sha256": "a823175866a871ef9a414f3942b5ddb6e6608416d2431a577f09e8cb7a6e27be",
+      "candidate_sha256": "f307d5e255400d6dadd695f5e6e74799f64e9c804d5d866e3f1caed9e7317482",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts",
       "source_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
-      "candidate_sha256": "fed592107edb1073d215d45d2e54cd229c99aa91016910e5c57875a8d5c66371",
+      "candidate_sha256": "a6374bf0789401603442e80e9d0b5722da2da7b0fd1a32f738616e3898ca7105",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/render.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/render.ts",
       "source_sha256": "2b709e86628d5b8fdb61f860e60ababc342b0626c67576305442cf548283a604",
-      "candidate_sha256": "2b709e86628d5b8fdb61f860e60ababc342b0626c67576305442cf548283a604",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
+      "candidate_sha256": "a57a0284818170b5651b6a7d1df02308f0a2c9c8fd063d3062a8c9f9d02b4f62",
+      "same_bytes_as_upstream": false,
+      "same_bytes_as_7db3e80": false,
+      "scope": "adapted PR watcher: a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/tsconfig.json",
@@ -168,10 +168,10 @@
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/types.ts",
       "source_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
-      "candidate_sha256": "8d67a168253d87bc9dc42501f6e551d5dc0b862db8f569225ac5f868b4de36d8",
+      "candidate_sha256": "cd736d54b6c7cba9b07139831dce64861253f304f9f7f9bc9910bca9e2c2ae35",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
-      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
+      "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
     },
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/watch-pr",
