@@ -1,7 +1,7 @@
-# Use hStack 0.5.2
+# Use hStack 0.5.3
 
-This guide is for version 0.5.2. It requires native helper use by command,
-improves diagnostics, adds Android instrumentation and tightens worker handoffs.
+This guide is for version 0.5.3. It lets the PR watcher wait for named status
+contexts, so a required check that has not posted yet reads as pending.
 The hStack rename shipped in 0.4.0. Your app stays in its own repository. Skills are instruction files for
 specific jobs. Playbooks order the steps of a larger task. Start with `hugues-mode` and describe the result you want.
 It retains the generic workflows and applicable Swift/iOS, Kotlin/Android,
@@ -18,12 +18,12 @@ performs no installation or authentication setup.
 
 ## Install in Claude Code
 
-Once its tag exists, version 0.5.2 can load for one session from a `v0.5.2` checkout.
+Once its tag exists, version 0.5.3 can load for one session from a `v0.5.3` checkout.
 Keep an active task on its recorded older copy until you reconcile its binding.
-Updates from 0.4.0 to 0.5.0 and from 0.5.0 to 0.5.1 were observed on both hosts.
-Updating from 0.5.1 to 0.5.2 remains unobserved. Restart the Claude Code process
+Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were observed on
+both hosts. Updating from 0.5.2 to 0.5.3 remains unobserved. Restart the Claude Code process
 after updating. A process started before an update can keep loading its old cache. Follow the
-[upgrade instructions](RELEASE-0.5.2.md#upgrade) for persistent installs.
+[upgrade instructions](RELEASE-0.5.3.md#upgrade) for persistent installs.
 Start from your app directory:
 
 ```sh
@@ -37,7 +37,7 @@ settings to force discovery or bypass an owner-disabled skill.
 For an earlier release, use its release notes ([0.2.0](RELEASE-0.2.0.md),
 [0.3.0](RELEASE-0.3.0.md)) and the instructions at that tag. Their historical
 instructions use the earlier names and do not apply to this version. The
-[0.5.2 release notes](RELEASE-0.5.2.md) describe the current upgrade and its
+[0.5.3 release notes](RELEASE-0.5.3.md) describe the current upgrade and its
 limits. The [0.4.0 notes](RELEASE-0.4.0.md) retain the historical rename and
 migration from 0.3.0.
 
@@ -46,8 +46,8 @@ migration from 0.3.0.
 Codex supports explicit skill invocation and project-native discovery. This
 version supplies canonical skills plus `agents/openai.yaml` invocation metadata.
 The 0.5.0 pretest used an installed Codex copy on CLI 0.163.0. Updates from
-0.4.0 to 0.5.0 and from 0.5.0 to 0.5.1 were later observed on both hosts.
-Updating from 0.5.1 to 0.5.2 remains unobserved.
+0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were later observed on both
+hosts. Updating from 0.5.2 to 0.5.3 remains unobserved.
 Use your host's supported native discovery route, and check that `hugues-mode`
 is available before invoking `$hugues-mode`. Keep the complete resource layout.
 
@@ -158,7 +158,9 @@ hooks off. Interactive normal-permission completion, native runtime parity,
 persisted-transcript coverage, complete mobile journeys and live forge/cloud/loop
 workflows remain unverified. The [0.5.1 validation](RELEASE-0.5.1.md#validation)
 adds native helper observations. The [0.5.2 validation](RELEASE-0.5.2.md#validation)
-separates historical fixtures, final-source helper proof and pending re-runs.
+separates historical fixtures, final-source helper proof and the skipped
+fixture re-runs. The [0.5.3 validation](RELEASE-0.5.3.md#validation) records the
+static checks and the watch-pr Bun suite. No live PR has used `--require-context` yet.
 hStack supports Swift/iOS, Kotlin/Android, KMP and CMP development through its
 mobile adapter. A complete journey on a real consumer project remains
 unobserved on either host.
