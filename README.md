@@ -41,8 +41,8 @@ under normal permissions remains unobserved.
 
 Use a supported native discovery/invocation route and confirm that `hugues-mode`
 appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
-Codex copy. Updates from 0.4.0 to 0.5.0 and from 0.5.0 to 0.5.1 were later
-observed on both hosts. Updating from 0.5.1 to 0.5.2 remains unobserved. See the
+Codex copy. Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2
+were later observed on both hosts. See the
 [upgrade instructions](docs/RELEASE-0.5.2.md#upgrade). If
 `hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
@@ -79,7 +79,7 @@ summaries. See the [execution contract](plugin/adapters/native-execution.md).
 The [0.5.1 validation](docs/RELEASE-0.5.1.md#validation) records final-source
 helper observations, including failed and incomplete attempts. The
 [0.5.2 validation](docs/RELEASE-0.5.2.md#validation) records the current helper
-source and pending fixture re-runs. Helper checks complement the consumer's
+source and why no 0.5.2 fixture re-runs were made. Helper checks complement the consumer's
 required native runtime proof.
 
 ## Reference and maintenance

@@ -30,7 +30,7 @@ codex plugin marketplace upgrade hstack
 codex plugin add hstack@hstack
 ```
 
-Check that the resolved payload reports 0.5.2. These command forms match [0.5.1's upgrade instructions](RELEASE-0.5.1.md#upgrade). On 2026-10-19, both hosts updated from 0.5.0 to 0.5.1. `claude plugin list` reported 0.5.1, and the Codex cache matched `git archive v0.5.1 plugin`. The earlier 0.4.0 to 0.5.0 update was also observed on both hosts. Updating from 0.5.1 to 0.5.2 remains unobserved until the published release is installed and checked. If your host retains an older copy, use its supported reinstall controls and preserve the complete resource layout. Confirm native discovery before invoking `$hugues-mode` or `/hstack:hugues-mode`.
+Check that the resolved payload reports 0.5.2. These command forms match [0.5.1's upgrade instructions](RELEASE-0.5.1.md#upgrade). On 2026-10-19, both hosts updated from 0.5.0 to 0.5.1. `claude plugin list` reported 0.5.1, and the Codex cache matched `git archive v0.5.1 plugin`. The earlier 0.4.0 to 0.5.0 update was also observed on both hosts. On 2026-10-20, these commands updated both hosts from 0.5.1 to 0.5.2. `claude plugin list` reported 0.5.2. The Codex cache matched the release plugin tree exactly. The Claude cache matched except for its runtime `.in_use` marker. If your host retains an older copy, use its supported reinstall controls and preserve the complete resource layout. Confirm native discovery before invoking `$hugues-mode` or `/hstack:hugues-mode`.
 
 Before using `watch-pr` or `orch` from a newly installed copy, prepare its Bun dependencies once. Use a session authorized to install packages and write that copy's scripts directory. Expand `<plugin>` to the absolute root of the copy actually loaded:
 
@@ -79,6 +79,8 @@ The following retained observations have narrower scope. The three final-source 
 |---|---|---|
 | Claude Code update, 0.5.0 to 0.5.1, 2026-10-19 | Observed | Plugin list reported 0.5.1. Historical update only. |
 | Codex update, 0.5.0 to 0.5.1, 2026-10-19 | Observed | Cache matched the tagged plugin tree. Historical update only. |
+| Claude Code update, 0.5.1 to 0.5.2, 2026-10-20 | Observed | Plugin list reported 0.5.2. Cache matched the release plugin tree except for `.in_use`. |
+| Codex update, 0.5.1 to 0.5.2, 2026-10-20 | Observed | Cache matched the release plugin tree exactly. |
 | Codex directory-access check, 2026-10-20 | Writes succeeded | Reported launch with the worktree root added. Sandboxed writes under that root succeeded. No arbitrary-path or native-tool access claim. |
 | Final-source Gradle install | Passed, `build_only`, native exit 0 | Installed app and test APKs. Test counts unknown. No connected-test claim. |
 | Final-source direct instrumentation | Passed, complete, 1 / 0 / 0, native exit 0 | Explicit emulator serial on `Medium_Phone_API_36.1 -read-only -no-snapshot-save`. |
@@ -88,28 +90,19 @@ Retained local evidence is beside the maintainer repository under `hstack.worktr
 
 Earlier Claude review jobs on [#111](https://github.com/hugues-vnsgn/hstack/actions/runs/39358503366), [#112](https://github.com/hugues-vnsgn/hstack/actions/runs/39359814405) and [#113](https://github.com/hugues-vnsgn/hstack/actions/runs/39361441211) rejected the `ANTHROPIC_API_KEY` secret before a model call, with `is_error: true`, zero cost and no model usage. [#114](https://github.com/hugues-vnsgn/hstack/pull/114) switched both Claude workflows to `CLAUDE_CODE_OAUTH_TOKEN`.
 
-The [first review on release PR #115](https://github.com/hugues-vnsgn/hstack/actions/runs/39364795054), at `e01adfe`, also failed. The OAuth input was present, but the result was `is_error: true`, `total_cost_usd: 0` and `modelUsage: {}`. Initialization named `claude-sonnet-5-5`; no model use was observed. The action hid the underlying execution error, so its cause remains unresolved. A green job alone would also be insufficient because workflow-changing PRs can skip review.
+The [first review on release PR #115](https://github.com/hugues-vnsgn/hstack/actions/runs/39364795054), at `e01adfe`, also failed. The OAuth input was present, but the result was `is_error: true`, `total_cost_usd: 0` and `modelUsage: {}`. Initialization named `claude-sonnet-5-5`; no model use was observed. The action hid the underlying execution error. After the token secret was regenerated, a [rerun of that review](https://github.com/hugues-vnsgn/hstack/actions/runs/39365425609) completed with `is_error: false`, 4 turns and a nonzero cost, so the earlier secret was the cause.
 
 ### Fixture re-runs
 
-PENDING. Run these four cells after the version bump merges. Fill each verdict and evidence reference before tagging. Existing 0.5.1 results do not fill these rows.
-
-| 0.5.2 fixture re-run | Verdict | Scope and required evidence |
-|---|---|---|
-| SwiftPM on Codex | PENDING | Fresh installed copy, required helper use, regression and process verdict. |
-| Swift/iOS on Codex | PENDING | Fresh regression author, affected iOS target and process verdict. |
-| Kotlin/Android on Claude Code | PENDING | Helper-backed build and instrumentation, affected target and process verdict. |
-| KMP on Claude Code, control | PENDING | Shared-logic fixture and process verdict against the same release copy. |
-
-Claude Code `model: inherit` behavior is also PENDING until observed after the update. Header tests alone do not prove which model ran.
+The four planned fixture re-runs (SwiftPM and Swift/iOS on Codex, Kotlin/Android and KMP on Claude Code) were not run for this release, to limit token cost. The 0.5.1 fixture verdicts above therefore remain the latest fixture evidence. Whether hosts follow the 0.5.2 rules in a live run is unobserved.
 
 ## Known gaps
 
-- hStack supports Swift/iOS, Kotlin/Android, KMP and CMP development through its mobile adapter, bundled language guidance, native helpers and mobile routes. A complete journey on a real consumer project remains unobserved on either host. That observation is the owner's BFSOne_Mobile_App run. The four release fixture re-runs remain pending above.
+- hStack supports Swift/iOS, Kotlin/Android, KMP and CMP development through its mobile adapter, bundled language guidance, native helpers and mobile routes. A complete journey on a real consumer project remains unobserved on either host. That observation is the owner's BFSOne_Mobile_App run. The planned 0.5.2 fixture re-runs were not run.
 - Gradle `connected*AndroidTest` remains unobserved because `android-test-plugin-host-additional-test-output` is missing. Direct instrumentation does not establish that path. Device handling of instrumentation `-3` ignored bundles also remains unobserved.
-- Claude Code `model: inherit` remains unobserved after the update. Live adoption of the new regression, checklist, control, wait and escalation rules needs the release fixture evidence. Source wording tests alone do not establish compliance.
-- The 0.5.0 to 0.5.1 update was observed on both hosts. The 0.5.1 to 0.5.2 update remains unobserved. Restart Claude Code after updating because an existing process can retain its older plugin cache.
-- The earlier Claude review failures came from a rejected `ANTHROPIC_API_KEY`, before model use. #114 changed both workflows to `CLAUDE_CODE_OAUTH_TOKEN`. The first review of release PR #115 still failed with zero cost and empty model usage. Its underlying error remains unresolved. The watcher's match on bot login `claude` remains unconfirmed.
+- Claude Code `model: inherit` remains unobserved after the update. No Claude Code worker was spawned on 0.5.2 to show which model ran. Live adoption of the new regression, checklist, control, wait and escalation rules is unobserved. Source wording tests alone do not establish compliance.
+- The 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 updates were observed on both hosts. Restart Claude Code after updating because an existing process can retain its older plugin cache.
+- The earlier Claude review failures came from a rejected `ANTHROPIC_API_KEY`, before model use. #114 changed both workflows to `CLAUDE_CODE_OAUTH_TOKEN`. The first review of release PR #115 also failed until the token secret was regenerated. Its rerun reached a model. The watcher's match on bot login `claude` remains unconfirmed.
 - Codex between-turn scheduling remains unavailable. Active-session waits do not establish a scheduler binding. [#34](https://github.com/hugues-vnsgn/hstack/issues/34) items 4 and 5, native history acquisition and managed cloud workers, remain deferred. The optional Orca adapter in [#50](https://github.com/hugues-vnsgn/hstack/issues/50) and [#96](https://github.com/hugues-vnsgn/hstack/issues/96) remain open.
 - Both final 0.5.0 host runs wrote their checklists after reproduction. The accepted Claude run used headless bypassPermissions with hooks disabled. Those observations do not establish interactive completion under normal permissions, full checklist adherence or an isolated no-todo-tool fallback. Single runs do not establish repeatability.
 - Codex's default read-only sandbox blocked first-time dependency installation into the plugin cache in the earlier pretest. Authorized setup enabled later helper use. Added-directory writes do not establish cache installation under those default permissions.
