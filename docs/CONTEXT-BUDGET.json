@@ -1467,9 +1467,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 5,
-        "bytes": 37416,
-        "characters": 37376,
-        "estimated_tokens_characters_divided_by_4": 9344.0,
+        "bytes": 37663,
+        "characters": 37623,
+        "estimated_tokens_characters_divided_by_4": 9405.75,
         "inputs": {
           "plugin/adapters/host.md": {
             "bytes": 6819,
@@ -1484,8 +1484,8 @@
             "sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
-            "bytes": 3734,
-            "sha256": "ccbc7e2e1a32f949e253b4ae94c2de7eadc060e60f80ba5dd0be8290f9039384"
+            "bytes": 3981,
+            "sha256": "e948db023fcefd60585c00c88c8326ec7c7d89c046f088c7f230c04b816e2bc6"
           },
           "plugin/skills/unslop/SKILL.md": {
             "bytes": 6077,
@@ -2035,9 +2035,9 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 35,
-        "bytes": 139226,
-        "characters": 139158,
-        "estimated_tokens_characters_divided_by_4": 34789.5,
+        "bytes": 139473,
+        "characters": 139405,
+        "estimated_tokens_characters_divided_by_4": 34851.25,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2084,8 +2084,8 @@
             "sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535"
           },
           "plugin/skills/hugues-mode/playbooks/bug-fix.md": {
-            "bytes": 3734,
-            "sha256": "ccbc7e2e1a32f949e253b4ae94c2de7eadc060e60f80ba5dd0be8290f9039384"
+            "bytes": 3981,
+            "sha256": "e948db023fcefd60585c00c88c8326ec7c7d89c046f088c7f230c04b816e2bc6"
           },
           "plugin/skills/hugues-mode/playbooks/opening-a-pr.md": {
             "bytes": 5646,

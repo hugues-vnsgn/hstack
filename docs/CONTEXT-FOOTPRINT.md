@@ -36,11 +36,11 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (59 in the current candidate) | 3,940.25 | 3,700 | 3,945 | 14,803 → 15,781 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 9,344 | 45,289 → 37,416 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 34,789.5 | 135,888 → 139,226 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 9,405.75 | 45,289 → 37,663 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 34,851.25 | 135,888 → 139,473 |
 | Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 37,429.5 | 146,269 → 149,786 |
 
-The routing inventory falls about 17.4% from the previous native candidate.
+The routing inventory falls about 16.8% from the previous native candidate.
 Complete bundled workflow inventories also count worker dispatch, verification
 and publication instructions. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -228,7 +228,7 @@ Issue #109 adds 695 source bytes to these scenarios for command routing and
 worker-baseline handoffs. Their measured contributions are bounded separately
 at 240 and 560 bytes. Issue #110 counts its changed guidance separately by file.
 The allowances are capped at 1,300 bytes for the host table and checklist,
-550 for the router, 500 for worker rules, 750 for sandbox guidance, 650 for the
+550 for the router, 500 for worker rules, 750 for sandbox guidance, 900 for the
 bug-fix continuation, and 15 for each agent's model header. They count those
 passages in full, including existing words within changed passages, rather than
 claiming an exact net increase. Only files present in each scenario contribute.

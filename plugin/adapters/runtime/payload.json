@@ -196,7 +196,7 @@
     },
     {
       "path": "adapters/mobile-workflows.md",
-      "sha256": "8416519667a8e482b3977e9ee2ed9a28c02c4ef1f4304187bf00311ae99175ec",
+      "sha256": "0408722d680cd0751ccf84d6fd4b03e10868d4f9915d2b6516f57e8a327522a6",
       "mode": "100644"
     },
     {
@@ -486,7 +486,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/bug-fix.md",
-      "sha256": "ccbc7e2e1a32f949e253b4ae94c2de7eadc060e60f80ba5dd0be8290f9039384",
+      "sha256": "e948db023fcefd60585c00c88c8326ec7c7d89c046f088c7f230c04b816e2bc6",
       "mode": "100644"
     },
     {

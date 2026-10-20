@@ -70,8 +70,11 @@ reason and real surface proof. For shared changes, cover affected Android and iO
 surfaces. Missing proof is blocked or inconclusive, never a pass.
 
 The regression worker reads only the `tdd` SKILL.md, the matching language baseline
-at absolute installed paths, and the files named in its brief. It does not load
+at absolute installed paths, the native execution adapter at its absolute installed
+path, and the files named in its brief. It does not load
 the full mode or principles. The production worker is unchanged.
+Include `<plugin>/adapters/native-execution.md` as an absolute installed path in the brief.
+Any build or test command the regression worker runs goes through the native helper.
 Put this contract in the regression brief. It overrides transitive skill reads
 and TDD's production-edit steps.
 The coordinator never writes the regression test. On a stall, dispatch one fresh

@@ -370,3 +370,7 @@ every host translation row, both agent model headers, worker disclosure and
 Codex sandbox guidance. Scoped source allowances count the changed #110 guidance
 while preserving the bounds on unrelated text. These check delivered instructions.
 Claude Code inheritance and post-merge U3 behavior remain unobserved here.
+
+Chief review of #113 extends the existing narrow-reading-list case to require
+the native execution adapter at its absolute installed path and helper use for
+regression-worker build/test commands. Recollection remains 514 top-level cases.

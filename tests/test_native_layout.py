@@ -672,7 +672,9 @@ class HuguesModeRouter(unittest.TestCase):
             with self.subTest(path=path):
                 for phrase in [
                         'general-purpose regression worker',
-                        'reads only the `tdd` SKILL.md, the matching language baseline at absolute installed paths, and the files named in its brief',
+                        'reads only the `tdd` SKILL.md, the matching language baseline at absolute installed paths, the native execution adapter at its absolute installed path, and the files named in its brief',
+                        'Include `<plugin>/adapters/native-execution.md` as an absolute installed path in the brief.',
+                        'Any build or test command the regression worker runs goes through the native helper.',
                         'does not load the full mode or principles',
                         "It overrides transitive skill reads and TDD's production-edit steps.",
                         'The production worker is unchanged.']:
