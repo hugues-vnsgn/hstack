@@ -48,6 +48,7 @@ describe("parseArgs", () => {
         timeout: 0,
         maxQueryErrors: 5,
         allowDraft: false,
+        requiredContexts: [],
       },
     });
   });
@@ -79,13 +80,23 @@ describe("parseArgs", () => {
       timeout: 0,
       maxQueryErrors: 3,
       allowDraft: true,
+      requiredContexts: [],
     });
     expect(parsed.pretty).toBe(true);
+  });
+
+  it("collects repeated required contexts", () => {
+    expect(parseArgs(["--require-context", "local-ci/lint", "--require-context", "local-ci/"], silentIo).polling).toMatchObject({
+      requiredContexts: ["local-ci/lint", "local-ci/"],
+    });
   });
 
   it("rejects every invalid mode and numeric shape as usage", async () => {
     const invalid = [
       ["--unknown"],
+      ["--require-context"],
+      ["--require-context", ""],
+      ["--require-context", "   "],
       ["--interval", "0"],
       ["--sweep-interval", "-1"],
       ["--timeout", "-1"],
@@ -154,6 +165,50 @@ describe("rendering", () => {
 });
 
 describe("main", () => {
+  it("passes required contexts through single, stack and queued status reads", async () => {
+    for (const mode of [[], ["--stack"], ["--queued-stack", "--stack-prs", "1"]]) {
+      const harness = testRuntime(fakeReader({ fastPath: { kind: "checks", checks: [] } }));
+      expect(await main(["--owner", "owner", "--repo", "repo", "--pr", "1", ...mode, "--status-only", "--require-context", "local-ci/ios"], harness.runtime)).toBe(0);
+      expect(JSON.parse(harness.stdout[0])).toMatchObject({
+        kind: "STATUS",
+        rows: [{ ci: { kind: "ci-pending", pending: [{ name: "local-ci/ios", reportedState: "MISSING" }] } }],
+      });
+    }
+  });
+
+  it("names missing contexts in pretty status output", async () => {
+    const harness = testRuntime(fakeReader({ fastPath: { kind: "checks", checks: [] } }));
+    expect(await main(["--pr", "1", "--status-only", "--pretty", "--require-context", "local-ci/ios"], harness.runtime)).toBe(0);
+    expect(harness.stdout.join("")).toContain("local-ci/ios (missing required context)");
+  });
+
+  it("keeps polling missing contexts until success and waits in queued mode", async () => {
+    for (const mode of [[], ["--stack"], ["--queued-stack", "--stack-prs", "1"]]) {
+      const base = fakeReader();
+      let ready = false;
+      const harness = testRuntime({
+        ...base,
+        async checksFastPath() {
+          return { kind: "checks", checks: ready ? [passingCheck("local-ci/ios")] : [] };
+        },
+      });
+      let now = 0;
+      const runtime: CliRuntime = {
+        ...harness.runtime,
+        clock: {
+          ...harness.runtime.clock,
+          now: () => now,
+          async sleep(seconds) { now += seconds; ready = true; },
+        },
+      };
+      const queued = mode.includes("--queued-stack");
+      expect(await main(["--pr", "1", ...mode, "--interval", "1", "--timeout", "2", "--require-context", "local-ci/ios"], runtime)).toBe(queued ? 5 : 0);
+      expect(harness.stdout.join("")).toContain('"kind":"WAITING"');
+      expect(harness.stdout.join("")).toContain('"reportedState":"MISSING"');
+      expect(JSON.parse(harness.stdout.at(-1) ?? "")).toMatchObject({ kind: queued ? "TIMEOUT" : "READY" });
+    }
+  });
+
   it("returns EX_USAGE 64 and writes usage errors only to stderr", async () => {
     const harness = testRuntime(fakeReader());
     expect(await main(["--interval", "0"], harness.runtime)).toBe(64);

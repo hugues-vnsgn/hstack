@@ -1684,8 +1684,8 @@
       "blob_sha": "51549ab2da11e5905342bbb3aadb93685c8ac348",
       "size": 7619,
       "sha256": "e261c1ff5581e0f8fc6c686f34de4b535f87473e77beabea7dd8323021214610",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/babysit.md"
@@ -2077,8 +2077,8 @@
       "blob_sha": "0a0c3cfde8948e3aa8ee80c6f3f9ce7e3e64fcba",
       "size": 4387,
       "sha256": "bf56339bdf7e0223bcff5abf4e8599e3f5b547b3fcc3b4ce9475e6e7dda14a9f",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/shipping.md"
@@ -2392,8 +2392,8 @@
       "blob_sha": "0656b413e6c180858ca42981105944c45caf9dca",
       "size": 6161,
       "sha256": "a35592b4c6da96caf8d47987e9cd503fab6c7774ab87d11a43f24b4b5df2a9d1",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/cli.test.ts"
@@ -2411,8 +2411,8 @@
       "blob_sha": "ec8a2f27c5ac24866b699e6395e7d1f32e595068",
       "size": 6983,
       "sha256": "89c08863089181a232be782c4b2ed90a1552f44aeecb0dcb7aac2c623620e680",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/cli.ts"
@@ -2487,7 +2487,7 @@
       "size": 25198,
       "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
       "disposition": "port with adaptation",
-      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/github.ts"
@@ -2515,7 +2515,7 @@
       "size": 12405,
       "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
       "disposition": "port with adaptation",
-      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts"
@@ -2543,7 +2543,7 @@
       "size": 25169,
       "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
       "disposition": "port with adaptation",
-      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts"
@@ -2570,8 +2570,8 @@
       "blob_sha": "0e935839357335f24ab1bbc193d761495646ea99",
       "size": 7083,
       "sha256": "2b709e86628d5b8fdb61f860e60ababc342b0626c67576305442cf548283a604",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/render.ts"
@@ -2628,7 +2628,7 @@
       "size": 12649,
       "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
       "disposition": "port with adaptation",
-      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/types.ts"

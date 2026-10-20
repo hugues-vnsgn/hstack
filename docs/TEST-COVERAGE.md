@@ -127,8 +127,11 @@ unverified. Claude Code discovery and the router's firing were observed in the
 commit. Earlier native observations are bound to their original revisions.
 Historical Bun/TypeScript helper results remain separate from any new
 run recorded in the implementation evidence.
-Their source and dependency inputs remain unchanged; the Node plan checker did
-change and has current Python/Node integration coverage. The disclosure-pass
+The required-context change adapts the watch-pr sources and adds nine Bun
+cases. On October 20, 2026, `bun test ./watch-pr` passed all 65 watch-pr cases
+with Bun 1.3.14. These cases are separate from the Python totals above. The
+dependency inputs remain unchanged. The Node plan checker also changed and
+has current Python/Node integration coverage. The disclosure-pass
 Bun/TypeScript run was blocked before execution by sandbox preflight `EPERM`. The
 review-fix pass ran it on a scratch install of the candidate: Bun 1.4.2,
 `bun install --frozen-lockfile` through the session proxy, 52 of 52 `bun test orch

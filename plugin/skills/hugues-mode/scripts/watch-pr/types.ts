@@ -412,4 +412,5 @@ export interface PollingOptions {
   readonly timeout: number;
   readonly maxQueryErrors: number;
   readonly allowDraft: boolean;
+  readonly requiredContexts: readonly string[];
 }
