@@ -1,5 +1,8 @@
 # Mobile review lens
 
+Before pasting this lens into a prompt or the evidence store, resolve its
+relative links to absolute installed paths from this file's directory.
+
 Apply this lens at the selected action's existing review phase. Load the
 language baseline before affected source and only the applicable platform or
 interop references through [mobile language scope](../../../adapters/host-mobile-languages.md).

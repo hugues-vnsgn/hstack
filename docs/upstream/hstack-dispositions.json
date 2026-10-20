@@ -1364,8 +1364,8 @@
       "blob_sha": "ef7bff3d77c35a0af2a9947187ccee15465657f4",
       "size": 2275,
       "sha256": "f6005cc2b535006fca97a96c5bfda49df57312eedf1ffd8d1aaaf3eb33817c25",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Preserve the reviewer template and add the required Swift/Kotlin language-baseline handoff for both native hosts under issue #109. Original bytes remain in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/interrogate/references/reviewer-prompt.md"

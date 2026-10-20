@@ -17,7 +17,13 @@ class ContextDisclosure(unittest.TestCase):
     def test_initial_adapters_do_not_eagerly_load_unrelated_phase_guidance(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         mobile = (ROOT / 'plugin/adapters/mobile.md').read_text()
-        self.assertLess(len(host.encode()) + len(mobile.encode()), 6000)
+        native_row = next(line for line in host.splitlines(keepends=True)
+                          if '[Native execution](native-execution.md)' in line)
+        scope = 'Plain JVM or server Gradle projects stay out of scope.\n\n'
+        self.assertIn(scope, host)
+        native_growth = len((native_row + scope).encode())
+        self.assertLessEqual(native_growth, 240)
+        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth, 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
         # setup-hstack are reached only by native invocation, with denials respected, and
         # a file read is no substitute. The user-only read is stated once too, beside the tier.
@@ -183,17 +189,30 @@ class ContextDisclosure(unittest.TestCase):
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
         self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
                         measured['native_frontmatter']['native_before']['bytes'])
+        host = (ROOT / 'plugin/adapters/host.md').read_text()
+        native_row = next(line for line in host.splitlines(keepends=True)
+                          if '[Native execution](native-execution.md)' in line)
+        scope = 'Plain JVM or server Gradle projects stay out of scope.\n\n'
+        self.assertIn(scope, host)
+        native_growth = len((native_row + scope).encode())
+        self.assertLessEqual(native_growth, 240)
+        mode = (ROOT / 'plugin/skills/hugues-mode/SKILL.md').read_text()
+        brief = mode.split('## Subagents\n\n', 1)[1].split('\n\n', 1)[0] + '\n\n'
+        self.assertIn('absolute installed baseline paths', brief)
+        brief_growth = len(brief.encode())
+        self.assertLessEqual(brief_growth, 560)
+        required_growth = native_growth + brief_growth
         for name in ['initial_mode_routing', 'bug_fix']:
             profile = measured['scenarios'][name]
-            self.assertLess(profile['candidate']['bytes'], profile['native_before']['bytes'])
-        host = (ROOT / 'plugin/adapters/host.md').read_text()
+            self.assertLess(profile['candidate']['bytes'] - required_growth,
+                            profile['native_before']['bytes'])
         selection_row = next(line for line in host.splitlines(keepends=True)
                              if '[Mobile language scope](host-mobile-languages.md)' in line)
         selection_growth = len(selection_row.encode())
         self.assertLessEqual(selection_growth, 128)
         feature = measured['scenarios']['larger_feature']
         self.assertLessEqual(feature['candidate']['bytes'],
-                             feature['native_before']['bytes'] + selection_growth)
+                             feature['native_before']['bytes'] + selection_growth + required_growth)
         routing = measured['scenarios']['initial_mode_routing']
         self.assertLess(routing['candidate']['bytes'], routing['native_before']['bytes'] * .8)
 

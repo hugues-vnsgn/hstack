@@ -209,7 +209,7 @@
     {
       "source": "pstack/skills/interrogate/references/reviewer-prompt.md",
       "destination": "plugin/skills/interrogate/references/reviewer-prompt.md",
-      "disposition": "verbatim",
+      "disposition": "adapted",
       "blob_sha": "ef7bff3d77c35a0af2a9947187ccee15465657f4",
       "sha256": "f6005cc2b535006fca97a96c5bfda49df57312eedf1ffd8d1aaaf3eb33817c25"
     },

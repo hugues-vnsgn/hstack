@@ -83,7 +83,10 @@ references, not skill bodies or a native loader.
 | Transcript-dependent skills, optional integrations or consumer skill placement | [Special skills](host-special-skills.md) |
 | Reading or editing Swift or Kotlin files | [Mobile language scope](host-mobile-languages.md) |
 | Reading or editing TypeScript files | [TypeScript scope](host-typescript.md) |
+| Running `xcodebuild`, `swift build` / `swift test`, or Gradle in an Android/KMP/CMP project | [Native execution](native-execution.md) |
 | Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports | [Publication](host-publication.md) |
+
+Plain JVM or server Gradle projects stay out of scope.
 
 Apply [mobile applicability](mobile.md#applicability) before selecting a route.
 Do not load a phase reference merely because it is listed here.

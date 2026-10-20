@@ -14,6 +14,13 @@ The author's stated intent for this change:
 
 Review whether the code achieves this intent well. Do NOT question the intent itself. Assume the goal is correct and challenge the execution.
 
+## Language baseline
+
+{LANGUAGE_BASELINE_PATHS_OR_NONE}
+
+Read each listed baseline in full before the first source read.
+If the section says `none`, no Swift or Kotlin baseline applies.
+
 ## Code Under Review
 
 {DIFF_OR_FILES}

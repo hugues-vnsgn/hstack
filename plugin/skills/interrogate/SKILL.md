@@ -44,6 +44,13 @@ If the agent tool rejects a configured entry, run that reviewer on `inherit-pare
 
 Read `references/reviewer-prompt.md` and fill in the same template for every reviewer with the stated intent, the diff or file contents, the rubric from `references/rubric.md`, and the code-quality lens from `references/code-quality-review.md`. Pick each subagent's reasoning level and speed for the job, per [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
 
+Fill the required Language baseline section with absolute installed paths
+matching the languages in the diff, or `none`. Use
+`<plugin>/skills/swift-best-practices/SKILL.md` for Swift and
+`<plugin>/skills/kotlin-best-practices/SKILL.md` for Kotlin. Resolve `<plugin>`
+from the loaded mode path through [workflow tools](../../adapters/host-workflow-tools.md).
+Include both paths for mixed-language work.
+
 ## Step 4, Synthesize
 
 As results come back, build a unified picture. Parse every reviewer's findings. Merge findings that describe the same issue differently, and note which reviewers raised each one. Findings two or more reviewers raised independently are the highest signal. Read a lone reviewer's finding, but weight it accordingly. Note disagreements. If one reviewer flags something and another explicitly says the opposite, that is context for the verdict.
