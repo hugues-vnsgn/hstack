@@ -11,7 +11,7 @@ Carry the loaded mode's absolute path into every fresh worker, including
 general-purpose helpers. Derive it from the current loaded skill, so dispatch
 needs no operator-supplied script path. Workers keep that root for executable
 helpers and pass it on to their own children; see [workflow tools](host-workflow-tools.md).
-Before work, load the mode per [host.md](host.md). On Codex, select its enabled
+Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled
 catalog entry and read the complete SKILL.md yourself. Read each applicable
 principle's SKILL.md in full as the scoped bundled reference below.
 If the host cannot preserve required context isolation or parallelism, mark
@@ -45,6 +45,10 @@ scoped bundled reference; never substitute a consumer or external fallback for
 it. Inline briefs remain with their owner.
 General-purpose native workers receive absolute source,
 adapter and fixture paths, scope and success predicate, without a mode persona.
+The mobile regression worker is a general-purpose native worker without a mode persona.
+Its reading list is limited by [mobile workflows](mobile-workflows.md).
+A worker spawned with the coordinator's turns, `fork_turns: "all"` or the equivalent,
+is not fresh for either the regression or production role.
 Agent mode preserves available tool access; it never grants permission to write
 or query external sources. Missing authorized tools remain explicit coverage gaps.
 
@@ -64,6 +68,7 @@ the tool has none, the worker runs at the host's effort and the report says so.
 A role value may join alternatives with ` or `: use the first one the native tool
 accepts, else `inherit-parent` at the first alternative's effort, and report which
 ran.
+Report deliberate effort lowering too, with its reason.
 
 Enumerate models actually exposed by the native tool. Preserve each core skill's
 fallback sequence on rejected slugs, using only confirmed capabilities; record

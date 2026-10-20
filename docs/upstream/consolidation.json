@@ -43,7 +43,7 @@
       "source_mode": 420,
       "destination": "plugin/agents/hugues-comment-sicko.md",
       "disposition": "canonical",
-      "destination_sha256": "535e9453caa91b288b12c39d3de89a2d89947799d07919077c514cf7c7ad1de1"
+      "destination_sha256": "d660dfd12e7ba80d2989116c797be21180a559f67abb06c43e3459cede44c53b"
     },
     {
       "source": "pstack/agents/poteto-agent.md",
@@ -51,7 +51,7 @@
       "source_mode": 420,
       "destination": "plugin/agents/hugues-agent.md",
       "disposition": "canonical",
-      "destination_sha256": "076ead5cb6903b9ddb96fed6fdb58b64b16484ce4af5d184fa11cff2f3de396d"
+      "destination_sha256": "edbdaf70ce9763c39115b012a630f0c8e2b5c6b4709af525e9b9b3633485d651"
     },
     {
       "source": "pstack/assets/logo.png",
@@ -555,7 +555,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "bc6ddf0f3540d4a50eb86a072adb6f7d1784367c138f940c65fd2a3e3133b236"
+      "destination_sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -603,7 +603,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/playbooks/bug-fix.md",
       "disposition": "canonical",
-      "destination_sha256": "8051d0a344a61685e2128cba7e49caa8d64d27f825b8998d8f17247e9fc38498"
+      "destination_sha256": "ccbc7e2e1a32f949e253b4ae94c2de7eadc060e60f80ba5dd0be8290f9039384"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/eval.md",
@@ -1659,23 +1659,23 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "7905d917e3c59dbde41564a1d546151559b70f863a9f88b2a9f5852568f1b8a5",
+      "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "8eb6b7029b695409f96f4c766bd5acc6b54784f3ac5efbdc04845e9fa655bdff",
+      "sha256": "e4cf185c2293f5550ddb44f30839acc43d46fd8d19fb8cc641ec0f8ee16a674d",
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "07bf6e4269fcaa578741d88b16b2d767f52b01b84308dda7498ffd562d502b1d",
+      "sha256": "ab19262fe7cd6b758a137d667e9ba7a2b7d70294286e07cf82828c30a5e49f08",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "fa9a77cf32a98a14ca05b40d3cba1664af53c64123b51c01395abc35bd933467",
+      "sha256": "f4dec4635a5f19993ecb2fbfd23306a9efcd676b24126f5f5ef859e5868f7e11",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
-      "sha256": "b2cfc64606931a166a34ceb618e09d6b31691d22f52836be736c698e4393e582",
+      "sha256": "8416519667a8e482b3977e9ee2ed9a28c02c4ef1f4304187bf00311ae99175ec",
       "mode": 420
     },
     "adapters/mobile.md": {
@@ -1703,19 +1703,19 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "403a35853502ed5de34e581653d9394ede0e8ce782746f25ca59202fd1ad4874",
+      "sha256": "bab26c574abed70e77d1eb2ad1b3960515371f0731dd2f2aa76520c6300fdd7d",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "d49a07ac8a2f1804ff62b925cd07b24f7b91e1b058001c8ca3c0b1ec35223a39",
+      "sha256": "b13dffa3d5f18e37318166ba23bab052ef1f33a53894ed154d7f9c1b0f13add8",
       "mode": 420
     },
     "agents/hugues-agent.md": {
-      "sha256": "076ead5cb6903b9ddb96fed6fdb58b64b16484ce4af5d184fa11cff2f3de396d",
+      "sha256": "edbdaf70ce9763c39115b012a630f0c8e2b5c6b4709af525e9b9b3633485d651",
       "mode": 420
     },
     "agents/hugues-comment-sicko.md": {
-      "sha256": "535e9453caa91b288b12c39d3de89a2d89947799d07919077c514cf7c7ad1de1",
+      "sha256": "d660dfd12e7ba80d2989116c797be21180a559f67abb06c43e3459cede44c53b",
       "mode": 420
     },
     "skills/architect/SKILL.md": {
@@ -1887,7 +1887,7 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "bc6ddf0f3540d4a50eb86a072adb6f7d1784367c138f940c65fd2a3e3133b236",
+      "sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {
@@ -1915,7 +1915,7 @@
       "mode": 420
     },
     "skills/hugues-mode/playbooks/bug-fix.md": {
-      "sha256": "8051d0a344a61685e2128cba7e49caa8d64d27f825b8998d8f17247e9fc38498",
+      "sha256": "ccbc7e2e1a32f949e253b4ae94c2de7eadc060e60f80ba5dd0be8290f9039384",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/build-doctor.md": {

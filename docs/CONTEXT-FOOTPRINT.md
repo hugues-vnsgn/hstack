@@ -36,11 +36,11 @@ assumptions and mandatory transitive inputs are in the
 | Scenario | Released 0.2.0, estimated tokens | Before disclosure | After disclosure | Bytes before → after |
 |---|---:|---:|---:|---:|
 | Declared startup metadata, every frontmatter block (59 in the current candidate) | 3,940.25 | 3,700 | 3,945 | 14,803 → 15,781 |
-| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 8,783.25 | 45,289 → 35,173 |
-| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 33,959.75 | 135,888 → 135,907 |
-| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 36,747.25 | 146,269 → 147,057 |
+| Initial bug-fix routing, full playbook, todos and unslop reply | 11,331.75 | 11,307.75 | 9,344 | 45,289 → 37,416 |
+| One-function CLI bug fix with cheap regression test | 35,078 | 33,956 | 34,789.5 | 135,888 → 139,226 |
+| Three-module TypeScript feature with design and implementation arenas | 37,897.5 | 36,551.25 | 37,429.5 | 146,269 → 149,786 |
 
-The routing inventory falls about 22.4% from the previous native candidate.
+The routing inventory falls about 17.4% from the previous native candidate.
 Complete bundled workflow inventories also count worker dispatch, verification
 and publication instructions. The bug-fix profile
 includes how, why, TDD, source-control investigation and synthesis prompts,
@@ -68,8 +68,8 @@ fix round 1's reworded host-contract marker ("The host contract governs how this
 skill reaches any sibling dependency.", replacing wording that read as a blanket
 override of the scoped bundled-reference rule) touches every one of the 26. The
 nine skills added after the release carry the marker too. All 59 skill files
-total 227,818 bytes; bodies excluding frontmatter and delimiters total 211,683
-bytes. The mode file is 19,762 bytes, including its 19,485-byte body.
+total 228,298 bytes; bodies excluding frontmatter and delimiters total 212,163
+bytes. The mode file is 20,242 bytes, including its 19,965-byte body.
 
 History, not current counts: until the pstack 0.15.25 re-pin, all 24
 `principle-*` files matched `7db3e80`. Restoring pstack's router design had put
@@ -124,8 +124,8 @@ its own mandatory sections optional would change its agreed full-body loading
 contract.
 
 The old 9,182-versus-9,111 comparison counted only mode entry plus unconditional
-adapters, before a reply or task. That narrower read set is now 25,952 bytes,
-about 6,478.5 estimated tokens. At `main` (`a67df90`, pinned in
+adapters, before a reply or task. That narrower read set is now 27,605 bytes,
+about 6,891.75 estimated tokens. At `main` (`a67df90`, pinned in
 [the pre-PR baseline](CONTEXT-BASELINE-PRE-PR.json)) it was 25,980 bytes. The
 skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
@@ -135,7 +135,14 @@ wording, left it 264 bytes under that baseline, restoring pstack's router
 wording (#83) left it 852 bytes under, and the bundled deslop and the #48 reach
 rule left it 817 bytes under. The executable-helper resolution rule (#44)
 left it 737 bytes under. Bundling the control skills left it 740 bytes under. The Codex loading
-clarification left it 822 bytes under. Later host edits left it 723 bytes under. Issue #109 adds 695 bytes for command routing and worker-baseline handoffs, leaving it 28 bytes under. The explicit read-before-tools sentence keeps the previous sentence's byte count. The fix round restored the scope words the rewrite had
+clarification left it 822 bytes under. Later host edits left it 723 bytes under.
+Issue #109 added 695 bytes for command routing and worker-baseline handoffs,
+leaving it 28 bytes under. Issue #110 adds checklist, translation and disclosure
+guidance, leaving the current read set 1,625 bytes above that baseline. Its
+changed guidance has a separate bounded allowance.
+
+The explicit read-before-tools sentence keeps the previous sentence's byte count.
+The fix round restored the scope words the rewrite had
 dropped, named `AskUserQuestion` and the registered `hugues-agent` per host in
 the adapters, cut the mobile bullet to a pointer at the mobile workflows
 adapter, and adopted the owner's 236-character router description, 74 bytes
@@ -153,9 +160,9 @@ The workflow rows count each bundled path once across all participants. Fresh
 workers can load it again. The scenarios state five workers for the bug fix,
 including one mode worker, and fifteen for the feature, including eight mode
 workers. A separately reported mode-worker floor counts the required mode,
-agent and applicable shared guidance once per fresh mode worker. It falls from
-9,403.5 to 9,291.5 estimated tokens for the bug-fix worker, and from 75,228 to
-74,332 for the eight feature workers. The model-defaults paragraph and the
+agent and applicable shared guidance once per fresh mode worker. It measures
+9,803 estimated tokens for the bug-fix worker against 9,403.5 before disclosure,
+and 78,424 for the eight feature workers against 75,228 before disclosure. The model-defaults paragraph and the
 per-host `hugues-agent` line now sit in the worker reference that a fresh worker
 also reads, and the host adapter points at it; that move added 252.5 tokens (one worker)
 to this floor at the router rewrite. That historical delta is 8,410.75 minus
@@ -219,13 +226,18 @@ when applicable. The generic scenario inventories exclude these skill bodies
 and references while counting the short selection pointer in the host adapter.
 Issue #109 adds 695 source bytes to these scenarios for command routing and
 worker-baseline handoffs. Their measured contributions are bounded separately
-at 240 and 560 bytes. After subtracting those contributions, initial routing
-and the CLI bug fix must remain strictly below their historical inventories.
-The TypeScript feature measures 147,057 bytes against 146,269 historical bytes,
-an increase of 788 bytes. Its bound is the historical inventory plus those
-695 bytes and the host selection row's measured 97 bytes, currently 147,061 bytes.
-The selection row itself may not exceed 128 bytes. No runtime token saving or
-execution speedup follows from these source counts.
+at 240 and 560 bytes. Issue #110 counts its changed guidance separately by file.
+The allowances are capped at 1,300 bytes for the host table and checklist,
+550 for the router, 500 for worker rules, 750 for sandbox guidance, 650 for the
+bug-fix continuation, and 15 for each agent's model header. They count those
+passages in full, including existing words within changed passages, rather than
+claiming an exact net increase. Only files present in each scenario contribute.
+After subtracting the measured #109 contributions and #110 allowances, initial
+routing and the CLI bug fix remain strictly below their historical inventories.
+The TypeScript feature measures 149,786 bytes against 146,269 historical bytes.
+Its bound adds those same scoped contributions and the host language-selection
+row, which may not exceed 128 bytes. No runtime token saving or execution speedup
+follows from these source counts.
 
 Issue #105 adds a conditional native-execution reference of 9,953 source bytes.
 It is loaded for native build/test execution and is outside these non-mobile

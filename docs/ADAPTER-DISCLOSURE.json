@@ -200,8 +200,8 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "7543ba3540e4939253edfa7c2c8e60a910c7cd23a5c5a4bac29af5d4b5923abf",
       "disposition": "replaced",
-      "reason": "Obtaining applicable principles through native invocation is impossible once every principle-* skill is user-only; PR 1 fix round 1 reads each one's SKILL.md in full as the scoped bundled reference instead. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading.",
-      "replacement": "Before work, load the mode per [host.md](host.md). On Codex, select its enabled\ncatalog entry and read the complete SKILL.md yourself. Read each applicable\nprinciple's SKILL.md in full as the scoped bundled reference below.\nIf the host cannot preserve required context isolation or parallelism, mark\nthat phase blocked."
+      "reason": "Obtaining applicable principles through native invocation is impossible once every principle-* skill is user-only; PR 1 fix round 1 reads each one's SKILL.md in full as the scoped bundled reference instead. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading. Issue #110 scopes full-mode loading to preserve the narrow general-purpose regression worker.",
+      "replacement": "Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled\ncatalog entry and read the complete SKILL.md yourself. Read each applicable\nprinciple's SKILL.md in full as the scoped bundled reference below.\nIf the host cannot preserve required context isolation or parallelism, mark\nthat phase blocked."
     },
     {
       "paragraph": 11,
@@ -231,7 +231,10 @@
         1391
       ],
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "bc36947983ce53a884c49c10a9d6f2dc5f2d6ffae1202ed721f953c38355eaeb"
+      "sha256": "bc36947983ce53a884c49c10a9d6f2dc5f2d6ffae1202ed721f953c38355eaeb",
+      "disposition": "replaced",
+      "reason": "Issue #110 adds the narrow general-purpose regression worker and states that inherited coordinator turns do not satisfy regression or production freshness.",
+      "replacement": " Inline briefs remain with their owner.\nGeneral-purpose native workers receive absolute source,\nadapter and fixture paths, scope and success predicate, without a mode persona.\nThe mobile regression worker is a general-purpose native worker without a mode persona.\nIts reading list is limited by [mobile workflows](mobile-workflows.md).\nA worker spawned with the coordinator's turns, `fork_turns: \"all\"` or the equivalent,\nis not fresh for either the regression or production role.\nAgent mode preserves available tool access; it never grants permission to write\nor query external sources. Missing authorized tools remain explicit coverage gaps."
     },
     {
       "paragraph": 12,
@@ -355,6 +358,16 @@
       "disposition": "replaced",
       "reason": "Issue #105 makes personal expert skills optional supplements to the shipped baseline, while keeping consumer apps outside the plugin.",
       "replacement": "Use the bundled language baselines and applicable platform references. Optional\nexpert skills add depth without becoming baseline prerequisites. Keep consumer\napps outside this plugin."
+    },
+    {
+      "slice": [
+        2547,
+        3021
+      ],
+      "sha256": "7b96d4a346cc806c2c72d5f7d7fcb02dbdaf62630708be392fe920cfd5c72e86",
+      "disposition": "replaced",
+      "reason": "Issue #110 narrows regression-worker reading, keeps regression authorship out of the coordinator, bounds stall replacement and excludes inherited coordinator turns from fresh worker contexts. Production and impractical-test rules stay unchanged.",
+      "replacement": "For mobile bug fixes, assign a fresh general-purpose regression worker before the production\nworker. Independently observe RED against unfixed production, then give a separate\nfresh production worker the failing regression and observe GREEN on that same\nregression. Preserve the core TDD impractical-test exception with a concrete\nreason and real surface proof. For shared changes, cover affected Android and iOS\nsurfaces. Missing proof is blocked or inconclusive, never a pass.\n\nThe regression worker reads only the `tdd` SKILL.md, the matching language baseline\nat absolute installed paths, and the files named in its brief. It does not load\nthe full mode or principles. The production worker is unchanged.\nPut this contract in the regression brief. It overrides transitive skill reads\nand TDD's production-edit steps.\nThe coordinator never writes the regression test. On a stall, dispatch one fresh\nreplacement with a narrower brief. A second stall marks the regression step\nblocked. State it in the final message.\nA worker spawned with the coordinator's turns, `fork_turns: \"all\"` or the equivalent,\nis not fresh for either the regression or production role."
     },
     {
       "slice": [

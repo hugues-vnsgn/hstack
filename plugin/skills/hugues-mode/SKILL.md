@@ -101,7 +101,7 @@ read each baseline in full before the first source read. Use
 from the loaded mode path through [workflow tools](../../adapters/host-workflow-tools.md),
 and include both paths for mixed-language work.
 
-**Use `subagent_type: "hugues-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/hugues-mode` runs the playbook. Never spawn a `hugues-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `hugues-agent`.
+**Use `subagent_type: "hugues-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/hugues-mode` runs the playbook. Never spawn a `hugues-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `hugues-agent`. The mobile regression worker uses the general-purpose exception in [workers and models](../../adapters/host-workers.md).
 
 **Model defaults, and match the model to the job.** Every agent-tool call takes its defaults, role labels, project model overrides and the rule for fitting its reasoning level and speed to the job from [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
 
@@ -120,6 +120,7 @@ Write the reply clean as you draft it. A cleanup pass after drafting does not re
 - **Frame impact for the consumer and the maintainer.** Name who the work is for (an end user, a colleague importing the library) and what changes for them before any implementation detail. Then what the next engineer who owns this code inherits. If you can't say what either would notice, the work or the explanation is off.
 - **Never fabricate a link, citation, or transcript reference.** Link only artifacts you produced or read this session.
 - **Every claim carries its evidence or its label in the same sentence.** Measured, inferred, or guess. A prediction or an unseen cause is a guess. Never hand the human a check you could run.
+- Whenever a run spawned workers, include a Workers line with each role's requested and actual model and effort, plus any fallback or downgrade with its reason.
 
 Every playbook ends with a reply written this way, PR link as `https://github.com/<owner>/<repo>/pull/<number>`. Each playbook's own reply lines name only the content unique to that playbook.
 
@@ -130,6 +131,10 @@ Comments follow the same rule as the reply. Write them clean as you go. Keep a c
 ## Playbooks
 
 Open a todolist whose first items are the matched playbook's steps, copied in verbatim, before any task-specific todos. A step you choose not to do stays in the list with a one-line `skip: <reason>`. Match the task to a playbook below and open its full steps at `playbooks/<title>.md` relative to this SKILL.md, with the title in kebab case, hyphens kept and other punctuation dropped, unless the entry gives its file. Bound `read-workflow` uses `skills/hugues-mode/playbooks/<name>.md`. Copy its steps in verbatim.
+
+A step includes its numbered line and all continuation text. Copy the whole step.
+Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.
+Never bulk-mark at the end.
 
 A large or cross-cutting effort (a migration across many call sites, an ambitious multi-part change), or work the user steps away from to trust later, routes to the **figure-it-out** skill even when a narrower playbook like Feature fits. Use **figure-it-out** whenever no bundled playbook fits. It designs a bespoke, rigorous playbook for the task. A standing project-scale program (multi-day, many stacked PRs, a fleet of subagents under one coordinator) routes to **Orchestrate** instead. figure-it-out designs one bespoke run, orchestrate runs the program.
 
