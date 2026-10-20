@@ -2,14 +2,16 @@
 
 hStack gives Claude Code and Codex a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.5.1** adds bundled Swift and Kotlin guidance, a mobile review lens,
-native forensics and bounded Xcode, SwiftPM and Gradle helpers. It keeps the
-pstack 0.15.25 workflow baseline. The [0.5.1 release notes](docs/RELEASE-0.5.1.md)
-record upgrade steps, observed helper runs and remaining gaps. Complete mobile
-journeys on Claude Code and Codex remain unobserved. The plugin remains `hstack`. Its
+Version **0.5.2** requires native helper use by command, preserves failure
+diagnostics and adds Android instrumentation. It tightens worker handoffs,
+checklists and host guidance while keeping the pstack 0.15.25 workflow baseline.
+The [0.5.2 release notes](docs/RELEASE-0.5.2.md) record upgrade steps, observed
+helper runs and remaining gaps. hStack supports Swift/iOS, Kotlin/Android, KMP
+and CMP development through its mobile adapter. A complete journey on a real
+consumer project remains unobserved on either host. The plugin remains `hstack`. Its
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
 The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
-Version 0.5.1 adds two authored user-only language skills for 59 total. Each skill owns one canonical `SKILL.md`.
+Version 0.5.1 added two authored user-only language skills. Version 0.5.2 retains 59 total. Each skill owns one canonical `SKILL.md`.
 Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
 Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
@@ -39,8 +41,9 @@ under normal permissions remains unobserved.
 
 Use a supported native discovery/invocation route and confirm that `hugues-mode`
 appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
-Codex copy. The 0.4.0 to 0.5.0 update was later observed on both hosts. Updating
-to 0.5.1 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.1.md#upgrade). If
+Codex copy. Updates from 0.4.0 to 0.5.0 and from 0.5.0 to 0.5.1 were later
+observed on both hosts. Updating from 0.5.1 to 0.5.2 remains unobserved. See the
+[upgrade instructions](docs/RELEASE-0.5.2.md#upgrade). If
 `hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
 explains the boundary and a first-task workflow.
@@ -56,7 +59,7 @@ limits. It establishes no complete mobile journey. Read the
 
 ## Bundled mobile guidance
 
-Version 0.5.1 includes `swift-best-practices` and `kotlin-best-practices`.
+Version 0.5.2 includes `swift-best-practices` and `kotlin-best-practices`.
 Before source reads, the router and fresh workers read the relevant baseline in
 full. Source declarations and consumer configuration select SwiftUI, UIKit,
 Android Compose, KMP native-boundary and CMP wrapper references as needed.
@@ -66,15 +69,18 @@ remain required. See [language selection](plugin/adapters/host-mobile-languages.
 
 The existing review phase adds a [mobile review lens](plugin/skills/hugues-mode/references/mobile-review.md).
 Runtime forensics adds [native capture and hypothesis probes](plugin/skills/hugues-mode/references/mobile-forensics.md).
-Installed source contracts verify delivery and wiring. Fresh native host and
-mobile journeys for this upgrade remain a later phase of [issue #105](https://github.com/hugues-vnsgn/hstack/issues/105).
+Installed source contracts verify delivery and wiring. Fixtures exercise both
+hosts, while a complete journey on a real consumer project remains pending in
+[issue #105](https://github.com/hugues-vnsgn/hstack/issues/105).
 
 Native build/test helpers run explicit Xcode, SwiftPM and consumer Gradle
 commands, retain each attempt's full logs and native reports, and return bounded
 summaries. See the [execution contract](plugin/adapters/native-execution.md).
 The [0.5.1 validation](docs/RELEASE-0.5.1.md#validation) records final-source
-helper observations, including failed and incomplete attempts. Helper checks
-complement the consumer's required native runtime proof.
+helper observations, including failed and incomplete attempts. The
+[0.5.2 validation](docs/RELEASE-0.5.2.md#validation) records the current helper
+source and pending fixture re-runs. Helper checks complement the consumer's
+required native runtime proof.
 
 ## Reference and maintenance
 
