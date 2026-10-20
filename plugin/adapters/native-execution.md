@@ -1,5 +1,20 @@
 # Native build and test execution
 
+## When the helper is required
+
+Every build or test command using `xcodebuild`, `swift build` / `swift test`,
+or Gradle in an Android/KMP/CMP project must go through the helper.
+This rule depends on the command, not on the task being mobile.
+Allow an exception for one command at a time, only when:
+
+1. The helper does not support that command.
+2. The helper returns a prerequisite error that the agent cannot resolve.
+
+Run the excepted command and retain its raw logs in the task evidence store.
+List each excepted command and its reason under Gaps in the final message.
+An unsupported test step never excuses a build step or any other supported step.
+The existing impractical-test exception is unchanged.
+
 Before running Xcode, SwiftPM or consumer Gradle builds/tests, resolve the
 consumer recipe, toolchain, project, scheme, destination, variant, module,
 source set and supported test selector. An unresolved identity is a named

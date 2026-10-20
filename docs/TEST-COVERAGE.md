@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **502 top-level unittest cases**. One is a driver that
+The current candidate collects **507 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -17,12 +17,13 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,080 cases (355 `read-workflow`, 1,666 `translate-plan` and 59 in-plan cases) over all 59 bundled skills, the legacy aliases of the 54 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current setup-to-proof contracts | 9 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These nine cases check source/commands and evidence parsing, not host or device execution. |
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
+| Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 60 | test_native_exec; 58 controlled installed CLI cases and two installed workflow/evidence contracts. Native project observations run separately. |
-| Total collected | 502 | Current, mixed and historical scopes remain distinct |
+| Total collected | 507 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-502 Python cases. The opt-in CI workflow requires a provisioned native runner.
+507 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -352,3 +353,10 @@ compiler and Gradle causes, explicit omission flags and report manifests. Other
 cases cover argument ownership, Xcode actions and metadata modes, XML aggregate
 limits, interrupted builds and Unicode output-budget convergence. These are helper-boundary tests. Fresh native
 host/domain workflow evidence remains deferred.
+
+Issue #109 adds five installed wording contracts for helper routing and portable
+language-baseline handoffs. Collection gives 507 top-level cases. The context
+bounds account separately for the command routing row and scope sentence, capped
+at 240 bytes, and the worker-baseline brief paragraph, capped at 560 bytes. The
+existing budgets still bind all other source. These contracts do not establish
+Claude Code or Codex compliance with the revised text.

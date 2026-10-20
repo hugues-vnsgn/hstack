@@ -191,7 +191,7 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "998838d267d8848d595b815319d187a4be7601bac397e11948faeef7712c2fe1",
+      "sha256": "07bf6e4269fcaa578741d88b16b2d767f52b01b84308dda7498ffd562d502b1d",
       "mode": "100644"
     },
     {
@@ -206,7 +206,7 @@
     },
     {
       "path": "adapters/native-execution.md",
-      "sha256": "4345323fdc08186e9adc6002352213e2c7165a70fff9be1a19a889e95d1db24e",
+      "sha256": "059228bfec2f18684a2c9401f6723eea72c255fa60965fe2a61a0bb1aaf114ff",
       "mode": "100644"
     },
     {
@@ -451,7 +451,7 @@
     },
     {
       "path": "skills/hugues-mode/SKILL.md",
-      "sha256": "b10089941bdabd898275b68e16d66479e876d35db217d8102c2ec62c67c1294e",
+      "sha256": "bc6ddf0f3540d4a50eb86a072adb6f7d1784367c138f940c65fd2a3e3133b236",
       "mode": "100644"
     },
     {
@@ -631,7 +631,7 @@
     },
     {
       "path": "skills/hugues-mode/references/mobile-review.md",
-      "sha256": "20911bf29ce549097ba47bbdb6a35bf2773068fd9ba71e5b731fa3e6777e70c9",
+      "sha256": "41e67d1131f33b07e8964aaf243530290088bb2d887325c38ba71a3f668ccb23",
       "mode": "100644"
     },
     {
@@ -746,7 +746,7 @@
     },
     {
       "path": "skills/interrogate/SKILL.md",
-      "sha256": "af8a96191d726e67d4a2a717596c87e9f564d3d830af29a59e1c7318f742bdba",
+      "sha256": "45ad6bd7d04f912a9ea6f284ed3991cd3bacb118732f4ada0cc22298bfcb316d",
       "mode": "100644"
     },
     {
@@ -766,7 +766,7 @@
     },
     {
       "path": "skills/interrogate/references/reviewer-prompt.md",
-      "sha256": "f6005cc2b535006fca97a96c5bfda49df57312eedf1ffd8d1aaaf3eb33817c25",
+      "sha256": "19e91e7c76f33b165a571ed459cdd9c32937f742148b873f40898d4aac9bd2ee",
       "mode": "100644"
     },
     {

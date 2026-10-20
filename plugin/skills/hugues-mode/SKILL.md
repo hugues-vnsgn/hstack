@@ -93,6 +93,14 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 ## Subagents
 
+On both Claude Code and Codex, every worker brief that reaches Swift or Kotlin
+source must carry the absolute installed baseline paths and the instruction to
+read each baseline in full before the first source read. Use
+`<plugin>/skills/swift-best-practices/SKILL.md` for Swift and
+`<plugin>/skills/kotlin-best-practices/SKILL.md` for Kotlin. Resolve `<plugin>`
+from the loaded mode path through [workflow tools](../../adapters/host-workflow-tools.md),
+and include both paths for mixed-language work.
+
 **Use `subagent_type: "hugues-agent"` for any subagent you spawn inside a playbook step** (code-writing delegates, ad-hoc helpers). The chat that receives `/hugues-mode` runs the playbook. Never spawn a `hugues-agent` to run the playbook itself. Routed workflow skills (`how`, `why`, `interrogate`, `reflect`, `swarm`) set their own `subagent_type` for diverse-model review. Respect what the skill prescribes, don't override to `hugues-agent`.
 
 **Model defaults, and match the model to the job.** Every agent-tool call takes its defaults, role labels, project model overrides and the rule for fitting its reasoning level and speed to the job from [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels).
