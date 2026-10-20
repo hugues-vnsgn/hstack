@@ -29,9 +29,12 @@ Step 5 gives each role a tier. When a host's model list changes, keep the tier a
 
 | Tier | Claude Code | Codex | Roles |
 |---|---|---|---|
-| Workhorse | `sonnet` | `gpt-6.1-sol` | Code delegates, explorers, investigators, reflect tooling, swarm workers |
-| Judgment | `opus` | `gpt-6-astra` | Judgment and prose, explainer, synthesizers, reflect reviewers |
+| Scout | `sonnet` | `gpt-6-luna` | Explorers, investigators, swarm workers |
+| Workhorse | `sonnet` | `gpt-6.1-sol` | Code delegates, hillclimb, reflect tooling |
+| Judgment | `opus` | `gpt-6.1-sol` at `xhigh` | Judgment and prose, explainer, synthesizers, reflect reviewers |
 | Frontier | `fable` | `gpt-6-astra` at `xhigh` | Hardest tasks, one design or review seat, the cross-judge |
+
+The Claude Code aliases `sonnet`, `opus` and `fable` resolve to `claude-sonnet-5-5`, `claude-opus-5-5` and `claude-fable-5-1`. Codex efforts differ per model: `gpt-6.1-sol` (daily coding, refactoring, synthesis, review) and `gpt-6-luna` (parallel exploration, grep and tracing, swarm workers, far cheaper) accept `medium` to `max`; `gpt-6-astra` (hardest architecture and zero-day debugging, most expensive) accepts `low` to `xhigh`, so never write `gpt-6-astra max`.
 
 Effort follows the work: `medium` for parallel reading, lanes and hillclimb iterations, `high` for scoped implementation and judgment, `xhigh` for fixes, design and adversarial review.
 
@@ -54,7 +57,7 @@ The starting role values are the file shape shown in step 5 below. If `.hstack/m
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table from the step 5 values, and on a re-run keep the models or list of any role whose value differs from its step 5 value. `unlimited` leaves every effort as in that table. `large`, `medium`, and `small` set the effort of every alternative, panel and `inherit-parent` entries included, to `xhigh`, `high`, or `medium`. If the agent tool does not accept that effort for that model, use its highest accepted effort below the target, else mark the role as needing a choice. So `small` turns `opus xhigh or gpt-6-astra xhigh` into `opus medium or gpt-6-astra medium`.
+**(b) Apply it.** Build the working table from the step 5 values, and on a re-run keep the models or list of any role whose value differs from its step 5 value. `unlimited` leaves every effort as in that table. `large`, `medium`, and `small` set the effort of every alternative, panel and `inherit-parent` entries included, to `xhigh`, `high`, or `medium`. If the agent tool, or for the other host's models the ranges under Model tiers, does not accept that effort for that model, use its highest accepted effort below the target, else mark the role as needing a choice. So `small` turns `opus xhigh or gpt-6-astra xhigh` into `opus medium or gpt-6-astra medium`.
 
 **(c) Show the roles and confirm.** Show every role with its value, marking any current-host slug not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` as the options. Prefer AskQuestion over free text.
 
@@ -74,17 +77,17 @@ feature, refactoring: sonnet high or gpt-6.1-sol high
 bug-fix: sonnet xhigh or gpt-6.1-sol xhigh
 perf-issue: sonnet xhigh or gpt-6.1-sol xhigh
 hillclimb: sonnet medium or gpt-6.1-sol medium
-judgment and prose: opus high or gpt-6-astra high
+judgment and prose: opus high or gpt-6.1-sol xhigh
 hardest tasks: fable xhigh or opus max or gpt-6-astra xhigh
-how explorer: sonnet medium or gpt-6.1-sol medium
-how explainer: opus high or gpt-6-astra high
-why investigators: sonnet high or gpt-6.1-sol high
-why synthesizer: opus xhigh or gpt-6-astra xhigh
+how explorer: sonnet medium or gpt-6-luna medium
+how explainer: opus high or gpt-6.1-sol xhigh
+why investigators: sonnet high or gpt-6-luna high
+why synthesizer: opus xhigh or gpt-6.1-sol xhigh
 reflect tooling: sonnet high or gpt-6.1-sol high
-reflect judgment, divergent, synthesizer: opus high or gpt-6-astra high
+reflect judgment, divergent, synthesizer: opus high or gpt-6.1-sol xhigh
 arena runners: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhigh
 arena cross-judge pool: fable high or gpt-6-astra high, opus high or gpt-6.1-sol high
-swarm workers: sonnet medium or gpt-6.1-sol medium
+swarm workers: sonnet medium or gpt-6-luna medium
 architect runners: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or fable high
 interrogate reviewers: opus xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or sonnet xhigh, fable high or gpt-6.1-sol xhigh
 ```

@@ -1163,7 +1163,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/setup-hstack/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "7370298814382f2f06902943a8a693329f3ee8aa566845d9b657de8de7161cf9"
+      "destination_sha256": "7761b8ba92479688d675358d006164f3e5be417d24fedbdd82035626b76fca28"
     },
     {
       "source": "pstack/skills/sharpen/SKILL.md",
@@ -1671,7 +1671,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "d54457f8e42b2e6cee1a3b064fe0d6cdee01ae0d12f946a997baac98d2a15dec",
+      "sha256": "3779a887c7eea33fda58880914e9d65643489062d017bd248448d192fec4d571",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1703,11 +1703,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "15efe6c413dc4fb614602dd64afc2d43a27a606a61da3af2e84794519279ad1a",
+      "sha256": "437c70c5a00cd4c72b2614d6ed163ee480ce1e51739ef5e1e6b146562241c20b",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "0c7e459c7bb8b5069a22fb7da155f95c514dd176490b55dd9c61fad9e0521d0a",
+      "sha256": "28367e28465cb6ec30de5ee0461bb4efd52914ab19b7f53827e9f3d61e10521f",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -2427,7 +2427,7 @@
       "mode": 420
     },
     "skills/setup-hstack/SKILL.md": {
-      "sha256": "7370298814382f2f06902943a8a693329f3ee8aa566845d9b657de8de7161cf9",
+      "sha256": "7761b8ba92479688d675358d006164f3e5be417d24fedbdd82035626b76fca28",
       "mode": 420
     },
     "skills/setup-hstack/agents/openai.yaml": {
