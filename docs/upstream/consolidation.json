@@ -1627,7 +1627,7 @@
   ],
   "installed_files": {
     ".claude-plugin/plugin.json": {
-      "sha256": "b71f5369207d4a5166bb7bdcde0899e67e752a585046b031ba870224a6373669",
+      "sha256": "eeda883bd8be311e5653d307a0c3a44748cf8a409e1d46e335307e5e97154c82",
       "mode": 420
     },
     "PSTACK-LICENSE": {
@@ -1671,7 +1671,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "3c69e3d7df3ec4f62751e8cab699af43a8771371dc443266b5654d6a2334c75b",
+      "sha256": "02cbe8b14e42caf7bcab17e030c0272787f8d5fc4ada309d491b1380925e5441",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1703,11 +1703,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "59249f9865ae0c1beaab68695cdc8f5b01c30bbb52d0f8ec36bb15305082e28c",
+      "sha256": "166c598a6c2530eed0f634c0aac1b939ab1cca36da68232c876a9e0776d70447",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "b52593cdd102b1d62a0b8fd59dbf91acb6f9790b05ebdf2754bec512398089b2",
+      "sha256": "44d17ca96984fc68b37032f3811dbb3d0cabb6da6d20541f7ff272fe0aac8433",
       "mode": 420
     },
     "agents/hugues-agent.md": {
