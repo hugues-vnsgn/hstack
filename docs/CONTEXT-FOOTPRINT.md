@@ -60,8 +60,8 @@ Ten of the 50 skill files declared at 0.2.0 remain byte-identical to `7db3e80`,
 all of them `principle-*` skills, which never carried the reworded host-contract
 marker below. The other 40 differ. Fourteen are the principle skills the pstack
 0.15.25 re-pin updated. The 26 non-principle files differ for three separate
-reasons: `hugues-mode` and `setup-hstack` diverge from upstream to stay the only
-model-invocable skills; architect, arena, how, interrogate, reflect, swarm and
+reasons: `hugues-mode` and `setup-hstack` carry hStack's own router and setup
+changes; architect, arena, how, interrogate, reflect, swarm and
 why carry the separate tiered-model-role wiring that replaced Cursor's rule file
 with project-local `.hstack/models.md` and `inherit-parent` defaults; and PR 1
 fix round 1's reworded host-contract marker ("The host contract governs how this

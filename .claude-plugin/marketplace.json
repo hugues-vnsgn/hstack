@@ -9,7 +9,7 @@
       "name": "hstack",
       "description": "Mobile routing, proof guidance and principles for hStack in Claude Code and Codex.",
       "source": "./plugin",
-      "version": "0.5.3"
+      "version": "0.5.4"
     }
   ]
 }

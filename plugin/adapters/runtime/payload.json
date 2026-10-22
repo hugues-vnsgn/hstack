@@ -141,7 +141,7 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "98fa258778fcb60df33dbea2729b9aa6eaa307074e84b962d85df0f93dd4204e",
+      "sha256": "5d5948143f8171e8bf1efafe5c5e000a95e47e5b0446f9186688f00672712279",
       "mode": "100644"
     },
     {
@@ -431,7 +431,7 @@
     },
     {
       "path": "skills/hugues-help/SKILL.md",
-      "sha256": "cc2f0b71c2b8a86c645777bb0da9d9615a507e0df397483a13e00c8232d0132a",
+      "sha256": "c55830c6e8ec6fd020509b83d5fb19b8cf4bf89e5ab120fc58ce0605b38cf5dd",
       "mode": "100644"
     },
     {
