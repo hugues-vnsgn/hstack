@@ -84,7 +84,6 @@ Keep pstack's playbook text. Resolve inherited wording by host and surface here.
 | Cursor's `/loop` | Claude Code | Use `/loop` in the current local session, never a cloud schedule for work that needs local devices. |
 | Cursor's `/loop` | Codex | Use only active-session waits. Between-turn scheduling stays an unsatisfied gap, per #34 item 6. |
 | `cursor-team-kit` source attributions | Both hosts | Map to bundled `control-cli` / `control-ui`. |
-| `control-ui` | Both hosts | Before a server write or login, read [host-ui.md](host-ui.md). |
 
 ## Required phase guidance
 

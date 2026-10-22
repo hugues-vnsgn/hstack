@@ -1658,10 +1658,6 @@
       "sha256": "27f7d09bad9e656c2f34e7bafdeaf6230b04d2034799f47ec14a7a1a3c229a0e",
       "mode": 420
     },
-    "adapters/host-ui.md": {
-      "sha256": "f4cc9d6646150eaf9fb618d70969786da470f72de5fadfe5c045e63db4af6f69",
-      "mode": 420
-    },
     "adapters/host-workers.md": {
       "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992",
       "mode": 420
@@ -1671,11 +1667,11 @@
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "fd2b939d58a059937edec95b01ac98c2b1075e1eb58e5ab8a9a1e44c5faca868",
+      "sha256": "ab19262fe7cd6b758a137d667e9ba7a2b7d70294286e07cf82828c30a5e49f08",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "5a75267d113a714bc63cfef6d8e8f8292f052af76b153f5691a7c919b02b02b1",
+      "sha256": "6ddce1a315fa10bcf9d2e58d71645241c74a4ab2967b97db1e51b3aef1eec36f",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1707,11 +1703,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "c061c82074076297d511f6e13f94ab59ffb2edbb8f7e65e28abfe96f28c9295c",
+      "sha256": "4343c0a8e011ab99130f53c5b4a31d548ecfc178910dbd7a05034e627c6274d1",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "e29cf2aa47ac4bbf27d5ccb31d95a22cd90638a10071a94cd16a7b3c4790cac5",
+      "sha256": "704f7f7b892258a7473959c47cf269cdafc97ed53d88e7678eba5195db2090a7",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1799,7 +1795,7 @@
       "mode": 420
     },
     "skills/control-ui/SKILL.md": {
-      "sha256": "1b55506e7240432305024f01d1eb8228b89e9f9c21b9ba5d2a55d9c692f8fcf2",
+      "sha256": "93726de254a2478f1740d23b718e798dd30a18f610d8c2e4c75fbe7e66e945d3",
       "mode": 420
     },
     "skills/control-ui/agents/openai.yaml": {
