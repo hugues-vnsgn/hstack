@@ -1,6 +1,6 @@
 # Authoring, review and publication
 
-Cursor create-skill uses agent-writing and package checks.
+create-skill means writing-for-agents plus package checks.
 Before commits use bundled deslop, unslop and technical-writing, before review
 no-comments, and for control bundled control-cli or control-ui.
 Missing writing-for-agents is reported as a capability gap, never silently marked performed.
