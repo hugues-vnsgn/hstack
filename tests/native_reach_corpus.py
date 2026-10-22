@@ -145,19 +145,24 @@ CONTRADICTIONS = [
      'Before the PR opens, call the Skill tool on `no-comments` and follow its steps.'),
     ('issue 48 call the Skill tool for each bundled skill',
      'Call the Skill tool for each bundled skill the plan names.'),
+    # hugues-mode became user-only, as poteto-mode is upstream, so sentences that were
+    # correct while it was native-only now tell an agent to reach a user-only skill.
+    ('native-only tier rule naming hugues-mode',
+     "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\n"
+     "native-only skills) only through the host's supported native mechanism."),
+    ('preloaded mode',
+     'If it is not in your context, invoke `hugues-mode` natively before doing any work; '
+     'Codex uses its supported native invocation.'),
 ]
 
 # Sentences that name a native-reach word and a skill, or a class word, and are correct.
 CLEAN = [
     ('native-only tier rule',
-     "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\n"
-     "native-only skills) only through the host's supported native mechanism."),
+     "Reach `setup-hstack` and each consumer or external skill (the native-only\n"
+     "skills) only through the host's supported native mechanism."),
     ('mode natively, principles by reading, split at the semicolon',
      "Obtain the mode through supported native invocation before work; read each\n"
      "applicable principle's SKILL.md in full as the scoped bundled reference below."),
-    ('preloaded mode',
-     'If it is not in your context, invoke `hugues-mode` natively before doing any work; '
-     'Codex uses its supported native invocation.'),
     ('consumer and external dependency',
      'A consumer or external skill dependency must succeed through native invocation before work; '
      'never substitute a file read for one of those.'),

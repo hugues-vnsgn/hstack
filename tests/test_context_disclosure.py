@@ -57,7 +57,7 @@ class ContextDisclosure(unittest.TestCase):
         # setup-hstack are reached only by native invocation, with denials respected, and
         # a file read is no substitute. The user-only read is stated once too, beside the tier.
         self.assertEqual(host.count("only through the host's supported native mechanism"), 1)
-        self.assertIn('Reach `hugues-mode`, `setup-hstack` and each consumer or external skill', host)
+        self.assertIn('Reach `setup-hstack` and each consumer or external skill', host)
         self.assertIn('owner-disabled entries and native denials', host)
         self.assertIn('never use a file read as an invocation fallback', host)
         self.assertIn("reads its SKILL.md in full as the scoped bundled reference, with the host's own", host)
@@ -162,7 +162,7 @@ class ContextDisclosure(unittest.TestCase):
         for name, marker in [('plugin/adapters/mobile.md', '[mobile workflows](mobile-workflows.md) in full'),
                              ('plugin/adapters/mobile-workflows.md', 'separate\nfresh production worker'),
                              ('plugin/adapters/host-workers.md', 'List length sets'),
-                             ('plugin/adapters/host.md', 'Reach `hugues-mode`, `setup-hstack` and each consumer or external skill'),
+                             ('plugin/adapters/host.md', 'Reach `setup-hstack` and each consumer or external skill'),
                              ('plugin/adapters/host.md', "only through the host's supported native mechanism")]:
             with self.subTest(name=name):
                 changed = dict(original)
@@ -253,9 +253,8 @@ class ContextDisclosure(unittest.TestCase):
         measured = measure_context.measure(ROOT)
         skill_list = measured['skill_list']
         self.assertLessEqual(skill_list['candidate']['characters'], 2500)
-        self.assertEqual(skill_list['candidate']['model_invocable_skills'], 2)
-        self.assertEqual(set(skill_list['candidate']['paths']),
-                         {'plugin/skills/hugues-mode/SKILL.md', 'plugin/skills/setup-hstack/SKILL.md'})
+        self.assertEqual(skill_list['candidate']['model_invocable_skills'], 1)
+        self.assertEqual(set(skill_list['candidate']['paths']), {'plugin/skills/setup-hstack/SKILL.md'})
         # No hardcoded baseline here: native_before is recomputed, by the same function, over
         # the same pinned CONTEXT-BASELINE.json bytes every other measurement in this module
         # already compares against (measured['native_before_revision'] names the exact

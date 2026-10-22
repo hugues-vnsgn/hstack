@@ -14,7 +14,7 @@ The host contract governs how this skill reaches any sibling dependency.
 
 Answer the user's question about hStack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and an hStack run spends real tokens, so let them send the prompt.
 
-A message that asks for work, such as "use hStack to fix this bug", is not a help question. Reach [`hugues-mode`](../hugues-mode/SKILL.md) through the host's supported native mechanism, as the [host contract](../../adapters/host.md) says, and do the work under it. If the host cannot, give the user the exact command to type, `/hstack:hugues-mode` in Claude Code or `$hugues-mode` in Codex, and stop.
+A message that asks for work, such as "use hStack to fix this bug", is not a help question. Read [`hugues-mode`](../hugues-mode/SKILL.md) and do the work under it.
 
 This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, and the guide lives outside it, so give the user the file's public copy: `https://github.com/hugues-vnsgn/hstack/blob/main/` followed by its repository path, such as `plugin/skills/how/SKILL.md` or `docs/pstack/guide/01-setup.md`.
 
@@ -162,7 +162,7 @@ Principles are one-rule skills that `/hugues-mode` reads and cites in its replie
 | A question got treated as the next step of the last task | Say "new task", or say the turn doesn't need the mode. |
 | A new model choice had no effect | Skills read `.hstack/models.md` at each role selection. Check that the role's line exists and is spelled as `/setup-hstack` wrote it, and whether the host rejected that model and fell back to the role's alternative, which the report names. |
 | Runs cost more than expected | See the cost paragraph under Get set up. |
-| A skill didn't run on its own | Only `hugues-mode` and `setup-hstack` can be picked from the user's words. The others run when the user types them or when `/hugues-mode` reads them, and it doesn't read every skill. |
+| A skill didn't run on its own | Only `setup-hstack` can be picked from the user's words. The others run when the user types them or when `/hugues-mode` reads them, and it doesn't read every skill. |
 | Parallel agents overwrote each other | Give each agent its own worktree. |
 | An overnight run moved but finished nothing | A loop needs a check that can pass or fail, not a duration. See [guide page 7](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/07-overnight.md). |
 | The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |

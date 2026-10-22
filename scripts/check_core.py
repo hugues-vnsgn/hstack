@@ -16,14 +16,14 @@ TREE = '8ff8d978aee18904b8be529b477ade363a53f7dd'
 EXCLUDED = set()
 ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
-# hStack restores that design. Only `hugues-mode` (the router) and
-# `setup-hstack` stay model-invocable, so their descriptions are the only ones
-# paid for in the host's per-turn skill list. Every other bundled skill is user-only:
+# hStack restores that design. Only `setup-hstack` stays model-invocable, so its
+# description is the only one paid for in the host's per-turn skill list. The router,
+# `hugues-mode`, is user-only as `poteto-mode` is upstream. Every other bundled skill is user-only:
 # the owner can still type it by name, and the mode reaches it by reading its
 # SKILL.md in full (the scoped host adapter rule), never by native invocation.
 USER_ONLY = {
     'architect', 'arena', 'automate-me', 'benchmark-checklist', 'blast-radius', 'bro',
-    'control-cli', 'control-ui', 'correct', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help',
+    'control-cli', 'control-ui', 'correct', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help', 'hugues-mode',
     'in-your-own-words', 'interrogate', 'ketchup',
     'maintain-verification-skill', 'make-bot-ui', 'no-comments',
     'principle-attack-the-premise', 'principle-boundary-discipline', 'principle-build-the-lever',
@@ -300,7 +300,7 @@ def adapter_errors(texts):
             errors.append('missing phase prerequisite: ' + name)
     for marker in ['Before the triggering action, read its complete reference',
                    'never use a file read as an invocation fallback', 'never restart task routing',
-                   'Reach `hugues-mode`, `setup-hstack` and each consumer or external skill',
+                   'Reach `setup-hstack` and each consumer or external skill',
                    "only through the host's supported native mechanism",
                    'owner-disabled entries and native denials',
                    'No translation grants new authority', 'A constraint\ncan block execution',

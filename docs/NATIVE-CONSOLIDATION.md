@@ -47,15 +47,15 @@ proven universal limitation in this setup.
 At the pstack 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
 with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
 only `setup-pstack` is model-invocable. hStack restores that design instead of the earlier native
-table that made 46 skills model-invocable: only `hugues-mode` and
-`setup-hstack` are model-invocable now, so only their descriptions enter
-startup context on Claude Code. The other 55 bundled skills, including `deslop`, `control-cli` and `control-ui`, are user-only; the
+table that made 46 skills model-invocable: only `setup-hstack` is
+model-invocable now, so only its description enters startup context on Claude
+Code. The other 58 bundled skills, including `hugues-mode` ([ADR 0003](adr/0003-hugues-mode-is-user-only.md)), `deslop`, `control-cli` and `control-ui`, are user-only; the
 owner can still type any of them by name, and the mode reaches each one as its
 router's reference: the agent reads its SKILL.md in full with the host's own
 file-read tool instead of invoking it natively. The installed helper takes no
-part in that read. `hugues-agent` preloads `hugues-mode` through the Claude Code agent
-`skills` field and invokes it natively when the preload is absent; whether the
-plugin-scoped name `hstack:hugues-mode` resolves is unobserved. Generated
+part in that read. `hugues-agent` reads `hugues-mode/SKILL.md` from its parent's
+path, else from the installed plugins, as `poteto-agent` does; Claude Code cannot
+preload a `disable-model-invocation` skill. Generated
 project verification skills stay consumer-local and model-invocable so proof
 steps can drive them; that tier is unrelated to the bundled table above.
 

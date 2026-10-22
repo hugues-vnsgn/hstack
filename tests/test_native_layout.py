@@ -540,13 +540,22 @@ class HuguesModeRouter(unittest.TestCase):
             self.assertIn(marker, body.split('## Non-negotiables', 1)[0])
         for stale in ['Poteto mode', 'AskQuestion', 'poteto-agent', 'generalPurpose', '`Task`']:
             self.assertNotIn(stale, self.text)
-        self.assertIn('`AskUserQuestion`', self.text)
+        # The trigger names no host tool: subagents have no question tool and Codex's is
+        # unobserved, so it asks, and interviews only on a call no experiment can settle.
+        self.assertNotIn('AskUserQuestion', self.text)
+        self.assertIn('- About to ask the user on a "which approach"', self.text)
+        self.assertIn('Reserve questions for a genuine product or preference call no experiment can settle, '
+                      'and interview the user on it until you reach a shared understanding.', self.text)
         self.assertIn('subagent_type: "hugues-agent"', self.text)
-        # Codex rendered 243 characters of the previous 312-character description and cut the
-        # mobile clause. The whole description must fit under that observed cut.
-        description = measure_context.description_text(check_core.native_frontmatter(self.text)['description'])
+        # The router is user-only, as poteto-mode is upstream, and its description follows
+        # poteto-mode's style line. Codex rendered 243 characters of an earlier 312-character
+        # description, so the whole description stays under that observed cut.
+        fields = check_core.native_frontmatter(self.text)
+        self.assertTrue(fields['disable-model-invocation'])
+        description = measure_context.description_text(fields['description'])
         self.assertLessEqual(len(description), 243)
-        self.assertIn('any mobile task (Swift/iOS, Kotlin/Android, KMP, CMP, simulator or emulator proof)', description)
+        self.assertTrue(description.startswith("hugues's agent style for mobile and engineering work"), description)
+        self.assertIn('/hugues-mode, or requests to work in this style.', description)
         # Cursor-only concepts keep their wording; the host adapter translates them.
         for concept in ['Bugbot', '`control-cli`',
                         '`control-ui`', '**create-skill**', 'Cursor restart']:
@@ -606,9 +615,9 @@ class HuguesModeRouter(unittest.TestCase):
     def test_hugues_agent_registered_name_and_question_tool_have_a_host_home(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         flat = ' '.join(host.split())
-        # The router names `AskUserQuestion`; the adapter keys its translation on it, keeps the
-        # Cursor spelling for inherited wording, and claims no observed Codex tool name.
-        self.assertIn('Map `AskUserQuestion` (Cursor `AskQuestion`), todos, filesystem and Git to host tools.', flat)
+        # The router names no question tool. The adapter keys its translation on the Cursor
+        # spelling the other skills still use and claims no observed Codex tool name.
+        self.assertIn('Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.', flat)
         self.assertIn("Codex's equivalent is unobserved here", flat)
         self.assertNotIn('Translate AskQuestion', host)
         # host.md points at the one per-host line; the line is keyed on `hugues-agent` and keeps
@@ -777,12 +786,14 @@ class HuguesModeRouter(unittest.TestCase):
     def test_hugues_agent_finds_the_mode_file_itself(self):
         # Issue #48: owners whose brief carried no hugues-mode path never read a bundled
         # skill. pstack's poteto-agent finds its mode file on disk; hugues-agent does the same
-        # in Claude Code terms, in this order, and keeps the preload.
+        # in Claude Code terms, in this order. Claude Code cannot preload a
+        # disable-model-invocation skill, so the user-only mode is never preloaded.
         agent = (ROOT / 'plugin/agents/hugues-agent.md').read_text()
-        self.assertRegex(agent, r'(?m)^skills:\n  - hstack:hugues-mode$')
+        self.assertNotRegex(agent, r'(?m)^skills:')
+        self.assertNotIn('preload', agent)
         flat = ' '.join(agent.split())
-        order = ['the absolute path to the `hugues-mode` SKILL.md that your parent gave you',
-                 '"Base directory for this skill" that Claude Code shows with the preloaded `hugues-mode` skill',
+        order = ["Read the `hugues-mode` skill's `SKILL.md` in full before doing any work",
+                 'the absolute path to the `hugues-mode` SKILL.md that your parent gave you',
                  'search the installed plugins under the Claude config directory',
                  'a file whose path ends in `skills/hugues-mode/SKILL.md`',
                  'stop and tell your parent']
@@ -802,7 +813,7 @@ class HuguesModeRouter(unittest.TestCase):
                 with self.subTest(path=path, phrase=phrase):
                     self.assertIn(phrase, flat)
         # Native-only skills keep their native route.
-        self.assertIn('Reach `hugues-mode`, `setup-hstack` and each consumer or external skill',
+        self.assertIn('Reach `setup-hstack` and each consumer or external skill',
                       ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split()))
 
     def test_playbook_headers_no_longer_hold_a_step_on_invocation(self):
