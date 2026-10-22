@@ -2041,7 +2041,7 @@
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
-            "sha256": "a23763fb3fa696ce8cca51b7d9244a5e0fadf92892aeeae2a4274d24cfceffb6"
+            "sha256": "c6e2bb7db2018feabfd94e92e26691691e04759bc1084bc62a402f9ac16f4e33"
           },
           "plugin/adapters/host-workers.md": {
             "bytes": 8825,
@@ -2865,7 +2865,7 @@
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
-            "sha256": "a23763fb3fa696ce8cca51b7d9244a5e0fadf92892aeeae2a4274d24cfceffb6"
+            "sha256": "c6e2bb7db2018feabfd94e92e26691691e04759bc1084bc62a402f9ac16f4e33"
           },
           "plugin/adapters/host-typescript.md": {
             "bytes": 603,
