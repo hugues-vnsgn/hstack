@@ -180,6 +180,11 @@
       "mode": "100644"
     },
     {
+      "path": "adapters/host-ui.md",
+      "sha256": "f4cc9d6646150eaf9fb618d70969786da470f72de5fadfe5c045e63db4af6f69",
+      "mode": "100644"
+    },
+    {
       "path": "adapters/host-workers.md",
       "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992",
       "mode": "100644"
@@ -191,7 +196,7 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "ab19262fe7cd6b758a137d667e9ba7a2b7d70294286e07cf82828c30a5e49f08",
+      "sha256": "fd2b939d58a059937edec95b01ac98c2b1075e1eb58e5ab8a9a1e44c5faca868",
       "mode": "100644"
     },
     {
