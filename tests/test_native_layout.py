@@ -712,7 +712,7 @@ class HuguesModeRouter(unittest.TestCase):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         table = check_core.section(host, 'Inherited wording translations')
         rows = [line for line in table.splitlines() if line.startswith('| ')][1:]
-        self.assertEqual(len(rows), 7)
+        self.assertEqual(len(rows), 6)
         expected = [
             ('CLI or TUI', '`control-cli`'),
             ('Browser, Electron or web', '`control-ui`'),
@@ -720,14 +720,13 @@ class HuguesModeRouter(unittest.TestCase):
             ('Claude Code', 'current local session', 'never a cloud schedule'),
             ('Codex', 'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
             ('cursor-team-kit', 'bundled `control-cli` / `control-ui`'),
-            ('`control-ui`', 'Both hosts', 'server write or login', '(host-ui.md)'),
         ]
         for row, markers in zip(rows, expected):
             for marker in markers:
                 self.assertIn(marker, row)
         self.assertIn('"control skill" / "matching control skill"', table)
         self.assertIn("Cursor's `/loop`", table)
-        ui = (ROOT / 'plugin/adapters/host-ui.md').read_text()
+        ui = (ROOT / 'plugin/skills/control-ui/SKILL.md').read_text()
         self.assertIn('may write to the server', ui)
         self.assertIn('get a yes from the user, or from the coordinator', ui)
         self.assertIn('never prints, returns or logs them', ui)
