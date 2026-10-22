@@ -29,10 +29,9 @@ Step 5 gives each role a tier. When a host's model list changes, keep the tier a
 
 | Tier | Claude Code | Codex | Effort | Roles |
 |---|---|---|---|---|
-| Fast | `claude-haiku-5-5` | `gpt-6-luna` | `medium` | The how explorer |
+| Fast | `claude-haiku-5-5` | `gpt-6-luna` | `xhigh` | The how explorer |
 | Workhorse | `claude-sonnet-5-5` | `gpt-6.1-sol` | `high` | Code delegates, investigators, reflect tooling, swarm workers |
-| Judgment | `claude-opus-5-5` | `gpt-6-astra` | `high` | Judgment and prose, explainer, synthesizers, reflect reviewers |
-| Frontier | `claude-fable-5-1` | `gpt-6-astra` | `xhigh` | Hardest tasks, one design or review seat, the cross-judge |
+| Judgment | `claude-opus-5-5` | `gpt-6-astra` | `high` | Judgment and prose, hardest tasks, explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge |
 
 A role's effort can move off its tier default because effort follows the work: `medium` for parallel reading, lanes and hillclimb iterations, `high` for scoped implementation and judgment, `xhigh` for fixes, design and adversarial review. Every model in the table accepts `low` through `max`. Never write Codex's `ultra`, which delegates on its own.
 

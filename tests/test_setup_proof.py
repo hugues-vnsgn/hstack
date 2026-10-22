@@ -62,7 +62,7 @@ class SetupProofContract(unittest.TestCase):
         tiers = set(re.findall(r'^\| (?:Workhorse|Judgment|Frontier) \| `[^`]+` \| `(gpt-[^`]+)`', body, re.M))
         self.assertTrue(tiers)
         row = re.search(r'^interrogate reviewers: (.+)$', body, re.M).group(1)
-        self.assertEqual(len(row.split(',')), 3)
+        self.assertEqual(len(row.split(',')), 2)
         self.assertLessEqual(set(re.findall(r'gpt-[\w.-]+', row)), tiers)
 
 

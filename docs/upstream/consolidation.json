@@ -163,7 +163,7 @@
       "source_mode": 420,
       "destination": "docs/pstack/guide/01-setup.md",
       "disposition": "canonical",
-      "destination_sha256": "c889baa6150d9d8b46baa8ec4bcf6153c13bdeb7281dafadeeead03326439edf"
+      "destination_sha256": "beefe4a8aa244618376e3635d7e6a071197535a45403a6712a73dda188423cf7"
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
@@ -1163,7 +1163,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/setup-hstack/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "419be9a26eff3966e31785cb3b7c2f4bf141b759707211c356fb9488e98e1b48"
+      "destination_sha256": "c0e08bfb397ab832cdb6c56c858a132d94ad85e98ed4b87c45527b3fd79096a8"
     },
     {
       "source": "pstack/skills/sharpen/SKILL.md",
@@ -1671,7 +1671,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "e29c5d2271b9274710dc2b4a5eb33738150530e7bdf073447d3877112a3cd4e2",
+      "sha256": "4c093f62db1aafda8328d4c0db72b33ce29020f76b0ac07b7684316e2185de43",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1703,11 +1703,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "c69ce7ea7257233c576dd07d5b02a80278d590a439e7537fca8e5ac59a33906b",
+      "sha256": "559c0cec6ea9c4e6ff920eb6cd947a9987fd343fd628977d18824047786f34c7",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "faa76978f50423550dced5ff8fe56a9003f300bf2dfe6a67cf376a75683a9615",
+      "sha256": "c5483012524388026a3a1ded69ba2ddcd139a336230a460efd3ededeb86a219d",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -2427,7 +2427,7 @@
       "mode": 420
     },
     "skills/setup-hstack/SKILL.md": {
-      "sha256": "419be9a26eff3966e31785cb3b7c2f4bf141b759707211c356fb9488e98e1b48",
+      "sha256": "c0e08bfb397ab832cdb6c56c858a132d94ad85e98ed4b87c45527b3fd79096a8",
       "mode": 420
     },
     "skills/setup-hstack/agents/openai.yaml": {
