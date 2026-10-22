@@ -448,9 +448,9 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                 self.assertIn('native skill invocation', result.stderr)
                 self.assertNotIn('standalone guarded read', result.stderr)
 
-    def test_read_workflow_and_translate_keep_model_invocable_skills_native_only(self):
-        # `hugues-mode` and `setup-hstack` stay model-invocable and, like every other
-        # bundled skill, their SKILL.md is refused by both verbs.
+    def test_read_workflow_and_translate_refuse_the_mode_and_setup_bodies(self):
+        # Like every other bundled skill, `hugues-mode` and `setup-hstack` have their SKILL.md
+        # refused by both verbs.
         for source in ['skills/hugues-mode/SKILL.md', 'skills/setup-hstack/SKILL.md',
                        'pstack/skills/poteto-mode/SKILL.md', 'pstack/skills/setup-pstack/SKILL.md']:
             with self.subTest(source=source):

@@ -41,8 +41,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "908ea1518bf2e2bf893ef33822c075be8abaa1985e4cac31015f17c813a3acfa",
       "disposition": "replaced",
-      "reason": "The opening sentence scoped native invocation to every bundled skill too, which disable-model-invocation: true makes impossible for a user-only bundled skill; PR 1 fix round 1 narrowed it to consumer and external skills only, and round 3 names the whole native-only set (hugues-mode, setup-hstack (then setup-huguesstack), consumer and external skills) and states the rule once, so reading their files stays no substitute. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading.",
-      "replacement": "Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the\nnative-only skills) only through the host's supported native mechanism.\nOn Codex, select the enabled skill from the host-provided catalog and read\nits complete SKILL.md. No separate Skill tool exists.\nRespect manual-only selection, owner-disabled entries and native denials.\nOutside that mechanism, never use a file read as an invocation fallback."
+      "reason": "The opening sentence scoped native invocation to every bundled skill too, which disable-model-invocation: true makes impossible for a user-only bundled skill; PR 1 fix round 1 narrowed it to consumer and external skills only, and round 3 names the whole native-only set (hugues-mode, setup-hstack (then setup-huguesstack), consumer and external skills) and states the rule once, so reading their files stays no substitute. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading. hugues-mode later became user-only, as poteto-mode is upstream, so the native-only set is setup-hstack plus consumer and external skills.",
+      "replacement": "Reach `setup-hstack` and each consumer or external skill (the native-only\nskills) only through the host's supported native mechanism.\nOn Codex, select the enabled skill from the host-provided catalog and read\nits complete SKILL.md. No separate Skill tool exists.\nRespect manual-only selection, owner-disabled entries and native denials.\nOutside that mechanism, never use a file read as an invocation fallback."
     },
     {
       "paragraph": 4,
@@ -261,7 +261,7 @@
       "sha256": "1a0c39ffe445cc11c913d832f7962feeec220a32870e15299c9ff2448a2b8e29",
       "disposition": "replaced",
       "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md.",
-      "replacement": "`setup-hstack` uses the pinned detect \u2192 load \u2192 budget/map/confirm \u2192 validate\n\u2192 write \u2192 confirm \u2192 optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
+      "replacement": "`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate\n→ write → confirm → optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
     },
     {
       "paragraph": 16,
@@ -278,8 +278,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
-      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit.",
-      "replacement": "Map `AskUserQuestion` (Cursor `AskQuestion`), todos, filesystem and Git to host tools.\nCodex's equivalent is unobserved here. Use its question tool."
+      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved.",
+      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\nCodex's equivalent is unobserved here. Use its question tool."
     },
     {
       "paragraph": 17,

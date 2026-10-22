@@ -51,7 +51,7 @@
       "source_mode": 420,
       "destination": "plugin/agents/hugues-agent.md",
       "disposition": "canonical",
-      "destination_sha256": "edbdaf70ce9763c39115b012a630f0c8e2b5c6b4709af525e9b9b3633485d651"
+      "destination_sha256": "41723281e7293e3f3428211f1e3299b6676140ed57b1b21b979d01f252ff1432"
     },
     {
       "source": "pstack/assets/logo.png",
@@ -531,7 +531,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-help/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "efcb41b97b45d11f8bdcddaa86abb8f6aaf95af795c7575aa6bb8e7f4c9a08a9"
+      "destination_sha256": "cc2f0b71c2b8a86c645777bb0da9d9615a507e0df397483a13e00c8232d0132a"
     },
     {
       "source": "pstack/skills/poteto-help/references/prompting.md",
@@ -555,7 +555,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535"
+      "destination_sha256": "be585b590acc934ee70f06380a6f548f875fead69b074e094af999bde15fb158"
     },
     {
       "source": "pstack/skills/poteto-mode/playbooks/authoring-a-skill.md",
@@ -1435,6 +1435,7 @@
       "figure-it-out",
       "how",
       "hugues-help",
+      "hugues-mode",
       "in-your-own-words",
       "interrogate",
       "ketchup",
@@ -1479,7 +1480,7 @@
       "unslop",
       "why"
     ],
-    "reason": "Restores pstack's router design: hugues-mode reads every other bundled skill as a file instead of paying for its description in the host's skill list. Only hugues-mode and setup-hstack are model-invocable; every other bundled skill is user-only, reachable by typed name or by the mode's file read."
+    "reason": "Restores pstack's router design: hugues-mode reads every other bundled skill as a file instead of paying for its description in the host's skill list. Only setup-hstack is model-invocable; every other bundled skill, hugues-mode included as poteto-mode is upstream, is user-only, reachable by typed name or by a file read."
   },
   "agents": {
     "poteto-agent": {
@@ -1667,11 +1668,11 @@
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "ab19262fe7cd6b758a137d667e9ba7a2b7d70294286e07cf82828c30a5e49f08",
+      "sha256": "b95b8067dd73e536df6ca0297a546374a79280203d20ec9f5bfa237306505c7a",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "6ddce1a315fa10bcf9d2e58d71645241c74a4ab2967b97db1e51b3aef1eec36f",
+      "sha256": "15e4a7714ee3a0d357f6f396c5f645c439a9e097787aa303e715830b807ad766",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1703,15 +1704,15 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "4343c0a8e011ab99130f53c5b4a31d548ecfc178910dbd7a05034e627c6274d1",
+      "sha256": "51f9676c7d38500bf5c9c52e99236e0c6dda410fffe3cdce8f4767e82f4a50cf",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "704f7f7b892258a7473959c47cf269cdafc97ed53d88e7678eba5195db2090a7",
+      "sha256": "aebe29fb6b934057e2ccc01c0516c12f3d1f41d35ad0ed693958fa7377dae2bf",
       "mode": 420
     },
     "agents/hugues-agent.md": {
-      "sha256": "edbdaf70ce9763c39115b012a630f0c8e2b5c6b4709af525e9b9b3633485d651",
+      "sha256": "41723281e7293e3f3428211f1e3299b6676140ed57b1b21b979d01f252ff1432",
       "mode": 420
     },
     "agents/hugues-comment-sicko.md": {
@@ -1871,7 +1872,7 @@
       "mode": 420
     },
     "skills/hugues-help/SKILL.md": {
-      "sha256": "efcb41b97b45d11f8bdcddaa86abb8f6aaf95af795c7575aa6bb8e7f4c9a08a9",
+      "sha256": "cc2f0b71c2b8a86c645777bb0da9d9615a507e0df397483a13e00c8232d0132a",
       "mode": 420
     },
     "skills/hugues-help/agents/openai.yaml": {
@@ -1887,11 +1888,11 @@
       "mode": 420
     },
     "skills/hugues-mode/SKILL.md": {
-      "sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535",
+      "sha256": "be585b590acc934ee70f06380a6f548f875fead69b074e094af999bde15fb158",
       "mode": 420
     },
     "skills/hugues-mode/agents/openai.yaml": {
-      "sha256": "8619a54e8c098122a7f3881394f84ca89b684366e848233a29ad18b6ec363935",
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
       "mode": 420
     },
     "skills/hugues-mode/playbooks/authoring-a-skill.md": {

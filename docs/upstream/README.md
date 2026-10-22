@@ -12,8 +12,9 @@ A later native restoration made 46 of the 50 skills model-invocable, so every
 description entered the host's per-turn skill list. The skill-list-budget work
 reverses that: it returns to pstack's own router design, where only
 `poteto-mode` (here `hugues-mode`) was model-invocable and read every other
-skill as a file. Only `hugues-mode` and `setup-hstack` stay
-model-invocable now; the other 57 bundled skills are user-only (52 from pstack, three from Cursor's
+skill as a file. At the 0.15.25 pin `poteto-mode` is manual-only too, so
+`hugues-mode` is user-only ([ADR 0003](../adr/0003-hugues-mode-is-user-only.md)). Only `setup-hstack` stays
+model-invocable now; the other 58 bundled skills are user-only (53 from pstack, three from Cursor's
 `cursor-team-kit`, and the two hStack-authored Swift and Kotlin baselines), which is the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
 The invocation-exposure change moves no upstream responsibility or destination.
 Issue #105 adds hStack-authored mobile baselines in the separate authored inventory.
@@ -32,6 +33,9 @@ the Playbooks list, and the model-defaults paragraph now lives in
 The rewrite also restated many rules as the behavior to do. Issue #83 put
 pstack 0.15.25's wording back in all of them, so the body now differs from
 upstream only by these renames, the host translation and the mobile routes.
+ADR 0003 later took `poteto-mode`'s frontmatter description and manual-only
+flag, and replaced `AskUserQuestion` in the question trigger with asking the
+user, plus an interview on a call no experiment can settle.
 The next upstream sync of this file is a manual merge against this body, not
 a line-by-line port.
 

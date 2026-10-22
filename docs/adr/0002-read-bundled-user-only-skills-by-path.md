@@ -12,7 +12,7 @@ Claude Code leaves the Skill tool as the obvious move for a `/no-comments` step,
 
 The decision has three parts.
 
-- `hugues-agent` finds `hugues-mode/SKILL.md` itself, as `poteto-agent` does. It uses its parent's absolute path, else the base directory Claude Code shows with the preloaded skill, else a search of the installed plugins. The preload stays.
+- `hugues-agent` finds `hugues-mode/SKILL.md` itself, as `poteto-agent` does. It uses its parent's absolute path, else the base directory Claude Code shows with the preloaded skill, else a search of the installed plugins. The preload stays. [ADR 0003](0003-hugues-mode-is-user-only.md) later removed the preload and the base-directory step.
 - `host.md` and the `hugues-agent` header say that on Claude Code a bundled user-only skill is never a Skill-tool call. In a playbook, a router trigger or a plan, `/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md` in full. The playbooks keep pstack's wording, and the adapter translates it.
 - The playbook headers drop the hStack-only clause that held a step when invocation was unavailable or denied. pstack has no such clause, and a read does not depend on invocation.
 

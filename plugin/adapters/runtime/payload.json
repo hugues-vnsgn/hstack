@@ -191,7 +191,7 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "ab19262fe7cd6b758a137d667e9ba7a2b7d70294286e07cf82828c30a5e49f08",
+      "sha256": "b95b8067dd73e536df6ca0297a546374a79280203d20ec9f5bfa237306505c7a",
       "mode": "100644"
     },
     {
@@ -231,7 +231,7 @@
     },
     {
       "path": "agents/hugues-agent.md",
-      "sha256": "edbdaf70ce9763c39115b012a630f0c8e2b5c6b4709af525e9b9b3633485d651",
+      "sha256": "41723281e7293e3f3428211f1e3299b6676140ed57b1b21b979d01f252ff1432",
       "mode": "100644"
     },
     {
@@ -431,7 +431,7 @@
     },
     {
       "path": "skills/hugues-help/SKILL.md",
-      "sha256": "efcb41b97b45d11f8bdcddaa86abb8f6aaf95af795c7575aa6bb8e7f4c9a08a9",
+      "sha256": "cc2f0b71c2b8a86c645777bb0da9d9615a507e0df397483a13e00c8232d0132a",
       "mode": "100644"
     },
     {
@@ -451,12 +451,12 @@
     },
     {
       "path": "skills/hugues-mode/SKILL.md",
-      "sha256": "bd6711035070e9985bab1eb9eb9ab8d063f71d88ad7c8e109c94333f62e13535",
+      "sha256": "be585b590acc934ee70f06380a6f548f875fead69b074e094af999bde15fb158",
       "mode": "100644"
     },
     {
       "path": "skills/hugues-mode/agents/openai.yaml",
-      "sha256": "8619a54e8c098122a7f3881394f84ca89b684366e848233a29ad18b6ec363935",
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
       "mode": "100644"
     },
     {

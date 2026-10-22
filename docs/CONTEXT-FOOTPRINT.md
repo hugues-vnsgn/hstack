@@ -90,9 +90,10 @@ pstack's own wording back in every rule the rewrite had restated, keeping the
 renames, the host translation and the mobile routes, which brought the mode file
 to the size given above.
 
-Only `hugues-mode` and `setup-hstack` are model-invocable now, so only their
-352 characters of description (236 for the router, 116 for setup) enter startup
-context on Claude Code (362 before the rename shortened the setup description); the
+Only `setup-hstack` is model-invocable now, so only its 116 characters of
+description enter startup context on Claude Code. Until
+[ADR 0003](adr/0003-hugues-mode-is-user-only.md) made the router user-only, it
+added 236 more, for 352 (362 before the rename shortened the setup description); the
 [skill-list measurement](CONTEXT-BUDGET.json) tracks this directly. It
 carries two "before" points, both computed by the same function, neither
 hardcoded: `native_before`, against the `7db3e80`-pinned bytes every other
@@ -105,7 +106,7 @@ the actual commit this restoration branched from and the exact revision the
 Issue's Problem Statement cites (46 model-invocable skills, 9,844 description
 characters, close to but not forced to equal the owner's earlier informally
 recorded 9,869, since that number was recorded rather than recomputed from
-pinned bytes). The other 57 skills are user-only: the owner types one by
+pinned bytes). The other 58 skills are user-only: the owner types one by
 name, and the mode reads it in full as its router reference. The agent never
 invokes one natively; the owner still can. [Host validation](skill-list-host-validation.md) observed, at
 code commit `ae51493`, that Claude Code's attached skill list grows by exactly

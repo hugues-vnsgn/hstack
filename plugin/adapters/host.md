@@ -14,7 +14,7 @@ custom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mod
 `setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other
 public names are unchanged.
 
-Only `hugues-mode` and `setup-hstack` are model-invocable. Every other
+Only `setup-hstack` is model-invocable. Every other
 bundled skill, including each `principle-*`, is user-only: the owner can still
 type it by name. On Claude Code, never call the Skill tool for one. In a
 playbook, `/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`.
@@ -32,8 +32,8 @@ are role defaults to resolve against models the native tool exposes. Read
 [workers and models](host-workers.md), which names each host's registered
 `hugues-agent`, before the dispatch itself.
 
-Reach `hugues-mode`, `setup-hstack` and each consumer or external skill (the
-native-only skills) only through the host's supported native mechanism.
+Reach `setup-hstack` and each consumer or external skill (the native-only
+skills) only through the host's supported native mechanism.
 On Codex, select the enabled skill from the host-provided catalog and read
 its complete SKILL.md. No separate Skill tool exists.
 Respect manual-only selection, owner-disabled entries and native denials.
@@ -60,7 +60,7 @@ Keep skipped todos with reasons.
 
 ## Tools and authority
 
-Map `AskUserQuestion` (Cursor `AskQuestion`), todos, filesystem and Git to host tools.
+Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.
 Codex's equivalent is unobserved here. Use its question tool.
 No translation grants new authority. User scope governs consumer runs and edits,
 network sends, installs, credentials, system settings, pushes, PR publication,
