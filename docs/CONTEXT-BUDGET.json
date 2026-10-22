@@ -1101,9 +1101,9 @@
         "plugin/skills/why/SKILL.md"
       ],
       "unique_files": 59,
-      "bytes": 228298,
-      "characters": 228205,
-      "estimated_tokens_characters_divided_by_4": 57051.25,
+      "bytes": 229613,
+      "characters": 229520,
+      "estimated_tokens_characters_divided_by_4": 57380.0,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1298,8 +1298,8 @@
           "sha256": "8174edab846996e02b9fd18a34b2ece3ccd89968463b4b1cfe8e36ec849383f0"
         },
         "plugin/skills/setup-hstack/SKILL.md": {
-          "bytes": 9180,
-          "sha256": "7370298814382f2f06902943a8a693329f3ee8aa566845d9b657de8de7161cf9"
+          "bytes": 10495,
+          "sha256": "8f3d25ef99476ec86356c36e0822b12e1daa50dde44490d2372df9388091ffe6"
         },
         "plugin/skills/sharpen/SKILL.md": {
           "bytes": 1042,
@@ -1349,9 +1349,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 212163,
-      "characters": 212071,
-      "estimated_tokens_characters_divided_by_4": 53017.75
+      "bytes": 213478,
+      "characters": 213386,
+      "estimated_tokens_characters_divided_by_4": 53346.5
     },
     "mode_full_file": {
       "paths": [
@@ -1580,13 +1580,13 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 39262,
-          "characters": 39212,
-          "estimated_tokens_characters_divided_by_4": 9803.0,
+          "bytes": 39304,
+          "characters": 39254,
+          "estimated_tokens_characters_divided_by_4": 9813.5,
           "inputs": {
             "plugin/adapters/host-workers.md": {
-              "bytes": 8783,
-              "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b"
+              "bytes": 8825,
+              "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992"
             },
             "plugin/adapters/host.md": {
               "bytes": 6819,
@@ -2035,17 +2035,17 @@
           "plugin/skills/why/references/synthesizer-prompt.md"
         ],
         "unique_files": 35,
-        "bytes": 139473,
-        "characters": 139405,
-        "estimated_tokens_characters_divided_by_4": 34851.25,
+        "bytes": 139515,
+        "characters": 139447,
+        "estimated_tokens_characters_divided_by_4": 34861.75,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
             "sha256": "a23763fb3fa696ce8cca51b7d9244a5e0fadf92892aeeae2a4274d24cfceffb6"
           },
           "plugin/adapters/host-workers.md": {
-            "bytes": 8783,
-            "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b"
+            "bytes": 8825,
+            "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992"
           },
           "plugin/adapters/host-workflow-tools.md": {
             "bytes": 5301,
@@ -2294,13 +2294,13 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 39262,
-          "characters": 39212,
-          "estimated_tokens_characters_divided_by_4": 9803.0,
+          "bytes": 39304,
+          "characters": 39254,
+          "estimated_tokens_characters_divided_by_4": 9813.5,
           "inputs": {
             "plugin/adapters/host-workers.md": {
-              "bytes": 8783,
-              "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b"
+              "bytes": 8825,
+              "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992"
             },
             "plugin/adapters/host.md": {
               "bytes": 6819,
@@ -2320,8 +2320,8 @@
             }
           },
           "mode_workers": 1,
-          "repeated_bytes_floor": 39262,
-          "repeated_estimated_tokens_floor": 9803.0
+          "repeated_bytes_floor": 39304,
+          "repeated_estimated_tokens_floor": 9813.5
         }
       },
       "complete_execution_tokens": null,
@@ -2859,9 +2859,9 @@
           "plugin/skills/unslop/SKILL.md"
         ],
         "unique_files": 45,
-        "bytes": 149786,
-        "characters": 149718,
-        "estimated_tokens_characters_divided_by_4": 37429.5,
+        "bytes": 149828,
+        "characters": 149760,
+        "estimated_tokens_characters_divided_by_4": 37440.0,
         "inputs": {
           "plugin/adapters/host-publication.md": {
             "bytes": 1286,
@@ -2872,8 +2872,8 @@
             "sha256": "27f7d09bad9e656c2f34e7bafdeaf6230b04d2034799f47ec14a7a1a3c229a0e"
           },
           "plugin/adapters/host-workers.md": {
-            "bytes": 8783,
-            "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b"
+            "bytes": 8825,
+            "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992"
           },
           "plugin/adapters/host-workflow-tools.md": {
             "bytes": 5301,
@@ -3163,13 +3163,13 @@
             "plugin/skills/hugues-mode/SKILL.md"
           ],
           "unique_files": 5,
-          "bytes": 39262,
-          "characters": 39212,
-          "estimated_tokens_characters_divided_by_4": 9803.0,
+          "bytes": 39304,
+          "characters": 39254,
+          "estimated_tokens_characters_divided_by_4": 9813.5,
           "inputs": {
             "plugin/adapters/host-workers.md": {
-              "bytes": 8783,
-              "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b"
+              "bytes": 8825,
+              "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992"
             },
             "plugin/adapters/host.md": {
               "bytes": 6819,
@@ -3189,8 +3189,8 @@
             }
           },
           "mode_workers": 8,
-          "repeated_bytes_floor": 314096,
-          "repeated_estimated_tokens_floor": 78424.0
+          "repeated_bytes_floor": 314432,
+          "repeated_estimated_tokens_floor": 78508.0
         }
       },
       "complete_execution_tokens": null,

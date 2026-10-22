@@ -181,7 +181,7 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "6351e34dd4b5b46525aaea2bae27093a3ac214b7b2da5a05528a153e1be9a39b",
+      "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992",
       "mode": "100644"
     },
     {
@@ -1126,7 +1126,7 @@
     },
     {
       "path": "skills/setup-hstack/SKILL.md",
-      "sha256": "7370298814382f2f06902943a8a693329f3ee8aa566845d9b657de8de7161cf9",
+      "sha256": "8f3d25ef99476ec86356c36e0822b12e1daa50dde44490d2372df9388091ffe6",
       "mode": "100644"
     },
     {
