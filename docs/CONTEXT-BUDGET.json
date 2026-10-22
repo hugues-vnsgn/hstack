@@ -1100,9 +1100,9 @@
         "plugin/skills/why/SKILL.md"
       ],
       "unique_files": 59,
-      "bytes": 229667,
-      "characters": 229574,
-      "estimated_tokens_characters_divided_by_4": 57393.5,
+      "bytes": 229675,
+      "characters": 229582,
+      "estimated_tokens_characters_divided_by_4": 57395.5,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1157,8 +1157,8 @@
           "sha256": "ab01ab6ee01c1c3ec5349237d00c22c3b6c3a3a15d2c898ee2669514714bb5de"
         },
         "plugin/skills/hugues-help/SKILL.md": {
-          "bytes": 18746,
-          "sha256": "cc2f0b71c2b8a86c645777bb0da9d9615a507e0df397483a13e00c8232d0132a"
+          "bytes": 18754,
+          "sha256": "c55830c6e8ec6fd020509b83d5fb19b8cf4bf89e5ab120fc58ce0605b38cf5dd"
         },
         "plugin/skills/hugues-mode/SKILL.md": {
           "bytes": 20316,
@@ -1348,9 +1348,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 213519,
-      "characters": 213427,
-      "estimated_tokens_characters_divided_by_4": 53356.75
+      "bytes": 213527,
+      "characters": 213435,
+      "estimated_tokens_characters_divided_by_4": 53358.75
     },
     "mode_full_file": {
       "paths": [
