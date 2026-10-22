@@ -72,22 +72,22 @@ Write `.hstack/models.md` with a `# budget` line naming the chosen label and its
 # Value: alternatives joined by ` or `, each `<model> <effort>`. Claude models are full IDs; Claude Code passes the alias when its agent tool accepts only aliases. A host runs the first one its agent tool accepts. Panel seats alternate which host's model comes first. `inherit-parent` leaves the agent tool's `model` unset. Each comma-separated panel entry runs one subagent.
 # budget: unlimited (max)
 feature, refactoring: claude-sonnet-5-5 high or gpt-6.1-sol high
-bug-fix: claude-sonnet-5-5 xhigh or gpt-6.1-sol xhigh
-perf-issue: claude-sonnet-5-5 xhigh or gpt-6.1-sol xhigh
-hillclimb: claude-sonnet-5-5 medium or gpt-6.1-sol medium
+bug-fix: claude-sonnet-5-5 high or gpt-6.1-sol xhigh
+perf-issue: claude-sonnet-5-5 high or gpt-6.1-sol xhigh
+hillclimb: claude-sonnet-5-5 high or gpt-6.1-sol high
 judgment and prose: claude-opus-5-5 high or gpt-6-astra high
-hardest tasks: claude-fable-5-1 xhigh or claude-opus-5-5 max or gpt-6-astra xhigh
-how explorer: claude-haiku-5-5 medium or gpt-6-luna medium
+hardest tasks: claude-opus-5-5 xhigh or gpt-6-astra high
+how explorer: claude-haiku-5-5 xhigh or gpt-6-luna xhigh
 how explainer: claude-opus-5-5 high or gpt-6-astra high
 why investigators: claude-sonnet-5-5 high or gpt-6.1-sol high
-why synthesizer: claude-opus-5-5 xhigh or gpt-6-astra xhigh
+why synthesizer: claude-opus-5-5 xhigh or gpt-6-astra high
 reflect tooling: claude-sonnet-5-5 high or gpt-6.1-sol high
-reflect judgment, divergent, synthesizer: claude-opus-5-5 high or gpt-6-astra high
-arena runners: claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh
-arena cross-judge pool: claude-fable-5-1 high or gpt-6-astra high, claude-opus-5-5 high or gpt-6.1-sol high
-swarm workers: claude-sonnet-5-5 medium or gpt-6.1-sol medium
-architect runners: claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-fable-5-1 high
-interrogate reviewers: claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh, claude-fable-5-1 high or gpt-6.1-sol xhigh
+reflect judgment, divergent, synthesizer: claude-opus-5-5 xhigh or gpt-6-astra high
+arena runners: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xhigh or claude-sonnet-5-5 high
+arena cross-judge pool: claude-opus-5-5 xhigh or gpt-6.1-sol xhigh
+swarm workers: claude-sonnet-5-5 high or gpt-6.1-sol high
+architect runners: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xhigh
+interrogate reviewers: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xhigh
 ```
 
 ### 6. Confirm
