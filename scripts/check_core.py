@@ -44,9 +44,9 @@ USER_ONLY = {
 }
 # Skills hStack bundles from a source other than pstack. The pstack archive and the upstream
 # ledger have no row for them, so each is bound here instead: to the exact file and commit it
-# was copied from, to the MIT notice that came with it, and to the only changes allowed between
-# that file and the installed one (see external_skill_errors). consolidation.json carries the
-# same table as a reviewable receipt, and the two must agree.
+# was copied from and to the MIT notice that came with it (see external_skill_errors). The
+# installed body is hStack-maintained and may be edited; the pinned source copy records its
+# origin. consolidation.json carries the same table as a reviewable receipt, and the two must agree.
 EXTERNAL_SKILLS = {
     'control-cli': {
         'repository': 'https://github.com/cursor/plugins',
@@ -101,12 +101,6 @@ AUTHORED_SKILLS = {
     'swift-best-practices': {'paths': '["**/*.swift"]'},
     'kotlin-best-practices': {'paths': '["**/*.kt", "**/*.kts"]'},
 }
-EXTERNAL_MANUAL_ONLY = 'disable-model-invocation: true\n'
-EXTERNAL_HOST_CONTRACT = (
-    '## Host invocation contract\n\n'
-    'Before tools, read [host contract](../../adapters/host.md)\n'
-    'and [mobile applicability](../../adapters/mobile.md#applicability) in full, then apply.\n'
-    'The host contract governs how this skill reaches any sibling dependency.\n\n')
 # Cursor fields that neither Claude Code nor Codex reads from a skill's frontmatter.
 # The router carried them until the router rewrite; no skill may bring them back.
 DEAD_FRONTMATTER = {'mode', 'icon', 'color', 'reminder'}
@@ -266,18 +260,10 @@ def behavior_errors(bodies):
     return errors
 
 
-def external_installed(source):
-    """The installed form of an external skill's source: the source plus the manual-only line that
-    closes its frontmatter and the host invocation contract that opens its body. Nothing else."""
-    head, divider, body = source.partition('\n---\n\n')
-    if not (divider and head.startswith('---\n')):
-        return None
-    return head + '\n' + EXTERNAL_MANUAL_ONLY + '---\n\n' + EXTERNAL_HOST_CONTRACT + body
-
-
 def external_skill_errors(root, receipt, upstream):
-    """Bind each skill hStack bundles from outside pstack to its source, so that its body is
-    never edited and the only differences are the two additions in external_installed."""
+    """Pin the source copy and license notice of each skill hStack bundles from outside pstack.
+    The installed body is hStack-maintained; the user-only and host-contract requirements on it
+    come from the per-skill loop in check."""
     errors = []
     if receipt.get('external_skills') != EXTERNAL_SKILLS:
         errors.append('external skill receipt differs')
@@ -303,8 +289,6 @@ def external_skill_errors(root, receipt, upstream):
             errors.append('external skill license copy differs from its pinned commit: ' + name)
         if shipped_notice != notice:
             errors.append('installed external skill license differs from the pinned notice: ' + name)
-        if installed.decode() != external_installed(source.decode()):
-            errors.append('installed external skill differs from its source beyond the allowed additions: ' + name)
     return errors
 
 
