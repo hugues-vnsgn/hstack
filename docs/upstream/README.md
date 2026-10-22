@@ -219,12 +219,13 @@ under the MIT license, Copyright (c) 2026 Cursor.
   [deslop](../../plugin/skills/deslop/SKILL.md),
   [control-cli](../../plugin/skills/control-cli/SKILL.md) and
   [control-ui](../../plugin/skills/control-ui/SKILL.md).
-- Installed source has two additions. The frontmatter declares
-  `disable-model-invocation: true`, and the body includes the shared host
-  invocation contract. Each original name, description and procedure stays intact.
+- The installed bodies are hStack-maintained and may be edited. The provenance
+  copy records where each started.
 - The `external_skills` receipt in [consolidation.json](consolidation.json) and
   `EXTERNAL_SKILLS` in `scripts/check_core.py` pin the repository, commit, blob
-  and SHA-256 of each skill and license. The checker rejects any other installed
-  difference and rejects a skill that is not user-only.
+  and SHA-256 of each skill and license. The checker holds the provenance copy
+  and the license, and requires each skill to be user-only and to carry the
+  shared host invocation contract. It does not compare the installed body to
+  the source.
 - A newer Cursor pin needs manual review, new provenance bytes, both table
   updates and a reseal.

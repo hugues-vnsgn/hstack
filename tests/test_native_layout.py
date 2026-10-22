@@ -192,7 +192,7 @@ class NativeIntegrity(unittest.TestCase):
         seal_payload.seal(self.root, accept=['plugin/skills/architect/SKILL.md'])
         self.rejected()
 
-    def test_bundled_cursor_skills_are_pinned_sources_plus_two_additions(self):
+    def test_bundled_cursor_skills_keep_pinned_sources_and_notices(self):
         receipt = json.loads((self.root / 'docs/upstream/consolidation.json').read_text())
         self.assertEqual(set(receipt['external_skills']), {'control-cli', 'control-ui', 'deslop'})
         self.assertEqual(receipt['external_skills'], check_core.EXTERNAL_SKILLS)
@@ -204,15 +204,13 @@ class NativeIntegrity(unittest.TestCase):
                 source = (self.root / row['source_copy']).read_bytes()
                 installed = (self.root / row['destination']).read_bytes()
                 self.assertEqual(hashlib.sha256(source).hexdigest(), row['source_sha256'])
-                self.assertEqual(installed.decode(), check_core.external_installed(source.decode()))
-                self.assertEqual(installed.count(source.split(b'\n---\n\n', 1)[1]), 1)
                 self.assertTrue(check_core.native_frontmatter(installed.decode())['disable-model-invocation'])
                 self.assertIn(name, check_core.USER_ONLY)
                 self.assertEqual((self.root / row['license_copy']).read_bytes(),
                                  (self.root / row['license_destination']).read_bytes())
                 self.assertIn(b'Copyright (c) 2026 Cursor', (self.root / row['license_destination']).read_bytes())
 
-    def test_bundled_cursor_skill_drift_cannot_be_approved_by_resealing(self):
+    def test_bundled_cursor_skill_bodies_are_editable_but_sources_and_contracts_are_not(self):
         receipt = self.root / 'docs/upstream/consolidation.json'
         for name, row in check_core.EXTERNAL_SKILLS.items():
             skill = self.root / row['destination']
@@ -222,6 +220,9 @@ class NativeIntegrity(unittest.TestCase):
             installed = skill.read_text()
             def edit_body():
                 skill.write_text(installed + '\nChanged procedure.\n')
+            def drop_host_contract():
+                head, _, rest = installed.partition('## Host invocation contract\n\n')
+                skill.write_text(head + rest.split('\n\n', 1)[1])
             def edit_source_copy():
                 source.write_text(source.read_text() + '\nChanged procedure.\n')
                 edit_body()
@@ -236,14 +237,19 @@ class NativeIntegrity(unittest.TestCase):
                 data = json.loads(receipt.read_text())
                 data['external_skills'][name]['revision'] = '0' * 40
                 receipt.write_text(json.dumps(data))
-            for change, mutate in [('body edit', edit_body), ('source copy edit', edit_source_copy),
-                                   ('license edit', edit_license_copy), ('license removed', drop_license_copy),
-                                   ('model-invocable', make_model_invocable), ('receipt edit', edit_receipt)]:
+            for change, mutate, accepted in [
+                    ('body edit', edit_body, True), ('source copy edit', edit_source_copy, False),
+                    ('license edit', edit_license_copy, False), ('license removed', drop_license_copy, False),
+                    ('model-invocable', make_model_invocable, False), ('receipt edit', edit_receipt, False),
+                    ('host contract removed', drop_host_contract, False)]:
                 with self.subTest(skill=name, change=change):
                     kept = {p: p.read_bytes() for p in [skill, yaml, receipt, source, notice] if p.exists()}
                     mutate()
                     seal_payload.seal(self.root)
-                    self.rejected()
+                    if accepted:
+                        check_core.check(self.root)
+                    else:
+                        self.rejected()
                     for path, data in kept.items():
                         path.write_bytes(data)
                     seal_payload.seal(self.root)
