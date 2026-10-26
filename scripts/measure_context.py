@@ -15,12 +15,16 @@ ROOT = Path(__file__).resolve().parents[1]
 ADDED_AFTER_RELEASE = (
     'plugin/skills/control-cli/SKILL.md',
     'plugin/skills/control-ui/SKILL.md',
+    'plugin/skills/create-formal-verification-skill/SKILL.md',
     'plugin/skills/deslop/SKILL.md',
     'plugin/skills/hugues-help/SKILL.md',
     'plugin/skills/in-your-own-words/SKILL.md',
     'plugin/skills/ketchup/SKILL.md',
+    'plugin/skills/ketchup-video/SKILL.md',
     'plugin/skills/kotlin-best-practices/SKILL.md',
+    'plugin/skills/maintain-formal-verification-skill/SKILL.md',
     'plugin/skills/sharpen/SKILL.md',
+    'plugin/skills/statechart/SKILL.md',
     'plugin/skills/swift-best-practices/SKILL.md',
 )
 

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/cursor/plugins",
+  "revision": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
+  "version": "0.15.9",
+  "committed_at_utc": "2026-10-04T00:06:48Z",
+  "file_count": 161,
+  "pstack_tree_sha": "54dfdd87fd191ddda7fce01dd354d220adaeeacc",
+  "snapshot": "snapshots/pstack-0.15.9.json",
+  "snapshot_sha256": "47811cbed560e56e6bb16962abfee23bcee59bfb6bc0474ce62418b20c5ae469"
+}

@@ -8,7 +8,7 @@
 Implement and Scrap. Read [arena](../plugin/skills/arena/SKILL.md) for Frame,
 Fan out, Cross-judge, Pick, Graft and Verify. Both are explicit user tools;
 coordinators read their local dependencies directly.
-The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes; this record still describes the original package.
+The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`; this record still describes the original package.
 
 Architect grounds each touched subsystem through [how](../plugin/skills/how/SKILL.md)
 and changed ownership/layering through [why](../plugin/skills/why/SKILL.md). A

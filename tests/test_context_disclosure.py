@@ -206,14 +206,16 @@ class ContextDisclosure(unittest.TestCase):
         # the separate tiered-model-role wiring change. 50 - 26 = 24 bodies were byte-identical
         # to the pre-restoration baseline (the 24 principle-* skills, which never carried that
         # marker). The pstack 0.15.25 merge then ported upstream's rewrites of 14 of those 24
-        # principle bodies, so 10 remain identical. The four skills it added (hugues-help,
+        # principle bodies, so 10 remained identical. The four skills it added (hugues-help,
         # in-your-own-words, ketchup, sharpen) have no baseline body and are not compared. The
-        # list is recomputed here from the files, so only principle-* bodies can be counted.
+        # pstack 0.15.32 merge ported upstream's rewrites of three more of those 10, leaving 7;
+        # its four new skills have no baseline body either. The list is recomputed here from the
+        # files, so only principle-* bodies can be counted.
         baseline, _ = measure_context.native_baseline(ROOT)
         baseline = measure_context.current_names(baseline)
         identical = sorted(p for p in baseline if p.startswith('plugin/skills/') and p.endswith('/SKILL.md')
                            and baseline[p] == (ROOT / p).read_text())
-        self.assertEqual(len(identical), 10)
+        self.assertEqual(len(identical), 7)
         self.assertTrue(all(p.startswith('plugin/skills/principle-') for p in identical))
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
         self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
@@ -232,10 +234,24 @@ class ContextDisclosure(unittest.TestCase):
         self.assertLessEqual(brief_growth, 560)
         required_growth = native_growth + brief_growth
         issue_110 = self.issue_110_guidance_bytes()
+        # The bound is on hStack-authored growth. A file whose bytes equal its pinned upstream
+        # source grows only when pstack does, so the last re-pin's growth in those files is
+        # allowed (0.15.32 rewrote two principles that bug_fix reads).
+        receipt = json.loads((ROOT / 'docs/upstream/consolidation.json').read_text())
+        verbatim = {r['destination']: r['source'] for r in receipt['files']
+                    if r['destination'] and r['destination_sha256'] == r['source_sha256']}
+
+        def sizes(pin):
+            pin = json.loads((ROOT / 'docs/upstream' / pin).read_text())
+            snapshot = json.loads((ROOT / 'docs/upstream' / pin['snapshot']).read_text())
+            return {f['path']: f['size'] for f in snapshot['files']}
+        pinned, previous = sizes('pin.json'), sizes('baseline-pin.json')
         for name in ['initial_mode_routing', 'bug_fix']:
             profile = measured['scenarios'][name]
             guidance = sum(size for path, size in issue_110.items() if path in profile['candidate']['paths'])
-            self.assertLess(profile['candidate']['bytes'] - required_growth - guidance,
+            upstream_growth = sum(pinned[verbatim[path]] - previous.get(verbatim[path], 0)
+                                  for path in profile['candidate']['paths'] if path in verbatim)
+            self.assertLess(profile['candidate']['bytes'] - required_growth - guidance - upstream_growth,
                             profile['native_before']['bytes'])
         selection_row = next(line for line in host.splitlines(keepends=True)
                              if '[Mobile language scope](host-mobile-languages.md)' in line)

@@ -141,8 +141,8 @@ class NativeIntegrity(unittest.TestCase):
 
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
-        self.assertEqual(result['active_skills'], 59)
-        self.assertEqual(result['upstream_archive_files'], 169)
+        self.assertEqual(result['active_skills'], 63)
+        self.assertEqual(result['upstream_archive_files'], 200)
 
     def test_missing_receipt_cannot_disable_integrity(self):
         (self.root / 'docs/upstream/consolidation.json').unlink()
@@ -175,7 +175,7 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_corrupt_source_archive_is_rejected(self):
-        path = self.root / 'provenance/upstream/pstack-0.15.25.tar.gz'
+        path = self.root / 'provenance/upstream/pstack-0.15.32.tar.gz'
         path.write_bytes(path.read_bytes() + b'changed')
         self.rejected()
 
@@ -428,19 +428,25 @@ class NativeIntegrity(unittest.TestCase):
         import measure_context
         measured = measure_context.measure(self.root)
         self.assertEqual(json.loads((self.root / 'docs/CONTEXT-BUDGET.json').read_text()), measured)
-        self.assertEqual(measured['public_skills'], 59)
+        self.assertEqual(measured['public_skills'], 63)
         self.assertLessEqual(measured['mode_initial_read_set']['candidate']['bytes'], 38000)
-        self.assertLessEqual(measured['native_frontmatter']['candidate']['bytes'], 16000)
+        # An upper bound over every declared frontmatter block, user-only skills included. The
+        # pstack 0.15.32 merge added four user-only skills, so the bound moved from 16000; the
+        # per-turn skill list itself is bounded separately in test_context_disclosure.
+        self.assertLessEqual(measured['native_frontmatter']['candidate']['bytes'], 18000)
 
     def test_context_inventory_lists_skills_added_after_the_release(self):
         # Skills added after 0.2.0 have no historical counterpart, so each is listed by name.
         # A new SKILL.md that is not listed, or a listed one that goes missing, still fails.
         self.assertEqual(sorted(measure_context.ADDED_AFTER_RELEASE),
                          ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/control-ui/SKILL.md',
+                          'plugin/skills/create-formal-verification-skill/SKILL.md',
                           'plugin/skills/deslop/SKILL.md', 'plugin/skills/hugues-help/SKILL.md',
-                          'plugin/skills/in-your-own-words/SKILL.md', 'plugin/skills/ketchup/SKILL.md',
-                          'plugin/skills/kotlin-best-practices/SKILL.md',
-                          'plugin/skills/sharpen/SKILL.md', 'plugin/skills/swift-best-practices/SKILL.md'])
+                          'plugin/skills/in-your-own-words/SKILL.md', 'plugin/skills/ketchup-video/SKILL.md',
+                          'plugin/skills/ketchup/SKILL.md', 'plugin/skills/kotlin-best-practices/SKILL.md',
+                          'plugin/skills/maintain-formal-verification-skill/SKILL.md',
+                          'plugin/skills/sharpen/SKILL.md', 'plugin/skills/statechart/SKILL.md',
+                          'plugin/skills/swift-best-practices/SKILL.md'])
         unlisted = self.root / 'plugin/skills/unlisted/SKILL.md'
         unlisted.parent.mkdir()
         unlisted.write_text((self.root / 'plugin/skills/ketchup/SKILL.md').read_text())
