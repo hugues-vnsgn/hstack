@@ -87,6 +87,11 @@ svg .ah{fill:var(--edge)}
 .card .use{display:inline-block;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--accent-soft);color:var(--fg);padding:2px 7px;border-radius:6px;margin:2px 4px 4px 0}
 .card p{margin:4px 0 0;font-size:14px;color:var(--muted)}
 .pill{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);vertical-align:middle}
+.lbl{display:inline-block;font-size:11.5px;font-weight:700;line-height:1.35;padding:1px 8px;border-radius:999px;border:1px solid;color:var(--fg);vertical-align:baseline}
+.lbl.obs{background:var(--done);border-color:var(--done-s)}
+.lbl.def{background:var(--router);border-color:var(--router-s)}
+.lbl.host{background:var(--user);border-color:var(--user-s)}
+h2.part{font-size:32px;border-top:4px solid var(--accent);margin-top:88px;padding-top:20px}
 .hero{background:linear-gradient(135deg,var(--accent-soft),transparent 70%);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
 .meta{font-size:14px;color:var(--muted)}
 .kbd{font-family:"SF Mono",ui-monospace,monospace;font-size:13px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--card)}
@@ -98,15 +103,15 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
 </defs></svg>
-<header class="top"><span class="brand">hStack User Guide<small>v0.5.2</small></span>
+<header class="top"><span class="brand">hStack User Guide<small>v0.5.4</small></span>
 <div class="host-switch" role="group" aria-label="Show commands for">
 <button data-h="claude" aria-pressed="false">Claude Code</button><button data-h="codex" aria-pressed="false">Codex</button><button data-h="both" aria-pressed="true">Both</button></div></header>
-<div class="layout"><nav class="toc"><div class="grp">Contents</div><ol><li><a href="#start">1. Start here</a></li><li><a href="#concepts">2. How hStack thinks</a></li><li><a href="#setup">3. Set up hStack</a></li><li><a href="#commands">4. Command reference</a></li><li><a href="#prompting">5. Talk to hugues-mode</a></li><li><a href="#stuck">6. When you are stuck</a></li><li><a href="#debug">7. Debug a bug</a></li><li><a href="#feature">8. Build a new feature</a></li><li><a href="#mobile">9. Prove it on device</a></li><li><a href="#ship">10. Review and ship</a></li><li><a href="#big">11. Big and overnight work</a></li><li><a href="#principles">12. Steer with principles</a></li><li><a href="#tune">13. Tune cost and models</a></li><li><a href="#trouble">14. Troubleshooting and pitfalls</a></li><li><a href="#limits">15. What is verified today</a></li><li><a href="#glossary">16. Glossary</a></li></ol></nav>
+<div class="layout"><nav class="toc"><div class="grp">Part I. Get started</div><ol><li><a href="#start">1. Start here</a></li><li><a href="#concepts">2. How hStack thinks</a></li><li><a href="#setup">3. Set up hStack</a></li><li><a href="#commands">4. Command reference</a></li><li><a href="#prompting">5. Talk to hugues-mode</a></li><li><a href="#stuck">6. When you are stuck</a></li><li><a href="#debug">7. Debug a bug</a></li><li><a href="#feature">8. Build a new feature</a></li><li><a href="#mobile">9. Prove it on device</a></li><li><a href="#ship">10. Review and ship</a></li><li><a href="#big">11. Big and overnight work</a></li><li><a href="#principles">12. Steer with principles</a></li><li><a href="#tune">13. Tune cost and models</a></li><li><a href="#trouble">14. Troubleshooting and pitfalls</a></li></ol><div class="grp">Part II. Lead the team</div><ol><li><a href="#part2">Introduction and labels</a></li><li><a href="#lead">15. The lead's job</a></li><li><a href="#brief">16. Brief the team</a></li><li><a href="#backwards">17. Work backwards</a></li><li><a href="#measure">18. Measure a hundred times, cut once</a></li><li><a href="#plan">19. Turn the design into a plan</a></li><li><a href="#shape">20. Pick the team shape</a></li><li><a href="#run-team">21. Run the team in Claude Code</a></li><li><a href="#review">22. Review like a lead</a></li><li><a href="#improve">23. Make the team better</a></li><li><a href="#examples">24. Worked examples</a></li></ol><div class="grp">Appendix</div><ol><li><a href="#limits">A. What is verified today</a></li><li><a href="#glossary">B. Glossary</a></li></ol></nav>
 <main><div class="hero">
-<span class="pill">hStack 0.5.2 · pstack 0.15.25 baseline</span>
+<span class="pill">hStack 0.5.4 · pstack 0.15.25 baseline</span>
 <h1>hStack User Guide</h1>
-<p class="lede">How to set up hStack in Claude Code and Codex, and how to use it when you are stuck, when you debug, and when you build a new feature. Written for developers working on Swift/iOS, Kotlin/Android, Kotlin Multiplatform and Compose Multiplatform apps, and for any nontrivial engineering work.</p>
-<p class="meta">Updated 2026-10-20. Use the switch at the top right to show commands for Claude Code, Codex or both.</p>
+<p class="lede">How to set up hStack in Claude Code and Codex, and how to use it when you are stuck, when you debug, and when you build a new feature. Part II shows how to lead hStack like a team: brief it, pick its shape, run it and review it. Written for developers working on Swift/iOS, Kotlin/Android, Kotlin Multiplatform and Compose Multiplatform apps, and for any nontrivial engineering work.</p>
+<p class="meta">Updated 2026-10-26. Use the switch at the top right to show commands for Claude Code, Codex or both.</p>
 </div>
 
 <h2 id="start">1. Start here</h2>
@@ -117,11 +122,13 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <p>An agent left alone tends to do three things: it fixes the first plausible spot, it takes the first design it thought of, and it reports "done" because the code compiles. hStack's playbooks block each of those habits. Bugs are reproduced before they are fixed. Designs are compared before one is chosen. Results are proven on the real app, on the real target, before anyone calls them done. You stop being the person who checks every claim by hand.</p></div>
 
 <h3>How to read this guide</h3>
+<p>Part I (sections 1 to 14) gets you running. Part II (sections 15 to 24) teaches you to lead hStack like a team. The appendices hold what is verified today and the glossary.</p>
 <ul>
 <li><strong>First time?</strong> Read sections 2 to 5 in order: concepts, setup, commands, then how to talk to the router.</li>
 <li><strong>Stuck right now?</strong> Jump to <a href="#stuck">When you are stuck</a>.</li>
 <li><strong>Chasing a bug?</strong> Go to <a href="#debug">Debug a bug</a>.</li>
 <li><strong>Building something?</strong> Go to <a href="#feature">Build a new feature</a>.</li>
+<li><strong>Already running hStack on real work?</strong> Part II, <a href="#part2">Lead the team</a>, starts at section 15. It covers briefing, team shape, review and process.</li>
 </ul>
 
 <div class="callout warn"><span class="h">Coming from the old huguesStack guide or diagram?</span>
@@ -182,14 +189,15 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 </table>
 
 <h3>Two kinds of skills</h3>
-<p>Only two skills are visible to the model by default: <code>hugues-mode</code> and <code>setup-hstack</code>. Every other bundled skill is <strong>user-only</strong>. That keeps hStack's share of the host's skill list small. It has two consequences.</p>
+<p>Only <code>setup-hstack</code> is visible to the model by default. Every other bundled skill is <strong>user-only</strong>, and since 0.5.4 that includes <code>hugues-mode</code> itself. That keeps hStack's share of the host's skill list small. It has three consequences.</p>
 <ul>
-<li><strong>You can type any of them by name.</strong> For example <code class="cc">/hstack:how</code><code class="cx">$how</code> or <code class="cc">/hstack:interrogate</code><code class="cx">$interrogate</code>.</li>
+<li><strong>You start a run by typing the command.</strong> A task described without <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code> does not start hStack.</li>
+<li><strong>You can type any other skill by name.</strong> For example <code class="cc">/hstack:how</code><code class="cx">$how</code> or <code class="cc">/hstack:interrogate</code><code class="cx">$interrogate</code>.</li>
 <li><strong>The router reads the rest itself.</strong> Inside a playbook, the agent opens each skill's file when a step needs it. You never have to list skills in your prompt.</li>
 </ul>
 
 <h3>Who does what</h3>
-<p>The chat you type into is the <strong>coordinator</strong>. It plans, reviews diffs and verifies. Code is written by fresh subagents (<code>hugues-agent</code>), and review panels run on several models. A fresh worker for each new round is the default, because chained resumes silently drop instructions. The coordinator owns every worker's output: it reads the diff and writes its own summary instead of passing a worker's claim through.</p>
+<p>The chat you type into is the <strong>coordinator</strong>. It plans, reviews diffs and verifies. Code is written by fresh subagents (<code>hugues-agent</code>), and review panels run on several models. A fresh worker for each new round is the default, because chained resumes silently drop instructions. The coordinator owns every worker's output: it reads the diff and writes its own summary instead of passing a worker's claim through. Part II, <a href="#lead">The lead's job</a>, shows the whole team.</p>
 
 <h2 id="setup">3. Set up hStack</h2>
 <figure class="diagram"><svg viewBox="0 0 900 630" role="img" aria-label="Figure 2. Setup, start to first task"><title>Figure 2. Setup, start to first task</title><rect class="n user" x="30" y="16" width="400" height="58" rx="8"/>
@@ -251,7 +259,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <pre><code><span class="cc"># Claude Code
 claude plugin marketplace add hugues-vnsgn/hstack
 claude plugin install hstack@hstack
-claude plugin list          # should show hstack@hstack 0.5.2</span><span class="cx"># Codex
+claude plugin list          # should show hstack@hstack 0.5.4</span><span class="cx"># Codex
 codex plugin marketplace add hugues-vnsgn/hstack
 codex plugin add hstack@hstack</span></code></pre>
 <div class="callout tip"><span class="h">Try it without installing (Claude Code only)</span>
@@ -265,7 +273,7 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <p>Quit and relaunch Claude Code, or start a new Codex session. A process that was running before the install or update can keep loading its old cached copy.</p></li>
 
 <li><strong>Confirm discovery</strong>
-<p>In Claude Code, type <span class="kbd">/hstack:</span> and check that <code>hugues-mode</code> and <code>setup-hstack</code> appear. In Codex, type <span class="kbd">$</span> and check for <code>hugues-mode</code>.</p>
+<p>In Claude Code, type <span class="kbd">/hstack:</span> and check that <code>hugues-mode</code> and <code>setup-hstack</code> appear. In Codex, type <span class="kbd">$</span> and check for <code>hugues-mode</code>. Since 0.5.4, <code>hugues-mode</code> is user-only, and how Codex lists it under that policy is not yet observed.</p>
 <div class="callout warn"><span class="h">If it is missing, stop</span>
 <p>Do not paste the path of a <code>SKILL.md</code> into the chat as a workaround, copy a skill under another name, or change global settings to force it on. hStack treats those as defects, not fallbacks. Check the install with <code>claude plugin list</code> or your Codex plugin list, and see <a href="#trouble">Troubleshooting</a>.</p></div></li>
 
@@ -280,29 +288,30 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <tr><td><code>medium</code></td><td>Every role at <code>high</code></td></tr>
 <tr><td><code>small</code></td><td>Every role at <code>medium</code>. Fewest tokens.</td></tr>
 </table>
-<p>Each role lists a Claude model first and a Codex model after it, for example <code>sonnet high or gpt-6.1-sol high</code>. Each host runs the first model it accepts, so one file serves both hosts. Panel roles (arena runners, architect runners, interrogate reviewers) hold a list, and one subagent runs per entry. A role with no line runs on <code>inherit-parent</code>, which means your chat's own model.</p>
+<p>Each role lists a Claude model first and a Codex model after it, for example <code>claude-sonnet-5-5 high or gpt-6.1-sol high</code>. Claude models are full IDs. Where Claude Code's agent tool accepts only aliases, setup passes the alias, such as <code>sonnet</code>. Each host runs the first model it accepts, so one file serves both hosts. Panel roles (arena runners, architect runners, interrogate reviewers) hold a list, and one subagent runs per entry. A role with no line runs on <code>inherit-parent</code>, which means your chat's own model.</p>
 <table>
-<tr><th>Tier</th><th>Claude Code</th><th>Codex</th><th>Used for</th></tr>
-<tr><td>Workhorse</td><td><code>sonnet</code></td><td><code>gpt-6.1-sol</code></td><td>Code delegates, explorers, swarm workers</td></tr>
-<tr><td>Judgment</td><td><code>opus</code></td><td><code>gpt-6-astra</code></td><td>Judgment, prose, synthesizers, reviewers</td></tr>
-<tr><td>Frontier</td><td><code>fable</code></td><td><code>gpt-6-astra</code> at <code>xhigh</code></td><td>Hardest tasks, one design or review seat, the cross-judge</td></tr>
+<tr><th>Tier</th><th>Claude Code</th><th>Codex</th><th>Default effort</th><th>Used for</th></tr>
+<tr><td>Fast</td><td><code>claude-haiku-5-5</code></td><td><code>gpt-6-luna</code></td><td><code>xhigh</code></td><td>The <code>how</code> explorer</td></tr>
+<tr><td>Workhorse</td><td><code>claude-sonnet-5-5</code></td><td><code>gpt-6.1-sol</code></td><td><code>high</code></td><td>Code delegates, investigators, reflect tooling, swarm workers</td></tr>
+<tr><td>Judgment</td><td><code>claude-opus-5-5</code></td><td><code>gpt-6-astra</code></td><td><code>high</code></td><td>Judgment and prose, hardest tasks, the explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge</td></tr>
 </table>
-<p>To restore a default, delete that role's line. Rerun setup at any time.</p></li>
+<p>A tier fixes the model. A role's effort starts at the tier default and moves with the work. Version 0.5.4 added the Fast tier and folded the old Frontier tier into Judgment, because no default role uses <code>fable</code>. To restore a default, delete that role's line. Rerun setup at any time.</p></li>
 
 <li><strong>Create a verification skill for your app</strong>
 <p>For mobile projects this is required, not optional. The mobile-proof playbook needs a project <code>verify-&lt;app&gt;</code> recipe, even if XcodeBuildMCP or jev-ios-bridge can already drive the app. Setup offers to generate one. Accept. You can also run it yourself:</p>
 <pre class="prompt"><code><span class="cc">/hstack:create-verification-skill </span><span class="cx">$create-verification-skill </span></code></pre>
 <p>The generator studies your repository, not you. It works out how the app launches, what can drive it, and what evidence proves each feature. It writes <code>verify-&lt;app&gt;/</code> under your <code>.claude/skills/</code> or <code>.agents/skills/</code> folder, with Launch, Doctor, Drive, Evidence and Cleanup sections and a feature map. It proves one feature end to end before handing it over. Commit it so every person and agent drives the app the same way.</p>
 <div class="callout why"><span class="h">Why this pays off the most</span>
-<p>An agent that can check its own work keeps going until the check passes. An agent that cannot hands every result back to you. Keep it honest by running <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code> regularly. It drives every mapped feature and opens at most one PR of proven corrections.</p></div></li>
+<p>An agent that can check its own work keeps going until the check passes. An agent that cannot hands every result back to you. Keep it honest by running <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code> regularly. It drives every mapped feature and opens at most one PR of proven corrections.</p></div>
+<p><span class="pill">on main, not yet released</span> Setup also offers once to generate a formal verification skill. See the command reference.</p></li>
 
 <li><strong>Prepare the Bun helpers (only if you will babysit PRs or orchestrate)</strong>
 <p>Run once per installed copy. Replace <code>&lt;plugin&gt;</code> with the absolute root of the copy you loaded.</p>
 <pre><code><span class="cc"># Claude Code default root
-cd ~/.claude/plugins/cache/hstack/hstack/0.5.2/skills/hugues-mode/scripts
+cd ~/.claude/plugins/cache/hstack/hstack/0.5.4/skills/hugues-mode/scripts
 bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span><span class="cx"># Codex default root
-cd ~/.codex/plugins/cache/hstack/hstack/0.5.2/skills/hugues-mode/scripts
+cd ~/.codex/plugins/cache/hstack/hstack/0.5.4/skills/hugues-mode/scripts
 bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span></code></pre>
 <p>The <code>--help</code> call must exit 0. It also writes the install key the helpers check before running.</p></li>
@@ -312,7 +321,7 @@ bun ./watch-pr/watch-pr --help</span></code></pre>
 <pre class="prompt"><code><span class="cc">/hstack:hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span><span class="cx">$hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span></code></pre>
 <p>Then authorize a scoped change:</p>
 <pre class="prompt"><code><span class="cc">/hstack:hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span><span class="cx">$hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span></code></pre>
-<p>Watch the todo list. Its first items are the playbook's steps, copied in. A step the agent chose to skip stays visible as <code>skip: &lt;reason&gt;</code>. The mode is sticky: it stays on for the rest of the conversation.</p></li>
+<p>Watch the todo list. Its first items are the playbook's steps, copied in. A step the agent chose to skip stays visible as <code>skip: &lt;reason&gt;</code>. Short follow-ups usually work once the mode is loaded in the conversation. hStack documents no host setting that pins it, so if it stops applying after a few turns, type <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code> again.</p></li>
 </ol>
 
 <h3>Update or remove</h3>
@@ -324,7 +333,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <p>Keep a task that is in flight on the copy it started with until it finishes. To remove hStack, use the same host mechanism that installed it. A session-only <code>--plugin-dir</code> load ends with the session.</p>
 
 <h2 id="commands">4. Command reference</h2>
-<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Arguments are plain English.</p>
+<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Arguments are plain English. Release 0.5.4 bundles 59 skills. The main branch adds four more, listed after the table.</p>
 <table>
 <tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Use it to</th></tr>
 <tr><td>hugues-mode</td><td><code>/hstack:hugues-mode</code></td><td><code>$hugues-mode</code></td><td>Start any nontrivial task. The front door.</td></tr>
@@ -332,7 +341,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <tr><td>hugues-help</td><td><code>/hstack:hugues-help</code></td><td><code>$hugues-help</code></td><td>Ask which skill or playbook fits. It answers and hands you a prompt. It does not start work.</td></tr>
 <tr><td>how · why · teach</td><td><code>/hstack:how</code></td><td><code>$how</code></td><td>Understand code: how it works, why it is shaped this way, or both woven together</td></tr>
 <tr><td>recall · ketchup</td><td><code>/hstack:recall</code></td><td><code>$recall</code></td><td>Rebuild context from past work, or catch up on this chat</td></tr>
-<tr><td>in-your-own-words · sharpen · bro</td><td><code>/hstack:sharpen</code></td><td><code>$sharpen</code></td><td>Check the agent understood you, sharpen a task, or get plain language</td></tr>
+<tr><td>in-your-own-words · sharpen · bro</td><td><code>/hstack:sharpen</code></td><td><code>$sharpen</code></td><td>Check the agent understood you, sharpen a thin prompt, or get plain language. In 0.5.4 <code>sharpen</code> does the work. On main it returns a rewritten prompt and does not do the task.</td></tr>
 <tr><td>architect · arena · swarm</td><td><code>/hstack:architect</code></td><td><code>$architect</code></td><td>Design before code, compare parallel attempts, fan out parallel checks</td></tr>
 <tr><td>interrogate · blast-radius</td><td><code>/hstack:interrogate</code></td><td><code>$interrogate</code></td><td>Multi-model adversarial review, or find what a change could break elsewhere</td></tr>
 <tr><td>tdd</td><td><code>/hstack:tdd</code></td><td><code>$tdd</code></td><td>Failing test first, then the fix</td></tr>
@@ -344,6 +353,15 @@ codex plugin add hstack@hstack</span></code></pre>
 <tr><td>correct · reflect</td><td><code>/hstack:correct</code></td><td><code>$correct</code></td><td>Make repeated agent mistakes impossible, or learn from this transcript</td></tr>
 </table>
 <p>Rows with several skills show the first one's command. The others follow the same pattern.</p>
+<h3>On main, not yet released</h3>
+<p>The main branch pins pstack 0.15.32 and adds four user-only skills. They are not in 0.5.4.</p>
+<table>
+<tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Use it to</th></tr>
+<tr><td>create-formal-verification-skill</td><td><code>/hstack:create-formal-verification-skill</code></td><td><code>$create-formal-verification-skill</code></td><td>Generate a project skill that checks a key property, such as a race or an invariant, past what tests reach</td></tr>
+<tr><td>maintain-formal-verification-skill</td><td><code>/hstack:maintain-formal-verification-skill</code></td><td><code>$maintain-formal-verification-skill</code></td><td>Bring that verification back in line with changed code, and learn whether a failure is drift or a bug</td></tr>
+<tr><td>statechart</td><td><code>/hstack:statechart</code></td><td><code>$statechart</code></td><td>Draw how a system moves between states as a Mermaid chart from a TLA+ model, with each bug as a numbered path</td></tr>
+<tr><td>ketchup-video</td><td><code>/hstack:ketchup-video</code></td><td><code>$ketchup-video</code></td><td>Catch up like <code>ketchup</code>, as a short silent video of slides with the waiting calls as text</td></tr>
+</table>
 
 <h2 id="prompting">5. Talk to hugues-mode</h2>
 <p>You do not write a spec. You say what is wrong or what you want, plus anything that saves the agent time.</p>
@@ -432,7 +450,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <tr><td>"new task"</td><td>Re-matches a playbook instead of treating your words as the next step of the old one</td></tr>
 <tr><td>"in a fresh worktree off &lt;base&gt;"</td><td>Isolates the work so parallel agents do not collide</td></tr>
 <tr><td>"let me review before proceeding", "with checkpoint"</td><td>Adds a review gate before implementation</td></tr>
-<tr><td>"do it", "continue", "keep going until done"</td><td>Short follow-ups work because the mode is sticky</td></tr>
+<tr><td>"do it", "continue", "keep going until done"</td><td>Short follow-ups work once the chat holds the task. If the mode fades, type the command again.</td></tr>
 <tr><td>"pause", "I'm going offline"</td><td>Runs Pause safely: checkpoint commit and a resume note</td></tr>
 </table>
 
@@ -471,7 +489,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <div class="cards">
 <div class="card"><span class="sym">I don't know which skill to use</span><span class="use">hugues-help</span><p>Answers, gives you a prompt and links its source. Starts nothing.</p></div>
 <div class="card"><span class="sym">I don't understand this code</span><span class="use">how</span><span class="use">why</span><span class="use">teach</span><p>Mechanics, history, or a full explanation you can argue with.</p></div>
-<div class="card"><span class="sym">The agent misread what I want</span><span class="use">in-your-own-words</span><span class="use">sharpen</span><p>Surface the misreading before any code exists.</p></div>
+<div class="card"><span class="sym">The agent misread what I want</span><span class="use">in-your-own-words</span><span class="use">sharpen</span><p>Surface the misreading before any code exists. <code>sharpen</code> deepens a thin prompt.</p></div>
 <div class="card"><span class="sym">The report is noisy or vague</span><span class="use">hugues-mode: restate it</span><p>Restate the problem first, change no code.</p></div>
 <div class="card"><span class="sym">Every design fights back</span><span class="use">architect</span><span class="use">arena</span><span class="use">Prototype</span><p>Compare real candidates instead of polishing the first idea.</p></div>
 <div class="card"><span class="sym">Fix after fix keeps failing</span><span class="use">Attack the Premise</span><span class="use">Fix Root Causes</span><p>Question the shared premise instead of writing fix number three.</p></div>
@@ -498,7 +516,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <h3>Make sure the agent understood you</h3>
 <pre class="prompt"><code><span class="cc">/hstack:in-your-own-words </span><span class="cx">$in-your-own-words </span></code></pre>
 <pre class="prompt"><code><span class="cc">/hstack:hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span><span class="cx">$hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span></code></pre>
-<p><strong>Why:</strong> a misreading that shows up in a restatement costs you one message. The same misreading found after implementation costs a wrong fix. <code>sharpen</code> goes further: it asks how a top expert would approach the task and whether your prompt says too much or too little, then does the work.</p>
+<p><strong>Why:</strong> a misreading that shows up in a restatement costs you one message. The same misreading found after implementation costs a wrong fix. <code>sharpen</code> goes further. It asks how a top expert would approach the task and whether your prompt says too much or too little. In 0.5.4 it then does the work. On main, not yet released, it rewrites your prompt and leaves the work to you.</p>
 
 <h3>When the design keeps fighting back</h3>
 <pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span><span class="cx">$hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span></code></pre>
@@ -507,7 +525,7 @@ codex plugin add hstack@hstack</span></code></pre>
 
 <h3>When fixes keep failing</h3>
 <p>Two failed fixes that share one premise have failed the same gate. Say the principle's name to redirect the agent:</p>
-<pre class="prompt"><code>stop. apply attack the premise. which actors hold the imbalance? question the premise before writing another fix.</code></pre>
+<pre class="prompt"><code>stop. apply attack the premise. write down the premise every failed fix shares and test it before writing another fix.</code></pre>
 <p>For a stubborn hang, crash or leak, switch from fixing to diagnosing:</p>
 <pre class="prompt"><code><span class="cc">/hstack:hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span><span class="cx">$hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span></code></pre>
 
@@ -894,7 +912,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <rect class="n router" x="60" y="854" width="140" height="30" rx="8"/>
 <text class="tb" x="130.0" y="873.0" text-anchor="middle">decision</text>
 <rect class="n done" x="60" y="894" width="140" height="30" rx="8"/>
-<text class="tb" x="130.0" y="913.0" text-anchor="middle">finish</text></svg><figcaption><strong>Figure 7. The hStack workflow map (updated).</strong> This replaces the old huguesStack map. Names follow 0.5.2: /hstack:hugues-mode, setup-hstack and any review bot instead of Cursor's Bugbot. The owner never rebases or merges inside Autopilot-stack. The root is the chain's only writer.</figcaption></figure>
+<text class="tb" x="130.0" y="913.0" text-anchor="middle">finish</text></svg><figcaption><strong>Figure 7. The hStack workflow map (updated).</strong> This replaces the old huguesStack map. Names follow 0.5.4: /hstack:hugues-mode, setup-hstack and any review bot instead of Cursor's Bugbot. The owner never rebases or merges inside Autopilot-stack. The root is the chain's only writer.</figcaption></figure>
 
 <h3>Plan multi-PR work</h3>
 <pre class="prompt"><code><span class="cc">/hstack:hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span><span class="cx">$hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span></code></pre>
@@ -950,7 +968,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <li>Shorten a panel list. Each entry runs one subagent.</li>
 <li>Save <code>hugues-mode</code> for work that needs rigor. A small, obvious edit does not.</li>
 </ul>
-<p>Every run that spawned workers ends with a Workers line: each role's requested and actual model and effort, plus any fallback and its reason.</p>
+<p>Every run that spawned workers ends with a Workers line: each role's requested and actual model and effort, plus any fallback and its reason. Part II covers staffing in <a href="#run-team">Run the team in Claude Code</a>.</p>
 
 <h2 id="trouble">14. Troubleshooting and pitfalls</h2>
 <table>
@@ -961,6 +979,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <tr><td>Mobile proof is "blocked"</td><td>Read the named blocker. Usually a missing <code>verify-&lt;app&gt;</code>, a tool the sandbox denies, or missing authority in your prompt. Add the authority or run the printed host-baseline command yourself.</td></tr>
 <tr><td>Babysit fails to start <code>watch-pr</code></td><td>Run the one-time Bun setup in <a href="#setup">setup step 6</a> for the copy you actually loaded.</td></tr>
 <tr><td>The agent treats a new question as the next feature step</td><td>Start with "new task".</td></tr>
+<tr><td>The mode stops applying after a few turns</td><td>Type <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code> again to start the next task.</td></tr>
 <tr><td>Routing looks wrong in plan mode</td><td>Plan mode masks routing. Test routing in a normal session on a disposable copy of the app.</td></tr>
 <tr><td>Parallel agents overwrite each other</td><td>Ask for "a fresh worktree off &lt;base&gt;" in each task.</td></tr>
 <tr><td>Disk is full of worktrees and simulators</td><td><code>hugues-mode what's eating my disk? prune the worktrees and simulators that are safe to prune.</code></td></tr>
@@ -975,15 +994,516 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <li><strong>Forgetting authority.</strong> "Fix it" alone does not grant edit, build or device permission in your app. Say what is allowed.</li>
 </ul>
 
-<h2 id="limits">15. What is verified today</h2>
-<p>hStack's own docs separate what was observed from what was only built. As of 0.5.2:</p>
-<ul>
-<li><strong>Observed:</strong> installs and updates from 0.4.0 through 0.5.2 on both Claude Code and Codex. Router discovery and firing on Claude Code. Bounded bug-fix runs on both hosts. Native helper runs, including failed and incomplete attempts.</li>
-<li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on either host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR.</li>
-</ul>
-<p>The release notes in the repository (<code>docs/RELEASE-0.5.2.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
+<h2 id="part2" class="part">Part II. Lead the team</h2>
+<p class="lede">Part I taught you to run hStack. Part II teaches you to lead it, the way a project manager leads a real team. You brief it, choose its size, read its evidence and fix the process when it slips.</p>
+<p>Read Part II after you have finished a few tasks with Part I. The beginner path stays as it is. Every prompt below still starts with <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code>, unless it names another skill directly.</p>
 
-<h2 id="glossary">16. Glossary</h2>
+<div class="callout why"><span class="h">Credit</span>
+<p>This part follows poteto's article <a href="https://x.com/poteto/article/2097732320606507506">The Complete Guide to pstack Pt. 2</a>. The ideas and the examples are his: the Slack thread, virtualization, the Dune tutorial, the dropdown prototype, webhook rate limiting, the StyleX migration and the background worker timeouts. We changed the commands and tools so they run in hStack, and we checked every claim about hStack against this repository.</p></div>
+
+<h3>How to read the claim labels</h3>
+<p>A sentence that says what a skill file tells the agent to do quotes its source under <code>plugin/</code> and needs no label. A sentence about what a host did, or will do, carries one of three labels.</p>
+<table>
+<tr><th>Label</th><th>Meaning</th><th>Where the record lives</th></tr>
+<tr><td><span class="lbl obs">Observed</span></td><td>hStack's own docs record a run on that host.</td><td><code>docs/support.md</code>, <code>docs/router-interactive-check.md</code>, <code>docs/skill-list-host-validation.md</code>, <code>docs/RELEASE-0.5.*.md</code></td></tr>
+<tr><td><span class="lbl def">Defined, not yet observed</span></td><td>A skill or playbook says it. No hStack run has recorded it.</td><td>The file under <code>plugin/skills/</code> or <code>plugin/adapters/</code></td></tr>
+<tr><td><span class="lbl host">Claude Code feature, not tested by hStack</span></td><td>A general Claude Code feature. We cite Claude Code's documentation and have not run it with hStack.</td><td><a href="https://code.claude.com/docs">code.claude.com/docs</a></td></tr>
+</table>
+<p>Where a detail could not be confirmed from one of these sources, this guide leaves it out. Treat an unlabeled claim about a host as a mistake in the guide.</p>
+
+<h2 id="lead">15. The lead's job</h2>
+<p>An agent can change a system you have never read. That removes an old barrier and creates a new job. The code is still yours to keep good, and you now supervise a worker that writes code better than you do, in a codebase no one holds in their head.</p>
+<p>Strong models still fail in two ways.</p>
+<ol>
+<li>They cannot fully understand your intent, because the prompt under-specifies it or specifies it badly.</li>
+<li>They lack the context to do the work correctly.</li>
+</ol>
+<p>Both failures start in the agent's context window. You get better work when you fill it with good context before the agent begins. Poteto adds a balance. Older models needed micromanaging and current ones do not, so say what the agent must achieve and leave room for a solution you did not think of. Part I's advice, state the goal and the done check and leave out the how, is this rule in small form.</p>
+
+<h3>Who plays which role</h3>
+<figure class="diagram"><svg viewBox="0 0 900 384" role="img" aria-label="Figure 9. The team chart"><title>Figure 9. The team chart</title>
+<text class="nl" x="14" y="24" text-anchor="start">Never delegated</text>
+<text class="nt" x="14" y="42" text-anchor="start">intent</text>
+<text class="nt" x="14" y="57" text-anchor="start">product calls</text>
+<text class="nt" x="14" y="72" text-anchor="start">irreversible actions</text>
+<text class="nt" x="14" y="87" text-anchor="start">the final read of the evidence</text>
+<rect class="n user" x="330" y="16" width="240" height="58" rx="8"/>
+<text class="tb" x="450" y="41" text-anchor="middle">You</text>
+<text class="t" x="450" y="57" text-anchor="middle">product owner · engineering manager</text>
+<text class="nt" x="600" y="30" text-anchor="start">Every worker is fresh for each round.</text>
+<text class="nt" x="600" y="45" text-anchor="start">The coordinator owns each worker's output</text>
+<text class="nt" x="600" y="60" text-anchor="start">and writes its own summary.</text>
+<path class="e" d="M450,74 L450,106" marker-end="url(#ah)"/>
+<rect class="n router" x="290" y="106" width="320" height="58" rx="8"/>
+<text class="tb" x="450" y="131" text-anchor="middle">Coordinator</text>
+<text class="t" x="450" y="147" text-anchor="middle">the chat you typed the command into</text>
+<path class="e" d="M450,164 L450,186"/>
+<path class="e" d="M113,186 L791,186"/>
+<path class="e" d="M113,186 L113,208" marker-end="url(#ah)"/>
+<path class="e" d="M339,186 L339,208" marker-end="url(#ah)"/>
+<path class="e" d="M565,186 L565,208" marker-end="url(#ah)"/>
+<path class="e" d="M791,186 L791,208" marker-end="url(#ah)"/>
+<rect class="n worker" x="14" y="208" width="198" height="64" rx="8"/>
+<text class="tb" x="113" y="232" text-anchor="middle">Engineers</text>
+<text class="t" x="113" y="248" text-anchor="middle">hugues-agent workers</text>
+<text class="t" x="113" y="263" text-anchor="middle">one writer per worktree</text>
+<rect class="n step" x="240" y="208" width="198" height="64" rx="8"/>
+<text class="tb" x="339" y="232" text-anchor="middle">Researchers</text>
+<text class="t" x="339" y="248" text-anchor="middle">how explorers · why</text>
+<text class="t" x="339" y="263" text-anchor="middle">investigators, read-only</text>
+<rect class="n step" x="466" y="208" width="198" height="64" rx="8"/>
+<text class="tb" x="565" y="232" text-anchor="middle">Reviewers</text>
+<text class="t" x="565" y="248" text-anchor="middle">interrogate panel</text>
+<text class="t" x="565" y="263" text-anchor="middle">fresh context per seat</text>
+<rect class="n mobile" x="692" y="208" width="198" height="64" rx="8"/>
+<text class="tb" x="791" y="232" text-anchor="middle">QA</text>
+<text class="t" x="791" y="248" text-anchor="middle">verify-&lt;app&gt; · swarm lanes</text>
+<text class="t" x="791" y="263" text-anchor="middle">proof on the real target</text>
+<path class="e" d="M113,272 L113,296"/>
+<path class="e" d="M339,272 L339,296"/>
+<path class="e" d="M565,272 L565,296"/>
+<path class="e" d="M791,272 L791,296"/>
+<path class="e" d="M113,296 L791,296"/>
+<path class="e" d="M450,296 L450,318" marker-end="url(#ah)"/>
+<rect class="n done" x="215" y="318" width="470" height="54" rx="8"/>
+<text class="tb" x="450" y="342" text-anchor="middle">Evidence and status</text>
+<text class="t" x="450" y="358" text-anchor="middle">diff · test output · screens · Workers line · ketchup · decision log</text>
+<text class="nt" x="704" y="349" text-anchor="start">you read this last</text></svg><figcaption><strong>Figure 9. The team chart.</strong> You set intent and read the evidence. The coordinator briefs and checks. Fresh workers do the writing, researching, reviewing and proving.</figcaption></figure>
+
+<table>
+<tr><th>Role on a real team</th><th>Who plays it in hStack</th><th>Source</th></tr>
+<tr><td>Product owner and engineering manager</td><td>You. You set intent, make the product calls and read the evidence.</td><td><code>hugues-mode</code> Autonomy, <code>principle-never-block-on-the-human</code></td></tr>
+<tr><td>Tech lead</td><td>The coordinator, the chat you typed the command into. It plans, briefs, reviews diffs and verifies. In Orchestrate it "owns the program, never the code".</td><td><code>hugues-mode</code> Subagents, <code>playbooks/orchestrate.md</code></td></tr>
+<tr><td>Engineers</td><td><code>hugues-agent</code> workers. A fresh one for each round of work.</td><td><code>hugues-mode</code> Subagents, <code>agents/hugues-agent.md</code></td></tr>
+<tr><td>Researchers</td><td>Read-only explorers and investigators started by <code>how</code> and <code>why</code>.</td><td><code>how</code>, <code>why</code></td></tr>
+<tr><td>Reviewers</td><td>An <code>interrogate</code> panel with a fresh context for each seat, on the models you list. The Comment Sicko reviewer handles comments.</td><td><code>interrogate</code>, <code>no-comments</code></td></tr>
+<tr><td>QA</td><td>Your project's <code>verify-&lt;app&gt;</code> skill, driven by the coordinator or by <code>swarm</code> lanes. Shipping adds a fresh verifier for each PR.</td><td><code>create-verification-skill</code>, <code>swarm</code>, <code>playbooks/shipping.md</code></td></tr>
+<tr><td>Status report</td><td><code>ketchup</code>, the <code>show-me-your-work</code> decision log and the closing reply with its Workers line.</td><td><code>ketchup</code>, <code>show-me-your-work</code></td></tr>
+</table>
+<p><span class="lbl obs">Observed</span> On Claude Code, a fresh registered <code>hugues-agent</code> wrote a scratch function (a 0.1.0 release-candidate run, under the project's former name). On 9 October 2026 the router spawned three arena candidates as background <code>hugues-agent</code> calls, each for its own worktree. The session was stopped before they finished.</p>
+<p><span class="lbl def">Defined, not yet observed</span> The split between a coordinator and track sub-coordinators in Orchestrate, and Shipping's per-PR verifier.</p>
+
+<div class="callout warn"><span class="h">Roles drift, so check them</span>
+<p>In the 0.5.1 fixture runs, the Swift/iOS run on Codex was recorded as NOT VERIFIED because the coordinator wrote the regression test itself (see the 0.5.2 release notes). The rule says it never does. A rule does not enforce itself. Read the diff and the Workers line.</p></div>
+
+<h3>What a lead never delegates</h3>
+<ul>
+<li><strong>Intent.</strong> What you want and how you will know it is done. The agent can draw it out of you, as the next section shows. It cannot set it.</li>
+<li><strong>Product calls.</strong> When no experiment can settle a question, <code>hugues-mode</code> interviews you instead of guessing. Product direction comes from the human.</li>
+<li><strong>Irreversible actions.</strong> Force-pushes to shared branches, deploys, data deletion and customer messages always pause for you. Pushing, publishing, merging and releasing each need their own go-ahead. See <a href="#big">Big and overnight work</a>.</li>
+<li><strong>The final read of the evidence.</strong> The coordinator owns each worker's output and writes its own summary. You own the coordinator's. Open the diff, the test output and the screenshots, or ask for the exact check you would run.</li>
+</ul>
+
+<h2 id="brief">16. Brief the team</h2>
+<p>A good brief carries what you want and the context the agent cannot find alone. It does not carry your theory of the answer.</p>
+
+<h3>Draw intent out in the agent's own words</h3>
+<p>Poteto's indirect prompt asks the agent to restate the problem instead of telling it what to do. He uses it on bug reports from Slack.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span><span class="cx">$hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span></code></pre>
+<p>hStack ships no chat or ticket connector. The agent can read the thread only if you paste it or your host session has a matching MCP server. <span class="lbl def">Defined, not yet observed</span> hStack records no run that read a thread through an MCP server.</p>
+<p>The restatement does three things.</p>
+<ol>
+<li>It compresses a noisy conversation into a problem statement.</li>
+<li>It lets you catch a misreading before any code exists. If the agent fixates on a red herring, you correct it in one message.</li>
+<li>It keeps your assumptions out of the prompt. A stated hypothesis can be wrong, and it limits what the agent could find.</li>
+</ol>
+<p>Part I used the same move as a rescue. Make it the default for any noisy report. Mid-chat, <code class="cc">/hstack:in-your-own-words</code><code class="cx">$in-your-own-words</code> checks the agent's picture of your goal. The skill is one sentence that asks the agent to restate your goals and the problem you are trying to solve.</p>
+
+<table>
+<tr><th>Telling</th><th>Drawing out</th></tr>
+<tr><td>"It's the cache. Clear it on logout."</td><td>"Profile data is stale after logout and login. Restate the problem, then say what you would check first."</td></tr>
+</table>
+
+<h3>Sharpen a thin prompt</h3>
+<p><code>sharpen</code> asks four questions about your task. What would a top professional do that you did not ask for? What raw material would they start from? Which methods and tools would they use? What, other than you or the agent, would show the result is right? It leaves the choices that are yours open.</p>
+<p><span class="pill">on main, not yet released</span> <code>sharpen</code> then rewrites your prompt and does not do the task. Send the rewrite yourself. In 0.5.4 it applies the framing and does the work instead.</p>
+
+<h3>Build a shared mental model</h3>
+<p>You cannot supervise code you cannot picture. Three skills build the picture, and the agent benefits from the same research.</p>
+<pre class="prompt"><code><span class="cc">/hstack:how how is virtualization implemented?</span><span class="cx">$how how is virtualization implemented?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:why are we still stuck on an old version of node.js?</span><span class="cx">$why are we still stuck on an old version of node.js?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span><span class="cx">$teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span></code></pre>
+<ul>
+<li><strong><code>how</code> traces runtime mechanics.</strong> A narrow question gets one explainer. A subsystem that spans files or services gets two to four read-only explorers in parallel, then one explainer. Explorers run on the <code>how explorer</code> line of <code>.hstack/models.md</code>, which the 0.5.4 setup puts on the Fast tier, <code>claude-haiku-5-5</code> or <code>gpt-6-luna</code>. That replaces the fast models Poteto names.</li>
+<li><strong><code>why</code> traces motivation.</strong> It searches seven evidence categories in parallel: source control, issue tracker, long-form documents, team chat, infrastructure observability, error tracking and a product analytics warehouse. Source control is always there through <code>git</code> and <code>gh</code>. Each other category needs an MCP server or CLI in your host session, so Poteto's Linear, Notion, Slack, Datadog, Sentry and warehouse sources work only if your session has them. A category with no tool is reported as a gap, never skipped silently.</li>
+<li><strong><code>teach</code> runs both and explains the result.</strong> Use it after the agent has done something, to make it show its reasoning. Poteto finds that agents often state things confidently without having read the code that backs them. Making them teach forces the reading.</li>
+</ul>
+<p><span class="lbl obs">Observed</span> A bounded native <code>how</code> run on Claude Code, on a synthetic artifact. <span class="lbl def">Defined, not yet observed</span> <code>why</code> across MCP sources and <code>teach</code>.</p>
+
+<h3>Learn from history</h3>
+<p>Projects span chats. Poteto's example resumes a long bug hunt.</p>
+<pre class="prompt"><code><span class="cc">/hstack:recall the work i did yesterday on virtualization and then read this bug report on slack</span><span class="cx">$recall the work i did yesterday on virtualization and then read this bug report on slack</span></code></pre>
+<p><code>recall</code> pins a window (seven days by default), fans out parallel subagents over your chat history, sweeps the shared record through <code>why</code>, checks live state with <code>git</code> and <code>gh</code>, and hands back a short brief. The brief has a capsule, tagged threads, recurring problems and one next move.</p>
+<div class="callout warn"><span class="h">The transcript mining does not carry over</span>
+<p><code>recall</code> is written for Cursor's <code>agent-transcripts/</code> folders. hStack's host adapter limits history to transcript paths supplied for the active workspace, and it wires no Claude Code or Codex lookup. Native history acquisition is deferred (issue #34, item 4). hStack records no run of <code>recall</code> on either host.</p>
+<p>Two parts still work. Paste a state capsule, meaning the branch, the PR and what changed, and <code>recall</code> uses it and skips the mining. It then checks live state and sweeps the shared record. Better, leave the context where the next agent will look. That is the branch, the PR body, a <code>show-me-your-work</code> log or a Pause safely resume note, picked up by the Session pickup playbook.</p></div>
+<p><span class="lbl host">Claude Code feature, not tested by hStack</span> Claude Code stores each session as a JSONL transcript under <code>~/.claude/projects/</code> and reopens one with <code>claude --continue</code> or <code>claude --resume</code> (<a href="https://code.claude.com/docs/en/sessions">sessions docs</a>). Whether <code>recall</code> can read those files is unobserved.</p>
+
+<h2 id="backwards">17. Work backwards</h2>
+<p>Once you understand the problem, how do you specify the solution? Poteto thinks most plan modes over-specify implementation details and under-specify everything else. He plans through code instead. For shared code, he writes the README first.</p>
+
+<h3>Write the README first</h3>
+<p>README-driven development starts with the document a hypothetical user would read. You describe the API, then work back to the architecture. Poteto did this for Dune, an in-house client framework for desktop apps. He began with a tutorial for building an app with it. The first pass failed. The agent mixed a tutorial, a how-to guide, an explanation and an API reference in one document, in plain AI prose. He fixed the tool before the draft, by building the <code>technical-writing</code> skill. hStack bundles that skill.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span><span class="cx">$hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span></code></pre>
+<p>The prompt wording is ours. The example is his. <code>technical-writing</code> picks one Diátaxis mode for each document, then applies sentence rules and <code>unslop</code>.</p>
+<table>
+<tr><th>Mode</th><th>Serves</th><th>Rule from the skill</th></tr>
+<tr><td>Tutorial</td><td>Learning by doing</td><td>Open by saying what the learner will build. Every step produces a visible result.</td></tr>
+<tr><td>How-to</td><td>Work, toward a goal</td><td>Action only. No digressions, no background.</td></tr>
+<tr><td>Reference</td><td>Lookup</td><td>Only describe. No instruction, persuasion or opinion.</td></tr>
+<tr><td>Explanation</td><td>Understanding</td><td>Anchor on a real why question. Opinion is allowed here and nowhere else.</td></tr>
+</table>
+<p>A document written this way gives the agent a concrete target to check its own work against. It also shows you what will be built before it exists.</p>
+
+<h3>Compound the skills in one prompt</h3>
+<p>Many skills pay off in the design phase. Poteto chains them in one message. The sample below keeps his example and names the skills in plain words.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode (1) use recall on my work fixing virtualization bugs and perf issues from the past 7 days. use how and why to understand how our current virtualization implementation works.
+(2) then use hugues-mode planning and technical-writing to come up with a new virtualization engine that categorically eliminates flickering and jittering. let's start by writing a tutorial on how i would use this new package to virtualize a React app.
+(3) after you write the plan, use teach to prove to me why this new approach is superior to our current engine.</span><span class="cx">$hugues-mode (1) use recall on my work fixing virtualization bugs and perf issues from the past 7 days. use how and why to understand how our current virtualization implementation works.
+(2) then use hugues-mode planning and technical-writing to come up with a new virtualization engine that categorically eliminates flickering and jittering. let's start by writing a tutorial on how i would use this new package to virtualize a React app.
+(3) after you write the plan, use teach to prove to me why this new approach is superior to our current engine.</span></code></pre>
+<table>
+<tr><th>Part</th><th>What it asks</th><th>Why it is there</th></tr>
+<tr><td>1</td><td>Load past and present context about the current implementation.</td><td>The agent sees the problem as you do, not as a small slice.</td></tr>
+<tr><td>2</td><td>Use that context to design a replacement, tutorial first.</td><td>Bugs fixed before become requirements the new design must remove.</td></tr>
+<tr><td>3</td><td>Prove the new design is better.</td><td>The proof is only as good as the tools. Without <code>verify-&lt;app&gt;</code>, <code>control-ui</code> or <code>control-cli</code>, the agent can only argue.</td></tr>
+</table>
+<p><span class="lbl def">Defined, not yet observed</span> A single prompt that chains several skills. Part 1 also relies on <code>recall</code>, so the transcript gap from the previous section applies. Swap in a state capsule or a branch name.</p>
+
+<h2 id="measure">18. Measure a hundred times, cut once</h2>
+<p>Two planning mistakes are common. You accept the agent's first design, or you polish a plan that no code has tested. Poteto takes "measure twice, cut once" to its limit with parallel agents. He plans with code and lets the agent answer its own open questions with evidence instead of waiting for you.</p>
+
+<h3>Prototype to answer a question</h3>
+<p>The Prototype playbook builds throwaway sketches. Its rules invert most of hStack's. Speed beats polish, code quality does not matter and there are no tests. The rigor sits in choosing the right design cheaply. It also proposes variations you did not ask for.</p>
+<p>Its six steps are short. Name the decision the prototype exists to make, and with no decision route to Feature. Gather references when the design space is open. Build in a scratch directory apart from production source. Put alternatives behind one switcher, each labeled. Verify on the matching surface, with a screenshot of each variant for a visual decision or logged timing for a behavioral one. Then present the alternatives, the tradeoffs and a recommendation. The output is the decision plus the throwaway artifact, and Feature or <code>architect</code> builds the real thing.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for the new dropdown menu</span><span class="cx">$hugues-mode prototype a few options for the new dropdown menu</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span><span class="cx">$hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span></code></pre>
+<p>Poteto's <code>/control-app</code> is the verification skill from his Part 1. In hStack it is your project's <code>verify-&lt;app&gt;</code> skill, made by <code>create-verification-skill</code>. For a CLI use <code>control-cli</code>. For a web UI use <code>control-ui</code>. He also asks for videos. Ask for them only if your verify skill can record one.</p>
+<p><span class="lbl def">Defined, not yet observed</span> The Prototype playbook. hStack records no run of it.</p>
+
+<h3>Architect bigger changes</h3>
+<p>Poteto's article lists a cross-judge as the third architect phase. In hStack's <code>architect</code> file the cross-judge sits inside <code>arena</code>, so the phases are these.</p>
+<table>
+<tr><th>Phase</th><th>What happens</th></tr>
+<tr><td>1. Ground</td><td>Run <code>how</code> over every system the new code touches. Add <code>why</code> when the design moves ownership or layering. Skip only for greenfield work.</td></tr>
+<tr><td>2. Sketch</td><td>Run <code>arena</code>. Each runner drafts the caller's usage first, then types, signatures and module boundaries with "not implemented" bodies. At least two candidates must be structurally distinct, and each is screened against the design red flags. A cross-judge on a different model scores them, and the best parts are grafted into one base.</td></tr>
+<tr><td>3. Agree</td><td>Off by default. Say "with checkpoint" or "stop and show me before implementing" to review the design first.</td></tr>
+<tr><td>4. Implement</td><td>Fill in the bodies. The sketch is the contract, and a function that needs a parameter it did not expect is a signal to surface.</td></tr>
+<tr><td>5. Scrap</td><td>When friction keeps coming, throw the sketch away. Re-run <code>how</code>, redesign as if the new constraints were day-one assumptions, subtract before you add, and return to Sketch.</td></tr>
+</table>
+<p>The Scrap signal is a pattern, not one incident. These are the tells.</p>
+<ul>
+<li>The same workaround appears across unrelated code.</li>
+<li>Several unrelated edge cases each need a special-case branch.</li>
+<li>Types need escape hatches, such as <code>any</code>, casts or optional fields that are always set.</li>
+<li>Someone reaches for a lock after the sketch said the state was not shared.</li>
+<li>Callers must know the abstraction's internal rules.</li>
+<li>Two or more independent deviations of the same shape appear during Implement.</li>
+</ul>
+<p>A few edge cases do not condemn an architecture. Complexity in the data is not complexity in the design.</p>
+<pre class="prompt"><code><span class="cc">/hstack:architect this new &lt;feature request&gt;</span><span class="cx">$architect this new &lt;feature request&gt;</span></code></pre>
+<div class="callout tip"><span class="h">Check who sits on the panel</span>
+<p>The architect panel is the <code>architect runners</code> line of <code>.hstack/models.md</code>, one seat per entry. The default file gives its second seat only a Codex model. By setup-hstack's rule, a host runs the first alternative its agent tool accepts, so in Claude Code that seat runs on your chat's own model. Edit the line if you want a different Claude model there. hStack reports same-model process independence separately from model diversity. <span class="lbl def">Defined, not yet observed</span></p></div>
+<div class="callout why"><span class="h">Never review an abstract plan adversarially</span>
+<p>Reviewers start inventing theoretical risks and edge cases for problems that will never happen. Let the agent answer open questions by prototyping and verifying. Point <code>interrogate</code> at code or at a sketch, not at prose.</p></div>
+<p><span class="lbl obs">Observed</span> A managed Codex session ran design-only <code>architect</code> and <code>arena</code> guardrails. Two structurally distinct workers got no parent or rubric context, a fresh read-only judge scored them, and nothing was compiled or run. On Claude Code the router spawned three arena candidates and the session was stopped before they finished. <span class="lbl def">Defined, not yet observed</span> The full architect loop, including Implement and Scrap.</p>
+
+<h2 id="plan">19. Turn the design into a plan</h2>
+<p>You may still want a planning document. hStack has no planning skill. It has the Multi-phase plan playbook, and the order matters. Run it after the design settles, as a tactical execution plan.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode turn this design into a plan</span><span class="cx">$hugues-mode turn this design into a plan</span></code></pre>
+<p>The playbook writes a plan and does not implement it. It skips the plan when the change is one or two files with an obvious approach. Otherwise it settles open questions by prototype and asks you only for product calls, then explores in subagents that return file pointers, conventions, test commands and entry points. It fills a skeleton with one section per PR, each one change with its own evidence, and the plan names the playbook that will execute it. It writes the body as a how-to under <code>technical-writing</code> and <code>unslop</code>, runs the plan checker and fixes every line the checker prints. Then it hands back the plan path and the checker output and stops. Execution starts on your explicit go.</p>
+<p>Every task in the plan ends in proof. The rule is written into each verification block. <em>Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.</em> The live block drives the real surface through ten lanes. One lane runs the same scenario on trunk and on the PR head. The perf gate measures both sides. A PR that changes an interaction is review-gated, so you see screenshots and a video in chat before it merges. For a mobile plan, the lanes come from the mobile lane scenarios.</p>
+<p>The plan lives under the agent store's <code>docs/</code> folder unless you name a path. Poteto sometimes commits a plan temporarily on week-long work, so other agents know what is in progress. He deletes it when the work lands, so it never confuses the codebase. To do the same, name a repository path in your prompt and say when to delete it. The checker needs Node, as Part I's prerequisites table says.</p>
+<p>The plan's "How to read this" names the execution playbook. <a href="#shape">Section 20</a> helps you choose it.</p>
+<p><span class="lbl def">Defined, not yet observed</span> The Multi-phase plan playbook and its checker. hStack records no run of either.</p>
+
+<h2 id="shape">20. Pick the team shape</h2>
+<p>A bigger team is not a better team. Each shape below adds writers, verification and distance from you. Pick the lightest shape that can finish. Orchestrate says so itself. Work one agent could finish inside the session's budget is not a program, and the playbook sends you to Autonomous run.</p>
+<figure class="diagram"><svg viewBox="0 0 900 536" role="img" aria-label="Figure 10. Team shapes from lightest to heaviest"><title>Figure 10. Team shapes from lightest to heaviest</title><rect class="n done" x="40" y="16" width="440" height="56" rx="8"/>
+<text class="tb" x="260" y="40" text-anchor="middle">One playbook run</text>
+<text class="t" x="260" y="56" text-anchor="middle">one coordinator, fresh delegates, you land</text>
+<rect class="n router" x="40" y="96" width="440" height="56" rx="8"/>
+<text class="tb" x="260" y="120" text-anchor="middle">Autonomous run</text>
+<text class="t" x="260" y="136" text-anchor="middle">adds a done predicate and a wake</text>
+<path class="e" d="M260,72 L260,96" marker-end="url(#ah)"/>
+<rect class="n router" x="40" y="176" width="440" height="56" rx="8"/>
+<text class="tb" x="260" y="200" text-anchor="middle">architect · arena · swarm</text>
+<text class="t" x="260" y="216" text-anchor="middle">adds parallel candidates or checks, one report</text>
+<path class="e" d="M260,152 L260,176" marker-end="url(#ah)"/>
+<rect class="n router" x="40" y="256" width="440" height="56" rx="8"/>
+<text class="tb" x="260" y="280" text-anchor="middle">figure-it-out</text>
+<text class="t" x="260" y="296" text-anchor="middle">adds a designed run and a decision trail</text>
+<path class="e" d="M260,232 L260,256" marker-end="url(#ah)"/>
+<rect class="n router" x="40" y="336" width="440" height="56" rx="8"/>
+<text class="tb" x="260" y="360" text-anchor="middle">Autopilot-full · Autopilot-stack</text>
+<text class="t" x="260" y="376" text-anchor="middle">adds one owner per PR and a root verifier</text>
+<path class="e" d="M260,312 L260,336" marker-end="url(#ah)"/>
+<rect class="n router" x="40" y="416" width="440" height="56" rx="8"/>
+<text class="tb" x="260" y="440" text-anchor="middle">Orchestrate</text>
+<text class="t" x="260" y="456" text-anchor="middle">adds a standing program, a ledger and a stacker</text>
+<path class="e" d="M260,392 L260,416" marker-end="url(#ah)"/>
+<text class="nt" x="512" y="40" text-anchor="start">Bounded bug-fix runs observed</text>
+<text class="nt" x="512" y="55" text-anchor="start">on both hosts.</text>
+<text class="nt" x="512" y="120" text-anchor="start">Wake: /loop in the local Claude Code</text>
+<text class="nt" x="512" y="135" text-anchor="start">session. Codex: active-session waits.</text>
+<text class="nt" x="512" y="200" text-anchor="start">Bounded arena and architect runs</text>
+<text class="nt" x="512" y="215" text-anchor="start">observed. The full loops are not.</text>
+<text class="nt" x="512" y="280" text-anchor="start">For large, cross-cutting work, or work</text>
+<text class="nt" x="512" y="295" text-anchor="start">you review after stepping away.</text>
+<text class="nt" x="512" y="360" text-anchor="start">Full lands. Stack hands you a</text>
+<text class="nt" x="512" y="375" text-anchor="start">linear stack to land yourself.</text>
+<text class="nt" x="512" y="440" text-anchor="start">Only when the work outlives</text>
+<text class="nt" x="512" y="455" text-anchor="start">any single agent's session.</text>
+<rect class="n done" x="40" y="496" width="22" height="16" rx="4"/>
+<text class="nt" x="72" y="509" text-anchor="start">Observed in a bounded run</text>
+<rect class="n router" x="300" y="496" width="22" height="16" rx="4"/>
+<text class="nt" x="332" y="509" text-anchor="start">Defined, not yet observed</text></svg><figcaption><strong>Figure 10. Team shapes from lightest to heaviest.</strong> Each step down adds writers and verification, and takes you further from the keyboard. Start at the top and move down only when the shape above cannot finish.</figcaption></figure>
+
+<table>
+<tr><th>Shape</th><th>Pick it when</th><th>Who writes</th><th>Who verifies</th><th>Who lands</th></tr>
+<tr><td>One playbook run</td><td>One agent can finish inside the session.</td><td>Fresh <code>hugues-agent</code> delegates, led by the coordinator.</td><td>The coordinator, on the real surface. <code>interrogate</code> when the design is contested.</td><td>You. Opening a PR ends the run, and merging needs your go.</td></tr>
+<tr><td>Autonomous run</td><td>One task, one checkable predicate, no check-ins.</td><td>The same agent, one small change for each iteration.</td><td>The predicate, every iteration.</td><td>You.</td></tr>
+<tr><td><code>arena</code></td><td>A choice that is expensive to reverse and has several valid shapes.</td><td>N candidates, each in its own output location.</td><td>A cross-judge, on a different model when the pool offers one, then the coordinator's own read.</td><td>You. The coordinator grafts one result.</td></tr>
+<tr><td><code>architect</code></td><td>Code crossing a function boundary.</td><td>Arena runners sketch. A delegate then implements.</td><td>The sketch is the contract. A pattern of deviations means scrap it.</td><td>You.</td></tr>
+<tr><td><code>swarm</code></td><td>A coverage matrix, a race or parallel checks.</td><td>Workers write only when their brief says so.</td><td>One aggregated report. A gap is never a pass.</td><td>Nobody. It returns a report.</td></tr>
+<tr><td><code>figure-it-out</code></td><td>Large or cross-cutting work, or nothing else fits.</td><td>Delegates under a phase list the skill designs.</td><td>A hypothesis loop, with a judge paired with delegated work.</td><td>You, reading a committed decision trail.</td></tr>
+<tr><td>Autopilot-full</td><td>Independent PRs, and you granted landing authority.</td><td>One owner per PR, in parallel off trunk.</td><td>The root's swarm, which never wrote the code.</td><td>The owner, only on a clean verdict.</td></tr>
+<tr><td>Autopilot-stack</td><td>Coupled or sequenced PRs, or you want to review first.</td><td>One owner per PR, branching from the item it depends on.</td><td>The root's swarm, one verdict per link.</td><td>You, bottom-up. The root is the chain's only writer.</td></tr>
+<tr><td>Orchestrate</td><td>A program that outlives any single agent.</td><td>Workers for each unit. The coordinator never codes.</td><td>A verifier on a different model family, and a ledger row for each PR and head SHA.</td><td>The coordinator for verified units on cheap repos, otherwise a stacker.</td></tr>
+</table>
+<p><span class="lbl obs">Observed</span> Bounded bug-fix runs on both hosts, and bounded design-only <code>arena</code> and <code>architect</code> runs. <span class="lbl def">Defined, not yet observed</span> Every other row, and every shape at scale: Orchestrate, both autopilots, <code>swarm</code>, <code>figure-it-out</code>, the Autonomous run <code>/loop</code> wake and multi-day programs.</p>
+
+<h3>Four rules that hold in every shape</h3>
+<ul>
+<li><strong>One writer per worktree or branch.</strong> Eliminate shared state before you serialize it. In Autopilot-stack only the root rebases or retargets a link.</li>
+<li><strong>The verifier runs on a different model family from the writer.</strong> Orchestrate states it for every unit.</li>
+<li><strong>The judge is never the author.</strong> Shipping counts only a verdict from an agent that did not write the code. Autopilot-full merges only what a swarm that never wrote the code has proven.</li>
+<li><strong>The grant covers only what you named.</strong> Autopilot treats the items you call yours as gates, and a request to state the plan is not a go.</li>
+</ul>
+<div class="callout warn"><span class="h">Different family has limits inside one host</span>
+<p>Each host's subagents come from one vendor. Claude Code runs Claude models and Codex runs GPT models. Inside one host, "a different model" means a different model of that vendor. The only model-independent review is cross-host review. Claude Code reviews a Codex diff, or the reverse. <a href="#review">Section 22</a> shows how.</p></div>
+<div class="callout tip"><span class="h">Cloud workers run locally</span>
+<p>Some playbooks say cloud worker, inherited from Cursor. In Claude Code and Codex they run as local native workers where the playbook permits local execution. A cloud spawn is a gap. An operation that needs one holds and reports it. Orchestrate's bookkeeping uses the <code>orch</code> helper, which needs the Bun setup from Part I.</p></div>
+
+<h2 id="run-team">21. Run the team in Claude Code</h2>
+<p>This section is the daily rhythm of a lead. <a href="#shape">Section 20</a> chose the team. Here you keep it on track without watching every move.</p>
+<figure class="diagram"><svg viewBox="0 0 900 290" role="img" aria-label="Figure 11. The lead's loop"><title>Figure 11. The lead's loop</title><rect class="n user" x="30" y="30" width="250" height="64" rx="8"/>
+<text class="tb" x="155" y="55" text-anchor="middle">1. Standing orders</text>
+<text class="t" x="155" y="71" text-anchor="middle">written once, in files and hooks</text>
+<text class="t" x="155" y="85" text-anchor="middle">not repeated in chat</text>
+<rect class="n user" x="325" y="30" width="250" height="64" rx="8"/>
+<text class="tb" x="450" y="55" text-anchor="middle">2. Brief</text>
+<text class="t" x="450" y="71" text-anchor="middle">goal · scope · acceptance · verify</text>
+<text class="t" x="450" y="85" text-anchor="middle">forbidden · report</text>
+<path class="e" d="M280,62 L325,62" marker-end="url(#ah)"/>
+<rect class="n worker" x="620" y="30" width="250" height="64" rx="8"/>
+<text class="tb" x="745" y="55" text-anchor="middle">3. Run</text>
+<text class="t" x="745" y="71" text-anchor="middle">fresh workers, one worktree each</text>
+<text class="t" x="745" y="85" text-anchor="middle">effort matched to the job</text>
+<path class="e" d="M575,62 L620,62" marker-end="url(#ah)"/>
+<rect class="n step" x="620" y="170" width="250" height="64" rx="8"/>
+<text class="tb" x="745" y="195" text-anchor="middle">4. Check in</text>
+<text class="t" x="745" y="211" text-anchor="middle">ketchup · decision log</text>
+<text class="t" x="745" y="225" text-anchor="middle">Workers line · no polling</text>
+<path class="e" d="M745,94 L745,170" marker-end="url(#ah)"/>
+<rect class="n done" x="325" y="170" width="250" height="64" rx="8"/>
+<text class="tb" x="450" y="195" text-anchor="middle">5. Read the evidence</text>
+<text class="t" x="450" y="211" text-anchor="middle">diff · test output · screens</text>
+<text class="t" x="450" y="225" text-anchor="middle">measured, inferred or guess</text>
+<path class="e" d="M620,202 L575,202" marker-end="url(#ah)"/>
+<rect class="n mobile" x="30" y="170" width="250" height="64" rx="8"/>
+<text class="tb" x="155" y="195" text-anchor="middle">6. Encode the correction</text>
+<text class="t" x="155" y="211" text-anchor="middle">a check, not a reminder</text>
+<text class="t" x="155" y="225" text-anchor="middle">correct · reflect</text>
+<path class="e" d="M325,202 L280,202" marker-end="url(#ah)"/>
+<path class="e" d="M155,170 L155,94" marker-end="url(#ah)"/>
+<text class="nt" x="450" y="268" text-anchor="middle">You act in steps 1, 2, 5 and 6. The team acts in 3. The coordinator reports in 4.</text></svg><figcaption><strong>Figure 11. The lead's loop.</strong> A correction that reaches step 1 stops costing you a message, because step 6 feeds step 1.</figcaption></figure>
+
+<h3>Write standing orders once</h3>
+<p>Directives decay. Orchestrate keeps a standing-orders register, <code>preferences.md</code>, with numbered lines of one constraint each. It covers model policy, stack shape, the verification bar, forbidden paths and escalation. It goes verbatim into every spawn and every resume. When you catch yourself restating an instruction, the playbook says to append the line before you act. That is the Encode Lessons in Structure principle.</p>
+<p>Outside Orchestrate, your repository's instruction file does the same job. These are example lines.</p>
+<pre><code>1. Every code worker starts in a fresh worktree off main.
+2. A build is never proof. Mobile proof runs through verify-&lt;app&gt;.
+3. Nothing is pushed, merged or released without my go.
+4. Every claim carries a label: measured, inferred or guess.
+5. After two refuted hypotheses, stop and write up.</code></pre>
+<p><span class="lbl host">Claude Code feature, not tested by hStack</span> By default, Claude Code reads <code>CLAUDE.md</code> at the start of every session. It reads <code>AGENTS.md</code> instead only when no <code>CLAUDE.md</code>, <code>.claude/CLAUDE.md</code> or <code>CLAUDE.local.md</code> exists in the working directory or above it, so a <code>CLAUDE.md</code> that contains the line <code>@AGENTS.md</code> shares one file. A setting can change which instruction files load, including loading both. The docs call these files context, not enforced configuration, and aim for under 200 lines. To block an action regardless, use a hook, covered below.</p>
+<p>Move a rule up the ladder when you can. The <code>correct</code> skill orders the fixes. Use architecture first, then types, then a lint whose error names the fix, then a test. Write docs last, only for judgment calls.</p>
+
+<h3>Brief like Orchestrate does</h3>
+<p>Orchestrate's rule is that the brief is the product, because a worker cannot ask you a question. Every brief carries these fields. A field you cannot fill is a unit you have not scoped yet.</p>
+<pre><code>GOAL         one sentence, the outcome, executable by a stranger with no chat access
+SCOPE        paths this unit may write and may not; its exclusive worktree or branch
+CONTEXT      pointers to files and PRs; upstream reports pasted in full when needed
+ACCEPTANCE   checkable criteria, one per line
+VERIFY       exact commands or the control-skill path, plus known gotchas
+TIMEBOX      a cap on runtime; on expiry, return partial findings and stop
+FORBIDDEN    no retargets or merges, no rebase, no force-push, no fixes outside scope
+REPORT       status, branch, head SHA, verdict, what you ran, deviations, follow-ups
+STANDING     the standing orders, pasted verbatim</code></pre>
+<p>Size the brief to the unit. A one-command unit collapses to a paragraph that still names the goal, the scope, the verify command and the report. Using the template as your own prompt to the coordinator is our suggestion. hStack defines it for Orchestrate only.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode
+GOAL the profile screen shows fresh data after a logout and login
+SCOPE edit the Profile and Session modules only. fresh worktree off main. bug report pasted below.
+ACCEPTANCE a regression test fails on the unfixed code and passes after the fix. a before and after screenshot from the iPhone 17 simulator.
+VERIFY verify-shop and the existing xcodebuild test plan
+TIMEBOX after two refuted hypotheses, stop and report
+FORBIDDEN no push, no merge, no sdk changes
+REPORT root cause, fix, RED then GREEN output, and what you could not prove</span><span class="cx">$hugues-mode
+GOAL the profile screen shows fresh data after a logout and login
+SCOPE edit the Profile and Session modules only. fresh worktree off main. bug report pasted below.
+ACCEPTANCE a regression test fails on the unfixed code and passes after the fix. a before and after screenshot from the iPhone 17 simulator.
+VERIFY verify-shop and the existing xcodebuild test plan
+TIMEBOX after two refuted hypotheses, stop and report
+FORBIDDEN no push, no merge, no sdk changes
+REPORT root cause, fix, RED then GREEN output, and what you could not prove</span></code></pre>
+
+<h3>Staff the team</h3>
+<p><code>.hstack/models.md</code> maps each role to a model and an effort, and Part I's setup step wrote it. Match the effort to the job. The host adapter says to raise it one step, up to <code>max</code>, for the hardest work. Lower it one step for judgment and two or more for routine work. Use fast mode only when CI or trunk is red or a person is blocked on the result right now. Verification stays on the <code>swarm workers</code> line. A panel runs one worker for each entry, so a shorter list costs less.</p>
+<p>The Workers line audits who actually ran. Every run that spawned workers ends with each role's requested and actual model and effort, plus any fallback and its reason. Read it. When the host cannot accept a role's model, the role runs on your chat's model and the report names which one ran. <span class="lbl def">Defined, not yet observed</span> The 0.5.2 release notes record that live <code>model: inherit</code> on Claude Code was never observed.</p>
+
+<h3>Use a fresh worker and its own worktree for each round</h3>
+<p>Give new work to a fresh subagent with consolidated scope. That means the original brief, every later directive, and the prior agent's report and branch. This holds for a fix round, a follow-up, a retry and the next queue item. Resume an agent only when the work needs state that lives in it and is costly to move, such as its checkout, its uncommitted changes or a process it still runs. A worker started with the coordinator's turns is not fresh. Chained resumes silently drop directives, which is why a "done" summary is not enough. Say "in a fresh worktree off main" in the prompt and name the base yourself, because parallel agents that share a branch overwrite each other.</p>
+
+<h3>Get status without micromanaging</h3>
+<ul>
+<li><strong>Do not poll.</strong> Orchestrate treats a completion as a queue event, not an interrupt. It never resumes an agent just to check on it. It probes read-only instead: the ledger, the unit table, <code>gh</code> and pushed branches.</li>
+<li><strong>Ask for the catch-up.</strong> <code class="cc">/hstack:ketchup</code><code class="cx">$ketchup</code> reports in plain words what changed in this chat since your last message. It lists every call waiting on you, each with the agent's pick.</li>
+<li><strong>Read the decision log.</strong> <code>show-me-your-work</code> keeps a TSV with one row per decision, its reason, an evidence pointer and the result. It ends with an Attention section from a reviewer on a different model family.</li>
+<li><strong>In Orchestrate, read three lines.</strong> Each drain ends with counts against the states, what changed and the gates open. <code>status.md</code> is derived from the tables, not narrated. <code>gates.md</code> parks each human call with the question, the options and a default if you do not answer.</li>
+</ul>
+
+<h3>Steer in one line</h3>
+<table>
+<tr><th>Say</th><th>Effect</th></tr>
+<tr><td>"new task"</td><td>The mode matches a fresh playbook instead of continuing the old one.</td></tr>
+<tr><td>"apply prove it works. show me the real output, not the build log."</td><td>A principle name works because the agent already read the rule.</td></tr>
+<tr><td>"i said the goal is to repro. i did not ask for a fix yet."</td><td>Restates the goal and resets the step.</td></tr>
+<tr><td>A stop line</td><td>In Orchestrate, a line at the top of the standing orders halts new spawns while in-flight work finishes. Use it when continued spawning would produce garbage.</td></tr>
+<tr><td>"push back if this doesn't earn its place"</td><td>"No" is an acceptable answer. The mode is told to decline, push back and prefer candor over agreement.</td></tr>
+<tr><td>"pause"</td><td>Pause safely commits a checkpoint and writes a resume note. "Keep going" never triggers it.</td></tr>
+</table>
+
+<h3>Own the output</h3>
+<ul>
+<li><strong>Read the diff.</strong> The coordinator writes its own summary instead of passing a worker's claim through, and you do the same one level up.</li>
+<li><strong>Require a label on every claim.</strong> The mode's reply rule is that each claim carries its evidence or its label in the same sentence, measured, inferred or guess. A prediction is a guess.</li>
+<li><strong>Treat inconclusive as not passed.</strong> A wrong target, a flaky run and a skipped test are never a pass.</li>
+<li><strong>Check the todo list early.</strong> Its first items should be the playbook's steps. <span class="lbl obs">Observed</span> In the 0.5.0 pretest both hosts wrote the list after reproduction, not before step 1. One early Claude Code run fixed the bug and passed its tests but omitted workflow steps and Opening a PR. It was recorded NOT VERIFIED. A later run, after a wording fix, was recorded VERIFIED.</li>
+</ul>
+
+<h3>Let Claude Code hold the line</h3>
+<p><span class="lbl host">Claude Code feature, not tested by hStack</span> The rows below state what Claude Code's documentation says. The last column says how it meets hStack. Where it states what an hStack file says, it needs no label. Where it states what a host did with hStack, it carries the label of hStack's own record.</p>
+<table>
+<tr><th>Feature</th><th>What the docs say</th><th>With hStack</th></tr>
+<tr><td>Plan mode</td><td>Claude researches and proposes without editing. Edits stay blocked until you approve the plan. Enter with <span class="kbd">Shift+Tab</span>, <code>/plan</code> or <code>claude --permission-mode plan</code>.</td><td><span class="lbl obs">Observed</span> Plan mode replaced routing, so the router never fired. By the launcher's record, one plan was approved into auto mode and changed the real app. Test routing in a disposable copy.</td></tr>
+<tr><td>Permission modes</td><td>Six modes: <code>default</code> (Manual), <code>acceptEdits</code>, <code>plan</code>, <code>auto</code>, <code>dontAsk</code> and <code>bypassPermissions</code>. Deny rules block in every mode. Use bypass only in isolated containers and VMs.</td><td>The mode sets which tool calls prompt. Your prompt sets what the agent may do, and hStack holds any action you did not authorize. <span class="lbl obs">Observed</span> A session launched in <code>default</code> mode ran in auto mode, and the transcript does not say what changed it. Check the mode before you walk away.</td></tr>
+<tr><td>Hooks</td><td>A <code>PreToolUse</code> hook runs before a tool call and can block it. Exit 2 with a reason on stderr, and Claude receives the reason as feedback. Hooks live under <code>hooks</code> in a settings file.</td><td>Use a hook for a standing order that must never break, such as protected files or no push. A written rule can be skipped. A hook cannot.</td></tr>
+<tr><td>Subagents and background work</td><td>A subagent runs in its own context window. Background subagents run while you work, and <code>/tasks</code> lists background items so you can check, attach or stop them. By default a subagent can nest three layers deep, and 20 can run at once.</td><td><code>hugues-agent</code> declares <code>background: true</code>. Follow the status rules above, not a poll loop.</td></tr>
+<tr><td>Worktrees</td><td><code>claude --worktree &lt;name&gt;</code> creates <code>.claude/worktrees/&lt;name&gt;</code> on a branch named <code>worktree-&lt;name&gt;</code>. It branches from the default branch unless <code>worktree.baseRef</code> is <code>"head"</code>. A custom subagent with <code>isolation: worktree</code> gets its own.</td><td>hStack asks for "a fresh worktree off &lt;base&gt;". Name the base yourself, whichever tool creates the worktree.</td></tr>
+<tr><td>Context</td><td>Claude Code compacts automatically near the limit. <code>/compact</code> accepts focus instructions and <code>/context</code> shows usage. After compaction <code>CLAUDE.md</code> is re-read from disk. Invoked skill bodies are re-injected up to 5,000 tokens each and 25,000 in total.</td><td>Pause safely lists imminent compaction as a trigger, and the host adapter says to reread owned references after compaction. Before a long run, ask for a pause so a resume note exists.</td></tr>
+<tr><td><code>/loop</code></td><td>Re-runs a prompt in the current session, at a fixed interval or one Claude picks. It fires only while Claude Code is running and idle. Recurring tasks expire after seven days. A skill marked <code>disable-model-invocation: true</code> named in the prompt reaches Claude as plain text and does not run.</td><td><span class="lbl def">Defined, not yet observed</span> hStack maps <code>/loop</code> to the current local session on Claude Code. The playbooks arm it themselves, for example the hourly audit tick in a plan. Do not hand-write <code>/hstack:</code> commands in a loop prompt.</td></tr>
+</table>
+<p>Here is the hook example from Claude Code's hooks guide. It blocks any edit to protected files, and the script exits 2 with the reason.</p>
+<pre><code>{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/protect-files.sh"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+<p>Sources: Claude Code docs on <a href="https://code.claude.com/docs/en/permission-modes">permission modes</a>, <a href="https://code.claude.com/docs/en/memory">memory</a>, <a href="https://code.claude.com/docs/en/hooks-guide">hooks</a>, <a href="https://code.claude.com/docs/en/sub-agents">subagents</a>, <a href="https://code.claude.com/docs/en/agents">parallel agents</a>, <a href="https://code.claude.com/docs/en/worktrees">worktrees</a>, <a href="https://code.claude.com/docs/en/context-window">the context window</a> and <a href="https://code.claude.com/docs/en/scheduled-tasks">scheduled tasks</a>.</p>
+
+<h2 id="review">22. Review like a lead</h2>
+<p>A lead does not rubber-stamp a green diff. hStack gives you four review tools, and each answers one question.</p>
+<table>
+<tr><th>Your question</th><th>Tool</th><th>What you get</th></tr>
+<tr><td>What am I blind to in this change?</td><td><code>interrogate</code></td><td>One fresh reviewer for each entry on the <code>interrogate reviewers</code> line. The coordinator acts as lead reviewer and sorts every finding into Act on, Consider, Noted or Dismissed. It applies nothing.</td></tr>
+<tr><td>What could this break elsewhere?</td><td><code>blast-radius</code></td><td>The one fact the change is safe because of, proven by running real code. Its ladder runs from "you said so" through "you pointed at the line", "you showed the bad case cannot happen" and "you ran it" to "you reproduced it in the running app".</td></tr>
+<tr><td>Is the diff clean?</td><td><code>deslop</code> and <code>no-comments</code></td><td><code>deslop</code> strips AI slop from the diff against main before you commit. <code>no-comments</code> hands the comments to Comment Sicko, a reviewer that did not write them. It keeps license headers, public API docs and links that explain what code cannot.</td></tr>
+<tr><td>Is it safe to land?</td><td>Shipping</td><td>A fresh agent verifies each PR and posts PASS, PASS+NOTES or FAIL. Only the contiguous verified run from the bottom lands.</td></tr>
+</table>
+<p>A second opinion is the same prompt against a different model, and agreement is high-signal. In <code>interrogate</code>, a finding that two or more reviewers raised independently is the strongest. A lone finding gets read and weighted. Read the Dismissed list too. It is how you override the lead reviewer's judgment.</p>
+<p>For a model-independent review, run the panel in the host that did not write the diff.</p>
+<pre class="prompt"><code><span class="cc">/hstack:interrogate review the diff on this branch against main</span><span class="cx">$interrogate review the diff on this branch against main</span></code></pre>
+<p>For explicitly selected mobile work, the reviewers also get the mobile review lens. It covers lifecycle and process restoration, main-thread safety, cancellation, resource release, offline and retry behavior, accessibility and text scaling, and native-wrapper ownership. Each applicable risk ends covered with evidence or named as a gap.</p>
+<p>Review code, not abstract plans. <a href="#measure">Section 18</a> explains why.</p>
+<p><span class="lbl obs">Observed</span> A narrow <code>blast-radius</code> run on Claude Code, on a synthetic artifact. <span class="lbl def">Defined, not yet observed</span> A full <code>interrogate</code> panel, cross-host review, Shipping, <code>deslop</code> and <code>no-comments</code>. A routing preview has selected <code>interrogate</code>, but no run of a full panel is recorded.</p>
+
+<h2 id="improve">23. Make the team better over time</h2>
+<p>A team that repeats its mistakes has a process problem. Poteto's rule is the one hStack encodes as a principle. When you catch yourself writing the same instruction a second time, encode it. If the fix is structural, use only the structural fix, because the instruction is the symptom.</p>
+<h3>Fix the class of mistake</h3>
+<pre class="prompt"><code><span class="cc">/hstack:correct </span><span class="cx">$correct </span></code></pre>
+<p><code>correct</code> reads recent commits, reverts, review comments and workaround comments. It groups the mistakes into classes, and a class counts once it has happened twice. It fixes each class at the highest level that works. The order is architecture, then types, then a lint or CI check whose error names the fix, then a test, then docs last. It proves each new check fails on a real past mistake. It keeps a table in the instruction file that pairs each rule with what enforces it.</p>
+<h3>Learn from a session</h3>
+<p><code>reflect</code> sends three reviewers over a transcript, with judgment, tooling and divergent lenses. A synthesizer returns Accepted, Rejected and Backlog lists. Nothing applies without your approval. It looks for the transcript in an <code>agent-transcripts/</code> folder. hStack's adapters wire no Claude Code or Codex transcript folder, so when no path resolves, <code>reflect</code> uses a digest of the current session and labels its source and limits. <span class="pill">on main, not yet released</span> Approved edits go to a copy under <code>.claude/skills/</code> or <code>.agents/skills/</code>. <code>reflect</code> never edits the plugin cache and never opens a PR.</p>
+<h3>Keep the verifier honest</h3>
+<p>Your <code>verify-&lt;app&gt;</code> skill rots when the app changes. <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code> runs a source wave with one read-only subagent for each feature file, then a required live pass that drives every mapped feature. It ends in one of three outcomes. Clean means no change. Changed means one PR of proven corrections. Blocked means coverage could not finish. It never edits product code. Run it on a schedule you choose.</p>
+<p><span class="lbl def">Defined, not yet observed</span> <code>correct</code>, <code>reflect</code> and whole-map maintenance. The release notes list whole-map maintenance among behaviors the release tests did not establish.</p>
+<p><span class="pill">on main, not yet released</span> Four user-only skills extend this loop. <code>create-formal-verification-skill</code> generates a project skill that checks a key property, such as a race or an invariant, past what tests reach. <code>maintain-formal-verification-skill</code> keeps it in line with the code and says whether a failure is drift or a bug. <code>statechart</code> draws a flow as a Mermaid chart from a TLA+ model. <code>ketchup-video</code> catches you up as a short silent video of slides.</p>
+<p>Two habits close the loop. Fix a misbehaving skill in its own PR instead of working around it in the middle of other work. At the end of an Orchestrate program, move each recurring correction into <code>preferences.md</code> or the brief template.</p>
+
+<h2 id="examples">24. Worked examples</h2>
+<p>Each example keeps Poteto's scenario. The prompt shows the hStack command. The table shows what the lead checks and does at each checkpoint. The dropdown prototype is in <a href="#measure">section 18</a>. The Dune tutorial and the virtualization prompt are in <a href="#backwards">section 17</a>.</p>
+
+<h3>Example 1. Research an ambiguous bug</h3>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span><span class="cx">$hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span></code></pre>
+<table>
+<tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
+<tr><td>The todo list</td><td>The Investigation playbook, with the line <code>throughput checkpoint: n/a, read-only investigation</code>.</td><td>If it opened Bug fix, say "don't change any code yet".</td></tr>
+<tr><td>The data</td><td>Which sources it used. Metrics from a monitoring tool appear only if your session has one, and otherwise show as a named gap.</td><td>Add the source or accept the gap.</td></tr>
+<tr><td>The hypotheses</td><td>A label on each one: measured, inferred or guess.</td><td>Pick one, then send "new task" into Runtime forensics or Bug fix with "repro first".</td></tr>
+</table>
+
+<h3>Example 2. Design a new service boundary</h3>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span><span class="cx">$hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span></code></pre>
+<table>
+<tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
+<tr><td>Ground</td><td>A <code>how</code> summary of the current webhook path, plus <code>why</code> if ownership moves.</td><td>Correct anything the agent got wrong before it sketches.</td></tr>
+<tr><td>Sketch</td><td>At least two structurally distinct candidates, the cross-judge's verdict, and the prototype evidence for each empirical question.</td><td>Check the panel on the Workers line. Ask for another seat if all runners were the same model.</td></tr>
+<tr><td>Agree</td><td>"Let me review before proceeding" is your checkpoint. Read the caller's usage first, then the types.</td><td>Approve, or push back on the shape. Pushback is treated as new grounding and the sketch is re-run.</td></tr>
+<tr><td>Implement</td><td>Deviations from the sketch, and the Scrap tells in <a href="#measure">section 18</a>.</td><td>Ask for a scrap when you see a pattern.</td></tr>
+</table>
+
+<h3>Example 3. Execute a multi-PR migration</h3>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span><span class="cx">$hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span></code></pre>
+<table>
+<tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
+<tr><td>The handback</td><td>A plan path and the checker's output. The playbook stops here.</td><td>Open the plan. Do not say go yet.</td></tr>
+<tr><td>Each PR section</td><td>Unit, live and perf boxes, each with evidence. "100% identical" should appear as a regression lane that compares trunk and head. The Visual parity playbook, which hStack lists for migrating a styling system, makes a baseline harness the blocking first step. With no baseline there is no parity claim.</td><td>Reject a section whose proof is only a test run.</td></tr>
+<tr><td>Appendix A</td><td>What the prototypes proved and what is still unproven.</td><td>Decide whether an unproven item blocks the start.</td></tr>
+<tr><td>The execution playbook</td><td>Autopilot-stack or Autopilot-full, named in "How to read this".</td><td>Pick Autopilot-stack if you want to review before anything lands. Then say go.</td></tr>
+</table>
+
+<h3>Example 4. Fix what people report on Slack</h3>
+<p>These are the classics Poteto types in issue channels. In both, the agent needs the thread. Paste it, or give your session a Slack MCP server.</p>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode do it</span><span class="cx">$hugues-mode do it</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span><span class="cx">$hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span></code></pre>
+<table>
+<tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
+<tr><td>"do it"</td><td>That the thread already had enough context, and that the first reply acts on its problem. Type the command first. hStack documents no host setting that pins the mode on every turn.</td><td>If the agent picked the wrong problem, run the restate prompt from <a href="#brief">section 16</a>.</td></tr>
+<tr><td>The repro</td><td>A reproduction on the same surface before any fix. A video exists only if your verify recipe records one. Otherwise expect screenshots.</td><td>Stop the run if no repro happened.</td></tr>
+<tr><td>RED then GREEN</td><td>For mobile bugs, a regression test written by one fresh worker and a fix by a separate one, with the failing and passing output pasted.</td><td>Check the Workers line for two different workers.</td></tr>
+</table>
+
+<h2 id="limits">Appendix A. What is verified today</h2>
+<p>hStack's own docs separate what was observed from what was only built. As of 0.5.4:</p>
+<ul>
+<li><strong>Observed:</strong> installs and updates from 0.4.0 through 0.5.2 on both Claude Code and Codex, and 0.5.3 copies on both hosts that match the tag. Router discovery on Claude Code. Before 0.5.4 the router fired unprompted in one interactive session, and since 0.5.4 a typed <code>/hstack:hugues-mode</code> loaded it in a print-mode check on 2026-10-22. Bounded bug-fix runs on both hosts. Bounded <code>how</code>, <code>tdd</code>, <code>blast-radius</code> and design-only <code>architect</code> and <code>arena</code> runs. A fresh <code>hugues-agent</code> delegate writing a scratch function. Native helper runs, including failed and incomplete attempts.</li>
+<li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on either host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR. Codex with implicit invocation off for <code>hugues-mode</code>, including <code>$hugues-mode</code>. A live <code>hugues-agent</code> reading the mode by path. A session using the full model IDs that setup now writes. The update from 0.5.3 to 0.5.4 on either host.</li>
+<li><strong>Defined, not yet observed (Part II):</strong> Orchestrate, Autopilot-full and Autopilot-stack, <code>swarm</code> and <code>arena</code> at scale, the full <code>architect</code> loop, the Prototype and Multi-phase plan playbooks, the plan checker, the <code>/loop</code> wake, <code>recall</code> and <code>reflect</code> over transcripts, cross-host review and multi-day programs.</li>
+</ul>
+<p>The release notes in the repository (<code>docs/RELEASE-0.5.4.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
+
+<h2 id="glossary">Appendix B. Glossary</h2>
 <table>
 <tr><th>Term</th><th>Meaning</th></tr>
 <tr><td>Consumer app</td><td>Your app. It lives in its own repository, separate from hStack.</td></tr>
@@ -998,9 +1518,18 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <tr><td>STACK-READY</td><td>An Autopilot-stack owner's report that its PR passed self-proof and awaits root verification.</td></tr>
 <tr><td><code>.hstack/models.md</code></td><td>Per-project model and effort for each role, written by <code>setup-hstack</code>.</td></tr>
 <tr><td><code>verify-&lt;app&gt;</code></td><td>Your project's verification skill: how to launch, drive and prove the app.</td></tr>
+<tr><td>Brief</td><td>The prompt that scopes one unit of work. Orchestrate's template has nine fields: goal, scope, context, acceptance, verify, timebox, forbidden, report and standing orders.</td></tr>
+<tr><td>Standing orders</td><td>Numbered lines of one constraint each, pasted into every spawn and every resume. Orchestrate keeps them in <code>preferences.md</code>.</td></tr>
+<tr><td>Frontier</td><td>The chain of PRs and its lowest unmerged PR. Babysit works only that PR. Orchestrate computes the chain into <code>frontier.json</code>.</td></tr>
+<tr><td>Ledger</td><td>Orchestrate's verification record, <code>ledger.tsv</code>. It holds one verdict row for each PR and head SHA, and a new head SHA voids the row.</td></tr>
+<tr><td>Gate</td><td>A call only the human can make. Orchestrate parks it in <code>gates.md</code> with the question, the options and a default if you do not answer. The autopilots also stop at gates the operator names.</td></tr>
+<tr><td>Workers line</td><td>The closing line of any reply whose run spawned workers. It gives each role's requested and actual model and effort, plus any fallback and its reason.</td></tr>
+<tr><td>Cross-judge</td><td>The read-only judge in <code>arena</code>. It scores the candidates against the rubric, on a model that differs from the parent's when the pool offers one.</td></tr>
+<tr><td>Pilot</td><td>In Orchestrate, the first unit pushed through the whole path before any fan-out. It tests the brief template, the verify recipe and the unit size.</td></tr>
+<tr><td>Decision log</td><td>The TSV that <code>show-me-your-work</code> keeps, with one row for each decision, its reason, an evidence pointer and the result.</td></tr>
 </table>
 
-<footer>hStack is forked from pstack under the MIT license. Repository: <a href="https://github.com/hugues-vnsgn/hstack">github.com/hugues-vnsgn/hstack</a>. This guide covers version 0.5.2 and was written on 2026-10-20.</footer>
+<footer>hStack is forked from pstack under the MIT license. Repository: <a href="https://github.com/hugues-vnsgn/hstack">github.com/hugues-vnsgn/hstack</a>. This guide covers version 0.5.4, with the unreleased main branch marked, and was written on 2026-10-26.</footer>
 </main></div>
 <script>
 (function(){
