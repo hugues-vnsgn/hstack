@@ -33,6 +33,8 @@ Accepting generates a project-local recipe under the consumer's `.claude/skills/
 
 If you're new to pstack, accept the offer. An agent that can check its own work keeps going until the check passes. An agent that can't hands every result back to you to check by hand. Of everything in this guide, the verification skill pays off the most.
 
+Then setup offers once to generate a formal verification skill with [`/create-formal-verification-skill`](../../../plugin/skills/create-formal-verification-skill/SKILL.md), unless the project already has one. Tests check the cases someone thought to write. A formal verification skill checks one key property of your code, such as "a job never runs twice at once", in every case within a stated scope. Say yes when your code has concurrency, retries, a state machine, or a parser, where a bug is costly and tests rarely reach the case that breaks. Otherwise say no, and run it later if that changes. [Verify and ship](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill) covers it.
+
 Each skill reads `.hstack/models.md` at its next role selection, so the roles apply from the next subagent spawn.
 
 ## Keep the cost in check

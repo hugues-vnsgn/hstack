@@ -3,7 +3,7 @@
 # Retained verification skills
 
 The four leaves adapt pstack 0.15.9 at `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a` from `https://github.com/cursor/plugins`. The [provenance receipt](upstream/retained-verification-provenance.json) binds each source blob and SHA-256 to its adapted destination hash, retained contracts and deviations. The upstream ledger records all four as present adaptations. TDD and correct were planned as verbatim; their mobile and standalone-authority changes require the corrected disposition.
-The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes; this record still describes the original package.
+The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`; this record still describes the original package.
 
 | Tool | Retained work | Mobile or authority adaptation |
 |---|---|---|

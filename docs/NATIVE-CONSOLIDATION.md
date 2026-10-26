@@ -21,8 +21,8 @@ paths an owner may have used to disable skills. Different installation roots can
 still affect path-based host settings; reconcile those explicitly during an update.
 The pstack 0.15.25 merge adds a third alias, `poteto-help` → `hugues-help`.
 
-All 169 original source files at the current pin, pstack 0.15.25, keep their
-modes and bytes in `provenance/upstream/pstack-0.15.25.tar.gz`, outside runtime
+All 200 original source files at the current pin, pstack 0.15.32, keep their
+modes and bytes in `provenance/upstream/pstack-0.15.32.tar.gz`, outside runtime
 discovery. The
 Git-object snapshot independently checks the archive. The current adaptation
 map is `docs/upstream/consolidation.json`. The original releases and their frozen
@@ -46,10 +46,10 @@ proven universal limitation in this setup.
 
 At the pstack 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
 with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
-only `setup-pstack` is model-invocable. hStack restores that design instead of the earlier native
+only `setup-pstack` is model-invocable; at 0.15.32 that holds for 57 of 58. hStack restores that design instead of the earlier native
 table that made 46 skills model-invocable: only `setup-hstack` is
 model-invocable now, so only its description enters startup context on Claude
-Code. The other 58 bundled skills, including `hugues-mode` ([ADR 0003](adr/0003-hugues-mode-is-user-only.md)), `deslop`, `control-cli` and `control-ui`, are user-only; the
+Code. The other 62 bundled skills, including `hugues-mode` ([ADR 0003](adr/0003-hugues-mode-is-user-only.md)), `deslop`, `control-cli` and `control-ui`, are user-only; the
 owner can still type any of them by name, and the mode reaches each one as its
 router's reference: the agent reads its SKILL.md in full with the host's own
 file-read tool instead of invoking it natively. The installed helper takes no

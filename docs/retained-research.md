@@ -8,7 +8,7 @@ This package retains `how` and `why` from pstack 0.15.9 at
 skill and reference files: eight adapted and eight verbatim. Each entry binds
 the materialized upstream blob and SHA-256 to the disposition ledger and records
 the destination SHA-256, retained contracts and deviations.
-The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes; this record still describes the original package.
+The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`; this record still describes the original package.
 
 | Upstream contract | Retained behavior |
 |---|---|

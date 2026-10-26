@@ -1,14 +1,14 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
-  "upstream_version": "0.15.25",
+  "revision": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
+  "upstream_version": "0.15.32",
   "files": [
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "ac3d64ff001a653f6a3c7148fd60e4926d317043",
-      "sha256": "f234661471847cafc4ae9bcb4a9208eb32ed8154ac25b91b2b064ec71bd62167"
+      "blob_sha": "21993f546032ca37671d5f1caf39c9a82ab4fa9d",
+      "sha256": "2755f102e7a6d0496b429d1031a22fb353e1f3d523543367caeaae5c4ed6f544"
     },
     {
       "source": "pstack/agents/poteto-agent.md",
@@ -28,8 +28,8 @@
       "source": "pstack/skills/principle-attack-the-premise/SKILL.md",
       "destination": "plugin/skills/principle-attack-the-premise/SKILL.md",
       "disposition": "verbatim",
-      "blob_sha": "f9785ff9fdcf37d1c689e4468da7d611f3b76d4b",
-      "sha256": "c87bd7536f772f8a403ad8155535ee17a1bbec9a353156693eb3bb1520c87ae3"
+      "blob_sha": "e9a6d499606992edd9963b80f8f8f57feaccb221",
+      "sha256": "6a932884daad4aa189e9b5d1665226bbc75621d4d2a398fd4003bebd382f4599"
     },
     {
       "source": "pstack/skills/principle-boundary-discipline/SKILL.md",
@@ -77,8 +77,8 @@
       "source": "pstack/skills/principle-fix-root-causes/SKILL.md",
       "destination": "plugin/skills/principle-fix-root-causes/SKILL.md",
       "disposition": "verbatim",
-      "blob_sha": "5291682d0d604c251efd3ce6009e60e9af925bb8",
-      "sha256": "2131069d285d82fb799458494f2e4ac8759c9c6a60f9e300828c17874f514c6e"
+      "blob_sha": "14fc189fa1ec3fb1614b0a3c75557f92943d8f13",
+      "sha256": "8df3c8c3fe57eb0055a5c8efab8ab144557fdf301da70b1cdc77a3a3ef3f3052"
     },
     {
       "source": "pstack/skills/principle-foundational-thinking/SKILL.md",
@@ -105,15 +105,15 @@
       "source": "pstack/skills/principle-make-operations-idempotent/SKILL.md",
       "destination": "plugin/skills/principle-make-operations-idempotent/SKILL.md",
       "disposition": "verbatim",
-      "blob_sha": "a0834247ca99b09c11441747717a8034d4c22d7c",
-      "sha256": "540738217c3da7bf513b9886924ad6a2bc77e58be867f5bd2e1831c74bf2ce70"
+      "blob_sha": "c93f323d694a4d310515ea27165a093d399bc55e",
+      "sha256": "7aa9327cf1f1aa057e95d47a0a78bd88a8f9d556b608866fee939d455a53a019"
     },
     {
       "source": "pstack/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
       "destination": "plugin/skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
       "disposition": "verbatim",
-      "blob_sha": "06c7cfd87becc62d614d0af075b792f8ec6eb21d",
-      "sha256": "09978915a4a11990cf0a9a02d9c08cc59e0b7a04c5c24b83aa560fbe4146f75b"
+      "blob_sha": "57ddd7b27d06ba4ee9e2d3811880476a18b88df6",
+      "sha256": "580ad9bb1a0994ecb924321ba49efc38a2f85c64e22c76fb133f57a78272a2e6"
     },
     {
       "source": "pstack/skills/principle-minimize-reader-load/SKILL.md",
@@ -182,15 +182,15 @@
       "source": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
       "destination": "plugin/skills/principle-test-behavior-not-implementation/SKILL.md",
       "disposition": "verbatim",
-      "blob_sha": "f5a603e3a0925cdc6363bcc26dfbf587d9a36ec7",
-      "sha256": "b2b73ba42920f9c3174ecdf808ec6e4591b3a9266ada9a05814f386004266d3a"
+      "blob_sha": "78c9389bfe707d6d56485ade32c59150958228f9",
+      "sha256": "f7223698623b6a26fea49c751e466b38e6691b1f32ce841d3983e7ffbe2b74a6"
     },
     {
       "source": "pstack/skills/principle-type-system-discipline/SKILL.md",
       "destination": "plugin/skills/principle-type-system-discipline/SKILL.md",
       "disposition": "verbatim",
-      "blob_sha": "4321b83e245d99eded0756c7a74f3fb64e32c36b",
-      "sha256": "2e492cef34bb25a20b9115df61f9ef3a9837e3fda144ffda8079e5f45a1b72e8"
+      "blob_sha": "9fa08b0b17d536ce751fffa90134be8fb03699c7",
+      "sha256": "5cdaf79785e3c12b2592b9469ee8c272143eb86ab7a18d8382197cea5fd30106"
     },
     {
       "source": "pstack/skills/interrogate/references/code-quality-review.md",
@@ -203,8 +203,8 @@
       "source": "pstack/skills/interrogate/references/lead-judgment.md",
       "destination": "plugin/skills/interrogate/references/lead-judgment.md",
       "disposition": "verbatim",
-      "blob_sha": "5ce526097fdd3dfeaf4cd3b126a3f486c3ee36ae",
-      "sha256": "6e5bdf5670eb34017692e9b6c546f36ac7552e6bb9f3f2f3429164fcc46a9361"
+      "blob_sha": "3b41346c9c3f5c35453d34f1c77374b7e9346aa9",
+      "sha256": "355f5195a76bc75a655125292369f2a8231a2b61fabe5188d8f1386060922b87"
     },
     {
       "source": "pstack/skills/interrogate/references/reviewer-prompt.md",

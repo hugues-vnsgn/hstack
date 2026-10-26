@@ -111,3 +111,17 @@ test("accepts the Bugbot box recorded as not applicable, and rejects the colon f
 	expect(colon.status).toBe(1);
 	expect(colon.stderr).toContain("mid-sentence colon");
 });
+
+test("ignores prose punctuation inside matching multi-backtick code spans", () => {
+	for (const count of [2, 3, 4]) {
+		const delimiter = "`".repeat(count);
+		runPlan(`Use ${delimiter}echo \`x\`: “quoted” — example${delimiter}.\n`, 0);
+	}
+});
+
+test("checks prose following a multi-backtick span and unmatched delimiters", () => {
+	const outside = runPlan("Use ``echo `x`: y``. Bad: prose.\n", 1);
+	expect(outside.stderr).toContain("mid-sentence colon");
+	const unmatched = runPlan("Use ``unclosed: bad` here.\n", 1);
+	expect(unmatched.stderr).toContain("mid-sentence colon");
+});

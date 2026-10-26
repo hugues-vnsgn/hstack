@@ -154,7 +154,7 @@ class AuthoredMobileInventory(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='hstack-mobile-inventory-') as temp:
             root = Path(temp) / 'package'
             shutil.copytree(ROOT, root, ignore=shutil.ignore_patterns('.git', '__pycache__', 'planning'))
-            self.assertEqual(check_core.check(root)['active_skills'], 59)
+            self.assertEqual(check_core.check(root)['active_skills'], 63)
             changes = [
                 ('docs/upstream/consolidation.json', lambda text: text.replace('"authored_skills": {', '"unregistered_skills": {'), 'authored skill inventory differs'),
                 ('plugin/skills/swift-best-practices/SKILL.md', lambda text: text.replace('disable-model-invocation: true', 'disable-model-invocation: false'), 'host invocation table differs'),

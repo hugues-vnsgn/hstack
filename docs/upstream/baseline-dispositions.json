@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
   "repository": "https://github.com/cursor/plugins",
-  "revision": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
+  "revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
   "items": [
     {
       "path": "pstack/.cursor-plugin/plugin.json",
       "mode": "100644",
-      "blob_sha": "0ab7fa1b6a2bbcbb1a25e797e74be5ee63370bed",
-      "size": 721,
-      "sha256": "c17868a6a39a8f7c109fdedf5df7ebcc4d8cde127a10f40c663a8c46adc4087e",
+      "blob_sha": "9172fd0dc6edd2f26c49a7ba25cdc691895e50aa",
+      "size": 722,
+      "sha256": "b75609951c8a558e74f1eb20e15493933754eb2695fd2059d7f435f913889bb3",
       "disposition": "ignore with reason",
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
@@ -22,14 +22,13 @@
         "reason": "Generate native Claude/Codex packaging from shared source; Cursor-specific metadata cannot establish loading."
       },
       "previous_decision": {
-        "disposition": "port with adaptation",
-        "reason": "Adapt packaging and documentation for Claude Code and Codex; retain development and support limits.",
-        "release_target": "0.1.0",
+        "disposition": "ignore with reason",
+        "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
+        "release_target": "0.2",
         "destinations": [
-          "plugin/.claude-plugin/plugin.json",
-          ".claude-plugin/marketplace.json"
+          "provenance/upstream/pstack-0.15.9.tar.gz"
         ],
-        "implementation_state": "present"
+        "implementation_state": "not planned"
       }
     },
     {
@@ -42,13 +41,13 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Preserve ignored local/run artifacts using actual huguesStack tooling; do not hide distributable evidence by accident."
+        "reason": "Preserve ignored local/run artifacts using actual hStack tooling; do not hide distributable evidence by accident."
       }
     },
     {
@@ -73,40 +72,40 @@
     {
       "path": "pstack/README.md",
       "mode": "100644",
-      "blob_sha": "cf64d3602995ddf54f06fb8bf27e3520850d21f2",
-      "size": 23830,
-      "sha256": "850eea901004b9ef4633e17c1bd9932863046a021242b4e043907ae534b21fa8",
+      "blob_sha": "dbbef9bca8be42b06cf6930e12c9227ff5e047a1",
+      "size": 25431,
+      "sha256": "193fa128aab7818b5244883befe6d79e69b4143e3a51a3d1e30efe99d31b40c3",
       "disposition": "ignore with reason",
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Document huguesStack installation, supported scope and evidence limits instead of claiming Cursor behavior."
+        "reason": "Document hStack installation, supported scope and evidence limits instead of claiming Cursor behavior."
       },
       "previous_decision": {
-        "disposition": "port with adaptation",
-        "reason": "Adapt packaging and documentation for Claude Code and Codex; retain development and support limits.",
-        "release_target": "0.1.0",
+        "disposition": "ignore with reason",
+        "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
+        "release_target": "0.2",
         "destinations": [
-          "README.md"
+          "provenance/upstream/pstack-0.15.9.tar.gz"
         ],
-        "implementation_state": "present"
+        "implementation_state": "not planned"
       }
     },
     {
       "path": "pstack/agents/comment-sicko.md",
       "mode": "100644",
-      "blob_sha": "9a688b8c5b5734ee80f782d4616a78c4c59b0946",
+      "blob_sha": "209e3704dfa75022060c936bd3f3362fa3bbe254",
       "size": 2230,
-      "sha256": "c0fd0383008da45fc78cfac17b9007d62c42f87ad1c8d5c2fb658b1fd01f7c82",
+      "sha256": "3e239e40b7b4b9beb2cf7f3ccc57f2388eb8b69bd1ba8ae888ef87ef6e0e2116",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/agents/hugues-comment-sicko.md"
       ],
@@ -115,17 +114,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Keep an independent read-only comment-review lens via supported host delegation; preserve necessary rationale and notices."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/agents/hugues-comment-sicko.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/agents/poteto-agent.md",
       "mode": "100644",
-      "blob_sha": "f9d79a75560520cbb2f939c587ce00fa7e33037a",
-      "size": 686,
-      "sha256": "abe41c169ecbfe65641f1725f4188d568e046c0dec7fd2dc271abb594c299201",
+      "blob_sha": "e1d2df2e8c3c4954b87ee1b29655c898bc7ee699",
+      "size": 1316,
+      "sha256": "979f18abd000d185a0b4c41a2a4111c0910596a7f5c81cbb571885bc721b2bf7",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/agents/hugues-agent.md"
       ],
@@ -137,8 +145,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Use the fresh-per-task worker with revision-bound authority and host-native handoff.",
-        "release_target": "0.1.0",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
         "destinations": [
           "plugin/agents/hugues-agent.md"
         ],
@@ -155,13 +163,13 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -174,7 +182,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -193,7 +201,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -212,7 +220,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_skill",
@@ -231,7 +239,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -250,7 +258,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -269,7 +277,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -288,7 +296,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_skill",
@@ -307,7 +315,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_skill",
@@ -326,7 +334,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -345,7 +353,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -364,7 +372,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -383,7 +391,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -395,12 +403,12 @@
     {
       "path": "pstack/docs/guide/01-setup.md",
       "mode": "100644",
-      "blob_sha": "1e602f61c81eb1902150b849682b92b8e583fa7c",
-      "size": 2955,
-      "sha256": "bbac20e25fb097029e2676ecf3212f4a72f566eaf2b1031b56317aa1e4fdf490",
+      "blob_sha": "62420df8255f5f3de03f3977e64bc0f34dbdc073",
+      "size": 4313,
+      "sha256": "86d0330f245d16254a2069955f993c15d96cf29cd1a73690a0164074b7ac1190",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/01-setup.md"
       ],
@@ -408,18 +416,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/01-setup.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/02-poteto-mode.md",
       "mode": "100644",
-      "blob_sha": "403cbe8cc9dbc5204c6f9399abcced228f8e76f7",
-      "size": 4728,
-      "sha256": "379a1b2c9cd2ba54032b2b142563328d0f3d65039f067863d19b1d4c008737f5",
+      "blob_sha": "8341604aebe418077003b10a894ebcaff2a9ce0d",
+      "size": 7045,
+      "sha256": "979f61ca3d44cb8e68affda40327d32797e93fa9cc53ced7444c15e2600897e1",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/02-poteto-mode.md"
       ],
@@ -427,18 +444,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/02-poteto-mode.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/03-understand.md",
       "mode": "100644",
-      "blob_sha": "af985988c2ac9babbabf6e9b4447c2f22a346ee7",
-      "size": 3516,
-      "sha256": "16f3fe0f7df092a5c69dac90971ef57e63a8a9ae926eed851285c7bfddc0f3fd",
+      "blob_sha": "e15bea0520eff6e03df789a22cd4224daee04bd6",
+      "size": 5197,
+      "sha256": "0090afa9b8670adf175466a2a973ff4349e95ed67d2aa8cebdfc55ff4b7382c9",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/03-understand.md"
       ],
@@ -446,18 +472,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/03-understand.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/04-design.md",
       "mode": "100644",
-      "blob_sha": "681d39cff22438b4feb3d40a8d97017af026bc3d",
-      "size": 4866,
-      "sha256": "21e820ff73c0b70682aa570a967ede446b4d7caf62e8f391d0dd733ccb74874c",
+      "blob_sha": "61d5bbb591c93e432fafe77259cd62a7aaf1cce8",
+      "size": 8759,
+      "sha256": "31f2abe6e9b29feafd1a9eece8f4fe21992f86b8c19ab2e9b5c11a20f36587e7",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/04-design.md"
       ],
@@ -465,18 +500,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/04-design.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/05-build-and-clean.md",
       "mode": "100644",
-      "blob_sha": "c38bc44a39fe5e6ace2cd228f631c7eb57ecccf3",
-      "size": 4763,
-      "sha256": "6bd421b43a3cf9fec3cd201fd40ce65fd8c657264eac48b0c9a175b6afd7c252",
+      "blob_sha": "fc48a46df4f3e7f980522d40571367d4b809733b",
+      "size": 5696,
+      "sha256": "a93cc7771f7b35c7b54d0120b6f66e8367794ce6791237e889a30e7585c190fa",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/05-build-and-clean.md"
       ],
@@ -484,18 +528,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/05-build-and-clean.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/06-verify-and-ship.md",
       "mode": "100644",
-      "blob_sha": "d96c76612c647bfd33270d510440991946c508ed",
-      "size": 6000,
-      "sha256": "c93cd50c0359ce875a82b3f7d64eab102a4b0815dbbecdb8e0e5e910bd2d18e9",
+      "blob_sha": "007ea2cab45724e48e0ab8f52e52bf7957f694f2",
+      "size": 9683,
+      "sha256": "3ef0eed5ea084dfbbaf1b1ae9e08d84f2c8a2b536ffb3ef5226710bf105f70e6",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/06-verify-and-ship.md"
       ],
@@ -503,18 +556,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/06-verify-and-ship.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/07-overnight.md",
       "mode": "100644",
-      "blob_sha": "9ff66b7706041179ff3661213939a961eb196212",
-      "size": 5447,
-      "sha256": "5033d61e8b4b6fb0b2304b2132f26bf0b6aee685aa4ed53a76a73cf0ac1c3557",
+      "blob_sha": "cbad0672355927da4aa86547c5e5e108b354a4e2",
+      "size": 9139,
+      "sha256": "d7bd33a3d880768688dff4c1c2b5481ca9f0f194f5d97e44b65c9f96624d3ff0",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/07-overnight.md"
       ],
@@ -523,17 +585,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain advanced unattended-run guidance after its authority and recovery gates pass."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/07-overnight.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/08-principles.md",
       "mode": "100644",
-      "blob_sha": "283a5e66b99917c12ca88f8c3e3e70ad69342062",
-      "size": 5427,
-      "sha256": "a103e293dd6d9513f425feac39547f0c2c049300f36704d80b6d49c958e5a4bb",
+      "blob_sha": "0aaec930c3e6ca6a014087194d519048dd52b764",
+      "size": 5916,
+      "sha256": "73c3db659d356d4aa6d7674d30d0db46fab2bdd60152fca717c2d1772a042bdc",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/08-principles.md"
       ],
@@ -541,25 +612,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Deferred beyond the Layer 1 release by the revised public plan; responsibility remains accounted for.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "docs/pstack/guide/08-principles.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/09-make-it-yours.md",
       "mode": "100644",
-      "blob_sha": "6723069b5108f586575fe5353272ee6567a49b02",
-      "size": 4641,
-      "sha256": "b98588a232a38ca7acebbeecb95ac771df1981aed662dcb45c96b4b66ed20ec0",
+      "blob_sha": "321caaf9169aba31c69996fcf0de9c9423b24188",
+      "size": 7632,
+      "sha256": "157e0c20ad3c657857c2fbbea3afd26895b71b8f68475bc56f4c382dcdd0e118",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/09-make-it-yours.md"
       ],
@@ -567,18 +640,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/09-make-it-yours.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/10-recipes-and-pitfalls.md",
       "mode": "100644",
-      "blob_sha": "da0af5e6f7984d24818ef1cd28f518d0014da788",
-      "size": 4598,
-      "sha256": "a4662cd98870f08c6abe117a832abe37670ee84f8ed25dcbe7e99ef4eb8e05e0",
+      "blob_sha": "68751e7c02bde6e7b0620b9469c0e10b5e022168",
+      "size": 7419,
+      "sha256": "c652474764b08da4a6364d85f5d03cf1fc1cf35e9d7c549348fb66e2d09f7b1f",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/10-recipes-and-pitfalls.md"
       ],
@@ -586,18 +668,27 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "docs/pstack/guide/10-recipes-and-pitfalls.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/docs/guide/README.md",
       "mode": "100644",
-      "blob_sha": "564eee1d5b43729d57caca4fddcef45d3dffdef5",
-      "size": 2011,
-      "sha256": "125f870a93bf830d45bda187f585cec4508cc9ca5121271af58adbe937bbe54f",
+      "blob_sha": "627bfb222f5a6b0f544809de2ef43ec056ee684f",
+      "size": 2608,
+      "sha256": "49d92cfe91e01c04bd1150e5b000ee4fd4dfda8ce789b66a9dda98f7e5456e00",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "docs/pstack/guide/README.md"
       ],
@@ -605,14 +696,16 @@
       "category": "guide",
       "earlier_proposal": {
         "recommendation": "Adapt",
-        "reason": "Rewrite this guide for huguesStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
+        "reason": "Rewrite this guide for hStack native/mobile workflows and actual Claude/Codex capability/evidence; preserve its teaching purpose."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Deferred beyond the Layer 1 release by the revised public plan; responsibility remains accounted for.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "docs/pstack/guide/README.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -631,7 +724,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -650,7 +743,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -669,7 +762,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -688,7 +781,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -707,7 +800,7 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
     },
     {
@@ -726,18 +819,33 @@
       "category": "image",
       "earlier_proposal": {
         "recommendation": "Exclude",
-        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed huguesStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
+        "reason": "Propose omitting upstream branding or illustrative Cursor artwork from distributed hStack; retain attribution/inventory and replace useful explanations with native diagrams. Owner approval required."
       }
+    },
+    {
+      "path": "pstack/plugin.json",
+      "mode": "100644",
+      "blob_sha": "199469f97c82ec00a6d000f39cf65732b3cdd3e3",
+      "size": 619,
+      "sha256": "68f0ddbdda23d1e663b48c881f1b896305a3dcdc320ff83c65dd24cd9ac6850f",
+      "disposition": "ignore with reason",
+      "reason": "Upstream Agent Plugins v1 root manifest; hStack ships its own Claude Code and Codex manifests. Historical source preserved in provenance archive only.",
+      "release_target": "not planned",
+      "destinations": [
+        "provenance/upstream/pstack-0.15.25.tar.gz"
+      ],
+      "implementation_state": "not planned",
+      "category": "root_metadata"
     },
     {
       "path": "pstack/skills/architect/SKILL.md",
       "mode": "100644",
-      "blob_sha": "2bd58a7d46f1899f107f3c502f6ddcfbd6717f99",
-      "size": 5675,
-      "sha256": "741901140ee382ebf93263a7ed03c6ee3719e578416d81afcd195876fa16c496",
+      "blob_sha": "88e23ca105b89e67f4085d0e676c40d4b170a623",
+      "size": 5469,
+      "sha256": "31f8e97a52bfa5432edd61f68ade2a8632ef0bacbc2d2a6802d7a0e6821944ac",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/architect/SKILL.md"
       ],
@@ -749,12 +857,12 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Retain this Layer 1 responsibility with source-grounded mobile/host contracts; delivery beyond WP2 remains planned.",
-        "release_target": "0.1.0",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
         "destinations": [
           "plugin/skills/architect/SKILL.md"
         ],
-        "implementation_state": "planned"
+        "implementation_state": "present"
       }
     },
     {
@@ -807,12 +915,12 @@
     {
       "path": "pstack/skills/architect/references/runner-prompt.md",
       "mode": "100644",
-      "blob_sha": "580ec47a5df4259a6a9ace5c452e33092053bb90",
-      "size": 3087,
-      "sha256": "983bf2820cc14ed8ecab6e448e1033e5cfe6031967d0a9287b48c7fa9c33d925",
+      "blob_sha": "b1ad21aef22e80d718c361787190b599eb359d6c",
+      "size": 3092,
+      "sha256": "21dd5314aab778c5007228027a4591d97693fbec6ab86524037772b63f40948e",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/architect/references/runner-prompt.md"
       ],
@@ -821,17 +929,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve runner prompt responsibility under architect; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/architect/references/runner-prompt.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/arena/SKILL.md",
       "mode": "100644",
-      "blob_sha": "e50356e2f97608dbb48d9c1cd75af6d70b3f7059",
-      "size": 4973,
-      "sha256": "e3a1f6c49a08b7e0b92134e53300d146f1f22ba83386d2019926e736df421851",
+      "blob_sha": "b198b9e425c6b3e6ff01ca789b97ca5b4abb7ce2",
+      "size": 4511,
+      "sha256": "ed72f6c132b1ce3974d949581d0adc5dade424fe20793ac3b4c4fae22ecb9354",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/arena/SKILL.md"
       ],
@@ -840,17 +957,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Keep isolated design alternatives and declared comparison; replace Cursor worker mechanics."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/arena/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/automate-me/SKILL.md",
       "mode": "100644",
-      "blob_sha": "cd3636e9a53c7c782cf15254204dccfc854086b5",
-      "size": 7164,
-      "sha256": "1510979b0b71b54284427a19c09918f8b1fdfc168f9b7f9e30098793a5ec88ef",
+      "blob_sha": "50971b894688b1e1923458996b89f2a9961feeb3",
+      "size": 7297,
+      "sha256": "30b35f3628c4fd8c11af0ada06d14cdc3b28901810caca2480f627d4d21acfbe",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/automate-me/SKILL.md"
       ],
@@ -866,32 +992,50 @@
         "release_target": "not planned",
         "destinations": [],
         "implementation_state": "not planned"
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/automate-me/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/benchmark-checklist/SKILL.md",
       "mode": "100644",
-      "blob_sha": "c02adb78929d0c1218fba554a31c423d65deb24d",
-      "size": 5409,
-      "sha256": "6a767e788a60428fa14e645ee10fe2e49896e514ff654f668b1d824deb9038e8",
+      "blob_sha": "e901d1fdbc9ffce53e94d6514be7d9a22e771a1a",
+      "size": 5002,
+      "sha256": "ba109e96c8f6c1c391baccf19e5d11e14370df7b3f2605e1572cd565a6c0fca0",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/benchmark-checklist/SKILL.md"
       ],
       "implementation_state": "present",
-      "category": "top_level_skill"
+      "category": "top_level_skill",
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/benchmark-checklist/SKILL.md"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/blast-radius/SKILL.md",
       "mode": "100644",
-      "blob_sha": "1713b283d477530be64e925ede2bdbe5ce2d6e31",
-      "size": 3851,
-      "sha256": "5f02db9101ccf26c20254718f0fcd5c2c7ac5d4292b0e0923d0944ac47237aff",
+      "blob_sha": "b296cce0d746260a53c16e3671cb05bacfe82daf",
+      "size": 3856,
+      "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/blast-radius/SKILL.md"
       ],
@@ -900,6 +1044,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Prove affected mobile call paths and invariants through runtime checks rather than a static assertion."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/blast-radius/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -939,12 +1092,12 @@
     {
       "path": "pstack/skills/create-verification-skill/SKILL.md",
       "mode": "100644",
-      "blob_sha": "f869e26122991252373d5b8f6357e5b9ff195a00",
-      "size": 5879,
-      "sha256": "644f2551403c1bca01a2855b34611b6e7be0ce0dc5b204514c376c0f6a6e6ac4",
+      "blob_sha": "140d033a001e8d27acd14b06004506c43053b199",
+      "size": 6533,
+      "sha256": "d353973547bf8ad8977eca645f4cd4feaed0d32f4b43d1448f906b0a76c4d694",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/create-verification-skill/SKILL.md"
       ],
@@ -953,6 +1106,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Generate project-owned native control and feature maps in external consumers, exposed through each supported host."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/create-verification-skill/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1015,12 +1177,12 @@
     {
       "path": "pstack/skills/figure-it-out/SKILL.md",
       "mode": "100644",
-      "blob_sha": "fbf3fb122cab127d71d3c41e84711e61cc5dec4c",
-      "size": 4059,
-      "sha256": "0eb9485f0e7d84fee56b5d0f0af0faf4635e3ca87c8cba3970c01293b76ecc19",
+      "blob_sha": "0d04c2e69b75b22ff1a9a1d8ab339580a5fbbfed",
+      "size": 4111,
+      "sha256": "bdb23cdbd82a1e6af094b495691c832a6f7f3ab9706ba9edbeb664ef51a726e1",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/figure-it-out/SKILL.md"
       ],
@@ -1029,17 +1191,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Retain bespoke auditable workflows when no playbook fits; bind native checks and explicit authority."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/figure-it-out/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/how/SKILL.md",
       "mode": "100644",
-      "blob_sha": "cd22fff659f14822ad2f485f711a355b6da0668d",
-      "size": 3077,
-      "sha256": "d31805589c7f6a63a6db6c9fadebbd79fb9660682cf1654e9b2e5e1e7cd30bc0",
+      "blob_sha": "67edc340d4d8a9c7ab0b9e08c663e0e63b8d9125",
+      "size": 2651,
+      "sha256": "08a00079bb15b4258874ac3ff62d4ca7e94350ffedb521d0fd296dc9dd21904e",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/how/SKILL.md"
       ],
@@ -1048,6 +1219,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Retain source-grounded explanation; use native lifecycle and shared/native boundary examples and available host delegates."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/how/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1072,12 +1252,12 @@
     {
       "path": "pstack/skills/how/references/explorer-prompt.md",
       "mode": "100644",
-      "blob_sha": "9b4b0594bfd779015616e9d280369aba939583b4",
-      "size": 2684,
-      "sha256": "a3b44a6e5bb16a6d4d1cac19db8ed5322ffd5f5f5d45baca4e73990ca096f8be",
+      "blob_sha": "724bacfc7df759865c0c29705bfee641e4c1aeca",
+      "size": 1135,
+      "sha256": "6300128385ee940fd42ecb84b0e623435440a2dc283eae54ee4a52ba56947ba1",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/how/references/explorer-prompt.md"
       ],
@@ -1086,17 +1266,41 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve explorer prompt responsibility under how; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/how/references/explorer-prompt.md"
+        ],
+        "implementation_state": "present"
       }
+    },
+    {
+      "path": "pstack/skills/in-your-own-words/SKILL.md",
+      "mode": "100644",
+      "blob_sha": "4b2a476a9017863032c8dba9d12f0a2026943292",
+      "size": 315,
+      "sha256": "fa8ba74e27d7be371dc270ec78bbf816411477d0dfab185356c861ac8dd413ad",
+      "disposition": "port with adaptation",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/in-your-own-words/SKILL.md"
+      ],
+      "implementation_state": "present",
+      "category": "top_level_skill"
     },
     {
       "path": "pstack/skills/interrogate/SKILL.md",
       "mode": "100644",
-      "blob_sha": "bd82e5b179f186e1cd7913dd112db9f8b07b4846",
-      "size": 5054,
-      "sha256": "59d498c3e9848a24b2d105eb3f05b808aa4152adf4cb1de7bbb6aff4f4cd9b68",
+      "blob_sha": "94946d22d8bf896bfcc2c54d363df5af3d17b4ca",
+      "size": 4548,
+      "sha256": "a16dfe179005abc22a4651b82f25b0c8ab953284276efe4e6dc341958fb63647",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/interrogate/SKILL.md"
       ],
@@ -1105,6 +1309,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve independent identical-rubric review and lead judgment; validate actual model/delegate capabilities."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/interrogate/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1148,12 +1361,12 @@
     {
       "path": "pstack/skills/interrogate/references/reviewer-prompt.md",
       "mode": "100644",
-      "blob_sha": "13a252b2c3cd18522d4c8dc39a7030477037b249",
-      "size": 2491,
-      "sha256": "e0598e254792b56de39bb16b1e6db559b03a522fdc54b98f942d254090920ae6",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "ef7bff3d77c35a0af2a9947187ccee15465657f4",
+      "size": 2275,
+      "sha256": "f6005cc2b535006fca97a96c5bfda49df57312eedf1ffd8d1aaaf3eb33817c25",
+      "disposition": "port with adaptation",
+      "reason": "Preserve the reviewer template and add the required Swift/Kotlin language-baseline handoff for both native hosts under issue #109. Original bytes remain in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/interrogate/references/reviewer-prompt.md"
       ],
@@ -1162,17 +1375,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve reviewer prompt responsibility under interrogate; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/interrogate/references/reviewer-prompt.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/interrogate/references/rubric.md",
       "mode": "100644",
-      "blob_sha": "2d92f1b83e13be03fb10f20cba12639a1406a2da",
-      "size": 5025,
-      "sha256": "a85aa801abbaf14434f00579440abc0d8e2723227ba8bf57de7cca8d6e7d2f25",
+      "blob_sha": "8dab195ab840554bfe5e74e9b5ca0d9edbe9b496",
+      "size": 4772,
+      "sha256": "0f9c6bdb0b96e26dbde5f6407f417e0c02f54080e7a1268d8994f3c3ec6c5ac0",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/interrogate/references/rubric.md"
       ],
@@ -1181,7 +1403,31 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve rubric responsibility under interrogate; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/interrogate/references/rubric.md"
+        ],
+        "implementation_state": "present"
       }
+    },
+    {
+      "path": "pstack/skills/ketchup/SKILL.md",
+      "mode": "100644",
+      "blob_sha": "ebc3e9483266a165784df0a533d33d063292521b",
+      "size": 5287,
+      "sha256": "47b3fb0d5626a40fcb3bd016e68f1cb3d2d313351183e8f6c05d4c7abd76e665",
+      "disposition": "port with adaptation",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/ketchup/SKILL.md"
+      ],
+      "implementation_state": "present",
+      "category": "top_level_skill"
     },
     {
       "path": "pstack/skills/maintain-verification-skill/SKILL.md",
@@ -1231,12 +1477,12 @@
     {
       "path": "pstack/skills/no-comments/SKILL.md",
       "mode": "100644",
-      "blob_sha": "3b3e76295a7ad66806dcc683e4de92fb25690f8b",
-      "size": 2560,
-      "sha256": "5c5b0882297d704c3a9720c52b7a793c68b013eaf717989f0945624efdfe2b05",
+      "blob_sha": "a07ce9dfc657bdf1b2bdf3f7619225e7faac091b",
+      "size": 2693,
+      "sha256": "078ecfe224eafbb017f6476870612838bf6dbe38c0b697e12f0c887d0313f17e",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/no-comments/SKILL.md"
       ],
@@ -1245,17 +1491,71 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve independent comment-quality review while retaining necessary rationale, public documentation and required notices."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/no-comments/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
+    },
+    {
+      "path": "pstack/skills/poteto-help/SKILL.md",
+      "mode": "100644",
+      "blob_sha": "dc443648ed3f0fdce6398fddde226f184f7e3156",
+      "size": 13956,
+      "sha256": "1b0645c25200a19e5863583e117bad684b1b79ba8434823ebf4f6bbcc61e8a75",
+      "disposition": "port with adaptation",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/hugues-help/SKILL.md"
+      ],
+      "implementation_state": "present",
+      "category": "top_level_skill"
+    },
+    {
+      "path": "pstack/skills/poteto-help/references/prompting.md",
+      "mode": "100644",
+      "blob_sha": "6b72b2e6081fdb78a3261bd77cf7334596d1ee20",
+      "size": 3166,
+      "sha256": "463f450c44a60afd001a2f69fdf8a5dea174351f339369b12ec3c41515e564d3",
+      "disposition": "port with adaptation",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/hugues-help/references/prompting.md"
+      ],
+      "implementation_state": "present",
+      "category": "reference"
+    },
+    {
+      "path": "pstack/skills/poteto-help/references/recipes.md",
+      "mode": "100644",
+      "blob_sha": "d13da3a08cd27a29a68dc8bfbc93d0ca6d8a0647",
+      "size": 3355,
+      "sha256": "5fb97a805976a82db0aba5cc8943e88d0cb38b17a0d6b8e89a44633677febb1a",
+      "disposition": "port with adaptation",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/hugues-help/references/recipes.md"
+      ],
+      "implementation_state": "present",
+      "category": "reference"
     },
     {
       "path": "pstack/skills/poteto-mode/SKILL.md",
       "mode": "100644",
-      "blob_sha": "90bfebeecd3b8344eee39d08803a3e2a0f09e3c9",
-      "size": 20559,
-      "sha256": "404c0ef4a78e93451b2ab555ca532e7197b5cf87de29205b6f7109dbee5d9c4d",
+      "blob_sha": "ac3d64ff001a653f6a3c7148fd60e4926d317043",
+      "size": 20429,
+      "sha256": "f234661471847cafc4ae9bcb4a9208eb32ed8154ac25b91b2b064ec71bd62167",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/SKILL.md"
       ],
@@ -1267,8 +1567,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Read upstream routing changes and adapt fresh-worker, benchmark and reply contracts to the mobile mode.",
-        "release_target": "0.1.0",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
         "destinations": [
           "plugin/skills/hugues-mode/SKILL.md"
         ],
@@ -1297,12 +1597,12 @@
     {
       "path": "pstack/skills/poteto-mode/playbooks/autonomous-run.md",
       "mode": "100644",
-      "blob_sha": "12c3a7d84effcacf3550cb893be67498d7b28a4a",
-      "size": 1878,
-      "sha256": "15e54ad3ac92565613980772d8708de6e19cc4690bfd4bb3fb8836522407377b",
+      "blob_sha": "e6b88703cf327a76bcdd424429345ac0efeca67e",
+      "size": 1982,
+      "sha256": "6ac974fd2b09748add56493e89f578a35a6a9289e1026515878d81ef3cf129d1",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/autonomous-run.md"
       ],
@@ -1311,17 +1611,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Budgeted durable continuation; deferred operation. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/autonomous-run.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/autopilot-full.md",
       "mode": "100644",
-      "blob_sha": "d5a68c339e25ac016ffad9c51d858f0f6c37937a",
-      "size": 9431,
-      "sha256": "05ca30a16242c19d0c78ba1e88cca66f858d75252cb154fd740099fe292de802",
+      "blob_sha": "068882379d9bdc2298052e7762d67ac795715baf",
+      "size": 6596,
+      "sha256": "acf4f4a58c11045f9d3e8807d907a877e61ca6432b079f1087d7d30fc931566f",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/autopilot-full.md"
       ],
@@ -1332,22 +1641,24 @@
         "reason": "Per-PR ownership and independent review before authorized merge; deferred. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Only the ten selected upstream playbooks ship in Layer 1; performance and managed/automatic workflows remain deferred.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/autopilot-full.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/autopilot-stack.md",
       "mode": "100644",
-      "blob_sha": "750a7547235ae8eb340285684b9be7c36dff323a",
-      "size": 5031,
-      "sha256": "007c0a3b12011954a224f54773ef4ad7b75918be0a311914c1b51ad4e794c1e5",
+      "blob_sha": "d7bdc289e045e8bc7da97b4ddfccc8d6c9ed0800",
+      "size": 2205,
+      "sha256": "c6bcb18b2ce605e77a2a2225854590a4b9a687911f79331746d91a4fe9a52e60",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/autopilot-stack.md"
       ],
@@ -1358,22 +1669,24 @@
         "reason": "Verified linear stack prepared for owner review; deferred. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Only the ten selected upstream playbooks ship in Layer 1; performance and managed/automatic workflows remain deferred.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/autopilot-stack.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/babysit.md",
       "mode": "100644",
-      "blob_sha": "683cf0ba889789cbe2d880fce667c75349f9ed12",
-      "size": 8289,
-      "sha256": "a0346c37c2313f36a863b80f66ee7b98059c2242adf74fc7b3e48abdb9ec6f5a",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "51549ab2da11e5905342bbb3aadb93685c8ac348",
+      "size": 7619,
+      "sha256": "e261c1ff5581e0f8fc6c686f34de4b535f87473e77beabea7dd8323021214610",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/babysit.md"
       ],
@@ -1382,17 +1695,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Bounded CI/review/conflict follow-through; deferred operation. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/babysit.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/bug-fix.md",
       "mode": "100644",
-      "blob_sha": "eeebc42b7477d435d8ac61d631d84822f908f59c",
-      "size": 2255,
-      "sha256": "018bbc146ae19145caa6c7e70591fee081b64447dda1c1c4b681c9974d928b13",
+      "blob_sha": "b5de0bfa63add6ed38a38a8bd668cf36ac009c61",
+      "size": 2359,
+      "sha256": "66e26542dad131cfd7df80ac0cdf81ed4d85e7b5e3f0eb65b933888760c4831f",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/bug-fix.md"
       ],
@@ -1401,17 +1723,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Native reproduction, cause, regression proof; candidate core. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/bug-fix.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/eval.md",
       "mode": "100644",
-      "blob_sha": "3dae34e2ef0cbdd9bafa5ab372da5ea143d48452",
-      "size": 2524,
-      "sha256": "b862bfa2fae2399abf047a8e80d3e3dddb64003af96fb1cebb625216131e36bb",
+      "blob_sha": "768a894e275b1e9b198e83ceb6b46964e3f9d6db",
+      "size": 2628,
+      "sha256": "a93d449a908236afa6645179651844094b1547dbab4e484cffcdda630e4b90bf",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/eval.md"
       ],
@@ -1420,17 +1751,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Small blinded workflow comparison; should, larger study later. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/eval.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/feature.md",
       "mode": "100644",
-      "blob_sha": "79a6bbbe0ce61c3b5ef9af1ee8e3ccdb0557edc6",
-      "size": 2766,
-      "sha256": "3a62cc4a8cbcf144bb9dd05f05420a15be0d38b784d3b141bb730a5852f50a62",
+      "blob_sha": "eb1040cb2631f3eeacd8f9f6469d7e97277f24ef",
+      "size": 2870,
+      "sha256": "af8ce700b99953741cb547e34308fde0cf6b98ce67e1652c800d0deedf53aba1",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/feature.md"
       ],
@@ -1439,17 +1779,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Data shape → bounded implementation → feature map/native proof; candidate core. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/feature.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/hillclimb.md",
       "mode": "100644",
-      "blob_sha": "c6441b92d30a71489d88eae5bfa8dc457da55cb1",
-      "size": 4403,
-      "sha256": "244f289898fe67a458065e90fe8217c916c5acf61cdee8975ade3f9831a12e91",
+      "blob_sha": "e9cf267908a9737236b3a8a8a5a99fe9066f7554",
+      "size": 4507,
+      "sha256": "942c1565b75ad02a2cb6230dd7c1ebd87e19f59a00319ebac2b6616007bf018f",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/hillclimb.md"
       ],
@@ -1460,11 +1809,13 @@
         "reason": "Budgeted metric loop; authored first, sustained run deferred. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Only the ten selected upstream playbooks ship in Layer 1; performance and managed/automatic workflows remain deferred.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/hillclimb.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1489,12 +1840,12 @@
     {
       "path": "pstack/skills/poteto-mode/playbooks/multi-phase-plan.md",
       "mode": "100644",
-      "blob_sha": "f8ed78a6533cc5d738d3a3ec106bf2577d3f98ca",
-      "size": 12977,
-      "sha256": "27d310e3fc3937a60b8fcbe1318f9d249a7477a722907bf85b3e4eb3dc436b11",
+      "blob_sha": "27e99947bd20575e2ff503dbfba985a4f0fa298e",
+      "size": 13217,
+      "sha256": "5f239457bfdec3345c92caa06c59bf0257c662b89353f25a1c02ea942dcd00b1",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/multi-phase-plan.md"
       ],
@@ -1505,22 +1856,24 @@
         "reason": "Dependencies, exits, evidence and handoff; core. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Only the ten selected upstream playbooks ship in Layer 1; performance and managed/automatic workflows remain deferred.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/multi-phase-plan.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/opening-a-pr.md",
       "mode": "100644",
-      "blob_sha": "4e25989729174580e48ce36e265f298231c6de7f",
-      "size": 6142,
-      "sha256": "ab40de7163c1c6e274f46ee559b2e53ef45673703f601f13f4931c199e6fb90f",
+      "blob_sha": "d729a7a06c5b67e406b081e1777114bc03b66f4a",
+      "size": 5669,
+      "sha256": "a5aef646de8b651306c2d10974623650e4a013a245aec1c00525bbe0e31bfa76",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/opening-a-pr.md"
       ],
@@ -1532,8 +1885,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Read the upstream playbook diff and preserve user adaptations, mobile proof and separately authorized publication.",
-        "release_target": "0.1.0",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
         "destinations": [
           "plugin/skills/hugues-mode/playbooks/opening-a-pr.md"
         ],
@@ -1543,12 +1896,12 @@
     {
       "path": "pstack/skills/poteto-mode/playbooks/orchestrate.md",
       "mode": "100644",
-      "blob_sha": "d5b6d008026ff0177f52e22a6fb4b2edae5c87e2",
-      "size": 16779,
-      "sha256": "d42b4375f1bd4ce23da0b575a198571a2117df7eea10c3c9fc6d92ae1053f7be",
+      "blob_sha": "4ccb24d76c5e190125cecc99d4a9b5c9eb2932d9",
+      "size": 17127,
+      "sha256": "08dce6c9e7be1d13bc6944ab9b51665f935c531437f5e088bc53d2a62099ef05",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/orchestrate.md"
       ],
@@ -1557,6 +1910,15 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Standing program ownership and recovery; deferred. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/orchestrate.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1581,12 +1943,12 @@
     {
       "path": "pstack/skills/poteto-mode/playbooks/perf-issue.md",
       "mode": "100644",
-      "blob_sha": "405c7a4362bedbd4194a5ef234553adf0dff78c9",
-      "size": 1446,
-      "sha256": "2b88ad0f880e4d4d755ac19fe52414d6631d6baa816d060f53cf0a7429d7e14a",
+      "blob_sha": "46dcc9963366992016dfb1d59ccaae977930f982",
+      "size": 1550,
+      "sha256": "c12aa2f82de7651a11676a3d5fea168f539b7f0faaa3a501d279255dd2a469c8",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/perf-issue.md"
       ],
@@ -1597,11 +1959,13 @@
         "reason": "Declared native baseline and measured change; observe if feasible. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Only the ten selected upstream playbooks ship in Layer 1; performance and managed/automatic workflows remain deferred.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/perf-issue.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1626,12 +1990,12 @@
     {
       "path": "pstack/skills/poteto-mode/playbooks/refactoring.md",
       "mode": "100644",
-      "blob_sha": "df2a863b531906c64f92b9f9d8feb62f8c7a8665",
-      "size": 3211,
-      "sha256": "50f4f7d3d301551f8b8a57c3303c99958c5ca630ae0d0051823b6987c0eb5b96",
+      "blob_sha": "c04b07eeb8b8fa651d080729363466ab73d2fe40",
+      "size": 3315,
+      "sha256": "0f5dd38113379ea8cf61e2182eca0a7478eea9a869eb40c2dddab3335aeca197",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/refactoring.md"
       ],
@@ -1640,17 +2004,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve selected behavior with before/after evidence; should. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/refactoring.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/runtime-forensics.md",
       "mode": "100644",
-      "blob_sha": "ba659bfe1c4c2f956f3285974bfdc941120f9948",
-      "size": 1210,
-      "sha256": "594f02c40c243a346e1f57b688ecf2ed5e882f21b3d24ed2204d1ac6f1c24a8a",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "6bf64240d1a890df290b98c632ad374d20ca9fd4",
+      "size": 1314,
+      "sha256": "3463372b578c28f27c236f2627f09b5c5b1e85e86db7399fb984f3892fb450f5",
+      "disposition": "port with adaptation",
+      "reason": "Issue #105 adds a conditional native-forensics reference before capture for explicit mobile tasks. The pinned five-step diagnosis procedure remains intact.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/runtime-forensics.md"
       ],
@@ -1659,17 +2032,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Live native diagnosis with instrumentation; should. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/runtime-forensics.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/session-pickup.md",
       "mode": "100644",
-      "blob_sha": "9b2ed06e0ff8b01bf03b7a0d6a4cbb8ba3a46720",
-      "size": 1678,
-      "sha256": "1604fb463f7c7410d43fa024ca76c1c1824c166a01fd69d61f073d06fdca2a47",
+      "blob_sha": "876b1433828ccc7c874123cdf300240abb285dd9",
+      "size": 1782,
+      "sha256": "d194f2a7ef392c1598ef3f0e3b561370ca25c2c7a78308007af4aa46ada8ee12",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/session-pickup.md"
       ],
@@ -1678,17 +2060,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Cold-start checkpoint recovery; core. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/session-pickup.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/shipping.md",
       "mode": "100644",
-      "blob_sha": "0f1d41f189222b991734015926a3b22607e1b92f",
-      "size": 5439,
-      "sha256": "19f3f6803a7bbe9ff04f624b03e3b55f07ac0a05e991aa00d5fe51239b920b2a",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "0a0c3cfde8948e3aa8ee80c6f3f9ce7e3e64fcba",
+      "size": 4387,
+      "sha256": "bf56339bdf7e0223bcff5abf4e8599e3f5b547b3fcc3b4ce9475e6e7dda14a9f",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/shipping.md"
       ],
@@ -1697,17 +2088,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Independent current-patch proof and ordered authorized landing; deferred. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/shipping.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/playbooks/trace-forensics.md",
       "mode": "100644",
-      "blob_sha": "48ed6b2f690215027eda96a1897ed98212bbd07a",
-      "size": 1865,
-      "sha256": "137ce3984fb96e45971fdff4d3c79fa4ccc647c5b30ae4945783b9fb23f8cec7",
+      "blob_sha": "bf1b003786503623d91ca173fc97a6e54eee3acf",
+      "size": 1867,
+      "sha256": "ef0bbf79856a4ae1a8993d54c1a1da159cb97623941b652c0069cf75a017e0f5",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/trace-forensics.md"
       ],
@@ -1716,6 +2116,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Versioned captured-artifact diagnosis; should. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/trace-forensics.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1740,12 +2149,12 @@
     {
       "path": "pstack/skills/poteto-mode/playbooks/worktree-cleanup.md",
       "mode": "100644",
-      "blob_sha": "39c9ef9f368ac63b0e4245503302a4c174e846d6",
-      "size": 2932,
-      "sha256": "fc464dc4121926df1704f483c5feca83717c0a40b4651d3e11bd3aedd89441b6",
+      "blob_sha": "45e1af693cc40d0271249a0e98f15bfc815af615",
+      "size": 2947,
+      "sha256": "be04ae0afe19d4a4da5bcc4e94455f68dbebd1cda6eb0f456ca0d358ecf76c00",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/playbooks/worktree-cleanup.md"
       ],
@@ -1754,6 +2163,15 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Explicit scoped recoverability/deletion procedure; disabled until authorized. Preserve responsibility through host/native replacements; claimed behavior needs direct proof."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/playbooks/worktree-cleanup.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1816,12 +2234,12 @@
     {
       "path": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "mode": "100755",
-      "blob_sha": "d242f28eb801e781ccc2f2ba93b700b263a77816",
-      "size": 7594,
-      "sha256": "4f9432d9989880b6afc2bdda503d5b12a9d07d357ecf31936b7ab5e83bc80523",
+      "blob_sha": "c8626766cee4cc4a2736fe438a1aea5c1f1b28ce",
+      "size": 8153,
+      "sha256": "e58c3d871b09d477be00628d69dd23ffa6c2e3a1728f5b867a841baa8e90278b",
       "disposition": "port with adaptation",
       "reason": "Retain the plan evidence gate and accept bound native workflow rereads after plan translation; exact original helper remains in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/check-plan.mjs"
       ],
@@ -1832,22 +2250,39 @@
         "reason": "Retain evidence-bearing plan validation; replace Cursor-specific commands and hard-coded ten-lane/prose assumptions with declared scope and risk-based checks."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Layer 2 helper tooling is deferred; check-plan is reconsidered only if multi-phase-plan ships. No upstream script is executed.",
+        "disposition": "port with adaptation",
+        "reason": "Retain the plan evidence gate and accept bound native workflow rereads after plan translation; exact original helper remains in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/check-plan.mjs"
+        ],
+        "implementation_state": "present"
       }
+    },
+    {
+      "path": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
+      "mode": "100644",
+      "blob_sha": "fd966c2b5fb6e99c12070c553906765c7bd900d8",
+      "size": 3289,
+      "sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
+      "disposition": "port with adaptation",
+      "reason": "Upstream plan-check tests adapted to the hStack plan checker; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/hugues-mode/scripts/check-plan.test.ts"
+      ],
+      "implementation_state": "present",
+      "category": "script_config_test_helper"
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
       "mode": "100644",
-      "blob_sha": "9c234de724991083b4644e906a5f1358f8ef8dcc",
-      "size": 18424,
-      "sha256": "174b86d21ff51ccd28d1a8c938cb2e0c6fa287b209d4ca6c03932fcb1b53372e",
+      "blob_sha": "2ef435d7d6f464a396d23158d4bcaae08f19c94d",
+      "size": 21801,
+      "sha256": "5e80b416bdcd68e4067690ce857345852fd2e0db3dcf3e25607999cd55b963d2",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/orch/orch.test.ts"
       ],
@@ -1856,17 +2291,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain orchestration state/ownership/test responsibility in orch.test.ts; requires durable recovery, current revisions and bounded host operations before enablement."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/orch/orch.test.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/orch/orch.ts",
       "mode": "100755",
-      "blob_sha": "219ac17bd8805b45140eca7c429834be9ded1b7d",
-      "size": 15511,
-      "sha256": "f091687df627a0b75fabd54af58945a9cd6c7039ef0622012ac9ed60cd8ec434",
+      "blob_sha": "14cb5139a91745a58780a81d8a1b40ef67d9504d",
+      "size": 15737,
+      "sha256": "47c92c57e8276616d8de94665a126bd832e748036afa8d0ffdbacb7946decb5c",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/orch/orch.ts"
       ],
@@ -1875,17 +2319,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain orchestration state/ownership/test responsibility in orch.ts; requires durable recovery, current revisions and bounded host operations before enablement."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/orch/orch.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/orch/store.ts",
       "mode": "100644",
-      "blob_sha": "5e6c602fb670a6b5598977f5bf85d717cf797ef7",
-      "size": 42927,
-      "sha256": "0eae7cf69282e827b1227166f2e32cee3560f2f3e65b3f1f2faf6fb83d3b4c5b",
+      "blob_sha": "417368918d2a6e2589c0221ade5c65535ffe05f1",
+      "size": 44466,
+      "sha256": "558cfda533e1ebe7c8d7842604f07e0be7618759cf129b4c2397a8e29516ecea",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/orch/store.ts"
       ],
@@ -1894,17 +2347,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain orchestration state/ownership/test responsibility in store.ts; requires durable recovery, current revisions and bounded host operations before enablement."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/orch/store.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/package.json",
       "mode": "100644",
-      "blob_sha": "8a3dfe27c2d0221a786e1ce61963d51c55260725",
-      "size": 352,
-      "sha256": "d1f815091209d49763775cc188e8e06ff32d5fec648bffd2272bc25a165e87c3",
+      "blob_sha": "d8abe49ad0eafd10d302e8c6a9a0a95c5e6fb0ef",
+      "size": 371,
+      "sha256": "fd511a0c01f522e0c781ddd8eccea0e91697a0856c6e6a3261de78a6a0287c72",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/package.json"
       ],
@@ -1913,6 +2375,15 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Track pinned helper dependencies for deferred orchestration/watching; choose runtime after adapter design instead of adding an unneeded Bun dependency to RC."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/package.json"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -1921,8 +2392,8 @@
       "blob_sha": "0656b413e6c180858ca42981105944c45caf9dca",
       "size": 6161,
       "sha256": "a35592b4c6da96caf8d47987e9cd503fab6c7774ab87d11a43f24b4b5df2a9d1",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/cli.test.ts"
@@ -1940,8 +2411,8 @@
       "blob_sha": "ec8a2f27c5ac24866b699e6395e7d1f32e595068",
       "size": 6983,
       "sha256": "89c08863089181a232be782c4b2ed90a1552f44aeecb0dcb7aac2c623620e680",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/cli.ts"
@@ -1956,12 +2427,12 @@
     {
       "path": "pstack/skills/poteto-mode/scripts/watch-pr/fakes.test-helper.ts",
       "mode": "100644",
-      "blob_sha": "2312522cd7399334115a5f39fd6438aab7fc5aa5",
-      "size": 2944,
-      "sha256": "e53e31b7f03068063f53a99a3591b052aaed66e4e2b196b3a364980f60324ab1",
+      "blob_sha": "84ccf596b01e03e7fb77e73ea82ec3b1738026ad",
+      "size": 3357,
+      "sha256": "cf0c5ee61b4a73444c1b775cfb6c81a40d312e055dd21a1f5eae6276e54de13f",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/fakes.test-helper.ts"
       ],
@@ -1970,17 +2441,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain PR watcher fakes.test-helper.ts responsibility; forge events only wake fresh state checks, with explicit polling/write authority and terminal accounting."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/watch-pr/fakes.test-helper.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
       "mode": "100644",
-      "blob_sha": "87f4048f08a63a54975c4ef2de8065375e751683",
-      "size": 9059,
-      "sha256": "0cbce011050522938523e36bb42a260e92b812dcd2076930fa681672ad316b24",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "54722a940aeeff3d8c8cdea5fe7e796296bb44c4",
+      "size": 13101,
+      "sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34); exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts"
       ],
@@ -1989,17 +2469,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain PR watcher github.test.ts responsibility; forge events only wake fresh state checks, with explicit polling/write authority and terminal accounting."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
       "mode": "100644",
-      "blob_sha": "79bc06fb682c5d99de7d48338b0a6ecd27a518da",
-      "size": 24072,
-      "sha256": "d1bbbafbe8e2c703c84da2029de7f2c4011412512f8cf65a42100f46bcb92c8a",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "4828b0299672a4696e6844132c1caedb7ebbbd8b",
+      "size": 25198,
+      "sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/github.ts"
       ],
@@ -2008,17 +2497,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain PR watcher github.ts responsibility; forge events only wake fresh state checks, with explicit polling/write authority and terminal accounting."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/watch-pr/github.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
       "mode": "100644",
-      "blob_sha": "0620ddedde46da8e763ab2a55ebceaad2aa6d0a7",
-      "size": 12397,
-      "sha256": "a9fedb25feefd1f57ef6a662f80c99018690170a3a8070773a08eaf694d1d3d9",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "6dae16da71800fb06eb37a7e3b296a8d27275b08",
+      "size": 12405,
+      "sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts"
       ],
@@ -2027,17 +2525,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain PR watcher policy.test.ts responsibility; forge events only wake fresh state checks, with explicit polling/write authority and terminal accounting."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
       "mode": "100644",
-      "blob_sha": "4665be37e8f9afff1c9e1f5dd60d98e0d70c8c6c",
-      "size": 25132,
-      "sha256": "68d240505852cf23c9b2dea463342e9e61243f486b3cc86c735d140f9ee7be49",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "cabadb9bf96f4d8c4c0426d77d0cbdab80fbe3e5",
+      "size": 25169,
+      "sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts"
       ],
@@ -2046,6 +2553,15 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain PR watcher policy.ts responsibility; forge events only wake fresh state checks, with explicit polling/write authority and terminal accounting."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2054,8 +2570,8 @@
       "blob_sha": "0e935839357335f24ab1bbc193d761495646ea99",
       "size": 7083,
       "sha256": "2b709e86628d5b8fdb61f860e60ababc342b0626c67576305442cf548283a604",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Watch-pr option where a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/render.ts"
@@ -2108,12 +2624,12 @@
     {
       "path": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
       "mode": "100644",
-      "blob_sha": "b67144e0d757e0b61ff079f981ced0a98555ea9d",
-      "size": 12359,
-      "sha256": "64ba6221e3bfe61bbb292337d199cdec6309455477280efb060203dba34e0e91",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "blob_sha": "6c94e0a687f8e48f91acffd21f725320dd66e659",
+      "size": 12649,
+      "sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
+      "disposition": "port with adaptation",
+      "reason": "Recognise Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; exact original remains in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/hugues-mode/scripts/watch-pr/types.ts"
       ],
@@ -2122,6 +2638,15 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Retain PR watcher types.ts responsibility; forge events only wake fresh state checks, with explicit polling/write authority and terminal accounting."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/hugues-mode/scripts/watch-pr/types.ts"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2146,20 +2671,29 @@
     {
       "path": "pstack/skills/poteto-mode/scripts/worktree-audit.sh",
       "mode": "100755",
-      "blob_sha": "b9af08160032aeb17143248f2a3648e98f5a75b3",
-      "size": 3984,
-      "sha256": "95b8530f3c0ccada8cabc4b0727c052fbc85c141531375aaace65c427af8aecc",
+      "blob_sha": "743c4e9250ba95000f90db10ef6ba47d8a106461",
+      "size": 6003,
+      "sha256": "e0a94e5e5b1ff60638916e440600e15851f7b79bc1a1d1f602fde05d465e2ec0",
       "disposition": "ignore with reason",
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.9.tar.gz"
+        "provenance/upstream/pstack-0.15.25.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "script_config_test_helper",
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Retain scoped inventory but replace Cursor transcript scanning and unsafe ownership inference; untracked work is not automatically disposable and deletion needs authority."
+      },
+      "previous_decision": {
+        "disposition": "ignore with reason",
+        "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
+        "release_target": "0.2",
+        "destinations": [
+          "provenance/upstream/pstack-0.15.9.tar.gz"
+        ],
+        "implementation_state": "not planned"
       }
     },
     {
@@ -2203,12 +2737,12 @@
     {
       "path": "pstack/skills/principle-build-the-lever/SKILL.md",
       "mode": "100644",
-      "blob_sha": "277189a10b00fddc7cbb63fcf2323c7341abb0df",
-      "size": 2458,
-      "sha256": "458b269eab8e95a1573276955312f7d2a13ae8599879a9efc748248f6bc34b56",
+      "blob_sha": "cbf003850489d95fea78e64198fd972c35b1aad3",
+      "size": 2386,
+      "sha256": "3434b0ad0c640c6f1d7960be7a8986c3bcdc14e26060360dec29903df60074ff",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-build-the-lever/SKILL.md"
       ],
@@ -2217,17 +2751,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Leave a reusable verification command or workflow. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-build-the-lever/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-encode-lessons-in-structure/SKILL.md",
       "mode": "100644",
-      "blob_sha": "df9cd5ff2fb3c18267349cc6aecd8121848ef834",
-      "size": 2211,
-      "sha256": "77044c83a9ac6df78fc643887ea5f1f11f082adaf14b717c060cdaed03cce863",
+      "blob_sha": "4a96f77fe70e36cb030f9c5efa142f66877bf58a",
+      "size": 558,
+      "sha256": "228963799189f481827d6f28065f278bc2008ffa37030b1234cbd5814d36b9e9",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-encode-lessons-in-structure/SKILL.md"
       ],
@@ -2236,17 +2779,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Convert recurrent failure modes into fixtures/contracts. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-encode-lessons-in-structure/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-exhaust-the-design-space/SKILL.md",
       "mode": "100644",
-      "blob_sha": "85dd16f1312f3427e2dddcfc8e7deb89e2555bb3",
-      "size": 1152,
-      "sha256": "8583310d7297b7823d75494faa57b003564d436807febecdecbd8321abe5cf6e",
+      "blob_sha": "395a0839126bb231430a9c9da02ebab5422557d5",
+      "size": 395,
+      "sha256": "2de83d99f93f60ec6313455b0bc9aa9f0bfb93dd59f414f403691322db00d4db",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-exhaust-the-design-space/SKILL.md"
       ],
@@ -2255,6 +2807,15 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Compare bounded alternatives where design uncertainty warrants. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-exhaust-the-design-space/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2279,27 +2840,36 @@
     {
       "path": "pstack/skills/principle-explain-the-number/SKILL.md",
       "mode": "100644",
-      "blob_sha": "9c22351d1fbe1ffcf277e61aef9fdb7816306fa7",
-      "size": 2109,
-      "sha256": "5aac99e7ce0bb1b37e2579acf4fe88c32a1456d9d46afd4a57cfe1df9092e89c",
+      "blob_sha": "1e180c14aefe49a3b2a515320398e08c3ebeb57d",
+      "size": 1663,
+      "sha256": "cd5a25f9e7cf023627ccb470dc5faa97542f29b4319496a32b839a8e1e988047",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-explain-the-number/SKILL.md"
       ],
       "implementation_state": "present",
-      "category": "principle_skill"
+      "category": "principle_skill",
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-explain-the-number/SKILL.md"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/principle-fix-root-causes/SKILL.md",
       "mode": "100644",
-      "blob_sha": "7e5a419aeec97b4076fa517865013677428a9fa3",
-      "size": 1246,
-      "sha256": "ba4cd38da1dcc8fe5432feb64457cba95594736a9b21b2ebf8f8c52aee068707",
+      "blob_sha": "5291682d0d604c251efd3ce6009e60e9af925bb8",
+      "size": 1369,
+      "sha256": "2131069d285d82fb799458494f2e4ac8759c9c6a60f9e300828c17874f514c6e",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-fix-root-causes/SKILL.md"
       ],
@@ -2308,6 +2878,15 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Reproduce and explain the failure before fixing. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-fix-root-causes/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2332,12 +2911,12 @@
     {
       "path": "pstack/skills/principle-guard-the-context-window/SKILL.md",
       "mode": "100644",
-      "blob_sha": "c4db544909b26981c45eed9caa6591d32885f841",
-      "size": 939,
-      "sha256": "d2cef147862576e3d709b7afc149d85196245e8338b9c7eef337c95fba412b3e",
+      "blob_sha": "0a1d3cfcf4539fe048887174000fecbf2fa40e81",
+      "size": 519,
+      "sha256": "af0b9dd70b43628ce4a59a4d332e9d9ad055084e460f430e7a757495c627e81a",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-guard-the-context-window/SKILL.md"
       ],
@@ -2346,17 +2925,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Scoped briefs and durable evidence pointers. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-guard-the-context-window/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-laziness-protocol/SKILL.md",
       "mode": "100644",
-      "blob_sha": "e5bc77e62aa96ae13e482a84df61b3c711c5d828",
-      "size": 1371,
-      "sha256": "9006579e9e3f33955d17569733db688ae65f22577dc3b21803d219a5a8445aff",
+      "blob_sha": "016c3c7c8dfffd995c1a02135a62248e6625879b",
+      "size": 552,
+      "sha256": "1be6e7a435f26a75a76eb848b9c3d611b9977d0f5822361753244da25ca3ca45",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-laziness-protocol/SKILL.md"
       ],
@@ -2365,6 +2953,15 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Prefer the smallest supported fix and delete unused scaffolding. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-laziness-protocol/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2408,12 +3005,12 @@
     {
       "path": "pstack/skills/principle-minimize-reader-load/SKILL.md",
       "mode": "100644",
-      "blob_sha": "64541d963123e344078d82fd3977e857e76129df",
-      "size": 2095,
-      "sha256": "42551c5dc74cd578163c148da552db3ff67d29b78600ef216bfd311fb828fe69",
+      "blob_sha": "628999088c5d05c1c546b3a3ca89da553cd3f3b2",
+      "size": 1996,
+      "sha256": "1ea2b7fef2391cae5844c4efdbd59031f775e8a52d06b7495d707229a200dcca",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-minimize-reader-load/SKILL.md"
       ],
@@ -2422,17 +3019,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Keep host and mobile guidance navigable and locally understandable. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-minimize-reader-load/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-model-the-domain/SKILL.md",
       "mode": "100644",
-      "blob_sha": "e1d664a19243c90a84e5e7a816e9e05146c88720",
-      "size": 2082,
-      "sha256": "bbadbb9a723fac3f76e782ae45665eb94058ec10993e4bae36d4dc6b0e4eac07",
+      "blob_sha": "09b7c739955facf03f08f66e1e329745d2f8880e",
+      "size": 1858,
+      "sha256": "52c0d85e0c3827c41c18299b642657d7b47eaf77b7b31609e42e0df42b84c75f",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-model-the-domain/SKILL.md"
       ],
@@ -2441,17 +3047,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Explicit target, report, lifecycle and work-state models. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-model-the-domain/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-never-block-on-the-human/SKILL.md",
       "mode": "100644",
-      "blob_sha": "11f08b6ef1fd93a3b3e47c57eb84716dc9acbff9",
-      "size": 1172,
-      "sha256": "f2764bb9338cbfc788c903cf4b9cd0a5f4042d3a04dd6d59cbd525d9beaadd0a",
+      "blob_sha": "4f59bdc69f79d536b30b0014a563ed3be05b8b62",
+      "size": 910,
+      "sha256": "05030a7a083c337676f793881b4e93cd218e8f1dd676529f56e6ac1d3efb8d1f",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-never-block-on-the-human/SKILL.md"
       ],
@@ -2460,6 +3075,15 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Resolve observable facts autonomously within granted authority; honor this review gate. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-never-block-on-the-human/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2503,12 +3127,12 @@
     {
       "path": "pstack/skills/principle-redesign-from-first-principles/SKILL.md",
       "mode": "100644",
-      "blob_sha": "090a4325f43a96080cce3895f0e932b62c39146a",
-      "size": 844,
-      "sha256": "a1c7fd0a96b40e12a74bceb0e6bb20a9666dd844dcabfb624acb27da23b929fe",
+      "blob_sha": "5ca5246cbb0fa08884ce17b0d22c117ae1ad67b8",
+      "size": 758,
+      "sha256": "170e0a658783e43fee8ec5a8c2422a4abb8f69cef621dd1819a95910b8207034",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-redesign-from-first-principles/SKILL.md"
       ],
@@ -2517,6 +3141,15 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Reconsider app boundaries when requirements change them. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-redesign-from-first-principles/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2560,12 +3193,12 @@
     {
       "path": "pstack/skills/principle-subtract-before-you-add/SKILL.md",
       "mode": "100644",
-      "blob_sha": "d28770cf47a5798d0250a25ad494aedfecad154e",
-      "size": 1094,
-      "sha256": "a983a50e732c1ed315eba7aaf47a61329e31c4794eb1ab9d25d9945265b31e03",
+      "blob_sha": "b8740ba6f06922d8e7ef3b23f9fb16e0fc4a876f",
+      "size": 909,
+      "sha256": "8c93bb9d1a7f38e2ef37655d93f0e790fa59903105af3d500cc8a663ebe45f3f",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-subtract-before-you-add/SKILL.md"
       ],
@@ -2574,17 +3207,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Remove obsolete adapter paths before adding replacements. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-subtract-before-you-add/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-test-behavior-not-implementation/SKILL.md",
       "mode": "100644",
-      "blob_sha": "42de6f8f7cab01b9f67aa28bd59b128f7574fbab",
-      "size": 2575,
-      "sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e",
+      "blob_sha": "f5a603e3a0925cdc6363bcc26dfbf587d9a36ec7",
+      "size": 1386,
+      "sha256": "b2b73ba42920f9c3174ecdf808ec6e4591b3a9266ada9a05814f386004266d3a",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-test-behavior-not-implementation/SKILL.md"
       ],
@@ -2593,17 +3235,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Assert externally meaningful behavior, not parser self-agreement. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-test-behavior-not-implementation/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/principle-type-system-discipline/SKILL.md",
       "mode": "100644",
-      "blob_sha": "6030f171bee0d1902cf7ca91f06225e09f0f5433",
-      "size": 4922,
-      "sha256": "c83da8031ffb4c86410030d3e261f659598fca2b7d8158fd9dc269d70a3a025e",
+      "blob_sha": "4321b83e245d99eded0756c7a74f3fb64e32c36b",
+      "size": 3661,
+      "sha256": "2e492cef34bb25a20b9115df61f9ef3a9837e3fda144ffda8079e5f45a1b72e8",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/principle-type-system-discipline/SKILL.md"
       ],
@@ -2612,17 +3263,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Apply Swift/Kotlin types and bridge contracts honestly. Keep the full principle discoverable and test its trigger in the relevant workflow."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/principle-type-system-discipline/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/recall/SKILL.md",
       "mode": "100644",
-      "blob_sha": "a70062a3f89a8d68b3391bc71fc4c6cc2dfcf6a4",
-      "size": 5212,
-      "sha256": "d265b0e5b6dc5b89c0407f3387d24462c988e1990a37d5359735137908128c5a",
+      "blob_sha": "cd8cc20790d90579e632626fe6db2b1fff593eea",
+      "size": 5345,
+      "sha256": "b0ceb996259c3404532f61e4b010df4e3d80d7ddbed85b3c302895723eb62a89",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/recall/SKILL.md"
       ],
@@ -2631,17 +3291,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Recover authorized project context through supported host history or durable checkpoints; do not scan personal sessions."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/recall/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/reflect/SKILL.md",
       "mode": "100644",
-      "blob_sha": "cb270acc507aeaeab7c37db11fc8130cbb2f93f4",
-      "size": 4982,
-      "sha256": "36efa48cc4ec2ba6f8131651aae24c6321682b098ed47a1069a7509462bf4a84",
+      "blob_sha": "998ae6530fe294791c3a1daa635b36e2947fcca2",
+      "size": 4766,
+      "sha256": "1f5a8c246cdee8251f8667d85bd5d97f6c2801f505843c26ddbd6c621632519b",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/reflect/SKILL.md"
       ],
@@ -2650,17 +3319,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Retain evidence-backed lessons and independent lenses; proposed skill changes remain reviewable."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/reflect/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/reflect/references/divergent-reviewer.md",
       "mode": "100644",
-      "blob_sha": "de95be3b9cc9c11052596249336dcc328473eb26",
-      "size": 3889,
-      "sha256": "221dfc0abf7cbcd25e1da3cd87323f5d1050fc3bf652e096d093584e183c98fb",
+      "blob_sha": "1e070a2a3754f4dc0ddbaec4450a56179b81c92f",
+      "size": 3668,
+      "sha256": "f6030d88e20e906ef5e2d9ba44cb013ce610c49c2fe2ef74c377d32e0dc9e939",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/reflect/references/divergent-reviewer.md"
       ],
@@ -2669,17 +3347,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve divergent reviewer responsibility under reflect; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/reflect/references/divergent-reviewer.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/reflect/references/judgment-reviewer.md",
       "mode": "100644",
-      "blob_sha": "222f02b1c3c6eb3e700fa09a71bad108807d3485",
-      "size": 3255,
-      "sha256": "a40ecb9b28bd2a3491e11a541157fe58efe158e0eda7b61a5006c14590aabe61",
+      "blob_sha": "61d15d76fff852eb573b551bc1317d79ed5a2e5f",
+      "size": 3107,
+      "sha256": "38f917619fbf346062d643e0ad6b12fc952d58678dfcbbf42ffcf6d8b9c08307",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/reflect/references/judgment-reviewer.md"
       ],
@@ -2688,17 +3375,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve judgment reviewer responsibility under reflect; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/reflect/references/judgment-reviewer.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/reflect/references/synthesizer.md",
       "mode": "100644",
-      "blob_sha": "d0e78195186c0dd6cfdc87ba19402ea8cd2aa385",
-      "size": 4164,
-      "sha256": "2f76c847eb45b182dc6fbcbf7d96c8ee7e2986ecfd9e0d640fec44e3cc5a617c",
+      "blob_sha": "1a090d86134987719ddb418023020c2ef58a6dae",
+      "size": 4141,
+      "sha256": "6af816963de74d1a1aef4070273c1ff533d2072732e488e159ddc0b299fec3cd",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/reflect/references/synthesizer.md"
       ],
@@ -2707,17 +3403,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve synthesizer responsibility under reflect; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/reflect/references/synthesizer.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/reflect/references/tooling-reviewer.md",
       "mode": "100644",
-      "blob_sha": "a37e2009d6ef08f535df87e020e52426c6a5fa33",
-      "size": 4609,
-      "sha256": "bc49ced90fa81eaba3083b88aeb430d900a6d8f14ff40c1d6b52263bacfc77b6",
+      "blob_sha": "a839db4318798c51539c319cb90387ce02557225",
+      "size": 4448,
+      "sha256": "f81b8697e7366fbbc18feba52c6e3253a101f751091364ebc4396a1d9b5753b4",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/reflect/references/tooling-reviewer.md"
       ],
@@ -2726,36 +3431,69 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve tooling reviewer responsibility under reflect; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/reflect/references/tooling-reviewer.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/setup-pstack/SKILL.md",
       "mode": "100644",
-      "blob_sha": "1009e73c6116c8f6c24b5870c8f0600ae144b631",
-      "size": 5548,
-      "sha256": "125dd0c8f588782cfb271efae8f97a0719e43e79f56b3495c095f460bcee6389",
+      "blob_sha": "90a9e575397fb59f4d9a47e6157c2106f4b4a5e2",
+      "size": 5716,
+      "sha256": "d61b47256a18155a81c8e5ef95e3cc6569ce8c18317c35c4dd9c8015cf68cb59",
       "disposition": "port with adaptation",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "reason": "Canonical native consolidation; the 0.15.25 hunks only change Cursor model defaults and budget semantics (owner decision: keep hStack defaults), so the body is unchanged at this pin. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
-        "plugin/skills/setup-huguesstack/SKILL.md"
+        "plugin/skills/setup-hstack/SKILL.md"
       ],
       "implementation_state": "present",
       "category": "top_level_skill",
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Replace Cursor rules/model slugs with capability-checked user-owned host configuration; no silent model fallback."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/setup-hstack/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
+    },
+    {
+      "path": "pstack/skills/sharpen/SKILL.md",
+      "mode": "100644",
+      "blob_sha": "4f9bb4ab50fd760285dd6c4cbbfa7fe20e2d2466",
+      "size": 792,
+      "sha256": "6bcd73916696eb9c5b79b6f960983760c34bcc28937c11142dd8d86b5107aa46",
+      "disposition": "port with adaptation",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.25",
+      "destinations": [
+        "plugin/skills/sharpen/SKILL.md"
+      ],
+      "implementation_state": "present",
+      "category": "top_level_skill"
     },
     {
       "path": "pstack/skills/show-me-your-work/SKILL.md",
       "mode": "100644",
-      "blob_sha": "d350a150c36ca16382b4aa6d4196b39e67454ad1",
-      "size": 6418,
-      "sha256": "bcff5f7f9fd23f92c12b251f9cd6b947e9485e1055cfacb6fdd9cae0789d7550",
+      "blob_sha": "ada1bba1e51356de0e0d4da1d13ba5a56ba9c7cb",
+      "size": 6551,
+      "sha256": "920a8217cbb62f92a2222fb81fc9eab17ecd554a0277e444a95a927195139bd1",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/show-me-your-work/SKILL.md"
       ],
@@ -2764,6 +3502,15 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Keep a reviewable decision trail tied to evidence and exact revisions."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/show-me-your-work/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2807,12 +3554,12 @@
     {
       "path": "pstack/skills/swarm/SKILL.md",
       "mode": "100644",
-      "blob_sha": "db22b8787966abc61216052d9f3142018404cab8",
-      "size": 2949,
-      "sha256": "bdcee4168e22428036e93d7cdeec3f391dbc4132f927f6db2540328c22db0273",
+      "blob_sha": "ed99acb98691c5555434e25b00e4ae3ca8b5b59b",
+      "size": 3082,
+      "sha256": "c8fe1b28282e7a051a4041a146a11f076e0fd95252bb010106a58209805303d5",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/swarm/SKILL.md"
       ],
@@ -2824,12 +3571,12 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Retain this Layer 1 responsibility with source-grounded mobile/host contracts; delivery beyond WP2 remains planned.",
-        "release_target": "0.1.0",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
         "destinations": [
           "plugin/skills/swarm/SKILL.md"
         ],
-        "implementation_state": "planned"
+        "implementation_state": "present"
       }
     },
     {
@@ -2873,12 +3620,12 @@
     {
       "path": "pstack/skills/technical-writing/SKILL.md",
       "mode": "100644",
-      "blob_sha": "5eef4fc494a059eb740cb621dadb4a7a81af23e4",
-      "size": 9792,
-      "sha256": "f5c512ffeec70bc4e0dee50f7bb4c26742e1be77967a6e8b15d1921e1c209ceb",
+      "blob_sha": "3e6d26109376cd66439c87ed48b4033df8d78a3a",
+      "size": 9093,
+      "sha256": "61fe9c424a798ebf36ad94941f87be049cb8827bdf86d21474a0dde37b513c43",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/technical-writing/SKILL.md"
       ],
@@ -2889,11 +3636,13 @@
         "reason": "Retain layered technical documentation and reviewer-facing validation detail."
       },
       "previous_decision": {
-        "disposition": "ignore with reason",
-        "reason": "Deferred beyond the Layer 1 release by the revised public plan; responsibility remains accounted for.",
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "0.2",
-        "destinations": [],
-        "implementation_state": "deferred"
+        "destinations": [
+          "plugin/skills/technical-writing/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -2958,12 +3707,12 @@
     {
       "path": "pstack/skills/unslop/SKILL.md",
       "mode": "100644",
-      "blob_sha": "229a090708710c36caa0017f8d33e90880dc6846",
-      "size": 6015,
-      "sha256": "195411d320b5b328f9f642baf59757ed19aaf0931c0838740e0aca273d538dc1",
+      "blob_sha": "97f5b6412148fa5b2a2fe478836fe8923ffa5cbb",
+      "size": 5827,
+      "sha256": "ccab208e315ce05e2fab8eeee2f7879f1289b5c6844840b2d307adf31c79144f",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/unslop/SKILL.md"
       ],
@@ -2972,17 +3721,26 @@
       "earlier_proposal": {
         "recommendation": "Include",
         "reason": "Keep clear concise prose across user reports and documentation."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/unslop/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/why/SKILL.md",
       "mode": "100644",
-      "blob_sha": "daac2c734a8f8fe43d30663054d694066f2b41ec",
-      "size": 10360,
-      "sha256": "2a852ec8680920109d2b56538b027c52867896a597250ac5d18a13e0b42e5b06",
+      "blob_sha": "b5fe93f8b78f58b06e0bf245a6b5b8faae4300e8",
+      "size": 8903,
+      "sha256": "144d42e7712723d763e607bc0a969e5f1cdf83ec7228519d87677cc534571bed",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/SKILL.md"
       ],
@@ -2991,17 +3749,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Retain evidence-ranked rationale; discover only authorized sources and disclose absent history or services."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/SKILL.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/why/references/epistemics.md",
       "mode": "100644",
-      "blob_sha": "3732bf6881b60d1337fa3498574452a85d33ba30",
-      "size": 7749,
-      "sha256": "fcc0f559c072832c869a5ada72434b4849320a637ae63c09e8ee14f7ad787059",
+      "blob_sha": "b18abf41dfa245ee55e94f1b3a80c0b750eb10cf",
+      "size": 6736,
+      "sha256": "d54a2361b2d5973bc3fe2edf62f446d87935974d4b40d47f23b9529f956ca758",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/epistemics.md"
       ],
@@ -3010,17 +3777,26 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve epistemics responsibility under why; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/epistemics.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/why/references/investigator-prompt.md",
       "mode": "100644",
-      "blob_sha": "3b56af44c589833508f4605cfdd4432b39a16739",
-      "size": 6985,
-      "sha256": "6892956a7ab0b5ee6c4babaf4f793703abe89b350ea7cb9463b4a56eea1c8266",
+      "blob_sha": "e1c2bbf52197ff600ba6e4552439e630687b7ae2",
+      "size": 5554,
+      "sha256": "c44afba186f899094f3694e6c9d6de5d14ff7c4ce28b787a9f50fc789c9a7fc3",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/investigator-prompt.md"
       ],
@@ -3029,6 +3805,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve investigator prompt responsibility under why; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/investigator-prompt.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -3053,12 +3838,12 @@
     {
       "path": "pstack/skills/why/references/sources/code-archaeology.md",
       "mode": "100644",
-      "blob_sha": "32d5f97f8d2d3974c668f5f0392737b7e8e25afd",
-      "size": 3489,
-      "sha256": "8c14aa382f0de40829b2668d43e3f54814480bb93a486c9282ada4003f6b9dbd",
+      "blob_sha": "e3555f809da0a5654ceefe7d2c20080397c03506",
+      "size": 1440,
+      "sha256": "a4a3970e9db448054aed676f3f7feeee667b4b69f0bd57c8fd72b751be687cc7",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/sources/code-archaeology.md"
       ],
@@ -3067,6 +3852,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve code archaeology responsibility under why; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/sources/code-archaeology.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -3091,12 +3885,12 @@
     {
       "path": "pstack/skills/why/references/sources/datadog.md",
       "mode": "100644",
-      "blob_sha": "d8363b1c1d1c7eadb15d47abd83bf70537c39620",
-      "size": 5323,
-      "sha256": "ebe9c07bac28e47757ee7f16fb93b0c01d427a08c501957d047f395a2f37b7e7",
+      "blob_sha": "536466ddd8ae6543836abb84bdf1efd8e43089ba",
+      "size": 4971,
+      "sha256": "b139faac5dc11b8f26c8255dce6033c1a6ac143b038d3dd103f2034c5dbec9cd",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/sources/datadog.md"
       ],
@@ -3105,17 +3899,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Optional datadog evidence adapter; requires an authorized connected service and provenance rules. Core why reports this source as unavailable rather than inventing facts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/sources/datadog.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/why/references/sources/incident-postmortem.md",
       "mode": "100644",
-      "blob_sha": "450d6e52f25b1b41f741cb3e9c93e1c74ef858b4",
-      "size": 1973,
-      "sha256": "a899470f05f86029630a13a2696491cc708ca7b56a6e822a69ff6e954d6ff8cf",
+      "blob_sha": "e7397e7ef374bee3b7f0018ac8e5ddd4322bab12",
+      "size": 372,
+      "sha256": "bf2661f1a81c37700884a45b77d6289be0c802b065febced31990e6564510839",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/sources/incident-postmortem.md"
       ],
@@ -3124,6 +3927,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve incident postmortem responsibility under why; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/sources/incident-postmortem.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
@@ -3167,12 +3979,12 @@
     {
       "path": "pstack/skills/why/references/sources/sentry.md",
       "mode": "100644",
-      "blob_sha": "2b7cf6f3098ee868547dc4e69efacfe9c255246b",
-      "size": 4947,
-      "sha256": "6f292bc4fb1548e956f95e1900b9481abf5134254419f1cd9edec95428c82d73",
+      "blob_sha": "8200fd9f3abbb7fca76d0079663502b33524bd09",
+      "size": 2089,
+      "sha256": "2d4f83048eac1df530b399e2aed75dd7c9c18577b7665420aaeb96d0ceb0b702",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/sources/sentry.md"
       ],
@@ -3181,17 +3993,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Optional sentry evidence adapter; requires an authorized connected service and provenance rules. Core why reports this source as unavailable rather than inventing facts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/sources/sentry.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/why/references/sources/slack.md",
       "mode": "100644",
-      "blob_sha": "863a527d60e4e055e680834ef8098ea04273a1ae",
-      "size": 3105,
-      "sha256": "58fee61d024b3700b407e7acbed367944720ff05adfddb6954d36c88368f3ba7",
+      "blob_sha": "cadd5618a349adc5eb1dce6fddde38e7221e00fd",
+      "size": 1336,
+      "sha256": "3bc6309f5c7b26ace3b919dbd7f7b048861dd2020f910fe24f656cc74b3b661c",
       "disposition": "port verbatim",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/sources/slack.md"
       ],
@@ -3200,17 +4021,26 @@
       "earlier_proposal": {
         "recommendation": "Defer",
         "reason": "Optional slack evidence adapter; requires an authorized connected service and provenance rules. Core why reports this source as unavailable rather than inventing facts."
+      },
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/sources/slack.md"
+        ],
+        "implementation_state": "present"
       }
     },
     {
       "path": "pstack/skills/why/references/synthesizer-prompt.md",
       "mode": "100644",
-      "blob_sha": "9707dfcc2fc57ea126484a433c5cd9ee4d400ef3",
-      "size": 7984,
-      "sha256": "733a3e9cf897b1aca56aaddeae01a3832e4bfed024c2f602db2d1bf807d7a73b",
+      "blob_sha": "287a350c925c28b44f0e0dc687bb09a843e11100",
+      "size": 7146,
+      "sha256": "11c62671aa7b7a6e3d36929ffe2b59bf95e6ca664eee4d93e6ee527dd3390ddb",
       "disposition": "port with adaptation",
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "0.2",
+      "release_target": "unreleased-pstack-0.15.25",
       "destinations": [
         "plugin/skills/why/references/synthesizer-prompt.md"
       ],
@@ -3219,6 +4049,15 @@
       "earlier_proposal": {
         "recommendation": "Adapt",
         "reason": "Preserve synthesizer prompt responsibility under why; adapt any host-specific invocation or native examples and check referenced contracts."
+      },
+      "previous_decision": {
+        "disposition": "port with adaptation",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "0.2",
+        "destinations": [
+          "plugin/skills/why/references/synthesizer-prompt.md"
+        ],
+        "implementation_state": "present"
       }
     }
   ],

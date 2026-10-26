@@ -14,7 +14,7 @@ native workflow proof. Subtests are not added to case totals.
 | Current installed adapters and regressions | 103 | test_host_adapters (78), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled non-pstack Cursor skills (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
-| Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,080 cases (355 `read-workflow`, 1,666 `translate-plan` and 59 in-plan cases) over all 59 bundled skills, the legacy aliases of the 54 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
+| Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,220 cases (379 `read-workflow`, 1,778 `translate-plan` and 63 in-plan cases) over all 63 bundled skills, the legacy aliases of the 58 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
 | Current setup-to-proof contracts | 9 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These nine cases check source/commands and evidence parsing, not host or device execution. |
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
@@ -109,7 +109,7 @@ JSON and unknown PR metadata. Candidate-specific holds and exit 2 remain require
 The active/pinned-chat gate stays separate. No real transcript was read and no
 real worktree was deleted.
 
-Native-layout cases compare all 59 public names (54 from pstack, three from Cursor's `cursor-team-kit` and two hStack-authored language baselines) and modes, archive/source identity,
+Native-layout cases compare all 63 public names (58 from pstack, three from Cursor's `cursor-team-kit` and two hStack-authored language baselines) and modes, archive/source identity,
 canonical mapping, workflow phase/cardinality/fallback constraints, the
 reviewed host invocation table, consumer boundaries and a measured source-context budget.
 Hash resealing cannot approve a lost phase gate or changed invocation policy.
@@ -392,3 +392,17 @@ bodies to their Cursor source. The two Cursor integrity cases are renamed and ke
 edit that a reseal approves, and six that it cannot, including a removed host
 contract. The paragraphs above describing the two allowed additions and six
 mutations are historical.
+
+The pstack 0.15.32 merge adds no case and keeps 540 top-level cases. It rebinds
+existing cases to the new pin: the upstream-sync fixtures follow the 0.15.25 to
+0.15.32 delta, and the 0.15.9 and 0.15.5 snapshots and ledgers still back the
+two historical deltas, which regenerate byte for byte. The skill counts move
+from 59 to 63, and the list of skills added after 0.2.0 names the four new
+skills. The rejection matrix grows from 2,080 to 2,220 subtests with them and
+their `pstack/skills/...` aliases. Three principle bodies that were still
+byte-identical to the pre-restoration baseline took upstream's rewrites, so 7
+remain identical. The all-frontmatter upper bound moves from 16,000 to 18,000
+bytes for the four user-only skills; the per-turn skill-list budget is
+unchanged. The bug-fix context bound now allows growth in files that are
+byte-identical to their pinned upstream source between the baseline pin and
+the current pin, which covers the two principles upstream rewrote.

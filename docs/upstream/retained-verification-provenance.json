@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
-  "upstream_version": "0.15.25",
+  "revision": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
+  "upstream_version": "0.15.32",
   "package": "verification",
   "files": [
     {
@@ -56,10 +56,10 @@
       "source": "pstack/skills/correct/SKILL.md",
       "destination": "plugin/skills/correct/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "c09f486e32935a154dd98daa13aa8187856600fe",
-      "sha256": "bf482bacc972b3f124a4af8bf9364b4b3e280cb5845e44c326ea4f4565e5c904",
+      "blob_sha": "c45e06f48a0982ae19f92c6e83a8cd05988097a3",
+      "sha256": "e347045d00c967a0b831ef883cc6ac79d21329aa10b5968637df95de7febf0ba",
       "mode": "100644",
-      "destination_sha256": "5c165e0cc438baf62e081cd3a31c9fdf3388ddf3e716f586090bf426a399879a",
+      "destination_sha256": "848af28946387831ea0179a17100d6641ea4cafae68442c4c0559efd09eb1b57",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],

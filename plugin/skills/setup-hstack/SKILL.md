@@ -102,3 +102,7 @@ For a non-mobile project, an existing harness remains sufficient. Offer generati
 On acceptance, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. Report a generated but unproved recipe as a draft with its blocker. Before later mobile proof, invoke the project recipe through the host's native mechanism; writing the file does not establish discovery or permission.
 
 For a manual handoff, show `/hstack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the active host's discovered entry. End by reporting model setup and verification readiness separately, including any held proof.
+
+### 8. Offer a formal verification skill (optional)
+
+Check whether the project already has a formal verification skill (a project skill that runs a model checker, a proof, or another verifier against the code). If not, offer once: "want a formal verification skill, so agents can prove a key property of your code holds in every case in scope, not only the cases tests reach? I can generate one with /create-formal-verification-skill." On yes, read `create-formal-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. For a manual handoff, show `/hstack:create-formal-verification-skill` in Claude Code or `$create-formal-verification-skill` in Codex. On no, move on without pushing.

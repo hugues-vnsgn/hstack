@@ -106,7 +106,7 @@ the actual commit this restoration branched from and the exact revision the
 Issue's Problem Statement cites (46 model-invocable skills, 9,844 description
 characters, close to but not forced to equal the owner's earlier informally
 recorded 9,869, since that number was recorded rather than recomputed from
-pinned bytes). The other 58 skills are user-only: the owner types one by
+pinned bytes). The other 62 skills are user-only: the owner types one by
 name, and the mode reads it in full as its router reference. The agent never
 invokes one natively; the owner still can. [Host validation](skill-list-host-validation.md) observed, at
 code commit `ae51493`, that Claude Code's attached skill list grows by exactly

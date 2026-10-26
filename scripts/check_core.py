@@ -11,8 +11,8 @@ import sys
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PIN = '6ce45c59b9301a638c1fe1a7b8dc2a82b650898f'
-TREE = '8ff8d978aee18904b8be529b477ade363a53f7dd'
+PIN = 'e73df471cd4bd918367e99f3dd9c51bd53ddf5f0'
+TREE = '880564357e051d7c7802da1cb5d8df1d0b008299'
 EXCLUDED = set()
 ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
@@ -23,9 +23,9 @@ ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto
 # SKILL.md in full (the scoped host adapter rule), never by native invocation.
 USER_ONLY = {
     'architect', 'arena', 'automate-me', 'benchmark-checklist', 'blast-radius', 'bro',
-    'control-cli', 'control-ui', 'correct', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help', 'hugues-mode',
-    'in-your-own-words', 'interrogate', 'ketchup',
-    'maintain-verification-skill', 'make-bot-ui', 'no-comments',
+    'control-cli', 'control-ui', 'correct', 'create-formal-verification-skill', 'create-verification-skill', 'deslop', 'figure-it-out', 'how', 'hugues-help', 'hugues-mode',
+    'in-your-own-words', 'interrogate', 'ketchup', 'ketchup-video',
+    'maintain-formal-verification-skill', 'maintain-verification-skill', 'make-bot-ui', 'no-comments',
     'principle-attack-the-premise', 'principle-boundary-discipline', 'principle-build-the-lever',
     'principle-encode-lessons-in-structure', 'principle-exhaust-the-design-space',
     'principle-experience-first', 'principle-explain-the-number', 'principle-fix-root-causes',
@@ -37,7 +37,7 @@ USER_ONLY = {
     'principle-redesign-from-first-principles', 'principle-separate-before-serializing-shared-state',
     'principle-sequence-verifiable-units', 'principle-subtract-before-you-add',
     'principle-test-behavior-not-implementation', 'principle-type-system-discipline',
-    'recall', 'reflect', 'sharpen', 'show-me-your-work', 'swarm', 'tdd', 'teach',
+    'recall', 'reflect', 'sharpen', 'show-me-your-work', 'statechart', 'swarm', 'tdd', 'teach',
     'technical-writing',
     'swift-best-practices', 'kotlin-best-practices',
     'typescript-best-practices', 'unslop', 'why',
@@ -559,13 +559,13 @@ def check(root=ROOT):
     upstream = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(upstream)
     snapshot = upstream.read_pin(root / 'docs/upstream/pin.json')
-    require(snapshot['revision'] == PIN and snapshot['file_count'] == 169, 'upstream pin differs')
+    require(snapshot['revision'] == PIN and snapshot['file_count'] == 200, 'upstream pin differs')
     receipt = upstream.load(root / 'docs/upstream/consolidation.json')
     require(receipt['schema_version'] == 1 and receipt['upstream_revision'] == PIN,
             'consolidation pin differs')
     require(not (root / 'plugin/core').exists() and not (root / 'plugin/core-bindings.json').exists(),
             'retired runtime core or registry present')
-    archive = root / 'provenance/upstream/pstack-0.15.25.tar.gz'
+    archive = root / 'provenance/upstream/pstack-0.15.32.tar.gz'
     require(receipt['archive'] == archive.relative_to(root).as_posix() and not archive.is_symlink()
             and hashlib.sha256(archive.read_bytes()).hexdigest() == receipt['archive_sha256'],
             'upstream archive differs')
@@ -599,6 +599,9 @@ def check(root=ROOT):
                 destination = None
         elif source.startswith('agents/'):
             destination = next(v['entrypoint'] for v in AGENTS.values() if v['source'] == row['source'])
+        elif source.startswith('docs/harness/'):
+            # pstack's adapter for running a Cursor-first plugin in Claude Code; hStack is native there.
+            destination = None
         elif source.startswith('docs/'):
             destination = 'docs/pstack/' + source.removeprefix('docs/')
         elif source == 'LICENSE':
@@ -618,7 +621,7 @@ def check(root=ROOT):
             require(stat.S_IMODE(path.stat().st_mode) == row['source_mode'], 'canonical source mode differs')
     names = {ALIASES.get(Path(name).parts[2], Path(name).parts[2]) for name in expected
              if len(Path(name).parts) == 4 and name.endswith('/SKILL.md')}
-    require(len(names) == 54 and not names & set(EXTERNAL_SKILLS), 'pstack skill inventory differs')
+    require(len(names) == 58 and not names & set(EXTERNAL_SKILLS), 'pstack skill inventory differs')
     names |= set(EXTERNAL_SKILLS) | set(AUTHORED_SKILLS)
     require(receipt.get('authored_skills') == AUTHORED_SKILLS, 'authored skill inventory differs')
     require(set(receipt['public_skills']) == names, 'public skill inventory differs')
@@ -731,7 +734,7 @@ def check(root=ROOT):
                   for p, row in sorted(installed.items()) if p not in anchors]}, 'installed payload manifest differs')
     require("MANIFEST_SHA256 = '" + hashlib.sha256(payload_path.read_bytes()).hexdigest() + "'" in
             (root / 'plugin/adapters/runtime/payload.py').read_text(), 'payload anchor differs')
-    return {'upstream_archive_files': 169, 'active_skills': len(names), 'core_playbooks': 23,
+    return {'upstream_archive_files': 200, 'active_skills': len(names), 'core_playbooks': 23,
             'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 15}
 
 

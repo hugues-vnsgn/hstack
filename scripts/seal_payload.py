@@ -46,7 +46,8 @@ def seal(root=ROOT, accept=()):
         if stat.S_IMODE((plugin / name).stat().st_mode) != 0o644:
             raise ValueError('unsafe trust anchor/runtime mode: ' + name)
     files = []
-    for p in sorted(plugin.rglob('*')):
+    # Sort by the POSIX path string, as check_core does: Path order puts `ketchup/` before `ketchup-video/`.
+    for p in sorted(plugin.rglob('*'), key=lambda p: p.relative_to(plugin).as_posix()):
         name = p.relative_to(plugin).as_posix()
         if '__pycache__' in p.parts:
             continue

@@ -1,5 +1,5 @@
 {
-  "source_revision": "6ce45c59b9301a638c1fe1a7b8dc2a82b650898f",
+  "source_revision": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
   "native_before_revision": "7db3e80d4b75e55f3f6d0ee85da5faa330e65d76",
   "files": [
     {
@@ -23,8 +23,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
-      "source_sha256": "e58c3d871b09d477be00628d69dd23ffa6c2e3a1728f5b867a841baa8e90278b",
-      "candidate_sha256": "c10fbf68eea64f8a2168d9f67687471c7aa5df14faaa07c865df1235afaa0900",
+      "source_sha256": "e3d4e9ca638c6fb4a2b52c434c17c7af30da4fdd44605ccfe9906f82fe37b555",
+      "candidate_sha256": "0fc93f19769d7a035982d72d4bd35a6c80e02565081cdcc041a00ba9614db569",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted plan checker; differs from upstream only by accepting a bound read-workflow command as the trunk read; installed Python/Node integration tests cover it"
@@ -32,8 +32,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
-      "source_sha256": "c80f3ea043b81f219b92c4c8a3af6bdd4f8d32ea596ec15b5b9e0252645f2ae8",
-      "candidate_sha256": "7b3149e06ccb2aaa31fae200127727241e0deb198c4366d9f6ff1b986ca8dba2",
+      "source_sha256": "848d321f2b76299d1b2d7bb46c929dbaebef08ca4ba8669dbe09d1d5c86f96e2",
+      "candidate_sha256": "30150c31a91b06f6a2829d12bdd487b3cf89523581c74e5097cf5126924dbed5",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "plan-checker tests added at pstack 0.15.25 plus one hStack case for the not-applicable Bugbot box; run with Bun against the hStack checker"
@@ -41,8 +41,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/orch/orch.test.ts",
-      "source_sha256": "5e80b416bdcd68e4067690ce857345852fd2e0db3dcf3e25607999cd55b963d2",
-      "candidate_sha256": "5e80b416bdcd68e4067690ce857345852fd2e0db3dcf3e25607999cd55b963d2",
+      "source_sha256": "c15bbcc17700acb812722bf3330e2b2ee2838407636cdb86784cdd9bb8ee93f3",
+      "candidate_sha256": "c15bbcc17700acb812722bf3330e2b2ee2838407636cdb86784cdd9bb8ee93f3",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -59,8 +59,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/orch/store.ts",
       "installed": "plugin/skills/hugues-mode/scripts/orch/store.ts",
-      "source_sha256": "558cfda533e1ebe7c8d7842604f07e0be7618759cf129b4c2397a8e29516ecea",
-      "candidate_sha256": "558cfda533e1ebe7c8d7842604f07e0be7618759cf129b4c2397a8e29516ecea",
+      "source_sha256": "bf0ed29c44093ee3b333aa10b138612f773c81eda73df7dc5337c59713f35a97",
+      "candidate_sha256": "bf0ed29c44093ee3b333aa10b138612f773c81eda73df7dc5337c59713f35a97",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
@@ -104,8 +104,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.test.ts",
-      "source_sha256": "70c9f03d8738228763846f2abdd8c7de7be68dba3035041482386a69cbf5639b",
-      "candidate_sha256": "0e835f81633b6ba2fdedee6ebf3a70c8f63b06b61e5ef28d04d6e53331e42326",
+      "source_sha256": "9d9f644388f3516364d47f5eb96c1f977dd6f560bd6005b660d90d3b367cf4b9",
+      "candidate_sha256": "a3820ebd1dbcafabb307d7acf844fddeab40398038592fc58a7d330efd781d0e",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34); Bun tests and tsc run on a local install, no review bot observed on a PR"
@@ -113,8 +113,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
-      "source_sha256": "a605b8531468dbe4c07b93663c0993a9c11dc7e9179adde970f5c740396451d9",
-      "candidate_sha256": "4881c6915310fc0daaba284cd992903797340c92ba40e6493e18a1fabee9c727",
+      "source_sha256": "7ba193190d488c8ce0982c85234ebea026e9a595703e99a3c3df0fcd640ddd18",
+      "candidate_sha256": "4323596671d54e5adf7f68dc0944824f50bcd794733ef09024faaed54c004495",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
@@ -122,8 +122,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.test.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.test.ts",
-      "source_sha256": "146acabcfee9b6fa3342358eb0a9504aa65fd081bbc15b10adf9c1c5485067d2",
-      "candidate_sha256": "f307d5e255400d6dadd695f5e6e74799f64e9c804d5d866e3f1caed9e7317482",
+      "source_sha256": "7ee38c20ed605f4a255f1f78e5a4be56b3563fcd8d3d65cfeea58d44c3f58d53",
+      "candidate_sha256": "3fbbd6742c975597f8d5b83eaa780084987e05e8bead8e3839722dc8382241b3",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
@@ -131,8 +131,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/policy.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/policy.ts",
-      "source_sha256": "f2a3e31223d05edc05e5473cc3f8f3cb9bd20c202c30c6abe7f21f0f7aee8fbb",
-      "candidate_sha256": "a6374bf0789401603442e80e9d0b5722da2da7b0fd1a32f738616e3898ca7105",
+      "source_sha256": "2d4823aeea788acab258ec60eb52e7b9e3a23a6649850af128d6ada5c33d7778",
+      "candidate_sha256": "46e515fab2edf0a8ab6c401e647cb832bae67a25f1d91d122e16d29e045844ec",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
@@ -167,8 +167,8 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/types.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/types.ts",
-      "source_sha256": "0cac435294dc85ce1ba755e8e67f6c5ab163dfa252f2722d6e3a2d68c58fec59",
-      "candidate_sha256": "cd736d54b6c7cba9b07139831dce64861253f304f9f7f9bc9910bca9e2c2ae35",
+      "source_sha256": "daa66c56220bae084c18cc6d3b0a2c66c0e72206d298e40973b44ee085ce16d2",
+      "candidate_sha256": "32024dd14ade8b86fd7f418d99ef94ec54f6c16b458e9393a10a652e2b4bd3ec",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"
@@ -185,7 +185,7 @@
     {
       "source": "pstack/skills/poteto-mode/scripts/worktree-audit.sh",
       "installed": null,
-      "source_sha256": "e0a94e5e5b1ff60638916e440600e15851f7b79bc1a1d1f602fde05d465e2ec0",
+      "source_sha256": "06be04b38346ded24ce761d373726f98cd9b9737f20ec98214e88b5f08f521b8",
       "candidate_sha256": null,
       "same_bytes_as_upstream": null,
       "same_bytes_as_7db3e80": null,

@@ -217,7 +217,8 @@ def decision(row, allow_pending):
     require(row['implementation_state'] in STATES, 'invalid implementation state')
     require(row['release_target'] in {'0.1.0', '0.2', 'not planned', 'pending',
                                     'unreleased-core-restoration',
-                                    'unreleased-pstack-0.15.25'}, 'invalid release target')
+                                    'unreleased-pstack-0.15.25',
+                                    'unreleased-pstack-0.15.32'}, 'invalid release target')
     require(allow_pending or (row['implementation_state'] != 'pending' and row['release_target'] != 'pending'),
             'incomplete triage decision')
     require(isinstance(row['destinations'], list) and all(isinstance(p, str) and p for p in row['destinations']), 'invalid destinations')
