@@ -76,6 +76,7 @@ class ContextDisclosure(unittest.TestCase):
         native_growth = len((native_row + scope).encode())
         self.assertLessEqual(native_growth, 240)
         self.assertIn('\nRead this file once per session, and again after compaction.', host)
+        self.assertIn('Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.', host)
         workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
         with self.subTest('the door runs a test before the first dispatch'):
             self.assertTrue(check_core.DOOR.startswith('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE`;'))

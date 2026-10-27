@@ -14,8 +14,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "571635456034ac994641e3445f29dc01e26f776e917b5fa019589648906cea02",
       "disposition": "replaced",
-      "reason": "Shorten equivalent authority and phase guidance to keep the initial read set small. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint.",
-      "replacement": "Apply this adapter and mobile applicability before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
+      "reason": "Shorten equivalent authority and phase guidance to keep the initial read set small. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint. P2 fix round 4 links mobile applicability in this sentence, because the phase section no longer carries \"Apply [mobile applicability](mobile.md#applicability) before selecting a route.\"",
+      "replacement": "Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
     },
     {
       "paragraph": 2,

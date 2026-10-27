@@ -442,7 +442,8 @@ and the host.md cap stays 1,300. The worker allowance stays 500 bytes and the ne
 fields and models` tables are not exempt. Since fix round 4 the door is one sentence at the top of
 `host-workers.md`, and `check_core.py` reports a missing door. A subtest checks that it is
 the only line in a `plugin/` Markdown file outside the index that names `hosts/`, and that no
-measured scenario reads a file there. The
+measured scenario reads a file there. The same case asserts that the `host.md` opener links
+mobile applicability. The
 Git-translation subtest is keyed to the hash-pinned baseline sentence, not to a reason's
 wording. The todo-checklist case checks that the checklist rule sits under the Tools
 table, not in one host's column, and resolves its Playbooks link to the router. The

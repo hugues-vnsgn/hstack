@@ -1,6 +1,6 @@
 # Claude Code and Codex host adapter
 
-Read this file once per session, and again after compaction. A skill's "read the host contract" is that read. Apply this adapter and mobile applicability before the canonical workflow.
+Read this file once per session, and again after compaction. A skill's "read the host contract" is that read. Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.
 Follow the consumer project's PR policy. Adapters translate host mechanics and
 limit authority; the canonical skill owns workflow
 phases, mandatory gates, panel cardinality, fallback and stop rules. A constraint
