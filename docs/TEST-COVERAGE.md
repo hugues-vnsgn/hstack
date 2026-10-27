@@ -421,4 +421,6 @@ existing cases moved a pinned phrase with its rule: the `AskQuestion`, `poteto-a
 and worker-pointer assertions, the todo-checklist section name, the translation-table rows
 and the guidance-byte accounting in `test_context_disclosure`. The accounting now names the
 `Cursor-only features` and `Subagent fields and models` sections, and the worker allowance
-rises from 500 to 1,620 bytes to hold the new tables.
+rises from 500 to 1,490 bytes, the measured size, to hold the new tables. The
+`poteto-agent` mapping sentence in `hugues-agent` by host went, with its assertion in
+`test_native_layout`, because the opening paragraph states the mapping.

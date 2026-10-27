@@ -638,7 +638,6 @@ class HuguesModeRouter(unittest.TestCase):
         line = ' '.join(line.split())
         self.assertIn('Claude Code registers it as `hstack:hugues-agent`', line)
         self.assertIn('Codex has no registered name observed here', line)
-        self.assertIn('`poteto-agent` mapping above stays', line)
         self.assertIn('A core `poteto-agent` call uses the registered hugues-agent in', ' '.join(self.workers.split()))
         self.assertEqual(self.workers.count('**`hugues-agent` by host.**'), 1)
         manifest = json.loads((ROOT / 'plugin/.claude-plugin/plugin.json').read_text())

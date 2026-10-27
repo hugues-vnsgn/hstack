@@ -36,7 +36,7 @@ class ContextDisclosure(unittest.TestCase):
             'plugin/agents/hugues-agent.md': 'model: inherit\n',
             'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
         }
-        limits = [1300, 550, 1620, 750, 900, 15, 15]
+        limits = [1300, 550, 1490, 750, 900, 15, 15]
         sizes = {path: len(text.encode()) for path, text in additions.items()}
         for (path, size), limit in zip(sizes.items(), limits):
             self.assertLessEqual(size, limit, path)
