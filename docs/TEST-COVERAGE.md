@@ -420,7 +420,7 @@ checks. Both are source checks of wiring. No Orca, T3 Code or omp session was ob
 existing cases moved a pinned phrase with its rule: the `AskQuestion`, `poteto-agent`
 and worker-pointer assertions, the todo-checklist section name, the translation-table rows
 and the guidance-byte accounting in `test_context_disclosure`. The accounting now names the
-`Cursor-only features` and `Subagent fields and models` sections, and the worker allowance
-rises from 500 to 1,490 bytes, the measured size, to hold the new tables. The
+`Cursor-only features` section. The worker allowance stays 500 bytes and the new
+`Subagent fields and models` tables are not exempt. The
 `poteto-agent` mapping sentence in `hugues-agent` by host went, with its assertion in
 `test_native_layout`, because the opening paragraph states the mapping.

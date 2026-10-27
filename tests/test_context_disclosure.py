@@ -29,14 +29,13 @@ class ContextDisclosure(unittest.TestCase):
             'plugin/adapters/host-workers.md': (
                 workers[workers.index('The mobile regression worker is'):workers.index('\nAgent mode preserves')]
                 + 'Report deliberate effort lowering too, with its reason.'
-                + 'Full-mode workers load the mode per [host.md](host.md) before work.'
-                + check_core.section(workers, 'Subagent fields and models')),
+                + 'Full-mode workers load the mode per [host.md](host.md) before work.'),
             'plugin/adapters/host-workflow-tools.md': check_core.section(tools, 'Codex sandbox'),
             'plugin/skills/hugues-mode/playbooks/bug-fix.md': bug[bug.index('   Use a fresh general-purpose regression worker.'):bug.index('   Run the same selected regression')],
             'plugin/agents/hugues-agent.md': 'model: inherit\n',
             'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
         }
-        limits = [1300, 550, 1490, 750, 900, 15, 15]
+        limits = [1300, 550, 500, 750, 900, 15, 15]
         sizes = {path: len(text.encode()) for path, text in additions.items()}
         for (path, size), limit in zip(sizes.items(), limits):
             self.assertLessEqual(size, limit, path)
