@@ -44,6 +44,14 @@ _Avoid_: The harness, the runtime, the core
 The Orca-managed worker runtime, Work Units and captured-review contracts of hstack-alpha (retired predecessor), kept as a deferred option. Its existing evidence is never cited as Layer 1 proof.
 _Avoid_: Phase 2, the full product
 
+**ADE**:
+An agent development environment: an app that hosts several agent sessions and their worktrees, such as Orca or T3 Code. hStack maps only its terminal and worktree mechanics ([ADR 0004](adr/0004-adapters-for-ades-and-agents.md)). It is not **Layer 1** or **Layer 2**.
+_Avoid_: Host (that means Claude Code or Codex), orchestrator, Layer 2
+
+**Agent**:
+A program that runs a model, such as Claude Code, Codex or omp. Not a **PR owner**, which is a role an agent can hold, and not **Layer 1** or **Layer 2**.
+_Avoid_: PR owner, subagent, worker
+
 **hugues-mode**:
 The hStack router skill, forked from pstack's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
 _Avoid_: mobile-mode, the orchestrator

@@ -620,16 +620,20 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_hugues_agent_registered_name_and_question_tool_have_a_host_home(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        flat = ' '.join(host.split())
         # The router names no question tool. The adapter keys its translation on the Cursor
         # spelling the other skills still use and claims no observed Codex tool name.
-        self.assertIn('Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.', flat)
-        self.assertIn("Codex's equivalent is unobserved here", flat)
+        tools = check_core.section(host, 'Tools')
+        row = next(line for line in tools.splitlines() if line.startswith('| `AskQuestion` |'))
+        cells = [cell.strip() for cell in row.strip('|').split('|')]
+        self.assertTrue(cells[1].startswith('`AskUserQuestion`.'))
+        self.assertIn('In `-p` mode it is absent', cells[1])
+        self.assertIn('plain text in your report and hold the dependent step', cells[1])
+        self.assertTrue(cells[2].startswith('unobserved.'))
         self.assertNotIn('Translate AskQuestion', host)
-        # host.md points at the one per-host line; the line is keyed on `hugues-agent` and keeps
-        # the `poteto-agent` mapping for playbooks that still say it.
-        self.assertIn("[workers and models](host-workers.md), which names each host's registered `hugues-agent`", flat)
-        self.assertIn('`poteto-agent` is `hugues-agent`', flat)
+        # The registered name has one per-host line in host-workers.md. host.md keeps the rename
+        # list and sends every worker dispatch to that file through the phase table.
+        self.assertIn('`poteto-agent` to `hugues-agent`', host)
+        self.assertRegex(host, r'(?m)^\| Worker dispatch[^|]*\| \[Workers and models\]\(host-workers\.md\) \|$')
         line = next(paragraph for paragraph in self.workers.split('\n\n') if paragraph.startswith('**`hugues-agent` by host.**'))
         line = ' '.join(line.split())
         self.assertIn('Claude Code registers it as `hstack:hugues-agent`', line)
@@ -645,7 +649,7 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_hosts_without_todo_tool_keep_a_checklist_in_the_agent_store(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        tools = ' '.join(check_core.section(host, 'Tools and authority').split())
+        tools = ' '.join(check_core.section(host, 'Tools').split())
         for phrase in [
                 'Without a todo tool', 'Markdown checklist',
                 "task's [agent store](host-workflow-tools.md#agent-store-translation)",
@@ -725,22 +729,25 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_host_translation_table_covers_control_loop_and_source_attributions(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        table = check_core.section(host, 'Inherited wording translations')
-        rows = [line for line in table.splitlines() if line.startswith('| ')][1:]
-        self.assertEqual(len(rows), 6)
+        section = check_core.section(host, 'Cursor-only features')
+        rows = [line for line in section.splitlines() if line.startswith('| ')][1:]
+        self.assertEqual(len(rows), 5)
         expected = [
-            ('CLI or TUI', '`control-cli`'),
-            ('Browser, Electron or web', '`control-ui`'),
-            ('iOS or Android', 'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
-            ('Claude Code', 'current local session', 'never a cloud schedule'),
-            ('Codex', 'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
-            ('cursor-team-kit', 'bundled `control-cli` / `control-ui`'),
+            ('Cursor Automations',),
+            ('Bugbot', '[Publication](host-publication.md)'),
+            ('A built-in PR tool', 'gh pr create'),
+            ('"control skill" / "matching control skill"', 'cursor-team-kit', '`control-cli`', '`control-ui`',
+             'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
+            ("Cursor's `/loop`", 'current local session', 'never a cloud schedule',
+             'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
         ]
         for row, markers in zip(rows, expected):
             for marker in markers:
                 self.assertIn(marker, row)
-        self.assertIn('"control skill" / "matching control skill"', table)
-        self.assertIn("Cursor's `/loop`", table)
+        for phrase in ['Skipped in <host>: <step>. <reason>.', 'Never stop, ask or retry.',
+                       'Name a placeholder for what a later step needs from it.',
+                       'A skip line never checks a gate: a skipped mandatory gate holds the result.']:
+            self.assertIn(phrase, section)
         ui = (ROOT / 'plugin/skills/control-ui/SKILL.md').read_text()
         self.assertIn('may write to the server', ui)
         self.assertIn('get a yes from the user, or from the coordinator', ui)

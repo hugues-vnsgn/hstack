@@ -1,13 +1,16 @@
 """Actual installed entrypoints in external consumer repos; synthetic history only."""
 from datetime import datetime, timezone
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
+import re
 import shlex
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -937,3 +940,131 @@ class ConsumerAudit(InstalledFixture, unittest.TestCase):
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-activity-unavailable')
         self.assertEqual({row['evidence_basis'] for row in report['worktrees'][1]['evidence']}, {'unparsed-path-hint', 'validated-record'})
         self.assertFalse(report['worktrees'][1]['deletion_authorized'])
+
+
+HOST_PAGE_ROWS = ['Detect', 'Sessions and worktrees', 'Start', 'Send', 'Read', 'Wait', 'Close',
+                  'Load a PR head', 'Allowed tools', 'Skip line']
+SKIP_LINE = re.compile(r'Skipped in .+: .+\. .+\.')
+HARNESS_MEMBER = 'pstack/docs/harness/claude-code.md'
+
+# Upstream first-column cells that hStack states elsewhere or does not need, each with its reason.
+DROPPED = {
+    '`Task`': 'host-workers.md opens with the Task to native agent tool translation',
+    'Run another pstack skill (`/name` or "the **name** skill")':
+        'host.md Loading and routing owns the read-by-path rule and bars the Skill tool for user-only skills',
+    '`subagent_type: generalPurpose`': 'host-workers.md maps generalPurpose to general-purpose in its routed-call paragraph',
+    '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
+    '`environment: "local"`': 'the Agent tool has no environment field, so nothing is passed and the intro drops it',
+    '`run_in_background: true`': 'host-workers.md Defaults pass it, and the Agent tool takes the flag',
+    '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
+    'The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc`': 'setup-hstack writes project-local .hstack/models.md',
+    'A role value `<model> <effort>`, such as `opus high`':
+        'the first Models row maps a role value, which setup-hstack writes as <model> <effort>',
+    '`.cursor/skills/`, `~/.cursor/skills/`': 'host-special-skills.md Project skill paths',
+    '`~/.cursor/plugins/`, `.cursor-plugin/plugin.json`': 'hStack ships native manifests',
+    '`.cursor/rules/*.mdc`, always-applied rules': 'no hStack body reads .mdc rules',
+    '`https://github.com/cursor/plugins/blob/main/pstack/<path>`': 'no hStack body links Cursor\'s repository',
+    'Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`':
+        'host-special-skills.md Scoped history reads only supplied transcript paths',
+    'Cursor cloud agents': 'the Subagent fields row for environment "cloud" maps it, and a step that needs the agent itself is Cursor-only',
+}
+
+
+def markdown_tables(text):
+    tables, heading, rows = {}, None, None
+    for line in text.splitlines() + ['']:
+        if line.startswith('#'):
+            heading = line.lstrip('#').strip()
+        if line.startswith('|'):
+            if rows is None:
+                rows = []
+            rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
+        elif rows is not None:
+            tables.setdefault(heading, []).extend(row[0] for row in rows[2:])
+            rows = None
+    return tables
+
+
+def unmapped_upstream_rows(upstream, adapters, dropped):
+    mine = {}
+    for text in adapters:
+        for name, cells in markdown_tables(text).items():
+            mine.setdefault(name, set()).update(cells)
+    return [f'{name}: {cell}' for name, cells in markdown_tables(upstream).items() for cell in cells
+            if cell not in mine.get(name, set()) and cell not in dropped]
+
+
+def host_page_errors(text):
+    rows = [row for rows in markdown_tables(text).values() for row in rows]
+    errors = [] if rows == HOST_PAGE_ROWS else [f'rows {rows} are not {HOST_PAGE_ROWS}']
+    if not SKIP_LINE.search(text):
+        errors.append('no skip line')
+    return errors
+
+
+def host_index_errors(readme, pages):
+    lists = readme.split('## Agents', 1)[1]
+    listed = set(re.findall(r'^- \[[^\]]+\]\(([^)/]+\.md)\)', lists, re.M))
+    return sorted([*('listed but missing: ' + name for name in listed - set(pages)),
+                   *('missing from the index: ' + name for name in set(pages) - listed)])
+
+
+class HostAdapterShape(unittest.TestCase):
+    def pinned_harness_doc(self, archive=None):
+        pin = json.loads((ROOT / 'docs/upstream/pin.json').read_text())
+        archive = archive or ROOT / f"provenance/upstream/pstack-{pin['version']}.tar.gz"
+        with tarfile.open(archive) as tar:
+            return tar.extractfile(HARNESS_MEMBER).read().decode()
+
+    def adapters(self):
+        return [(ROOT / f'plugin/adapters/{name}').read_text() for name in ('host.md', 'host-workers.md')]
+
+    def test_upstream_harness_rows_are_mapped(self):
+        upstream = self.pinned_harness_doc()
+        self.assertEqual(unmapped_upstream_rows(upstream, self.adapters(), DROPPED), [])
+        cells = {cell for rows in markdown_tables(upstream).values() for cell in rows}
+        self.assertEqual(set(DROPPED) - cells, set(), 'a DROPPED key is not an upstream row')
+        self.assertTrue(all(DROPPED.values()))
+        with tempfile.TemporaryDirectory(prefix='hstack-harness-') as directory:
+            extra = '| `brand_new_field: <x>` | `brand_new_value` |'
+            changed = upstream.replace('## Subagent fields\n\n| Cursor | Claude Code |\n| --- | --- |\n',
+                                       '## Subagent fields\n\n| Cursor | Claude Code |\n| --- | --- |\n' + extra + '\n')
+            self.assertNotEqual(changed, upstream)
+            archive = Path(directory) / 'pstack.tar.gz'
+            with tarfile.open(archive, 'w:gz') as tar:
+                info = tarfile.TarInfo(HARNESS_MEMBER)
+                info.size = len(changed.encode())
+                tar.addfile(info, io.BytesIO(changed.encode()))
+            with self.subTest('extra upstream row'):
+                errors = unmapped_upstream_rows(self.pinned_harness_doc(archive), self.adapters(), DROPPED)
+                self.assertEqual(errors, ['Subagent fields: `brand_new_field: <x>`'])
+
+    def test_host_pages_follow_the_page_shape_and_the_index_lists_them(self):
+        directory = ROOT / 'plugin/adapters/hosts'
+        readme = (directory / 'README.md').read_text()
+        self.assertLessEqual(len(readme.encode()), 1500)
+        self.assertIn(', '.join(HOST_PAGE_ROWS), readme)
+        pages = sorted(path.name for path in directory.glob('*.md') if path.name != 'README.md')
+        self.assertEqual(host_index_errors(readme, pages), [])
+        for name in pages:
+            with self.subTest(page=name):
+                self.assertEqual(host_page_errors((directory / name).read_text()), [])
+        def page(rows, skip='Skipped in Example: step. Reason.'):
+            return '# Example\n\n| Row | Mechanics |\n|---|---|\n' + ''.join(
+                f'| {row} | {skip if row == "Skip line" else "x"} |\n' for row in rows)
+
+        swapped = [*HOST_PAGE_ROWS[:2], HOST_PAGE_ROWS[3], HOST_PAGE_ROWS[2], *HOST_PAGE_ROWS[4:]]
+        listing = '## Agents\n\n- [One](one.md): test\n\n## ADEs\n\n- [Two](two.md): test\n'
+        for label, errors, expected in [
+                ('a complete page', host_page_errors(page(HOST_PAGE_ROWS)), []),
+                ('a missing row', host_page_errors(page(HOST_PAGE_ROWS[:6] + HOST_PAGE_ROWS[7:])), ['rows ']),
+                ('rows out of order', host_page_errors(page(swapped)), ['rows ']),
+                ('no skip line', host_page_errors(page(HOST_PAGE_ROWS, skip='none')), ['no skip line']),
+                ('an exact index', host_index_errors(listing, ['one.md', 'two.md']), []),
+                ('a page the index omits', host_index_errors(listing, ['one.md', 'two.md', 'three.md']),
+                 ['missing from the index: three.md']),
+                ('a listed page that is missing', host_index_errors(listing, ['one.md']), ['listed but missing: two.md'])]:
+            with self.subTest(label):
+                self.assertEqual(len(errors), len(expected), errors)
+                for error, prefix in zip(errors, expected):
+                    self.assertTrue(error.startswith(prefix), error)

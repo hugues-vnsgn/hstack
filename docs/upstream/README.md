@@ -59,6 +59,14 @@ in Claude Code, stays in provenance only, since hStack is native there; adopting
 its generator pattern is separate multi-host work. Changed and added rows carry
 the release target `unreleased-pstack-0.15.32` until a release ships them.
 
+Multi-host P2 (issue #136) reshapes `plugin/adapters/host.md` and
+`host-workers.md` into that adapter's tables, with a Codex column, and adds a
+door to `plugin/adapters/hosts/` for ADEs and other agents
+([ADR 0004](../adr/0004-adapters-for-ades-and-agents.md)). The harness doc stays
+provenance-only and no ledger row changes. A test reads it from the pinned
+archive and fails on an upstream table row that the adapters neither carry nor
+drop with a reason.
+
 ## pstack 0.15.25 merge
 
 The pin moves from 0.15.9 to 0.15.25. Upstream changed 94 files and added 8.

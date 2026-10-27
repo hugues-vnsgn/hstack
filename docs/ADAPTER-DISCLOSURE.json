@@ -207,10 +207,30 @@
       "paragraph": 11,
       "slice": [
         0,
+        349
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "129e533a6b571f014f4ae3eeb6e60af20a580faaa7b6cf485ef8edbb8a4ee312"
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        349,
+        450
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "2e266a55e97636404f7162bac68a10a182ef9d57074bd699ab7f27ee40fae6f4",
+      "disposition": "removed",
+      "reason": "The P2 harness-shape edit adds upstream's rule once above the Subagent fields table: never pass a field or value the tool schema rejects. That rule already says to use the tool's own agent types, so this sentence stated it a second time."
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        450,
         918
       ],
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "8c3ca5512dd31e9ffaeedca91ac4b995616c4bde1c6931b5aa44d584eed12e06"
+      "sha256": "787d64436a94c929f70b6342a885d91d32f99975b0bf42d29e7c70f2f851bb3a"
     },
     {
       "paragraph": 11,
@@ -267,7 +287,10 @@
       "paragraph": 16,
       "slice": null,
       "destination": "plugin/adapters/host.md",
-      "sha256": "75dade775b37e1019f067b69233464548dd4f6832ca48bf00a9a7b6b9b3de566"
+      "sha256": "75dade775b37e1019f067b69233464548dd4f6832ca48bf00a9a7b6b9b3de566",
+      "disposition": "replaced",
+      "reason": "The section now opens with pstack 0.15.32 harness adapter's Tools table in its three-column shape, so the heading takes upstream's name for it. The authority paragraph and the agent-store checklist stay beneath it unchanged.",
+      "replacement": "## Tools"
     },
     {
       "paragraph": 17,
@@ -278,8 +301,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
-      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved.",
-      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\nCodex's equivalent is unobserved here. Use its question tool."
+      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved. The P2 harness-shape edit turns the sentence into upstream's Tools table with the columns Cursor, Claude Code and Codex. Its AskQuestion row keeps the Codex tool unobserved, and says that in -p mode, where AskUserQuestion is absent, the worker writes the question in plain text in its report and holds the dependent step. Task and the skill-run row are dropped because host-workers.md and Loading and routing already state them.",
+      "replacement": "| Cursor | Claude Code | Codex |\n|---|---|---|\n| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |\n| Open a todolist | `TodoWrite` if offered, else the checklist below. | unobserved. Use the checklist below. |\n| `Grep`, `Glob` | `Bash` with `rg` when the session has neither. | unobserved |"
     },
     {
       "paragraph": 17,

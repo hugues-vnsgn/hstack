@@ -20,9 +20,8 @@ class ContextDisclosure(unittest.TestCase):
         workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
         bug = (ROOT / 'plugin/skills/hugues-mode/playbooks/bug-fix.md').read_text()
         tools = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
-        fidelity = host[host.index('A step includes'):host.index('Name the file in your reply.')]
         additions = {
-            'plugin/adapters/host.md': check_core.section(host, 'Inherited wording translations') + fidelity,
+            'plugin/adapters/host.md': check_core.section(host, 'Cursor-only features'),
             'plugin/skills/hugues-mode/SKILL.md': (
                 mode[mode.index('A step includes'):mode.index('\n\nA large or cross-cutting')]
                 + next(line for line in mode.splitlines() if line.startswith('- Whenever a run spawned workers'))
@@ -30,13 +29,14 @@ class ContextDisclosure(unittest.TestCase):
             'plugin/adapters/host-workers.md': (
                 workers[workers.index('The mobile regression worker is'):workers.index('\nAgent mode preserves')]
                 + 'Report deliberate effort lowering too, with its reason.'
-                + 'Full-mode workers load the mode per [host.md](host.md) before work.'),
+                + 'Full-mode workers load the mode per [host.md](host.md) before work.'
+                + check_core.section(workers, 'Subagent fields and models')),
             'plugin/adapters/host-workflow-tools.md': check_core.section(tools, 'Codex sandbox'),
             'plugin/skills/hugues-mode/playbooks/bug-fix.md': bug[bug.index('   Use a fresh general-purpose regression worker.'):bug.index('   Run the same selected regression')],
             'plugin/agents/hugues-agent.md': 'model: inherit\n',
             'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
         }
-        limits = [1300, 550, 500, 750, 900, 15, 15]
+        limits = [1300, 550, 1620, 750, 900, 15, 15]
         sizes = {path: len(text.encode()) for path, text in additions.items()}
         for (path, size), limit in zip(sizes.items(), limits):
             self.assertLessEqual(size, limit, path)
@@ -51,8 +51,11 @@ class ContextDisclosure(unittest.TestCase):
         self.assertIn(scope, host)
         native_growth = len((native_row + scope).encode())
         self.assertLessEqual(native_growth, 240)
+        self.assertIn('\nRead this file once per session, and again after compaction.', host)
+        door_row = next(line for line in host.splitlines(keepends=True) if '[Hosts](hosts/README.md)' in line)
+        self.assertLess(len(door_row.encode()), 100)
         translated_guidance = self.issue_110_guidance_bytes()['plugin/adapters/host.md']
-        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - translated_guidance, 6000)
+        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - len(door_row.encode()) - translated_guidance, 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
         # setup-hstack are reached only by native invocation, with denials respected, and
         # a file read is no substitute. The user-only read is stated once too, beside the tier.

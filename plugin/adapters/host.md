@@ -1,6 +1,6 @@
 # Claude Code and Codex host adapter
 
-Apply this adapter and mobile applicability before the canonical workflow.
+Read this file once per session, and again after compaction. Apply this adapter and mobile applicability before the canonical workflow.
 Follow the consumer project's PR policy. Adapters translate host mechanics and
 limit authority; the canonical skill owns workflow
 phases, mandatory gates, panel cardinality, fallback and stop rules. A constraint
@@ -24,13 +24,6 @@ file-read tool. Helpers never read a skill body. A missing or unreadable path
 holds the dependent step.
 A native denial on such a skill does not stop the host's file read; the owner's real
 control over those skills is enabling or disabling the plugin as a whole.
-
-Inherited Cursor worker wording translates before any dispatch: `poteto-agent` is
-`hugues-agent`, `generalPurpose` is Claude Code's `general-purpose` agent,
-`run_in_background: true` is the host's background option, and Cursor model slugs
-are role defaults to resolve against models the native tool exposes. Read
-[workers and models](host-workers.md), which names each host's registered
-`hugues-agent`, before the dispatch itself.
 
 Reach `setup-hstack` and each consumer or external skill (the native-only
 skills) only through the host's supported native mechanism.
@@ -58,10 +51,14 @@ Use figure-it-out for large, cross-cutting or unmatched work and Orchestrate for
 standing programs. Read the full canonical playbook. Copy its ordered todos verbatim.
 Keep skipped todos with reasons.
 
-## Tools and authority
+## Tools
 
-Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.
-Codex's equivalent is unobserved here. Use its question tool.
+| Cursor | Claude Code | Codex |
+|---|---|---|
+| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |
+| Open a todolist | `TodoWrite` if offered, else the checklist below. | unobserved. Use the checklist below. |
+| `Grep`, `Glob` | `Bash` with `rg` when the session has neither. | unobserved |
+
 No translation grants new authority. User scope governs consumer runs and edits,
 network sends, installs, credentials, system settings, pushes, PR publication,
 merges and releases. Hold actions without authority or capability. Continue independent work.
@@ -72,24 +69,22 @@ A step includes its numbered line and all continuation text. Copy the whole step
 Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.
 Never bulk-mark at the end. Name the file in your reply.
 
-## Inherited wording translations
+## Cursor-only features
 
-Keep pstack's playbook text. Resolve inherited wording by host and surface here.
+A step that needs a Cursor-only feature gets `Skipped in <host>: <step>. <reason>.`, then the next step. Never stop, ask or retry. Name a placeholder for what a later step needs from it. A skip line never checks a gate: a skipped mandatory gate holds the result.
 
-| Wording | Host or surface | Translation |
+| Cursor | Claude Code | Codex |
 |---|---|---|
-| "control skill" / "matching control skill" | CLI or TUI | Use bundled `control-cli`. |
-| "control skill" / "matching control skill" | Browser, Electron or web | Use bundled `control-ui`. |
-| "control skill" / "matching control skill" | iOS or Android | Use the repo's installed simulator-driving skill, such as `test-ios` or `test-android`, through the native mechanism. Otherwise use XCTest or UiAutomator through the native helper. A missing driver stays an execution gap. |
-| Cursor's `/loop` | Claude Code | Use `/loop` in the current local session, never a cloud schedule for work that needs local devices. |
-| Cursor's `/loop` | Codex | Use only active-session waits. Between-turn scheduling stays an unsatisfied gap, per #34 item 6. |
-| `cursor-team-kit` source attributions | Both hosts | Map to bundled `control-cli` / `control-ui`. |
+| Cursor Automations: routines, `update_state` routine calls, `api2.cursor.sh/automations` webhooks, routine wakes, and `SendToUser` secret requests | Skip with the line. | Same. |
+| Bugbot | [Publication](host-publication.md) | Same. |
+| A built-in PR tool | The step's forge command, such as `gh pr create`. No line. | Same. |
+| "control skill" / "matching control skill", `cursor-team-kit` attributions | Bundled `control-cli` (CLI, TUI) or `control-ui` (browser, Electron, web). iOS or Android: the repo's installed simulator-driving skill, such as `test-ios` or `test-android`, through the native mechanism, else XCTest or UiAutomator through the native helper. A missing driver stays an execution gap. | Same. |
+| Cursor's `/loop` | `/loop` in the current local session, never a cloud schedule for work that needs local devices. | Only active-session waits. Between-turn scheduling stays an unsatisfied gap, per #34 item 6. |
 
 ## Required phase guidance
 
 Before the triggering action, read its complete reference. Deferral never skips a rule.
-Retain loaded guidance and reread after compaction when needed. These are owned
-references, not skill bodies or a native loader.
+These are owned references, not skill bodies or a native loader.
 
 | Before this action | Read in full |
 |---|---|
@@ -100,8 +95,8 @@ references, not skill bodies or a native loader.
 | Reading or editing TypeScript files | [TypeScript scope](host-typescript.md) |
 | Running `xcodebuild`, `swift build` / `swift test`, or Gradle in an Android/KMP/CMP project | [Native execution](native-execution.md) |
 | Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports | [Publication](host-publication.md) |
+| First tool call in omp, or a dispatch in Orca or T3 Code | [Hosts](hosts/README.md) |
 
 Plain JVM or server Gradle projects stay out of scope.
 
-Apply [mobile applicability](mobile.md#applicability) before selecting a route.
 Do not load a phase reference merely because it is listed here.
