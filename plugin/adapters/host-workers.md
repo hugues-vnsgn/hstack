@@ -6,8 +6,8 @@ scoped-worker direct implementation exception; do not recursively delegate the
 same assignment. Supply absolute paths
 to the public mode, plugin skills directory and the host adapter and applicable mobile adapter,
 the exact base/head, writable scope, success predicate and evidence destination.
-Carry the loaded mode's absolute path into every fresh worker, including
-general-purpose helpers; see [workflow tools](host-workflow-tools.md).
+Carry the loaded mode's absolute path, derived from the current loaded skill, into every
+fresh worker, including general-purpose helpers; see [workflow tools](host-workflow-tools.md).
 Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled
 catalog entry and read the complete SKILL.md yourself. Read each applicable
 principle's SKILL.md in full as the scoped bundled reference below.
@@ -21,7 +21,6 @@ takes the role instructions of `agents/hugues-agent.md`.
 For routed research/review calls, preserve `generalPurpose` and the workflow's
 own prompt, readonly/agent-mode requirement, model, cardinality and handoff order.
 Do not replace these workers with `hugues-agent`.
-Cursor's `generalPurpose` maps to Claude Code's native `general-purpose` agent;
 Codex uses a fresh native worker with that role's prompt.
 Each owning skill names its complete worker prompts alongside its workflow.
 Read the selected role's ordinary prompt reference, fill its named placeholders,
@@ -53,25 +52,22 @@ independence separately from family diversity.
 
 Pass a role value's effort token through the native tool's effort setting. Where
 the tool has none, the worker runs at the host's effort and the report says so.
-A role value may join alternatives with ` or `: use the first one the native tool
-accepts, else `inherit-parent` at the first alternative's effort, and name which ran
-in the Workers line.
+setup-hstack's ` or ` rule picks first: the first alternative the native tool accepts,
+else `inherit-parent` at the first alternative's effort. A skill's own fallback to its
+default applies only after that, to a value the tool rejected.
 Report deliberate effort lowering too, with its reason.
 
-Enumerate models actually exposed by the native tool. Preserve each core skill's
-fallback sequence on rejected slugs, using only confirmed capabilities; record
-the requested and actual family/model/effort. If a seat needs a family the host cannot
-supply, mark the seat blocked and ask for an explicit configuration choice. Never invent
+Enumerate models actually exposed by the native tool, using only confirmed capabilities.
+The Workers line records the requested and actual family/model/effort. A seat needs a
+family only when its workflow requires one and no alternative on its line is accepted:
+mark the seat blocked and ask for an explicit configuration choice. Never invent
 an available model or label a blocked seat completed. Do not update or publish a
 default-fix PR without publication authority.
 
-`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate
-→ write → confirm → optional verification sequence. Translate the Cursor global
-rule path to project-local `.hstack/models.md`. Read it before all role
-selection; deleting a role restores its pinned default. Write only after the
-skill's confirmation and current filesystem authority. Keep every role and panel,
-the four budget choices and availability validation. This file is guidance;
-restoring the plugin does not execute setup or change any user's configuration.
+`setup-hstack` writes project-local `.hstack/models.md` in place of the Cursor global
+rule, only after the skill's confirmation and current filesystem authority. Read it
+before all role selection. This file is guidance; restoring the plugin does not
+execute setup or change any user's configuration.
 
 For Bun helper setup, read [helper setup](host-helper-setup.md) in full.
 
@@ -85,18 +81,18 @@ If a Cursor-only field has no row, drop it and say so. Never drop `subagent_type
 |---|---|---|
 | `readonly: true` | `subagent_type: "general-purpose"`, or `"Explore"` when the brief's job is to locate or search code, as a `how` explorer's is. The brief says "do not edit files"; then run `git status` in the worker's checkout. | unobserved |
 | `readonly: false` | `subagent_type: "general-purpose"` | unobserved |
-| `environment: "cloud"` | `isolation: "worktree"`, only where the core permits local execution. If the repo's AGENTS.md sets a worktree location, use it and omit `isolation`. The brief names the branch. | unobserved |
-| `environment: "local"` | Omit: the Agent tool has no such field. | unobserved |
+| `environment: "cloud"` | `isolation: "worktree"`, only where the core permits local execution. If the repo's AGENTS.md sets a worktree location, the coordinator creates the worktree there before dispatch and omits `isolation`. The brief names the branch. | unobserved |
+| `environment: "local"` | Omit; no such field. | unobserved |
 | `cloud_base_branch: <b>` | The brief names the checkout `<b>`. | unobserved |
 | `run_in_background: true` | Pass it. | unobserved |
-| `resume` | A new agent, the earlier result's text pasted into its brief; `SendMessage` in the cases `hugues-mode/SKILL.md` allows. | Same; its message tool is unobserved. |
+| `resume` | A new agent, the earlier result's text pasted whole into its brief; `SendMessage` in the cases `hugues-mode/SKILL.md` allows. | Same; its message tool is unobserved. |
 | `file_attachments` | The brief lists the paths. | Same. |
 
 ### Models
 
 | Cursor | Claude Code | Codex |
 |---|---|---|
-| `claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh` | `model: "opus"` and `effort: "xhigh"`. So does a role value `claude-opus-5-5 xhigh`. Drop `-fast`. | unobserved |
+| `claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh` | `model: "opus"` while the Agent tool takes only aliases, and `effort: "xhigh"` to start, which "Match the model to the job" may lower with a reported reason. Drop `-fast`. | unobserved |
 | A `grok-*`, `gpt-*`, or other non-Claude slug | Not accepted: the ` or ` rule above applies, and the Workers line names the model that ran. | unobserved |
 
 ## Model defaults and role labels

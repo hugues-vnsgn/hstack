@@ -956,14 +956,14 @@ DROPPED = {
             'host.md Loading and routing owns the read-by-path rule and bars the Skill tool for user-only skills',
     },
     'Subagent fields': {
-        '`subagent_type: generalPurpose`': 'host-workers.md maps generalPurpose to general-purpose in its routed-call paragraph',
+        '`subagent_type: generalPurpose`': 'the readonly rows map a generalPurpose worker by its readonly flag',
         '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
     },
     'Models': {
         '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
         'The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc`': 'setup-hstack writes project-local .hstack/models.md',
         'A role value `<model> <effort>`, such as `opus high`':
-            'the first Models row maps a role value, which setup-hstack writes as <model> <effort>',
+            'setup-hstack/SKILL.md Role values maps its model and effort, and host-workers.md passes the effort token',
     },
     'Paths': {
         '`.cursor/skills/`, `~/.cursor/skills/`': 'host-special-skills.md Project skill paths',
@@ -1091,12 +1091,29 @@ class HostAdapterShape(unittest.TestCase):
             self.assertIn('the ` or ` rule above applies', claude)
             self.assertIn('the Workers line names the model that ran', claude)
             self.assertNotIn('Omit `model`', claude)
-            self.assertIn("else `inherit-parent` at the first alternative's effort, and name which ran in the Workers line.", workers)
-            self.assertIn('If a seat needs a family the host cannot supply, mark the seat blocked', workers)
+            self.assertIn("setup-hstack's ` or ` rule picks first: the first alternative the native tool accepts, "
+                          "else `inherit-parent` at the first alternative's effort. A skill's own fallback to its default "
+                          'applies only after that, to a value the tool rejected.', workers)
+            self.assertNotIn("Preserve each core skill's fallback sequence", workers)
+            self.assertIn('The Workers line records the requested and actual family/model/effort.', workers)
+            self.assertIn('A seat needs a family only when its workflow requires one and no alternative on its line is '
+                          'accepted: mark the seat blocked', workers)
             self.assertNotIn('If no allowed equivalent is exposed', workers)
+            self.assertNotIn('If a seat needs a family the host cannot', workers)
+        with self.subTest('the Claude model row is the starting value'):
+            claude = self.row('Models', '`claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh`')[1]
+            for phrase in ['`model: "opus"` while the Agent tool takes only aliases', '`effort: "xhigh"` to start',
+                           '"Match the model to the job" may lower with a reported reason', 'Drop `-fast`.']:
+                self.assertIn(phrase, claude)
+            setup = ' '.join((ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text().split())
+            self.assertIn("When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias", setup)
+            self.assertIn('**Match the model to the job.**', workers)
+        with self.subTest('a generalPurpose worker maps by its readonly flag'):
+            self.assertNotIn("Cursor's `generalPurpose` maps to", workers)
+            self.assertIn("preserve `generalPurpose` and the workflow's own prompt, readonly/agent-mode requirement", workers)
         with self.subTest('resume sends the result text'):
             row = self.row('Subagent fields', '`resume`')
-            self.assertIn("the earlier result's text pasted into its brief", row[1])
+            self.assertIn("the earlier result's text pasted whole into its brief", row[1])
             self.assertIn('`SendMessage` in the cases `hugues-mode/SKILL.md` allows', row[1])
             self.assertTrue(row[2].startswith('Same; '), row[2])
             self.assertIn('its message tool is unobserved', row[2])
@@ -1111,7 +1128,8 @@ class HostAdapterShape(unittest.TestCase):
         with self.subTest('cloud keeps the local-execution limit and the worktree location'):
             claude = self.row('Subagent fields', '`environment: "cloud"`')[1]
             for phrase in ['`isolation: "worktree"`', 'only where the core permits local execution',
-                           "AGENTS.md sets a worktree location, use it and omit `isolation`", 'The brief names the branch.']:
+                           "AGENTS.md sets a worktree location, the coordinator creates the worktree there before dispatch "
+                           'and omits `isolation`', 'The brief names the branch.']:
                 self.assertIn(phrase, claude)
             tools = ' '.join((ROOT / 'plugin/adapters/host-workflow-tools.md').read_text().split())
             self.assertIn('Native local workers substitute for cloud only where the core permits local execution', tools)
@@ -1138,6 +1156,13 @@ class HostAdapterShape(unittest.TestCase):
             for test in ['`$ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
                 self.assertIn(test, door)
                 self.assertIn(test, readme)
+        with self.subTest('the index and the ADR name what the door reads and where it can miss'):
+            for limit in ['Unobserved: omp matches at dispatch, not its first tool call',
+                          "Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca",
+                          'Every process an Orca pane starts inherits it.']:
+                self.assertIn(limit, readme)
+            self.assertIn('reads at most the index, never a page', adr)
+            self.assertNotIn('never reads a file under', adr)
         def page(rows, skip='Skipped in Example: step. Reason.'):
             return '# Example\n\n| Row | Mechanics |\n|---|---|\n' + ''.join(
                 f'| {row} | {skip if row == "Skip line" else "x"} |\n' for row in rows)

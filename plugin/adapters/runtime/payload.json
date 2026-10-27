@@ -211,7 +211,7 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "199de577797d06e9b3b4043dd8b57f843b8d903852dd8b652d721f8447567586",
+      "sha256": "ff9dfd7e49eef195984a14b1da3c1583c1ea98d6574ab941de0c97db176f57e6",
       "mode": "100644"
     },
     {
@@ -221,12 +221,12 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "e406670a4f83f2868870084d065764a21ef8cf6716258cdecaaa4ac9bf1087c5",
+      "sha256": "c61d321054e2203cb53f4e376fd14817144e2c9b92dab1954844a15d2c729e24",
       "mode": "100644"
     },
     {
       "path": "adapters/hosts/README.md",
-      "sha256": "6eaaab651a477a4735284fa567c97cef724ce37324cc6de95b761f79e70da04f",
+      "sha256": "d6768d473d5f275de9b1eac686c75c648e9c8bb9fef0126be4ce64f9efb6f9ae",
       "mode": "100644"
     },
     {

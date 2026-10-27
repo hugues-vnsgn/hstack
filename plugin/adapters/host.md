@@ -56,15 +56,12 @@ Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.
 | Cursor | Claude Code | Codex |
 |---|---|---|
 | `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |
-| Open a todolist | `TodoWrite` if offered, else the checklist below. | unobserved |
+| Open a todolist | `TodoWrite` if offered, else a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation), copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks). Name the file in your reply. | unobserved |
 | `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |
 
 No translation grants new authority. User scope governs consumer runs and edits,
 network sends, installs, credentials, system settings, pushes, PR publication,
 merges and releases. Hold actions without authority or capability. Continue independent work.
-
-Without a todo tool, use a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation).
-Copy and mark its steps per the router's Playbooks. Name the file in your reply.
 
 ## Cursor-only features
 

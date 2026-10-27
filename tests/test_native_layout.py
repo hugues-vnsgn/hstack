@@ -653,14 +653,18 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_hosts_without_todo_tool_keep_a_checklist_in_the_agent_store(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        tools = ' '.join(check_core.section(host, 'Tools').split())
+        row = next(line for line in check_core.section(host, 'Tools').splitlines() if line.startswith('| Open a todolist |'))
         for phrase in [
-                'Without a todo tool', 'Markdown checklist',
+                '`TodoWrite` if offered, else a Markdown checklist',
                 "task's [agent store](host-workflow-tools.md#agent-store-translation)",
-                "Copy and mark its steps per the router's Playbooks.",
+                'copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks).',
                 'Name the file in your reply']:
             with self.subTest(phrase=phrase):
-                self.assertIn(phrase, tools)
+                self.assertIn(phrase, row)
+        # The link is the marking rule's only path for a direct swarm, arena or architect run.
+        target = (ROOT / 'plugin/adapters' / re.search(r'\[Playbooks\]\(([^)#]+)#playbooks\)', row).group(1)).resolve()
+        self.assertEqual(target, (ROOT / 'plugin/skills/hugues-mode/SKILL.md').resolve())
+        self.assertIn('\n## Playbooks\n', target.read_text())
         store = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
         self.assertIn('## Agent-store translation', store)
         self.assertIn('use the operator-named directory', store)

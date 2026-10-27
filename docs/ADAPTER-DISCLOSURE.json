@@ -227,10 +227,30 @@
       "paragraph": 11,
       "slice": [
         0,
+        212
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "bd5de5b35af7e6fb8ac18b9bbb8fbe1a5a05f021f2270fb6547c2356f1960007"
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        212,
+        292
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "173cc0ac502f62a3be792757cd302f071d5d11246e66e61597155bbd0c53a9c6",
+      "disposition": "removed",
+      "reason": "P2 fix round 3 drops this sentence. It mapped every generalPurpose worker to general-purpose with no exception, against the Subagent fields table, whose readonly: true row sends a search or locate brief to Explore. That table now maps the worker by its readonly flag, and the Codex half of the paragraph stays."
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        292,
         349
       ],
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "129e533a6b571f014f4ae3eeb6e60af20a580faaa7b6cf485ef8edbb8a4ee312"
+      "sha256": "3fdd6aa120b64a821d69e92e528f6fa4452202d56a95eb2cc93399f38eca5c1d"
     },
     {
       "paragraph": 11,
@@ -314,8 +334,8 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "e0466a1eff2e7767c9c4af77dd5f6e0c5b42c72cd99469fdf3ee0a0a700afce7",
       "disposition": "replaced",
-      "reason": "The P2 fix round scopes the blocked-seat rule. A role value with alternatives already falls back to inherit-parent at the first alternative's effort, so only a seat that needs a family the host cannot supply is blocked. Everything else in the paragraph is unchanged.",
-      "replacement": "Enumerate models actually exposed by the native tool. Preserve each core skill's\nfallback sequence on rejected slugs, using only confirmed capabilities; record\nthe requested and actual family/model/effort. If a seat needs a family the host cannot\nsupply, mark the seat blocked and ask for an explicit configuration choice. Never invent\nan available model or label a blocked seat completed. Do not update or publish a\ndefault-fix PR without publication authority."
+      "reason": "The P2 fix round scopes the blocked-seat rule. A role value with alternatives already falls back to inherit-parent at the first alternative's effort, so only a seat that needs a family the host cannot supply is blocked. Everything else in the paragraph is unchanged. P2 fix round 3 states the model precedence once: setup-hstack's ` or ` rule picks first, and a skill's own fallback to its default applies only after it, to a value the tool rejected. A seat needs a family only when its workflow requires one and no alternative on its line is accepted, so a seat with an accepted alternative is never blocked. The Workers line records the requested and actual family, model and effort.",
+      "replacement": "Enumerate models actually exposed by the native tool, using only confirmed capabilities.\nThe Workers line records the requested and actual family/model/effort. A seat needs a\nfamily only when its workflow requires one and no alternative on its line is accepted:\nmark the seat blocked and ask for an explicit configuration choice. Never invent\nan available model or label a blocked seat completed. Do not update or publish a\ndefault-fix PR without publication authority."
     },
     {
       "paragraph": 15,
@@ -323,8 +343,8 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "1a0c39ffe445cc11c913d832f7962feeec220a32870e15299c9ff2448a2b8e29",
       "disposition": "replaced",
-      "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md.",
-      "replacement": "`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate\n→ write → confirm → optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
+      "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md. P2 fix round 3 keeps the host rules and drops what setup-hstack/SKILL.md already states: its step sequence (Steps 1 to 8), every role and panel and the four budget choices (steps 3 and 5), and availability validation (step 4). \"Deleting a role restores its pinned default\" is the Model defaults rule that a role with no line keeps its default.",
+      "replacement": "`setup-hstack` writes project-local `.hstack/models.md` in place of the Cursor global\nrule, only after the skill's confirmation and current filesystem authority. Read it\nbefore all role selection. This file is guidance; restoring the plugin does not\nexecute setup or change any user's configuration."
     },
     {
       "paragraph": 16,
@@ -344,8 +364,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
-      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved. The P2 harness-shape edit keeps the sentence, so the filesystem and Git translation stays, and puts upstream's Tools table under it with the columns Cursor, Claude Code and Codex. The AskQuestion row keeps the Codex tool unobserved, and says that in -p mode, where AskUserQuestion is absent, the worker writes the question in plain text in its report and holds the dependent step. Task and the skill-run row are dropped because host-workers.md and Loading and routing already state them.",
-      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\n\n| Cursor | Claude Code | Codex |\n|---|---|---|\n| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |\n| Open a todolist | `TodoWrite` if offered, else the checklist below. | unobserved |\n| `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |"
+      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved. The P2 harness-shape edit keeps the sentence, so the filesystem and Git translation stays, and puts upstream's Tools table under it with the columns Cursor, Claude Code and Codex. The AskQuestion row keeps the Codex tool unobserved, and says that in -p mode, where AskUserQuestion is absent, the worker writes the question in plain text in its report and holds the dependent step. Task and the skill-run row are dropped because host-workers.md and Loading and routing already state them. P2 fix round 3 folds the agent-store checklist into the todolist row and links the router's Playbooks section, so a direct swarm, arena or architect run on a host without a todo tool still finds the copy and marking rule.",
+      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\n\n| Cursor | Claude Code | Codex |\n|---|---|---|\n| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |\n| Open a todolist | `TodoWrite` if offered, else a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation), copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks). Name the file in your reply. | unobserved |\n| `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |"
     },
     {
       "paragraph": 17,

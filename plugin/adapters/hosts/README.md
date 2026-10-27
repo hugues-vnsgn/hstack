@@ -2,6 +2,8 @@
 
 [host.md](../host.md) sends you here when `$ORCA_TERMINAL_HANDLE` is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
 
+Unobserved: omp matches at dispatch, not its first tool call, so an omp agent that never dispatches reads no page. Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca. Every process an Orca pane starts inherits it.
+
 An ADE hosts agent sessions and worktrees. An agent here is a program that runs a model, not a PR owner. Each list line reads `- [name](name.md): detection test`.
 
 ## Shared ADE rule
@@ -10,7 +12,7 @@ A page maps terminal and worktree mechanics only: which session and worktree a w
 
 ## Page shape
 
-One page per agent or ADE, `<name>.md`, holding one table `| Row | Mechanics |` whose rows come in this order: Detect, Sessions and worktrees, Start, Send, Read, Wait, Close, Load a PR head, Allowed tools, Skip line. The Skip line row holds `Skipped in <name>: <step>. <reason>.`. Write `unobserved` for what hStack has not seen. A page adds no gate or authority and edits no file the upstream ledger maps.
+Each agent or ADE gets one page, `<name>.md`, with one table `| Row | Mechanics |` and these rows in order: Detect, Sessions and worktrees, Start, Send, Read, Wait, Close, Load a PR head, Allowed tools, Skip line. The Skip line row holds `Skipped in <name>: <step>. <reason>.`. Write `unobserved` for what hStack has not seen. A page adds no gate or authority and edits no file the upstream ledger maps.
 
 ## Agents
 
