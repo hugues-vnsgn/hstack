@@ -76,25 +76,26 @@ class ContextDisclosure(unittest.TestCase):
         native_growth = len((native_row + scope).encode())
         self.assertLessEqual(native_growth, 240)
         self.assertIn('\nRead this file once per session, and again after compaction.', host)
-        door_row = next(line for line in host.splitlines(keepends=True) if '[Hosts](hosts/README.md)' in line)
-        self.assertLess(len(door_row.encode()), 100)
-        with self.subTest('the door row names tests the agent can run'):
-            for test in ['`$ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
-                self.assertIn(test, door_row)
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        with self.subTest('the door runs a test before the first dispatch'):
+            self.assertTrue(check_core.DOOR.startswith('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE`;'))
+            for test in ['if it prints a value', '`t3-code` tools are listed', 'the agent is omp']:
+                self.assertIn(test, check_core.DOOR)
+            self.assertTrue(workers.startswith('## Native workers and role models\n\n' + check_core.DOOR + '\n\n'))
         with self.subTest('a session that meets no door test reads nothing under hosts/'):
+            hosts = ROOT / 'plugin/adapters/hosts'
+            references = [(path.relative_to(ROOT).as_posix(), line)
+                          for path in sorted((ROOT / 'plugin').rglob('*.md')) if hosts not in path.parents
+                          for line in path.read_text().splitlines() if 'hosts/' in line]
+            self.assertEqual(references, [('plugin/adapters/host-workers.md', check_core.DOOR)])
             measured = measure_context.measure(ROOT)
-            for path in measured['mode_initial_read_set']['candidate_paths']:
-                lines = [line for line in (ROOT / path).read_text().splitlines(keepends=True) if 'hosts/' in line]
-                self.assertEqual(lines, [door_row] if path == 'plugin/adapters/host.md' else [], path)
-            self.assertIn(door_row, check_core.section(host, 'Required phase guidance'))
-            self.assertIn('Do not load a phase reference merely because it is listed here.', host)
             for name, profile in measured['scenarios'].items():
                 self.assertEqual([p for p in profile['candidate']['paths'] if '/hosts/' in p], [], name)
         with self.subTest('the opener and the phase reference reread rule agree with the skills'):
             self.assertIn('Retain loaded guidance and reread after compaction when needed.', host)
             self.assertIn('A skill\'s "read the host contract" is that read.', host)
         translated_guidance = self.issue_110_guidance_bytes()['plugin/adapters/host.md']
-        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - len(door_row.encode()) - translated_guidance, 6000)
+        self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - translated_guidance, 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
         # setup-hstack are reached only by native invocation, with denials respected, and
         # a file read is no substitute. The user-only read is stated once too, beside the tier.
@@ -203,6 +204,12 @@ class ContextDisclosure(unittest.TestCase):
                 changed = dict(original)
                 changed[check_core.ADAPTERS[0]] = changed[check_core.ADAPTERS[0]].replace('(' + name + ')', '(missing.md)')
                 self.assertTrue(check_core.adapter_errors(changed))
+        workers = 'plugin/adapters/host-workers.md'
+        for old in ['(hosts/README.md)', '`printenv ORCA_TERMINAL_HANDLE`']:
+            with self.subTest(door=old):
+                changed = dict(original)
+                changed[workers] = changed[workers].replace(old, '(missing.md)')
+                self.assertEqual(check_core.adapter_errors(changed), ['missing door: hosts/README.md'])
 
     def test_mobile_and_worker_rules_cannot_disappear_after_deferral(self):
         original = self.adapter_texts()

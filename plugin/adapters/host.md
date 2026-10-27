@@ -56,8 +56,10 @@ Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.
 | Cursor | Claude Code | Codex |
 |---|---|---|
 | `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |
-| Open a todolist | `TodoWrite` if offered, else a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation), copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks). Name the file in your reply. | unobserved |
+| Open a todolist | `TodoWrite` | unobserved |
 | `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |
+
+Without a todo tool, use a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation), copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks). Name the file in your reply.
 
 No translation grants new authority. User scope governs consumer runs and edits,
 network sends, installs, credentials, system settings, pushes, PR publication,
@@ -89,7 +91,6 @@ Retain loaded guidance and reread after compaction when needed. These are owned 
 | Reading or editing TypeScript files | [TypeScript scope](host-typescript.md) |
 | Running `xcodebuild`, `swift build` / `swift test`, or Gradle in an Android/KMP/CMP project | [Native execution](native-execution.md) |
 | Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports | [Publication](host-publication.md) |
-| Dispatch with `$ORCA_TERMINAL_HANDLE` set, `t3-code` tools or omp | [Hosts](hosts/README.md) |
 
 Plain JVM or server Gradle projects stay out of scope.
 

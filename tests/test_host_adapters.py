@@ -956,14 +956,15 @@ DROPPED = {
             'host.md Loading and routing owns the read-by-path rule and bars the Skill tool for user-only skills',
     },
     'Subagent fields': {
-        '`subagent_type: generalPurpose`': 'the readonly rows map a generalPurpose worker by its readonly flag',
+        '`subagent_type: generalPurpose`':
+            'the readonly rows map a generalPurpose worker by its readonly flag, the false row also with no readonly field',
         '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
     },
     'Models': {
         '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
         'The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc`': 'setup-hstack writes project-local .hstack/models.md',
         'A role value `<model> <effort>`, such as `opus high`':
-            'setup-hstack/SKILL.md Role values maps its model and effort, and host-workers.md passes the effort token',
+            'the Models row maps a role value such as claude-opus-5-5 xhigh, and host-workers.md passes the effort token',
     },
     'Paths': {
         '`.cursor/skills/`, `~/.cursor/skills/`': 'host-special-skills.md Project skill paths',
@@ -1085,7 +1086,20 @@ class HostAdapterShape(unittest.TestCase):
                            '"do not edit files"', "`git status` in the worker's checkout"]:
                 self.assertIn(phrase, claude)
             self.assertLess(claude.index('general-purpose'), claude.index('Explore'))
-            self.assertEqual(self.row('Subagent fields', '`readonly: false`')[1], '`subagent_type: "general-purpose"`')
+            self.assertTrue(self.row('Subagent fields', '`readonly: false`')[1].startswith('`subagent_type: "general-purpose"`'))
+        with self.subTest('every generalPurpose call in the skills has a row'):
+            shapes = {}
+            for path in sorted((ROOT / 'plugin/skills').rglob('*.md')):
+                for line in path.read_text().splitlines():
+                    if 'generalPurpose`' in line:
+                        readonly = next((value for value in ('true', 'false') if f'`readonly: {value}`' in line), None)
+                        shapes.setdefault(readonly, []).append(path.relative_to(ROOT).as_posix())
+            self.assertEqual(set(shapes), {'true', 'false', None})
+            for readonly, paths in shapes.items():
+                claude = self.row('Subagent fields', f'`readonly: {readonly or "false"}`')[1]
+                self.assertIn('`subagent_type: "general-purpose"`', claude, paths)
+                if readonly is None:
+                    self.assertIn('also for `generalPurpose` without `readonly`', claude, paths)
         with self.subTest('one model rule'):
             claude = self.row('Models', 'A `grok-*`, `gpt-*`, or other non-Claude slug')[1]
             self.assertIn('the ` or ` rule above applies', claude)
@@ -1093,7 +1107,7 @@ class HostAdapterShape(unittest.TestCase):
             self.assertNotIn('Omit `model`', claude)
             self.assertIn("setup-hstack's ` or ` rule picks first: the first alternative the native tool accepts, "
                           "else `inherit-parent` at the first alternative's effort. A skill's own fallback to its default "
-                          'applies only after that, to a value the tool rejected.', workers)
+                          'applies only if the tool then rejects the value that rule picked.', workers)
             self.assertNotIn("Preserve each core skill's fallback sequence", workers)
             self.assertIn('The Workers line records the requested and actual family/model/effort.', workers)
             self.assertIn('A seat needs a family only when its workflow requires one and no alternative on its line is '
@@ -1103,14 +1117,18 @@ class HostAdapterShape(unittest.TestCase):
         with self.subTest('the Claude model row is the starting value'):
             claude = self.row('Models', '`claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh`')[1]
             for phrase in ['`model: "opus"` while the Agent tool takes only aliases', '`effort: "xhigh"` to start',
-                           '"Match the model to the job" may lower with a reported reason', 'Drop `-fast`.']:
+                           '"Match the model to the job" may lower with a reported reason',
+                           'So does a role value `claude-opus-5-5 xhigh`.', 'Drop `-fast`.']:
                 self.assertIn(phrase, claude)
             setup = ' '.join((ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text().split())
             self.assertIn("When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias", setup)
             self.assertIn('**Match the model to the job.**', workers)
         with self.subTest('a generalPurpose worker maps by its readonly flag'):
             self.assertNotIn("Cursor's `generalPurpose` maps to", workers)
-            self.assertIn("preserve `generalPurpose` and the workflow's own prompt, readonly/agent-mode requirement", workers)
+            self.assertNotIn('preserve `generalPurpose`', workers)
+            self.assertIn("preserve the workflow's own prompt, readonly/agent-mode requirement", workers)
+            self.assertIn("Do not replace these workers with `hugues-agent`. Codex uses a fresh native worker with the "
+                          "workflow's prompt.", workers)
         with self.subTest('resume sends the result text'):
             row = self.row('Subagent fields', '`resume`')
             self.assertIn("the earlier result's text pasted whole into its brief", row[1])
@@ -1144,24 +1162,27 @@ class HostAdapterShape(unittest.TestCase):
         for name in pages:
             with self.subTest(page=name):
                 self.assertEqual(host_page_errors((directory / name).read_text()), [])
-        with self.subTest('the ADE rule is stated once, and the door row names the tests the README repeats'):
+        with self.subTest('the ADE rule is stated once, and the door names the tests the README repeats'):
             adr = (ROOT / 'docs/adr/0004-adapters-for-ades-and-agents.md').read_text()
             sentence = 'A page never creates or reads the ADE'
             self.assertEqual(readme.count(sentence), 1)
             self.assertEqual(adr.count(sentence), 0)
             self.assertIn('hosts/README.md#shared-ade-rule', adr)
             self.assertIn('settlement receipts', readme)
-            host = (ROOT / 'plugin/adapters/host.md').read_text()
-            door = next(line for line in host.splitlines() if '(hosts/README.md)' in line)
-            for test in ['`$ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
+            workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+            door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
+            for test in ['ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
                 self.assertIn(test, door)
                 self.assertIn(test, readme)
+            self.assertIn('[host-workers.md](../host-workers.md) sends you here', readme)
         with self.subTest('the index and the ADR name what the door reads and where it can miss'):
             for limit in ['Unobserved: omp matches at dispatch, not its first tool call',
                           "Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca",
                           'Every process an Orca pane starts inherits it.']:
                 self.assertIn(limit, readme)
             self.assertIn('reads at most the index, never a page', adr)
+            self.assertIn('host.md, which every session reads, carries none of it', adr)
+            self.assertNotIn('gets one row in its phase table', adr)
             self.assertNotIn('never reads a file under', adr)
         def page(rows, skip='Skipped in Example: step. Reason.'):
             return '# Example\n\n| Row | Mechanics |\n|---|---|\n' + ''.join(

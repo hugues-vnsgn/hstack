@@ -159,9 +159,11 @@ PHASE_GUIDANCE = {
     'host-mobile-languages.md': 'Reading or editing Swift or Kotlin files',
     'host-typescript.md': 'Reading or editing TypeScript files',
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
-    'hosts/README.md': 'Dispatch with `$ORCA_TERMINAL_HANDLE` set, `t3-code` tools or omp',
 }
-ADAPTER_RESOURCES = ['plugin/adapters/' + name for name in PHASE_GUIDANCE] + ['plugin/adapters/mobile-workflows.md']
+DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE`; if it prints a value, '
+        '`t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
+ADAPTER_RESOURCES = (['plugin/adapters/' + name for name in PHASE_GUIDANCE]
+                     + ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/hosts/README.md'])
 
 
 def require(value, message):
@@ -299,6 +301,8 @@ def adapter_errors(texts):
     for name, trigger in PHASE_GUIDANCE.items():
         if not re.search(r'^\| ' + re.escape(trigger) + r' \| \[[^\]]+\]\(' + re.escape(name) + r'\) \|$', host, re.M):
             errors.append('missing phase prerequisite: ' + name)
+    if texts['plugin/adapters/host-workers.md'].count(DOOR) != 1:
+        errors.append('missing door: hosts/README.md')
     for marker in ['Before the triggering action, read its complete reference',
                    'never use a file read as an invocation fallback', 'never restart task routing',
                    'Reach `setup-hstack` and each consumer or external skill',
@@ -325,7 +329,7 @@ def adapter_errors(texts):
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
                      'All 59 top-level skills are registered',
-                     'preserve `generalPurpose`', 'Do not replace these workers with `hugues-agent`',
+                     'also for `generalPurpose` without `readonly`', 'Do not replace these workers with `hugues-agent`',
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',
                      'automate-me history mining remains blocked',

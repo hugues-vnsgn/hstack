@@ -653,15 +653,19 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_hosts_without_todo_tool_keep_a_checklist_in_the_agent_store(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        row = next(line for line in check_core.section(host, 'Tools').splitlines() if line.startswith('| Open a todolist |'))
+        rules = [line for line in check_core.section(host, 'Tools').splitlines() if 'Markdown checklist' in line]
+        self.assertEqual(len(rules), 1)
+        rule = rules[0]
+        with self.subTest('the rule binds every host, not one table column'):
+            self.assertFalse(rule.startswith('|'), rule)
+            self.assertTrue(rule.startswith('Without a todo tool, use a Markdown checklist'), rule)
         for phrase in [
-                '`TodoWrite` if offered, else a Markdown checklist',
                 "task's [agent store](host-workflow-tools.md#agent-store-translation)",
                 'copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks).',
                 'Name the file in your reply']:
             with self.subTest(phrase=phrase):
-                self.assertIn(phrase, row)
-        target = (ROOT / 'plugin/adapters' / re.search(r'\[Playbooks\]\(([^)#]+)#playbooks\)', row).group(1)).resolve()
+                self.assertIn(phrase, rule)
+        target = (ROOT / 'plugin/adapters' / re.search(r'\[Playbooks\]\(([^)#]+)#playbooks\)', rule).group(1)).resolve()
         self.assertEqual(target, (ROOT / 'plugin/skills/hugues-mode/SKILL.md').resolve())
         self.assertIn('\n## Playbooks\n', target.read_text())
         store = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
@@ -691,7 +695,8 @@ class HuguesModeRouter(unittest.TestCase):
         workers = ' '.join(self.workers.split())
         self.assertIn('Full-mode workers load the mode per [host.md](host.md) before work.', workers)
         self.assertIn('On Codex, select its enabled catalog entry and read the complete SKILL.md yourself.', workers)
-        self.assertIn("preserve `generalPurpose` and the workflow's own prompt", workers)
+        self.assertIn("preserve the workflow's own prompt", workers)
+        self.assertIn("Carry the loaded mode's absolute path, derived from the current loaded skill, into every fresh worker", workers)
         self.assertIn('without a mode persona', workers)
 
     def test_mobile_regression_worker_has_only_the_narrow_reading_list(self):

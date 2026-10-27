@@ -420,12 +420,15 @@ lists only under Paths. Further subtests pin the five coordinator rulings in the
 result's text, the drop rule and the cloud row. Fix round 3 adds subtests for the model
 precedence (setup-hstack's ` or ` rule first, a skill's fallback only for a rejected value), the
 blocked-seat definition, the Claude Models row as the alias-while-alias-only starting value,
-the removed `generalPurpose` mapping and the coordinator creating the worktree.
+the removed `generalPurpose` mapping and the coordinator creating the worktree. Fix round 4
+adds subtests that every `generalPurpose` call in the skills, with `readonly: true`, `false`
+or no `readonly`, reaches a `general-purpose` row, and that the Claude Models row maps a role
+value such as `claude-opus-5-5 xhigh`.
 `test_host_pages_follow_the_page_shape_and_the_index_lists_them` checks each page under
 `plugin/adapters/hosts/` for the ten rows in order and a skip line, and checks that the
 index lists exactly the pages that exist; no page exists yet, so synthetic pages prove the
 checks. A subtest checks that the shared ADE rule is stated once, in the README, and that the
-README repeats the three tests the door row names. Another checks that the README names the
+README repeats the three tests the door names and points back to `host-workers.md`. Another checks that the README names the
 door's unobserved limits and that ADR 0004 lets a session outside every listed ADE and agent
 read at most the index. Both cases are source checks of wiring. No
 Orca, T3 Code or omp session was observed. Four existing cases moved a pinned phrase with its
@@ -436,10 +439,13 @@ guidance-byte accounting in `test_context_disclosure`. The accounting computes e
 features` section that replaced issue 110's `host.md` text is 1,372 bytes against 1,185 at
 `ae7cec3`. Its 187-byte growth is pinned and counts against every bound, so no exemption rose
 and the host.md cap stays 1,300. The worker allowance stays 500 bytes and the new `Subagent
-fields and models` tables are not exempt. A subtest checks that the door row is the only line
-under `hosts/` in the initial read set and that no measured scenario reads a file there. The
+fields and models` tables are not exempt. Since fix round 4 the door is one sentence at the top of
+`host-workers.md`, and `check_core.py` reports a missing door. A subtest checks that it is
+the only line in a `plugin/` Markdown file outside the index that names `hosts/`, and that no
+measured scenario reads a file there. The
 Git-translation subtest is keyed to the hash-pinned baseline sentence, not to a reason's
-wording. The todo-checklist case resolves the row's Playbooks link to the router. The
+wording. The todo-checklist case checks that the checklist rule sits under the Tools
+table, not in one host's column, and resolves its Playbooks link to the router. The
 `poteto-agent` mapping sentence in `hugues-agent` by host went, with its assertion in
 `test_native_layout`, because the rename list and the per-host line state the mapping. The
 checklist's three step-fidelity sentences went from `host.md` to the router's Playbooks
