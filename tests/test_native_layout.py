@@ -661,7 +661,6 @@ class HuguesModeRouter(unittest.TestCase):
                 'Name the file in your reply']:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, row)
-        # The link is the marking rule's only path for a direct swarm, arena or architect run.
         target = (ROOT / 'plugin/adapters' / re.search(r'\[Playbooks\]\(([^)#]+)#playbooks\)', row).group(1)).resolve()
         self.assertEqual(target, (ROOT / 'plugin/skills/hugues-mode/SKILL.md').resolve())
         self.assertIn('\n## Playbooks\n', target.read_text())

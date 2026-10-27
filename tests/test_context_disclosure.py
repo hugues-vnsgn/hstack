@@ -14,7 +14,7 @@ import measure_context
 from test_host_adapters import InstalledFixture
 
 TRUNK = 'ae7cec396976abddfe27ca701e9fe782bc7db6f7'
-P2_HOST_GROWTH = 187
+CURSOR_ONLY_SECTION_GROWTH_OVER_TRUNK = 187
 
 
 def issue_110_guidance(read, host_guidance):
@@ -56,19 +56,15 @@ def at_trunk(path):
 
 class ContextDisclosure(unittest.TestCase):
     def issue_110_guidance_bytes(self):
+        trunk = issue_110_guidance(at_trunk, trunk_host_guidance)
         head = issue_110_guidance(lambda path: (ROOT / path).read_text(),
                                   lambda host: check_core.section(host, 'Cursor-only features'))
-        trunk = issue_110_guidance(at_trunk, trunk_host_guidance)
         host = 'plugin/adapters/host.md'
-        # P2 rewrote issue 110's host.md text as the "Cursor-only features" section. The section
-        # keeps the bytes that text had at TRUNK and no more, so its growth counts against every
-        # bound. The growth is pinned so the section cannot change size unnoticed.
-        self.assertEqual(head[host] - trunk[host], P2_HOST_GROWTH)
-        head[host] = trunk[host]
-        self.assertEqual(head, trunk)
-        for (path, size), limit in zip(head.items(), [1300, 550, 500, 750, 900, 15, 15]):
+        self.assertEqual(head.pop(host) - trunk[host], CURSOR_ONLY_SECTION_GROWTH_OVER_TRUNK)
+        self.assertEqual(head, {path: size for path, size in trunk.items() if path != host})
+        for (path, size), limit in zip(trunk.items(), [1300, 550, 500, 750, 900, 15, 15]):
             self.assertLessEqual(size, limit, path)
-        return head
+        return trunk
 
     def test_initial_adapters_do_not_eagerly_load_unrelated_phase_guidance(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
