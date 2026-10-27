@@ -159,7 +159,7 @@ PHASE_GUIDANCE = {
     'host-mobile-languages.md': 'Reading or editing Swift or Kotlin files',
     'host-typescript.md': 'Reading or editing TypeScript files',
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
-    'hosts/README.md': 'First tool call in omp, or a dispatch in Orca or T3 Code',
+    'hosts/README.md': 'Dispatch with `$ORCA_TERMINAL_HANDLE` set, `t3-code` tools or omp',
 }
 ADAPTER_RESOURCES = ['plugin/adapters/' + name for name in PHASE_GUIDANCE] + ['plugin/adapters/mobile-workflows.md']
 

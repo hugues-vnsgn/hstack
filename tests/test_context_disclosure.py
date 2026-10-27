@@ -35,10 +35,14 @@ class ContextDisclosure(unittest.TestCase):
             'plugin/agents/hugues-agent.md': 'model: inherit\n',
             'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
         }
-        limits = [1300, 550, 500, 750, 900, 15, 15]
+        limits = [1400, 550, 500, 750, 900, 15, 15]
+        trunk = [1185, 476, 426, 651, 837, 15, 15]
+        # A raise over `ae7cec3` is recorded here and named under "Budget loosening" in the PR body.
+        loosened = [187, 0, 0, 0, 0, 0, 0]
         sizes = {path: len(text.encode()) for path, text in additions.items()}
-        for (path, size), limit in zip(sizes.items(), limits):
+        for (path, size), limit, base, extra in zip(sizes.items(), limits, trunk, loosened):
             self.assertLessEqual(size, limit, path)
+            self.assertEqual(size - base, extra, path)
         return sizes
 
     def test_initial_adapters_do_not_eagerly_load_unrelated_phase_guidance(self):
@@ -53,6 +57,13 @@ class ContextDisclosure(unittest.TestCase):
         self.assertIn('\nRead this file once per session, and again after compaction.', host)
         door_row = next(line for line in host.splitlines(keepends=True) if '[Hosts](hosts/README.md)' in line)
         self.assertLess(len(door_row.encode()), 100)
+        with self.subTest('the door row names tests the agent can run, and a plain session reads nothing under hosts/'):
+            for test in ['`$ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
+                self.assertIn(test, door_row)
+            self.assertIn('Do not load a phase reference merely because it is listed here.', host)
+        with self.subTest('the opener and the phase reference reread rule agree with the skills'):
+            self.assertIn('Retain loaded guidance and reread after compaction when needed.', host)
+            self.assertIn('A skill\'s "read the host contract" is that read.', host)
         translated_guidance = self.issue_110_guidance_bytes()['plugin/adapters/host.md']
         self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - len(door_row.encode()) - translated_guidance, 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
@@ -117,6 +128,10 @@ class ContextDisclosure(unittest.TestCase):
                 self.fail('unknown disposition: ' + disposition)
             restored.setdefault(row['paragraph'], []).append(fragment)
         self.assertEqual(set(restored), set(range(len(paragraphs))))
+        for row in receipt['host_fragments']:
+            if 'Git translation' in row.get('reason', ''):
+                with self.subTest('a reason that claims the Git translation is kept'):
+                    self.assertIn('filesystem and Git to host tools', (ROOT / row['destination']).read_text())
         for index, pieces in restored.items():
             self.assertEqual(' '.join(' '.join(pieces).split()), ' '.join(paragraphs[index].split()))
         # The blanket pre-fix sentences are gone from the live adapter, not merely shadowed by a

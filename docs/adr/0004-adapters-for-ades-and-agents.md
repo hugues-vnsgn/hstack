@@ -19,7 +19,7 @@ An ADE (agent development environment) is an app that hosts several agent sessio
 
 ## The shared ADE rule
 
-An ADE page maps terminal and worktree mechanics only: which session and worktree a worker runs in, so the coordinator can send, read and wait on it. hStack's own playbooks keep dispatch, completion, verification and every record. A page never creates or reads the ADE's own runs, tasks, dispatches, inboxes or settlement receipts. New work gets a fresh worker.
+The rule is stated once, in [hosts/README.md](../../plugin/adapters/hosts/README.md#shared-ade-rule), because sessions read that file. This ADR does not repeat it, so the two cannot differ.
 
 ## Orca is terminal-only
 

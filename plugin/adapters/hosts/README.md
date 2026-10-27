@@ -1,12 +1,12 @@
 # Hosts and ADEs
 
-Read this once, before the first dispatch in an ADE or the first tool call in an agent listed below. Run each list's detection test, read the page of the first match, and go on under [host.md](../host.md) when none matches.
+[host.md](../host.md) sends you here when `$ORCA_TERMINAL_HANDLE` is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
 
 An ADE hosts agent sessions and worktrees. An agent here is a program that runs a model, not a PR owner. Each list line reads `- [name](name.md): detection test`.
 
 ## Shared ADE rule
 
-A page maps terminal and worktree mechanics only: which session and worktree a worker runs in, so the coordinator can send, read and wait on it. hStack's playbooks keep dispatch, completion, verification and every record. A page never creates or reads the ADE's own runs, tasks, dispatches or inboxes. New work gets a fresh worker.
+A page maps terminal and worktree mechanics only: which session and worktree a worker runs in, so the coordinator can send, read and wait on it. hStack's playbooks keep dispatch, completion, verification and every record. A page never creates or reads the ADE's own runs, tasks, dispatches, inboxes or settlement receipts. New work gets a fresh worker.
 
 ## Page shape
 

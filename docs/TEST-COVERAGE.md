@@ -411,16 +411,26 @@ The host.md harness-shape change (issue #136, multi-host P2) adds two cases, so 
 cases collect. `test_upstream_harness_rows_are_mapped` reads
 `pstack/docs/harness/claude-code.md` from the archive the pin names and checks that each
 first-column cell of each upstream table is a cell of the same-named table in `host.md` or
-`host-workers.md`, or a key of the test's `DROPPED` map with its reason. A subtest builds an
-archive with one extra row and expects the case to name it.
+`host-workers.md`, a key of that table's entry in the test's `DROPPED` map with its reason,
+or a key of its entry in `GAPS`, the rows hStack leaves open. Subtests build an archive with
+one extra row and expect the case to name it, add `Task` to upstream's Cursor-only features
+table, which `DROPPED` lists only under Tools, and add the transcripts row, which `GAPS`
+lists only under Paths. Further subtests pin the five coordinator rulings in the
+`host-workers.md` cells: the `readonly` precedence, the one model rule, `resume` with the
+result's text, the drop rule and the cloud row.
 `test_host_pages_follow_the_page_shape_and_the_index_lists_them` checks each page under
 `plugin/adapters/hosts/` for the ten rows in order and a skip line, and checks that the
 index lists exactly the pages that exist; no page exists yet, so synthetic pages prove the
-checks. Both are source checks of wiring. No Orca, T3 Code or omp session was observed. Four
-existing cases moved a pinned phrase with its rule: the `AskQuestion`, `poteto-agent`
-and worker-pointer assertions, the todo-checklist section name, the translation-table rows
-and the guidance-byte accounting in `test_context_disclosure`. The accounting now names the
-`Cursor-only features` section. The worker allowance stays 500 bytes and the new
-`Subagent fields and models` tables are not exempt. The
+checks. A subtest checks that the shared ADE rule is stated once, in the README, and that the
+README repeats the three tests the door row names. Both cases are source checks of wiring. No
+Orca, T3 Code or omp session was observed. Four existing cases moved a pinned phrase with its
+rule: the `AskQuestion`, `poteto-agent` and worker-pointer assertions, the todo-checklist
+section name and phrases, the translation-table rows and skip-line sentences, and the
+guidance-byte accounting in `test_context_disclosure`. The accounting names the `Cursor-only
+features` section, 1,372 bytes against 1,185 at `ae7cec3`. The test records that 187-byte raise
+beside the trunk sizes, so an exemption cannot move without a changed constant. The worker
+allowance stays 500 bytes and the new `Subagent fields and models` tables are not exempt. The
 `poteto-agent` mapping sentence in `hugues-agent` by host went, with its assertion in
-`test_native_layout`, because the opening paragraph states the mapping.
+`test_native_layout`, because the rename list and the per-host line state the mapping. The
+checklist's three step-fidelity sentences went from `host.md` to the router's Playbooks
+section, which already carries them and is already asserted.

@@ -947,30 +947,47 @@ HOST_PAGE_ROWS = ['Detect', 'Sessions and worktrees', 'Start', 'Send', 'Read', '
 SKIP_LINE = re.compile(r'Skipped in .+: .+\. .+\.')
 HARNESS_MEMBER = 'pstack/docs/harness/claude-code.md'
 
-# Upstream first-column cells that hStack states elsewhere or does not need, each with its reason.
+# Upstream first-column cells that hStack states elsewhere or does not need, keyed by the upstream
+# table that holds them so a cell dropped in one table cannot hide the same cell in another.
 DROPPED = {
-    '`Task`': 'host-workers.md opens with the Task to native agent tool translation',
-    'Run another pstack skill (`/name` or "the **name** skill")':
-        'host.md Loading and routing owns the read-by-path rule and bars the Skill tool for user-only skills',
-    '`subagent_type: generalPurpose`': 'host-workers.md maps generalPurpose to general-purpose in its routed-call paragraph',
-    '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
-    '`environment: "local"`': 'the Agent tool has no environment field, so nothing is passed and the intro drops it',
-    '`run_in_background: true`': 'host-workers.md Defaults pass it, and the Agent tool takes the flag',
-    '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
-    'The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc`': 'setup-hstack writes project-local .hstack/models.md',
-    'A role value `<model> <effort>`, such as `opus high`':
-        'the first Models row maps a role value, which setup-hstack writes as <model> <effort>',
-    '`.cursor/skills/`, `~/.cursor/skills/`': 'host-special-skills.md Project skill paths',
-    '`~/.cursor/plugins/`, `.cursor-plugin/plugin.json`': 'hStack ships native manifests',
-    '`.cursor/rules/*.mdc`, always-applied rules': 'no hStack body reads .mdc rules',
-    '`https://github.com/cursor/plugins/blob/main/pstack/<path>`': 'no hStack body links Cursor\'s repository',
-    'Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`':
-        'host-special-skills.md Scoped history reads only supplied transcript paths',
-    'Cursor cloud agents': 'the Subagent fields row for environment "cloud" maps it, and a step that needs the agent itself is Cursor-only',
+    'Tools': {
+        '`Task`': 'host-workers.md opens with the Task to native agent tool translation',
+        'Run another pstack skill (`/name` or "the **name** skill")':
+            'host.md Loading and routing owns the read-by-path rule and bars the Skill tool for user-only skills',
+    },
+    'Subagent fields': {
+        '`subagent_type: generalPurpose`': 'host-workers.md maps generalPurpose to general-purpose in its routed-call paragraph',
+        '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
+    },
+    'Models': {
+        '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
+        'The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc`': 'setup-hstack writes project-local .hstack/models.md',
+        'A role value `<model> <effort>`, such as `opus high`':
+            'the first Models row maps a role value, which setup-hstack writes as <model> <effort>',
+    },
+    'Paths': {
+        '`.cursor/skills/`, `~/.cursor/skills/`': 'host-special-skills.md Project skill paths',
+        '`~/.cursor/plugins/`, `.cursor-plugin/plugin.json`':
+            'host-special-skills.md:31-32 maps skill paths to the actual host, and hStack ships native manifests',
+        '`.cursor/rules/*.mdc`, always-applied rules': 'no hStack body reads .mdc rules',
+        '`https://github.com/cursor/plugins/blob/main/pstack/<path>`': 'no hStack body links Cursor\'s repository',
+    },
+    'Cursor-only features': {
+        'Cursor cloud agents':
+            'the Subagent fields row for environment "cloud" maps it, and a step that needs the agent itself is Cursor-only',
+    },
+}
+# Upstream rows hStack leaves open, each with the reason it cannot be closed here.
+GAPS = {
+    'Paths': {
+        'Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`':
+            'plugin/skills/recall/SKILL.md:21 hardcodes the Cursor transcript path and the skill is ledger-mapped, '
+            'so this adapter cannot translate it',
+    },
 }
 
 
-def markdown_tables(text):
+def table_rows(text):
     tables, heading, rows = {}, None, None
     for line in text.splitlines() + ['']:
         if line.startswith('#'):
@@ -980,18 +997,28 @@ def markdown_tables(text):
                 rows = []
             rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
         elif rows is not None:
-            tables.setdefault(heading, []).extend(row[0] for row in rows[2:])
+            tables.setdefault(heading, []).extend(rows[2:])
             rows = None
     return tables
 
 
-def unmapped_upstream_rows(upstream, adapters, dropped):
+def markdown_tables(text):
+    return {name: [row[0] for row in rows] for name, rows in table_rows(text).items()}
+
+
+def unmapped_upstream_rows(upstream, adapters, dropped, gaps):
     mine = {}
     for text in adapters:
         for name, cells in markdown_tables(text).items():
             mine.setdefault(name, set()).update(cells)
     return [f'{name}: {cell}' for name, cells in markdown_tables(upstream).items() for cell in cells
-            if cell not in mine.get(name, set()) and cell not in dropped]
+            if cell not in mine.get(name, set()) and cell not in dropped.get(name, {}) and cell not in gaps.get(name, {})]
+
+
+def with_extra_row(text, heading, row):
+    separator = '| --- | --- |\n'
+    at = text.index(separator, text.index(f'## {heading}\n')) + len(separator)
+    return text[:at] + row + '\n' + text[at:]
 
 
 def host_page_errors(text):
@@ -1019,25 +1046,75 @@ class HostAdapterShape(unittest.TestCase):
     def adapters(self):
         return [(ROOT / f'plugin/adapters/{name}').read_text() for name in ('host.md', 'host-workers.md')]
 
+    def row(self, table, first):
+        rows = [row for text in self.adapters() for row in table_rows(text).get(table, []) if row[0] == first]
+        self.assertEqual(len(rows), 1, f'{table}: {first}')
+        return rows[0]
+
     def test_upstream_harness_rows_are_mapped(self):
         upstream = self.pinned_harness_doc()
-        self.assertEqual(unmapped_upstream_rows(upstream, self.adapters(), DROPPED), [])
-        cells = {cell for rows in markdown_tables(upstream).values() for cell in rows}
-        self.assertEqual(set(DROPPED) - cells, set(), 'a DROPPED key is not an upstream row')
-        self.assertTrue(all(DROPPED.values()))
+        with self.subTest('every upstream row is mapped, dropped or a recorded gap'):
+            self.assertEqual(unmapped_upstream_rows(upstream, self.adapters(), DROPPED, GAPS), [])
+        cells = markdown_tables(upstream)
+        for table, reasons in [*DROPPED.items(), *GAPS.items()]:
+            self.assertEqual(set(reasons) - set(cells.get(table, [])), set(), f'{table} lists a cell upstream lacks')
+            self.assertTrue(all(reasons.values()))
         with tempfile.TemporaryDirectory(prefix='hstack-harness-') as directory:
-            extra = '| `brand_new_field: <x>` | `brand_new_value` |'
-            changed = upstream.replace('## Subagent fields\n\n| Cursor | Claude Code |\n| --- | --- |\n',
-                                       '## Subagent fields\n\n| Cursor | Claude Code |\n| --- | --- |\n' + extra + '\n')
-            self.assertNotEqual(changed, upstream)
-            archive = Path(directory) / 'pstack.tar.gz'
-            with tarfile.open(archive, 'w:gz') as tar:
-                info = tarfile.TarInfo(HARNESS_MEMBER)
-                info.size = len(changed.encode())
-                tar.addfile(info, io.BytesIO(changed.encode()))
-            with self.subTest('extra upstream row'):
-                errors = unmapped_upstream_rows(self.pinned_harness_doc(archive), self.adapters(), DROPPED)
-                self.assertEqual(errors, ['Subagent fields: `brand_new_field: <x>`'])
+            for label, heading, row, expected in [
+                    ('extra upstream row', 'Subagent fields', '| `brand_new_field: <x>` | `brand_new_value` |',
+                     'Subagent fields: `brand_new_field: <x>`'),
+                    ('a row dropped in another table', 'Cursor-only features', '| `Task` | `Agent` |',
+                     'Cursor-only features: `Task`'),
+                    ('a gap in another table', 'Tools', '| Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/` | x |',
+                     'Tools: Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`')]:
+                changed = with_extra_row(upstream, heading, row)
+                self.assertNotEqual(changed, upstream)
+                archive = Path(directory) / 'pstack.tar.gz'
+                with tarfile.open(archive, 'w:gz') as tar:
+                    info = tarfile.TarInfo(HARNESS_MEMBER)
+                    info.size = len(changed.encode())
+                    tar.addfile(info, io.BytesIO(changed.encode()))
+                with self.subTest(label):
+                    errors = unmapped_upstream_rows(self.pinned_harness_doc(archive), self.adapters(), DROPPED, GAPS)
+                    self.assertEqual(errors, [expected])
+
+        workers = ' '.join(self.adapters()[1].split())
+        with self.subTest('readonly precedence'):
+            claude = self.row('Subagent fields', '`readonly: true`')[1]
+            for phrase in ['`subagent_type: "general-purpose"`', '`"Explore"`', 'locate or search code', '`how` explorer',
+                           '"do not edit files"', "`git status` in the worker's checkout"]:
+                self.assertIn(phrase, claude)
+            self.assertLess(claude.index('general-purpose'), claude.index('Explore'))
+            self.assertEqual(self.row('Subagent fields', '`readonly: false`')[1], '`subagent_type: "general-purpose"`')
+        with self.subTest('one model rule'):
+            claude = self.row('Models', 'A `grok-*`, `gpt-*`, or other non-Claude slug')[1]
+            self.assertIn('the ` or ` rule above applies', claude)
+            self.assertIn('the Workers line names the model that ran', claude)
+            self.assertNotIn('Omit `model`', claude)
+            self.assertIn("else `inherit-parent` at the first alternative's effort, and name which ran in the Workers line.", workers)
+            self.assertIn('If a seat needs a family the host cannot supply, mark the seat blocked', workers)
+            self.assertNotIn('If no allowed equivalent is exposed', workers)
+        with self.subTest('resume sends the result text'):
+            row = self.row('Subagent fields', '`resume`')
+            self.assertIn("the earlier result's text pasted into its brief", row[1])
+            self.assertIn('`SendMessage` in the cases `hugues-mode/SKILL.md` allows', row[1])
+            self.assertTrue(row[2].startswith('Same; '), row[2])
+            self.assertIn('its message tool is unobserved', row[2])
+            router = (ROOT / 'plugin/skills/hugues-mode/SKILL.md').read_text()
+            self.assertIn('Resume, message, or queue a follow-up on an existing subagent only when', router)
+        with self.subTest('the drop rule spares the fields the Agent tool lists'):
+            self.assertIn('If a Cursor-only field has no row, drop it and say so.', workers)
+            for field in ['subagent_type', 'model', 'effort', 'run_in_background', 'isolation']:
+                self.assertIn(f'`{field}`', workers.split('Never drop ', 1)[1].split('. ', 1)[0])
+            self.assertEqual(self.row('Subagent fields', '`run_in_background: true`')[1], 'Pass it.')
+            self.assertIn('no such field', self.row('Subagent fields', '`environment: "local"`')[1])
+        with self.subTest('cloud keeps the local-execution limit and the worktree location'):
+            claude = self.row('Subagent fields', '`environment: "cloud"`')[1]
+            for phrase in ['`isolation: "worktree"`', 'only where the core permits local execution',
+                           "AGENTS.md sets a worktree location, use it and omit `isolation`", 'The brief names the branch.']:
+                self.assertIn(phrase, claude)
+            tools = ' '.join((ROOT / 'plugin/adapters/host-workflow-tools.md').read_text().split())
+            self.assertIn('Native local workers substitute for cloud only where the core permits local execution', tools)
 
     def test_host_pages_follow_the_page_shape_and_the_index_lists_them(self):
         directory = ROOT / 'plugin/adapters/hosts'
@@ -1049,6 +1126,18 @@ class HostAdapterShape(unittest.TestCase):
         for name in pages:
             with self.subTest(page=name):
                 self.assertEqual(host_page_errors((directory / name).read_text()), [])
+        with self.subTest('the ADE rule is stated once, and the door row names the tests the README repeats'):
+            adr = (ROOT / 'docs/adr/0004-adapters-for-ades-and-agents.md').read_text()
+            sentence = 'A page never creates or reads the ADE'
+            self.assertEqual(readme.count(sentence), 1)
+            self.assertEqual(adr.count(sentence), 0)
+            self.assertIn('hosts/README.md#shared-ade-rule', adr)
+            self.assertIn('settlement receipts', readme)
+            host = (ROOT / 'plugin/adapters/host.md').read_text()
+            door = next(line for line in host.splitlines() if '(hosts/README.md)' in line)
+            for test in ['`$ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
+                self.assertIn(test, door)
+                self.assertIn(test, readme)
         def page(rows, skip='Skipped in Example: step. Reason.'):
             return '# Example\n\n| Row | Mechanics |\n|---|---|\n' + ''.join(
                 f'| {row} | {skip if row == "Skip line" else "x"} |\n' for row in rows)

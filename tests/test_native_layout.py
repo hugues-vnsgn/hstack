@@ -630,6 +630,10 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn('plain text in your report and hold the dependent step', cells[1])
         self.assertTrue(cells[2].startswith('unobserved.'))
         self.assertNotIn('Translate AskQuestion', host)
+        self.assertIn('Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.', tools)
+        grep = next(line for line in tools.splitlines() if line.startswith('| `Grep`, `Glob` |'))
+        for phrase in ['`rg`', '`grep` and `find`', 'whichever the session lacks']:
+            self.assertIn(phrase, grep)
         # The registered name has one per-host line in host-workers.md. host.md keeps the rename
         # list and sends every worker dispatch to that file through the phase table.
         self.assertIn('`poteto-agent` to `hugues-agent`', host)
@@ -638,7 +642,8 @@ class HuguesModeRouter(unittest.TestCase):
         line = ' '.join(line.split())
         self.assertIn('Claude Code registers it as `hstack:hugues-agent`', line)
         self.assertIn('Codex has no registered name observed here', line)
-        self.assertIn('A core `poteto-agent` call uses the registered hugues-agent in', ' '.join(self.workers.split()))
+        self.assertIn('takes the role instructions of `agents/hugues-agent.md`', line)
+        self.assertNotIn('A core `poteto-agent` call', self.workers)
         self.assertEqual(self.workers.count('**`hugues-agent` by host.**'), 1)
         manifest = json.loads((ROOT / 'plugin/.claude-plugin/plugin.json').read_text())
         self.assertEqual(manifest['name'], 'hstack')
@@ -652,10 +657,7 @@ class HuguesModeRouter(unittest.TestCase):
         for phrase in [
                 'Without a todo tool', 'Markdown checklist',
                 "task's [agent store](host-workflow-tools.md#agent-store-translation)",
-                'Copy playbook steps verbatim before step 1',
-                'A step includes its numbered line and all continuation text. Copy the whole step.',
-                'Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.',
-                'Never bulk-mark at the end.',
+                "Copy and mark its steps per the router's Playbooks.",
                 'Name the file in your reply']:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, tools)
@@ -743,10 +745,16 @@ class HuguesModeRouter(unittest.TestCase):
         for row, markers in zip(rows, expected):
             for marker in markers:
                 self.assertIn(marker, row)
-        for phrase in ['Skipped in <host>: <step>. <reason>.', 'Never stop, ask or retry.',
-                       'Name a placeholder for what a later step needs from it.',
+        for phrase in ["Keep pstack's playbook text.",
+                       'gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.`',
+                       'Never ask the user to choose, offer an alternative or retry.',
+                       'Independent steps continue; one that needs the skipped output holds, with a named placeholder.',
                        'A skip line never checks a gate: a skipped mandatory gate holds the result.']:
             self.assertIn(phrase, section)
+        self.assertNotIn('Never stop', section)
+        for row in rows:
+            if row.startswith(('| Cursor Automations', '| A built-in PR tool')):
+                self.assertTrue(row.rstrip().endswith('| unobserved |'), row)
         ui = (ROOT / 'plugin/skills/control-ui/SKILL.md').read_text()
         self.assertIn('may write to the server', ui)
         self.assertIn('get a yes from the user, or from the coordinator', ui)

@@ -104,8 +104,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "4ee3bf6f9c8991310ae0c75b4ef04b9b3cee7cf3c5683409b9106f3b9dfe92e7",
       "disposition": "replaced",
-      "replacement": "Use figure-it-out for large, cross-cutting or unmatched work and Orchestrate for\nstanding programs. Read the full canonical playbook. Copy its ordered todos verbatim.\nKeep skipped todos with reasons.",
-      "reason": "F4 shortens equivalent routing and playbook-read wording to fit the host checklist translation. Keep large, unmatched and standing-program routes, full canonical reads, ordered verbatim todos and skipped-item reasons unchanged."
+      "replacement": "Read the full canonical playbook and copy its ordered todos verbatim.",
+      "reason": "The P2 fix round shortens this paragraph further. The router's Playbooks section, which every session reads first, already routes large or unmatched work to figure-it-out and standing programs to Orchestrate, and keeps a skipped todo with its reason. Full canonical reads and ordered verbatim todos stay, because the adapter check pins them."
     },
     {
       "paragraph": 7,
@@ -184,12 +184,32 @@
     },
     {
       "paragraph": 10,
+      "destination": "plugin/adapters/host-workers.md",
       "slice": [
         0,
+        253
+      ],
+      "sha256": "a77de484eb1aadeaf549afa112042bf3889ddcd186f9942c5439e6bd2b792122"
+    },
+    {
+      "paragraph": 10,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        253,
+        408
+      ],
+      "sha256": "c8151ee9933a5c4045b565e726f2aaeb174bcf54f669776af6678092068127ed",
+      "disposition": "removed",
+      "reason": "The P2 fix round drops this sentence. \"hugues-agent by host\" in the same file states the registered name for Claude Code and the role instructions for Codex, and host.md's rename list maps poteto-agent to hugues-agent, so the sentence repeated both."
+    },
+    {
+      "paragraph": 10,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        408,
         607
       ],
-      "destination": "plugin/adapters/host-workers.md",
-      "sha256": "015d81c41f94372c769533c1958ca82508f4fe4e3d901956334dd879fa7847de"
+      "sha256": "7df05e3b9b6fce1e379758ea46baeea78af2250c836b82560b516718f26b805a"
     },
     {
       "paragraph": 10,
@@ -225,12 +245,32 @@
     },
     {
       "paragraph": 11,
+      "destination": "plugin/adapters/host-workers.md",
       "slice": [
         450,
+        526
+      ],
+      "sha256": "4202d7746bfd82e38c7bc1291b29e304762cf159542838381a0e6912b1397719"
+    },
+    {
+      "paragraph": 11,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        526,
+        613
+      ],
+      "sha256": "1629dcc76c7cb6e1c2d53c85e9c89579cf870170ae1785c43c7551ce3062e641",
+      "disposition": "removed",
+      "reason": "The P2 fix round drops this sentence. It described the maintainer receipt, not a host rule, and no worker reads it to act."
+    },
+    {
+      "paragraph": 11,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        613,
         918
       ],
-      "destination": "plugin/adapters/host-workers.md",
-      "sha256": "787d64436a94c929f70b6342a885d91d32f99975b0bf42d29e7c70f2f851bb3a"
+      "sha256": "be6bbc682ed21739874d6c4c0e6cf13b82bc58525a7a6fc42933f0acf0a521b9"
     },
     {
       "paragraph": 11,
@@ -272,7 +312,10 @@
       "paragraph": 14,
       "slice": null,
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "e0466a1eff2e7767c9c4af77dd5f6e0c5b42c72cd99469fdf3ee0a0a700afce7"
+      "sha256": "e0466a1eff2e7767c9c4af77dd5f6e0c5b42c72cd99469fdf3ee0a0a700afce7",
+      "disposition": "replaced",
+      "reason": "The P2 fix round scopes the blocked-seat rule. A role value with alternatives already falls back to inherit-parent at the first alternative's effort, so only a seat that needs a family the host cannot supply is blocked. Everything else in the paragraph is unchanged.",
+      "replacement": "Enumerate models actually exposed by the native tool. Preserve each core skill's\nfallback sequence on rejected slugs, using only confirmed capabilities; record\nthe requested and actual family/model/effort. If a seat needs a family the host cannot\nsupply, mark the seat blocked and ask for an explicit configuration choice. Never invent\nan available model or label a blocked seat completed. Do not update or publish a\ndefault-fix PR without publication authority."
     },
     {
       "paragraph": 15,
@@ -301,8 +344,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
-      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved. The P2 harness-shape edit turns the sentence into upstream's Tools table with the columns Cursor, Claude Code and Codex. Its AskQuestion row keeps the Codex tool unobserved, and says that in -p mode, where AskUserQuestion is absent, the worker writes the question in plain text in its report and holds the dependent step. Task and the skill-run row are dropped because host-workers.md and Loading and routing already state them.",
-      "replacement": "| Cursor | Claude Code | Codex |\n|---|---|---|\n| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |\n| Open a todolist | `TodoWrite` if offered, else the checklist below. | unobserved. Use the checklist below. |\n| `Grep`, `Glob` | `Bash` with `rg` when the session has neither. | unobserved |"
+      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved. The P2 harness-shape edit keeps the sentence, so the filesystem and Git translation stays, and puts upstream's Tools table under it with the columns Cursor, Claude Code and Codex. The AskQuestion row keeps the Codex tool unobserved, and says that in -p mode, where AskUserQuestion is absent, the worker writes the question in plain text in its report and holds the dependent step. Task and the skill-run row are dropped because host-workers.md and Loading and routing already state them.",
+      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\n\n| Cursor | Claude Code | Codex |\n|---|---|---|\n| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |\n| Open a todolist | `TodoWrite` if offered, else the checklist below. | unobserved |\n| `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |"
     },
     {
       "paragraph": 17,
