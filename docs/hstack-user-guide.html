@@ -103,12 +103,12 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
 </defs></svg>
-<header class="top"><span class="brand">hStack User Guide<small>v0.5.5</small></span>
+<header class="top"><span class="brand">hStack User Guide<small>v0.5.6</small></span>
 <div class="host-switch" role="group" aria-label="Show commands for">
 <button data-h="claude" aria-pressed="false">Claude Code</button><button data-h="codex" aria-pressed="false">Codex</button><button data-h="both" aria-pressed="true">Both</button></div></header>
 <div class="layout"><nav class="toc"><div class="grp">Part I. Get started</div><ol><li><a href="#start">1. Start here</a></li><li><a href="#concepts">2. How hStack thinks</a></li><li><a href="#setup">3. Set up hStack</a></li><li><a href="#commands">4. Command reference</a></li><li><a href="#prompting">5. Talk to hugues-mode</a></li><li><a href="#stuck">6. When you are stuck</a></li><li><a href="#debug">7. Debug a bug</a></li><li><a href="#feature">8. Build a new feature</a></li><li><a href="#mobile">9. Prove it on device</a></li><li><a href="#ship">10. Review and ship</a></li><li><a href="#big">11. Big and overnight work</a></li><li><a href="#principles">12. Steer with principles</a></li><li><a href="#tune">13. Tune cost and models</a></li><li><a href="#trouble">14. Troubleshooting and pitfalls</a></li></ol><div class="grp">Part II. Lead the team</div><ol><li><a href="#part2">Introduction and labels</a></li><li><a href="#lead">15. The lead's job</a></li><li><a href="#brief">16. Brief the team</a></li><li><a href="#backwards">17. Work backwards</a></li><li><a href="#measure">18. Measure a hundred times, cut once</a></li><li><a href="#plan">19. Turn the design into a plan</a></li><li><a href="#shape">20. Pick the team shape</a></li><li><a href="#run-team">21. Run the team in Claude Code</a></li><li><a href="#review">22. Review like a lead</a></li><li><a href="#improve">23. Make the team better</a></li><li><a href="#examples">24. Worked examples</a></li></ol><div class="grp">Appendix</div><ol><li><a href="#limits">A. What is verified today</a></li><li><a href="#glossary">B. Glossary</a></li></ol></nav>
 <main><div class="hero">
-<span class="pill">hStack 0.5.5 · pstack 0.15.32 baseline</span>
+<span class="pill">hStack 0.5.6 · pstack 0.15.32 baseline</span>
 <h1>hStack User Guide</h1>
 <p class="lede">How to set up hStack in Claude Code and Codex, and how to use it when you are stuck, when you debug, and when you build a new feature. Part II shows how to lead hStack like a team: brief it, pick its shape, run it and review it. Written for developers working on Swift/iOS, Kotlin/Android, Kotlin Multiplatform and Compose Multiplatform apps, and for any nontrivial engineering work.</p>
 <p class="meta">Updated 2026-10-26. Use the switch at the top right to show commands for Claude Code, Codex or both.</p>
@@ -259,7 +259,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <pre><code><span class="cc"># Claude Code
 claude plugin marketplace add hugues-vnsgn/hstack
 claude plugin install hstack@hstack
-claude plugin list          # should show hstack@hstack 0.5.5</span><span class="cx"># Codex
+claude plugin list          # should show hstack@hstack 0.5.6</span><span class="cx"># Codex
 codex plugin marketplace add hugues-vnsgn/hstack
 codex plugin add hstack@hstack</span></code></pre>
 <div class="callout tip"><span class="h">Try it without installing (Claude Code only)</span>
@@ -308,10 +308,10 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <li><strong>Prepare the Bun helpers (only if you will babysit PRs or orchestrate)</strong>
 <p>Run once per installed copy. Replace <code>&lt;plugin&gt;</code> with the absolute root of the copy you loaded.</p>
 <pre><code><span class="cc"># Claude Code default root
-cd ~/.claude/plugins/cache/hstack/hstack/0.5.5/skills/hugues-mode/scripts
+cd ~/.claude/plugins/cache/hstack/hstack/0.5.6/skills/hugues-mode/scripts
 bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span><span class="cx"># Codex default root
-cd ~/.codex/plugins/cache/hstack/hstack/0.5.5/skills/hugues-mode/scripts
+cd ~/.codex/plugins/cache/hstack/hstack/0.5.6/skills/hugues-mode/scripts
 bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span></code></pre>
 <p>The <code>--help</code> call must exit 0. It also writes the install key the helpers check before running.</p></li>
@@ -333,7 +333,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <p>Keep a task that is in flight on the copy it started with until it finishes. To remove hStack, use the same host mechanism that installed it. A session-only <code>--plugin-dir</code> load ends with the session.</p>
 
 <h2 id="commands">4. Command reference</h2>
-<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Arguments are plain English. Release 0.5.5 bundles 63 skills. The four added in 0.5.5 are listed after the table.</p>
+<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Arguments are plain English. Release 0.5.6 bundles 63 skills, the same as 0.5.5. The four added in 0.5.5 are listed after the table.</p>
 <table>
 <tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Use it to</th></tr>
 <tr><td>hugues-mode</td><td><code>/hstack:hugues-mode</code></td><td><code>$hugues-mode</code></td><td>Start any nontrivial task. The front door.</td></tr>
@@ -1495,13 +1495,13 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 </table>
 
 <h2 id="limits">Appendix A. What is verified today</h2>
-<p>hStack's own docs separate what was observed from what was only built. As of 0.5.5:</p>
+<p>hStack's own docs separate what was observed from what was only built. As of 0.5.6:</p>
 <ul>
 <li><strong>Observed:</strong> installs and updates from 0.4.0 through 0.5.2 on both Claude Code and Codex, and 0.5.3 copies on both hosts that match the tag. Router discovery on Claude Code. Before 0.5.4 the router fired unprompted in one interactive session, and since 0.5.4 a typed <code>/hstack:hugues-mode</code> loaded it in a print-mode check on 2026-10-22. Bounded bug-fix runs on both hosts. Bounded <code>how</code>, <code>tdd</code>, <code>blast-radius</code> and design-only <code>architect</code> and <code>arena</code> runs. A fresh <code>hugues-agent</code> delegate writing a scratch function. Native helper runs, including failed and incomplete attempts.</li>
-<li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on either host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR. Codex with implicit invocation off for <code>hugues-mode</code>, including <code>$hugues-mode</code>. A live <code>hugues-agent</code> reading the mode by path. A session using the full model IDs that setup now writes. The updates from 0.5.3 to 0.5.4 and from 0.5.4 to 0.5.5 on either host. Any host run of the four skills new in 0.5.5.</li>
+<li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on either host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR. Codex with implicit invocation off for <code>hugues-mode</code>, including <code>$hugues-mode</code>. A live <code>hugues-agent</code> reading the mode by path. A session using the full model IDs that setup now writes. The updates from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5 and from 0.5.5 to 0.5.6 on either host. Any host run of the four skills new in 0.5.5.</li>
 <li><strong>Defined, not yet observed (Part II):</strong> Orchestrate, Autopilot-full and Autopilot-stack, <code>swarm</code> and <code>arena</code> at scale, the full <code>architect</code> loop, the Prototype and Multi-phase plan playbooks, the plan checker, the <code>/loop</code> wake, <code>recall</code> and <code>reflect</code> over transcripts, cross-host review and multi-day programs.</li>
 </ul>
-<p>The release notes in the repository (<code>docs/RELEASE-0.5.5.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
+<p>The release notes in the repository (<code>docs/RELEASE-0.5.6.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
 
 <h2 id="glossary">Appendix B. Glossary</h2>
 <table>
@@ -1529,7 +1529,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <tr><td>Decision log</td><td>The TSV that <code>show-me-your-work</code> keeps, with one row for each decision, its reason, an evidence pointer and the result.</td></tr>
 </table>
 
-<footer>hStack is forked from pstack under the MIT license. Repository: <a href="https://github.com/hugues-vnsgn/hstack">github.com/hugues-vnsgn/hstack</a>. This guide covers version 0.5.5 and was updated on 2026-10-26.</footer>
+<footer>hStack is forked from pstack under the MIT license. Repository: <a href="https://github.com/hugues-vnsgn/hstack">github.com/hugues-vnsgn/hstack</a>. This guide covers version 0.5.6 and was updated on 2026-10-28.</footer>
 </main></div>
 <script>
 (function(){

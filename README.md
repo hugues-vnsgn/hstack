@@ -2,18 +2,19 @@
 
 hStack gives Claude Code and Codex a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.5.5** moves the workflow baseline to pstack 0.15.32 and adds four
-user-only skills, `create-formal-verification-skill`,
-`maintain-formal-verification-skill`, `statechart` and `ketchup-video`. Start a
-run by typing `/hstack:hugues-mode` in Claude Code or `$hugues-mode` in Codex.
-The release also ships the rewritten [user guide](docs/hstack-user-guide.html)
-and keeps the native helpers unchanged. The [0.5.5 release notes](docs/RELEASE-0.5.5.md) record
+Version **0.5.6** adds the [Orca page](plugin/adapters/hosts/orca.md), so a
+coordinator in an Orca pane can start, read, wait for and close hStack workers in
+other panes. A Claude Code `SessionStart` hook tells a session in Orca to read the
+[hosts index](plugin/adapters/hosts/README.md). The shared host adapter now
+follows the tables of pstack's own Claude Code adapter. Start a run by typing
+`/hstack:hugues-mode` in Claude Code or `$hugues-mode` in Codex. The release
+keeps the pstack 0.15.32 baseline and the native helpers unchanged. The [0.5.6 release notes](docs/RELEASE-0.5.6.md) record
 upgrade steps, checks and remaining gaps. hStack supports Swift/iOS, Kotlin/Android, KMP
 and CMP development through its mobile adapter. A complete journey on a real
 consumer project remains unobserved on either host. The plugin remains `hstack`. Its
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
 The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
-Version 0.5.1 added two authored user-only language skills. Version 0.5.5 has 63 in total. Each skill owns one canonical `SKILL.md`.
+Version 0.5.1 added two authored user-only language skills. Version 0.5.6 has 63 in total. Each skill owns one canonical `SKILL.md`.
 Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
 Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
@@ -45,8 +46,8 @@ Use a supported native discovery/invocation route and confirm that `hugues-mode`
 appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
 Codex copy. Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2
 were later observed on both hosts, and both hosts on the maintainer machine
-hold 0.5.3 copies that match its tag. Updating from 0.5.3 to 0.5.4 and from
-0.5.4 to 0.5.5 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.5.md#upgrade). If
+hold 0.5.3 copies that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4
+to 0.5.5 and from 0.5.5 to 0.5.6 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.6.md#upgrade). If
 `hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
 explains the boundary and a first-task workflow.
@@ -62,7 +63,7 @@ limits. It establishes no complete mobile journey. Read the
 
 ## Bundled mobile guidance
 
-Version 0.5.5 includes `swift-best-practices` and `kotlin-best-practices`.
+Version 0.5.6 includes `swift-best-practices` and `kotlin-best-practices`.
 Before source reads, the router and fresh workers read the relevant baseline in
 full. Source declarations and consumer configuration select SwiftUI, UIKit,
 Android Compose, KMP native-boundary and CMP wrapper references as needed.
@@ -82,7 +83,7 @@ summaries. See the [execution contract](plugin/adapters/native-execution.md).
 The [0.5.1 validation](docs/RELEASE-0.5.1.md#validation) records final-source
 helper observations, including failed and incomplete attempts. The
 [0.5.2 validation](docs/RELEASE-0.5.2.md#validation) records the current helper
-source and why no 0.5.2 fixture re-runs were made. Versions 0.5.3, 0.5.4 and 0.5.5 do not
+source and why no 0.5.2 fixture re-runs were made. Versions 0.5.3 to 0.5.6 do not
 change the native helpers. Helper checks complement the consumer's
 required native runtime proof.
 
@@ -94,6 +95,7 @@ required native runtime proof.
 - [Source and workflow contracts](docs/CORE-RESTORATION.md)
 - [Test accounting](docs/TEST-COVERAGE.md)
 - [Installed planning and read-only worktree audit](plugin/adapters/host-tools.md)
+- [Orca coordinator page](plugin/adapters/hosts/orca.md)
 
 To check a source checkout, run these commands from the hstack folder:
 
