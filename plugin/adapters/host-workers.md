@@ -1,6 +1,6 @@
 ## Native workers and role models
 
-Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE`; if it prints a value, `t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).
+Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`; if it prints a value, `t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).
 
 Translate Cursor Task to the current host's native agent tool. Each new work
 round gets a fresh worker. Preserve the core's narrow resume exceptions and the

@@ -1171,7 +1171,8 @@ class HostAdapterShape(unittest.TestCase):
             self.assertIn('settlement receipts', readme)
             workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
             door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
-            for test in ['ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
+            for test in ['ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID',
+                         '`t3-code` tools', 'omp']:
                 self.assertIn(test, door)
                 self.assertIn(test, readme)
             self.assertIn('[host-workers.md](../host-workers.md) sends you here', readme)
@@ -1224,7 +1225,7 @@ class HostDetectionHook(unittest.TestCase):
             environment[name] = ''
         environment.update(env or {})
         environment['CLAUDE_PLUGIN_ROOT'] = str(root or ROOT / 'plugin')
-        return subprocess.run(['bash', str(self.HOOK)], capture_output=True, text=True,
+        return subprocess.run([str(self.HOOK)], capture_output=True, text=True,
                               env=environment)
 
     def context(self, result):
@@ -1240,6 +1241,9 @@ class HostDetectionHook(unittest.TestCase):
         self.assertEqual(hooks[0]['type'], 'command')
         self.assertIn('host-detect.sh', hooks[0]['command'])
         self.assertIn('${CLAUDE_PLUGIN_ROOT}', hooks[0]['command'])
+        # The command runs the script directly, so the executable bit is
+        # load-bearing. A `bash` wrapper would make the mode a dead pin.
+        self.assertNotIn('bash', hooks[0]['command'])
         self.assertGreaterEqual(hooks[0]['timeout'], 1)
 
     def test_the_hook_script_is_sealed_and_executable(self):
@@ -1277,11 +1281,9 @@ class HostDetectionHook(unittest.TestCase):
     def test_the_hook_names_the_index_only_and_grants_no_authority(self):
         result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'})
         context = self.context(result).replace(str(ROOT / 'plugin'), '')
-        # It names the index only. A page is read when the session matches a line.
         for page in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
             with self.subTest(page=page):
                 self.assertNotIn(page, context)
-        # It adds no gate and no authority: it asks for a read and grants nothing.
         for word in ['must', 'required', 'never', 'shall', 'only', 'always', 'mandatory',
                      'approve', 'permission', 'allow', 'gate', 'block']:
             with self.subTest(word=word):
@@ -1290,12 +1292,44 @@ class HostDetectionHook(unittest.TestCase):
     def test_the_written_check_stays_for_the_hosts_that_load_no_hook(self):
         workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
         door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
-        for test in ['ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
+        for test in ['`t3-code` tools', 'omp']:
             with self.subTest(test=test):
                 self.assertIn(test, door)
-        # The written check and the hook test the same Orca variable, so a session
-        # that meets the hook's test also meets the written one.
-        self.assertIn('ORCA_TERMINAL_HANDLE', self.HOOK.read_text())
+
+    def test_the_hook_and_the_written_check_test_the_same_variables(self):
+        # A session that meets the hook's test must also meet the written one, so
+        # the two doors carry the same set of variables. A variable in one and not
+        # the other opens a session that reads the index and one that does not.
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
+        written = {name for name in self.ORCA_VARIABLES if name in door}
+        self.assertEqual(written, set(self.ORCA_VARIABLES))
+        for name in self.ORCA_VARIABLES:
+            with self.subTest(variable=name):
+                self.assertIn(name, self.HOOK.read_text())
+
+    def test_the_message_survives_a_plugin_path_holding_json_characters(self):
+        # The plugin root is a filesystem path, so it may hold a quote or a
+        # backslash. A hand-built JSON string breaks the moment it does.
+        result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'},
+                                root='/tmp/we"ird\\path')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        context = payload['hookSpecificOutput']['additionalContext']
+        self.assertIn('/tmp/we"ird\\path/adapters/hosts/README.md', context)
+
+    def test_the_hook_says_nothing_without_a_plugin_root(self):
+        # A relative path would send the session to an index guessed from the
+        # working directory, which is worse than no message at all.
+        environment = dict(os.environ)
+        for name in self.ORCA_VARIABLES:
+            environment[name] = ''
+        environment['ORCA_TERMINAL_HANDLE'] = 'probe-value'
+        environment.pop('CLAUDE_PLUGIN_ROOT', None)
+        result = subprocess.run(['bash', str(self.HOOK)], capture_output=True, text=True,
+                                env=environment)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, '')
 
     def test_the_hook_adds_no_always_read_bytes_to_the_host_adapters(self):
         # The hook's message is delivered by the host, not by an adapter every

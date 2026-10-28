@@ -20,13 +20,27 @@
 # written check.
 set -u
 
-# A plain terminal session reads no hosts page. Print nothing, so the session
-# starts with no extra bytes.
 if [ -z "${ORCA_TERMINAL_HANDLE:-}" ] && [ -z "${ORCA_PANE_KEY:-}" ] && [ -z "${ORCA_TAB_ID:-}" ]; then
     exit 0
 fi
 
-# The message holds no quote, backslash or control character, so it is a JSON
-# string as it stands. The path is absolute, so the session reads the index of the
-# plugin it loaded rather than one guessed from the working directory.
-printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"This session runs in an ADE. Before your first dispatch, read %s/adapters/hosts/README.md in full, then read the page of the first ADE or agent in its lists whose detection test is true. A session that matches no line reads no page."}}\n' "${CLAUDE_PLUGIN_ROOT:-.}"
+# Without the plugin root there is no absolute index path to name, so the hook
+# says nothing rather than naming one guessed from the working directory.
+if [ -z "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+    exit 0
+fi
+
+# The plugin root is a filesystem path, so it may hold a quote or a backslash.
+# It goes through a JSON encoder, because a hand-built string breaks the moment
+# the path does.
+index="${CLAUDE_PLUGIN_ROOT}/adapters/hosts/README.md"
+message="This session runs in an ADE. Before your first dispatch, read ${index} in full, then read the page of the first ADE or agent in its lists whose detection test is true. A session that matches no line reads no page."
+
+if command -v python3 >/dev/null 2>&1; then
+    python3 -c 'import json,sys; print(json.dumps({"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":sys.argv[1]}}))' "$message"
+else
+    # No JSON encoder on the host. Escape the two characters a path may hold
+    # that JSON reserves, and the control characters a path cannot.
+    escaped=$(printf '%s' "$message" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' | tr -d '\000-\037')
+    printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$escaped"
+fi

@@ -1,6 +1,6 @@
 # Hosts and ADEs
 
-[host-workers.md](../host-workers.md) sends you here when `$ORCA_TERMINAL_HANDLE` is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
+[host-workers.md](../host-workers.md) sends you here when `$ORCA_TERMINAL_HANDLE`, `$ORCA_PANE_KEY` or `$ORCA_TAB_ID` is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
 
 Each list line reads `- [name](name.md): detection test`.
 

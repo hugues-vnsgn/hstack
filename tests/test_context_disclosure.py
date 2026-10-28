@@ -79,7 +79,7 @@ class ContextDisclosure(unittest.TestCase):
         self.assertIn('Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.', host)
         workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
         with self.subTest('the door runs a test before the first dispatch'):
-            self.assertTrue(check_core.DOOR.startswith('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE`;'))
+            self.assertTrue(check_core.DOOR.startswith('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`;'))
             for test in ['if it prints a value', '`t3-code` tools are listed', 'the agent is omp']:
                 self.assertIn(test, check_core.DOOR)
             self.assertTrue(workers.startswith('## Native workers and role models\n\n' + check_core.DOOR + '\n\n'))
@@ -206,7 +206,7 @@ class ContextDisclosure(unittest.TestCase):
                 changed[check_core.ADAPTERS[0]] = changed[check_core.ADAPTERS[0]].replace('(' + name + ')', '(missing.md)')
                 self.assertTrue(check_core.adapter_errors(changed))
         workers = 'plugin/adapters/host-workers.md'
-        for old in ['(hosts/README.md)', '`printenv ORCA_TERMINAL_HANDLE`']:
+        for old in ['(hosts/README.md)', '`printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`']:
             with self.subTest(door=old):
                 changed = dict(original)
                 changed[workers] = changed[workers].replace(old, '(missing.md)')

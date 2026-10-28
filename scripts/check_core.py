@@ -3,10 +3,14 @@ import hashlib
 import ast
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 import stat
+import subprocess
 import sys
+import tempfile
 
 import tarfile
 
@@ -160,8 +164,8 @@ PHASE_GUIDANCE = {
     'host-typescript.md': 'Reading or editing TypeScript files',
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
-DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE`; if it prints a value, '
-        '`t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
+DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`; '
+        'if it prints a value, `t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
 ADAPTER_RESOURCES = (['plugin/adapters/' + name for name in PHASE_GUIDANCE]
                      + ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/hosts/README.md'])
 # The SessionStart hook that detects an ADE. It is the reliable path to the hosts
@@ -348,10 +352,83 @@ def hook_errors(root, load):
         errors.append('hook does not resolve the plugin root')
     if 'hookSpecificOutput' not in script or HOOK_EVENT not in script:
         errors.append('hook does not emit a ' + HOOK_EVENT + ' context')
-    # It names one file, the index, and grants nothing.
     for forbidden in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
         if forbidden in script:
             errors.append('hook names a page instead of the index: ' + forbidden)
+    # The hook and the written door must test the same variables, so a session
+    # that meets the hook's test also meets the written one.
+    door = (root / 'plugin/adapters/host-workers.md').read_text()
+    door_line = next((line for line in door.splitlines() if '(hosts/README.md)' in line), '')
+    for name in HOOK_ORCA_VARIABLES:
+        if name not in door_line:
+            errors.append('the written door does not test ' + name)
+    errors.extend(hook_output_errors(script_path, root))
+    return errors
+
+
+def hook_output_errors(script_path, root):
+    """Run the hook and check what it actually prints.
+
+    Reading the script's text cannot catch a broken message, so the check parses
+    the output. A plugin root holding a quote or a backslash must still yield
+    valid JSON, and a path the session cannot resolve is worse than no message.
+    """
+    errors = []
+    plugin_root = (root / 'plugin').as_posix()
+    index = (root / 'plugin/adapters/hosts/README.md').as_posix()
+    # The hook has two encoders: python3, and a sed fallback for a host without
+    # it. Both must produce valid JSON, so both are exercised. The fallback runs
+    # under a stub PATH that holds sed and tr but no python3, so the branch is
+    # taken rather than skipped.
+    with tempfile.TemporaryDirectory(prefix='hstack-hook-path-') as stub:
+        for tool in ('bash', 'sed', 'tr'):
+            found = shutil.which(tool)
+            if found:
+                os.symlink(found, os.path.join(stub, tool))
+        # Only the tools the hook and its fallback need. python3 must be
+        # unreachable, or the branch is skipped and the fallback goes unchecked.
+        stub_path = stub
+        for encoder, path in [('python3', None), ('the sed fallback', stub_path)]:
+            for label, root_value, expect_message in [
+                    ('a plain path', plugin_root, True),
+                    ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True),
+                    ('no plugin root', '', False)]:
+                environment = dict(os.environ)
+                for name in HOOK_ORCA_VARIABLES:
+                    environment[name] = ''
+                environment['ORCA_TERMINAL_HANDLE'] = 'probe'
+                if root_value:
+                    environment['CLAUDE_PLUGIN_ROOT'] = root_value
+                else:
+                    environment.pop('CLAUDE_PLUGIN_ROOT', None)
+                if path:
+                    environment['PATH'] = path
+                result = subprocess.run(['bash', str(script_path)], capture_output=True,
+                                        text=True, env=environment)
+                if result.returncode != 0:
+                    errors.append('the hook fails on ' + label + ' with ' + encoder + ': '
+                                  + result.stderr.strip())
+                    continue
+                if not expect_message:
+                    if result.stdout.strip():
+                        errors.append('the hook prints a message with no plugin root')
+                    continue
+                try:
+                    payload = json.loads(result.stdout)
+                except ValueError as error:
+                    errors.append('the hook prints invalid JSON on ' + label + ' with '
+                                  + encoder + ': ' + str(error))
+                    continue
+                context = payload.get('hookSpecificOutput', {}).get('additionalContext', '')
+                if not context:
+                    errors.append('the hook prints no context on ' + label + ' with ' + encoder)
+                    continue
+                named = context.split(' read ', 1)[-1].split(' in full', 1)[0]
+                if not named.startswith('/'):
+                    errors.append('the hook names a relative index path on ' + label + ' with '
+                                  + encoder)
+                if label.startswith('a plain') and named != index:
+                    errors.append('the hook names a path that is not the loaded plugin index')
     return errors
 
 

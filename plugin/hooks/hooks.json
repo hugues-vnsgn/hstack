@@ -1,12 +1,12 @@
 {
-  "description": "hStack host detection: tell the session to read the hosts index when it runs in an ADE or in an agent beyond Claude Code and Codex.",
+  "description": "hStack host detection: a session in an ADE reads the hosts index before its first dispatch.",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/host-detect.sh\"",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/host-detect.sh\"",
             "timeout": 10
           }
         ]

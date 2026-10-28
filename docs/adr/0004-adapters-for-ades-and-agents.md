@@ -21,7 +21,7 @@ So hStack ships its first hook: a `SessionStart` command hook in [hooks.json](..
 
 Observed: in an Orca 1.4.241 pane, `ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID` are all set, and the hook fires in Claude Code 2.1.311.
 
-The written check stays, for three reasons. Codex and omp load no plugin hook, so the written check is their only path. A T3 Code thread exposes no Orca variable, and the hook cannot see the tools a session was given, so the written check covers it. And the written check names the same variable the hook tests, so a session that meets the hook's test also meets the written one.
+The written check stays, for three reasons. Codex and omp load no plugin hook, so the written check is their only path. A T3 Code thread exposes no Orca variable, and the hook cannot see the tools a session was given, so the written check covers it. And the written check names the same three variables the hook tests, so a session that meets the hook's test also meets the written one.
 
 ## Terms
 
@@ -41,4 +41,4 @@ This is [#50](https://github.com/hugues-vnsgn/hstack/issues/50) after its 2026-1
 - A session that meets no door test reads nothing under `plugin/adapters/hosts/`. A session that meets one reads the index, `hosts/README.md`, and reads a page only for a listed ADE or agent it matches. So a session outside every listed ADE and agent reads at most the index, never a page.
 - A test reads each page for its rows in order and a skip line, and checks that the index lists exactly the pages that exist.
 - A test reads the hook's manifest and script: one `SessionStart` command hook, the three Orca variables it tests, the index it names, no page, and no authority in its message. A plain session gets no output.
-- Unobserved: an Orca, T3 Code or omp session reading the door. Static tests prove the wiring only. The index names the door's limits: omp matches at dispatch rather than its first tool call, Codex may strip `ORCA_TERMINAL_HANDLE` in Orca, and every process an Orca pane starts inherits it. The hook covers Claude Code only, and it adds a runtime surface pstack lacks.
+- Unobserved: an Orca, T3 Code or omp session reading the door. Static tests prove the wiring only. The index names the door's limits: omp matches at dispatch rather than its first tool call, Codex may strip `ORCA_TERMINAL_HANDLE` in Orca, and every process an Orca pane starts inherits it. The hook covers Claude Code only, and it adds a runtime hook pstack lacks.
