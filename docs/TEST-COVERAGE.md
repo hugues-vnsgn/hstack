@@ -425,12 +425,14 @@ or no `readonly`, reaches a `general-purpose` row, and that the Claude Models ro
 value such as `claude-opus-5-5 xhigh`.
 `test_host_pages_follow_the_page_shape_and_the_index_lists_them` checks each page under
 `plugin/adapters/hosts/` for the ten rows in order and a skip line, and checks that the
-index lists exactly the pages that exist; no page exists yet, so synthetic pages prove the
-checks. A subtest checks that the shared ADE rule is stated once, in the README, and that the
+index lists exactly the pages that exist. `orca.md` is the first page. The test's
+`HOST_PAGES` table gives each page its index list and the words only its skip line may use,
+and the index stays at most 1,750 bytes, a cap the owner raised from 1,500 on 2026-10-28.
+Synthetic pages prove each check can fail. A subtest checks that the shared ADE rule is stated once, in the README, and that the
 README repeats the three tests the door names and points back to `host-workers.md`. Another checks that the README names the
 door's unobserved limits and that ADR 0004 lets a session outside every listed ADE and agent
-read at most the index. Both cases are source checks of wiring. No
-Orca, T3 Code or omp session was observed. Four existing cases moved a pinned phrase with its
+read at most the index. Both cases are source checks of wiring and
+observe no session. Four existing cases moved a pinned phrase with its
 rule: the `AskQuestion`, `poteto-agent` and worker-pointer assertions, the todo-checklist
 section name and phrases, the translation-table rows and skip-line sentences, and the
 guidance-byte accounting in `test_context_disclosure`. The accounting computes each issue
