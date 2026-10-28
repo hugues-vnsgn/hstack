@@ -428,7 +428,7 @@ value such as `claude-opus-5-5 xhigh`.
 index lists exactly the pages that exist. `orca.md` is the first page. The test's
 `HOST_PAGES` table gives each page its index list and the words only its skip line may use,
 and the index stays at most 1,750 bytes, a cap the owner raised from 1,500 on 2026-10-28.
-Synthetic pages prove each check can fail. A subtest checks that the shared ADE rule is stated once, in the README, and that the
+Synthetic pages prove each page and index check can fail. A subtest checks that the shared ADE rule is stated once, in the README, and that the
 README repeats the three tests the door names and points back to `host-workers.md`. Another checks that the README names the
 door's unobserved limits and that ADR 0004 lets a session outside every listed ADE and agent
 read at most the index. Both cases are source checks of wiring and
