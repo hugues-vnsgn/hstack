@@ -1203,3 +1203,105 @@ class HostAdapterShape(unittest.TestCase):
                 self.assertEqual(len(errors), len(expected), errors)
                 for error, prefix in zip(errors, expected):
                     self.assertTrue(error.startswith(prefix), error)
+
+
+class HostDetectionHook(unittest.TestCase):
+    """The SessionStart hook that detects an ADE, and the written check it backs up.
+
+    Prose could not make the door reliable: across rounds 2 to 4 of PR 142 a
+    session read the index in 2 of 6 Orca runs, and the runs that skipped it never
+    mentioned Orca at all. The hook does the test where the session cannot miss
+    it. The written check stays, because Codex and omp load no plugin hook.
+    """
+    HOOK = ROOT / 'plugin/hooks/host-detect.sh'
+    MANIFEST = ROOT / 'plugin/hooks/hooks.json'
+    # The three Orca variables observed set in a real pane on Orca 1.4.241.
+    ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
+
+    def run_hook(self, env=None, root=None):
+        environment = dict(os.environ)
+        for name in self.ORCA_VARIABLES:
+            environment[name] = ''
+        environment.update(env or {})
+        environment['CLAUDE_PLUGIN_ROOT'] = str(root or ROOT / 'plugin')
+        return subprocess.run(['bash', str(self.HOOK)], capture_output=True, text=True,
+                              env=environment)
+
+    def context(self, result):
+        return json.loads(result.stdout)['hookSpecificOutput']['additionalContext']
+
+    def test_the_manifest_declares_one_session_start_command_hook(self):
+        manifest = json.loads(self.MANIFEST.read_text())
+        self.assertIn('SessionStart', manifest['hooks'])
+        entries = manifest['hooks']['SessionStart']
+        self.assertEqual(len(entries), 1)
+        hooks = entries[0]['hooks']
+        self.assertEqual(len(hooks), 1)
+        self.assertEqual(hooks[0]['type'], 'command')
+        self.assertIn('host-detect.sh', hooks[0]['command'])
+        self.assertIn('${CLAUDE_PLUGIN_ROOT}', hooks[0]['command'])
+        self.assertGreaterEqual(hooks[0]['timeout'], 1)
+
+    def test_the_hook_script_is_sealed_and_executable(self):
+        receipt = json.loads((ROOT / 'docs/upstream/consolidation.json').read_text())
+        for relative in ('hooks/hooks.json', 'hooks/host-detect.sh'):
+            with self.subTest(path=relative):
+                self.assertIn(relative, receipt['installed_files'])
+        mode = receipt['installed_files']['hooks/host-detect.sh']['mode']
+        self.assertEqual(mode, 0o755, 'the hook script must be executable')
+        self.assertEqual(receipt['installed_files']['hooks/hooks.json']['mode'], 0o644)
+        self.assertTrue((ROOT / 'plugin/hooks/host-detect.sh').is_file())
+
+    def test_a_plain_session_gets_no_output_and_no_bytes(self):
+        result = self.run_hook()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, '')
+        self.assertEqual(result.stderr, '')
+
+    def test_each_orca_variable_alone_triggers_the_door(self):
+        for name in self.ORCA_VARIABLES:
+            with self.subTest(variable=name):
+                result = self.run_hook({name: 'probe-value'})
+                self.assertEqual(result.returncode, 0, result.stderr)
+                payload = json.loads(result.stdout)
+                self.assertEqual(payload['hookSpecificOutput']['hookEventName'], 'SessionStart')
+                context = payload['hookSpecificOutput']['additionalContext']
+                self.assertIn('/adapters/hosts/README.md', context)
+                self.assertIn('Before your first dispatch', context)
+
+    def test_the_door_names_the_index_of_the_loaded_plugin(self):
+        result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'}, root=ROOT / 'plugin')
+        self.assertIn(str(ROOT / 'plugin' / 'adapters' / 'hosts' / 'README.md'),
+                      self.context(result))
+
+    def test_the_hook_names_the_index_only_and_grants_no_authority(self):
+        result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'})
+        context = self.context(result).replace(str(ROOT / 'plugin'), '')
+        # It names the index only. A page is read when the session matches a line.
+        for page in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
+            with self.subTest(page=page):
+                self.assertNotIn(page, context)
+        # It adds no gate and no authority: it asks for a read and grants nothing.
+        for word in ['must', 'required', 'never', 'shall', 'only', 'always', 'mandatory',
+                     'approve', 'permission', 'allow', 'gate', 'block']:
+            with self.subTest(word=word):
+                self.assertNotIn(word, context.lower())
+
+    def test_the_written_check_stays_for_the_hosts_that_load_no_hook(self):
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
+        for test in ['ORCA_TERMINAL_HANDLE`', '`t3-code` tools', 'omp']:
+            with self.subTest(test=test):
+                self.assertIn(test, door)
+        # The written check and the hook test the same Orca variable, so a session
+        # that meets the hook's test also meets the written one.
+        self.assertIn('ORCA_TERMINAL_HANDLE', self.HOOK.read_text())
+
+    def test_the_hook_adds_no_always_read_bytes_to_the_host_adapters(self):
+        # The hook's message is delivered by the host, not by an adapter every
+        # session reads, so neither host.md nor mobile.md grows for it.
+        for relative in ('plugin/adapters/host.md', 'plugin/adapters/mobile.md'):
+            with self.subTest(path=relative):
+                self.assertNotIn('host-detect.sh', (ROOT / relative).read_text())
+        # host.md, which every session reads, carries none of the detection.
+        self.assertNotIn('ORCA_TERMINAL_HANDLE', (ROOT / 'plugin/adapters/host.md').read_text())

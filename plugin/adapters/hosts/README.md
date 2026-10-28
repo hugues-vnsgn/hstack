@@ -2,9 +2,9 @@
 
 [host-workers.md](../host-workers.md) sends you here when `$ORCA_TERMINAL_HANDLE` is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
 
-Unobserved: omp matches at dispatch, not its first tool call, so an omp agent that never dispatches reads no page. Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca. Every process an Orca pane starts inherits it.
-
 Each list line reads `- [name](name.md): detection test`.
+
+Unobserved: omp matches at dispatch, not its first tool call, so an omp agent that never dispatches reads no page. Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca. Every process an Orca pane starts inherits it. A Claude Code hook also sends you here.
 
 ## Shared ADE rule
 
