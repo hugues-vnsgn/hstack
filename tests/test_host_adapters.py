@@ -1,13 +1,16 @@
 """Actual installed entrypoints in external consumer repos; synthetic history only."""
 from datetime import datetime, timezone
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
+import re
 import shlex
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -937,3 +940,402 @@ class ConsumerAudit(InstalledFixture, unittest.TestCase):
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-activity-unavailable')
         self.assertEqual({row['evidence_basis'] for row in report['worktrees'][1]['evidence']}, {'unparsed-path-hint', 'validated-record'})
         self.assertFalse(report['worktrees'][1]['deletion_authorized'])
+
+
+HOST_PAGE_ROWS = ['Detect', 'Sessions and worktrees', 'Start', 'Send', 'Read', 'Wait', 'Close',
+                  'Load a PR head', 'Allowed tools', 'Skip line']
+SKIP_LINE = re.compile(r'Skipped in .+: .+\. .+\.')
+HARNESS_MEMBER = 'pstack/docs/harness/claude-code.md'
+
+# Upstream first-column cells that hStack states elsewhere or does not need, keyed by the upstream
+# table that holds them so a cell dropped in one table cannot hide the same cell in another.
+DROPPED = {
+    'Tools': {
+        '`Task`': 'host-workers.md opens with the Task to native agent tool translation',
+        'Run another pstack skill (`/name` or "the **name** skill")':
+            'host.md Loading and routing owns the read-by-path rule and bars the Skill tool for user-only skills',
+    },
+    'Subagent fields': {
+        '`subagent_type: generalPurpose`':
+            'the readonly rows map a generalPurpose worker by its readonly flag, the false row also with no readonly field',
+        '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
+    },
+    'Models': {
+        '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
+        'The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc`': 'setup-hstack writes project-local .hstack/models.md',
+        'A role value `<model> <effort>`, such as `opus high`':
+            'the Models row maps a role value such as claude-opus-5-5 xhigh, and host-workers.md passes the effort token',
+    },
+    'Paths': {
+        '`.cursor/skills/`, `~/.cursor/skills/`': 'host-special-skills.md Project skill paths',
+        '`~/.cursor/plugins/`, `.cursor-plugin/plugin.json`':
+            'host-special-skills.md:31-32 maps skill paths to the actual host, and hStack ships native manifests',
+        '`.cursor/rules/*.mdc`, always-applied rules': 'no hStack body reads .mdc rules',
+        '`https://github.com/cursor/plugins/blob/main/pstack/<path>`': 'no hStack body links Cursor\'s repository',
+    },
+    'Cursor-only features': {
+        'Cursor cloud agents':
+            'the Subagent fields row for environment "cloud" maps it, and a step that needs the agent itself is Cursor-only',
+    },
+}
+# Upstream rows hStack leaves open, each with the reason it cannot be closed here.
+GAPS = {
+    'Paths': {
+        'Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`':
+            'plugin/skills/recall/SKILL.md:21 hardcodes the Cursor transcript path and the skill is ledger-mapped, '
+            'so this adapter cannot translate it',
+    },
+}
+
+
+def table_rows(text):
+    tables, heading, rows = {}, None, None
+    for line in text.splitlines() + ['']:
+        if line.startswith('#'):
+            heading = line.lstrip('#').strip()
+        if line.startswith('|'):
+            if rows is None:
+                rows = []
+            rows.append([cell.strip() for cell in line.strip().strip('|').split('|')])
+        elif rows is not None:
+            tables.setdefault(heading, []).extend(rows[2:])
+            rows = None
+    return tables
+
+
+def markdown_tables(text):
+    return {name: [row[0] for row in rows] for name, rows in table_rows(text).items()}
+
+
+def unmapped_upstream_rows(upstream, adapters, dropped, gaps):
+    mine = {}
+    for text in adapters:
+        for name, cells in markdown_tables(text).items():
+            mine.setdefault(name, set()).update(cells)
+    return [f'{name}: {cell}' for name, cells in markdown_tables(upstream).items() for cell in cells
+            if cell not in mine.get(name, set()) and cell not in dropped.get(name, {}) and cell not in gaps.get(name, {})]
+
+
+def with_extra_row(text, heading, row):
+    separator = '| --- | --- |\n'
+    at = text.index(separator, text.index(f'## {heading}\n')) + len(separator)
+    return text[:at] + row + '\n' + text[at:]
+
+
+def host_page_errors(text):
+    rows = [row for rows in markdown_tables(text).values() for row in rows]
+    errors = [] if rows == HOST_PAGE_ROWS else [f'rows {rows} are not {HOST_PAGE_ROWS}']
+    if not SKIP_LINE.search(text):
+        errors.append('no skip line')
+    return errors
+
+
+def host_index_errors(readme, pages):
+    lists = readme.split('## Agents', 1)[1]
+    listed = set(re.findall(r'^- \[[^\]]+\]\(([^)/]+\.md)\)', lists, re.M))
+    return sorted([*('listed but missing: ' + name for name in listed - set(pages)),
+                   *('missing from the index: ' + name for name in set(pages) - listed)])
+
+
+class HostAdapterShape(unittest.TestCase):
+    def pinned_harness_doc(self, archive=None):
+        pin = json.loads((ROOT / 'docs/upstream/pin.json').read_text())
+        archive = archive or ROOT / f"provenance/upstream/pstack-{pin['version']}.tar.gz"
+        with tarfile.open(archive) as tar:
+            return tar.extractfile(HARNESS_MEMBER).read().decode()
+
+    def adapters(self):
+        return [(ROOT / f'plugin/adapters/{name}').read_text() for name in ('host.md', 'host-workers.md')]
+
+    def row(self, table, first):
+        rows = [row for text in self.adapters() for row in table_rows(text).get(table, []) if row[0] == first]
+        self.assertEqual(len(rows), 1, f'{table}: {first}')
+        return rows[0]
+
+    def test_upstream_harness_rows_are_mapped(self):
+        upstream = self.pinned_harness_doc()
+        with self.subTest('every upstream row is mapped, dropped or a recorded gap'):
+            self.assertEqual(unmapped_upstream_rows(upstream, self.adapters(), DROPPED, GAPS), [])
+        cells = markdown_tables(upstream)
+        for table, reasons in [*DROPPED.items(), *GAPS.items()]:
+            self.assertEqual(set(reasons) - set(cells.get(table, [])), set(), f'{table} lists a cell upstream lacks')
+            self.assertTrue(all(reasons.values()))
+        with tempfile.TemporaryDirectory(prefix='hstack-harness-') as directory:
+            for label, heading, row, expected in [
+                    ('extra upstream row', 'Subagent fields', '| `brand_new_field: <x>` | `brand_new_value` |',
+                     'Subagent fields: `brand_new_field: <x>`'),
+                    ('a row dropped in another table', 'Cursor-only features', '| `Task` | `Agent` |',
+                     'Cursor-only features: `Task`'),
+                    ('a gap in another table', 'Tools', '| Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/` | x |',
+                     'Tools: Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`')]:
+                changed = with_extra_row(upstream, heading, row)
+                self.assertNotEqual(changed, upstream)
+                archive = Path(directory) / 'pstack.tar.gz'
+                with tarfile.open(archive, 'w:gz') as tar:
+                    info = tarfile.TarInfo(HARNESS_MEMBER)
+                    info.size = len(changed.encode())
+                    tar.addfile(info, io.BytesIO(changed.encode()))
+                with self.subTest(label):
+                    errors = unmapped_upstream_rows(self.pinned_harness_doc(archive), self.adapters(), DROPPED, GAPS)
+                    self.assertEqual(errors, [expected])
+
+        workers = ' '.join(self.adapters()[1].split())
+        with self.subTest('readonly precedence'):
+            claude = self.row('Subagent fields', '`readonly: true`')[1]
+            for phrase in ['`subagent_type: "general-purpose"`', '`"Explore"`', 'locate or search code', '`how` explorer',
+                           '"do not edit files"', "`git status` in the worker's checkout"]:
+                self.assertIn(phrase, claude)
+            self.assertLess(claude.index('general-purpose'), claude.index('Explore'))
+            self.assertTrue(self.row('Subagent fields', '`readonly: false`')[1].startswith('`subagent_type: "general-purpose"`'))
+        with self.subTest('every generalPurpose call in the skills has a row'):
+            shapes = {}
+            for path in sorted((ROOT / 'plugin/skills').rglob('*.md')):
+                for line in path.read_text().splitlines():
+                    if 'generalPurpose`' in line:
+                        readonly = next((value for value in ('true', 'false') if f'`readonly: {value}`' in line), None)
+                        shapes.setdefault(readonly, []).append(path.relative_to(ROOT).as_posix())
+            self.assertEqual(set(shapes), {'true', 'false', None})
+            for readonly, paths in shapes.items():
+                claude = self.row('Subagent fields', f'`readonly: {readonly or "false"}`')[1]
+                self.assertIn('`subagent_type: "general-purpose"`', claude, paths)
+                if readonly is None:
+                    self.assertIn('also for `generalPurpose` without `readonly`', claude, paths)
+        with self.subTest('one model rule'):
+            claude = self.row('Models', 'A `grok-*`, `gpt-*`, or other non-Claude slug')[1]
+            self.assertIn('the ` or ` rule above applies', claude)
+            self.assertIn('the Workers line names the model that ran', claude)
+            self.assertNotIn('Omit `model`', claude)
+            self.assertIn("setup-hstack's ` or ` rule picks first: the first alternative the native tool accepts, "
+                          "else `inherit-parent` at the first alternative's effort. A skill's own fallback to its default "
+                          'applies only if the tool then rejects the value that rule picked.', workers)
+            self.assertNotIn("Preserve each core skill's fallback sequence", workers)
+            self.assertIn('The Workers line records the requested and actual family/model/effort.', workers)
+            self.assertIn('A seat needs a family only when its workflow requires one and no alternative on its line is '
+                          'accepted: mark the seat blocked', workers)
+            self.assertNotIn('If no allowed equivalent is exposed', workers)
+            self.assertNotIn('If a seat needs a family the host cannot', workers)
+        with self.subTest('the Claude model row is the starting value'):
+            claude = self.row('Models', '`claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh`')[1]
+            for phrase in ['`model: "opus"` while the Agent tool takes only aliases', '`effort: "xhigh"` to start',
+                           '"Match the model to the job" may lower with a reported reason',
+                           'So does a role value `claude-opus-5-5 xhigh`.', 'Drop `-fast`.']:
+                self.assertIn(phrase, claude)
+            setup = ' '.join((ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text().split())
+            self.assertIn("When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias", setup)
+            self.assertIn('**Match the model to the job.**', workers)
+        with self.subTest('a generalPurpose worker maps by its readonly flag'):
+            self.assertNotIn("Cursor's `generalPurpose` maps to", workers)
+            self.assertNotIn('preserve `generalPurpose`', workers)
+            self.assertIn("preserve the workflow's own prompt, readonly/agent-mode requirement", workers)
+            self.assertIn("Do not replace these workers with `hugues-agent`. Codex uses a fresh native worker with the "
+                          "workflow's prompt.", workers)
+        with self.subTest('resume sends the result text'):
+            row = self.row('Subagent fields', '`resume`')
+            self.assertIn("the earlier result's text pasted whole into its brief", row[1])
+            self.assertIn('`SendMessage` in the cases `hugues-mode/SKILL.md` allows', row[1])
+            self.assertTrue(row[2].startswith('Same; '), row[2])
+            self.assertIn('its message tool is unobserved', row[2])
+            router = (ROOT / 'plugin/skills/hugues-mode/SKILL.md').read_text()
+            self.assertIn('Resume, message, or queue a follow-up on an existing subagent only when', router)
+        with self.subTest('the drop rule spares the fields the Agent tool lists'):
+            self.assertIn('If a Cursor-only field has no row, drop it and say so.', workers)
+            for field in ['subagent_type', 'model', 'effort', 'run_in_background', 'isolation']:
+                self.assertIn(f'`{field}`', workers.split('Never drop ', 1)[1].split('. ', 1)[0])
+            self.assertEqual(self.row('Subagent fields', '`run_in_background: true`')[1], 'Pass it.')
+            self.assertIn('no such field', self.row('Subagent fields', '`environment: "local"`')[1])
+        with self.subTest('cloud keeps the local-execution limit and the worktree location'):
+            claude = self.row('Subagent fields', '`environment: "cloud"`')[1]
+            for phrase in ['`isolation: "worktree"`', 'only where the core permits local execution',
+                           "AGENTS.md sets a worktree location, the coordinator creates the worktree there before dispatch "
+                           'and omits `isolation`', 'The brief names the branch.']:
+                self.assertIn(phrase, claude)
+            tools = ' '.join((ROOT / 'plugin/adapters/host-workflow-tools.md').read_text().split())
+            self.assertIn('Native local workers substitute for cloud only where the core permits local execution', tools)
+
+    def test_host_pages_follow_the_page_shape_and_the_index_lists_them(self):
+        directory = ROOT / 'plugin/adapters/hosts'
+        readme = (directory / 'README.md').read_text()
+        self.assertLessEqual(len(readme.encode()), 1500)
+        self.assertIn(', '.join(HOST_PAGE_ROWS), readme)
+        pages = sorted(path.name for path in directory.glob('*.md') if path.name != 'README.md')
+        self.assertEqual(host_index_errors(readme, pages), [])
+        for name in pages:
+            with self.subTest(page=name):
+                self.assertEqual(host_page_errors((directory / name).read_text()), [])
+        with self.subTest('the ADE rule is stated once, and the door names the tests the README repeats'):
+            adr = (ROOT / 'docs/adr/0004-adapters-for-ades-and-agents.md').read_text()
+            sentence = 'A page never creates or reads the ADE'
+            self.assertEqual(readme.count(sentence), 1)
+            self.assertEqual(adr.count(sentence), 0)
+            self.assertIn('hosts/README.md#shared-ade-rule', adr)
+            self.assertIn('settlement receipts', readme)
+            workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+            door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
+            for test in ['ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID',
+                         '`t3-code` tools', 'omp']:
+                self.assertIn(test, door)
+                self.assertIn(test, readme)
+            self.assertIn('[host-workers.md](../host-workers.md) sends you here', readme)
+        with self.subTest('the index and the ADR name what the door reads and where it can miss'):
+            for limit in ['Unobserved: omp matches at dispatch, not its first tool call',
+                          "Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca",
+                          'Every process an Orca pane starts inherits it.']:
+                self.assertIn(limit, readme)
+            self.assertIn('reads at most the index, never a page', adr)
+            self.assertIn('host.md, which every session reads, carries none of it', adr)
+            self.assertNotIn('gets one row in its phase table', adr)
+            self.assertNotIn('never reads a file under', adr)
+        def page(rows, skip='Skipped in Example: step. Reason.'):
+            return '# Example\n\n| Row | Mechanics |\n|---|---|\n' + ''.join(
+                f'| {row} | {skip if row == "Skip line" else "x"} |\n' for row in rows)
+
+        swapped = [*HOST_PAGE_ROWS[:2], HOST_PAGE_ROWS[3], HOST_PAGE_ROWS[2], *HOST_PAGE_ROWS[4:]]
+        listing = '## Agents\n\n- [One](one.md): test\n\n## ADEs\n\n- [Two](two.md): test\n'
+        for label, errors, expected in [
+                ('a complete page', host_page_errors(page(HOST_PAGE_ROWS)), []),
+                ('a missing row', host_page_errors(page(HOST_PAGE_ROWS[:6] + HOST_PAGE_ROWS[7:])), ['rows ']),
+                ('rows out of order', host_page_errors(page(swapped)), ['rows ']),
+                ('no skip line', host_page_errors(page(HOST_PAGE_ROWS, skip='none')), ['no skip line']),
+                ('an exact index', host_index_errors(listing, ['one.md', 'two.md']), []),
+                ('a page the index omits', host_index_errors(listing, ['one.md', 'two.md', 'three.md']),
+                 ['missing from the index: three.md']),
+                ('a listed page that is missing', host_index_errors(listing, ['one.md']), ['listed but missing: two.md'])]:
+            with self.subTest(label):
+                self.assertEqual(len(errors), len(expected), errors)
+                for error, prefix in zip(errors, expected):
+                    self.assertTrue(error.startswith(prefix), error)
+
+
+class HostDetectionHook(unittest.TestCase):
+    """The SessionStart hook that detects an ADE, and the written check it backs up.
+
+    Prose could not make the door reliable: across rounds 2 to 4 of PR 142 a
+    session read the index in 2 of 6 Orca runs, and the runs that skipped it never
+    mentioned Orca at all. The hook does the test where the session cannot miss
+    it. The written check stays, because Codex and omp load no plugin hook.
+    """
+    HOOK = ROOT / 'plugin/hooks/host-detect.sh'
+    MANIFEST = ROOT / 'plugin/hooks/hooks.json'
+    # The three Orca variables observed set in a real pane on Orca 1.4.241.
+    ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
+
+    def run_hook(self, env=None, root=None):
+        environment = dict(os.environ)
+        for name in self.ORCA_VARIABLES:
+            environment[name] = ''
+        environment.update(env or {})
+        environment['CLAUDE_PLUGIN_ROOT'] = str(root or ROOT / 'plugin')
+        return subprocess.run([str(self.HOOK)], capture_output=True, text=True,
+                              env=environment)
+
+    def context(self, result):
+        return json.loads(result.stdout)['hookSpecificOutput']['additionalContext']
+
+    def test_the_manifest_declares_one_session_start_command_hook(self):
+        manifest = json.loads(self.MANIFEST.read_text())
+        self.assertIn('SessionStart', manifest['hooks'])
+        entries = manifest['hooks']['SessionStart']
+        self.assertEqual(len(entries), 1)
+        hooks = entries[0]['hooks']
+        self.assertEqual(len(hooks), 1)
+        self.assertEqual(hooks[0]['type'], 'command')
+        self.assertIn('host-detect.sh', hooks[0]['command'])
+        self.assertIn('${CLAUDE_PLUGIN_ROOT}', hooks[0]['command'])
+        # The command runs the script directly, so the executable bit is
+        # load-bearing. A `bash` wrapper would make the mode a dead pin.
+        self.assertNotIn('bash', hooks[0]['command'])
+        self.assertGreaterEqual(hooks[0]['timeout'], 1)
+
+    def test_the_hook_script_is_sealed_and_executable(self):
+        receipt = json.loads((ROOT / 'docs/upstream/consolidation.json').read_text())
+        for relative in ('hooks/hooks.json', 'hooks/host-detect.sh'):
+            with self.subTest(path=relative):
+                self.assertIn(relative, receipt['installed_files'])
+        mode = receipt['installed_files']['hooks/host-detect.sh']['mode']
+        self.assertEqual(mode, 0o755, 'the hook script must be executable')
+        self.assertEqual(receipt['installed_files']['hooks/hooks.json']['mode'], 0o644)
+        self.assertTrue((ROOT / 'plugin/hooks/host-detect.sh').is_file())
+
+    def test_a_plain_session_gets_no_output_and_no_bytes(self):
+        result = self.run_hook()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, '')
+        self.assertEqual(result.stderr, '')
+
+    def test_each_orca_variable_alone_triggers_the_door(self):
+        for name in self.ORCA_VARIABLES:
+            with self.subTest(variable=name):
+                result = self.run_hook({name: 'probe-value'})
+                self.assertEqual(result.returncode, 0, result.stderr)
+                payload = json.loads(result.stdout)
+                self.assertEqual(payload['hookSpecificOutput']['hookEventName'], 'SessionStart')
+                context = payload['hookSpecificOutput']['additionalContext']
+                self.assertIn('/adapters/hosts/README.md', context)
+                self.assertIn('Before your first dispatch', context)
+
+    def test_the_door_names_the_index_of_the_loaded_plugin(self):
+        result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'}, root=ROOT / 'plugin')
+        self.assertIn(str(ROOT / 'plugin' / 'adapters' / 'hosts' / 'README.md'),
+                      self.context(result))
+
+    def test_the_hook_names_the_index_only_and_grants_no_authority(self):
+        result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'})
+        context = self.context(result).replace(str(ROOT / 'plugin'), '')
+        for page in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
+            with self.subTest(page=page):
+                self.assertNotIn(page, context)
+        for word in ['must', 'required', 'never', 'shall', 'only', 'always', 'mandatory',
+                     'approve', 'permission', 'allow', 'gate', 'block']:
+            with self.subTest(word=word):
+                self.assertNotIn(word, context.lower())
+
+    def test_the_written_check_stays_for_the_hosts_that_load_no_hook(self):
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
+        for test in ['`t3-code` tools', 'omp']:
+            with self.subTest(test=test):
+                self.assertIn(test, door)
+
+    def test_the_hook_and_the_written_check_test_the_same_variables(self):
+        # A session that meets the hook's test must also meet the written one, so
+        # the two doors carry the same set of variables. A variable in one and not
+        # the other opens a session that reads the index and one that does not.
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
+        written = {name for name in self.ORCA_VARIABLES if name in door}
+        self.assertEqual(written, set(self.ORCA_VARIABLES))
+        for name in self.ORCA_VARIABLES:
+            with self.subTest(variable=name):
+                self.assertIn(name, self.HOOK.read_text())
+
+    def test_the_message_survives_a_plugin_path_holding_json_characters(self):
+        # The plugin root is a filesystem path, so it may hold a quote or a
+        # backslash. A hand-built JSON string breaks the moment it does.
+        result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'},
+                                root='/tmp/we"ird\\path')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        context = payload['hookSpecificOutput']['additionalContext']
+        self.assertIn('/tmp/we"ird\\path/adapters/hosts/README.md', context)
+
+    def test_the_hook_says_nothing_without_a_plugin_root(self):
+        # A relative path would send the session to an index guessed from the
+        # working directory, which is worse than no message at all.
+        environment = dict(os.environ)
+        for name in self.ORCA_VARIABLES:
+            environment[name] = ''
+        environment['ORCA_TERMINAL_HANDLE'] = 'probe-value'
+        environment.pop('CLAUDE_PLUGIN_ROOT', None)
+        result = subprocess.run(['bash', str(self.HOOK)], capture_output=True, text=True,
+                                env=environment)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, '')
+
+    def test_the_hook_adds_no_always_read_bytes_to_the_host_adapters(self):
+        # The hook's message is delivered by the host, not by an adapter every
+        # session reads, so neither host.md nor mobile.md grows for it.
+        for relative in ('plugin/adapters/host.md', 'plugin/adapters/mobile.md'):
+            with self.subTest(path=relative):
+                self.assertNotIn('host-detect.sh', (ROOT / relative).read_text())
+        # host.md, which every session reads, carries none of the detection.
+        self.assertNotIn('ORCA_TERMINAL_HANDLE', (ROOT / 'plugin/adapters/host.md').read_text())

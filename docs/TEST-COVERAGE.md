@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **540 top-level unittest cases**. One is a driver that
+The current candidate collects **553 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -11,7 +11,7 @@ native workflow proof. Subtests are not added to case totals.
 | Current checker, historical 0.1.0 fixtures | 27 | Explicit historical validation mode and package mutations |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
-| Current installed adapters and regressions | 103 | test_host_adapters (78), test_review_regressions (12), test_rereview_regressions (13) |
+| Current installed adapters and regressions | 116 | test_host_adapters (91), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled non-pstack Cursor skills (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,220 cases (379 `read-workflow`, 1,778 `translate-plan` and 63 in-plan cases) over all 63 bundled skills, the legacy aliases of the 58 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
@@ -19,11 +19,11 @@ native workflow proof. Subtests are not added to case totals.
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
-| Total collected | 540 | Current, mixed and historical scopes remain distinct |
+| Total collected | 553 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-540 Python cases. The opt-in CI workflow requires a provisioned native runner.
+553 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -406,3 +406,67 @@ bytes for the four user-only skills; the per-turn skill-list budget is
 unchanged. The bug-fix context bound now allows growth in files that are
 byte-identical to their pinned upstream source between the baseline pin and
 the current pin, which covers the two principles upstream rewrote.
+
+The host.md harness-shape change (issue #136, multi-host P2) adds two cases. `test_upstream_harness_rows_are_mapped` reads
+`pstack/docs/harness/claude-code.md` from the archive the pin names and checks that each
+first-column cell of each upstream table is a cell of the same-named table in `host.md` or
+`host-workers.md`, a key of that table's entry in the test's `DROPPED` map with its reason,
+or a key of its entry in `GAPS`, the rows hStack leaves open. Subtests build an archive with
+one extra row and expect the case to name it, add `Task` to upstream's Cursor-only features
+table, which `DROPPED` lists only under Tools, and add the transcripts row, which `GAPS`
+lists only under Paths. Further subtests pin the five coordinator rulings in the
+`host-workers.md` cells: the `readonly` precedence, the one model rule, `resume` with the
+result's text, the drop rule and the cloud row. Fix round 3 adds subtests for the model
+precedence (setup-hstack's ` or ` rule first, a skill's fallback only for a rejected value), the
+blocked-seat definition, the Claude Models row as the alias-while-alias-only starting value,
+the removed `generalPurpose` mapping and the coordinator creating the worktree. Fix round 4
+adds subtests that every `generalPurpose` call in the skills, with `readonly: true`, `false`
+or no `readonly`, reaches a `general-purpose` row, and that the Claude Models row maps a role
+value such as `claude-opus-5-5 xhigh`.
+`test_host_pages_follow_the_page_shape_and_the_index_lists_them` checks each page under
+`plugin/adapters/hosts/` for the ten rows in order and a skip line, and checks that the
+index lists exactly the pages that exist; no page exists yet, so synthetic pages prove the
+checks. A subtest checks that the shared ADE rule is stated once, in the README, and that the
+README repeats the three tests the door names and points back to `host-workers.md`. Another checks that the README names the
+door's unobserved limits and that ADR 0004 lets a session outside every listed ADE and agent
+read at most the index. Both cases are source checks of wiring. No
+Orca, T3 Code or omp session was observed. Four existing cases moved a pinned phrase with its
+rule: the `AskQuestion`, `poteto-agent` and worker-pointer assertions, the todo-checklist
+section name and phrases, the translation-table rows and skip-line sentences, and the
+guidance-byte accounting in `test_context_disclosure`. The accounting computes each issue
+110 exemption from `ae7cec3` with `git show` and exempts exactly those bytes. The `Cursor-only
+features` section that replaced issue 110's `host.md` text is 1,372 bytes against 1,185 at
+`ae7cec3`. Its 187-byte growth is pinned and counts against every bound, so no exemption rose
+and the host.md cap stays 1,300. The worker allowance stays 500 bytes and the new `Subagent
+fields and models` tables are not exempt. Since fix round 4 the door is one sentence at the top of
+`host-workers.md`, and `check_core.py` reports a missing door. A subtest checks that it is
+the only line in a `plugin/` Markdown file outside the index that names `hosts/`, and that no
+measured scenario reads a file there. The same case asserts that the `host.md` opener links
+mobile applicability. The
+Git-translation subtest is keyed to the hash-pinned baseline sentence, not to a reason's
+wording. The todo-checklist case checks that the checklist rule sits under the Tools
+table, not in one host's column, and resolves its Playbooks link to the router. The
+`poteto-agent` mapping sentence in `hugues-agent` by host went, with its assertion in
+`test_native_layout`, because the rename list and the per-host line state the mapping. The
+checklist's three step-fidelity sentences went from `host.md` to the router's Playbooks
+section, which already carries them and is already asserted.
+
+The P2 fix round 5 host-detection hook adds eleven cases, so 553 top-level cases collect.
+`test_host_adapters.HostDetectionHook` reads the hook's manifest and script: one
+`SessionStart` command hook that resolves `${CLAUDE_PLUGIN_ROOT}` and runs the script
+directly, so the executable bit is load-bearing, the three Orca variables the script tests
+(`ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID`, all observed set in a real
+Orca 1.4.241 pane), the index the message names, no page, and no gate or authority in the
+message. It runs the script: a plain session gets no output and no bytes, each Orca
+variable alone produces the `SessionStart` context naming the loaded plugin's index, a
+plugin path holding a quote and a backslash still yields valid JSON, and a session with
+no plugin root gets no message rather than a path guessed from the working directory. It
+checks the script is sealed executable and the manifest sealed read-only, that the written
+check in `host-workers.md` stays for the hosts that load no plugin hook, and that the
+written check and the hook test the same set of variables, so a session that meets one
+meets the other. `scripts/check_core.py` holds the same wiring, the two modes and the
+emitted output, run through both encoders the script has, so a reseal cannot approve a
+broken, non-executable or wrongly-escaping hook. These are source and wiring checks. The
+hook firing in a live Claude Code session was observed on 2026-10-28 with Claude Code
+2.1.311, and the Orca variables were observed in a live Orca 1.4.241 pane. A session
+reading the index because of the hook was not observed.

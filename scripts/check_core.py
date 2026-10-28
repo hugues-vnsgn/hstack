@@ -3,10 +3,14 @@ import hashlib
 import ast
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 import stat
+import subprocess
 import sys
+import tempfile
 
 import tarfile
 
@@ -160,7 +164,20 @@ PHASE_GUIDANCE = {
     'host-typescript.md': 'Reading or editing TypeScript files',
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
-ADAPTER_RESOURCES = ['plugin/adapters/' + name for name in PHASE_GUIDANCE] + ['plugin/adapters/mobile-workflows.md']
+DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`; '
+        'if it prints a value, `t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
+ADAPTER_RESOURCES = (['plugin/adapters/' + name for name in PHASE_GUIDANCE]
+                     + ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/hosts/README.md'])
+# The SessionStart hook that detects an ADE. It is the reliable path to the hosts
+# index: prose could not make the door fire, because a session that read
+# host-workers.md still skipped the test (2 of 6 Orca runs across rounds 2 to 4 of
+# PR 142). Codex and omp load no plugin hook, so the written door above stays.
+HOOK_MANIFEST = 'plugin/hooks/hooks.json'
+HOOK_SCRIPT = 'plugin/hooks/host-detect.sh'
+HOOK_EVENT = 'SessionStart'
+# The Orca variables the hook tests. ORCA_TERMINAL_HANDLE, ORCA_PANE_KEY and
+# ORCA_TAB_ID were all observed set in a real Orca 1.4.241 pane.
+HOOK_ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
 
 
 def require(value, message):
@@ -292,12 +309,137 @@ def external_skill_errors(root, receipt, upstream):
     return errors
 
 
+def hook_errors(root, load):
+    """Check the SessionStart hook that detects an ADE.
+
+    The hook is the reliable door: prose could not make a session run the written
+    test, so the host runs it. The check holds the wiring, the tested variables,
+    the one file the message names, and the fact that the message grants no
+    authority.
+    """
+    errors = []
+    manifest_path = root / HOOK_MANIFEST
+    script_path = root / HOOK_SCRIPT
+    for path in (manifest_path, script_path):
+        if not path.is_file() or path.is_symlink():
+            errors.append('missing hook file: ' + path.relative_to(root).as_posix())
+    if errors:
+        return errors
+    manifest = load(HOOK_MANIFEST)
+    if not isinstance(manifest, dict) or not isinstance(manifest.get('hooks'), dict):
+        return ['hook manifest is not an object with hooks']
+    entries = manifest['hooks'].get(HOOK_EVENT)
+    if not isinstance(entries, list) or len(entries) != 1:
+        return ['hook manifest declares no single ' + HOOK_EVENT + ' entry']
+    hooks = entries[0].get('hooks') if isinstance(entries[0], dict) else None
+    if not isinstance(hooks, list) or len(hooks) != 1:
+        return ['hook manifest declares no single command hook']
+    hook = hooks[0]
+    if not isinstance(hook, dict) or hook.get('type') != 'command':
+        return ['hook is not a command hook']
+    command = hook.get('command')
+    if not isinstance(command, str) or 'host-detect.sh' not in command:
+        errors.append('hook command does not run the detection script')
+    elif '${CLAUDE_PLUGIN_ROOT}' not in command:
+        errors.append('hook command does not resolve the plugin root')
+    if not isinstance(hook.get('timeout'), int) or hook['timeout'] < 1:
+        errors.append('hook has no timeout')
+    script = script_path.read_text()
+    for name in HOOK_ORCA_VARIABLES:
+        if name not in script:
+            errors.append('hook does not test ' + name)
+    if 'CLAUDE_PLUGIN_ROOT' not in script:
+        errors.append('hook does not resolve the plugin root')
+    if 'hookSpecificOutput' not in script or HOOK_EVENT not in script:
+        errors.append('hook does not emit a ' + HOOK_EVENT + ' context')
+    for forbidden in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
+        if forbidden in script:
+            errors.append('hook names a page instead of the index: ' + forbidden)
+    # The hook and the written door must test the same variables, so a session
+    # that meets the hook's test also meets the written one.
+    door = (root / 'plugin/adapters/host-workers.md').read_text()
+    door_line = next((line for line in door.splitlines() if '(hosts/README.md)' in line), '')
+    for name in HOOK_ORCA_VARIABLES:
+        if name not in door_line:
+            errors.append('the written door does not test ' + name)
+    errors.extend(hook_output_errors(script_path, root))
+    return errors
+
+
+def hook_output_errors(script_path, root):
+    """Run the hook and check what it actually prints.
+
+    Reading the script's text cannot catch a broken message, so the check parses
+    the output. A plugin root holding a quote or a backslash must still yield
+    valid JSON, and a path the session cannot resolve is worse than no message.
+    """
+    errors = []
+    plugin_root = (root / 'plugin').as_posix()
+    index = (root / 'plugin/adapters/hosts/README.md').as_posix()
+    # The hook has two encoders: python3, and a sed fallback for a host without
+    # it. Both must produce valid JSON, so both are exercised. The fallback runs
+    # under a stub PATH that holds sed and tr but no python3, so the branch is
+    # taken rather than skipped.
+    with tempfile.TemporaryDirectory(prefix='hstack-hook-path-') as stub:
+        for tool in ('bash', 'sed', 'tr'):
+            found = shutil.which(tool)
+            if found:
+                os.symlink(found, os.path.join(stub, tool))
+        # Only the tools the hook and its fallback need. python3 must be
+        # unreachable, or the branch is skipped and the fallback goes unchecked.
+        stub_path = stub
+        for encoder, path in [('python3', None), ('the sed fallback', stub_path)]:
+            for label, root_value, expect_message in [
+                    ('a plain path', plugin_root, True),
+                    ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True),
+                    ('no plugin root', '', False)]:
+                environment = dict(os.environ)
+                for name in HOOK_ORCA_VARIABLES:
+                    environment[name] = ''
+                environment['ORCA_TERMINAL_HANDLE'] = 'probe'
+                if root_value:
+                    environment['CLAUDE_PLUGIN_ROOT'] = root_value
+                else:
+                    environment.pop('CLAUDE_PLUGIN_ROOT', None)
+                if path:
+                    environment['PATH'] = path
+                result = subprocess.run(['bash', str(script_path)], capture_output=True,
+                                        text=True, env=environment)
+                if result.returncode != 0:
+                    errors.append('the hook fails on ' + label + ' with ' + encoder + ': '
+                                  + result.stderr.strip())
+                    continue
+                if not expect_message:
+                    if result.stdout.strip():
+                        errors.append('the hook prints a message with no plugin root')
+                    continue
+                try:
+                    payload = json.loads(result.stdout)
+                except ValueError as error:
+                    errors.append('the hook prints invalid JSON on ' + label + ' with '
+                                  + encoder + ': ' + str(error))
+                    continue
+                context = payload.get('hookSpecificOutput', {}).get('additionalContext', '')
+                if not context:
+                    errors.append('the hook prints no context on ' + label + ' with ' + encoder)
+                    continue
+                named = context.split(' read ', 1)[-1].split(' in full', 1)[0]
+                if not named.startswith('/'):
+                    errors.append('the hook names a relative index path on ' + label + ' with '
+                                  + encoder)
+                if label.startswith('a plain') and named != index:
+                    errors.append('the hook names a path that is not the loaded plugin index')
+    return errors
+
+
 def adapter_errors(texts):
     errors = []
     host = texts[ADAPTERS[0]]
     for name, trigger in PHASE_GUIDANCE.items():
         if not re.search(r'^\| ' + re.escape(trigger) + r' \| \[[^\]]+\]\(' + re.escape(name) + r'\) \|$', host, re.M):
             errors.append('missing phase prerequisite: ' + name)
+    if texts['plugin/adapters/host-workers.md'].count(DOOR) != 1:
+        errors.append('missing door: hosts/README.md')
     for marker in ['Before the triggering action, read its complete reference',
                    'never use a file read as an invocation fallback', 'never restart task routing',
                    'Reach `setup-hstack` and each consumer or external skill',
@@ -324,7 +466,7 @@ def adapter_errors(texts):
                      '`Comment Sicko` to `hugues-comment-sicko`',
                      'Do not substitute a generic worker without those rules',
                      'All 59 top-level skills are registered',
-                     'preserve `generalPurpose`', 'Do not replace these workers with `hugues-agent`',
+                     'also for `generalPurpose` without `readonly`', 'Do not replace these workers with `hugues-agent`',
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',
                      'automate-me history mining remains blocked',
@@ -690,6 +832,8 @@ def check(root=ROOT):
     require(not cursor_models, 'Cursor model wiring in installed skills: ' + ', '.join(cursor_models))
     texts = {p: (root / p).read_text() for p in [*ADAPTERS, *ADAPTER_RESOURCES]}
     require(not adapter_errors(texts), 'adapter behavior differs: ' + '; '.join(adapter_errors(texts)))
+    door_errors = hook_errors(root, lambda name: upstream.load(root / name))
+    require(not door_errors, 'host detection hook differs: ' + '; '.join(door_errors))
     reach_errors = native_reach_errors(root)
     require(not reach_errors, 'user-only skill promised native reach: ' + '; '.join(reach_errors))
     mobile = {name: (root / f'plugin/skills/hugues-mode/playbooks/{name}.md').read_text()
@@ -705,6 +849,12 @@ def check(root=ROOT):
             installed[relative] = {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
                                    'mode': stat.S_IMODE(path.stat().st_mode)}
     require(installed == receipt['installed_files'], 'installed inventory/bytes/mode differs')
+    # The detection script runs from a command hook, so it must stay executable.
+    # The manifest is data, so it must not be.
+    require(installed['hooks/host-detect.sh']['mode'] == 0o755,
+            'host detection script is not executable')
+    require(installed['hooks/hooks.json']['mode'] == 0o644,
+            'host detection manifest is not read-only data')
     helpers = upstream.load(root / 'docs/HELPER-INPUTS.json')
     require(helpers['source_revision'] == PIN and {r['source'] for r in helpers['files']} ==
             {p for p in expected if p.startswith('pstack/skills/poteto-mode/scripts/')},

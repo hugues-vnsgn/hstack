@@ -211,7 +211,7 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992",
+      "sha256": "9827028d5d29e3360f72d927f40c22accb03c0514ab48ebbb11e2cbd45db6bbd",
       "mode": "100644"
     },
     {
@@ -221,7 +221,12 @@
     },
     {
       "path": "adapters/host.md",
-      "sha256": "b95b8067dd73e536df6ca0297a546374a79280203d20ec9f5bfa237306505c7a",
+      "sha256": "7c5ce18958df0e7dd4c82030cf9e3a211ddf9d6ef5e5d89aaa7c59e03ae6936f",
+      "mode": "100644"
+    },
+    {
+      "path": "adapters/hosts/README.md",
+      "sha256": "2799b8301365f71b0bf50ab6ad4bdb25eafea3890fc728642772fcc87bf0fb5c",
       "mode": "100644"
     },
     {
@@ -268,6 +273,16 @@
       "path": "agents/hugues-comment-sicko.md",
       "sha256": "d660dfd12e7ba80d2989116c797be21180a559f67abb06c43e3459cede44c53b",
       "mode": "100644"
+    },
+    {
+      "path": "hooks/hooks.json",
+      "sha256": "d2b31d1f0568700ebdbe8e840b6b0b6f656a1b2c484362eb3d9707e54f98f899",
+      "mode": "100644"
+    },
+    {
+      "path": "hooks/host-detect.sh",
+      "sha256": "cc5a1b13366a305129f995225d4f8c28e936761951fdfdd0abbcf1e3050212d9",
+      "mode": "100755"
     },
     {
       "path": "skills/architect/SKILL.md",

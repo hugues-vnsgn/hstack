@@ -620,22 +620,30 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_hugues_agent_registered_name_and_question_tool_have_a_host_home(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        flat = ' '.join(host.split())
         # The router names no question tool. The adapter keys its translation on the Cursor
         # spelling the other skills still use and claims no observed Codex tool name.
-        self.assertIn('Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.', flat)
-        self.assertIn("Codex's equivalent is unobserved here", flat)
+        tools = check_core.section(host, 'Tools')
+        row = next(line for line in tools.splitlines() if line.startswith('| `AskQuestion` |'))
+        cells = [cell.strip() for cell in row.strip('|').split('|')]
+        self.assertTrue(cells[1].startswith('`AskUserQuestion`.'))
+        self.assertIn('In `-p` mode it is absent', cells[1])
+        self.assertIn('plain text in your report and hold the dependent step', cells[1])
+        self.assertTrue(cells[2].startswith('unobserved.'))
         self.assertNotIn('Translate AskQuestion', host)
-        # host.md points at the one per-host line; the line is keyed on `hugues-agent` and keeps
-        # the `poteto-agent` mapping for playbooks that still say it.
-        self.assertIn("[workers and models](host-workers.md), which names each host's registered `hugues-agent`", flat)
-        self.assertIn('`poteto-agent` is `hugues-agent`', flat)
+        self.assertIn('Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.', tools)
+        grep = next(line for line in tools.splitlines() if line.startswith('| `Grep`, `Glob` |'))
+        for phrase in ['`rg`', '`grep` and `find`', 'whichever the session lacks']:
+            self.assertIn(phrase, grep)
+        # The registered name has one per-host line in host-workers.md. host.md keeps the rename
+        # list and sends every worker dispatch to that file through the phase table.
+        self.assertIn('`poteto-agent` to `hugues-agent`', host)
+        self.assertRegex(host, r'(?m)^\| Worker dispatch[^|]*\| \[Workers and models\]\(host-workers\.md\) \|$')
         line = next(paragraph for paragraph in self.workers.split('\n\n') if paragraph.startswith('**`hugues-agent` by host.**'))
         line = ' '.join(line.split())
         self.assertIn('Claude Code registers it as `hstack:hugues-agent`', line)
         self.assertIn('Codex has no registered name observed here', line)
-        self.assertIn('`poteto-agent` mapping above stays', line)
-        self.assertIn('A core `poteto-agent` call uses the registered hugues-agent in', ' '.join(self.workers.split()))
+        self.assertIn('takes the role instructions of `agents/hugues-agent.md`', line)
+        self.assertNotIn('A core `poteto-agent` call', self.workers)
         self.assertEqual(self.workers.count('**`hugues-agent` by host.**'), 1)
         manifest = json.loads((ROOT / 'plugin/.claude-plugin/plugin.json').read_text())
         self.assertEqual(manifest['name'], 'hstack')
@@ -645,17 +653,21 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_hosts_without_todo_tool_keep_a_checklist_in_the_agent_store(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        tools = ' '.join(check_core.section(host, 'Tools and authority').split())
+        rules = [line for line in check_core.section(host, 'Tools').splitlines() if 'Markdown checklist' in line]
+        self.assertEqual(len(rules), 1)
+        rule = rules[0]
+        with self.subTest('the rule binds every host, not one table column'):
+            self.assertFalse(rule.startswith('|'), rule)
+            self.assertTrue(rule.startswith('Without a todo tool, use a Markdown checklist'), rule)
         for phrase in [
-                'Without a todo tool', 'Markdown checklist',
                 "task's [agent store](host-workflow-tools.md#agent-store-translation)",
-                'Copy playbook steps verbatim before step 1',
-                'A step includes its numbered line and all continuation text. Copy the whole step.',
-                'Mark each item when its step fires, done with an evidence pointer or `skip: <reason>`.',
-                'Never bulk-mark at the end.',
+                'copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks).',
                 'Name the file in your reply']:
             with self.subTest(phrase=phrase):
-                self.assertIn(phrase, tools)
+                self.assertIn(phrase, rule)
+        target = (ROOT / 'plugin/adapters' / re.search(r'\[Playbooks\]\(([^)#]+)#playbooks\)', rule).group(1)).resolve()
+        self.assertEqual(target, (ROOT / 'plugin/skills/hugues-mode/SKILL.md').resolve())
+        self.assertIn('\n## Playbooks\n', target.read_text())
         store = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
         self.assertIn('## Agent-store translation', store)
         self.assertIn('use the operator-named directory', store)
@@ -683,7 +695,8 @@ class HuguesModeRouter(unittest.TestCase):
         workers = ' '.join(self.workers.split())
         self.assertIn('Full-mode workers load the mode per [host.md](host.md) before work.', workers)
         self.assertIn('On Codex, select its enabled catalog entry and read the complete SKILL.md yourself.', workers)
-        self.assertIn("preserve `generalPurpose` and the workflow's own prompt", workers)
+        self.assertIn("preserve the workflow's own prompt", workers)
+        self.assertIn("Carry the loaded mode's absolute path, derived from the current loaded skill, into every fresh worker", workers)
         self.assertIn('without a mode persona', workers)
 
     def test_mobile_regression_worker_has_only_the_narrow_reading_list(self):
@@ -725,22 +738,31 @@ class HuguesModeRouter(unittest.TestCase):
 
     def test_host_translation_table_covers_control_loop_and_source_attributions(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
-        table = check_core.section(host, 'Inherited wording translations')
-        rows = [line for line in table.splitlines() if line.startswith('| ')][1:]
-        self.assertEqual(len(rows), 6)
+        section = check_core.section(host, 'Cursor-only features')
+        rows = [line for line in section.splitlines() if line.startswith('| ')][1:]
+        self.assertEqual(len(rows), 5)
         expected = [
-            ('CLI or TUI', '`control-cli`'),
-            ('Browser, Electron or web', '`control-ui`'),
-            ('iOS or Android', 'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
-            ('Claude Code', 'current local session', 'never a cloud schedule'),
-            ('Codex', 'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
-            ('cursor-team-kit', 'bundled `control-cli` / `control-ui`'),
+            ('Cursor Automations',),
+            ('Bugbot', '[Publication](host-publication.md)'),
+            ('A built-in PR tool', 'gh pr create'),
+            ('"control skill" / "matching control skill"', 'cursor-team-kit', '`control-cli`', '`control-ui`',
+             'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
+            ("Cursor's `/loop`", 'current local session', 'never a cloud schedule',
+             'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
         ]
         for row, markers in zip(rows, expected):
             for marker in markers:
                 self.assertIn(marker, row)
-        self.assertIn('"control skill" / "matching control skill"', table)
-        self.assertIn("Cursor's `/loop`", table)
+        for phrase in ["Keep pstack's playbook text.",
+                       'gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.`',
+                       'Never ask the user to choose, offer an alternative or retry.',
+                       'Independent steps continue; one that needs the skipped output holds, with a named placeholder.',
+                       'A skip line never checks a gate: a skipped mandatory gate holds the result.']:
+            self.assertIn(phrase, section)
+        self.assertNotIn('Never stop', section)
+        for row in rows:
+            if row.startswith(('| Cursor Automations', '| A built-in PR tool')):
+                self.assertTrue(row.rstrip().endswith('| unobserved |'), row)
         ui = (ROOT / 'plugin/skills/control-ui/SKILL.md').read_text()
         self.assertIn('may write to the server', ui)
         self.assertIn('get a yes from the user, or from the coordinator', ui)

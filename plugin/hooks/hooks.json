@@ -1,0 +1,16 @@
+{
+  "description": "hStack host detection: a session in an ADE reads the hosts index before its first dispatch.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${CLAUDE_PLUGIN_ROOT}/hooks/host-detect.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

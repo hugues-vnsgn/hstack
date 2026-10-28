@@ -1916,7 +1916,7 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "57e5f1a6547fe88cd0c62e7288f8047faa439d0e5a7a5ada04f8d91c8a75e992",
+      "sha256": "9827028d5d29e3360f72d927f40c22accb03c0514ab48ebbb11e2cbd45db6bbd",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
@@ -1924,11 +1924,15 @@
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "b95b8067dd73e536df6ca0297a546374a79280203d20ec9f5bfa237306505c7a",
+      "sha256": "7c5ce18958df0e7dd4c82030cf9e3a211ddf9d6ef5e5d89aaa7c59e03ae6936f",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "3c0606eab45cc244170e7d2e7c4acef03927639edb4f79638ae5788cab128dc9",
+      "sha256": "13caa0799b920c7d48ba9b805df3a8b4776bc07ae87b53ca104817430f42af2c",
+      "mode": 420
+    },
+    "adapters/hosts/README.md": {
+      "sha256": "2799b8301365f71b0bf50ab6ad4bdb25eafea3890fc728642772fcc87bf0fb5c",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -1960,11 +1964,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "6cdeadbddd2c3eb9676a31debd80a834d0f085aaf0abc4fc594ed317d0b121bd",
+      "sha256": "ced28218ef67dc8ccc56f9e7e8c839f50a2ba136a0d30dd0ca066b889eb2ad41",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "673b39530dfa2332a5e6129c3526133ac09973a939a572b1938bb2e1174cf667",
+      "sha256": "5a3988781b9b228321041760fe1df575167ad740cbdaaff5ce24adb88ba51528",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -1974,6 +1978,14 @@
     "agents/hugues-comment-sicko.md": {
       "sha256": "d660dfd12e7ba80d2989116c797be21180a559f67abb06c43e3459cede44c53b",
       "mode": 420
+    },
+    "hooks/hooks.json": {
+      "sha256": "d2b31d1f0568700ebdbe8e840b6b0b6f656a1b2c484362eb3d9707e54f98f899",
+      "mode": 420
+    },
+    "hooks/host-detect.sh": {
+      "sha256": "cc5a1b13366a305129f995225d4f8c28e936761951fdfdd0abbcf1e3050212d9",
+      "mode": 493
     },
     "skills/architect/SKILL.md": {
       "sha256": "dcf78b1d76823e5a7551ff65525a1298fd509f5e51814089838aad89202f9312",

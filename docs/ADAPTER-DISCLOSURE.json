@@ -14,8 +14,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "571635456034ac994641e3445f29dc01e26f776e917b5fa019589648906cea02",
       "disposition": "replaced",
-      "reason": "Shorten equivalent authority and phase guidance to keep the initial read set small. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint.",
-      "replacement": "Apply this adapter and mobile applicability before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
+      "reason": "Shorten equivalent authority and phase guidance to keep the initial read set small. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint. P2 fix round 4 links mobile applicability in this sentence, because the phase section no longer carries \"Apply [mobile applicability](mobile.md#applicability) before selecting a route.\"",
+      "replacement": "Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
     },
     {
       "paragraph": 2,
@@ -104,8 +104,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "4ee3bf6f9c8991310ae0c75b4ef04b9b3cee7cf3c5683409b9106f3b9dfe92e7",
       "disposition": "replaced",
-      "replacement": "Use figure-it-out for large, cross-cutting or unmatched work and Orchestrate for\nstanding programs. Read the full canonical playbook. Copy its ordered todos verbatim.\nKeep skipped todos with reasons.",
-      "reason": "F4 shortens equivalent routing and playbook-read wording to fit the host checklist translation. Keep large, unmatched and standing-program routes, full canonical reads, ordered verbatim todos and skipped-item reasons unchanged."
+      "replacement": "Read the full canonical playbook and copy its ordered todos verbatim.",
+      "reason": "The P2 fix round shortens this paragraph further. The router's Playbooks section, which every session reads first, already routes large or unmatched work to figure-it-out and standing programs to Orchestrate, and keeps a skipped todo with its reason. Full canonical reads and ordered verbatim todos stay, because the adapter check pins them."
     },
     {
       "paragraph": 7,
@@ -184,12 +184,32 @@
     },
     {
       "paragraph": 10,
+      "destination": "plugin/adapters/host-workers.md",
       "slice": [
         0,
+        253
+      ],
+      "sha256": "a77de484eb1aadeaf549afa112042bf3889ddcd186f9942c5439e6bd2b792122"
+    },
+    {
+      "paragraph": 10,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        253,
+        408
+      ],
+      "sha256": "c8151ee9933a5c4045b565e726f2aaeb174bcf54f669776af6678092068127ed",
+      "disposition": "removed",
+      "reason": "The P2 fix round drops this sentence. \"hugues-agent by host\" in the same file states the registered name for Claude Code and the role instructions for Codex, and host.md's rename list maps poteto-agent to hugues-agent, so the sentence repeated both."
+    },
+    {
+      "paragraph": 10,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        408,
         607
       ],
-      "destination": "plugin/adapters/host-workers.md",
-      "sha256": "015d81c41f94372c769533c1958ca82508f4fe4e3d901956334dd879fa7847de"
+      "sha256": "7df05e3b9b6fce1e379758ea46baeea78af2250c836b82560b516718f26b805a"
     },
     {
       "paragraph": 10,
@@ -200,17 +220,83 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "7543ba3540e4939253edfa7c2c8e60a910c7cd23a5c5a4bac29af5d4b5923abf",
       "disposition": "replaced",
-      "reason": "Obtaining applicable principles through native invocation is impossible once every principle-* skill is user-only; PR 1 fix round 1 reads each one's SKILL.md in full as the scoped bundled reference instead. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading. Issue #110 scopes full-mode loading to preserve the narrow general-purpose regression worker.",
-      "replacement": "Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled\ncatalog entry and read the complete SKILL.md yourself. Read each applicable\nprinciple's SKILL.md in full as the scoped bundled reference below.\nIf the host cannot preserve required context isolation or parallelism, mark\nthat phase blocked."
+      "reason": "Obtaining applicable principles through native invocation is impossible once every principle-* skill is user-only; PR 1 fix round 1 reads each one's SKILL.md in full as the scoped bundled reference instead. The release 0.5.0 pretest observed Codex selecting its enabled catalog skill and reading the complete SKILL.md without a separate Skill tool; clarify that native mechanism while preserving native-only holds and independent worker loading. Issue #110 scopes full-mode loading to preserve the narrow general-purpose regression worker. P2 fix round 4 drops \"Read each applicable principle's SKILL.md in full as the scoped bundled reference below.\" host.md already makes every principle-* skill user-only and says a fresh worker reads any bundled user-only skill's SKILL.md itself, in full, as the scoped bundled reference.",
+      "replacement": "Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled\ncatalog entry and read the complete SKILL.md yourself.\nIf the host cannot preserve required context isolation or parallelism, mark\nthat phase blocked."
     },
     {
       "paragraph": 11,
       "slice": [
         0,
-        918
+        212
       ],
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "8c3ca5512dd31e9ffaeedca91ac4b995616c4bde1c6931b5aa44d584eed12e06"
+      "sha256": "bd5de5b35af7e6fb8ac18b9bbb8fbe1a5a05f021f2270fb6547c2356f1960007",
+      "disposition": "replaced",
+      "replacement": "For routed research/review calls, preserve the workflow's\nown prompt, readonly/agent-mode requirement, model, cardinality and handoff order.\nDo not replace these workers with `hugues-agent`.",
+      "reason": "P2 fix round 4 drops \"`generalPurpose` and\" from the preserved list, because Claude Code's Agent tool rejects that spelling. The Subagent fields rows map a generalPurpose worker by its readonly flag, and the readonly: false row also covers one with no readonly field, as swarm's worker has. The workflow's own prompt, readonly or agent-mode requirement, model, cardinality and handoff order stay preserved."
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        212,
+        292
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "173cc0ac502f62a3be792757cd302f071d5d11246e66e61597155bbd0c53a9c6",
+      "disposition": "removed",
+      "reason": "P2 fix round 3 drops this sentence. It mapped every generalPurpose worker to general-purpose with no exception, against the Subagent fields table, whose readonly: true row sends a search or locate brief to Explore. That table now maps the worker by its readonly flag, and the Codex half of the paragraph stays."
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        292,
+        349
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "3fdd6aa120b64a821d69e92e528f6fa4452202d56a95eb2cc93399f38eca5c1d",
+      "disposition": "replaced",
+      "replacement": "Codex uses a fresh native worker with the workflow's prompt.",
+      "reason": "P2 fix round 4 names the workflow's prompt. Once the generalPurpose mapping sentence before it went, \"that role\" read as hugues-agent, the opposite of what is meant."
+    },
+    {
+      "paragraph": 11,
+      "slice": [
+        349,
+        450
+      ],
+      "destination": "plugin/adapters/host-workers.md",
+      "sha256": "2e266a55e97636404f7162bac68a10a182ef9d57074bd699ab7f27ee40fae6f4",
+      "disposition": "removed",
+      "reason": "The P2 harness-shape edit adds upstream's rule once above the Subagent fields table: never pass a field or value the tool schema rejects. That rule already says to use the tool's own agent types, so this sentence stated it a second time."
+    },
+    {
+      "paragraph": 11,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        450,
+        526
+      ],
+      "sha256": "4202d7746bfd82e38c7bc1291b29e304762cf159542838381a0e6912b1397719"
+    },
+    {
+      "paragraph": 11,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        526,
+        613
+      ],
+      "sha256": "1629dcc76c7cb6e1c2d53c85e9c89579cf870170ae1785c43c7551ce3062e641",
+      "disposition": "removed",
+      "reason": "The P2 fix round drops this sentence. It described the maintainer receipt, not a host rule, and no worker reads it to act."
+    },
+    {
+      "paragraph": 11,
+      "destination": "plugin/adapters/host-workers.md",
+      "slice": [
+        613,
+        918
+      ],
+      "sha256": "be6bbc682ed21739874d6c4c0e6cf13b82bc58525a7a6fc42933f0acf0a521b9"
     },
     {
       "paragraph": 11,
@@ -252,7 +338,10 @@
       "paragraph": 14,
       "slice": null,
       "destination": "plugin/adapters/host-workers.md",
-      "sha256": "e0466a1eff2e7767c9c4af77dd5f6e0c5b42c72cd99469fdf3ee0a0a700afce7"
+      "sha256": "e0466a1eff2e7767c9c4af77dd5f6e0c5b42c72cd99469fdf3ee0a0a700afce7",
+      "disposition": "replaced",
+      "reason": "The P2 fix round scopes the blocked-seat rule. A role value with alternatives already falls back to inherit-parent at the first alternative's effort, so only a seat that needs a family the host cannot supply is blocked. Everything else in the paragraph is unchanged. P2 fix round 3 states the model precedence once: setup-hstack's ` or ` rule picks first, and a skill's own fallback to its default applies only after it, to a value the tool rejected. A seat needs a family only when its workflow requires one and no alternative on its line is accepted, so a seat with an accepted alternative is never blocked. The Workers line records the requested and actual family, model and effort. P2 fix round 4 drops \"Do not update or publish a default-fix PR without publication authority.\" host.md's Tools section already says user scope governs pushes and PR publication, and that no translation grants new authority.",
+      "replacement": "Enumerate models actually exposed by the native tool, using only confirmed capabilities.\nThe Workers line records the requested and actual family/model/effort. A seat needs a\nfamily only when its workflow requires one and no alternative on its line is accepted:\nmark the seat blocked and ask for an explicit configuration choice. Never invent\nan available model or label a blocked seat completed."
     },
     {
       "paragraph": 15,
@@ -260,14 +349,17 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "1a0c39ffe445cc11c913d832f7962feeec220a32870e15299c9ff2448a2b8e29",
       "disposition": "replaced",
-      "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md.",
-      "replacement": "`setup-hstack` uses the pinned detect → load → budget/map/confirm → validate\n→ write → confirm → optional verification sequence. Translate the Cursor global\nrule path to project-local `.hstack/models.md`. Read it before all role\nselection; deleting a role restores its pinned default. Write only after the\nskill's confirmation and current filesystem authority. Keep every role and panel,\nthe four budget choices and availability validation. This file is guidance;\nrestoring the plugin does not execute setup or change any user's configuration."
+      "reason": "0.4.0 renamed the project to hStack: the setup skill is now setup-hstack and its project model file is .hstack/models.md. P2 fix round 3 keeps the host rules and drops what setup-hstack/SKILL.md already states: its step sequence (Steps 1 to 8), every role and panel and the four budget choices (steps 3 and 5), and availability validation (step 4). \"Deleting a role restores its pinned default\" is the Model defaults rule that a role with no line keeps its default.",
+      "replacement": "`setup-hstack` writes project-local `.hstack/models.md` in place of the Cursor global\nrule, only after the skill's confirmation and current filesystem authority. Read it\nbefore all role selection. This file is guidance; restoring the plugin does not\nexecute setup or change any user's configuration."
     },
     {
       "paragraph": 16,
       "slice": null,
       "destination": "plugin/adapters/host.md",
-      "sha256": "75dade775b37e1019f067b69233464548dd4f6832ca48bf00a9a7b6b9b3de566"
+      "sha256": "75dade775b37e1019f067b69233464548dd4f6832ca48bf00a9a7b6b9b3de566",
+      "disposition": "replaced",
+      "reason": "The section now opens with pstack 0.15.32 harness adapter's Tools table in its three-column shape, so the heading takes upstream's name for it. The authority paragraph and the agent-store checklist stay beneath it unchanged.",
+      "replacement": "## Tools"
     },
     {
       "paragraph": 17,
@@ -278,8 +370,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "2d55a452e559c9077708b1422f0231000e8d95b8df54812031cc2364794c16c6",
       "disposition": "replaced",
-      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved.",
-      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\nCodex's equivalent is unobserved here. Use its question tool."
+      "reason": "The sentence translated only Cursor's AskQuestion, but the router now names Claude Code's AskUserQuestion directly, so an adapter that keys on the Cursor spelling leaves the router's tool name untranslated. The replacement keys the translation on AskUserQuestion, keeps AskQuestion as inherited Cursor wording for the skills and playbooks that still say it, and says Codex's question tool is unobserved here, so it claims no Codex tool name. F4 uses shorter equivalent tool names while retaining filesystem and Git translation, both question spellings and the unobserved Codex question-tool limit. The router later dropped the tool name for host-neutral wording (ask, then interview the user), so the translation keys on the Cursor spelling the remaining skills still use; Claude Code's question tool is in its own tool list, and Codex's stays unobserved. The P2 harness-shape edit keeps the sentence, so the filesystem and Git translation stays, and puts upstream's Tools table under it with the columns Cursor, Claude Code and Codex. The AskQuestion row keeps the Codex tool unobserved, and says that in -p mode, where AskUserQuestion is absent, the worker writes the question in plain text in its report and holds the dependent step. Task and the skill-run row are dropped because host-workers.md and Loading and routing already state them. P2 fix round 3 folds the agent-store checklist into the todolist row and links the router's Playbooks section, so a direct swarm, arena or architect run on a host without a todo tool still finds the copy and marking rule. P2 fix round 4 moves the checklist out of the Claude Code cell into a sentence under the table, \"Without a todo tool, use a Markdown checklist in the task's agent store\", so it binds every host, Codex included, as it did at ae7cec3.",
+      "replacement": "Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.\n\n| Cursor | Claude Code | Codex |\n|---|---|---|\n| `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |\n| Open a todolist | `TodoWrite` | unobserved |\n| `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |"
     },
     {
       "paragraph": 17,

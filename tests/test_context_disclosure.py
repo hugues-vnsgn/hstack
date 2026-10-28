@@ -2,6 +2,7 @@ from pathlib import Path
 import hashlib
 import json
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -12,35 +13,58 @@ import check_core
 import measure_context
 from test_host_adapters import InstalledFixture
 
+TRUNK = 'ae7cec396976abddfe27ca701e9fe782bc7db6f7'
+CURSOR_ONLY_SECTION_GROWTH_OVER_TRUNK = 187
+
+
+def issue_110_guidance(read, host_guidance):
+    mode = read('plugin/skills/hugues-mode/SKILL.md')
+    workers = read('plugin/adapters/host-workers.md')
+    bug = read('plugin/skills/hugues-mode/playbooks/bug-fix.md')
+    sentences = {
+        'plugin/skills/hugues-mode/SKILL.md': ['The mobile regression worker uses the general-purpose exception in [workers and models](../../adapters/host-workers.md).'],
+        'plugin/adapters/host-workers.md': ['Report deliberate effort lowering too, with its reason.',
+                                            'Full-mode workers load the mode per [host.md](host.md) before work.'],
+    }
+    texts = {
+        'plugin/adapters/host.md': host_guidance(read('plugin/adapters/host.md')),
+        'plugin/skills/hugues-mode/SKILL.md': (
+            mode[mode.index('A step includes'):mode.index('\n\nA large or cross-cutting')]
+            + next(line for line in mode.splitlines() if line.startswith('- Whenever a run spawned workers'))),
+        'plugin/adapters/host-workers.md': workers[workers.index('The mobile regression worker is'):workers.index('\nAgent mode preserves')],
+        'plugin/adapters/host-workflow-tools.md': check_core.section(read('plugin/adapters/host-workflow-tools.md'), 'Codex sandbox'),
+        'plugin/skills/hugues-mode/playbooks/bug-fix.md': bug[bug.index('   Use a fresh general-purpose regression worker.'):bug.index('   Run the same selected regression')],
+        'plugin/agents/hugues-agent.md': 'model: inherit\n',
+        'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
+    }
+    for path, extra in sentences.items():
+        missing = [sentence for sentence in extra if ' '.join(sentence.split()) not in ' '.join(read(path).split())]
+        assert not missing, (path, missing)
+        texts[path] += ''.join(extra)
+    return {path: len(text.encode()) for path, text in texts.items()}
+
+
+def trunk_host_guidance(host):
+    return (check_core.section(host, 'Inherited wording translations')
+            + host[host.index('A step includes'):host.index('Name the file in your reply.')])
+
+
+def at_trunk(path):
+    return subprocess.run(['git', '-C', str(ROOT), 'show', f'{TRUNK}:{path}'],
+                          capture_output=True, text=True, check=True).stdout
+
 
 class ContextDisclosure(unittest.TestCase):
     def issue_110_guidance_bytes(self):
-        host = (ROOT / 'plugin/adapters/host.md').read_text()
-        mode = (ROOT / 'plugin/skills/hugues-mode/SKILL.md').read_text()
-        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
-        bug = (ROOT / 'plugin/skills/hugues-mode/playbooks/bug-fix.md').read_text()
-        tools = (ROOT / 'plugin/adapters/host-workflow-tools.md').read_text()
-        fidelity = host[host.index('A step includes'):host.index('Name the file in your reply.')]
-        additions = {
-            'plugin/adapters/host.md': check_core.section(host, 'Inherited wording translations') + fidelity,
-            'plugin/skills/hugues-mode/SKILL.md': (
-                mode[mode.index('A step includes'):mode.index('\n\nA large or cross-cutting')]
-                + next(line for line in mode.splitlines() if line.startswith('- Whenever a run spawned workers'))
-                + 'The mobile regression worker uses the general-purpose exception in [workers and models](../../adapters/host-workers.md).'),
-            'plugin/adapters/host-workers.md': (
-                workers[workers.index('The mobile regression worker is'):workers.index('\nAgent mode preserves')]
-                + 'Report deliberate effort lowering too, with its reason.'
-                + 'Full-mode workers load the mode per [host.md](host.md) before work.'),
-            'plugin/adapters/host-workflow-tools.md': check_core.section(tools, 'Codex sandbox'),
-            'plugin/skills/hugues-mode/playbooks/bug-fix.md': bug[bug.index('   Use a fresh general-purpose regression worker.'):bug.index('   Run the same selected regression')],
-            'plugin/agents/hugues-agent.md': 'model: inherit\n',
-            'plugin/agents/hugues-comment-sicko.md': 'model: inherit\n',
-        }
-        limits = [1300, 550, 500, 750, 900, 15, 15]
-        sizes = {path: len(text.encode()) for path, text in additions.items()}
-        for (path, size), limit in zip(sizes.items(), limits):
+        trunk = issue_110_guidance(at_trunk, trunk_host_guidance)
+        head = issue_110_guidance(lambda path: (ROOT / path).read_text(),
+                                  lambda host: check_core.section(host, 'Cursor-only features'))
+        host = 'plugin/adapters/host.md'
+        self.assertEqual(head.pop(host) - trunk[host], CURSOR_ONLY_SECTION_GROWTH_OVER_TRUNK)
+        self.assertEqual(head, {path: size for path, size in trunk.items() if path != host})
+        for (path, size), limit in zip(trunk.items(), [1300, 550, 500, 750, 900, 15, 15]):
             self.assertLessEqual(size, limit, path)
-        return sizes
+        return trunk
 
     def test_initial_adapters_do_not_eagerly_load_unrelated_phase_guidance(self):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
@@ -51,6 +75,26 @@ class ContextDisclosure(unittest.TestCase):
         self.assertIn(scope, host)
         native_growth = len((native_row + scope).encode())
         self.assertLessEqual(native_growth, 240)
+        self.assertIn('\nRead this file once per session, and again after compaction.', host)
+        self.assertIn('Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.', host)
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        with self.subTest('the door runs a test before the first dispatch'):
+            self.assertTrue(check_core.DOOR.startswith('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`;'))
+            for test in ['if it prints a value', '`t3-code` tools are listed', 'the agent is omp']:
+                self.assertIn(test, check_core.DOOR)
+            self.assertTrue(workers.startswith('## Native workers and role models\n\n' + check_core.DOOR + '\n\n'))
+        with self.subTest('a session that meets no door test reads nothing under hosts/'):
+            hosts = ROOT / 'plugin/adapters/hosts'
+            references = [(path.relative_to(ROOT).as_posix(), line)
+                          for path in sorted((ROOT / 'plugin').rglob('*.md')) if hosts not in path.parents
+                          for line in path.read_text().splitlines() if 'hosts/' in line]
+            self.assertEqual(references, [('plugin/adapters/host-workers.md', check_core.DOOR)])
+            measured = measure_context.measure(ROOT)
+            for name, profile in measured['scenarios'].items():
+                self.assertEqual([p for p in profile['candidate']['paths'] if '/hosts/' in p], [], name)
+        with self.subTest('the opener and the phase reference reread rule agree with the skills'):
+            self.assertIn('Retain loaded guidance and reread after compaction when needed.', host)
+            self.assertIn('A skill\'s "read the host contract" is that read.', host)
         translated_guidance = self.issue_110_guidance_bytes()['plugin/adapters/host.md']
         self.assertLess(len(host.encode()) + len(mobile.encode()) - native_growth - translated_guidance, 6000)
         # The native-only set is named once, in host.md itself: hugues-mode and
@@ -115,6 +159,11 @@ class ContextDisclosure(unittest.TestCase):
                 self.fail('unknown disposition: ' + disposition)
             restored.setdefault(row['paragraph'], []).append(fragment)
         self.assertEqual(set(restored), set(range(len(paragraphs))))
+        with self.subTest('the baseline Git translation sentence keeps its Git mapping'):
+            rows = [row for row in receipt['host_fragments']
+                    if 'filesystem and Git operations' in paragraphs[row['paragraph']][slice(*(row['slice'] or [None]))]]
+            self.assertEqual(len(rows), 1)
+            self.assertIn('filesystem and Git to host tools', (ROOT / rows[0]['destination']).read_text())
         for index, pieces in restored.items():
             self.assertEqual(' '.join(' '.join(pieces).split()), ' '.join(paragraphs[index].split()))
         # The blanket pre-fix sentences are gone from the live adapter, not merely shadowed by a
@@ -156,6 +205,12 @@ class ContextDisclosure(unittest.TestCase):
                 changed = dict(original)
                 changed[check_core.ADAPTERS[0]] = changed[check_core.ADAPTERS[0]].replace('(' + name + ')', '(missing.md)')
                 self.assertTrue(check_core.adapter_errors(changed))
+        workers = 'plugin/adapters/host-workers.md'
+        for old in ['(hosts/README.md)', '`printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`']:
+            with self.subTest(door=old):
+                changed = dict(original)
+                changed[workers] = changed[workers].replace(old, '(missing.md)')
+                self.assertEqual(check_core.adapter_errors(changed), ['missing door: hosts/README.md'])
 
     def test_mobile_and_worker_rules_cannot_disappear_after_deferral(self):
         original = self.adapter_texts()
