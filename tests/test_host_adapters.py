@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+from typing import NamedTuple
 import unittest
 from unittest.mock import patch
 
@@ -945,6 +946,10 @@ class ConsumerAudit(InstalledFixture, unittest.TestCase):
 HOST_PAGE_ROWS = ['Detect', 'Sessions and worktrees', 'Start', 'Send', 'Read', 'Wait', 'Close',
                   'Load a PR head', 'Allowed tools', 'Skip line']
 SKIP_LINE = re.compile(r'Skipped in .+: .+\. .+\.')
+HostPage = NamedTuple('HostPage', [('listing', str), ('skip_only', list)])
+HOST_PAGES = {
+    'orca.md': HostPage(listing='ADEs', skip_only=['worker_done', 'orchestration']),
+}
 HARNESS_MEMBER = 'pstack/docs/harness/claude-code.md'
 
 # Upstream first-column cells that hStack states elsewhere or does not need, keyed by the upstream
@@ -1022,11 +1027,16 @@ def with_extra_row(text, heading, row):
     return text[:at] + row + '\n' + text[at:]
 
 
-def host_page_errors(text):
-    rows = [row for rows in markdown_tables(text).values() for row in rows]
+def host_page_errors(text, skip_only=()):
+    cells = [row for rows in table_rows(text).values() for row in rows]
+    rows = [row[0] for row in cells]
     errors = [] if rows == HOST_PAGE_ROWS else [f'rows {rows} are not {HOST_PAGE_ROWS}']
     if not SKIP_LINE.search(text):
         errors.append('no skip line')
+    skip = ' '.join(row[1] for row in cells if row[0] == 'Skip line')
+    for word in skip_only:
+        if word not in skip or word in text.replace(skip, ''):
+            errors.append(f'{word} is not only in the skip line')
     return errors
 
 
@@ -1155,13 +1165,17 @@ class HostAdapterShape(unittest.TestCase):
     def test_host_pages_follow_the_page_shape_and_the_index_lists_them(self):
         directory = ROOT / 'plugin/adapters/hosts'
         readme = (directory / 'README.md').read_text()
-        self.assertLessEqual(len(readme.encode()), 1500)
+        self.assertLessEqual(len(readme.encode()), 1750)
         self.assertIn(', '.join(HOST_PAGE_ROWS), readme)
         pages = sorted(path.name for path in directory.glob('*.md') if path.name != 'README.md')
         self.assertEqual(host_index_errors(readme, pages), [])
         for name in pages:
             with self.subTest(page=name):
-                self.assertEqual(host_page_errors((directory / name).read_text()), [])
+                self.assertIn(name, HOST_PAGES)
+                host_page = HOST_PAGES[name]
+                self.assertEqual(host_page_errors((directory / name).read_text(), host_page.skip_only), [])
+                section = readme.split(f'## {host_page.listing}\n', 1)[1].split('\n## ', 1)[0]
+                self.assertIn(f']({name}):', section)
         with self.subTest('the ADE rule is stated once, and the door names the tests the README repeats'):
             adr = (ROOT / 'docs/adr/0004-adapters-for-ades-and-agents.md').read_text()
             sentence = 'A page never creates or reads the ADE'
@@ -1196,6 +1210,10 @@ class HostAdapterShape(unittest.TestCase):
                 ('a missing row', host_page_errors(page(HOST_PAGE_ROWS[:6] + HOST_PAGE_ROWS[7:])), ['rows ']),
                 ('rows out of order', host_page_errors(page(swapped)), ['rows ']),
                 ('no skip line', host_page_errors(page(HOST_PAGE_ROWS, skip='none')), ['no skip line']),
+                ('a skip-only word in the skip line', host_page_errors(page(HOST_PAGE_ROWS), ['step']), []),
+                ('a skip-only word outside the skip line',
+                 host_page_errors(page(HOST_PAGE_ROWS) + 'Use step.\n', ['step']), ['step is not only']),
+                ('a skip-only word missing', host_page_errors(page(HOST_PAGE_ROWS), ['inbox']), ['inbox is not only']),
                 ('an exact index', host_index_errors(listing, ['one.md', 'two.md']), []),
                 ('a page the index omits', host_index_errors(listing, ['one.md', 'two.md', 'three.md']),
                  ['missing from the index: three.md']),

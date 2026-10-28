@@ -226,7 +226,12 @@
     },
     {
       "path": "adapters/hosts/README.md",
-      "sha256": "2799b8301365f71b0bf50ab6ad4bdb25eafea3890fc728642772fcc87bf0fb5c",
+      "sha256": "ea6644b55b232d867188436cdbe64df0a1724062ed9043fe829fea454e15aa21",
+      "mode": "100644"
+    },
+    {
+      "path": "adapters/hosts/orca.md",
+      "sha256": "f676d58fd5114a7c6098723f057c1418a141c918fc1e3fdb46cf8900e14b2f82",
       "mode": "100644"
     },
     {
