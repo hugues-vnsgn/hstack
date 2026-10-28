@@ -17,3 +17,5 @@ Each agent or ADE gets one page, `<name>.md`, with one table `| Row | Mechanics 
 ## Agents
 
 ## ADEs
+
+- [Orca](orca.md): `$ORCA_TERMINAL_HANDLE`, `$ORCA_PANE_KEY` or `$ORCA_TAB_ID` is set.
