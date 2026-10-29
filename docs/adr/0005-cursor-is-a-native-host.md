@@ -31,7 +31,7 @@ This is a written gap, not a field. The [workers adapter](../../plugin/adapters/
 
 A Cursor transcript carries no `cwd` and no record-level timestamp, and it may carry no tool results. So a Cursor source resolves only an absolute path, gets its recency from the transcript file's modification time, and cannot claim to see what a tool returned. The [tools adapter](../../plugin/adapters/host-tools.md) states those limits, and the activity reader reports them as a coverage gap rather than as proof that nothing happened.
 
-A Cursor transcript's project slug has two forms, because Cursor ships more than one way to compute it. The rule that covers every observed form is to replace each character that is not a letter or a digit with a hyphen, then collapse runs of hyphens and trim the ends. A slug is lossy, so hStack never reverses one into a workspace path: two different workspaces can share a slug, and one workspace can have two slugs.
+A Cursor transcript's project slug has two forms, because Cursor ships more than one way to compute it. Take the absolute workspace path and replace each `/` with a hyphen; a segment's own `-` is written either as `-` or as `_`, so one workspace can have two slug directories. A slug is lossy, so hStack never reverses one into a workspace path: two different workspaces can share a slug, and one workspace can have two slugs. The [recall skill](../../plugin/skills/recall/SKILL.md) states both forms and says to look for the other one before concluding a history is gone.
 
 ## Consequences
 

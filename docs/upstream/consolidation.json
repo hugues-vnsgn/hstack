@@ -1147,7 +1147,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/recall/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "bc274d2f6958c23ad0de56292bf86577f4244adc884ccd25cc2869a48aaa2582"
+      "destination_sha256": "ef8935dbb0a6884e06e48cc9f445ef04ed5505b1bbb3a2569869a3fe6a536b4c"
     },
     {
       "source": "pstack/skills/reflect/SKILL.md",
@@ -1932,7 +1932,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "824c5764210b639644137feee1d31ba57779df57035f84fb0020e6dbf9931c55",
+      "sha256": "7b434ae053ebce371fc5748c973edad7e28d38c1c2b00710c3bc60e666283aa5",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -1972,11 +1972,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "1e659b29ff339d95dfde79ed286a687714d8eff374ba37d2e9c95e2b2a7be625",
+      "sha256": "400b9216ef4eea2a886633d640e63e187b7101bda834aa39a71d31944d5b3532",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "6bbd06b79db4eebd86c5a3cdef92f8e3cad9211ed7abe1d3134eae1dbff1e51a",
+      "sha256": "07f70364c72247c853bbfe2737ee903069b971e247434fdd0965ac56cecf4960",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -2696,7 +2696,7 @@
       "mode": 420
     },
     "skills/recall/SKILL.md": {
-      "sha256": "bc274d2f6958c23ad0de56292bf86577f4244adc884ccd25cc2869a48aaa2582",
+      "sha256": "ef8935dbb0a6884e06e48cc9f445ef04ed5505b1bbb3a2569869a3fe6a536b4c",
       "mode": 420
     },
     "skills/recall/agents/openai.yaml": {

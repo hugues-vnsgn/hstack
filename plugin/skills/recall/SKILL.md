@@ -20,7 +20,7 @@ Your context lives in two records. Your own chat history holds what you did and 
 
 Transcripts live at `~/.cursor/projects/<slug>/agent-transcripts/<uuid>/<uuid>.jsonl`, with subagent chats under `<uuid>/subagents/<subagent-uuid>.jsonl`. Every line is one chat message.
 
-The `<slug>` is a one-way name for the workspace directory, and Cursor has shipped more than one way to compute it. The rule that covers every observed form is: take the absolute workspace path, and replace each character that is not a letter or a digit with a hyphen, then collapse runs of hyphens into one and trim leading and trailing hyphens. Under that rule `/Users/you/proj` becomes `Users-you-proj`.
+The `<slug>` is a one-way name for the workspace directory: take the absolute workspace path and replace each `/` with `-`. Cursor has shipped more than one separator style, so a segment's own `-` is written either as `-` or as `_`, and both forms exist on disk for one workspace. `/Users/you/proj` becomes `Users-you-proj`; `/Users/hugues_mini/proj` becomes both `Users-hugues-mini-proj` and `Users-hugues_mini-proj`.
 
 Do not reverse a slug into a workspace path. A slug is lossy, so two different workspaces can share one, and one workspace can have two slugs. When you need the workspace path, take it from the session or the repository you are already in, and use the slug only to find the directory. If a directory you expect is missing, look for the other form before you conclude the history is gone.
 

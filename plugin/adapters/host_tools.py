@@ -19,7 +19,7 @@ RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "4d332478a35dbdcb2dee15f9ce92ceba62abaea99ce56429cf881445ce2c9cfa",
-    "payload.py": "6bbd06b79db4eebd86c5a3cdef92f8e3cad9211ed7abe1d3134eae1dbff1e51a"
+    "payload.py": "07f70364c72247c853bbfe2737ee903069b971e247434fdd0965ac56cecf4960"
 }
 
 
