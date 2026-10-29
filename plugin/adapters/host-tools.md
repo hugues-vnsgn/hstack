@@ -149,15 +149,15 @@ records. Never discover private history to fill a missing source. For example:
   "coverage": "complete",
   "sources": [
     {"provider": "claude", "files": ["/absolute/authorized/session.jsonl"], "authorization": "owner-approved source scope", "coverage": "complete"},
-    {"provider": "codex", "root": "/absolute/authorized/session-directory", "authorization": "owner-approved source scope including subagents", "coverage": "complete"}
+    {"provider": "codex", "root": "/absolute/authorized/session-directory", "authorization": "owner-approved source scope including subagents", "coverage": "complete"},
+    {"provider": "cursor", "files": ["/absolute/authorized/session.jsonl"], "authorization": "owner-approved source scope", "coverage": "complete"}
   ]
 }
 ```
 
-The supported hosts are Claude Code and Codex. Cursor sources are ignored without
-reading them; they contribute no evidence or coverage for these hosts. A manifest
-containing only ignored sources remains unavailable. Supported sources determine
-coverage independently; no Cursor source is required.
+The supported hosts are Claude Code, Codex and Cursor. Each provider contributes
+evidence and coverage independently, so a manifest may name any subset of them.
+A manifest with no supported source remains unavailable.
 
 `complete` is the owner's explicit assertion that the supplied set covers all
 relevant supported-host chats and sibling trees; a successful scan cannot establish that
@@ -169,7 +169,8 @@ Duplicate JSON keys and JSON nesting over 64 levels hold instead of hiding recor
 
 Supported inputs are Claude JSONL user/assistant records and string summaries
 and Codex JSONL session/turn/response records including JSON-encoded function
-arguments. Claude content blocks are text, tool_use, tool_result and plaintext
+arguments, and Cursor JSONL `role`/`message` records with `text` and `tool_use`
+blocks plus `turn_ended` markers. Claude content blocks are text, tool_use, tool_result and plaintext
 thinking, with required content fields. Tool-result content is a string
 or a list of text leaves with only `type` and string `text` fields; nested,
 malformed or opaque result blocks hold coverage. Codex messages require a known
@@ -187,6 +188,14 @@ labeled as validated records or unparsed path hints, never as deletion safety.
 Opaque records invalidate inherited relative context until a reviewed context
 resets it. Envelope/message metadata also uses bounded fields and types;
 unknown metadata, including unreviewed usage structures, holds. Other formats hold.
+
+A Cursor record carries no working directory and no record-level timestamp, and
+its transcript may carry no tool results. A Cursor operation therefore resolves
+only an absolute path, and a relative path holds coverage. Recency comes from the
+transcript file's modification time, so a Cursor source reports activity by file
+mtime and not by when the operation ran. A Cursor tool the adapter has not
+reviewed holds coverage. Treat those limits as a coverage gap in the report and
+never as proof that nothing happened.
 The text matcher checks literal paths, current-user `~/` aliases, and up to
 three percent-decoding passes (including file URLs). Other-user home aliases and
 unresolved deeper encodings hold. Word characters and hyphens continue a filename;

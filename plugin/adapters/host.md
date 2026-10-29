@@ -1,29 +1,27 @@
-# Claude Code and Codex host adapter
+# Claude Code, Codex and Cursor host adapter
 
 Read this file once per session, and again after compaction. A skill's "read the host contract" is that read. Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.
 Follow the consumer project's PR policy. Adapters translate host mechanics and
 limit authority; the canonical skill owns workflow
-phases, mandatory gates, panel cardinality, fallback and stop rules. A constraint
-can block execution. It cannot turn an omitted gate into success.
+phases, mandatory gates and stop rules. A constraint
+can block execution.
 
 ## Loading and routing
 
-Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no
-custom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,
+Native discovery uses each canonical `skills/<name>/SKILL.md`; there is no
+custom runtime registry or host loader. `poteto-mode` maps to `hugues-mode`,
 `poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,
 `setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other
 public names are unchanged.
 
-Only `setup-hstack` is model-invocable. Every other
-bundled skill, including each `principle-*`, is user-only: the owner can still
-type it by name. On Claude Code, never call the Skill tool for one. In a
-playbook, `/<name>` and "the **<name>** skill" mean reading `../<name>/SKILL.md`.
-An agent
-reads its SKILL.md in full as the scoped bundled reference, with the host's own
-file-read tool. Helpers never read a skill body. A missing or unreadable path
-holds the dependent step.
-A native denial on such a skill does not stop the host's file read; the owner's real
-control over those skills is enabling or disabling the plugin as a whole.
+Only `setup-hstack` is model-invocable; every other bundled skill is user-only
+and the owner types it by name. On Claude Code,
+never call the Skill tool for one. In a playbook, `/<name>` and "the **<name>**
+skill" mean reading `../<name>/SKILL.md`. An agent
+reads its SKILL.md in full as the scoped bundled reference, with the host's own file-read tool.
+Helpers never read a skill body. A missing or unreadable path holds the dependent step.
+A native denial on such a skill does not stop the host's file read; the owner's
+real control is enabling or disabling the plugin as a whole.
 
 Reach `setup-hstack` and each consumer or external skill (the native-only
 skills) only through the host's supported native mechanism.
@@ -36,16 +34,12 @@ the dependent step.
 If user invocation is required, give the exact native command and wait.
 Printed commands do not prove native invocation.
 An available file or a successful binding check establishes no skill permission.
-Read owned references only as the phase needs. Base relative paths on the owning file or mode root, never consumer cwd. Never traverse links recursively or
-invoke linked skills eagerly. For native-only skills, this rule overrides inherited sibling reads; bundled
-user-only skills keep their scoped read above.
+Read owned references only as the phase needs. Base relative paths on the owning file or mode root, never consumer cwd, and never traverse links or invoke linked skills eagerly. For native-only skills, this rule overrides inherited sibling reads; user-only skills keep their scoped read above.
 For a principles consultation from figure-it-out, use already-loaded mode context
 or read the needed principle's SKILL.md in full: never restart task routing.
 A fresh worker reads any bundled user-only skill itself. It loads any native-only
 skill itself through the host-specific mechanism above; a parent's claim of
 permission is insufficient. Missing capability holds the phase without scanning user settings.
-
-Bundled commands use [workflow tools](host-workflow-tools.md) in every worker.
 
 Read the full canonical playbook and copy its ordered todos verbatim.
 
@@ -69,6 +63,13 @@ merges and releases. Hold actions without authority or capability. Continue inde
 
 Keep pstack's playbook text. A step that needs a Cursor-only feature gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.` Never ask the user to choose, offer an alternative or retry. Independent steps continue; one that needs the skipped output holds, with a named placeholder. A skip line never checks a gate: a skipped mandatory gate holds the result.
 
+A Cursor feature that the owner's plan has on the free plan is native in Cursor.
+Only a feature that needs a paid Cursor plan is skipped, and it is skipped on
+every host, including Cursor.
+
+In Cursor, follow the `Cursor` column; the other columns are those hosts'
+instructions.
+
 | Cursor | Claude Code | Codex |
 |---|---|---|
 | Cursor Automations: routines, `update_state` routine calls, `api2.cursor.sh/automations` webhooks, routine wakes, and `SendToUser` secret requests | Skip with the line. | unobserved |
@@ -76,11 +77,12 @@ Keep pstack's playbook text. A step that needs a Cursor-only feature gets one pl
 | A built-in PR tool | The step's forge command, such as `gh pr create`. No line. | unobserved |
 | "control skill" / "matching control skill", `cursor-team-kit` attributions | Bundled `control-cli` (CLI, TUI) or `control-ui` (browser, Electron, web). iOS or Android: the repo's installed simulator-driving skill, such as `test-ios` or `test-android`, through the native mechanism, else XCTest or UiAutomator through the native helper. A missing driver stays an execution gap. | Same. |
 | Cursor's `/loop` | `/loop` in the current local session, never a cloud schedule for work that needs local devices. | Only active-session waits. Between-turn scheduling stays an unsatisfied gap, per #34 item 6. |
+| Cursor cloud agents, `environment: "cloud"`, the Cursor SDK, and T3 Code's Cursor provider | Paid Cursor features. Skip with the line. A local worktree worker substitutes only where the core permits local execution. | Paid Cursor features. Skip with the line. |
 
 ## Required phase guidance
 
-Before the triggering action, read its complete reference. Deferral never skips a rule.
-Retain loaded guidance and reread after compaction when needed. These are owned references, not skill bodies or a native loader.
+Before the triggering action, read its complete reference.
+Retain loaded guidance and reread after compaction when needed.
 
 | Before this action | Read in full |
 |---|---|
@@ -94,4 +96,4 @@ Retain loaded guidance and reread after compaction when needed. These are owned 
 
 Plain JVM or server Gradle projects stay out of scope.
 
-Do not load a phase reference merely because it is listed here.
+Load a phase reference only when the step needs it.
