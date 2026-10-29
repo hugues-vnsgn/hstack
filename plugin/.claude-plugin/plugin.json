@@ -1,11 +1,13 @@
 {
   "name": "hstack",
   "version": "0.5.6",
-  "description": "Mobile routing, proof guidance and principles for hStack in Claude Code and Codex.",
+  "description": "Mobile routing, proof guidance and principles for hStack in Claude Code, Codex and Cursor.",
   "author": {
     "name": "hugues-vnsgn"
   },
   "license": "MIT",
+  "homepage": "https://github.com/hugues-vnsgn/hstack",
+  "repository": "https://github.com/hugues-vnsgn/hstack",
   "keywords": [
     "mobile",
     "swift",

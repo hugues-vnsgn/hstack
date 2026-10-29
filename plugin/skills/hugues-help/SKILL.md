@@ -51,7 +51,7 @@ Only `setup-hstack` appears in the host's skill list. Every other skill, `hugues
 
 If cost is the worry, say where the tokens go and how to spend fewer. hStack spends extra tokens on subagents and review panels. Rerun `/setup-hstack` and pick a smaller budget or cheaper models, and match the budget to the job: less for easy work, more for hard design and review. A role set to `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/hugues-mode` for work that needs rigor.
 
-hStack targets Claude Code and Codex. Its workflow skills hand work to the host's own subagents: Claude Code's registered `hstack:hugues-agent` and `general-purpose` agents, and fresh workers that Codex starts with the same role instructions. See [workers and models](../../adapters/host-workers.md). The README lists what has and hasn't been observed on each host. Say "not observed" instead of promising that a workflow will run end to end.
+hStack targets Claude Code, Codex and Cursor. Its workflow skills hand work to the host's own subagents: Claude Code's registered `hstack:hugues-agent` and `general-purpose` agents, fresh workers that Codex starts with the same role instructions, and Cursor's plugin subagents. See [workers and models](../../adapters/host-workers.md). The README lists what has and hasn't been observed on each host. Say "not observed" instead of promising that a workflow will run end to end.
 
 ## Start a task with `/hugues-mode`
 

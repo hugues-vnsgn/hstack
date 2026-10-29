@@ -4,12 +4,22 @@
     "name": "hugues-vnsgn"
   },
   "description": "hStack local development marketplace",
+  "metadata": {
+    "description": "hStack local development marketplace",
+    "version": "0.5.6"
+  },
   "plugins": [
     {
       "name": "hstack",
-      "description": "Mobile routing, proof guidance and principles for hStack in Claude Code and Codex.",
+      "description": "Mobile routing, proof guidance and principles for hStack in Claude Code, Codex and Cursor.",
       "source": "./plugin",
-      "version": "0.5.6"
+      "version": "0.5.6",
+      "author": {
+        "name": "hugues-vnsgn"
+      },
+      "license": "MIT",
+      "homepage": "https://github.com/hugues-vnsgn/hstack",
+      "repository": "https://github.com/hugues-vnsgn/hstack"
     }
   ]
 }

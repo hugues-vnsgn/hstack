@@ -1,6 +1,6 @@
 # hStack
 
-hStack is the standalone adaptation of pstack for first-class mobile development through Claude Code and Codex.
+hStack is the standalone adaptation of pstack for first-class mobile development through Claude Code, Codex and Cursor.
 
 ## Language
 
@@ -37,7 +37,7 @@ A bounded version presented for acceptance against declared requirements, with i
 _Avoid_: Full parity, production-ready by date alone
 
 **Layer 1**:
-The hStack plugin itself: skills, playbooks, principles, one agent definition, two scripts and docs, installed in Claude Code and Codex from a marketplace manifest. It is the whole 0.1.0 release candidate.
+The hStack plugin itself: skills, playbooks, principles, one agent definition, two scripts and docs, installed in Claude Code, Codex and Cursor from a marketplace manifest. It is the whole 0.1.0 release candidate.
 _Avoid_: The harness, the runtime, the core
 
 **Layer 2**:
@@ -46,10 +46,10 @@ _Avoid_: Phase 2, the full product
 
 **ADE**:
 An agent development environment: an app that hosts several agent sessions and their worktrees, such as Orca or T3 Code. hStack maps only its terminal and worktree mechanics ([ADR 0004](adr/0004-adapters-for-ades-and-agents.md)). It is not **Layer 1** or **Layer 2**.
-_Avoid_: Host (that means Claude Code or Codex), orchestrator, Layer 2
+_Avoid_: Host (that means Claude Code, Codex or Cursor), orchestrator, Layer 2
 
 **Agent**:
-A program that runs a model, such as Claude Code, Codex or omp. Not a **PR owner**, which is a role an agent can hold, and not **Layer 1** or **Layer 2**.
+A program that runs a model, such as Claude Code, Codex, Cursor or omp. Not a **PR owner**, which is a role an agent can hold, and not **Layer 1** or **Layer 2**.
 _Avoid_: PR owner, subagent, worker
 
 **hugues-mode**:

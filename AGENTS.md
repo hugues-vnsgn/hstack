@@ -1,6 +1,6 @@
 # hStack
 
-hStack is pstack for mobile development, running in Claude Code and Codex.
+hStack is pstack for mobile development, running in Claude Code, Codex and Cursor.
 pstack is poteto's Cursor plugin: a router mode matches a task to a playbook,
 the playbook calls skills and principles as its steps fire, and the work ends in
 evidence. hStack preserves its upstream source in a nondiscoverable provenance archive

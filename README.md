@@ -1,6 +1,6 @@
 # hStack
 
-hStack gives Claude Code and Codex a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
+hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
 Version **0.5.6** adds the [Orca page](plugin/adapters/hosts/orca.md), so a
 coordinator in an Orca pane can start, read, wait for and close hStack workers in
@@ -39,6 +39,43 @@ router. The [interactive check](docs/router-interactive-check.md) records that s
 The [0.5.0 validation](docs/RELEASE-0.5.0.md#validation) adds a bounded headless
 bug-fix run with hooks off and bypassPermissions. Interactive workflow completion
 under normal permissions remains unobserved.
+
+## Start with Cursor
+
+Cursor loads hStack from one source only. Remove pstack first, because 55 of
+hStack's 63 skill names are shared with pstack and Cursor registers both sets
+from two local plugin folders:
+
+```sh
+rm -rf "$HOME/.cursor/plugins/local/pstack"
+```
+
+Then install hStack itself as a copy of this repository's `plugin/` folder
+(replace the absolute path):
+
+```sh
+src="/absolute/path/to/hstack/plugin"
+dst="$HOME/.cursor/plugins/local/hstack"
+rm -rf "$dst"
+mkdir -p "$dst"
+cp -R "$src"/. "$dst"/
+```
+
+Copy rather than symlink. Cursor skips a symlink in that folder whose target
+resolves outside it, and this repository is outside it.
+
+Reload the window, then confirm under **Customize → Plugins** that hStack is
+enabled and its components are listed. Type `/hugues-help` in the composer to
+confirm the router answers.
+
+Do not enable hStack in Claude Code at the same time. Cursor loads the Claude
+plugin cache as well as `~/.cursor/plugins/local/`, and it de-duplicates
+within one plugin rather than across plugins, so every shared skill name
+registers twice.
+
+A GitHub-marketplace route is also published: a repository root holding
+`.cursor-plugin/marketplace.json`, imported through **Dashboard → Plugins & MCPs
+→ Add Marketplace → Import from Repo**. That route is unobserved.
 
 ## Start with Codex
 
