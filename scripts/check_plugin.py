@@ -66,15 +66,31 @@ if errors:
 
 market = load(root / '.claude-plugin/marketplace.json')
 standard = load(root / 'plugin/.claude-plugin/plugin.json')
+# The Cursor manifests ship with hStack 0.5.7. The frozen 0.1.0 archive predates
+# them, and a historical validation never loads a file the release did not have.
+cursor_market = load(root / '.cursor-plugin/marketplace.json') if not historical else {}
+cursor_plugin = load(root / 'plugin/.cursor-plugin/plugin.json') if not historical else {}
 slug = re.compile(r'[a-z0-9]+(?:-[a-z0-9]+)*\Z')
-for label, data in [('marketplace', market), ('plugin', standard)]:
+manifests = [('marketplace', market), ('plugin', standard)]
+if not historical:
+    manifests += [('cursor marketplace', cursor_market), ('cursor plugin', cursor_plugin)]
+for label, data in manifests:
     if not isinstance(data.get('name'), str) or not slug.fullmatch(data['name']):
         fail(f'{label}: invalid name')
-    if not isinstance(data.get('description'), str) or not data['description'].strip():
-        fail(f'{label}: missing description')
-    person = data.get('owner' if label == 'marketplace' else 'author')
+    person = data.get('owner' if label.endswith('marketplace') else 'author')
     if not isinstance(person, dict) or not isinstance(person.get('name'), str) or not person['name'].strip():
         fail(f'{label}: missing owner/author name')
+# Claude's marketplace carries a top-level description. Cursor's own loader reads
+# the marketplace description from `metadata.description` instead, and its plugin
+# entry carries the description the marketplace shows for the plugin.
+if not isinstance(market.get('description'), str) or not market['description'].strip():
+    fail('marketplace: missing description')
+if not historical:
+    cursor_metadata = cursor_market.get('metadata')
+    if (not isinstance(cursor_metadata, dict)
+            or not isinstance(cursor_metadata.get('description'), str)
+            or not cursor_metadata['description'].strip()):
+        fail('cursor marketplace: missing metadata description')
 if not re.fullmatch(r'\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?', str(standard.get('version', ''))):
     fail('plugin: invalid version')
 if standard.get('license') != 'MIT':
@@ -92,6 +108,59 @@ else:
     if entry.get('source') != './plugin':
         fail('marketplace: expected source ./plugin')
     local(root, entry.get('source'), 'marketplace source')
+
+# The Cursor manifests describe the same plugin for Cursor's own loader, so every
+# field that names the plugin must match the Claude manifest. Cursor resolves
+# `source` relative to the marketplace root, and its loader reads a plugin
+# manifest from `.cursor-plugin/plugin.json`.
+cursor_entry = {}
+if not historical:
+    if not re.fullmatch(r'\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?', str(cursor_plugin.get('version', ''))):
+        fail('cursor plugin: invalid version')
+    if cursor_plugin.get('license') != 'MIT':
+        fail('cursor plugin: expected MIT license')
+    if set(cursor_plugin) - allowed:
+        fail('cursor plugin: unsupported fields ' + ', '.join(sorted(set(cursor_plugin) - allowed)))
+    cursor_plugins = cursor_market.get('plugins')
+    if not isinstance(cursor_plugins, list) or len(cursor_plugins) != 1 or not isinstance(cursor_plugins[0], dict):
+        fail('cursor marketplace: expected one plugin entry')
+    else:
+        cursor_entry = cursor_plugins[0]
+        if cursor_entry.get('source') != 'plugin':
+            fail('cursor marketplace: expected source plugin')
+        if not local(root, './plugin', 'cursor marketplace source'):
+            fail('cursor marketplace: source does not resolve inside the repository')
+    if cursor_market.get('owner') != market.get('owner'):
+        fail('cursor marketplace: owner differs from the Claude marketplace')
+
+    # One plugin identity across all four manifests. A user installs hStack from
+    # either marketplace, so a field that names the plugin must not differ by host.
+    IDENTITY = ('name', 'version', 'description', 'author', 'license')
+    for field in IDENTITY:
+        if cursor_plugin.get(field) != standard.get(field):
+            fail(f'cursor plugin: {field} differs from the Claude manifest')
+    for label, entry in (('marketplace', plugins[0]), ('cursor marketplace', cursor_entry)):
+        for field in IDENTITY:
+            if entry.get(field) != standard.get(field):
+                fail(f'{label}: plugin {field} differs from the plugin manifest')
+    # Cursor resolves a skill or agent path relative to the plugin root and reads a
+    # skills path as a directory of skill folders.
+    for field in ('skills', 'agents'):
+        value = cursor_plugin.get(field)
+        if not isinstance(value, str) or not value.startswith('./'):
+            fail(f'cursor plugin: expected a ./ relative {field} path')
+            continue
+        target = local(root / 'plugin', value, f'cursor plugin {field}')
+        if target and not target.is_dir():
+            fail(f'cursor plugin {field}: expected directory')
+    # Both manifests must point at the same component set, so no skill ships on one
+    # host and not the other.
+    cursor_skills = local(root / 'plugin', cursor_plugin.get('skills', ''), 'cursor plugin skills')
+    if cursor_skills and cursor_skills.is_dir():
+        cursor_found = {p.relative_to(cursor_skills).as_posix() for p in cursor_skills.rglob('SKILL.md')}
+        if cursor_found != {p.relative_to(root / 'plugin/skills').as_posix()
+                            for p in (root / 'plugin/skills').rglob('SKILL.md')}:
+            fail('cursor plugin: skills path does not cover the shipped skills')
 
 skill_dirs = standard.get('skills')
 if isinstance(skill_dirs, str):
