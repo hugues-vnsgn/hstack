@@ -740,7 +740,7 @@ class HuguesModeRouter(unittest.TestCase):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         section = check_core.section(host, 'Cursor-only features')
         rows = [line for line in section.splitlines() if line.startswith('| ')][1:]
-        self.assertEqual(len(rows), 5)
+        self.assertEqual(len(rows), 6)
         expected = [
             ('Cursor Automations',),
             ('Bugbot', '[Publication](host-publication.md)'),
@@ -749,6 +749,9 @@ class HuguesModeRouter(unittest.TestCase):
              'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
             ("Cursor's `/loop`", 'current local session', 'never a cloud schedule',
              'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
+            ('Cursor cloud agents', 'environment: "cloud"', 'the Cursor SDK',
+             "T3 Code's Cursor provider", 'Paid Cursor features. Skip with the line.',
+             'A local worktree worker substitutes only where the core permits local execution.'),
         ]
         for row, markers in zip(rows, expected):
             for marker in markers:
@@ -757,7 +760,10 @@ class HuguesModeRouter(unittest.TestCase):
                        'gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.`',
                        'Never ask the user to choose, offer an alternative or retry.',
                        'Independent steps continue; one that needs the skipped output holds, with a named placeholder.',
-                       'A skip line never checks a gate: a skipped mandatory gate holds the result.']:
+                       'A skip line never checks a gate: a skipped mandatory gate holds the result.',
+                       'A Cursor feature that the owner\'s plan has on the free plan is native in Cursor.',
+                       'Only a feature that needs a paid Cursor plan is skipped, and it is skipped on',
+                       'every host, including Cursor.']:
             self.assertIn(phrase, section)
         self.assertNotIn('Never stop', section)
         for row in rows:

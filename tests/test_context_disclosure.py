@@ -14,7 +14,14 @@ import measure_context
 from test_host_adapters import InstalledFixture
 
 TRUNK = 'ae7cec396976abddfe27ca701e9fe782bc7db6f7'
-CURSOR_ONLY_SECTION_GROWTH_OVER_TRUNK = 187
+# The Cursor-only features section grew when Cursor became a native host: the paid
+# Cursor features that need a paid plan got their own row, and the free-versus-paid
+# rule got one sentence. The growth is pinned, so a later edit to that section cannot
+# quietly raise the host.md cap. The value is the section's live size over the trunk
+# section it replaced (730 = 1915 - 1185); it is net-zero for the caps, which subtract
+# the trunk guidance, and it records the section's real growth so a later edit to the
+# section shows up here rather than passing unnoticed.
+CURSOR_ONLY_SECTION_GROWTH_OVER_TRUNK = 730
 
 
 def issue_110_guidance(read, host_guidance):

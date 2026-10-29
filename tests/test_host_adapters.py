@@ -291,6 +291,19 @@ class SyntheticActivity(unittest.TestCase):
         row.update(kwargs)
         return row
 
+    def cursor(self, **kwargs):
+        """One Cursor assistant record, in the shape Cursor's own store writes.
+
+        A Cursor record carries no `cwd` and no record-level timestamp, so the
+        fixture names an absolute path and the reader's recency comes from the
+        transcript file's mtime.
+        """
+        row = {'role': 'assistant',
+               'message': {'content': [{'type': 'tool_use', 'name': 'Read',
+                                        'input': {'path': str(self.wt / 'README.md')}}]}}
+        row.update(kwargs)
+        return row
+
     def test_claude_native_cwd_and_relative_read(self):
         hits, _, complete = self.scan('claude', [self.claude()])
         self.assertTrue(complete)
@@ -300,6 +313,69 @@ class SyntheticActivity(unittest.TestCase):
         hits, _, complete = self.scan('codex', [self.codex()])
         self.assertTrue(complete)
         self.assertTrue(hits[str(self.wt)][0]['recent'])
+
+    def test_cursor_absolute_read_is_seen_and_recency_comes_from_file_mtime(self):
+        hits, _, complete = self.scan('cursor', [self.cursor()])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.wt)][0]['recent'])
+        self.assertEqual(hits[str(self.wt)][0]['timestamp_basis'], 'file-mtime-conservative')
+
+    def test_cursor_relative_path_without_working_directory_holds(self):
+        row = {'role': 'assistant',
+               'message': {'content': [{'type': 'tool_use', 'name': 'Read',
+                                        'input': {'path': 'README.md'}}]}}
+        self.assertFalse(self.scan('cursor', [row])[2])
+
+    def test_cursor_relative_path_with_absolute_working_directory_resolves(self):
+        row = {'role': 'assistant',
+               'message': {'content': [{'type': 'tool_use', 'name': 'Read',
+                                        'input': {'path': 'README.md',
+                                                  'working_directory': str(self.wt)}}]}}
+        hits, _, complete = self.scan('cursor', [row])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.wt)])
+
+    def test_cursor_shell_command_resolves_absolute_paths(self):
+        row = {'role': 'assistant',
+               'message': {'content': [{'type': 'tool_use', 'name': 'Shell',
+                                        'input': {'command': shlex.join(['cat', str(self.wt / 'README.md')]),
+                                                  'working_directory': str(self.wt)}}]}}
+        hits, _, complete = self.scan('cursor', [row])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.wt)])
+
+    def test_cursor_unreviewed_record_shapes_hold(self):
+        cases = [
+            {'role': 'assistant', 'message': {'content': [{'type': 'tool_result', 'text': 'plain'}]}},
+            {'role': 'assistant', 'message': {'content': [{'type': 'tool_use', 'name': 'Read'}]}},
+            {'role': 'assistant', 'message': {'content': [{'type': 'tool_use', 'name': 'Read', 'input': {'path': 17}}]}},
+            {'role': 'assistant', 'message': {'content': [{'type': 'tool_use', 'name': 'Read',
+                                                           'input': {'path': str(self.wt), 'unknown': 'field'}}]}},
+            {'role': 'system', 'message': {'content': [{'type': 'text', 'text': 'plain'}]}},
+            {'role': 'assistant', 'message': {'content': []}},
+            {'role': 'assistant', 'message': {'content': 'plain'}},
+            {'type': 'turn_started', 'status': 'success'},
+            {'type': 'turn_ended', 'status': 'unknown'},
+            {'type': 'turn_ended', 'status': 'success', 'error': 17},
+        ]
+        for row in cases:
+            with self.subTest(row=row):
+                self.assertFalse(self.scan('cursor', [row])[2])
+
+    def test_cursor_turn_markers_and_text_blocks_are_supported(self):
+        rows = [{'role': 'user', 'message': {'content': [{'type': 'text', 'text': 'hello'}]}},
+                {'role': 'assistant', 'message': {'content': [{'type': 'text', 'text': 'hi'}]}},
+                {'type': 'turn_ended', 'status': 'success'}]
+        hits, _, complete = self.scan('cursor', rows)
+        self.assertTrue(complete)
+
+    def test_cursor_missing_tool_result_does_not_hold(self):
+        # Cursor's transcript may carry no tool result. A `tool_use` alone is a
+        # reviewed shape, so its absence does not hold coverage.
+        row = {'role': 'assistant',
+               'message': {'content': [{'type': 'tool_use', 'name': 'Read',
+                                        'input': {'path': str(self.wt / 'README.md')}}]}}
+        self.assertTrue(self.scan('cursor', [row])[2])
 
     def test_codex_session_context_relative_operation(self):
         row = self.codex(payload={'type': 'function_call', 'name': 'exec_command', 'arguments': json.dumps({'cmd': 'cat README.md'})})
@@ -352,7 +428,8 @@ class SyntheticActivity(unittest.TestCase):
 
     def test_supported_hosts_and_nested_subagents_are_scanned(self):
         sources = []
-        for provider, row in [('claude', self.claude()), ('codex', self.codex())]:
+        for provider, row in [('claude', self.claude()), ('codex', self.codex()),
+                              ('cursor', self.cursor())]:
             root = self.area / provider
             child = root / 'subagents' / 'nested.jsonl'
             child.parent.mkdir(parents=True)
@@ -360,8 +437,8 @@ class SyntheticActivity(unittest.TestCase):
             sources.append({'provider': provider, 'root': str(root), 'authorization': 'synthetic only', 'coverage': 'complete'})
         hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': sources}, [self.wt], self.now)
         self.assertTrue(complete)
-        self.assertEqual({r['provider'] for r in hits[str(self.wt)]}, {'claude', 'codex'})
-        self.assertEqual(sum(r['files_scanned'] for r in reports), 2)
+        self.assertEqual({r['provider'] for r in hits[str(self.wt)]}, {'claude', 'codex', 'cursor'})
+        self.assertEqual(sum(r['files_scanned'] for r in reports), 3)
 
     def test_empty_and_missing_roots_both_hold(self):
         root = self.area / 'empty'
@@ -462,7 +539,7 @@ class SyntheticActivity(unittest.TestCase):
         self.assertFalse(self.scan('claude', [row])[2])
 
     def test_unsupported_host_is_ignored_without_reading_or_coverage(self):
-        ignored = {'provider': 'cursor', 'root': '/not-authorized/not-read', 'coverage': 'complete'}
+        ignored = {'provider': 'omp', 'root': '/not-authorized/not-read', 'coverage': 'complete'}
         with patch.object(activity, 'read_selected', side_effect=AssertionError('must not read unsupported host')):
             hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [ignored]}, [self.wt], self.now)
         self.assertFalse(complete)
@@ -825,8 +902,8 @@ class ConsumerAudit(InstalledFixture, unittest.TestCase):
         _, report = self.audit(manifest)
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-wip')
 
-    def test_cli_cursor_is_ignored_and_cannot_supply_supported_host_coverage(self):
-        ignored = {'provider': 'cursor', 'files': ['/not-authorized/not-read.jsonl'], 'coverage': 'complete'}
+    def test_cli_unsupported_host_is_ignored_and_cannot_supply_supported_host_coverage(self):
+        ignored = {'provider': 'omp', 'files': ['/not-authorized/not-read.jsonl'], 'coverage': 'complete'}
         result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [ignored]})
         self.assertEqual(result.returncode, 2)
         self.assertEqual(report['sources'][0]['coverage'], 'ignored')
@@ -977,6 +1054,9 @@ DROPPED = {
             'host-special-skills.md:31-32 maps skill paths to the actual host, and hStack ships native manifests',
         '`.cursor/rules/*.mdc`, always-applied rules': 'no hStack body reads .mdc rules',
         '`https://github.com/cursor/plugins/blob/main/pstack/<path>`': 'no hStack body links Cursor\'s repository',
+        'Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`':
+            'plugin/skills/recall/SKILL.md states the Cursor transcript path and both slug forms, '
+            'and plugin/adapters/runtime/activity.py reads that provider',
     },
     'Cursor-only features': {
         'Cursor cloud agents':
@@ -984,13 +1064,7 @@ DROPPED = {
     },
 }
 # Upstream rows hStack leaves open, each with the reason it cannot be closed here.
-GAPS = {
-    'Paths': {
-        'Transcripts in `~/.cursor/projects/<slug>/agent-transcripts/`':
-            'plugin/skills/recall/SKILL.md:21 hardcodes the Cursor transcript path and the skill is ledger-mapped, '
-            'so this adapter cannot translate it',
-    },
-}
+GAPS = {}
 
 
 def table_rows(text):
