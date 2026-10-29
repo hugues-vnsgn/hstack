@@ -171,7 +171,12 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "0df5fc69d150f34fe4572b7eb4d8ada18a80adb0bbe5c6b19158b3a26c688fb1",
+      "sha256": "f252025ed3e8a0abf0d4a57da4d3eaac54fed1a0e4b2013a1e60ccaf6b4ea5f3",
+      "mode": "100644"
+    },
+    {
+      "path": ".cursor-plugin/plugin.json",
+      "sha256": "ae51556337591fd0de3a9ec2ced872752f60bbc2de50080ab58a6a540db86262",
       "mode": "100644"
     },
     {
@@ -181,7 +186,7 @@
     },
     {
       "path": "adapters/host-helper-setup.md",
-      "sha256": "191d61a3dc9fb36cb5bc361a5795b8c50a1ea713fdc7eed4e329bf981b975f4b",
+      "sha256": "c8bea0acebcd7367483d0c322822310bfec29b6a4aa8a13f0f859c204b4d2c79",
       "mode": "100644"
     },
     {
@@ -201,7 +206,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "1d037f5795b4f355a28c6b07091b0afce15be4dabf2a59dc059fedf6e8cb4bf1",
+      "sha256": "dd0d061a5cc7cdeda499aa2df4aec21a68482338986344528e3ce7619e818c7d",
       "mode": "100644"
     },
     {
@@ -211,17 +216,17 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "9827028d5d29e3360f72d927f40c22accb03c0514ab48ebbb11e2cbd45db6bbd",
+      "sha256": "541b325bd2d92c9316dae302bec019c4737de2ad699ffd111b2b445c77ea716a",
       "mode": "100644"
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "e4cf185c2293f5550ddb44f30839acc43d46fd8d19fb8cc641ec0f8ee16a674d",
+      "sha256": "22cc06829fa4de8d1f8f32b3e85b3ac6d167ad67f68cbcb568e81aa6d9bed069",
       "mode": "100644"
     },
     {
       "path": "adapters/host.md",
-      "sha256": "7c5ce18958df0e7dd4c82030cf9e3a211ddf9d6ef5e5d89aaa7c59e03ae6936f",
+      "sha256": "3661fd833861428518e0560c69159ecdc2c3e51d48ccc2bd7ad2572f3c3c2541",
       "mode": "100644"
     },
     {
@@ -241,7 +246,7 @@
     },
     {
       "path": "adapters/mobile.md",
-      "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825",
+      "sha256": "b32c767b8131c193e0e542a596877bc18993da6f34a233f0570524e20631649c",
       "mode": "100644"
     },
     {
@@ -261,7 +266,7 @@
     },
     {
       "path": "adapters/runtime/activity.py",
-      "sha256": "5803f97bcc6270bf6d5b5139a68add48a5bb386e05d2d16bed3044a0a223da93",
+      "sha256": "4d332478a35dbdcb2dee15f9ce92ceba62abaea99ce56429cf881445ce2c9cfa",
       "mode": "100644"
     },
     {
@@ -491,7 +496,7 @@
     },
     {
       "path": "skills/hugues-help/SKILL.md",
-      "sha256": "e2effd3ef53670783acfea385d2946bc8d96c94376d91f52523daa7166304d0a",
+      "sha256": "b5bdb16fb3cd7fa49a80a6dd70b94047a2d6db7fd02310c864a204033b7da534",
       "mode": "100644"
     },
     {
@@ -1166,7 +1171,7 @@
     },
     {
       "path": "skills/recall/SKILL.md",
-      "sha256": "43625256524afa2aff128cb263c88526ae4fc7b2da7bb667be7bcc800d205125",
+      "sha256": "bc274d2f6958c23ad0de56292bf86577f4244adc884ccd25cc2869a48aaa2582",
       "mode": "100644"
     },
     {
@@ -1176,7 +1181,7 @@
     },
     {
       "path": "skills/reflect/SKILL.md",
-      "sha256": "8d741bb95066f69fb411b8426535f9762eccea66f890537581aabdbda2c12caf",
+      "sha256": "658ed36048ccf27fd02ffea6ca5e36ded3061fed1503b5460fdb078704289429",
       "mode": "100644"
     },
     {
@@ -1206,12 +1211,17 @@
     },
     {
       "path": "skills/setup-hstack/SKILL.md",
-      "sha256": "2132509da7821f136679d1d0ea5ff073675edbeebb427a2b235189ebe49e71d1",
+      "sha256": "5e8fa51b0d16bca229f5c93976960baf0ab506441180c904e88d604817517b95",
       "mode": "100644"
     },
     {
       "path": "skills/setup-hstack/agents/openai.yaml",
       "sha256": "8619a54e8c098122a7f3881394f84ca89b684366e848233a29ad18b6ec363935",
+      "mode": "100644"
+    },
+    {
+      "path": "skills/setup-hstack/references/cursor-models.md",
+      "sha256": "83d31b1b162cd32f1c84d116a47f8931162679c004dbe3df38db0a0fe80e0ea0",
       "mode": "100644"
     },
     {

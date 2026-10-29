@@ -1,4 +1,4 @@
-"""Conservative local audit of owner-selected Claude Code and Codex sources."""
+"""Conservative local audit of owner-selected Claude Code, Codex and Cursor sources."""
 from datetime import datetime, timezone
 from .json_input import load_json
 import os
@@ -9,9 +9,10 @@ import stat
 import subprocess
 from urllib.parse import unquote
 
-PROVIDERS = {'claude', 'codex'}
+PROVIDERS = {'claude', 'codex', 'cursor'}
 PR_STATES = {'OPEN', 'CLOSED', 'MERGED', 'NONE'}
-PATH_KEYS = {'cwd', 'workdir', 'file_path', 'path', 'absolute_path', 'directory'}
+PATH_KEYS = {'cwd', 'workdir', 'file_path', 'path', 'absolute_path', 'directory',
+             'working_directory'}
 RECENT_SECONDS = 4 * 86400
 SIMPLE_COMMANDS = {'cat', 'ls', 'head', 'tail', 'wc', 'stat', 'rg', 'grep',
                    'git', 'pwd', 'readlink', 'realpath'}
@@ -298,6 +299,76 @@ def operation_paths(value, inherited=None):
         yield resolve_operation_path(path, cwd)
 
 
+def cursor_operation_paths(block):
+    """Resolve one Cursor tool operation into the paths it touched.
+
+    Cursor's own tool set names its file argument `path`, its write payload
+    `contents`, and its shell argument `command` with an optional
+    `working_directory`. Unlike Claude Code, Cursor records no record-level
+    working directory, so a relative path cannot be resolved and holds
+    coverage rather than being guessed.
+    """
+    name = block.get('name')
+    args = block.get('input')
+    if not isinstance(name, str) or not isinstance(args, dict):
+        raise ValueError('malformed Cursor tool operation')
+    name = name.rsplit('.', 1)[-1]
+    cwd = None
+    if 'working_directory' in args:
+        directory = args['working_directory']
+        if not isinstance(directory, str) or not directory.strip():
+            raise ValueError('invalid operation working directory')
+        if not Path(directory).is_absolute():
+            raise ValueError('relative working directory lacks parent context')
+        cwd = str(Path(directory).resolve())
+    if name == 'Shell':
+        allowed = {'command', 'description', 'working_directory', 'block_until_ms',
+                   'required_permissions', 'request_smart_mode_approval',
+                   'smart_mode_block_reason'}
+        if set(args) - allowed:
+            raise ValueError('unknown native tool argument fields')
+        command = args.get('command')
+        if not isinstance(command, str) or not command.strip():
+            raise ValueError('missing shell command')
+        paths = shell_paths(command)
+    elif name in {'Read', 'Write', 'Edit', 'StrReplace'}:
+        allowed = {'path', 'contents', 'old_string', 'new_string', 'offset',
+                   'limit', 'replace_all', 'working_directory'}
+        if set(args) - allowed:
+            raise ValueError('unknown native tool argument fields')
+        path = args.get('path')
+        if not isinstance(path, str) or not path.strip():
+            raise ValueError('missing native tool argument: path')
+        paths = [path]
+    elif name == 'Grep':
+        allowed = {'pattern', 'path', 'output_mode', 'head_limit', 'offset',
+                   '-A', '-B', '-C', '-i', 'glob', 'type'}
+        if set(args) - allowed:
+            raise ValueError('unknown native tool argument fields')
+        path = args.get('path')
+        if path is not None and (not isinstance(path, str) or not path.strip()):
+            raise ValueError('invalid native tool argument: path')
+        paths = [path] if path else []
+    elif name == 'Glob':
+        allowed = {'glob_pattern', 'target_directory'}
+        if set(args) - allowed:
+            raise ValueError('unknown native tool argument fields')
+        directory = args.get('target_directory')
+        if directory is not None and (not isinstance(directory, str) or not directory.strip()):
+            raise ValueError('invalid native tool argument: target_directory')
+        paths = [directory] if directory else []
+    else:
+        raise ValueError('unsupported native operation')
+    if cwd:
+        yield cwd
+    for path in paths:
+        if not Path(path).is_absolute():
+            if not cwd:
+                raise ValueError('relative operation path lacks working-directory context')
+            path = str(Path(cwd) / path)
+        yield str(Path(path).resolve())
+
+
 def mentions_worktree(value, worktree, decode_arguments=True):
     variants = {str(worktree)}
     # macOS Git canonicalizes /tmp and /var to /private/...; native records may
@@ -448,6 +519,72 @@ def codex_context(payload):
             and all(value is None or isinstance(value, str) for value in metadata.values()))
 
 
+def cursor_record(row):
+    """Validate one Cursor agent-transcript record.
+
+    Cursor's own store writes a `{"role", "message"}` envelope whose content
+    blocks are `text` or `tool_use`, and closes a turn with a `turn_ended`
+    record. Observed records carry no `cwd` and no record-level timestamp, so
+    recency falls back to file mtime and only absolute paths resolve.
+    """
+    if set(row) - {'role', 'message', 'type', 'status', 'error'}:
+        return False
+    if 'type' in row:
+        # A turn marker. Only the observed two shapes are accepted.
+        if row.get('type') != 'turn_ended':
+            return False
+        if set(row) - {'type', 'status', 'error'}:
+            return False
+        if row.get('status') not in {'success', 'error'}:
+            return False
+        if 'error' in row and not isinstance(row['error'], str):
+            return False
+        return True
+    if set(row) != {'role', 'message'}:
+        return False
+    if row.get('role') not in {'user', 'assistant'}:
+        return False
+    message = row.get('message')
+    if not isinstance(message, dict) or set(message) != {'content'}:
+        return False
+    content = message.get('content')
+    if not isinstance(content, list) or not content:
+        return False
+    for block in content:
+        if not isinstance(block, dict):
+            return False
+        kind = block.get('type')
+        if kind == 'text':
+            if set(block) != {'type', 'text'} or not isinstance(block['text'], str):
+                return False
+        elif kind == 'tool_use':
+            if set(block) - {'type', 'name', 'input'}:
+                return False
+            if not isinstance(block.get('name'), str) or not block['name'].strip():
+                return False
+            if not isinstance(block.get('input'), dict):
+                return False
+        else:
+            # Any other block kind is an unexamined schema, so it holds coverage.
+            return False
+    return True
+
+
+def cursor_operations(row):
+    """Yield Cursor tool operations in their own decoded input shape.
+
+    Cursor writes tool inputs as decoded objects rather than encoded argument
+    strings, so the Claude `tool_use` envelope is reused with the Cursor tool
+    names the host actually exposes.
+    """
+    message = row.get('message')
+    if not isinstance(message, dict):
+        return
+    for block in message.get('content', []):
+        if isinstance(block, dict) and block.get('type') == 'tool_use':
+            yield block
+
+
 def claude_message(message):
     if not isinstance(message, dict):
         return False
@@ -531,6 +668,8 @@ def records(provider, path, body, mtime):
                 supported = codex_payload(row.get('payload'))
             if kind == 'event_msg':
                 supported = codex_event(row.get('payload'))
+        elif provider == 'cursor':
+            supported = cursor_record(row)
         else:
             supported = False
         if not supported:
@@ -600,8 +739,10 @@ def scan(manifest, worktrees, now):
         report = {'provider': source.get('provider') if isinstance(source, dict) else None,
                   'coverage': 'unavailable', 'files_scanned': 0}
         reports.append(report)
-        if isinstance(source, dict) and source.get('provider') == 'cursor':
-            report.update(coverage='ignored', reason='unsupported host; contributes no Claude/Codex evidence')
+        if isinstance(source, dict) and isinstance(source.get('provider'), str) and source['provider'] not in PROVIDERS:
+            # An unsupported host contributes no evidence and no coverage, and
+            # its transcripts are never read.
+            report.update(coverage='ignored', reason='unsupported host; contributes no evidence')
             continue
         try:
             files = selected_files(source)
@@ -632,7 +773,12 @@ def scan(manifest, worktrees, now):
                             next_cwd = row['payload']['cwd']
                         if next_cwd and (not isinstance(next_cwd, str) or not Path(next_cwd).is_absolute()):
                             raise ValueError('invalid session working directory')
-                        normalized = list(operation_paths(row, next_cwd))
+                        if source['provider'] == 'cursor':
+                            normalized = []
+                            for block in cursor_operations(row):
+                                normalized.extend(cursor_operation_paths(block))
+                        else:
+                            normalized = list(operation_paths(row, next_cwd))
                         for location in context_paths(row):
                             if Path(location).is_absolute():
                                 normalized.append(str(Path(location).resolve()))
