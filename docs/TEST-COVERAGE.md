@@ -456,8 +456,10 @@ section, which already carries them and is already asserted.
 The P2 fix round 5 host-detection hook adds eleven cases. The Cursor host work adds
 seven more in `test_host_adapters`, and the review-1 fix round adds seven more
 there and seventeen in `test_check_plugin`. A later merge of two near-identical
-Cursor path tests removes one, and this release's fix round adds the shared
-matcher regression, so 584 top-level cases collect.
+Cursor path tests removes one, so the Cursor work nets thirteen in
+`test_host_adapters` (91 to 104) and seventeen in `test_check_plugin` (27 to 44).
+This release's fix round adds the shared matcher regression, so 105 sit in
+`test_host_adapters` and 584 top-level cases collect.
 The `test_host_adapters` additions cover the Cursor activity reader's honest
 coverage: a Cursor operation that names no absolute path holds, the observed
 tools that touch no file are inert, the observed Shell argument keys are
