@@ -10,8 +10,36 @@ Cursor joins Claude Code and Codex as hStack's third native host. One tree, one 
 
 1. **Cursor is a native host.** The identity line reads "hStack is pstack for mobile development, running in Claude Code, Codex and Cursor." A Cursor user installs the plugin, sees its skills and runs `/hugues-mode`, `/hugues-help` and `/setup-hstack`.
 2. **The only Cursor surface is the Cursor IDE.** The Cursor CLI (`agent`), Cloud Agents, the Cursor SDK, T3 Code's Cursor provider and Bugbot are out of scope. hStack does not document, support or test through them.
-3. **One tree, one source.** A `.cursor-plugin/` manifest pair points at the existing `plugin/skills/` and `plugin/agents/`. No generated tree, no copied bodies. Pick exactly one route: **A**, you already use hStack in Claude Code, so install nothing in Cursor and Cursor loads hStack from Claude Code's install; or **B**, you don't use Claude Code, so hold a copy of this tree's `plugin/` folder at `~/.cursor/plugins/local/hstack`. One hStack source at a time: a user who holds route B's local copy *and* keeps hStack enabled in Claude Code gets every shared skill registered twice, because Cursor loads the Claude plugin cache as well as `~/.cursor/plugins/local/` and de-duplicates within one plugin rather than across plugins. Both halves of that observation come from one lab session on 2026-10-30 with both sources present, observed in Cursor 3.27.22 with a third-party auth extension: that session loaded `hstack` from the local copy (`loadUserLocalPlugin`) and from `~/.claude/plugins/cache/hstack/hstack/0.5.6` (`loadClaudePlugin hstack@hstack`), and ran the `host-detect.sh` hook once per copy. Route A is expected, not proven: lane 1b has not passed yet, so the README marks it expected and this ADR records it as a gap. The README's Cursor section names pstack as the first thing to remove, since 55 of hStack's 63 skill names are shared with it.
+3. **One tree, one source.** A `.cursor-plugin/` manifest pair points at the existing `plugin/skills/` and `plugin/agents/`. No generated tree, no copied bodies. Pick exactly one route: **A**, you already use hStack in Claude Code, so install nothing in Cursor and Cursor loads hStack from Claude Code's install; or **B**, you don't use Claude Code, so hold a copy of this tree's `plugin/` folder at `~/.cursor/plugins/local/hstack`. One hStack source at a time: a user who holds route B's local copy *and* keeps hStack enabled in Claude Code gets every shared skill registered twice, because Cursor loads the Claude plugin cache as well as `~/.cursor/plugins/local/` and de-duplicates within one plugin rather than across plugins. Both halves of that observation come from one lab session on 2026-10-30 with both sources present, observed in Cursor 3.27.22 with a third-party auth extension: that session loaded `hstack` from the local copy (`loadUserLocalPlugin`) and from `~/.claude/plugins/cache/hstack/hstack/0.5.6` (`loadClaudePlugin hstack@hstack`), and ran the `host-detect.sh` hook once per copy. Route A is expected, not proven: it is checked at the end, on the released plugin, with hStack on in Claude Code and no local copy, so the README marks it expected and this ADR records it as a gap. The README's Cursor section names pstack as the first thing to remove, since 55 of hStack's 63 skill names are shared with it.
 4. **The proof environment is the owner's Cursor.** Proof runs in the owner's own Cursor IDE, observed in Cursor <version> with a third-party auth extension; stock Cursor not observed. Every Cursor claim in the README, the PR body and the 0.5.7 release notes is worded the same way. Stock Cursor is a gap, and the free plan without the extension is a gap. A feature that needs a paid Cursor plan keeps the skip line, and it is skipped on every host, including Cursor. A free feature that a lane exercises is simply native in Cursor.
+
+## The gaps
+
+These are not observed in the Cursor IDE. Each one is a claim hStack does not
+make until a run in the IDE shows it.
+
+- **Subagents are not observed in the Cursor IDE.** No lane ran a read-only
+  Explore subagent, and no lane confirmed that a Cursor plugin subagent leaves
+  the working tree clean.
+- **The `hugues-agent` delegate is not observed in the Cursor IDE.** No lane
+  ran one helper task. The foreground-delegate gap below stands on the
+  loader's own behaviour, unproven by a run.
+- **`setup-hstack` is not observed in the Cursor IDE.** No lane wrote
+  `.hstack/models.md` with a Cursor section.
+- **The paid-feature skip line is not observed in the Cursor IDE.** No lane
+  asked for a paid Cursor feature and read the line it printed.
+- **The Swift skill is not observed in the Cursor IDE.** No lane loaded
+  `swift-best-practices` on a Swift task.
+- **`recall` is not observed in the Cursor IDE.** No lane found an earlier
+  chat in Cursor's transcripts. The slug rules below come from the observed
+  on-disk layout, not from a run of the skill.
+- **Route A is not observed in the Cursor IDE.** Cursor loading hStack from
+  Claude Code's install is expected, and it is checked at the end, on the
+  released plugin, with hStack on in Claude Code and no local copy. Until
+  then the README marks it expected.
+- **Stock Cursor is not observed.** Every observation here comes from Cursor
+  3.27.22 with a third-party auth extension. The free plan without that
+  extension is unobserved too.
 
 ## Why
 
@@ -39,4 +67,4 @@ A Cursor transcript's project slug has two forms, because Cursor ships more than
 - The [host adapter](../../plugin/adapters/host.md) splits its Cursor-only features into free and paid. The paid rows keep the skip line format `Skipped in <host>: <step>. <reason>.`
 - The [setup skill](../../plugin/skills/setup-hstack/SKILL.md) points at [cursor-models.md](../../plugin/skills/setup-hstack/references/cursor-models.md). On the free plan every role stays on `inherit-parent`.
 - The activity reader lives in [activity.py](../../plugin/adapters/runtime/activity.py) and covers three providers. It reads Cursor's `{"role", "message"}` envelope, its `text` and `tool_use` blocks and its `turn_ended` marker, and it treats any other shape as unreviewed and holds coverage.
-- Runtime behaviour in the IDE is unobserved until the owner runs the lanes. The release notes carry that gap. Route A is expected until lane 1b proves it: stock Cursor is unobserved, and the free plan without the third-party auth extension is unobserved.
+- Runtime behaviour in the IDE is unobserved until the owner runs the lanes. The release notes carry that gap. Route A is expected until the final check on the released plugin proves it: stock Cursor is unobserved, and the free plan without the third-party auth extension is unobserved.
