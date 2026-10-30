@@ -7,8 +7,8 @@ Use the absolute loaded `skills/hugues-mode/SKILL.md` found by
 `<plugin>`. Keep that root for this run, including helpers and subagents.
 On Codex, the available skills list supplies the absolute `hugues-mode` path.
 On Claude Code, the loaded skill's base directory supplies it. A known loaded
-path wins over discovery, even for a maintainer checkout. Never replace it
-with a newer checkout or another cached version.
+path wins over discovery, even when that path is a maintainer checkout.
+Never replace it with a newer checkout or another cached version.
 
 Translate each bundled command before execution. Quote the resulting absolute
 script path and keep the consumer working directory and arguments. Resolve
@@ -29,6 +29,7 @@ An absent loaded root or script holds the dependent step. Do not search the
 consumer or another plugin copy to fill it. Worker dispatch carries the loaded
 mode path through [workers and models](host-workers.md); a helper resolves this
 table itself, without a hand-written script path in its brief.
+
 ## Agent-store translation
 
 Before a plan, program or decision trail needs the inherited "agent store",
@@ -47,6 +48,7 @@ actual orchestration program directory through the existing `--store` or
 subdirectory. Pass the complete log-file path to `log.sh`. Keep all state outside
 the installed plugin. This is a path translation, not a new runtime or permission
 to access another program's state.
+
 ## Codex sandbox
 
 Prefer launching with `codex --add-dir <evidence store> --add-dir <worktree root>`.
@@ -73,6 +75,7 @@ The supported native hosts are Claude Code, Codex and Cursor. Each provider's
 sources are read only when the owner authorizes them, and one provider's source
 is never coverage for another.
 These are mechanical operand translations, not new execution or deletion scope.
+
 Before Bun helpers, read [helper setup](host-helper-setup.md) in full.
 The bootstrap can install dependencies.
 Do not execute it without installation authority. Missing runtimes, dependencies,

@@ -315,8 +315,11 @@ class SyntheticActivity(unittest.TestCase):
         self.assertTrue(hits[str(self.wt)][0]['recent'])
 
     def test_cursor_absolute_read_is_seen_and_recency_comes_from_file_mtime(self):
-        hits, _, complete = self.scan('cursor', [self.cursor()])
-        self.assertTrue(complete)
+        hits, reports, complete = self.scan('cursor', [self.cursor()])
+        # The source reads cleanly, so its own coverage is complete, but a
+        # Cursor source can never make the scan's coverage complete.
+        self.assertEqual(reports[0]['coverage'], 'complete')
+        self.assertFalse(complete)
         self.assertTrue(hits[str(self.wt)][0]['recent'])
         self.assertEqual(hits[str(self.wt)][0]['timestamp_basis'], 'file-mtime-conservative')
 
@@ -324,15 +327,18 @@ class SyntheticActivity(unittest.TestCase):
         row = {'role': 'assistant',
                'message': {'content': [{'type': 'tool_use', 'name': 'Read',
                                         'input': {'path': 'README.md'}}]}}
-        self.assertFalse(self.scan('cursor', [row])[2])
+        hits, reports, complete = self.scan('cursor', [row])
+        self.assertFalse(complete)
+        self.assertEqual(reports[0]['coverage'], 'unavailable')
 
     def test_cursor_relative_path_with_absolute_working_directory_resolves(self):
         row = {'role': 'assistant',
-               'message': {'content': [{'type': 'tool_use', 'name': 'Read',
-                                        'input': {'path': 'README.md',
+               'message': {'content': [{'type': 'tool_use', 'name': 'Shell',
+                                        'input': {'command': shlex.join(['cat', 'README.md']),
                                                   'working_directory': str(self.wt)}}]}}
-        hits, _, complete = self.scan('cursor', [row])
-        self.assertTrue(complete)
+        hits, reports, complete = self.scan('cursor', [row])
+        self.assertEqual(reports[0]['coverage'], 'complete')
+        self.assertFalse(complete)
         self.assertTrue(hits[str(self.wt)])
 
     def test_cursor_shell_command_resolves_absolute_paths(self):
@@ -340,8 +346,9 @@ class SyntheticActivity(unittest.TestCase):
                'message': {'content': [{'type': 'tool_use', 'name': 'Shell',
                                         'input': {'command': shlex.join(['cat', str(self.wt / 'README.md')]),
                                                   'working_directory': str(self.wt)}}]}}
-        hits, _, complete = self.scan('cursor', [row])
-        self.assertTrue(complete)
+        hits, reports, complete = self.scan('cursor', [row])
+        self.assertEqual(reports[0]['coverage'], 'complete')
+        self.assertFalse(complete)
         self.assertTrue(hits[str(self.wt)])
 
     def test_cursor_unreviewed_record_shapes_hold(self):
@@ -363,19 +370,135 @@ class SyntheticActivity(unittest.TestCase):
                 self.assertFalse(self.scan('cursor', [row])[2])
 
     def test_cursor_turn_markers_and_text_blocks_are_supported(self):
+        # A text-only chat reads cleanly, so the source's own coverage is
+        # complete. The scan's coverage stays incomplete, because a Cursor
+        # source can never claim it.
         rows = [{'role': 'user', 'message': {'content': [{'type': 'text', 'text': 'hello'}]}},
                 {'role': 'assistant', 'message': {'content': [{'type': 'text', 'text': 'hi'}]}},
                 {'type': 'turn_ended', 'status': 'success'}]
-        hits, _, complete = self.scan('cursor', rows)
-        self.assertTrue(complete)
+        hits, reports, complete = self.scan('cursor', rows)
+        self.assertFalse(complete)
+        self.assertEqual(reports[0]['coverage'], 'complete')
+        self.assertEqual(reports[0]['limits'],
+                         'cursor: no cwd, no tool results, recency is file mtime')
 
-    def test_cursor_missing_tool_result_does_not_hold(self):
-        # Cursor's transcript may carry no tool result. A `tool_use` alone is a
-        # reviewed shape, so its absence does not hold coverage.
+    def test_cursor_missing_tool_result_states_its_limit(self):
+        # Cursor's transcript carries no tool result, so the reader cannot see
+        # what a tool touched or returned. That limit is stated in the report.
         row = {'role': 'assistant',
                'message': {'content': [{'type': 'tool_use', 'name': 'Read',
                                         'input': {'path': str(self.wt / 'README.md')}}]}}
-        self.assertTrue(self.scan('cursor', [row])[2])
+        hits, reports, complete = self.scan('cursor', [row])
+        self.assertFalse(complete)
+        self.assertEqual(reports[0]['limits'],
+                         'cursor: no cwd, no tool results, recency is file mtime')
+
+    def test_a_cursor_operation_without_an_absolute_path_holds(self):
+        # A Cursor record carries no working directory, so an operation that
+        # names no absolute path cannot be resolved and holds the coverage.
+        cases = [
+            ('Shell', {'command': 'ls'}),
+            ('Shell', {'command': 'pwd'}),
+            ('Grep', {'pattern': 'needle'}),
+            ('Glob', {'glob_pattern': '**/*.py'}),
+        ]
+        for name, args in cases:
+            with self.subTest(tool=name, args=args):
+                row = {'role': 'assistant',
+                       'message': {'content': [{'type': 'tool_use', 'name': name, 'input': args}]}}
+                hits, reports, complete = self.scan('cursor', [row])
+                self.assertFalse(complete)
+                self.assertEqual(reports[0]['coverage'], 'unavailable')
+
+    def test_an_observed_cursor_tool_that_touches_no_file_is_inert(self):
+        # These tools are reviewed shapes, so they neither contribute a path
+        # nor hold the source's coverage.
+        for name, args in [('GetDynamicTools', {'namespace': 'x'}),
+                           ('CallDynamicTool', {'namespace': 'x', 'toolName': 'y'}),
+                           ('AskQuestion', {'questions': []}),
+                           ('ask_question', {'questions': []}),
+                           ('AwaitShell', {'namespace': 'x', 'toolName': 'y'}),
+                           ('UpdateCurrentStep', {})]:
+            with self.subTest(tool=name):
+                row = {'role': 'assistant',
+                       'message': {'content': [{'type': 'tool_use', 'name': name, 'input': args}]}}
+                hits, reports, complete = self.scan('cursor', [row])
+                self.assertEqual(reports[0]['coverage'], 'complete', name)
+                self.assertFalse(complete, name)
+
+    def test_the_observed_cursor_shell_keys_are_accepted(self):
+        for extra in [{'timeout': 30}, {'request_permissions': ['all']},
+                      {'request_smart_mode_approval': True,
+                       'smart_mode_block_reason': 'because'}]:
+            with self.subTest(extra=extra):
+                args = {'command': shlex.join(['cat', str(self.wt / 'README.md')]),
+                        'working_directory': str(self.wt)}
+                args.update(extra)
+                row = {'role': 'assistant',
+                       'message': {'content': [{'type': 'tool_use', 'name': 'Shell', 'input': args}]}}
+                hits, reports, complete = self.scan('cursor', [row])
+                self.assertEqual(reports[0]['coverage'], 'complete', extra)
+                self.assertTrue(hits[str(self.wt)])
+
+    def test_an_unknown_cursor_provider_is_an_error_not_a_silent_skip(self):
+        source = self.area / 'other.jsonl'
+        source.write_text(json.dumps(self.cursor()) + '\n')
+        manifest = {'coverage': 'complete',
+                    'sources': [{'provider': 'other', 'files': [str(source)],
+                                 'authorization': 'synthetic only', 'coverage': 'complete'}]}
+        hits, reports, complete = activity.scan(manifest, [self.wt], self.now)
+        self.assertFalse(complete)
+        self.assertEqual(reports[0]['coverage'], 'unavailable')
+        self.assertIn('unsupported transcript provider', reports[0]['error'])
+
+    def test_a_record_with_an_undecodable_encoding_is_still_read(self):
+        # The owner's real store carries a shell command with a git date format,
+        # `--format='%h %ad %s'`. `%ad` is not valid percent-encoding. The raw
+        # text is still searched, so the record is read rather than holding the
+        # whole source.
+        row = {'role': 'assistant',
+               'message': {'content': [
+                   {'type': 'text', 'text': "the format is --format='%h %ad %s'"},
+                   {'type': 'tool_use', 'name': 'Shell',
+                    'input': {'command': 'cat ' + str(self.wt / 'README.md'),
+                              'description': 'read',
+                              'working_directory': str(self.wt)}}]}}
+        hits, reports, complete = self.scan('cursor', [row])
+        self.assertEqual(reports[0].get('error'), None, reports[0])
+        self.assertEqual(reports[0]['coverage'], 'complete', reports[0])
+
+    def test_a_redacted_real_cursor_transcript_reads_without_holding(self):
+        # The fixtures are the owner's real chats with every value replaced.
+        # A real help chat and a real Shell chat must both read as reviewed
+        # records, so a real transcript is not mistaken for an unreadable one.
+        for name in ['cursor-help.jsonl', 'cursor-shell.jsonl']:
+            with self.subTest(fixture=name):
+                source = self.area / name
+                source.write_text((ROOT / 'tests/fixtures/cursor' / name).read_text())
+                manifest = {'coverage': 'complete',
+                            'sources': [{'provider': 'cursor', 'files': [str(source)],
+                                         'authorization': 'redacted real transcripts',
+                                         'coverage': 'complete'}]}
+                hits, reports, complete = activity.scan(manifest, [self.wt], self.now)
+                self.assertEqual(reports[0].get('error'), None, reports[0])
+                self.assertEqual(reports[0]['coverage'], 'complete', reports[0])
+                self.assertFalse(complete, reports[0])
+
+    def test_the_observed_cursor_tool_keys_do_not_hold_a_real_chat(self):
+        # The review found that 4 of the owner's 9 real transcripts came back
+        # unavailable, because the reader rejected tool arguments Cursor
+        # actually writes. The observed keys are accepted, so a real chat
+        # reads instead of holding its source. The tool names come from the
+        # owner's own store.
+        source = self.area / 'real.jsonl'
+        source.write_text((ROOT / 'tests/fixtures/cursor/cursor-shell.jsonl').read_text())
+        manifest = {'coverage': 'complete',
+                    'sources': [{'provider': 'cursor', 'files': [str(source)],
+                                 'authorization': 'redacted real transcripts',
+                                 'coverage': 'complete'}]}
+        hits, reports, complete = activity.scan(manifest, [self.wt], self.now)
+        self.assertEqual(reports[0].get('error'), None, reports[0])
+        self.assertEqual(reports[0]['files_scanned'], 1)
 
     def test_codex_session_context_relative_operation(self):
         row = self.codex(payload={'type': 'function_call', 'name': 'exec_command', 'arguments': json.dumps({'cmd': 'cat README.md'})})
@@ -436,7 +559,10 @@ class SyntheticActivity(unittest.TestCase):
             child.write_text(json.dumps(row) + '\n')
             sources.append({'provider': provider, 'root': str(root), 'authorization': 'synthetic only', 'coverage': 'complete'})
         hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': sources}, [self.wt], self.now)
-        self.assertTrue(complete)
+        # The Cursor source caps the scan's coverage: its records carry no
+        # working directory and no tool results, so it can never make the
+        # scan complete on its own.
+        self.assertFalse(complete)
         self.assertEqual({r['provider'] for r in hits[str(self.wt)]}, {'claude', 'codex', 'cursor'})
         self.assertEqual(sum(r['files_scanned'] for r in reports), 3)
 
@@ -1026,6 +1152,7 @@ SKIP_LINE = re.compile(r'Skipped in .+: .+\. .+\.')
 HostPage = NamedTuple('HostPage', [('listing', str), ('skip_only', list)])
 HOST_PAGES = {
     'orca.md': HostPage(listing='ADEs', skip_only=['worker_done', 'orchestration']),
+    'cursor.md': HostPage(listing='Agents', skip_only=[]),
 }
 HARNESS_MEMBER = 'pstack/docs/harness/claude-code.md'
 

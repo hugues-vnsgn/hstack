@@ -740,7 +740,10 @@ class HuguesModeRouter(unittest.TestCase):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         section = check_core.section(host, 'Cursor-only features')
         rows = [line for line in section.splitlines() if line.startswith('| ')][1:]
-        self.assertEqual(len(rows), 6)
+        # The cloud row moved out with the rest of the Cursor-specific prose, so
+        # the always-loaded table keeps only the rows every host reads. The
+        # Cursor-only rows live in the Cursor page.
+        self.assertEqual(len(rows), 5)
         expected = [
             ('Cursor Automations',),
             ('Bugbot', '[Publication](host-publication.md)'),
@@ -749,9 +752,6 @@ class HuguesModeRouter(unittest.TestCase):
              'test-ios', 'test-android', 'native mechanism', 'XCTest or UiAutomator', 'native helper', 'execution gap'),
             ("Cursor's `/loop`", 'current local session', 'never a cloud schedule',
              'active-session waits', 'Between-turn scheduling stays an unsatisfied gap', '#34 item 6'),
-            ('Cursor cloud agents', 'environment: "cloud"', 'the Cursor SDK',
-             "T3 Code's Cursor provider", 'Paid Cursor features. Skip with the line.',
-             'A local worktree worker substitutes only where the core permits local execution.'),
         ]
         for row, markers in zip(rows, expected):
             for marker in markers:
@@ -760,15 +760,26 @@ class HuguesModeRouter(unittest.TestCase):
                        'gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.`',
                        'Never ask the user to choose, offer an alternative or retry.',
                        'Independent steps continue; one that needs the skipped output holds, with a named placeholder.',
-                       'A skip line never checks a gate: a skipped mandatory gate holds the result.',
-                       'A Cursor feature that the owner\'s plan has on the free plan is native in Cursor.',
-                       'Only a feature that needs a paid Cursor plan is skipped, and it is skipped on',
-                       'every host, including Cursor.']:
+                       'A skip line never checks a gate: a skipped mandatory gate holds the result.']:
             self.assertIn(phrase, section)
         self.assertNotIn('Never stop', section)
         for row in rows:
             if row.startswith(('| Cursor Automations', '| A built-in PR tool')):
                 self.assertTrue(row.rstrip().endswith('| unobserved |'), row)
+        # The free-versus-paid rule and the cloud row live in the Cursor page,
+        # where a Cursor session reads them.
+        page = (ROOT / 'plugin/adapters/hosts/cursor.md').read_text()
+        for phrase in ['A free Cursor feature is native in Cursor.',
+                       'A feature that needs a paid Cursor plan keeps the skip line',
+                       'it is skipped on every host, including Cursor.',
+                       'Cursor cloud agents',
+                       'A local worktree worker substitutes only where the core permits local execution.']:
+            self.assertIn(phrase, page)
+        # Claude Code does not print a skip line for cloud agents: the workers
+        # adapter maps `environment: "cloud"` to an isolated worktree.
+        self.assertNotIn('Cursor cloud agents', section)
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        self.assertIn('`isolation: "worktree"`, only where the core permits local execution.', workers)
         ui = (ROOT / 'plugin/skills/control-ui/SKILL.md').read_text()
         self.assertIn('may write to the server', ui)
         self.assertIn('get a yes from the user, or from the coordinator', ui)

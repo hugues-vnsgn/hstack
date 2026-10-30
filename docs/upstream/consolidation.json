@@ -1147,7 +1147,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/recall/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "ef8935dbb0a6884e06e48cc9f445ef04ed5505b1bbb3a2569869a3fe6a536b4c"
+      "destination_sha256": "eb9dd100db97ae9560abcf9f0e5cb2a60e161ad6d56129baac65a1aba703a66c"
     },
     {
       "source": "pstack/skills/reflect/SKILL.md",
@@ -1155,7 +1155,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/reflect/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "658ed36048ccf27fd02ffea6ca5e36ded3061fed1503b5460fdb078704289429"
+      "destination_sha256": "8d741bb95066f69fb411b8426535f9762eccea66f890537581aabdbda2c12caf"
     },
     {
       "source": "pstack/skills/reflect/references/divergent-reviewer.md",
@@ -1912,7 +1912,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "dd0d061a5cc7cdeda499aa2df4aec21a68482338986344528e3ce7619e818c7d",
+      "sha256": "87a7b490edf6389bc1a82fd8b2e48fae815de94a0492f6a1a8c27a6a62a2a9bf",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1920,23 +1920,27 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "541b325bd2d92c9316dae302bec019c4737de2ad699ffd111b2b445c77ea716a",
+      "sha256": "c65d5c0be037b19a045894fb6b833651acee61f1ac018fec74c572048fbc0a38",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "22cc06829fa4de8d1f8f32b3e85b3ac6d167ad67f68cbcb568e81aa6d9bed069",
+      "sha256": "9a105d0afc6b713ea58bc50bb0200d69687f70425e05a9271fb245c37894339f",
       "mode": 420
     },
     "adapters/host.md": {
-      "sha256": "3661fd833861428518e0560c69159ecdc2c3e51d48ccc2bd7ad2572f3c3c2541",
+      "sha256": "3bcfe558b95ccdc1f045d46a24a3512175ed1100f10ac4320644f8c1b5883c91",
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "7b434ae053ebce371fc5748c973edad7e28d38c1c2b00710c3bc60e666283aa5",
+      "sha256": "4f2bb7d03f04b75c15ceb917f7c9dbf35a2d7965a7c3c47f8197799742a7acde",
       "mode": 420
     },
     "adapters/hosts/README.md": {
-      "sha256": "ea6644b55b232d867188436cdbe64df0a1724062ed9043fe829fea454e15aa21",
+      "sha256": "ae799601d2c7b3ba8dd6f104c67d7ea447dfb62f6e18227cd268878ad31b84c7",
+      "mode": 420
+    },
+    "adapters/hosts/cursor.md": {
+      "sha256": "334e9215a71995cdf2a9fe9bc55785688e6ebf7bf1ee9fdcf4124d0bb8929605",
       "mode": 420
     },
     "adapters/hosts/orca.md": {
@@ -1948,7 +1952,7 @@
       "mode": 420
     },
     "adapters/mobile.md": {
-      "sha256": "b32c767b8131c193e0e542a596877bc18993da6f34a233f0570524e20631649c",
+      "sha256": "29e939e30177d5734e5e64718bacabcd2eb7b6698f005b208ee9622c5f5f5825",
       "mode": 420
     },
     "adapters/native-execution.md": {
@@ -1964,7 +1968,7 @@
       "mode": 420
     },
     "adapters/runtime/activity.py": {
-      "sha256": "4d332478a35dbdcb2dee15f9ce92ceba62abaea99ce56429cf881445ce2c9cfa",
+      "sha256": "4dd88c1b66280dc2277ea8dd5923d6f3e1302d702f08ca36315d633b85c69f83",
       "mode": 420
     },
     "adapters/runtime/json_input.py": {
@@ -1972,11 +1976,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "400b9216ef4eea2a886633d640e63e187b7101bda834aa39a71d31944d5b3532",
+      "sha256": "e42ab1e127d0bd53bef5088598c7f6bddbcf1bb975ced8fed09be70aec007600",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "07f70364c72247c853bbfe2737ee903069b971e247434fdd0965ac56cecf4960",
+      "sha256": "ca201d6e266f438c89e0408eef259b3959a6e825b7ffa8b76a5f5e836c1cdd7b",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -2696,7 +2700,7 @@
       "mode": 420
     },
     "skills/recall/SKILL.md": {
-      "sha256": "ef8935dbb0a6884e06e48cc9f445ef04ed5505b1bbb3a2569869a3fe6a536b4c",
+      "sha256": "eb9dd100db97ae9560abcf9f0e5cb2a60e161ad6d56129baac65a1aba703a66c",
       "mode": 420
     },
     "skills/recall/agents/openai.yaml": {
@@ -2704,7 +2708,7 @@
       "mode": 420
     },
     "skills/reflect/SKILL.md": {
-      "sha256": "658ed36048ccf27fd02ffea6ca5e36ded3061fed1503b5460fdb078704289429",
+      "sha256": "8d741bb95066f69fb411b8426535f9762eccea66f890537581aabdbda2c12caf",
       "mode": 420
     },
     "skills/reflect/agents/openai.yaml": {
@@ -2736,7 +2740,7 @@
       "mode": 420
     },
     "skills/setup-hstack/references/cursor-models.md": {
-      "sha256": "83d31b1b162cd32f1c84d116a47f8931162679c004dbe3df38db0a0fe80e0ea0",
+      "sha256": "8e520d757b691c9b77be50052582371ef325dbfdab710168502e4a9e0aa1d3a6",
       "mode": 420
     },
     "skills/sharpen/SKILL.md": {

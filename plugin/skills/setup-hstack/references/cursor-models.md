@@ -7,15 +7,18 @@ If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the l
 
 ## Free plan
 
-On Cursor's free plan the IDE exposes no per-model choice to the agent tool, so
-the detected model set is empty and every role stays on `inherit-parent`. Write
+Per Cursor's loader; not observed in the IDE: on Cursor's free plan the IDE
+exposes no per-model choice to the agent tool, so
+the detected model set is empty and every role stays on `inherit-parent`. P1
+found `model` stripped for plugin agents. Write
 the role lines with `inherit-parent` as the only alternative, keeping the
 budget's effort on each line, and say that the free plan offers no model
 choice.
 
 ## Paid plan
 
-On a paid plan the IDE exposes model ids the agent tool accepts. Detect them
+Per Cursor's loader; not observed in the IDE: on a paid plan the IDE exposes
+model ids the agent tool accepts. Detect them
 from the agent tool's own schema in the session, the same way step 1 detects
 them in Claude Code, and write each role's first alternative as the detected
 id that matches its tier, followed by its effort. Keep the Claude and Codex

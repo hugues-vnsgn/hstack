@@ -17,8 +17,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "571635456034ac994641e3445f29dc01e26f776e917b5fa019589648906cea02",
       "disposition": "replaced",
-      "reason": "P2 fix round 4 links mobile applicability in this sentence, because the phase section no longer carries \"Apply [mobile applicability](mobile.md#applicability) before selecting a route.\" P2 shortens the authority clause to the phases the adapters still govern, which keeps the initial read set inside the cap.",
-      "replacement": "Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates and stop rules."
+      "reason": "Shorten equivalent authority and phase guidance to keep the initial read set small. Preserve consumer PR policy and every phase, gate, cardinality, fallback and stop constraint. P2 fix round 4 links mobile applicability in this sentence, because the phase section no longer carries \"Apply [mobile applicability](mobile.md#applicability) before selecting a route.\"",
+      "replacement": "Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.\nFollow the consumer project's PR policy. Adapters translate host mechanics and\nlimit authority; the canonical skill owns workflow\nphases, mandatory gates, panel cardinality, fallback and stop rules. A constraint\ncan block execution. It cannot turn an omitted gate into success."
     },
     {
       "paragraph": 2,
@@ -32,8 +32,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "d737eb8fd6e9b2d696582714e83ee6c1bb13a9b63da1a4a9f34bbbe976351a98",
       "disposition": "replaced",
-      "reason": "The pstack 0.15.25 merge adds upstream poteto-help as hugues-help, a third skill alias that the inherited-name translation must list. P2 joins the two sentences with a semicolon so the section loses a word without dropping a rule.",
-      "replacement": "Native discovery uses each canonical `skills/<name>/SKILL.md`; there is no\ncustom runtime registry or host loader. `poteto-mode` maps to `hugues-mode`,\n`poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,\n`setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other\npublic names are unchanged."
+      "reason": "The pstack 0.15.25 merge adds upstream poteto-help as hugues-help, a third skill alias that the inherited-name translation must list.",
+      "replacement": "Native discovery uses each canonical `skills/<name>/SKILL.md`. There is no\ncustom runtime registry or custom host loader. `poteto-mode` maps to `hugues-mode`,\n`poteto-agent` to `hugues-agent`, `Comment Sicko` to `hugues-comment-sicko`,\n`setup-pstack` to `setup-hstack` and `poteto-help` to `hugues-help`; other\npublic names are unchanged."
     },
     {
       "paragraph": 4,
@@ -68,8 +68,8 @@
       "destination": "plugin/adapters/host.md",
       "sha256": "042531ad133d16a1fdd8709a346d40c2c320dadfdc2ace3095c994aee1e222dc",
       "disposition": "replaced",
-      "replacement": "If user invocation is required, give the exact native command and wait.\nPrinted commands do not prove native invocation.\nAn available file or a successful binding check establishes no skill permission.\nRead owned references only as the phase needs. Base relative paths on the owning file or mode root, never consumer cwd, and never traverse links or invoke linked skills eagerly.",
-      "reason": "F4 shortens equivalent user-handoff, command-evidence and owned-reference guidance to fit the checklist translation without changing those rules. P2 names the link rule \"never traverse links or invoke linked skills eagerly\" because the host no longer follows navigation links recursively."
+      "replacement": "If user invocation is required, give the exact native command and wait.\nPrinted commands do not prove native invocation.\nAn available file or a successful binding check establishes no skill permission.\nRead owned references only as the phase needs. Base relative paths on the owning file or mode root, never consumer cwd. Never traverse links recursively or\ninvoke linked skills eagerly.",
+      "reason": "Keep the same conditional user handoff, command-evidence limit, file-permission boundary and phase-scoped resource rules in fewer words so the Codex mechanism fits the existing context limits. F4 shortens equivalent user-handoff, command-evidence and owned-reference guidance to fit the checklist translation without changing those rules."
     },
     {
       "paragraph": 4,
@@ -81,7 +81,7 @@
       "sha256": "0d6cb1863a1d6b3e8b8c0f261e9eed602a7c4a312b5d60b0113fd7e473566aee",
       "disposition": "replaced",
       "reason": "A blanket override of inherited raw sibling-read wording is false for bundled user-only skills, which keep that wording; PR 1 fix round 1 scoped the override to consumer and external skills, and round 3 scopes it to the native-only skills and points back at the one statement of the user-only read instead of restating it.",
-      "replacement": "For native-only skills, this rule overrides inherited sibling reads; user-only skills keep their scoped read above."
+      "replacement": "For native-only skills, this rule overrides inherited sibling reads; bundled\nuser-only skills keep their scoped read above."
     },
     {
       "paragraph": 4,
@@ -195,10 +195,7 @@
         0,
         253
       ],
-      "sha256": "a77de484eb1aadeaf549afa112042bf3889ddcd186f9942c5439e6bd2b792122",
-      "disposition": "replaced",
-      "reason": "The prohibition is absolute: no assignment is ever delegated recursively, so the rule reads \"never\" rather than \"do not\".",
-      "replacement": "Translate Cursor Task to the current host's native agent tool. Each new work\nround gets a fresh worker. Preserve the core's narrow resume exceptions and the\nscoped-worker direct implementation exception; never recursively delegate the\nsame assignment."
+      "sha256": "a77de484eb1aadeaf549afa112042bf3889ddcd186f9942c5439e6bd2b792122"
     },
     {
       "paragraph": 10,
@@ -328,8 +325,8 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "bc36947983ce53a884c49c10a9d6f2dc5f2d6ffae1202ed721f953c38355eaeb",
       "disposition": "replaced",
-      "reason": "P2 shortens the last phrase of the coverage-gap rule to \"explicit gaps\", which says the same thing in fewer words. The regression worker's narrow reading list and the freshness rule are unchanged.",
-      "replacement": " Inline briefs remain with their owner.\nGeneral-purpose native workers receive absolute source,\nadapter and fixture paths, scope and success predicate, without a mode persona.\nThe mobile regression worker is a general-purpose native worker without a mode persona.\nIts reading list is limited by [mobile workflows](mobile-workflows.md).\nA worker spawned with the coordinator's turns, `fork_turns: \"all\"` or the equivalent,\nis not fresh for either the regression or production role.\nAgent mode preserves available tool access; it never grants permission to write\nor query external sources. Missing authorized tools remain explicit gaps."
+      "reason": "Issue #110 adds the narrow general-purpose regression worker and states that inherited coordinator turns do not satisfy regression or production freshness.",
+      "replacement": " Inline briefs remain with their owner.\nGeneral-purpose native workers receive absolute source,\nadapter and fixture paths, scope and success predicate, without a mode persona.\nThe mobile regression worker is a general-purpose native worker without a mode persona.\nIts reading list is limited by [mobile workflows](mobile-workflows.md).\nA worker spawned with the coordinator's turns, `fork_turns: \"all\"` or the equivalent,\nis not fresh for either the regression or production role.\nAgent mode preserves available tool access; it never grants permission to write\nor query external sources. Missing authorized tools remain explicit coverage gaps."
     },
     {
       "paragraph": 12,
@@ -349,8 +346,8 @@
       "destination": "plugin/adapters/host-workers.md",
       "sha256": "e0466a1eff2e7767c9c4af77dd5f6e0c5b42c72cd99469fdf3ee0a0a700afce7",
       "disposition": "replaced",
-      "reason": "P2 shortens the last word of the blocked-seat rule to \"complete\", which says the same thing in one word less. The rule, the Workers line and the capability limit are unchanged.",
-      "replacement": "Enumerate models actually exposed by the native tool, using only confirmed capabilities.\nThe Workers line records the requested and actual family/model/effort. A seat needs a\nfamily only when its workflow requires one and no alternative on its line is accepted:\nmark the seat blocked and ask for an explicit configuration choice. Never invent\nan available model or label a blocked seat complete."
+      "reason": "The P2 fix round scopes the blocked-seat rule. A role value with alternatives already falls back to inherit-parent at the first alternative's effort, so only a seat that needs a family the host cannot supply is blocked. Everything else in the paragraph is unchanged. P2 fix round 3 states the model precedence once: setup-hstack's ` or ` rule picks first, and a skill's own fallback to its default applies only after it, to a value the tool rejected. A seat needs a family only when its workflow requires one and no alternative on its line is accepted, so a seat with an accepted alternative is never blocked. The Workers line records the requested and actual family, model and effort. P2 fix round 4 drops \"Do not update or publish a default-fix PR without publication authority.\" host.md's Tools section already says user scope governs pushes and PR publication, and that no translation grants new authority.",
+      "replacement": "Enumerate models actually exposed by the native tool, using only confirmed capabilities.\nThe Workers line records the requested and actual family/model/effort. A seat needs a\nfamily only when its workflow requires one and no alternative on its line is accepted:\nmark the seat blocked and ask for an explicit configuration choice. Never invent\nan available model or label a blocked seat completed."
     },
     {
       "paragraph": 15,

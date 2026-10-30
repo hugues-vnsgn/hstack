@@ -4,8 +4,12 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+import seal_payload
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = ROOT / 'scripts/check-plugin.sh'
@@ -213,6 +217,132 @@ class PackageChecks(unittest.TestCase):
 ''')
         result = self.run_check()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_plugin_description_must_not_be_empty(self):
+        for description in ['', '   ', None]:
+            with self.subTest(description=description):
+                self.manifest(lambda m: m.update(description=description))
+                self.assert_rejected('plugin: missing description')
+
+    def test_marketplace_entry_shape_failure_does_not_traceback(self):
+        file = self.repo / '.claude-plugin/marketplace.json'
+        data = json.loads(file.read_text())
+        data['plugins'] = []
+        file.write_text(json.dumps(data))
+        result = self.run_check()
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+        self.assertIn('marketplace: expected one plugin entry', result.stderr)
+
+
+class CursorManifestChecks(unittest.TestCase):
+    """The Cursor manifests have their own rules, and each one needs a
+    negative test, because a rule nothing exercises is a rule that rots."""
+
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory(prefix='hstack-cursor-manifest-')
+        self.addCleanup(temp.cleanup)
+        self.repo = Path(temp.name) / 'package'
+        shutil.copytree(ROOT, self.repo, ignore=shutil.ignore_patterns('.git', '__pycache__', 'planning'))
+
+    def run_check(self):
+        return subprocess.run([sys.executable, str(ROOT / 'scripts/check_plugin.py'), str(self.repo)],
+                              text=True, capture_output=True)
+
+    def assert_rejected(self, diagnostic):
+        result = self.run_check()
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn(diagnostic, result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+
+    def write(self, relative, data):
+        file = self.repo / relative
+        file.write_text(json.dumps(data, indent=2))
+        return data
+
+    def cursor_market(self, change):
+        file = self.repo / '.cursor-plugin/marketplace.json'
+        data = json.loads(file.read_text())
+        change(data)
+        self.write('.cursor-plugin/marketplace.json', data)
+
+    def cursor_plugin(self, change):
+        file = self.repo / 'plugin/.cursor-plugin/plugin.json'
+        data = json.loads(file.read_text())
+        change(data)
+        self.write('plugin/.cursor-plugin/plugin.json', data)
+
+    def test_the_current_cursor_manifests_pass(self):
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_a_cursor_name_mismatch_is_rejected(self):
+        self.cursor_plugin(lambda m: m.update(name='other'))
+        self.assert_rejected('cursor plugin: name differs from the Claude manifest')
+
+    def test_a_cursor_version_mismatch_is_rejected(self):
+        self.cursor_plugin(lambda m: m.update(version='9.9.9'))
+        self.assert_rejected('cursor plugin: version differs from the Claude manifest')
+
+    def test_a_cursor_description_mismatch_is_rejected(self):
+        self.cursor_plugin(lambda m: m.update(description='another description'))
+        self.assert_rejected('cursor plugin: description differs from the Claude manifest')
+
+    def test_a_cursor_license_mismatch_is_rejected(self):
+        self.cursor_plugin(lambda m: m.update(license='Apache-2.0'))
+        self.assert_rejected('cursor plugin: license differs from the Claude manifest')
+
+    def test_a_cursor_keyword_mismatch_is_rejected(self):
+        self.cursor_plugin(lambda m: m.update(keywords=['mobile']))
+        self.assert_rejected('cursor plugin: keywords differ from the Claude manifest')
+
+    def test_an_invalid_cursor_version_string_is_rejected(self):
+        self.cursor_plugin(lambda m: m.update(version='not-a-version'))
+        self.assert_rejected('cursor plugin: invalid version')
+
+    def test_a_cursor_marketplace_metadata_version_mismatch_is_rejected(self):
+        self.cursor_market(lambda m: m['metadata'].update(version='9.9.9'))
+        self.assert_rejected('cursor marketplace: metadata version differs from the plugin manifest')
+
+    def test_an_invalid_cursor_marketplace_metadata_version_is_rejected(self):
+        self.cursor_market(lambda m: m['metadata'].update(version='v1'))
+        self.assert_rejected('cursor marketplace: invalid metadata version')
+
+    def test_a_missing_cursor_marketplace_description_is_rejected(self):
+        self.cursor_market(lambda m: m['metadata'].pop('description'))
+        self.assert_rejected('cursor marketplace: missing metadata description')
+
+    def test_a_cursor_marketplace_owner_mismatch_is_rejected(self):
+        self.cursor_market(lambda m: m.update(owner={'name': 'someone-else'}))
+        self.assert_rejected('cursor marketplace: owner differs from the Claude marketplace')
+
+    def test_a_cursor_marketplace_source_outside_the_repository_is_rejected(self):
+        self.cursor_market(lambda m: m['plugins'][0].update(source='../outside'))
+        self.assert_rejected('cursor marketplace:')
+
+    def test_a_cursor_marketplace_entry_version_mismatch_is_rejected(self):
+        self.cursor_market(lambda m: m['plugins'][0].update(version='9.9.9'))
+        self.assert_rejected('cursor marketplace entry 0: version differs from the plugin manifest')
+
+    def test_a_cursor_marketplace_entry_shape_failure_does_not_traceback(self):
+        self.cursor_market(lambda m: m.update(plugins=[]))
+        result = self.run_check()
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+        self.assertIn('cursor marketplace: expected one plugin entry', result.stderr)
+
+    def test_the_cursor_models_reference_is_present(self):
+        # The setup skill points at the Cursor model reference. A missing file
+        # would break the setup step on Cursor only.
+        reference = self.repo / 'plugin/skills/setup-hstack/references/cursor-models.md'
+        self.assertTrue(reference.is_file())
+        setup = (self.repo / 'plugin/skills/setup-hstack/SKILL.md').read_text()
+        self.assertIn('cursor-models.md', setup)
+        # The checker's link rule is what catches a missing reference. Removing
+        # the file and resealing the payload makes the link the only defect.
+        reference.unlink()
+        seal_payload.seal(self.repo, accept=['plugin/skills/setup-hstack/references/cursor-models.md'])
+        self.assert_rejected('broken local link')
 
 
 if __name__ == '__main__':

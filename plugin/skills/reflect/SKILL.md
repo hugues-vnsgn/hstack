@@ -54,7 +54,7 @@ Present the synthesizer's full Accepted / Rejected / Backlog output and wait for
 
 File each Backlog item to your team's devex or backlog tracker without waiting. Only the Accepted list waits for approval.
 
-Never edit a skill under `plugins/cache/` (`~/.claude/plugins/cache/`, `~/.codex/plugins/cache/` or `~/.cursor/plugins/local/`). Before approval, show its destination: `.claude/skills/<skill>/` or `~/.claude/skills/<skill>/` in Claude Code, `.agents/skills/<skill>/` or `~/.agents/skills/<skill>/` in Codex, and `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/` in Cursor. After approval, copy the skill folder there and edit the copy. Never open a PR or push.
+Never edit a skill under `plugins/cache/` (`~/.claude/plugins/cache/` or `~/.codex/plugins/cache/`). Before approval, show its destination: `.claude/skills/<skill>/` or `~/.claude/skills/<skill>/` in Claude Code, `.agents/skills/<skill>/` or `~/.agents/skills/<skill>/` in Codex. After approval, copy the skill folder there and edit the copy. Never open a PR or push.
 
 Follow each approved row's Routing exactly:
 

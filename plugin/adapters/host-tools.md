@@ -191,11 +191,15 @@ unknown metadata, including unreviewed usage structures, holds. Other formats ho
 
 A Cursor record carries no working directory and no record-level timestamp, and
 its transcript may carry no tool results. A Cursor operation therefore resolves
-only an absolute path, and a relative path holds coverage. Recency comes from the
+only an absolute path, and a relative path holds coverage. A Cursor operation
+that names no absolute path at all, such as a shell command with no operand or
+a search with no path, holds the same way. Recency comes from the
 transcript file's modification time, so a Cursor source reports activity by file
-mtime and not by when the operation ran. A Cursor tool the adapter has not
-reviewed holds coverage. Treat those limits as a coverage gap in the report and
-never as proof that nothing happened.
+mtime and not by when the operation ran. A Cursor source reports its limits in
+the scan output, and a source the owner did not assert as complete is partial.
+A Cursor tool the adapter has not reviewed holds coverage. The observed tools
+that touch no file are read as reviewed and contribute no path. Treat those
+limits as a coverage gap in the report and never as proof that nothing happened.
 The text matcher checks literal paths, current-user `~/` aliases, and up to
 three percent-decoding passes (including file URLs). Other-user home aliases and
 unresolved deeper encodings hold. Word characters and hyphens continue a filename;

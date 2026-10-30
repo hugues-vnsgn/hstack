@@ -10,9 +10,20 @@ import subprocess
 from urllib.parse import unquote
 
 PROVIDERS = {'claude', 'codex', 'cursor'}
+# A provider the owner named as deliberately out of scope. Its transcripts are
+# never read and it contributes no evidence. Any other provider this reader
+# does not support is an error, not a silent skip.
+IGNORED_PROVIDERS = {'omp'}
 PR_STATES = {'OPEN', 'CLOSED', 'MERGED', 'NONE'}
-PATH_KEYS = {'cwd', 'workdir', 'file_path', 'path', 'absolute_path', 'directory',
-             'working_directory'}
+PATH_KEYS = {'cwd', 'workdir', 'file_path', 'path', 'absolute_path', 'directory'}
+# The Cursor reader also resolves `working_directory`, which only Cursor's own
+# tool inputs carry. The shared key set stays as Claude Code and Codex have it,
+# so their hint and context paths do not change.
+CURSOR_PATH_KEYS = PATH_KEYS | {'working_directory'}
+# Observed Cursor tools that touch no file. Their calls are reviewed shapes, so
+# they contribute no path and hold no coverage.
+CURSOR_INERT_TOOLS = {'GetDynamicTools', 'CallDynamicTool', 'AskQuestion',
+                      'ask_question', 'AwaitShell', 'UpdateCurrentStep'}
 RECENT_SECONDS = 4 * 86400
 SIMPLE_COMMANDS = {'cat', 'ls', 'head', 'tail', 'wc', 'stat', 'rg', 'grep',
                    'git', 'pwd', 'readlink', 'realpath'}
@@ -315,16 +326,24 @@ def cursor_operation_paths(block):
     name = name.rsplit('.', 1)[-1]
     cwd = None
     if 'working_directory' in args:
+        if name != 'Shell':
+            # Only a Shell operation carries a working directory in the observed
+            # Cursor transcripts.
+            raise ValueError('unknown native tool argument fields')
         directory = args['working_directory']
         if not isinstance(directory, str) or not directory.strip():
             raise ValueError('invalid operation working directory')
         if not Path(directory).is_absolute():
             raise ValueError('relative working directory lacks parent context')
         cwd = str(Path(directory).resolve())
+    if name in CURSOR_INERT_TOOLS:
+        # An observed Cursor tool that touches no file. Its call is a reviewed
+        # shape, so it contributes no path and holds no coverage.
+        return
     if name == 'Shell':
         allowed = {'command', 'description', 'working_directory', 'block_until_ms',
-                   'required_permissions', 'request_smart_mode_approval',
-                   'smart_mode_block_reason'}
+                   'timeout', 'required_permissions', 'request_permissions',
+                   'request_smart_mode_approval', 'smart_mode_block_reason'}
         if set(args) - allowed:
             raise ValueError('unknown native tool argument fields')
         command = args.get('command')
@@ -333,7 +352,7 @@ def cursor_operation_paths(block):
         paths = shell_paths(command)
     elif name in {'Read', 'Write', 'Edit', 'StrReplace'}:
         allowed = {'path', 'contents', 'old_string', 'new_string', 'offset',
-                   'limit', 'replace_all', 'working_directory'}
+                   'limit', 'replace_all'}
         if set(args) - allowed:
             raise ValueError('unknown native tool argument fields')
         path = args.get('path')
@@ -361,6 +380,12 @@ def cursor_operation_paths(block):
         raise ValueError('unsupported native operation')
     if cwd:
         yield cwd
+    if not paths:
+        # The operation names no absolute path: a shell command with no operand,
+        # a search with no path, or a glob with no directory. Cursor records no
+        # working directory, so the operation's scope cannot be resolved and the
+        # coverage it would have supplied is held rather than guessed.
+        raise ValueError('native operation lacks absolute working-directory/path context')
     for path in paths:
         if not Path(path).is_absolute():
             if not cwd:
@@ -392,12 +417,21 @@ def mentions_worktree(value, worktree, decode_arguments=True):
     for text in text_strings(value, decode_arguments):
         representations = [text]
         for _ in range(3):
-            decoded = unquote(representations[-1], errors='strict')
+            try:
+                decoded = unquote(representations[-1], errors='strict')
+            except UnicodeDecodeError:
+                # The text carries a percent sign that is not valid encoding, as
+                # a git date format does (`--format='%h %ad %s'`). The raw text
+                # is still searched, and an undecodable one cannot hide a path.
+                break
             if decoded == representations[-1]:
                 break
             representations.append(decoded)
-        if unquote(representations[-1], errors='strict') != representations[-1]:
-            raise ValueError('path encoding exceeds supported depth')
+        try:
+            if unquote(representations[-1], errors='strict') != representations[-1]:
+                raise ValueError('path encoding exceeds supported depth')
+        except UnicodeDecodeError:
+            pass
         for representation in representations:
             if re.search(r'~[^/\s]+/', representation):
                 raise ValueError('other-user home path cannot be resolved')
@@ -525,21 +559,20 @@ def cursor_record(row):
     Cursor's own store writes a `{"role", "message"}` envelope whose content
     blocks are `text` or `tool_use`, and closes a turn with a `turn_ended`
     record. Observed records carry no `cwd` and no record-level timestamp, so
-    recency falls back to file mtime and only absolute paths resolve.
+    recency falls back to file mtime and only absolute paths resolve. The
+    observed turn marker is `{"type": "turn_ended", "status": "success"}`: no
+    observed record carries an `error` field or a failing status, so neither is
+    accepted as a reviewed shape.
     """
-    if set(row) - {'role', 'message', 'type', 'status', 'error'}:
+    if set(row) - {'role', 'message', 'type', 'status'}:
         return False
     if 'type' in row:
-        # A turn marker. Only the observed two shapes are accepted.
+        # A turn marker. Only the observed shape is accepted.
         if row.get('type') != 'turn_ended':
             return False
-        if set(row) - {'type', 'status', 'error'}:
+        if set(row) != {'type', 'status'}:
             return False
-        if row.get('status') not in {'success', 'error'}:
-            return False
-        if 'error' in row and not isinstance(row['error'], str):
-            return False
-        return True
+        return row.get('status') == 'success'
     if set(row) != {'role', 'message'}:
         return False
     if row.get('role') not in {'user', 'assistant'}:
@@ -683,7 +716,10 @@ def selected_files(source):
         raise ValueError('source entry must be an object')
     if set(source) - {'provider', 'root', 'files', 'authorization', 'coverage'}:
         raise ValueError('unknown source fields')
-    if source.get('provider') not in PROVIDERS or not isinstance(source.get('authorization'), str) or not source['authorization'].strip():
+    provider = source.get('provider')
+    if provider not in PROVIDERS:
+        raise ValueError('unsupported transcript provider: ' + repr(provider))
+    if not isinstance(source.get('authorization'), str) or not source['authorization'].strip():
         raise ValueError('provider and explicit source authorization required')
     if ('root' in source) == ('files' in source):
         raise ValueError('select one source root or explicit file list')
@@ -739,15 +775,25 @@ def scan(manifest, worktrees, now):
         report = {'provider': source.get('provider') if isinstance(source, dict) else None,
                   'coverage': 'unavailable', 'files_scanned': 0}
         reports.append(report)
-        if isinstance(source, dict) and isinstance(source.get('provider'), str) and source['provider'] not in PROVIDERS:
-            # An unsupported host contributes no evidence and no coverage, and
-            # its transcripts are never read.
+        if isinstance(source, dict) and source.get('provider') in IGNORED_PROVIDERS:
+            # An explicitly ignored host contributes no evidence and no coverage,
+            # and its transcripts are never read. Any other unknown provider
+            # reaches the source check below and reports its error.
             report.update(coverage='ignored', reason='unsupported host; contributes no evidence')
             continue
         try:
             files = selected_files(source)
             supported_sources += 1
             unavailable = False
+            cursor_source = source['provider'] == 'cursor'
+            limited = False
+            if cursor_source:
+                # A Cursor source can never claim complete coverage: the records
+                # carry no working directory and no tool results, so the reader
+                # cannot see what a tool touched or returned.
+                report['limits'] = 'cursor: no cwd, no tool results, recency is file mtime'
+                limited = True
+            mtime_only = False
             for path in files:
                 try:
                     body, mtime = read_selected(path)
@@ -779,10 +825,13 @@ def scan(manifest, worktrees, now):
                                 normalized.extend(cursor_operation_paths(block))
                         else:
                             normalized = list(operation_paths(row, next_cwd))
-                        for location in context_paths(row):
+                        keys = CURSOR_PATH_KEYS if cursor_source else PATH_KEYS
+                        for location in context_paths(row, keys):
                             if Path(location).is_absolute():
                                 normalized.append(str(Path(location).resolve()))
                         cwd = next_cwd
+                        if cursor_source and origin == 'file-mtime-conservative':
+                            mtime_only = True
                     except (ValueError, OSError, TypeError, KeyError, UnicodeError) as exc:
                         report['error'] = str(exc)
                         unavailable = True
@@ -797,6 +846,8 @@ def scan(manifest, worktrees, now):
                             normalized = []
                         cwd = None  # Never inherit uncertain context across an opaque record.
                         ts, origin, basis = mtime, 'file-mtime-unparsed-conservative', 'unparsed-path-hint'
+                        if cursor_source:
+                            mtime_only = True
                     for wt in worktrees:
                         hit = (mentions_worktree(row, wt, basis == 'validated-record') or mentions_worktree(normalized, wt) or
                                any(contains_worktree(Path(p), wt) for p in normalized) or
@@ -807,10 +858,21 @@ def scan(manifest, worktrees, now):
                                                      'recent': now - ts <= RECENT_SECONDS, 'evidence_basis': basis})
                 report['files_scanned'] += 1
             if not unavailable:
+                # The source coverage reports whether the reader could read the
+                # source without holding, and takes the caller's own assertion.
+                # A Cursor source that the caller did not assert as complete is
+                # partial, because its recency is file mtime only.
                 report['coverage'] = 'complete' if source.get('coverage') == 'complete' else 'partial'
+                if cursor_source:
+                    # A Cursor record carries no working directory and no tool
+                    # results, so the reader cannot see what a tool touched or
+                    # returned. The scan's coverage never rises above partial
+                    # for a Cursor source, whatever the caller asserted.
+                    report['limits'] = 'cursor: no cwd, no tool results, recency is file mtime'
+                    limited = True
         except (ValueError, OSError, TypeError, KeyError, UnicodeError) as exc:
             report['error'] = str(exc)
-        complete = complete and report['coverage'] == 'complete'
+        complete = complete and report['coverage'] == 'complete' and not limited
     return activity, reports, complete and supported_sources > 0
 
 

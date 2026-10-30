@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **560 top-level unittest cases**. One is a driver that
+The current candidate collects **584 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -8,10 +8,10 @@ native workflow proof. Subtests are not added to case totals.
 | Group | Collected cases | Evidence |
 |---|---:|---|
 | Historical 0.1.0 contracts | 131 | Unchanged SHA256-bound release archive |
-| Current checker, historical 0.1.0 fixtures | 27 | Explicit historical validation mode and package mutations |
+| Current checker, historical 0.1.0 fixtures | 44 | Explicit historical validation mode, package mutations, and the Cursor manifest rules, each with its own negative case |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
-| Current installed adapters and regressions | 123 | test_host_adapters (98), test_review_regressions (12), test_rereview_regressions (13) |
+| Current installed adapters and regressions | 130 | test_host_adapters (105), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled non-pstack Cursor skills (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,220 cases (379 `read-workflow`, 1,778 `translate-plan` and 63 in-plan cases) over all 63 bundled skills, the legacy aliases of the 58 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
@@ -19,11 +19,11 @@ native workflow proof. Subtests are not added to case totals.
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
-| Total collected | 560 | Current, mixed and historical scopes remain distinct |
+| Total collected | 584 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-560 Python cases. The opt-in CI workflow requires a provisioned native runner.
+584 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -454,7 +454,16 @@ checklist's three step-fidelity sentences went from `host.md` to the router's Pl
 section, which already carries them and is already asserted.
 
 The P2 fix round 5 host-detection hook adds eleven cases. The Cursor host work adds
-seven more in `test_host_adapters`, so 560 top-level cases collect.
+seven more in `test_host_adapters`, and the review-1 fix round adds sixteen more
+there and seventeen in `test_check_plugin`, so 583 top-level cases collect.
+The `test_host_adapters` additions cover the Cursor activity reader's honest
+coverage: a Cursor operation that names no absolute path holds, the observed
+tools that touch no file are inert, the observed Shell argument keys are
+accepted, an unknown provider is an error rather than a silent skip, the
+turn marker accepts only the observed shape, and two fixtures built from the
+owner's real chats, with every value replaced, read as reviewed records.
+The `test_check_plugin` additions give each Cursor manifest rule its own
+negative case, so a rule nothing exercised cannot rot unnoticed.
 `test_host_adapters.HostDetectionHook` reads the hook's manifest and script: one
 `SessionStart` command hook that resolves `${CLAUDE_PLUGIN_ROOT}` and runs the script
 directly, so the executable bit is load-bearing, the three Orca variables the script tests

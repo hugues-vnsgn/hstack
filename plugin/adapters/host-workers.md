@@ -4,7 +4,7 @@ Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORC
 
 Translate Cursor Task to the current host's native agent tool. Each new work
 round gets a fresh worker. Preserve the core's narrow resume exceptions and the
-scoped-worker direct implementation exception; never recursively delegate the
+scoped-worker direct implementation exception; do not recursively delegate the
 same assignment. Supply absolute paths
 to the public mode, plugin skills directory and the host adapter and applicable mobile adapter,
 the exact base/head, writable scope, success predicate and evidence destination.
@@ -17,8 +17,7 @@ that phase blocked.
 
 **`hugues-agent` by host.** Claude Code registers it as `hstack:hugues-agent`, the
 `subagent_type` to pass. Codex has no registered name observed here: the fresh worker
-takes the role instructions of `agents/hugues-agent.md`. Cursor registers the
-plugin's own agents, so `hugues-agent` is a subagent there.
+takes the role instructions of `agents/hugues-agent.md`. In Cursor, read [hosts/cursor.md](hosts/cursor.md) for the agent registration.
 
 For routed research/review calls, preserve the workflow's
 own prompt, readonly/agent-mode requirement, model, cardinality and handoff order.
@@ -39,7 +38,7 @@ Its reading list is limited by [mobile workflows](mobile-workflows.md).
 A worker spawned with the coordinator's turns, `fork_turns: "all"` or the equivalent,
 is not fresh for either the regression or production role.
 Agent mode preserves available tool access; it never grants permission to write
-or query external sources. Missing authorized tools remain explicit gaps.
+or query external sources. Missing authorized tools remain explicit coverage gaps.
 
 The no-comments Task role `Comment Sicko` uses the registered
 `hugues-comment-sicko` agent in Claude Code. Codex supplies that canonical specialized role through its supported fresh-worker mechanism before work. Do not substitute a generic worker without those rules. Preserve its exact
@@ -63,7 +62,7 @@ Enumerate models actually exposed by the native tool, using only confirmed capab
 The Workers line records the requested and actual family/model/effort. A seat needs a
 family only when its workflow requires one and no alternative on its line is accepted:
 mark the seat blocked and ask for an explicit configuration choice. Never invent
-an available model or label a blocked seat complete.
+an available model or label a blocked seat completed.
 
 `setup-hstack` writes project-local `.hstack/models.md` in place of the Cursor global
 rule, only after the skill's confirmation and current filesystem authority. Read it
@@ -89,10 +88,7 @@ If a Cursor-only field has no row, drop it and say so. Never drop `subagent_type
 | `resume` | A new agent, the earlier result's text pasted whole into its brief; `SendMessage` in the cases `hugues-mode/SKILL.md` allows. | Same; its message tool is unobserved. |
 | `file_attachments` | The brief lists the paths. | Same. |
 
-In Cursor, `readonly: true` and `readonly: false` are native as written: a
-read-only worker keeps its file reads and makes no edit. A Cursor plugin agent
-runs in the foreground, so `run_in_background: true` has no native field there:
-dispatch it and wait in the same turn, and say it ran in the foreground.
+In Cursor, read [hosts/cursor.md](hosts/cursor.md) for the field meanings.
 
 ### Models
 
@@ -105,11 +101,10 @@ dispatch it and wait in the same turn, and say it ran in the foreground.
 
 **Defaults for every agent-tool call.** `run_in_background: true`, agent mode, file pointers instead of inlined context, and an explicit model and effort per role. The defaults are `inherit-parent xhigh` for code and `inherit-parent max` for prose and judgment, and `/setup-hstack` configures them.
 
-Code delegates tier by difficulty. The hardest changes go to your
-strongest judgment model (default `inherit-parent max`). Trivial edits go to your fast code model.
+Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) go to your strongest judgment model (default `inherit-parent max`), whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your fast code model.
 
-Per-role lines in `.hstack/models.md`, written by `/setup-hstack`, override these defaults and the model choices in the routed skills. A role with no line keeps its default; `inherit-parent` runs on the parent chat model (omit the agent tool's `model`). If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
+Per-role lines in `.hstack/models.md`, written by `/setup-hstack`, override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default; `inherit-parent` runs on the parent chat model (omit the agent tool's `model`). If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
 
-**Match the model to the job.** Before each spawn, start from the role's line or default and pick the reasoning level and speed the job needs. The `/setup-hstack` budget sets each role's starting level. Raise it one step, up to max, for the hardest or subtlest work; lower it one step for judgment and two or more for routine work. Use fast mode only when the job is urgent: CI or trunk is red, or a person is blocked now. Otherwise use standard speed. Fast mode is a speed option on the native agent tool; Claude Code's has none and Codex's is unobserved, so the worker runs at standard speed and the report says so. Verification stays on the `swarm workers` model and speed. Change only the effort level and the speed, and keep the family the role names, so a diverse panel stays diverse. If the family has no model at that level and speed, use its nearest one the tool exposes. A role on `auto` or `inherit-parent` stays on the parent model. If the native agent tool rejects the adjusted value, do not try another.
+**Match the model to the job.** Before each spawn, start from the role's line or default and pick the reasoning level and speed the job needs. The `/setup-hstack` budget sets each role's starting level, `xhigh` for code and `max` for prose and judgment by default. Raise it one step, up to max, for the hardest or subtlest work. Lower it one step for judgment and two or more steps for routine work. Use fast mode only when the job is urgent, meaning CI or trunk is red or a person is blocked on the result right now. Otherwise use standard speed. Fast mode is a speed option on the native agent tool; Claude Code's has none and Codex's is unobserved, so the worker runs at standard speed and the report says so. Verification is the exception and stays on the `swarm workers` model and speed (`inherit-parent xhigh` by default). Change only the effort level and the speed, and keep the family the role names, so a diverse panel stays diverse. If the family has no model at that level and speed, use its nearest one the native agent tool exposes. A role on `auto` or `inherit-parent` stays on the parent model. If the native agent tool rejects the adjusted value, do not try another adjusted value. Use the role's line or default and say so.
 
 **Role labels.** `setup-hstack` writes these labels and the router's playbooks read them. A code playbook's configured model comes from its line: `feature, refactoring`, `bug-fix`, `perf-issue` or `hillclimb`. The hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
