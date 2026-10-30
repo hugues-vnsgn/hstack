@@ -15,6 +15,27 @@ You are running in the Cursor IDE. Read this page before the first tool call, th
 | Allowed tools | The `Cursor` column of the [host.md](../host.md) tables. `readonly: true` and `readonly: false` are native as written: a read-only worker keeps its file reads and makes no edit. Per Cursor's loader, not observed in the IDE. Cursor registers the plugin's own agents, so `hugues-agent` is a subagent there. Per Cursor's loader, not observed in the IDE. `run_in_background: true` has no native field there. On Cursor's free plan the IDE exposes no per-model choice to the agent tool, so the detected model set is empty and every role stays on `inherit-parent`. Per Cursor's loader, not observed in the IDE: P1 found `model` stripped for plugin agents. On a paid plan the IDE exposes model ids the agent tool accepts; detect them from the agent tool's own schema in the session. Never write a Cursor model id the agent tool did not list. |
 | Skip line | Skipped in Cursor: <step>. <reason>. A free Cursor feature is native in Cursor. A feature that needs a paid Cursor plan keeps the skip line, and it is skipped on every host, including Cursor. The paid rows are Cursor Automations, Bugbot, and Cursor cloud agents with the Cursor SDK and T3 Code's Cursor provider; a step that needs the cloud agent itself is Cursor-only. A local worktree worker substitutes only where the core permits local execution. |
 
+### The Cursor-only features, one action each
+
+The free rows are native in Cursor, so they run with no skip line. A built-in
+PR tool uses the step's forge command, such as `gh pr create`, with no line. A
+"control skill" or "matching control skill" and its `cursor-team-kit`
+attributions use the bundled `control-cli` for a CLI or TUI and `control-ui`
+for a browser, Electron or web UI; on iOS or Android, the repo's installed
+simulator-driving skill, such as `test-ios` or `test-android`, through the
+native mechanism, else XCTest or UiAutomator through the native helper, and a
+missing driver stays an execution gap. Cursor's `/loop` is the native `/loop`
+in the current local session, never a cloud schedule for work that needs local
+devices, and between-turn scheduling stays an unsatisfied gap per #34 item 6.
+
+The paid rows skip with the line. Cursor Automations covers routines,
+`update_state` routine calls, `api2.cursor.sh/automations` webhooks, routine
+wakes and `SendToUser` secret requests. Bugbot covers a Bugbot review. Cursor
+cloud agents covers `environment: "cloud"`, the Cursor SDK and T3 Code's
+Cursor provider, where a step that needs the cloud agent itself is Cursor-only
+and a local worktree worker substitutes only where the core permits local
+execution. Per Cursor's loader; not observed in the IDE.
+
 ## Where a skill is edited in Cursor
 
 Never edit a skill under `plugins/cache/` (`~/.claude/plugins/cache/`,
@@ -24,6 +45,7 @@ Claude Code, `.agents/skills/<skill>/` or `~/.agents/skills/<skill>/` in Codex,
 and `.cursor/skills/<skill>/` or `~/.cursor/skills/<skill>/` in Cursor. After
 approval, copy the skill folder there and edit the copy. Never open a PR or
 push.
+
 ## One-source evidence
 
 Both halves of the one-source observation come from one lab session on 2026-10-30 with both sources present, observed in Cursor 3.27.22 with a third-party auth extension: that session loaded `hstack` from the local copy (`loadUserLocalPlugin`) and from `~/.claude/plugins/cache/hstack/hstack/0.5.6` (`loadClaudePlugin hstack@hstack`), and ran the `host-detect.sh` hook once per copy. Route A, loading from Claude Code's install, is expected, not proven: lane 1b has not passed yet. Stock Cursor is unobserved, and so is the free plan without the third-party auth extension.
