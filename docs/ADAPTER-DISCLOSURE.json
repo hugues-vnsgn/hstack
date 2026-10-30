@@ -6,7 +6,10 @@
       "paragraph": 0,
       "slice": null,
       "destination": "plugin/adapters/host.md",
-      "sha256": "d134f221705d8d1277806e659529441c622977b012ceccdcc3fcf6f91360ecee"
+      "sha256": "d134f221705d8d1277806e659529441c622977b012ceccdcc3fcf6f91360ecee",
+      "disposition": "replaced",
+      "reason": "Cursor became a native host, so the adapter title names it.",
+      "replacement": "# Claude Code, Codex and Cursor host adapter"
     },
     {
       "paragraph": 1,
@@ -96,7 +99,10 @@
       "paragraph": 5,
       "slice": null,
       "destination": "plugin/adapters/host-workflow-tools.md",
-      "sha256": "548ed366116bc182509a9a6aa888a11156928204e9ec45a09dcb876e37b0855e"
+      "sha256": "548ed366116bc182509a9a6aa888a11156928204e9ec45a09dcb876e37b0855e",
+      "disposition": "replaced",
+      "reason": "Cursor became a native host, so the sentence that named the supported hosts and told the reader to ignore Cursor transcripts now names Cursor as supported and states that each provider's sources are read only when the owner authorizes them, and that one provider's source is never coverage for another.",
+      "replacement": "For executable operands in planning and cleanup, use the installed\n[host tools](host-tools.md) and [entrypoint](host_tools.py). In multi-phase-plan,\nreplace the consumer-relative Node command with `plan-check`. Translate bundled\n`git show origin/main:pstack/...` reads in that plan and autopilot-full/stack to\n`read-workflow` using the program's saved installed-payload binding at every tick.\nConsumer-owned trunk reads stay on consumer Git. In worktree-cleanup step 1 use\n`worktree-audit` with explicit authorized native source inputs. Unknown activity\ncoverage holds candidates; the separate active/pinned-chat gate remains required.\nThe supported native hosts are Claude Code, Codex and Cursor. Each provider's\nsources are read only when the owner authorizes them, and one provider's source\nis never coverage for another.\nThese are mechanical operand translations, not new execution or deletion scope."
     },
     {
       "paragraph": 6,

@@ -740,6 +740,9 @@ class HuguesModeRouter(unittest.TestCase):
         host = (ROOT / 'plugin/adapters/host.md').read_text()
         section = check_core.section(host, 'Cursor-only features')
         rows = [line for line in section.splitlines() if line.startswith('| ')][1:]
+        # The cloud row moved out with the rest of the Cursor-specific prose, so
+        # the always-loaded table keeps only the rows every host reads. The
+        # Cursor-only rows live in the Cursor page.
         self.assertEqual(len(rows), 5)
         expected = [
             ('Cursor Automations',),
@@ -763,6 +766,20 @@ class HuguesModeRouter(unittest.TestCase):
         for row in rows:
             if row.startswith(('| Cursor Automations', '| A built-in PR tool')):
                 self.assertTrue(row.rstrip().endswith('| unobserved |'), row)
+        # The free-versus-paid rule and the cloud row live in the Cursor page,
+        # where a Cursor session reads them.
+        page = (ROOT / 'plugin/adapters/hosts/cursor.md').read_text()
+        for phrase in ['A free Cursor feature is native in Cursor.',
+                       'A feature that needs a paid Cursor plan keeps the skip line',
+                       'it is skipped on every host, including Cursor.',
+                       'Cursor cloud agents',
+                       'A local worktree worker substitutes only where the core permits local execution.']:
+            self.assertIn(phrase, page)
+        # Claude Code does not print a skip line for cloud agents: the workers
+        # adapter maps `environment: "cloud"` to an isolated worktree.
+        self.assertNotIn('Cursor cloud agents', section)
+        workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        self.assertIn('`isolation: "worktree"`, only where the core permits local execution.', workers)
         ui = (ROOT / 'plugin/skills/control-ui/SKILL.md').read_text()
         self.assertIn('may write to the server', ui)
         self.assertIn('get a yes from the user, or from the coordinator', ui)

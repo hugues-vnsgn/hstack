@@ -1,4 +1,4 @@
-# Claude Code and Codex host adapter
+# Claude Code, Codex and Cursor host adapter
 
 Read this file once per session, and again after compaction. A skill's "read the host contract" is that read. Apply this adapter and [mobile applicability](mobile.md#applicability) before the canonical workflow.
 Follow the consumer project's PR policy. Adapters translate host mechanics and
@@ -68,6 +68,8 @@ merges and releases. Hold actions without authority or capability. Continue inde
 ## Cursor-only features
 
 Keep pstack's playbook text. A step that needs a Cursor-only feature gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.` Never ask the user to choose, offer an alternative or retry. Independent steps continue; one that needs the skipped output holds, with a named placeholder. A skip line never checks a gate: a skipped mandatory gate holds the result.
+
+In Cursor, read [hosts/cursor.md](hosts/cursor.md) before the first tool call.
 
 | Cursor | Claude Code | Codex |
 |---|---|---|

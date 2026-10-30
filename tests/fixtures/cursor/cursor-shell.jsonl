@@ -1,0 +1,29 @@
+{"role": "user", "message": {"content": [{"type": "text", "text": "<redacted user text>"}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"type": "turn_ended", "status": "success"}
+{"role": "user", "message": {"content": [{"type": "text", "text": "<redacted user text>"}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "working_directory": "/redacted/workspace/file.txt"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "working_directory": "/redacted/workspace/file.txt"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "working_directory": "/redacted/workspace/file.txt"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "working_directory": "/redacted/workspace/file.txt"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "required_permissions": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "required_permissions": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "required_permissions": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "required_permissions": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "required_permissions": "<redacted>"}}]}}
+{"role": "assistant", "message": {"content": [{"type": "text", "text": "<redacted user text>"}, {"type": "tool_use", "name": "Shell", "input": {"command": "cat /redacted/workspace/file.txt", "description": "<redacted>", "working_directory": "/redacted/workspace/file.txt"}}]}}
+{"type": "turn_ended", "status": "success"}
+{"role": "user", "message": {"content": [{"type": "text", "text": "<redacted user text>"}]}}

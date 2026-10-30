@@ -62,6 +62,8 @@ The starting role values are the file shape shown in step 5 below. If `.hstack/m
 
 Every real slug written for the current host must be in the detected set. The other host's alternatives (Codex models when setup runs in Claude Code, Claude model IDs when it runs in Codex) cannot be confirmed here: keep them and list them as unverified. `inherit-parent` always passes. If a chosen real slug is not available, stop and ask again.
 
+In Cursor, read [Cursor model roles](references/cursor-models.md) first and follow it: detect the Cursor model ids from the agent tool's own schema in the session, and put the detected id first in each role's alternatives.
+
 ### 5. Write the file
 
 Write `.hstack/models.md` with a `# budget` line naming the chosen label and its target effort, and one line per role, using the role labels in [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels). Overwrite the whole file so re-runs stay idempotent. Setup writes only `.hstack/`; it never writes or deletes `.huguesstack/`. Shape:

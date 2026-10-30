@@ -71,8 +71,9 @@ replace the consumer-relative Node command with `plan-check`. Translate bundled
 Consumer-owned trunk reads stay on consumer Git. In worktree-cleanup step 1 use
 `worktree-audit` with explicit authorized native source inputs. Unknown activity
 coverage holds candidates; the separate active/pinned-chat gate remains required.
-The supported native hosts are Claude Code and Codex. Ignore Cursor transcript
-sources without reading them or counting them as supported-host coverage.
+The supported native hosts are Claude Code, Codex and Cursor. Each provider's
+sources are read only when the owner authorizes them, and one provider's source
+is never coverage for another.
 These are mechanical operand translations, not new execution or deletion scope.
 
 Before Bun helpers, read [helper setup](host-helper-setup.md) in full.

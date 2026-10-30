@@ -17,7 +17,7 @@ that phase blocked.
 
 **`hugues-agent` by host.** Claude Code registers it as `hstack:hugues-agent`, the
 `subagent_type` to pass. Codex has no registered name observed here: the fresh worker
-takes the role instructions of `agents/hugues-agent.md`.
+takes the role instructions of `agents/hugues-agent.md`. In Cursor, read [hosts/cursor.md](hosts/cursor.md) for the agent registration.
 
 For routed research/review calls, preserve the workflow's
 own prompt, readonly/agent-mode requirement, model, cardinality and handoff order.
@@ -87,6 +87,8 @@ If a Cursor-only field has no row, drop it and say so. Never drop `subagent_type
 | `run_in_background: true` | Pass it. | unobserved |
 | `resume` | A new agent, the earlier result's text pasted whole into its brief; `SendMessage` in the cases `hugues-mode/SKILL.md` allows. | Same; its message tool is unobserved. |
 | `file_attachments` | The brief lists the paths. | Same. |
+
+In Cursor, read [hosts/cursor.md](hosts/cursor.md) for the field meanings.
 
 ### Models
 

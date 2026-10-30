@@ -9,6 +9,7 @@ for custom locations and versions.
 |---|---|
 | Claude Code | `~/.claude/plugins/cache/hstack/hstack/<loaded-version>/skills/hugues-mode/scripts` |
 | Codex | `~/.codex/plugins/cache/hstack/hstack/<loaded-version>/skills/hugues-mode/scripts` |
+| Cursor | `~/.cursor/plugins/local/hstack/skills/hugues-mode/scripts` |
 
 For each newly installed copy, offer this one-time, owner-approved setup in a
 session that can write that directory. Expand `<plugin>` to the absolute loaded
