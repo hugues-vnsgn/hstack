@@ -331,25 +331,24 @@ class SyntheticActivity(unittest.TestCase):
         self.assertFalse(complete)
         self.assertEqual(reports[0]['coverage'], 'unavailable')
 
-    def test_cursor_relative_path_with_absolute_working_directory_resolves(self):
-        row = {'role': 'assistant',
-               'message': {'content': [{'type': 'tool_use', 'name': 'Shell',
-                                        'input': {'command': shlex.join(['cat', 'README.md']),
-                                                  'working_directory': str(self.wt)}}]}}
-        hits, reports, complete = self.scan('cursor', [row])
-        self.assertEqual(reports[0]['coverage'], 'complete')
-        self.assertFalse(complete)
-        self.assertTrue(hits[str(self.wt)])
-
-    def test_cursor_shell_command_resolves_absolute_paths(self):
-        row = {'role': 'assistant',
-               'message': {'content': [{'type': 'tool_use', 'name': 'Shell',
-                                        'input': {'command': shlex.join(['cat', str(self.wt / 'README.md')]),
-                                                  'working_directory': str(self.wt)}}]}}
-        hits, reports, complete = self.scan('cursor', [row])
-        self.assertEqual(reports[0]['coverage'], 'complete')
-        self.assertFalse(complete)
-        self.assertTrue(hits[str(self.wt)])
+    def test_a_cursor_shell_command_resolves_its_absolute_paths(self):
+        # A relative path resolves against the operation's working directory,
+        # and an absolute one resolves on its own. Both are seen, and neither
+        # holds the source's coverage.
+        cases = [
+            (shlex.join(['cat', 'README.md']), str(self.wt)),
+            (shlex.join(['cat', str(self.wt / 'README.md')]), str(self.wt)),
+        ]
+        for command, working_directory in cases:
+            with self.subTest(command=command):
+                row = {'role': 'assistant',
+                       'message': {'content': [{'type': 'tool_use', 'name': 'Shell',
+                                                'input': {'command': command,
+                                                          'working_directory': working_directory}}]}}
+                hits, reports, complete = self.scan('cursor', [row])
+                self.assertEqual(reports[0]['coverage'], 'complete')
+                self.assertFalse(complete)
+                self.assertTrue(hits[str(self.wt)])
 
     def test_cursor_unreviewed_record_shapes_hold(self):
         cases = [
