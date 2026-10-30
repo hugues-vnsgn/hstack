@@ -42,50 +42,58 @@ under normal permissions remains unobserved.
 
 ## Start with Cursor
 
-Cursor loads hStack from one source only. Remove pstack first, because 55 of
-hStack's 63 skill names are shared with pstack and Cursor registers both sets
-from two local plugin folders:
+Cursor loads hStack from one source only. Pick exactly one route. Either way,
+remove pstack first, because 55 of hStack's 63 skill names are shared with
+pstack:
 
 ```sh
 rm -rf "$HOME/.cursor/plugins/local/pstack"
 ```
 
-Then install hStack itself as a copy of this repository's `plugin/` folder
-(replace the absolute path):
+- **A. You already use hStack in Claude Code.** Install nothing in Cursor.
+  Cursor loads hStack from Claude Code's install, so both hosts stay on and
+  update together. Remove any `~/.cursor/plugins/local/hstack` copy:
 
-```sh
-src="/absolute/path/to/hstack/plugin"
-dst="$HOME/.cursor/plugins/local/hstack"
-rm -rf "$dst"
-mkdir -p "$dst"
-cp -R "$src"/. "$dst"/
-```
+  ```sh
+  rm -rf "$HOME/.cursor/plugins/local/hstack"
+  ```
 
-Copy rather than symlink. Cursor skips a symlink in that folder whose target
-resolves outside it, and this repository is outside it.
+  Reload the window. Expected: the `/` list shows hStack's skills once, loaded
+  from the Claude plugin cache. Route A is expected until lane 1b proves it;
+  stock Cursor is not observed.
 
-Reload the window, then confirm under **Customize → Plugins** that hStack is
-enabled and its components are listed. Type `/hugues-help` in the composer to
-confirm the router answers.
+- **B. You don't use Claude Code.** Install hStack as a copy of this
+  repository's `plugin/` folder (replace the absolute path):
 
-Do not enable hStack in Claude Code at the same time. Cursor loads the Claude
-plugin cache as well as `~/.cursor/plugins/local/`, and it de-duplicates
-within one plugin rather than across plugins, so every shared skill name
-registers twice. Observed in Cursor's own plugin log on 2026-10-30: one
-session loaded `hstack` from both `~/.cursor/plugins/local/hstack` and
-`~/.claude/plugins/cache/hstack/hstack/0.5.6`, and ran the `host-detect.sh`
-hook once per copy.
+  ```sh
+  src="/absolute/path/to/hstack/plugin"
+  dst="$HOME/.cursor/plugins/local/hstack"
+  rm -rf "$dst"
+  mkdir -p "$dst"
+  cp -R "$src"/. "$dst"/
+  ```
 
-To keep exactly one source, disable hStack in Claude Code while Cursor holds
-the local copy. Cursor reads the same `enabledPlugins` map that Claude Code
-does, so one edit turns the plugin off for both:
+  Copy rather than symlink. Cursor skips a symlink in that folder whose target
+  resolves outside it, and this repository is outside it.
 
-```sh
-# In ~/.claude/settings.json, set "hstack@hstack": false.
-```
+  Reload the window, then confirm under **Customize → Plugins** that hStack is
+  enabled and its components are listed. Type `/hugues-help` in the composer
+  to confirm the router answers.
 
-Re-enable it before the Claude Code and Codex regression lane, which needs
-hStack to load in Claude Code.
+Why one source only: Cursor loads the Claude plugin cache as well as
+`~/.cursor/plugins/local/`, and it de-duplicates within one plugin rather than
+across plugins, so two sources register every shared skill name twice. Both
+halves of that observation come from one lab session on 2026-10-30 with both
+sources present, observed in Cursor 3.27.22 with a third-party auth extension:
+that session loaded `hstack` from `~/.cursor/plugins/local/hstack`
+(`loadUserLocalPlugin`) and from
+`~/.claude/plugins/cache/hstack/hstack/0.5.6`
+(`loadClaudePlugin hstack@hstack`), and ran the `host-detect.sh` hook once per
+copy. Route A keeps only the Claude-cache half; route B keeps only the local
+half. Stock Cursor is not observed.
+
+Gaps: stock Cursor is unobserved, and so is the free plan without the
+third-party auth extension.
 
 A GitHub-marketplace route is also published: a repository root holding
 `.cursor-plugin/marketplace.json`, imported through **Dashboard → Plugins & MCPs
