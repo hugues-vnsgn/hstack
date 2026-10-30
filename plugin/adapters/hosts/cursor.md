@@ -53,9 +53,8 @@ Observed in the IDE on 2026-10-30: Cursor's shell wrapper adds a
 `git commit`, and `git commit --amend` adds it again. No git hook, local
 config or alias produces it.
 
-A commit whose body must stay empty is therefore built with `git commit-tree`
-and pointed at with `git update-ref`. Say that you did it, because
-`update-ref` moves the branch ref directly and bypasses hooks.
+Never bypass hooks to remove the trailer. If a project forbids the trailer,
+say so and leave the commit to the user.
 
 ## The one-source evidence
 

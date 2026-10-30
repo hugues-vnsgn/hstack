@@ -66,9 +66,9 @@ Both runs also produced two observations that change what hStack states.
   now tells a Cursor session to detect the ids from the schema instead.
 - **Cursor's shell adds a commit trailer.** The shell wrapper adds a
   `Co-authored-by` trailer to every `git commit`, and `git commit --amend`
-  adds it again. A commit whose body must stay empty is built with
-  `git commit-tree` and pointed at with `git update-ref`, which bypasses
-  hooks, and the [Cursor page](../../plugin/adapters/hosts/cursor.md) says so.
+  adds it again. Never bypass hooks to remove it: if a project forbids the
+  trailer, say so and leave the commit to the user. The
+  [Cursor page](../../plugin/adapters/hosts/cursor.md) says so.
 
 One more observation, with no change to hStack: the `/hugues-help` session
 ran `setup-hstack` and the repository's test suite itself, where the skill
