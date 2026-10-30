@@ -38,6 +38,13 @@ make until a run in the IDE shows it.
 
 Two lanes moved from gaps to observed, and the transcripts are the evidence.
 
+- **The install shows up once, with no duplicate names.** On 2026-10-30 the
+  owner counted 63 hStack skills in the Cursor IDE's `/` list, no name twice,
+  with hStack listed once, from the local copy. Cursor's plugin log carries
+  the load side: with hStack off in Claude Code, one reload holds a single
+  `loadUserLocalPlugin hstack` line and no `loadClaudePlugin hstack@hstack`
+  line. The `/` list itself is an IDE surface, so the count is the owner's
+  reading and the log is the corroboration.
 - **`setup-hstack` is observed in the Cursor IDE.** On 2026-10-30 a
   `/hugues-help` session read the setup skill and the Cursor model roles,
   asked for a budget and a model per role, and wrote `.hstack/models.md`. The
@@ -102,4 +109,4 @@ A Cursor transcript's project slug has two forms, because Cursor ships more than
 - The [host adapter](../../plugin/adapters/host.md) splits its Cursor-only features into free and paid. The paid rows keep the skip line format `Skipped in <host>: <step>. <reason>.`
 - The [setup skill](../../plugin/skills/setup-hstack/SKILL.md) points at [cursor-models.md](../../plugin/skills/setup-hstack/references/cursor-models.md). A Cursor session detects the model ids from the agent tool's own schema, and the effort token is recorded but not applied, because the tool has no effort setting.
 - The activity reader lives in [activity.py](../../plugin/adapters/runtime/activity.py) and covers three providers. It reads Cursor's `{"role", "message"}` envelope, its `text` and `tool_use` blocks and its `turn_ended` marker, and it treats any other shape as unreviewed and holds coverage.
-- Runtime behaviour in the IDE is unobserved until the owner runs the lanes. The release notes carry that gap. Route A is expected until the final check on the released plugin proves it: stock Cursor is unobserved, and the free plan without the third-party auth extension is unobserved.
+- Runtime behaviour in the IDE was unobserved until the owner ran the lanes, and three lanes have now run. `setup-hstack` and the `hugues-agent` delegate are observed. The read-only subagent, the paid-feature skip line, the Swift skill and `recall` are still not observed in the Cursor IDE, and the release notes carry those gaps. Route A is expected until the final check on the released plugin proves it: stock Cursor is unobserved, and the free plan without the third-party auth extension is unobserved.
