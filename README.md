@@ -2,19 +2,19 @@
 
 hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.5.6** adds the [Orca page](plugin/adapters/hosts/orca.md), so a
-coordinator in an Orca pane can start, read, wait for and close hStack workers in
-other panes. A Claude Code `SessionStart` hook tells a session in Orca to read the
-[hosts index](plugin/adapters/hosts/README.md). The shared host adapter now
-follows the tables of pstack's own Claude Code adapter. Start a run by typing
+Version **0.5.7** adds Cursor as a third native host, so a Cursor user installs
+the plugin, sees its skills and runs `/hugues-mode`, `/hugues-help` and
+`/setup-hstack` in the Cursor IDE. A `.cursor-plugin/` manifest pair points at
+the same `plugin/skills/` and `plugin/agents/`, so one tree serves all three
+hosts. Start a run by typing
 `/hstack:hugues-mode` in Claude Code or `$hugues-mode` in Codex. The release
-keeps the pstack 0.15.32 baseline and the native helpers unchanged. The [0.5.6 release notes](docs/RELEASE-0.5.6.md) record
+keeps the pstack 0.15.32 baseline and the native helpers unchanged. The [0.5.7 release notes](docs/RELEASE-0.5.7.md) record
 upgrade steps, checks and remaining gaps. hStack supports Swift/iOS, Kotlin/Android, KMP
 and CMP development through its mobile adapter. A complete journey on a real
-consumer project remains unobserved on either host. The plugin remains `hstack`. Its
+consumer project remains unobserved on any host. The plugin remains `hstack`. Its
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
 The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
-Version 0.5.1 added two authored user-only language skills. Version 0.5.6 has 63 in total. Each skill owns one canonical `SKILL.md`.
+Version 0.5.1 added two authored user-only language skills. Version 0.5.7 has 63 in total. Each skill owns one canonical `SKILL.md`.
 Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
 Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
@@ -95,7 +95,10 @@ half. Stock Cursor is not observed.
 Gaps: stock Cursor is unobserved, and so is the free plan without the
 third-party auth extension. A read-only Explore subagent, the paid-feature
 skip line, the Swift skill and `recall` are not observed in the Cursor IDE
-either. `setup-hstack` and the `hugues-agent` delegate are observed.
+either. `setup-hstack` and the `hugues-agent` delegate are observed. Route A,
+where Cursor loads hStack from Claude Code's install, is expected, not proven:
+it is checked at the end, on the released plugin, with hStack on in Claude Code
+and no local copy.
 
 A GitHub-marketplace route is also published: a repository root holding
 `.cursor-plugin/marketplace.json`, imported through **Dashboard → Plugins & MCPs
@@ -108,7 +111,7 @@ appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
 Codex copy. Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2
 were later observed on both hosts, and both hosts on the maintainer machine
 hold 0.5.3 copies that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4
-to 0.5.5 and from 0.5.5 to 0.5.6 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.6.md#upgrade). If
+to 0.5.5 and from 0.5.5 to 0.5.6 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.7.md#upgrade). If
 `hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
 explains the boundary and a first-task workflow.
@@ -144,7 +147,7 @@ summaries. See the [execution contract](plugin/adapters/native-execution.md).
 The [0.5.1 validation](docs/RELEASE-0.5.1.md#validation) records final-source
 helper observations, including failed and incomplete attempts. The
 [0.5.2 validation](docs/RELEASE-0.5.2.md#validation) records the current helper
-source and why no 0.5.2 fixture re-runs were made. Versions 0.5.3 to 0.5.6 do not
+source and why no 0.5.2 fixture re-runs were made. Versions 0.5.3 to 0.5.7 do not
 change the native helpers. Helper checks complement the consumer's
 required native runtime proof.
 

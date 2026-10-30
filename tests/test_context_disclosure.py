@@ -14,6 +14,11 @@ import measure_context
 from test_host_adapters import InstalledFixture
 
 TRUNK = 'ae7cec396976abddfe27ca701e9fe782bc7db6f7'
+# The revision before Cursor became a native host, which is the 0.5.6 release.
+# It is the baseline for the Cursor adapter allowance, and it is pinned rather
+# than read from `origin/main` so the allowance does not collapse when that
+# branch starts carrying the Cursor commit itself.
+PRE_CURSOR = '4f64103ea6e7463ecc5e1d2b531e75ceb99c0d10'
 # The Cursor-only features section grew when Cursor became a native host. After the review
 # moved the per-feature Cursor actions, the subagent and model meanings, the transcript store,
 # the foreground-delegate gap and the one-source rule out to plugin/adapters/hosts/cursor.md,
@@ -66,6 +71,19 @@ def at_trunk(path):
 def at_main(path):
     """The bytes a file had on the base this branch started from."""
     return subprocess.run(['git', '-C', str(ROOT), 'show', f'origin/main:{path}'],
+                          capture_output=True, text=True, check=True).stdout
+
+
+def at_pre_cursor(path):
+    """The bytes a file had before Cursor became a native host.
+
+    The Cursor adapter allowance measures what the third host costs, so its
+    baseline has to be the revision before the Cursor work landed. Measuring
+    against `origin/main` breaks the moment that branch carries the Cursor
+    commit: the growth collapses to zero while the always-loaded content has
+    not shrunk, and the bound fails on a release that changed no adapter.
+    """
+    return subprocess.run(['git', '-C', str(ROOT), 'show', f'{PRE_CURSOR}:{path}'],
                           capture_output=True, text=True, check=True).stdout
 
 
@@ -288,19 +306,20 @@ class ContextDisclosure(unittest.TestCase):
     def cursor_adapter_growth(self, adapters=None):
         """The bytes the adapters add over the trunk hStack inherited.
 
-        Measured from the adapters' own bytes against `origin/main`, so the
-        figure is exactly the Cursor host's cost: the door sentence that points
-        a Cursor session at its page, the 8 bytes that name it in the adapter
-        title, the Cursor sentence in the tools adapter and the two page doors
-        in the workers adapter. The trunk text the review asked to restore is
-        not part of this figure, because it is not the Cursor host's cost.
+        Measured from the adapters' own bytes against the revision before
+        Cursor landed, so the figure is exactly the Cursor host's cost: the
+        door sentence that points a Cursor session at its page, the 8 bytes
+        that name it in the adapter title, the Cursor sentence in the tools
+        adapter and the two page doors in the workers adapter. The trunk text
+        the review asked to restore is not part of this figure, because it is
+        not the Cursor host's cost.
         """
         if adapters is None:
             adapters = ['plugin/adapters/host.md', 'plugin/adapters/mobile.md',
                         'plugin/adapters/host-workers.md', 'plugin/adapters/host-workflow-tools.md']
         growth = 0
         for path in adapters:
-            inherited = at_main(path)
+            inherited = at_pre_cursor(path)
             growth += len((ROOT / path).read_bytes()) - len(inherited.encode())
         return growth
 
