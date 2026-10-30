@@ -56,7 +56,7 @@ mkdir -p "$dst"
 cp -R "$src"/. "$dst"/
 ```
 
-Copy rather than symlink. Cursor skips a symlink in that folder whose target resolves outside it, and this repository is outside it.
+Copy rather than symlink. Cursor's own documentation states that a symlink in that folder loads only when its target resolves inside that folder, and that Cursor skips a symlink pointing outside it. This repository is outside it, so a copy is the route that cannot break on that rule. The rule is from Cursor's documentation, not observed in the IDE.
 
 One source only. Cursor loads the Claude plugin cache as well as `~/.cursor/plugins/local/`, and it de-duplicates within one plugin rather than across plugins, so two sources register every shared skill name twice.
 

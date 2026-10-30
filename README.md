@@ -73,8 +73,9 @@ rm -rf "$HOME/.cursor/plugins/local/pstack"
   cp -R "$src"/. "$dst"/
   ```
 
-  Copy rather than symlink. Cursor skips a symlink in that folder whose target
-  resolves outside it, and this repository is outside it.
+  Copy rather than symlink. Cursor's own documentation states that a symlink in
+  that folder loads only when its target resolves inside it, and that Cursor
+  skips one pointing outside it. This repository is outside it.
 
   Reload the window, then confirm under **Customize → Plugins** that hStack is
   enabled and its components are listed. Type `/hugues-help` in the composer
@@ -111,7 +112,7 @@ appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
 Codex copy. Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2
 were later observed on both hosts, and both hosts on the maintainer machine
 hold 0.5.3 copies that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4
-to 0.5.5 and from 0.5.5 to 0.5.6 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.7.md#upgrade). If
+to 0.5.5, from 0.5.5 to 0.5.6 and from 0.5.6 to 0.5.7 remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.7.md#upgrade). If
 `hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
 explains the boundary and a first-task workflow.
@@ -127,7 +128,7 @@ limits. It establishes no complete mobile journey. Read the
 
 ## Bundled mobile guidance
 
-Version 0.5.6 includes `swift-best-practices` and `kotlin-best-practices`.
+Version 0.5.7 includes `swift-best-practices` and `kotlin-best-practices`.
 Before source reads, the router and fresh workers read the relevant baseline in
 full. Source declarations and consumer configuration select SwiftUI, UIKit,
 Android Compose, KMP native-boundary and CMP wrapper references as needed.

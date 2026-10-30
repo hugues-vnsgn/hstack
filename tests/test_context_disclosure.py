@@ -68,12 +68,6 @@ def at_trunk(path):
                           capture_output=True, text=True, check=True).stdout
 
 
-def at_main(path):
-    """The bytes a file had on the base this branch started from."""
-    return subprocess.run(['git', '-C', str(ROOT), 'show', f'origin/main:{path}'],
-                          capture_output=True, text=True, check=True).stdout
-
-
 def at_pre_cursor(path):
     """The bytes a file had before Cursor became a native host.
 
