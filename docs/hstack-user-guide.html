@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>hStack User Guide · Claude Code and Codex</title>
+<title>hStack User Guide · Claude Code, Codex and Cursor</title>
 <style>
 :root{--bg:#f8f7f4;--fg:#1c1f24;--muted:#5d6472;--card:#fff;--line:#d9dce3;--accent:#3550c8;--accent-soft:#e8ecfb;
 --code:#f1f0ec;--step:#eef2ff;--step-s:#55628f;--router:#fff3d1;--router-s:#a9832b;--done:#dcf2e2;--done-s:#3d8a56;
@@ -38,16 +38,17 @@ code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.88em
 pre{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.55;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow:auto;white-space:pre-wrap;word-break:break-word}
 pre code{background:none;padding:0;font-size:inherit}
 pre.prompt{border-left:4px solid var(--accent)}
-pre .cc,pre .cx{display:block}
-pre .cc+.cx{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
-pre .cc::before,pre .cx::before{display:block;font:600 11px/1.4 -apple-system,Helvetica,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+pre .cc,pre .cx,pre .cu{display:block}
+pre .cc+.cx,pre .cc+.cu,pre .cx+.cu{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+pre .cc::before,pre .cx::before,pre .cu::before{display:block;font:600 11px/1.4 -apple-system,Helvetica,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
 pre .cc::before{content:"Claude Code"}
 pre .cx::before{content:"Codex"}
-code.cc+code.cx{margin-left:6px}
-body[data-host=claude] .cx,body[data-host=codex] .cc{display:none!important}
-body[data-host] code.cc+code.cx{margin-left:0}
-body[data-host=claude] pre .cc+.cx,body[data-host=codex] pre .cc+.cx{border:0}
-body[data-host] pre .cc::before,body[data-host] pre .cx::before{display:none}
+pre .cu::before{content:"Cursor"}
+code.cc+code.cx,code.cc+code.cu,code.cx+code.cu{margin-left:6px}
+body[data-host=claude] .cx,body[data-host=claude] .cu,body[data-host=codex] .cc,body[data-host=codex] .cu,body[data-host=cursor] .cc,body[data-host=cursor] .cx{display:none!important}
+body[data-host] code.cc+code.cx,body[data-host] code.cc+code.cu,body[data-host] code.cx+code.cu{margin-left:0}
+body[data-host=claude] pre .cc+.cx,body[data-host=claude] pre .cc+.cu,body[data-host=codex] pre .cc+.cx,body[data-host=codex] pre .cc+.cu,body[data-host=cursor] pre .cc+.cx,body[data-host=cursor] pre .cx+.cu{border:0}
+body[data-host] pre .cc::before,body[data-host] pre .cx::before,body[data-host] pre .cu::before{display:none}
 table{border-collapse:collapse;width:100%;margin:14px 0 20px;font-size:14.5px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
 th{background:var(--code);font-weight:600}
@@ -105,17 +106,17 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 </defs></svg>
 <header class="top"><span class="brand">hStack User Guide<small>v0.5.7</small></span>
 <div class="host-switch" role="group" aria-label="Show commands for">
-<button data-h="claude" aria-pressed="false">Claude Code</button><button data-h="codex" aria-pressed="false">Codex</button><button data-h="both" aria-pressed="true">Both</button></div></header>
+<button data-h="claude" aria-pressed="false">Claude Code</button><button data-h="codex" aria-pressed="false">Codex</button><button data-h="cursor" aria-pressed="false">Cursor</button><button data-h="all" aria-pressed="true">All</button></div></header>
 <div class="layout"><nav class="toc"><div class="grp">Part I. Get started</div><ol><li><a href="#start">1. Start here</a></li><li><a href="#concepts">2. How hStack thinks</a></li><li><a href="#setup">3. Set up hStack</a></li><li><a href="#commands">4. Command reference</a></li><li><a href="#prompting">5. Talk to hugues-mode</a></li><li><a href="#stuck">6. When you are stuck</a></li><li><a href="#debug">7. Debug a bug</a></li><li><a href="#feature">8. Build a new feature</a></li><li><a href="#mobile">9. Prove it on device</a></li><li><a href="#ship">10. Review and ship</a></li><li><a href="#big">11. Big and overnight work</a></li><li><a href="#principles">12. Steer with principles</a></li><li><a href="#tune">13. Tune cost and models</a></li><li><a href="#trouble">14. Troubleshooting and pitfalls</a></li></ol><div class="grp">Part II. Lead the team</div><ol><li><a href="#part2">Introduction and labels</a></li><li><a href="#lead">15. The lead's job</a></li><li><a href="#brief">16. Brief the team</a></li><li><a href="#backwards">17. Work backwards</a></li><li><a href="#measure">18. Measure a hundred times, cut once</a></li><li><a href="#plan">19. Turn the design into a plan</a></li><li><a href="#shape">20. Pick the team shape</a></li><li><a href="#run-team">21. Run the team in Claude Code</a></li><li><a href="#review">22. Review like a lead</a></li><li><a href="#improve">23. Make the team better</a></li><li><a href="#examples">24. Worked examples</a></li></ol><div class="grp">Appendix</div><ol><li><a href="#limits">A. What is verified today</a></li><li><a href="#glossary">B. Glossary</a></li></ol></nav>
 <main><div class="hero">
 <span class="pill">hStack 0.5.7 · pstack 0.15.32 baseline</span>
 <h1>hStack User Guide</h1>
-<p class="lede">How to set up hStack in Claude Code and Codex, and how to use it when you are stuck, when you debug, and when you build a new feature. Part II shows how to lead hStack like a team: brief it, pick its shape, run it and review it. Written for developers working on Swift/iOS, Kotlin/Android, Kotlin Multiplatform and Compose Multiplatform apps, and for any nontrivial engineering work.</p>
-<p class="meta">Updated 2026-10-26. Use the switch at the top right to show commands for Claude Code, Codex or both.</p>
+<p class="lede">How to set up hStack in Claude Code, Codex and Cursor, and how to use it when you are stuck, when you debug, and when you build a new feature. Part II shows how to lead hStack like a team: brief it, pick its shape, run it and review it. Written for developers working on Swift/iOS, Kotlin/Android, Kotlin Multiplatform and Compose Multiplatform apps, and for any nontrivial engineering work.</p>
+<p class="meta">Updated 2026-10-30. Use the switch at the top right to show commands for Claude Code, Codex, Cursor or all of them.</p>
 </div>
 
 <h2 id="start">1. Start here</h2>
-<p>hStack is pstack for mobile development. pstack is poteto's Cursor plugin. hStack carries the same workflow to Claude Code and Codex and adds mobile proof rules for four domains: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI.</p>
+<p>hStack is pstack for mobile development. pstack is poteto's Cursor plugin. hStack carries the same workflow to Claude Code, Codex and Cursor and adds mobile proof rules for four domains: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI.</p>
 <p>The idea fits in one sentence. <strong>You describe what you want and how you will know it is done. hStack picks a playbook, runs the right skills as each step fires, and ends with evidence you can check.</strong></p>
 
 <div class="callout why"><span class="h">Why use it at all?</span>
@@ -140,7 +141,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <tr><td><code>setup-huguesstack</code></td><td><code>setup-hstack</code></td></tr>
 <tr><td><code>.huguesstack/models.md</code></td><td><code>.hstack/models.md</code> (setup reads the old file once and tells you to move it)</td></tr>
 <tr><td>"Bugbot triage" as a fixed step</td><td>Triage of whichever review bot your repository has. hStack installs none. See <a href="#ship">Review and ship</a>.</td></tr>
-<tr><td><code>/poteto-mode</code>, <code>/setup-pstack</code> (Cursor)</td><td>Cursor is not covered by hStack. Use pstack itself there.</td></tr>
+<tr><td><code>/poteto-mode</code>, <code>/setup-pstack</code> (Cursor)</td><td>Since 0.5.7 hStack is a native Cursor host too. Use hStack's own <code>/hugues-mode</code>, <code>/hugues-help</code> and <code>/setup-hstack</code> there; pstack stays the upstream project.</td></tr>
 </table>
 <p>The <code>hugues-*</code> skill names did not change.</p></div>
 
@@ -191,8 +192,8 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <h3>Two kinds of skills</h3>
 <p>Only <code>setup-hstack</code> is visible to the model by default. Every other bundled skill is <strong>user-only</strong>, and since 0.5.4 that includes <code>hugues-mode</code> itself. That keeps hStack's share of the host's skill list small. It has three consequences.</p>
 <ul>
-<li><strong>You start a run by typing the command.</strong> A task described without <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code> does not start hStack.</li>
-<li><strong>You can type any other skill by name.</strong> For example <code class="cc">/hstack:how</code><code class="cx">$how</code> or <code class="cc">/hstack:interrogate</code><code class="cx">$interrogate</code>.</li>
+<li><strong>You start a run by typing the command.</strong> A task described without <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code><code class="cu">/hugues-mode</code> does not start hStack.</li>
+<li><strong>You can type any other skill by name.</strong> For example <code class="cc">/hstack:how</code><code class="cx">$how</code><code class="cu">/how</code> or <code class="cc">/hstack:interrogate</code><code class="cx">$interrogate</code><code class="cu">/interrogate</code>.</li>
 <li><strong>The router reads the rest itself.</strong> Inside a playbook, the agent opens each skill's file when a step needs it. You never have to list skills in your prompt.</li>
 </ul>
 
@@ -244,7 +245,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <h3>Before you start</h3>
 <table>
 <tr><th>You need</th><th>For</th></tr>
-<tr><td>Claude Code or Codex, installed and signed in</td><td>Everything. hStack does not install or authenticate the host.</td></tr>
+<tr><td>Claude Code, Codex or Cursor, installed and signed in</td><td>Everything. hStack does not install or authenticate the host.</td></tr>
 <tr><td>Git, Python 3.9+</td><td>The planning and audit helpers</td></tr>
 <tr><td>Node</td><td><code>check-plan.mjs</code>, which validates multi-PR plans</td></tr>
 <tr><td>Bun</td><td>Only the <code>watch-pr</code> and <code>orch</code> helpers (Babysit, Orchestrate)</td></tr>
@@ -261,7 +262,12 @@ claude plugin marketplace add hugues-vnsgn/hstack
 claude plugin install hstack@hstack
 claude plugin list          # should show hstack@hstack 0.5.7</span><span class="cx"># Codex
 codex plugin marketplace add hugues-vnsgn/hstack
-codex plugin add hstack@hstack</span></code></pre>
+codex plugin add hstack@hstack</span><span class="cu"># Cursor: copy the plugin folder, then reload the window
+src="/absolute/path/to/hstack/plugin"
+dst="$HOME/.cursor/plugins/local/hstack"
+rm -rf "$dst"
+mkdir -p "$dst"
+cp -R "$src"/. "$dst"/</span></code></pre>
 <div class="callout tip"><span class="h">Try it without installing (Claude Code only)</span>
 <p>Clone the repository and load it for one session from your app's directory. Nothing persists after the session ends.</p>
 <pre><code>git clone https://github.com/hugues-vnsgn/hstack.git ~/Codes/hstack
@@ -279,7 +285,7 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 
 <li><strong>Pick your models with setup-hstack</strong>
 <p>Run this once in each app repository:</p>
-<pre class="prompt"><code><span class="cc">/hstack:setup-hstack </span><span class="cx">$setup-hstack </span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:setup-hstack </span><span class="cx">$setup-hstack </span><span class="cu">/setup-hstack </span></code></pre>
 <p>Setup reads which models your host offers, asks for a reasoning budget, shows every role and lets you change any of them. It writes <code>.hstack/models.md</code> at your project root. Every hStack skill reads that file before it picks a subagent's model.</p>
 <table>
 <tr><th>Budget</th><th>Effect</th></tr>
@@ -288,21 +294,21 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <tr><td><code>medium</code></td><td>Every role at <code>high</code></td></tr>
 <tr><td><code>small</code></td><td>Every role at <code>medium</code>. Fewest tokens.</td></tr>
 </table>
-<p>Each role lists a Claude model first and a Codex model after it, for example <code>claude-sonnet-5-5 high or gpt-6.1-sol high</code>. Claude models are full IDs. Where Claude Code's agent tool accepts only aliases, setup passes the alias, such as <code>sonnet</code>. Each host runs the first model it accepts, so one file serves both hosts. Panel roles (arena runners, architect runners, interrogate reviewers) hold a list, and one subagent runs per entry. A role with no line runs on <code>inherit-parent</code>, which means your chat's own model.</p>
+<p>Each role lists a Claude model first and a Codex model after it, for example <code>claude-sonnet-5-5 high or gpt-6.1-sol high</code>. Claude models are full IDs. Where Claude Code's agent tool accepts only aliases, setup passes the alias, such as <code>sonnet</code>. Each host runs the first model it accepts, so one file serves every host. In Cursor, setup detects the model ids from the agent tool's own schema in the session and writes the detected id first, keeping the Claude and Codex alternatives after it, so the same file still serves the other hosts. Panel roles (arena runners, architect runners, interrogate reviewers) hold a list, and one subagent runs per entry. A role with no line runs on <code>inherit-parent</code>, which means your chat's own model.</p>
 <table>
-<tr><th>Tier</th><th>Claude Code</th><th>Codex</th><th>Default effort</th><th>Used for</th></tr>
-<tr><td>Fast</td><td><code>claude-haiku-5-5</code></td><td><code>gpt-6-luna</code></td><td><code>xhigh</code></td><td>The <code>how</code> explorer</td></tr>
-<tr><td>Workhorse</td><td><code>claude-sonnet-5-5</code></td><td><code>gpt-6.1-sol</code></td><td><code>high</code></td><td>Code delegates, investigators, reflect tooling, swarm workers</td></tr>
-<tr><td>Judgment</td><td><code>claude-opus-5-5</code></td><td><code>gpt-6-astra</code></td><td><code>high</code></td><td>Judgment and prose, hardest tasks, the explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge</td></tr>
+<tr><th>Tier</th><th>Claude Code</th><th>Codex</th><th>Cursor</th><th>Default effort</th><th>Used for</th></tr>
+<tr><td>Fast</td><td><code>claude-haiku-5-5</code></td><td><code>gpt-6-luna</code></td><td>detected id</td><td><code>xhigh</code></td><td>The <code>how</code> explorer</td></tr>
+<tr><td>Workhorse</td><td><code>claude-sonnet-5-5</code></td><td><code>gpt-6.1-sol</code></td><td>detected id</td><td><code>high</code></td><td>Code delegates, investigators, reflect tooling, swarm workers</td></tr>
+<tr><td>Judgment</td><td><code>claude-opus-5-5</code></td><td><code>gpt-6-astra</code></td><td>detected id</td><td><code>high</code></td><td>Judgment and prose, hardest tasks, the explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge</td></tr>
 </table>
 <p>A tier fixes the model. A role's effort starts at the tier default and moves with the work. Version 0.5.4 added the Fast tier and folded the old Frontier tier into Judgment, because no default role uses <code>fable</code>. To restore a default, delete that role's line. Rerun setup at any time.</p></li>
 
 <li><strong>Create a verification skill for your app</strong>
 <p>For mobile projects this is required, not optional. The mobile-proof playbook needs a project <code>verify-&lt;app&gt;</code> recipe, even if XcodeBuildMCP or jev-ios-bridge can already drive the app. Setup offers to generate one. Accept. You can also run it yourself:</p>
-<pre class="prompt"><code><span class="cc">/hstack:create-verification-skill </span><span class="cx">$create-verification-skill </span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:create-verification-skill </span><span class="cx">$create-verification-skill </span><span class="cu">/create-verification-skill </span></code></pre>
 <p>The generator studies your repository, not you. It works out how the app launches, what can drive it, and what evidence proves each feature. It writes <code>verify-&lt;app&gt;/</code> under your <code>.claude/skills/</code> or <code>.agents/skills/</code> folder, with Launch, Doctor, Drive, Evidence and Cleanup sections and a feature map. It proves one feature end to end before handing it over. Commit it so every person and agent drives the app the same way.</p>
 <div class="callout why"><span class="h">Why this pays off the most</span>
-<p>An agent that can check its own work keeps going until the check passes. An agent that cannot hands every result back to you. Keep it honest by running <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code> regularly. It drives every mapped feature and opens at most one PR of proven corrections.</p></div>
+<p>An agent that can check its own work keeps going until the check passes. An agent that cannot hands every result back to you. Keep it honest by running <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code><code class="cu">/maintain-verification-skill</code> regularly. It drives every mapped feature and opens at most one PR of proven corrections.</p></div>
 <p><span class="pill">new in 0.5.5</span> Setup also offers once to generate a formal verification skill. See the command reference.</p></li>
 
 <li><strong>Prepare the Bun helpers (only if you will babysit PRs or orchestrate)</strong>
@@ -313,15 +319,18 @@ bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span><span class="cx"># Codex default root
 cd ~/.codex/plugins/cache/hstack/hstack/0.5.7/skills/hugues-mode/scripts
 bun install --frozen-lockfile
+bun ./watch-pr/watch-pr --help</span><span class="cu"># Cursor default root
+cd ~/.cursor/plugins/local/hstack/skills/hugues-mode/scripts
+bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span></code></pre>
 <p>The <code>--help</code> call must exit 0. It also writes the install key the helpers check before running.</p></li>
 
 <li><strong>Run a first small task</strong>
 <p>Start read-only, so you can see the routing before anything changes:</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span><span class="cx">$hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span><span class="cx">$hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span><span class="cu">/hugues-mode preview only. explain how search submission works in this app. name the relevant files, the playbook you would pick and any open questions. do not edit or run the app.</span></code></pre>
 <p>Then authorize a scoped change:</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span><span class="cx">$hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span></code></pre>
-<p>Watch the todo list. Its first items are the playbook's steps, copied in. A step the agent chose to skip stays visible as <code>skip: &lt;reason&gt;</code>. Short follow-ups usually work once the mode is loaded in the conversation. hStack documents no host setting that pins it, so if it stops applying after a few turns, type <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code> again.</p></li>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span><span class="cx">$hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span><span class="cu">/hugues-mode fix the search field clearing before submission succeeds. use a fresh worktree. you may edit the relevant source and run the existing local tests. report the reproduction, the changed behavior, the checks you ran and any proof you could not run. do not push.</span></code></pre>
+<p>Watch the todo list. Its first items are the playbook's steps, copied in. A step the agent chose to skip stays visible as <code>skip: &lt;reason&gt;</code>. Short follow-ups usually work once the mode is loaded in the conversation. hStack documents no host setting that pins it, so if it stops applying after a few turns, type <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code><code class="cu">/hugues-mode</code> again.</p></li>
 </ol>
 
 <h3>Update or remove</h3>
@@ -329,30 +338,35 @@ bun ./watch-pr/watch-pr --help</span></code></pre>
 claude plugin marketplace update hstack
 claude plugin update hstack@hstack</span><span class="cx"># Codex: update, then start a new session
 codex plugin marketplace upgrade hstack
-codex plugin add hstack@hstack</span></code></pre>
+codex plugin add hstack@hstack</span><span class="cu"># Cursor: replace the local copy, then reload the window
+src="/absolute/path/to/hstack/plugin"
+dst="$HOME/.cursor/plugins/local/hstack"
+rm -rf "$dst"
+mkdir -p "$dst"
+cp -R "$src"/. "$dst"/</span></code></pre>
 <p>Keep a task that is in flight on the copy it started with until it finishes. To remove hStack, use the same host mechanism that installed it. A session-only <code>--plugin-dir</code> load ends with the session.</p>
 
 <h2 id="commands">4. Command reference</h2>
-<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Arguments are plain English. Release 0.5.7 bundles 63 skills, the same as 0.5.6. The four added in 0.5.5 are listed after the table.</p>
+<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Cursor uses <code>/</code> and the bare name. Arguments are plain English. Release 0.5.7 bundles 63 skills, the same as 0.5.6. The four added in 0.5.5 are listed after the table.</p>
 <table>
-<tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Use it to</th></tr>
-<tr><td>hugues-mode</td><td><code>/hstack:hugues-mode</code></td><td><code>$hugues-mode</code></td><td>Start any nontrivial task. The front door.</td></tr>
-<tr><td>setup-hstack</td><td><code>/hstack:setup-hstack</code></td><td><code>$setup-hstack</code></td><td>Pick models and reasoning budget per role</td></tr>
-<tr><td>hugues-help</td><td><code>/hstack:hugues-help</code></td><td><code>$hugues-help</code></td><td>Ask which skill or playbook fits. It answers and hands you a prompt. It does not start work.</td></tr>
-<tr><td>how · why · teach</td><td><code>/hstack:how</code></td><td><code>$how</code></td><td>Understand code: how it works, why it is shaped this way, or both woven together</td></tr>
-<tr><td>recall · ketchup</td><td><code>/hstack:recall</code></td><td><code>$recall</code></td><td>Rebuild context from past work, or catch up on this chat</td></tr>
-<tr><td>in-your-own-words · sharpen · bro</td><td><code>/hstack:sharpen</code></td><td><code>$sharpen</code></td><td>Check the agent understood you, sharpen a thin prompt, or get plain language. Since 0.5.5 <code>sharpen</code> returns a rewritten prompt and does not do the task.</td></tr>
-<tr><td>architect · arena · swarm</td><td><code>/hstack:architect</code></td><td><code>$architect</code></td><td>Design before code, compare parallel attempts, fan out parallel checks</td></tr>
-<tr><td>interrogate · blast-radius</td><td><code>/hstack:interrogate</code></td><td><code>$interrogate</code></td><td>Multi-model adversarial review, or find what a change could break elsewhere</td></tr>
-<tr><td>tdd</td><td><code>/hstack:tdd</code></td><td><code>$tdd</code></td><td>Failing test first, then the fix</td></tr>
-<tr><td>deslop · unslop · no-comments</td><td><code>/hstack:deslop</code></td><td><code>$deslop</code></td><td>Clean code slop, clean prose, strip comments with a reviewer who did not write them</td></tr>
-<tr><td>figure-it-out · show-me-your-work</td><td><code>/hstack:figure-it-out</code></td><td><code>$figure-it-out</code></td><td>Design a bespoke run for big work, keep a decision log</td></tr>
-<tr><td>create- / maintain-verification-skill</td><td><code>/hstack:create-verification-skill</code></td><td><code>$create-verification-skill</code></td><td>Generate and maintain the app's <code>verify-&lt;app&gt;</code> recipe</td></tr>
-<tr><td>swift- / kotlin-best-practices</td><td><code>/hstack:swift-best-practices</code></td><td><code>$swift-best-practices</code></td><td>Language baselines. The router reads them automatically before Swift or Kotlin source.</td></tr>
-<tr><td>benchmark-checklist</td><td><code>/hstack:benchmark-checklist</code></td><td><code>$benchmark-checklist</code></td><td>Vet a measured number before you trust it</td></tr>
-<tr><td>correct · reflect</td><td><code>/hstack:correct</code></td><td><code>$correct</code></td><td>Make repeated agent mistakes impossible, or learn from this transcript</td></tr>
+<tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Cursor</th><th>Use it to</th></tr>
+<tr><td>hugues-mode</td><td><code>/hstack:hugues-mode</code></td><td><code>$hugues-mode</code></td><td><code>/hugues-mode</code></td><td>Start any nontrivial task. The front door.</td></tr>
+<tr><td>setup-hstack</td><td><code>/hstack:setup-hstack</code></td><td><code>$setup-hstack</code></td><td><code>/setup-hstack</code></td><td>Pick models and reasoning budget per role</td></tr>
+<tr><td>hugues-help</td><td><code>/hstack:hugues-help</code></td><td><code>$hugues-help</code></td><td><code>/hugues-help</code></td><td>Ask which skill or playbook fits. It answers and hands you a prompt. It does not start work.</td></tr>
+<tr><td>how · why · teach</td><td><code>/hstack:how</code></td><td><code>$how</code></td><td>not observed</td><td>Understand code: how it works, why it is shaped this way, or both woven together</td></tr>
+<tr><td>recall · ketchup</td><td><code>/hstack:recall</code></td><td><code>$recall</code></td><td>not observed</td><td>Rebuild context from past work, or catch up on this chat</td></tr>
+<tr><td>in-your-own-words · sharpen · bro</td><td><code>/hstack:sharpen</code></td><td><code>$sharpen</code></td><td>not observed</td><td>Check the agent understood you, sharpen a thin prompt, or get plain language. Since 0.5.5 <code>sharpen</code> returns a rewritten prompt and does not do the task.</td></tr>
+<tr><td>architect · arena · swarm</td><td><code>/hstack:architect</code></td><td><code>$architect</code></td><td>not observed</td><td>Design before code, compare parallel attempts, fan out parallel checks</td></tr>
+<tr><td>interrogate · blast-radius</td><td><code>/hstack:interrogate</code></td><td><code>$interrogate</code></td><td>not observed</td><td>Multi-model adversarial review, or find what a change could break elsewhere</td></tr>
+<tr><td>tdd</td><td><code>/hstack:tdd</code></td><td><code>$tdd</code></td><td>not observed</td><td>Failing test first, then the fix</td></tr>
+<tr><td>deslop · unslop · no-comments</td><td><code>/hstack:deslop</code></td><td><code>$deslop</code></td><td>not observed</td><td>Clean code slop, clean prose, strip comments with a reviewer who did not write them</td></tr>
+<tr><td>figure-it-out · show-me-your-work</td><td><code>/hstack:figure-it-out</code></td><td><code>$figure-it-out</code></td><td>not observed</td><td>Design a bespoke run for big work, keep a decision log</td></tr>
+<tr><td>create- / maintain-verification-skill</td><td><code>/hstack:create-verification-skill</code></td><td><code>$create-verification-skill</code></td><td>not observed</td><td>Generate and maintain the app's <code>verify-&lt;app&gt;</code> recipe</td></tr>
+<tr><td>swift- / kotlin-best-practices</td><td><code>/hstack:swift-best-practices</code></td><td><code>$swift-best-practices</code></td><td>not observed</td><td>Language baselines. The router reads them automatically before Swift or Kotlin source.</td></tr>
+<tr><td>benchmark-checklist</td><td><code>/hstack:benchmark-checklist</code></td><td><code>$benchmark-checklist</code></td><td>not observed</td><td>Vet a measured number before you trust it</td></tr>
+<tr><td>correct · reflect</td><td><code>/hstack:correct</code></td><td><code>$correct</code></td><td>not observed</td><td>Make repeated agent mistakes impossible, or learn from this transcript</td></tr>
 </table>
-<p>Rows with several skills show the first one's command. The others follow the same pattern.</p>
+<p>Rows with several skills show the first one's command. The others follow the same pattern. The Cursor column is honest about what was run: <code>/hugues-mode</code>, <code>/hugues-help</code> and <code>/setup-hstack</code> were observed in the Cursor IDE, and no other row was. The <a href="#limits">Appendix A</a> lists the observed and unobserved lanes.</p>
 <h3>New in 0.5.5</h3>
 <p>Release 0.5.5 pins pstack 0.15.32 and adds four user-only skills.</p>
 <table>
@@ -375,7 +389,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <tr><td><strong>What you already know</strong></td><td>A log line or repro step saves a search</td><td>"failing job id is 4812"</td></tr>
 <tr><td><strong>Constraints and authority</strong></td><td>These change what the agent does. A plain mode request does not let it edit, build or run your app.</td><td>"repro first", "don't change code yet", "you may run the simulator"</td></tr>
 </table>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode the csv export drops its last row since yesterday&#x27;s deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.</span><span class="cx">$hugues-mode the csv export drops its last row since yesterday&#x27;s deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode the csv export drops its last row since yesterday&#x27;s deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.</span><span class="cx">$hugues-mode the csv export drops its last row since yesterday&#x27;s deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.</span><span class="cu">/hugues-mode the csv export drops its last row since yesterday&#x27;s deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.</span></code></pre>
 
 <div class="callout tip"><span class="h">Leave two things out</span>
 <ul><li><strong>The how.</strong> Leave room for a better path than the one you would pick.</li>
@@ -502,40 +516,40 @@ codex plugin add hstack@hstack</span></code></pre>
 </div>
 
 <h3>Ask which tool fits</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-help which skill should i use to review this branch?</span><span class="cx">$hugues-help which skill should i use to review this branch?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-help which skill should i use to review this branch?</span><span class="cx">$hugues-help which skill should i use to review this branch?</span><span class="cu">/hugues-help which skill should i use to review this branch?</span></code></pre>
 <p><strong>Why:</strong> a full hStack run spends real tokens. <code>hugues-help</code> answers from the guide and skill files and hands you a prompt to send when you are ready. It runs only when you type it.</p>
 
 <h3>Understand before you change anything</h3>
 <p>Agents usually fail because they misread you or because they lack context. These skills fix the second problem, and they make the agent explain itself in words you can check.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode investigate why background sync times out every few hours. give me what we know, what data you used, and your best hypotheses. don&#x27;t change any code yet.</span><span class="cx">$hugues-mode investigate why background sync times out every few hours. give me what we know, what data you used, and your best hypotheses. don&#x27;t change any code yet.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:how how do we dedupe push notifications? is there an n+1 when we look up subscribers?</span><span class="cx">$how how do we dedupe push notifications? is there an n+1 when we look up subscribers?</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:why why was the retry limit set to five? does the reason still hold?</span><span class="cx">$why why was the retry limit set to five? does the reason still hold?</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:teach me how this PR changes retries. convince me it fixes the cause and not the symptom.</span><span class="cx">$teach me how this PR changes retries. convince me it fixes the cause and not the symptom.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode investigate why background sync times out every few hours. give me what we know, what data you used, and your best hypotheses. don&#x27;t change any code yet.</span><span class="cx">$hugues-mode investigate why background sync times out every few hours. give me what we know, what data you used, and your best hypotheses. don&#x27;t change any code yet.</span><span class="cu">/hugues-mode investigate why background sync times out every few hours. give me what we know, what data you used, and your best hypotheses. don&#x27;t change any code yet.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:how how do we dedupe push notifications? is there an n+1 when we look up subscribers?</span><span class="cx">$how how do we dedupe push notifications? is there an n+1 when we look up subscribers?</span><span class="cu">/how how do we dedupe push notifications? is there an n+1 when we look up subscribers?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:why why was the retry limit set to five? does the reason still hold?</span><span class="cx">$why why was the retry limit set to five? does the reason still hold?</span><span class="cu">/why why was the retry limit set to five? does the reason still hold?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:teach me how this PR changes retries. convince me it fixes the cause and not the symptom.</span><span class="cx">$teach me how this PR changes retries. convince me it fixes the cause and not the symptom.</span><span class="cu">/teach me how this PR changes retries. convince me it fixes the cause and not the symptom.</span></code></pre>
 <p><strong>Why:</strong> <code>how</code> traces the runtime flow and key types. <code>why</code> digs through git history and whatever your MCPs expose (issues, docs, chat) and separates direct evidence from inference. "Nobody wrote down why" is a valid answer. <code>teach</code> builds the explanation diagram by diagram, and "convince me" turns it into an argument you can poke at.</p>
 
 <h3>Make sure the agent understood you</h3>
-<pre class="prompt"><code><span class="cc">/hstack:in-your-own-words </span><span class="cx">$in-your-own-words </span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span><span class="cx">$hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:in-your-own-words </span><span class="cx">$in-your-own-words </span><span class="cu">/in-your-own-words </span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span><span class="cx">$hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span><span class="cu">/hugues-mode read this thread. restate the underlying issue in your own words, in plain english. don&#x27;t change any code yet.</span></code></pre>
 <p><strong>Why:</strong> a misreading that shows up in a restatement costs you one message. The same misreading found after implementation costs a wrong fix. <code>sharpen</code> goes further. It asks how a top expert would approach the task and whether your prompt says too much or too little. In 0.5.4 it then does the work. On main, not yet released, it rewrites your prompt and leaves the work to you.</p>
 
 <h3>When the design keeps fighting back</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span><span class="cx">$hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:arena this, 5 candidates. the cache key format is expensive to change later.</span><span class="cx">$arena this, 5 candidates. the cache key format is expensive to change later.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span><span class="cx">$hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span><span class="cu">/hugues-mode prototype a few options for the onboarding screen. put them behind a switcher and send me screenshots of each on the simulator.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:arena this, 5 candidates. the cache key format is expensive to change later.</span><span class="cx">$arena this, 5 candidates. the cache key format is expensive to change later.</span><span class="cu">/arena this, 5 candidates. the cache key format is expensive to change later.</span></code></pre>
 <p><strong>Why:</strong> one attempt at a hard design locks in the first shape the model thought of. A prototype answers questions by running something, not by asking you. Arena has several subagents attempt the same brief, a judge on a different model scores them, and the coordinator picks a base and grafts in the best parts of the others.</p>
 
 <h3>When fixes keep failing</h3>
 <p>Two failed fixes that share one premise have failed the same gate. Say the principle's name to redirect the agent:</p>
 <pre class="prompt"><code>stop. apply attack the premise. write down the premise every failed fix shares and test it before writing another fix.</code></pre>
 <p>For a stubborn hang, crash or leak, switch from fixing to diagnosing:</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span><span class="cx">$hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span><span class="cx">$hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span><span class="cu">/hugues-mode new task. runtime forensics: the app&#x27;s memory grows 40 MB per minute on the feed screen. find the cause with instrumentation. no fix yet.</span></code></pre>
 
 <h3>When you lost the thread</h3>
-<pre class="prompt"><code><span class="cc">/hstack:recall my work on the offline cache from last week, then read this bug report.</span><span class="cx">$recall my work on the offline cache from last week, then read this bug report.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode take over this branch. read the decision log, figure out what&#x27;s done, and continue from there. don&#x27;t redo finished work.</span><span class="cx">$hugues-mode take over this branch. read the decision log, figure out what&#x27;s done, and continue from there. don&#x27;t redo finished work.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:recall my work on the offline cache from last week, then read this bug report.</span><span class="cx">$recall my work on the offline cache from last week, then read this bug report.</span><span class="cu">/recall my work on the offline cache from last week, then read this bug report.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode take over this branch. read the decision log, figure out what&#x27;s done, and continue from there. don&#x27;t redo finished work.</span><span class="cx">$hugues-mode take over this branch. read the decision log, figure out what&#x27;s done, and continue from there. don&#x27;t redo finished work.</span><span class="cu">/hugues-mode take over this branch. read the decision log, figure out what&#x27;s done, and continue from there. don&#x27;t redo finished work.</span></code></pre>
 <p><code>ketchup</code> summarizes what changed in this chat since your last message. <code>bro</code> restates the last reply without jargon.</p>
 
 <h3>When the agent keeps making the same mistake</h3>
-<pre class="prompt"><code><span class="cc">/hstack:correct </span><span class="cx">$correct </span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:correct </span><span class="cx">$correct </span><span class="cu">/correct </span></code></pre>
 <p><strong>Why:</strong> writing the same instruction twice means the lesson belongs in structure, not text. <code>correct</code> tries architecture first, then types, then a lint whose error names the fix, then a test, and writes docs last. It proves each check fails on a real past mistake.</p>
 
 <h2 id="debug">7. Debug a bug</h2>
@@ -593,7 +607,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <ol class="steps">
 <li><strong>Describe the symptom and the authority</strong>
 <p>State what happens, where, and what the agent may touch.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode users get two notifications after a retry. repro first, then fix and verify. you may edit the notification module and run its tests.</span><span class="cx">$hugues-mode users get two notifications after a retry. repro first, then fix and verify. you may edit the notification module and run its tests.</span></code></pre></li>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode users get two notifications after a retry. repro first, then fix and verify. you may edit the notification module and run its tests.</span><span class="cx">$hugues-mode users get two notifications after a retry. repro first, then fix and verify. you may edit the notification module and run its tests.</span><span class="cu">/hugues-mode users get two notifications after a retry. repro first, then fix and verify. you may edit the notification module and run its tests.</span></code></pre></li>
 <li><strong>Let it reproduce on the same surface</strong>
 <p>The agent drives the app itself: <code>verify-&lt;app&gt;</code> for your app, <code>control-ui</code> for web and Electron, <code>control-cli</code> for CLIs and TUIs. It asks you to reproduce only when it can name a specific reason the surface cannot reach the bug. If the bug will not fire, it synthesizes the trigger or adds instrumentation until it does.</p></li>
 <li><strong>Watch the hypotheses get eliminated</strong>
@@ -611,24 +625,24 @@ codex plugin add hstack@hstack</span></code></pre>
 
 <h3>Mobile bug prompts</h3>
 <h4>Swift / iOS</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode ios: the profile screen shows stale data after logging out and back in. repro first on the iPhone 17 simulator, then fix. you may edit the Profile and Session modules, run the xcodebuild test plan and drive the simulator. show me RED then GREEN and a before and after screenshot.</span><span class="cx">$hugues-mode ios: the profile screen shows stale data after logging out and back in. repro first on the iPhone 17 simulator, then fix. you may edit the Profile and Session modules, run the xcodebuild test plan and drive the simulator. show me RED then GREEN and a before and after screenshot.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode ios: the profile screen shows stale data after logging out and back in. repro first on the iPhone 17 simulator, then fix. you may edit the Profile and Session modules, run the xcodebuild test plan and drive the simulator. show me RED then GREEN and a before and after screenshot.</span><span class="cx">$hugues-mode ios: the profile screen shows stale data after logging out and back in. repro first on the iPhone 17 simulator, then fix. you may edit the Profile and Session modules, run the xcodebuild test plan and drive the simulator. show me RED then GREEN and a before and after screenshot.</span><span class="cu">/hugues-mode ios: the profile screen shows stale data after logging out and back in. repro first on the iPhone 17 simulator, then fix. you may edit the Profile and Session modules, run the xcodebuild test plan and drive the simulator. show me RED then GREEN and a before and after screenshot.</span></code></pre>
 <h4>Kotlin / Android</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode android: rotating the device during checkout loses the selected address. repro first on the Pixel emulator, then fix. you may run the gradle unit and instrumentation tests. show me the failing test before the fix.</span><span class="cx">$hugues-mode android: rotating the device during checkout loses the selected address. repro first on the Pixel emulator, then fix. you may run the gradle unit and instrumentation tests. show me the failing test before the fix.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode android: rotating the device during checkout loses the selected address. repro first on the Pixel emulator, then fix. you may run the gradle unit and instrumentation tests. show me the failing test before the fix.</span><span class="cx">$hugues-mode android: rotating the device during checkout loses the selected address. repro first on the Pixel emulator, then fix. you may run the gradle unit and instrumentation tests. show me the failing test before the fix.</span><span class="cu">/hugues-mode android: rotating the device during checkout loses the selected address. repro first on the Pixel emulator, then fix. you may run the gradle unit and instrumentation tests. show me the failing test before the fix.</span></code></pre>
 <h4>KMP shared logic</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode kmp: the token refresh in the shared module fires twice when two requests race. repro first in commonTest, then fix. prove it on one android caller and one ios caller.</span><span class="cx">$hugues-mode kmp: the token refresh in the shared module fires twice when two requests race. repro first in commonTest, then fix. prove it on one android caller and one ios caller.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode kmp: the token refresh in the shared module fires twice when two requests race. repro first in commonTest, then fix. prove it on one android caller and one ios caller.</span><span class="cx">$hugues-mode kmp: the token refresh in the shared module fires twice when two requests race. repro first in commonTest, then fix. prove it on one android caller and one ios caller.</span><span class="cu">/hugues-mode kmp: the token refresh in the shared module fires twice when two requests race. repro first in commonTest, then fix. prove it on one android caller and one ios caller.</span></code></pre>
 <h4>Broken build</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode the ios build fails with &quot;framework not found Shared&quot; since the gradle upgrade. diagnose only. do not change sdks or global settings.</span><span class="cx">$hugues-mode the ios build fails with &quot;framework not found Shared&quot; since the gradle upgrade. diagnose only. do not change sdks or global settings.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode the ios build fails with &quot;framework not found Shared&quot; since the gradle upgrade. diagnose only. do not change sdks or global settings.</span><span class="cx">$hugues-mode the ios build fails with &quot;framework not found Shared&quot; since the gradle upgrade. diagnose only. do not change sdks or global settings.</span><span class="cu">/hugues-mode the ios build fails with &quot;framework not found Shared&quot; since the gradle upgrade. diagnose only. do not change sdks or global settings.</span></code></pre>
 <p>That routes to build-doctor. It separates a code or configuration defect from a missing tool, SDK, license or signing capability. Before blaming the agent's environment, it runs the same command outside the agent (the host baseline). It repairs only what you authorized.</p>
 
 <h3>Slowness, traces and numbers</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode cold start takes 1.8s on the release build. trace it, fix the measured cause, show me before and after.</span><span class="cx">$hugues-mode cold start takes 1.8s on the release build. trace it, fix the measured cause, show me before and after.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode here&#x27;s a trace from the slow startup. tell me where the time goes and which source lines own it. no fix yet.</span><span class="cx">$hugues-mode here&#x27;s a trace from the slow startup. tell me where the time goes and which source lines own it. no fix yet.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:benchmark-checklist vet the startup speedup before it goes in the pr</span><span class="cx">$benchmark-checklist vet the startup speedup before it goes in the pr</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode cold start takes 1.8s on the release build. trace it, fix the measured cause, show me before and after.</span><span class="cx">$hugues-mode cold start takes 1.8s on the release build. trace it, fix the measured cause, show me before and after.</span><span class="cu">/hugues-mode cold start takes 1.8s on the release build. trace it, fix the measured cause, show me before and after.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode here&#x27;s a trace from the slow startup. tell me where the time goes and which source lines own it. no fix yet.</span><span class="cx">$hugues-mode here&#x27;s a trace from the slow startup. tell me where the time goes and which source lines own it. no fix yet.</span><span class="cu">/hugues-mode here&#x27;s a trace from the slow startup. tell me where the time goes and which source lines own it. no fix yet.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:benchmark-checklist vet the startup speedup before it goes in the pr</span><span class="cx">$benchmark-checklist vet the startup speedup before it goes in the pr</span><span class="cu">/benchmark-checklist vet the startup speedup before it goes in the pr</span></code></pre>
 <p><strong>Why vet the number:</strong> a warm cache, a debug build on one side, or work that never ran inside the timed region can each fake a speedup. The checklist asks seven questions and returns faster, slower, no measurable difference or inconclusive, with the run count and range.</p>
 
 <h3>Test-first in two words</h3>
 <p>When a bug has a cheap local test path and the context is already in the chat:</p>
-<pre class="prompt"><code><span class="cc">/hstack:tdd implement</span><span class="cx">$tdd implement</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:tdd implement</span><span class="cx">$tdd implement</span><span class="cu">/tdd implement</span></code></pre>
 
 <h2 id="feature">8. Build a new feature</h2>
 <p>State the behavior you want and what must not change. The Feature playbook makes the agent learn the code, design before writing, and prove the result on the matching surface.</p>
@@ -675,12 +689,12 @@ codex plugin add hstack@hstack</span></code></pre>
 <h3>Step by step</h3>
 <ol class="steps">
 <li><strong>Say the behavior and the invariants</strong>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode add a &quot;save for later&quot; action to cart items. existing checkout behavior stays identical. verify on ios and android with screenshots.</span><span class="cx">$hugues-mode add a &quot;save for later&quot; action to cart items. existing checkout behavior stays identical. verify on ios and android with screenshots.</span></code></pre></li>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode add a &quot;save for later&quot; action to cart items. existing checkout behavior stays identical. verify on ios and android with screenshots.</span><span class="cx">$hugues-mode add a &quot;save for later&quot; action to cart items. existing checkout behavior stays identical. verify on ios and android with screenshots.</span><span class="cu">/hugues-mode add a &quot;save for later&quot; action to cart items. existing checkout behavior stays identical. verify on ios and android with screenshots.</span></code></pre></li>
 <li><strong>Prototype open questions first (optional)</strong>
 <p>If you do not know what it should look like, settle it by running something:</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype three layouts for the save-for-later list. screenshots of each on the simulator. no production code.</span><span class="cx">$hugues-mode prototype three layouts for the save-for-later list. screenshots of each on the simulator. no production code.</span></code></pre></li>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype three layouts for the save-for-later list. screenshots of each on the simulator. no production code.</span><span class="cx">$hugues-mode prototype three layouts for the save-for-later list. screenshots of each on the simulator. no production code.</span><span class="cu">/hugues-mode prototype three layouts for the save-for-later list. screenshots of each on the simulator. no production code.</span></code></pre></li>
 <li><strong>Review the design if the stakes are high</strong>
-<pre class="prompt"><code><span class="cc">/hstack:architect with checkpoint. design the saved-items store before writing any code. i care most about how the cart screen uses it.</span><span class="cx">$architect with checkpoint. design the saved-items store before writing any code. i care most about how the cart screen uses it.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:architect with checkpoint. design the saved-items store before writing any code. i care most about how the cart screen uses it.</span><span class="cx">$architect with checkpoint. design the saved-items store before writing any code. i care most about how the cart screen uses it.</span><span class="cu">/architect with checkpoint. design the saved-items store before writing any code. i care most about how the cart screen uses it.</span></code></pre>
 <p><code>architect</code> grounds itself with <code>how</code>, then runs an arena of competing sketches. Each sketch starts with how callers use it, then types, signatures and a module map. "with checkpoint" makes it stop and show you before implementing.</p></li>
 <li><strong>Let it plan the throughput</strong>
 <p>The agent writes four todo items: blocking first steps, independent workstreams, shared mutable state and the smallest safe decomposition. This is where it decides what can run in parallel.</p></li>
@@ -710,13 +724,13 @@ codex plugin add hstack@hstack</span></code></pre>
 
 <h3>Mobile feature prompts</h3>
 <h4>KMP shared boundary</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode kmp: expose the saved-items repository from the shared module to swift and kotlin. pin the behavior in commonTest first. prove one android caller and one ios caller.</span><span class="cx">$hugues-mode kmp: expose the saved-items repository from the shared module to swift and kotlin. pin the behavior in commonTest first. prove one android caller and one ios caller.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode kmp: expose the saved-items repository from the shared module to swift and kotlin. pin the behavior in commonTest first. prove one android caller and one ios caller.</span><span class="cx">$hugues-mode kmp: expose the saved-items repository from the shared module to swift and kotlin. pin the behavior in commonTest first. prove one android caller and one ios caller.</span><span class="cu">/hugues-mode kmp: expose the saved-items repository from the shared module to swift and kotlin. pin the behavior in commonTest first. prove one android caller and one ios caller.</span></code></pre>
 <p>This adds the kmp-bridge-change route. It pins behavior in common tests before edits, accounts for every platform adapter and caller, and runs common tests on each Android and iOS target.</p>
 <h4>CMP shared UI</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode cmp: add the save-for-later button to the shared cart item composable. prove it on an android emulator and an ios simulator, with text scaling at 200%.</span><span class="cx">$hugues-mode cmp: add the save-for-later button to the shared cart item composable. prove it on an android emulator and an ios simulator, with text scaling at 200%.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode cmp: add the save-for-later button to the shared cart item composable. prove it on an android emulator and an ios simulator, with text scaling at 200%.</span><span class="cx">$hugues-mode cmp: add the save-for-later button to the shared cart item composable. prove it on an android emulator and an ios simulator, with text scaling at 200%.</span><span class="cu">/hugues-mode cmp: add the save-for-later button to the shared cart item composable. prove it on an android emulator and an ios simulator, with text scaling at 200%.</span></code></pre>
 <p>This adds cmp-two-target-change. CMP proof needs Android and iOS UI evidence plus semantics or text-scaling evidence.</p>
 <h4>Refactor without behavior change</h4>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode move the networking layer into one module, zero behavior change. record the current test output first and prove it&#x27;s unchanged after.</span><span class="cx">$hugues-mode move the networking layer into one module, zero behavior change. record the current test output first and prove it&#x27;s unchanged after.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode move the networking layer into one module, zero behavior change. record the current test output first and prove it&#x27;s unchanged after.</span><span class="cx">$hugues-mode move the networking layer into one module, zero behavior change. record the current test output first and prove it&#x27;s unchanged after.</span><span class="cu">/hugues-mode move the networking layer into one module, zero behavior change. record the current test output first and prove it&#x27;s unchanged after.</span></code></pre>
 
 <h3>Language guidance is automatic</h3>
 <p>Before the agent reads any Swift or Kotlin source, it reads the bundled <code>swift-best-practices</code> or <code>kotlin-best-practices</code> baseline in full. Every worker brief that reaches that source carries the same instruction. Source declarations then select SwiftUI, UIKit, Android Compose, KMP boundary or CMP references as needed. Your own expert skills are optional extras.</p>
@@ -773,7 +787,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <li><strong>Evidence folder.</strong> Outside both the plugin and your app repository, so it survives cleanup. It records revision, command, exit code, target identity and artifact paths.</li>
 </ul>
 
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prove the save-for-later change with /verify-shop. ios and android. show me screenshots and the test counts per target.</span><span class="cx">$hugues-mode prove the save-for-later change with /verify-shop. ios and android. show me screenshots and the test counts per target.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prove the save-for-later change with /verify-shop. ios and android. show me screenshots and the test counts per target.</span><span class="cx">$hugues-mode prove the save-for-later change with /verify-shop. ios and android. show me screenshots and the test counts per target.</span><span class="cu">/hugues-mode prove the save-for-later change with /verify-shop. ios and android. show me screenshots and the test counts per target.</span></code></pre>
 
 <div class="callout warn"><span class="h">Results are never rounded up</span>
 <p>A flaky result is reported as flaky. A skipped test is skipped. A result from a different simulator or variant is invalid for the requested target. A missing device, tool or permission is a named blocker. None of these become a pass.</p></div>
@@ -805,16 +819,16 @@ codex plugin add hstack@hstack</span></code></pre>
 <text class="nt" x="750" y="28" text-anchor="middle">&quot;land the stack.&quot;</text></svg><figcaption><strong>Figure 8. From diff to merged.</strong> Three playbooks, three separate decisions. Green checks are not the same as safe, so Shipping verifies before it lands anything.</figcaption></figure>
 
 <h3>Open the PR</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode open the pr. small ordered commits, evidence in the description.</span><span class="cx">$hugues-mode open the pr. small ordered commits, evidence in the description.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode open the pr. small ordered commits, evidence in the description.</span><span class="cx">$hugues-mode open the pr. small ordered commits, evidence in the description.</span><span class="cu">/hugues-mode open the pr. small ordered commits, evidence in the description.</span></code></pre>
 <p>Opening a PR works from a worktree, rebases into small ordered commits, runs <code>deslop</code> on the diff and applies <code>unslop</code> to the description. Before review, <code>no-comments</code> hands the comments to a reviewer agent that did not write them. It keeps license headers, public API docs and links that explain what code cannot. Everything else goes, or comes back as a refactor flag.</p>
 
 <h3>Get it green with Babysit</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode babysit this pr. get it green.</span><span class="cx">$hugues-mode babysit this pr. get it green.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode check on pr 123. anything outstanding?</span><span class="cx">$hugues-mode check on pr 123. anything outstanding?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode babysit this pr. get it green.</span><span class="cx">$hugues-mode babysit this pr. get it green.</span><span class="cu">/hugues-mode babysit this pr. get it green.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode check on pr 123. anything outstanding?</span><span class="cx">$hugues-mode check on pr 123. anything outstanding?</span><span class="cu">/hugues-mode check on pr 123. anything outstanding?</span></code></pre>
 <p>Babysit takes blockers in order: conflicts, then review threads, then CI. It batches every known fix into one push so checks restart once. A flaky CI job gets one fresh build, never a second retry. Review comments are triaged skeptically: real findings get a fix with a red-first proof, noise gets dismissed with a concrete reason on the thread. The second prompt asks for status only and does not start the loop.</p>
 
 <h3>Turn on a review bot</h3>
-<p>pstack's triage text calls the review bot "Bugbot". On Claude Code and Codex it means whichever bot your repository has. hStack installs none.</p>
+<p>pstack's triage text calls the review bot "Bugbot". On every host it means whichever bot your repository has. hStack installs none.</p>
 <ul>
 <li><strong>Claude Code Review:</strong> an owner of your Claude organization turns it on (Team or Enterprise plan).</li>
 <li><strong>Claude GitHub Action:</strong> run <code>/install-github-app</code> in Claude Code and pick the review workflow.</li>
@@ -823,7 +837,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <p>With no bot installed, a plan's "Bugbot triage done." box reads "Not applicable. Reason no review bot."</p>
 
 <h3>Land it with Shipping</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode land the stack.</span><span class="cx">$hugues-mode land the stack.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode land the stack.</span><span class="cx">$hugues-mode land the stack.</span><span class="cu">/hugues-mode land the stack.</span></code></pre>
 <p>Green is not safe. Shipping has one fresh agent per PR prove the behavior live, and the agent that judges a change is never the one that wrote it. It then lands only the contiguous verified run from the bottom and reports the first PR that breaks the chain.</p>
 
 <h2 id="big">11. Big and overnight work</h2>
@@ -915,7 +929,7 @@ codex plugin add hstack@hstack</span></code></pre>
 <text class="tb" x="130.0" y="913.0" text-anchor="middle">finish</text></svg><figcaption><strong>Figure 7. The hStack workflow map (updated).</strong> This replaces the old huguesStack map. Names follow 0.5.4: /hstack:hugues-mode, setup-hstack and any review bot instead of Cursor's Bugbot. The owner never rebases or merges inside Autopilot-stack. The root is the chain's only writer.</figcaption></figure>
 
 <h3>Plan multi-PR work</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span><span class="cx">$hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span><span class="cx">$hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span><span class="cu">/hugues-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.</span></code></pre>
 <p>The Multi-phase plan playbook settles open questions by prototype, writes one section per PR (each ending in proof that the change works), runs <code>check-plan.mjs</code> over the file and stops. It does not implement. Execution starts only on your explicit go, under the playbook the plan names.</p>
 
 <h3>The overnight contract</h3>
@@ -923,6 +937,9 @@ codex plugin add hstack@hstack</span></code></pre>
 done means zero old callers, all parser tests pass, old api deleted.
 keep a decision log. don&#x27;t ask me before committing.
 keep going until done. if you&#x27;re truly stuck after a few hours, stop and write up why.</span><span class="cx">$hugues-mode im going to bed. migrate every caller to the new parser in a fresh worktree off main.
+done means zero old callers, all parser tests pass, old api deleted.
+keep a decision log. don&#x27;t ask me before committing.
+keep going until done. if you&#x27;re truly stuck after a few hours, stop and write up why.</span><span class="cu">/hugues-mode im going to bed. migrate every caller to the new parser in a fresh worktree off main.
 done means zero old callers, all parser tests pass, old api deleted.
 keep a decision log. don&#x27;t ask me before committing.
 keep going until done. if you&#x27;re truly stuck after a few hours, stop and write up why.</span></code></pre>
@@ -940,8 +957,8 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <p>Run a loop unattended only after you have seen the task done once, the agent has your tools (the verification skill, profiler, logs), every stage can stop the line, and you have turned repeated failures into checks. Until then, watch it.</p></div>
 
 <h3>Pause and resume</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode pause. i&#x27;m restarting claude code.</span><span class="cx">$hugues-mode pause. i&#x27;m restarting claude code.</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode pick up the work from the resume note on feat/parser-migration.</span><span class="cx">$hugues-mode pick up the work from the resume note on feat/parser-migration.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode pause. i&#x27;m restarting claude code.</span><span class="cx">$hugues-mode pause. i&#x27;m restarting claude code.</span><span class="cu">/hugues-mode pause. i&#x27;m restarting claude code.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode pick up the work from the resume note on feat/parser-migration.</span><span class="cx">$hugues-mode pick up the work from the resume note on feat/parser-migration.</span><span class="cu">/hugues-mode pick up the work from the resume note on feat/parser-migration.</span></code></pre>
 <p>Pause safely finishes or backs out of the current step, commits a work-in-progress checkpoint and writes a resume note. Session pickup treats that trail as authoritative and verifies inherited claims instead of redoing them. Saying "keep going" never triggers a pause.</p>
 
 <h3>What always pauses for you</h3>
@@ -963,7 +980,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <h2 id="tune">13. Tune cost and models</h2>
 <p>hStack spends extra tokens on subagents and review panels. That is the price of the rigor. To spend fewer:</p>
 <ul>
-<li>Rerun <code class="cc">/hstack:setup-hstack</code><code class="cx">$setup-hstack</code> and pick a smaller budget or cheaper models. A strong chat model with cheaper code roles is a good split.</li>
+<li>Rerun <code class="cc">/hstack:setup-hstack</code><code class="cx">$setup-hstack</code><code class="cu">/setup-hstack</code> and pick a smaller budget or cheaper models. A strong chat model with cheaper code roles is a good split.</li>
 <li>Set a role to <code>inherit-parent</code> so it runs on the chat's own model.</li>
 <li>Shorten a panel list. Each entry runs one subagent.</li>
 <li>Save <code>hugues-mode</code> for work that needs rigor. A small, obvious edit does not.</li>
@@ -979,7 +996,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <tr><td>Mobile proof is "blocked"</td><td>Read the named blocker. Usually a missing <code>verify-&lt;app&gt;</code>, a tool the sandbox denies, or missing authority in your prompt. Add the authority or run the printed host-baseline command yourself.</td></tr>
 <tr><td>Babysit fails to start <code>watch-pr</code></td><td>Run the one-time Bun setup in <a href="#setup">setup step 6</a> for the copy you actually loaded.</td></tr>
 <tr><td>The agent treats a new question as the next feature step</td><td>Start with "new task".</td></tr>
-<tr><td>The mode stops applying after a few turns</td><td>Type <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code> again to start the next task.</td></tr>
+<tr><td>The mode stops applying after a few turns</td><td>Type <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code><code class="cu">/hugues-mode</code> again to start the next task.</td></tr>
 <tr><td>Routing looks wrong in plan mode</td><td>Plan mode masks routing. Test routing in a normal session on a disposable copy of the app.</td></tr>
 <tr><td>Parallel agents overwrite each other</td><td>Ask for "a fresh worktree off &lt;base&gt;" in each task.</td></tr>
 <tr><td>Disk is full of worktrees and simulators</td><td><code>hugues-mode what's eating my disk? prune the worktrees and simulators that are safe to prune.</code></td></tr>
@@ -996,7 +1013,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 
 <h2 id="part2" class="part">Part II. Lead the team</h2>
 <p class="lede">Part I taught you to run hStack. Part II teaches you to lead it, the way a project manager leads a real team. You brief it, choose its size, read its evidence and fix the process when it slips.</p>
-<p>Read Part II after you have finished a few tasks with Part I. The beginner path stays as it is. Every prompt below still starts with <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code>, unless it names another skill directly.</p>
+<p>Read Part II after you have finished a few tasks with Part I. The beginner path stays as it is. Every prompt below still starts with <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code><code class="cu">/hugues-mode</code>, unless it names another skill directly.</p>
 
 <div class="callout why"><span class="h">Credit</span>
 <p>This part follows poteto's article <a href="https://x.com/poteto/article/2097732320606507506">The Complete Guide to pstack Pt. 2</a>. The ideas and the examples are his: the Slack thread, virtualization, the Dune tutorial, the dropdown prototype, webhook rate limiting, the StyleX migration and the background worker timeouts. We changed the commands and tools so they run in hStack, and we checked every claim about hStack against this repository.</p></div>
@@ -1099,7 +1116,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 
 <h3>Draw intent out in the agent's own words</h3>
 <p>Poteto's indirect prompt asks the agent to restate the problem instead of telling it what to do. He uses it on bug reports from Slack.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span><span class="cx">$hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span><span class="cx">$hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span><span class="cu">/hugues-mode read this slack thread. restate in your own words and in plain english what you think the underlying issue is</span></code></pre>
 <p>hStack ships no chat or ticket connector. The agent can read the thread only if you paste it or your host session has a matching MCP server. <span class="lbl def">Defined, not yet observed</span> hStack records no run that read a thread through an MCP server.</p>
 <p>The restatement does three things.</p>
 <ol>
@@ -1107,7 +1124,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <li>It lets you catch a misreading before any code exists. If the agent fixates on a red herring, you correct it in one message.</li>
 <li>It keeps your assumptions out of the prompt. A stated hypothesis can be wrong, and it limits what the agent could find.</li>
 </ol>
-<p>Part I used the same move as a rescue. Make it the default for any noisy report. Mid-chat, <code class="cc">/hstack:in-your-own-words</code><code class="cx">$in-your-own-words</code> checks the agent's picture of your goal. The skill is one sentence that asks the agent to restate your goals and the problem you are trying to solve.</p>
+<p>Part I used the same move as a rescue. Make it the default for any noisy report. Mid-chat, <code class="cc">/hstack:in-your-own-words</code><code class="cx">$in-your-own-words</code><code class="cu">/in-your-own-words</code> checks the agent's picture of your goal. The skill is one sentence that asks the agent to restate your goals and the problem you are trying to solve.</p>
 
 <table>
 <tr><th>Telling</th><th>Drawing out</th></tr>
@@ -1120,9 +1137,9 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 
 <h3>Build a shared mental model</h3>
 <p>You cannot supervise code you cannot picture. Three skills build the picture, and the agent benefits from the same research.</p>
-<pre class="prompt"><code><span class="cc">/hstack:how how is virtualization implemented?</span><span class="cx">$how how is virtualization implemented?</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:why are we still stuck on an old version of node.js?</span><span class="cx">$why are we still stuck on an old version of node.js?</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span><span class="cx">$teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:how how is virtualization implemented?</span><span class="cx">$how how is virtualization implemented?</span><span class="cu">/how how is virtualization implemented?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:why are we still stuck on an old version of node.js?</span><span class="cx">$why are we still stuck on an old version of node.js?</span><span class="cu">/why are we still stuck on an old version of node.js?</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span><span class="cx">$teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span><span class="cu">/teach me why you implemented it this way and not &lt;other way&gt;. what were the tradeoffs you made and why?</span></code></pre>
 <ul>
 <li><strong><code>how</code> traces runtime mechanics.</strong> A narrow question gets one explainer. A subsystem that spans files or services gets two to four read-only explorers in parallel, then one explainer. Explorers run on the <code>how explorer</code> line of <code>.hstack/models.md</code>, which the 0.5.4 setup puts on the Fast tier, <code>claude-haiku-5-5</code> or <code>gpt-6-luna</code>. That replaces the fast models Poteto names.</li>
 <li><strong><code>why</code> traces motivation.</strong> It searches seven evidence categories in parallel: source control, issue tracker, long-form documents, team chat, infrastructure observability, error tracking and a product analytics warehouse. Source control is always there through <code>git</code> and <code>gh</code>. Each other category needs an MCP server or CLI in your host session, so Poteto's Linear, Notion, Slack, Datadog, Sentry and warehouse sources work only if your session has them. A category with no tool is reported as a gap, never skipped silently.</li>
@@ -1132,10 +1149,10 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 
 <h3>Learn from history</h3>
 <p>Projects span chats. Poteto's example resumes a long bug hunt.</p>
-<pre class="prompt"><code><span class="cc">/hstack:recall the work i did yesterday on virtualization and then read this bug report on slack</span><span class="cx">$recall the work i did yesterday on virtualization and then read this bug report on slack</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:recall the work i did yesterday on virtualization and then read this bug report on slack</span><span class="cx">$recall the work i did yesterday on virtualization and then read this bug report on slack</span><span class="cu">/recall the work i did yesterday on virtualization and then read this bug report on slack</span></code></pre>
 <p><code>recall</code> pins a window (seven days by default), fans out parallel subagents over your chat history, sweeps the shared record through <code>why</code>, checks live state with <code>git</code> and <code>gh</code>, and hands back a short brief. The brief has a capsule, tagged threads, recurring problems and one next move.</p>
 <div class="callout warn"><span class="h">The transcript mining does not carry over</span>
-<p><code>recall</code> is written for Cursor's <code>agent-transcripts/</code> folders. hStack's host adapter limits history to transcript paths supplied for the active workspace, and it wires no Claude Code or Codex lookup. Native history acquisition is deferred (issue #34, item 4). hStack records no run of <code>recall</code> on either host.</p>
+<p><code>recall</code> is written for Cursor's <code>agent-transcripts/</code> folders. hStack's host adapter limits history to transcript paths supplied for the active workspace, and it wires no Claude Code or Codex lookup. Native history acquisition is deferred (issue #34, item 4). hStack records no run of <code>recall</code> on any host.</p>
 <p>Two parts still work. Paste a state capsule, meaning the branch, the PR and what changed, and <code>recall</code> uses it and skips the mining. It then checks live state and sweeps the shared record. Better, leave the context where the next agent will look. That is the branch, the PR body, a <code>show-me-your-work</code> log or a Pause safely resume note, picked up by the Session pickup playbook.</p></div>
 <p><span class="lbl host">Claude Code feature, not tested by hStack</span> Claude Code stores each session as a JSONL transcript under <code>~/.claude/projects/</code> and reopens one with <code>claude --continue</code> or <code>claude --resume</code> (<a href="https://code.claude.com/docs/en/sessions">sessions docs</a>). Whether <code>recall</code> can read those files is unobserved.</p>
 
@@ -1144,7 +1161,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 
 <h3>Write the README first</h3>
 <p>README-driven development starts with the document a hypothetical user would read. You describe the API, then work back to the architecture. Poteto did this for Dune, an in-house client framework for desktop apps. He began with a tutorial for building an app with it. The first pass failed. The agent mixed a tutorial, a how-to guide, an explanation and an API reference in one document, in plain AI prose. He fixed the tool before the draft, by building the <code>technical-writing</code> skill. hStack bundles that skill.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span><span class="cx">$hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span><span class="cx">$hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span><span class="cu">/hugues-mode we are building a client framework for desktop apps. use technical-writing to write the tutorial first, so we learn what building an app with it feels like. one Diátaxis mode only. no code yet.</span></code></pre>
 <p>The prompt wording is ours. The example is his. <code>technical-writing</code> picks one Diátaxis mode for each document, then applies sentence rules and <code>unslop</code>.</p>
 <table>
 <tr><th>Mode</th><th>Serves</th><th>Rule from the skill</th></tr>
@@ -1161,6 +1178,8 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 (2) then use hugues-mode planning and technical-writing to come up with a new virtualization engine that categorically eliminates flickering and jittering. let's start by writing a tutorial on how i would use this new package to virtualize a React app.
 (3) after you write the plan, use teach to prove to me why this new approach is superior to our current engine.</span><span class="cx">$hugues-mode (1) use recall on my work fixing virtualization bugs and perf issues from the past 7 days. use how and why to understand how our current virtualization implementation works.
 (2) then use hugues-mode planning and technical-writing to come up with a new virtualization engine that categorically eliminates flickering and jittering. let's start by writing a tutorial on how i would use this new package to virtualize a React app.
+(3) after you write the plan, use teach to prove to me why this new approach is superior to our current engine.</span><span class="cu">/hugues-mode (1) use recall on my work fixing virtualization bugs and perf issues from the past 7 days. use how and why to understand how our current virtualization implementation works.
+(2) then use hugues-mode planning and technical-writing to come up with a new virtualization engine that categorically eliminates flickering and jittering. let's start by writing a tutorial on how i would use this new package to virtualize a React app.
 (3) after you write the plan, use teach to prove to me why this new approach is superior to our current engine.</span></code></pre>
 <table>
 <tr><th>Part</th><th>What it asks</th><th>Why it is there</th></tr>
@@ -1176,8 +1195,8 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <h3>Prototype to answer a question</h3>
 <p>The Prototype playbook builds throwaway sketches. Its rules invert most of hStack's. Speed beats polish, code quality does not matter and there are no tests. The rigor sits in choosing the right design cheaply. It also proposes variations you did not ask for.</p>
 <p>Its six steps are short. Name the decision the prototype exists to make, and with no decision route to Feature. Gather references when the design space is open. Build in a scratch directory apart from production source. Put alternatives behind one switcher, each labeled. Verify on the matching surface, with a screenshot of each variant for a visual decision or logged timing for a behavioral one. Then present the alternatives, the tradeoffs and a recommendation. The output is the decision plus the throwaway artifact, and Feature or <code>architect</code> builds the real thing.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for the new dropdown menu</span><span class="cx">$hugues-mode prototype a few options for the new dropdown menu</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span><span class="cx">$hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for the new dropdown menu</span><span class="cx">$hugues-mode prototype a few options for the new dropdown menu</span><span class="cu">/hugues-mode prototype a few options for the new dropdown menu</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span><span class="cx">$hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span><span class="cu">/hugues-mode prototype a few options for &lt;feature request&gt;. use verify-&lt;app&gt; and take screenshots for me to review and choose from</span></code></pre>
 <p>Poteto's <code>/control-app</code> is the verification skill from his Part 1. In hStack it is your project's <code>verify-&lt;app&gt;</code> skill, made by <code>create-verification-skill</code>. For a CLI use <code>control-cli</code>. For a web UI use <code>control-ui</code>. He also asks for videos. Ask for them only if your verify skill can record one.</p>
 <p><span class="lbl def">Defined, not yet observed</span> The Prototype playbook. hStack records no run of it.</p>
 
@@ -1201,7 +1220,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <li>Two or more independent deviations of the same shape appear during Implement.</li>
 </ul>
 <p>A few edge cases do not condemn an architecture. Complexity in the data is not complexity in the design.</p>
-<pre class="prompt"><code><span class="cc">/hstack:architect this new &lt;feature request&gt;</span><span class="cx">$architect this new &lt;feature request&gt;</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:architect this new &lt;feature request&gt;</span><span class="cx">$architect this new &lt;feature request&gt;</span><span class="cu">/architect this new &lt;feature request&gt;</span></code></pre>
 <div class="callout tip"><span class="h">Check who sits on the panel</span>
 <p>The architect panel is the <code>architect runners</code> line of <code>.hstack/models.md</code>, one seat per entry. The default file gives its second seat only a Codex model. By setup-hstack's rule, a host runs the first alternative its agent tool accepts, so in Claude Code that seat runs on your chat's own model. Edit the line if you want a different Claude model there. hStack reports same-model process independence separately from model diversity. <span class="lbl def">Defined, not yet observed</span></p></div>
 <div class="callout why"><span class="h">Never review an abstract plan adversarially</span>
@@ -1210,7 +1229,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 
 <h2 id="plan">19. Turn the design into a plan</h2>
 <p>You may still want a planning document. hStack has no planning skill. It has the Multi-phase plan playbook, and the order matters. Run it after the design settles, as a tactical execution plan.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode turn this design into a plan</span><span class="cx">$hugues-mode turn this design into a plan</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode turn this design into a plan</span><span class="cx">$hugues-mode turn this design into a plan</span><span class="cu">/hugues-mode turn this design into a plan</span></code></pre>
 <p>The playbook writes a plan and does not implement it. It skips the plan when the change is one or two files with an obvious approach. Otherwise it settles open questions by prototype and asks you only for product calls, then explores in subagents that return file pointers, conventions, test commands and entry points. It fills a skeleton with one section per PR, each one change with its own evidence, and the plan names the playbook that will execute it. It writes the body as a how-to under <code>technical-writing</code> and <code>unslop</code>, runs the plan checker and fixes every line the checker prints. Then it hands back the plan path and the checker output and stops. Execution starts on your explicit go.</p>
 <p>Every task in the plan ends in proof. The rule is written into each verification block. <em>Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.</em> The live block drives the real surface through ten lanes. One lane runs the same scenario on trunk and on the PR head. The perf gate measures both sides. A PR that changes an interaction is review-gated, so you see screenshots and a video in chat before it merges. For a mobile plan, the lanes come from the mobile lane scenarios.</p>
 <p>The plan lives under the agent store's <code>docs/</code> folder unless you name a path. Poteto sometimes commits a plan temporarily on week-long work, so other agents know what is in progress. He deletes it when the work lands, so it never confuses the codebase. To do the same, name a repository path in your prompt and say when to delete it. The checker needs Node, as Part I's prerequisites table says.</p>
@@ -1243,7 +1262,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <text class="t" x="260" y="456" text-anchor="middle">adds a standing program, a ledger and a stacker</text>
 <path class="e" d="M260,392 L260,416" marker-end="url(#ah)"/>
 <text class="nt" x="512" y="40" text-anchor="start">Bounded bug-fix runs observed</text>
-<text class="nt" x="512" y="55" text-anchor="start">on both hosts.</text>
+<text class="nt" x="512" y="55" text-anchor="start">on Claude Code and Codex.</text>
 <text class="nt" x="512" y="120" text-anchor="start">Wake: /loop in the local Claude Code</text>
 <text class="nt" x="512" y="135" text-anchor="start">session. Codex: active-session waits.</text>
 <text class="nt" x="512" y="200" text-anchor="start">Bounded arena and architect runs</text>
@@ -1271,7 +1290,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <tr><td>Autopilot-stack</td><td>Coupled or sequenced PRs, or you want to review first.</td><td>One owner per PR, branching from the item it depends on.</td><td>The root's swarm, one verdict per link.</td><td>You, bottom-up. The root is the chain's only writer.</td></tr>
 <tr><td>Orchestrate</td><td>A program that outlives any single agent.</td><td>Workers for each unit. The coordinator never codes.</td><td>A verifier on a different model family, and a ledger row for each PR and head SHA.</td><td>The coordinator for verified units on cheap repos, otherwise a stacker.</td></tr>
 </table>
-<p><span class="lbl obs">Observed</span> Bounded bug-fix runs on both hosts, and bounded design-only <code>arena</code> and <code>architect</code> runs. <span class="lbl def">Defined, not yet observed</span> Every other row, and every shape at scale: Orchestrate, both autopilots, <code>swarm</code>, <code>figure-it-out</code>, the Autonomous run <code>/loop</code> wake and multi-day programs.</p>
+<p><span class="lbl obs">Observed</span> Bounded bug-fix runs on Claude Code and Codex, and bounded design-only <code>arena</code> and <code>architect</code> runs. <span class="lbl def">Defined, not yet observed</span> Every other row, and every shape at scale: Orchestrate, both autopilots, <code>swarm</code>, <code>figure-it-out</code>, the Autonomous run <code>/loop</code> wake and multi-day programs.</p>
 
 <h3>Four rules that hold in every shape</h3>
 <ul>
@@ -1283,7 +1302,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <div class="callout warn"><span class="h">Different family has limits inside one host</span>
 <p>Each host's subagents come from one vendor. Claude Code runs Claude models and Codex runs GPT models. Inside one host, "a different model" means a different model of that vendor. The only model-independent review is cross-host review. Claude Code reviews a Codex diff, or the reverse. <a href="#review">Section 22</a> shows how.</p></div>
 <div class="callout tip"><span class="h">Cloud workers run locally</span>
-<p>Some playbooks say cloud worker, inherited from Cursor. In Claude Code and Codex they run as local native workers where the playbook permits local execution. A cloud spawn is a gap. An operation that needs one holds and reports it. Orchestrate's bookkeeping uses the <code>orch</code> helper, which needs the Bun setup from Part I.</p></div>
+<p>Some playbooks say cloud worker, inherited from Cursor. In Claude Code, Codex and Cursor they run as local native workers where the playbook permits local execution. A cloud spawn is a gap. An operation that needs one holds and reports it. Orchestrate's bookkeeping uses the <code>orch</code> helper, which needs the Bun setup from Part I.</p></div>
 
 <h2 id="run-team">21. Run the team in Claude Code</h2>
 <p>This section is the daily rhythm of a lead. <a href="#shape">Section 20</a> chose the team. Here you keep it on track without watching every move.</p>
@@ -1356,6 +1375,13 @@ ACCEPTANCE a regression test fails on the unfixed code and passes after the fix.
 VERIFY verify-shop and the existing xcodebuild test plan
 TIMEBOX after two refuted hypotheses, stop and report
 FORBIDDEN no push, no merge, no sdk changes
+REPORT root cause, fix, RED then GREEN output, and what you could not prove</span><span class="cu">/hugues-mode
+GOAL the profile screen shows fresh data after a logout and login
+SCOPE edit the Profile and Session modules only. fresh worktree off main. bug report pasted below.
+ACCEPTANCE a regression test fails on the unfixed code and passes after the fix. a before and after screenshot from the iPhone 17 simulator.
+VERIFY verify-shop and the existing xcodebuild test plan
+TIMEBOX after two refuted hypotheses, stop and report
+FORBIDDEN no push, no merge, no sdk changes
 REPORT root cause, fix, RED then GREEN output, and what you could not prove</span></code></pre>
 
 <h3>Staff the team</h3>
@@ -1368,7 +1394,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <h3>Get status without micromanaging</h3>
 <ul>
 <li><strong>Do not poll.</strong> Orchestrate treats a completion as a queue event, not an interrupt. It never resumes an agent just to check on it. It probes read-only instead: the ledger, the unit table, <code>gh</code> and pushed branches.</li>
-<li><strong>Ask for the catch-up.</strong> <code class="cc">/hstack:ketchup</code><code class="cx">$ketchup</code> reports in plain words what changed in this chat since your last message. It lists every call waiting on you, each with the agent's pick.</li>
+<li><strong>Ask for the catch-up.</strong> <code class="cc">/hstack:ketchup</code><code class="cx">$ketchup</code><code class="cu">/ketchup</code> reports in plain words what changed in this chat since your last message. It lists every call waiting on you, each with the agent's pick.</li>
 <li><strong>Read the decision log.</strong> <code>show-me-your-work</code> keeps a TSV with one row per decision, its reason, an evidence pointer and the result. It ends with an Attention section from a reviewer on a different model family.</li>
 <li><strong>In Orchestrate, read three lines.</strong> Each drain ends with counts against the states, what changed and the gates open. <code>status.md</code> is derived from the tables, not narrated. <code>gates.md</code> parks each human call with the question, the options and a default if you do not answer.</li>
 </ul>
@@ -1433,7 +1459,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 </table>
 <p>A second opinion is the same prompt against a different model, and agreement is high-signal. In <code>interrogate</code>, a finding that two or more reviewers raised independently is the strongest. A lone finding gets read and weighted. Read the Dismissed list too. It is how you override the lead reviewer's judgment.</p>
 <p>For a model-independent review, run the panel in the host that did not write the diff.</p>
-<pre class="prompt"><code><span class="cc">/hstack:interrogate review the diff on this branch against main</span><span class="cx">$interrogate review the diff on this branch against main</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:interrogate review the diff on this branch against main</span><span class="cx">$interrogate review the diff on this branch against main</span><span class="cu">/interrogate review the diff on this branch against main</span></code></pre>
 <p>For explicitly selected mobile work, the reviewers also get the mobile review lens. It covers lifecycle and process restoration, main-thread safety, cancellation, resource release, offline and retry behavior, accessibility and text scaling, and native-wrapper ownership. Each applicable risk ends covered with evidence or named as a gap.</p>
 <p>Review code, not abstract plans. <a href="#measure">Section 18</a> explains why.</p>
 <p><span class="lbl obs">Observed</span> A narrow <code>blast-radius</code> run on Claude Code, on a synthetic artifact. <span class="lbl def">Defined, not yet observed</span> A full <code>interrogate</code> panel, cross-host review, Shipping, <code>deslop</code> and <code>no-comments</code>. A routing preview has selected <code>interrogate</code>, but no run of a full panel is recorded.</p>
@@ -1441,12 +1467,12 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <h2 id="improve">23. Make the team better over time</h2>
 <p>A team that repeats its mistakes has a process problem. Poteto's rule is the one hStack encodes as a principle. When you catch yourself writing the same instruction a second time, encode it. If the fix is structural, use only the structural fix, because the instruction is the symptom.</p>
 <h3>Fix the class of mistake</h3>
-<pre class="prompt"><code><span class="cc">/hstack:correct </span><span class="cx">$correct </span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:correct </span><span class="cx">$correct </span><span class="cu">/correct </span></code></pre>
 <p><code>correct</code> reads recent commits, reverts, review comments and workaround comments. It groups the mistakes into classes, and a class counts once it has happened twice. It fixes each class at the highest level that works. The order is architecture, then types, then a lint or CI check whose error names the fix, then a test, then docs last. It proves each new check fails on a real past mistake. It keeps a table in the instruction file that pairs each rule with what enforces it.</p>
 <h3>Learn from a session</h3>
 <p><code>reflect</code> sends three reviewers over a transcript, with judgment, tooling and divergent lenses. A synthesizer returns Accepted, Rejected and Backlog lists. Nothing applies without your approval. It looks for the transcript in an <code>agent-transcripts/</code> folder. hStack's adapters wire no Claude Code or Codex transcript folder, so when no path resolves, <code>reflect</code> uses a digest of the current session and labels its source and limits. <span class="pill">on main, not yet released</span> Approved edits go to a copy under <code>.claude/skills/</code> or <code>.agents/skills/</code>. <code>reflect</code> never edits the plugin cache and never opens a PR.</p>
 <h3>Keep the verifier honest</h3>
-<p>Your <code>verify-&lt;app&gt;</code> skill rots when the app changes. <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code> runs a source wave with one read-only subagent for each feature file, then a required live pass that drives every mapped feature. It ends in one of three outcomes. Clean means no change. Changed means one PR of proven corrections. Blocked means coverage could not finish. It never edits product code. Run it on a schedule you choose.</p>
+<p>Your <code>verify-&lt;app&gt;</code> skill rots when the app changes. <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code><code class="cu">/maintain-verification-skill</code> runs a source wave with one read-only subagent for each feature file, then a required live pass that drives every mapped feature. It ends in one of three outcomes. Clean means no change. Changed means one PR of proven corrections. Blocked means coverage could not finish. It never edits product code. Run it on a schedule you choose.</p>
 <p><span class="lbl def">Defined, not yet observed</span> <code>correct</code>, <code>reflect</code> and whole-map maintenance. The release notes list whole-map maintenance among behaviors the release tests did not establish.</p>
 <p><span class="pill">new in 0.5.5</span> Four user-only skills extend this loop. <code>create-formal-verification-skill</code> generates a project skill that checks a key property, such as a race or an invariant, past what tests reach. <code>maintain-formal-verification-skill</code> keeps it in line with the code and says whether a failure is drift or a bug. <code>statechart</code> draws a flow as a Mermaid chart from a TLA+ model. <code>ketchup-video</code> catches you up as a short silent video of slides.</p>
 <p>Two habits close the loop. Fix a misbehaving skill in its own PR instead of working around it in the middle of other work. At the end of an Orchestrate program, move each recurring correction into <code>preferences.md</code> or the brief template.</p>
@@ -1455,7 +1481,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <p>Each example keeps Poteto's scenario. The prompt shows the hStack command. The table shows what the lead checks and does at each checkpoint. The dropdown prototype is in <a href="#measure">section 18</a>. The Dune tutorial and the virtualization prompt are in <a href="#backwards">section 17</a>.</p>
 
 <h3>Example 1. Research an ambiguous bug</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span><span class="cx">$hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span><span class="cx">$hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span><span class="cu">/hugues-mode investigate why background workers periodically fail with timeout errors. give me a breakdown of what we know, what data you used, and your best hypotheses.</span></code></pre>
 <table>
 <tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
 <tr><td>The todo list</td><td>The Investigation playbook, with the line <code>throughput checkpoint: n/a, read-only investigation</code>.</td><td>If it opened Bug fix, say "don't change any code yet".</td></tr>
@@ -1464,7 +1490,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 </table>
 
 <h3>Example 2. Design a new service boundary</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span><span class="cx">$hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span><span class="cx">$hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span><span class="cu">/hugues-mode we need to add rate limiting for external webhooks. architect this first, and answer any open questions with prototypes. let me review before proceeding.</span></code></pre>
 <table>
 <tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
 <tr><td>Ground</td><td>A <code>how</code> summary of the current webhook path, plus <code>why</code> if ownership moves.</td><td>Correct anything the agent got wrong before it sketches.</td></tr>
@@ -1474,7 +1500,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 </table>
 
 <h3>Example 3. Execute a multi-PR migration</h3>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span><span class="cx">$hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span><span class="cx">$hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span><span class="cu">/hugues-mode create a plan to migrate our entire UI library to StyleX. break the migration into small, verifiable PRs. each PR must have its visual regression tests and live verification steps. i want the final result to be 100% identical compared to the original - bugs included</span></code></pre>
 <table>
 <tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
 <tr><td>The handback</td><td>A plan path and the checker's output. The playbook stops here.</td><td>Open the plan. Do not say go yet.</td></tr>
@@ -1485,8 +1511,8 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 
 <h3>Example 4. Fix what people report on Slack</h3>
 <p>These are the classics Poteto types in issue channels. In both, the agent needs the thread. Paste it, or give your session a Slack MCP server.</p>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode do it</span><span class="cx">$hugues-mode do it</span></code></pre>
-<pre class="prompt"><code><span class="cc">/hstack:hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span><span class="cx">$hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode do it</span><span class="cx">$hugues-mode do it</span><span class="cu">/hugues-mode do it</span></code></pre>
+<pre class="prompt"><code><span class="cc">/hstack:hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span><span class="cx">$hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span><span class="cu">/hugues-mode repro this with verify-&lt;app&gt;. if it repros on main, fix it and show me a video as proof</span></code></pre>
 <table>
 <tr><th>Checkpoint</th><th>You look for</th><th>You do</th></tr>
 <tr><td>"do it"</td><td>That the thread already had enough context, and that the first reply acts on its problem. Type the command first. hStack documents no host setting that pins the mode on every turn.</td><td>If the agent picked the wrong problem, run the restate prompt from <a href="#brief">section 16</a>.</td></tr>
@@ -1497,9 +1523,9 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <h2 id="limits">Appendix A. What is verified today</h2>
 <p>hStack's own docs separate what was observed from what was only built. As of 0.5.7:</p>
 <ul>
-<li><strong>Observed:</strong> installs and updates from 0.4.0 through 0.5.2 on both Claude Code and Codex, and 0.5.3 copies on both hosts that match the tag. Router discovery on Claude Code. Before 0.5.4 the router fired unprompted in one interactive session, and since 0.5.4 a typed <code>/hstack:hugues-mode</code> loaded it in a print-mode check on 2026-10-22. Bounded bug-fix runs on both hosts. Bounded <code>how</code>, <code>tdd</code>, <code>blast-radius</code> and design-only <code>architect</code> and <code>arena</code> runs. A fresh <code>hugues-agent</code> delegate writing a scratch function. Native helper runs, including failed and incomplete attempts.</li>
-<li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on any host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR. Codex with implicit invocation off for <code>hugues-mode</code>, including <code>$hugues-mode</code>. A live <code>hugues-agent</code> reading the mode by path. A session using the full model IDs that setup now writes. The updates from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and from 0.5.6 to 0.5.7 on any host. Any host run of the four skills new in 0.5.5.</li>
-<li><strong>Defined, not yet observed (Part II):</strong> Orchestrate, Autopilot-full and Autopilot-stack, <code>swarm</code> and <code>arena</code> at scale, the full <code>architect</code> loop, the Prototype and Multi-phase plan playbooks, the plan checker, the <code>/loop</code> wake, <code>recall</code> and <code>reflect</code> over transcripts, cross-host review and multi-day programs.</li>
+<li><strong>Observed:</strong> installs and updates from 0.4.0 through 0.5.2 on both Claude Code and Codex, and 0.5.3 copies on both hosts that match the tag. Router discovery on Claude Code. Before 0.5.4 the router fired unprompted in one interactive session, and since 0.5.4 a typed <code>/hstack:hugues-mode</code> loaded it in a print-mode check on 2026-10-22. Bounded bug-fix runs on both hosts. Bounded <code>how</code>, <code>tdd</code>, <code>blast-radius</code> and design-only <code>architect</code> and <code>arena</code> runs. A fresh <code>hugues-agent</code> delegate writing a scratch function. Native helper runs, including failed and incomplete attempts. In Cursor 3.27.22 with a third-party auth extension, on the Auto model: the local-copy install showed 63 hStack skills with no duplicate names, <code>/hugues-help</code> answered and named Claude Code, Codex and Cursor, <code>/hugues-mode</code> routed to the <code>bug-fix</code> playbook and ran one foreground <code>hugues-agent</code> delegate whose work the parent checked against the committed file, and <code>/setup-hstack</code> asked for a reasoning budget and a model per role and wrote <code>.hstack/models.md</code>.</li>
+<li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on any host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR. Codex with implicit invocation off for <code>hugues-mode</code>, including <code>$hugues-mode</code>. A live <code>hugues-agent</code> reading the mode by path. A session using the full model IDs that setup now writes. The updates from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and from 0.5.6 to 0.5.7 on any host. Any host run of the four skills new in 0.5.5. In Cursor: stock Cursor, the free plan without the third-party auth extension, a read-only Explore subagent, the paid-feature skip line, the Swift skill on a Swift task, <code>recall</code> over Cursor's transcripts, the install from the Claude Code cache (route A), the GitHub-marketplace install route, and every other row of the command reference above.</li>
+<li><strong>Defined, not yet observed (Part II):</strong> Orchestrate, Autopilot-full and Autopilot-stack, <code>swarm</code> and <code>arena</code> at scale, the full <code>architect</code> loop, the Prototype and Multi-phase plan playbooks, the plan checker, the <code>/loop</code> wake, <code>recall</code> and <code>reflect</code> over transcripts, cross-host review and multi-day programs. A Cursor plugin agent cannot run in the background: Cursor's plugin-agent conversion drops the flag, so <code>hugues-agent</code> runs in the foreground there.</li>
 </ul>
 <p>The release notes in the repository (<code>docs/RELEASE-0.5.7.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
 
@@ -1534,11 +1560,11 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <script>
 (function(){
   var b=document.body, btns=document.querySelectorAll('.host-switch button');
-  function set(h){ if(h==='both'){delete b.dataset.host}else{b.dataset.host=h}
+  function set(h){ if(h==='all'){delete b.dataset.host}else{b.dataset.host=h}
     btns.forEach(function(x){x.setAttribute('aria-pressed', String(x.dataset.h===h))});
     try{localStorage.setItem('hstack-guide-host',h)}catch(e){} }
   btns.forEach(function(x){x.addEventListener('click',function(){set(x.dataset.h)})});
-  var saved='both'; try{saved=localStorage.getItem('hstack-guide-host')||'both'}catch(e){}
+  var saved='all'; try{saved=localStorage.getItem('hstack-guide-host')||'all'}catch(e){}
   set(saved);
   var links=[].slice.call(document.querySelectorAll('nav.toc a'));
   var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}).filter(Boolean);

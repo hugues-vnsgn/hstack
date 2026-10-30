@@ -27,7 +27,7 @@ and `node_modules/.poteto-mode-tools-install-key`. The key must match the
 SHA-256 of package.json, a NUL byte, and bun.lock, in that order. A standalone
 `bun install --frozen-lockfile` does not write the key. Resume later helper calls
 from the consumer directory, using the
-[workflow command table](host-workflow-tools.md#resolve-bundled-commands-on-both-hosts).
+[workflow command table](host-workflow-tools.md#resolve-bundled-commands-on-every-host).
 
 If dependencies or the matching key are missing and the cache is not writable,
 hold the dependent step. Report the exact expanded setup command as the gap,

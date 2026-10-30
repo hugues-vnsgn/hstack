@@ -8,13 +8,13 @@ Version 0.5.7 makes Cursor a third native host, beside Claude Code and Codex. A 
 - **Cursor page ([#146](https://github.com/hugues-vnsgn/hstack/pull/146)).** [plugin/adapters/hosts/cursor.md](../plugin/adapters/hosts/cursor.md) holds the Cursor mechanics: how a Cursor session detects itself, where its transcripts live, that a plugin agent runs in the foreground, which tools it may use, and which skip line a paid feature prints. The always-loaded adapters keep one door sentence pointing a Cursor session at that page.
 - **Cursor transcripts.** The activity reader reads Cursor's `{"role", "message"}` envelope, its `text` and `tool_use` blocks and its `turn_ended` marker, and treats any other shape as unreviewed and holds coverage. The recall skill states the slug rules Cursor actually uses, because Cursor ships more than one way to compute one.
 - **Model setup in Cursor.** `plugin/skills/setup-hstack/references/cursor-models.md` tells a Cursor session to detect the model ids from the agent tool's own schema in the session, and to write the Claude and Codex alternatives after them, so one `.hstack/models.md` still serves every host.
-- **Identity.** The identity line, the glossary, the README, both guides and the support table name three hosts. Claude Code and Codex keep their behaviour: no edit in this release changes what those hosts load or do.
+- **Identity.** The identity line, the glossary, the README, the developer guide, the user guide and the support table name three hosts. The Claude Code and Codex lanes keep their behaviour: no edit in this release changes what those hosts load or do. The one shared-code edit is scoped to the Cursor path of the activity reader, so the Claude Code and Codex audit stays exactly as conservative as it was at 0.5.6.
 
 Three lanes ran by hand in Cursor 3.27.22 with a third-party auth extension, on the Auto model, against the local copy at route B. `setup-hstack` wrote `.hstack/models.md`. A `/hugues-mode` session routed to `bug-fix` and ran one foreground `hugues-agent` delegate that fixed and committed a typo. The install showed 63 hStack skills with no duplicate names, from the local copy alone.
 
 Two claims were retired by those runs. The Cursor agent tool does expose a model id and has no effort parameter, so the model roles reference no longer says the detected set is empty. And Cursor's shell wrapper adds a `Co-authored-by` trailer to every `git commit`, which the Cursor page records without teaching agents to bypass hooks.
 
-- **Counts.** The tree collects 583 test cases, up from 553 at 0.5.6. The skill count stays at 63. The always-loaded router read set grows by 88 bytes over 0.5.6, all of it in the host adapter: an 80-byte door sentence that points a Cursor session at its page and an 8-byte title that names the third host.
+- **Counts.** The tree collects 584 test cases, up from 553 at 0.5.6. The skill count stays at 63. The always-loaded router read set — `hugues-mode/SKILL.md` plus `host.md` and `mobile.md` — grows by 88 bytes over 0.5.6, all of it in the host adapter: a 78-byte door sentence that points a Cursor session at its page, the blank line that separates it, and an 8-byte title that names the third host. Across all four adapters the Cursor work costs 279 bytes: `host.md` +88, `host-workers.md` +155, `host-workflow-tools.md` +36 and `mobile.md` +0. The two latter adapters are phase guidance, read on demand rather than with the router.
 
 The native build and test helpers, the mobile adapters, the bundled Swift and Kotlin guidance, the agents, and the Bun dependency inputs (`package.json`, `bun.lock`) are unchanged from 0.5.6. The pstack baseline stays at 0.15.32.
 
@@ -66,7 +66,7 @@ Static checks establish source and wiring contracts only. They ran at the releas
 
 | Static release check | Result | Scope |
 |---|---|---|
-| `python3 -m unittest discover -s tests -v` | PASS, 583 cases | Current source, installed adapters, helper contracts and historical restoration driver. |
+| `python3 -m unittest discover -s tests -v` | PASS, 584 cases | Current source, installed adapters, helper contracts and historical restoration driver. |
 | `./scripts/check-plugin.sh` | PASS, 63 skills | Plugin layout, manifests and installed payload. |
 | `python3 scripts/check_core.py` | PASS, 200 archive files | Canonical source and core workflow contracts. |
 | `python3 scripts/upstream-diff.py check` | PASS, 200 ledger rows | Pinned upstream source and responsibility accounting. |

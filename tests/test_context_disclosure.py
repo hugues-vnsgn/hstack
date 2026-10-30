@@ -315,7 +315,9 @@ class ContextDisclosure(unittest.TestCase):
         for path in adapters:
             inherited = at_pre_cursor(path)
             growth += len((ROOT / path).read_bytes()) - len(inherited.encode())
-        return growth
+        # A negative growth would loosen the allowance it feeds, so it is
+        # clamped at zero: an adapter that shrank adds no headroom.
+        return max(0, growth)
 
     def test_source_budgets_recompute_and_bound_unchanged_bodies(self):
         measured = measure_context.measure(ROOT)
@@ -471,9 +473,13 @@ class ContextDisclosure(unittest.TestCase):
         # the third host. The bound absorbs that growth explicitly rather than
         # leaving it to the guidance allowance, which is anchored to older
         # frozen revisions that predate both.
+        # Measured at this head: candidate 27,656 bytes, guidance 1,661 bytes
+        # (host.md 1,185 and hugues-mode/SKILL.md 476), router_growth 88 bytes,
+        # so the left-hand side is 25,907 against a `before` of 25,980: 73 bytes
+        # of headroom, which is what this bound now absorbs and no more.
         router_growth = self.cursor_adapter_growth(['plugin/adapters/host.md',
                                                     'plugin/adapters/mobile.md'])
-        self.assertLess(candidate - guidance - router_growth, before + 15)
+        self.assertLess(candidate - guidance - router_growth, before)
         router = 'plugin/skills/hugues-mode/SKILL.md'
         self.assertLess((ROOT / router).stat().st_size, len(main[router].encode()))
 

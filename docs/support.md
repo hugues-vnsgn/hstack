@@ -54,6 +54,18 @@ assertion. A successful same-artifact retry retains its flaky outcome.
 | RC2 K1 native UI/recipe/maintenance | observed-pass | GREEN, recipe and maintenance each: six exact cases PASS, zero fail/skip/unrun and four reopened, decoded, coordinator-viewed native images. Android 16 / SDK 36 / full SDK 36.1; same retained APK, bounded feature host/fakes only. Owned cleanup and evidence survival verified. Original STOP/failures retained; no Room/full-app/hardware Enter/analytics proof. [Receipt and image limits](rc2-native-feature-proof.md#k1-private-continuation) |
 | RC2 native project recipe discovery | observed-pass | Both hosts actually read full S1/K1 recipe Markdown. Claude catalog omitted these recipes; Codex native discovery is self-reported without raw catalog proof. Direct read establishes fallback only. [Limits](rc2-native-feature-proof.md#recipe-discovery-and-preservation) |
 | Layer 2, feature maps and CLI-first addition | deferred | Managed-worker runtime outside Layer 1; draft PR #2 remains post-first-release work |
+| Cursor local-copy install (route B) | observed-pass | Cursor 3.27.22 with a third-party auth extension, on the Auto model: the install showed 63 hStack skills with no duplicate names, with hStack listed once, from the local copy at `~/.cursor/plugins/local/hstack`. Stock Cursor and the free plan without that extension are unobserved. [Release notes](RELEASE-0.5.7.md#validation) |
+| Cursor install from the Claude Code cache (route A) | blocked | Unrun. Cursor loading hStack from Claude Code's install is expected, not proven; it is checked at the end, on the released plugin, with hStack on in Claude Code and no local copy |
+| Cursor GitHub-marketplace install route | blocked | Unrun. The repository-root `.cursor-plugin/marketplace.json` route is unobserved |
+| Cursor `/hugues-help` | observed-pass | The answer named Claude Code, Codex and Cursor, after reading the host contract, the mobile adapter and the Cursor page |
+| Cursor `/hugues-mode` routing to `bug-fix` | observed-pass | The session read the Cursor page, routed to the `bug-fix` playbook, and dispatched one `hugues-agent` delegate that ran in the foreground. The parent verified the delegate's work against the committed file, not the delegate's report |
+| Cursor `/setup-hstack` | observed-pass | It read the setup skill and the Cursor model roles, asked for a reasoning budget and a model per role, and wrote `.hstack/models.md`. The agent tool's own schema listed one real model id plus `inherit`, and no effort parameter |
+| Cursor read-only Explore subagent | blocked | No lane ran a read-only Explore subagent, and no run confirmed that a Cursor plugin subagent leaves the working tree clean |
+| Cursor paid-feature skip line | blocked | No lane asked for a paid Cursor feature and read the line it printed |
+| Cursor Swift skill on a Swift task | blocked | No lane loaded `swift-best-practices` on a Swift task |
+| Cursor `recall` over transcripts | blocked | No lane found an earlier chat in Cursor's transcripts. The slug rules come from the observed on-disk layout, not from a run of the skill |
+| Cursor background plugin agent | blocked | Cursor's plugin-agent conversion drops the flag, so `hugues-agent` runs in the foreground there. This is a written gap, not a field |
+| Cursor CLI, Cloud Agents, SDK and T3 Code provider | deferred | Unsupported surfaces. hStack does not document, support or test through them. [ADR](adr/0005-cursor-is-a-native-host.md) |
 
 PRs [#1](https://github.com/hugues-vnsgn/huguesStack/pull/1),
 [#3](https://github.com/hugues-vnsgn/huguesStack/pull/3),

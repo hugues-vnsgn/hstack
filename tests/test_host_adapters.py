@@ -228,8 +228,12 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
     def test_bun_helper_setup_holds_unwritable_installation(self):
         tools = ' '.join((ROOT / 'plugin/adapters/host-helper-setup.md').read_text().split())
         setup = (ROOT / 'plugin/adapters/host-workers.md').read_text()
-        for host in ['.claude', '.codex']:
-            self.assertIn(f'{host}/plugins/cache/hstack/hstack/<loaded-version>/skills/hugues-mode/scripts', tools)
+        for host, directory in [
+                ('.claude', '.claude/plugins/cache/hstack/hstack/<loaded-version>/skills/hugues-mode/scripts'),
+                ('.codex', '.codex/plugins/cache/hstack/hstack/<loaded-version>/skills/hugues-mode/scripts'),
+                ('.cursor', '.cursor/plugins/local/hstack/skills/hugues-mode/scripts')]:
+            with self.subTest(host=host):
+                self.assertIn(directory, tools)
         for contract in [
                 'cd "<plugin>/skills/hugues-mode/scripts" && bun install --frozen-lockfile',
                 'bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" --help',
@@ -465,6 +469,23 @@ class SyntheticActivity(unittest.TestCase):
         hits, reports, complete = self.scan('cursor', [row])
         self.assertEqual(reports[0].get('error'), None, reports[0])
         self.assertEqual(reports[0]['coverage'], 'complete', reports[0])
+
+    def test_an_undecodable_escape_holds_claude_and_not_cursor(self):
+        # The shared matcher decodes percent escapes strictly for Claude Code
+        # and Codex, so a record whose text is not valid percent-encoding holds
+        # that source's coverage. Only the Cursor path tolerates it, because
+        # the owner's real Cursor store carries a git date format.
+        text = "the format is --format='%h %ad %s'"
+        claude = {'type': 'assistant', 'timestamp': self.stamp, 'cwd': str(self.other),
+                  'message': {'content': [{'type': 'text', 'text': text}]}}
+        hits, reports, complete = self.scan('claude', [claude])
+        self.assertEqual(reports[0]['coverage'], 'unavailable', reports[0])
+        self.assertFalse(complete)
+        cursor = {'role': 'assistant',
+                  'message': {'content': [{'type': 'text', 'text': text}]}}
+        hits, reports, complete = self.scan('cursor', [cursor])
+        self.assertEqual(reports[0]['coverage'], 'complete', reports[0])
+        self.assertFalse(complete)
 
     def test_a_redacted_real_cursor_transcript_reads_without_holding(self):
         # The fixtures are the owner's real chats with every value replaced.

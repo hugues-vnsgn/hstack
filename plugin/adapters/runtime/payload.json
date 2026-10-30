@@ -186,17 +186,17 @@
     },
     {
       "path": "adapters/host-helper-setup.md",
-      "sha256": "c8bea0acebcd7367483d0c322822310bfec29b6a4aa8a13f0f859c204b4d2c79",
+      "sha256": "06ed64f7c055a9578f48ed87481720540b8e0ab2820ce629f98e84431e2ffb94",
       "mode": "100644"
     },
     {
       "path": "adapters/host-mobile-languages.md",
-      "sha256": "6bf8401a774c077a7ef81aef9d47c0c1cda58c06d56a89e8d481874ec6c2d405",
+      "sha256": "6017f189fe1afa54a804f163aa319a99933fcb25d2cc3d10d71231b3a91817c3",
       "mode": "100644"
     },
     {
       "path": "adapters/host-publication.md",
-      "sha256": "c6e2bb7db2018feabfd94e92e26691691e04759bc1084bc62a402f9ac16f4e33",
+      "sha256": "9b4105a68132271af537817421ec8ed0cbc2879ec53cbce178226dbae7963359",
       "mode": "100644"
     },
     {
@@ -206,7 +206,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "87a7b490edf6389bc1a82fd8b2e48fae815de94a0492f6a1a8c27a6a62a2a9bf",
+      "sha256": "2f1ee01203c2aab5191c68343def82646d6983431d3379883d53cca2957ccfb9",
       "mode": "100644"
     },
     {
@@ -221,7 +221,7 @@
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "9a105d0afc6b713ea58bc50bb0200d69687f70425e05a9271fb245c37894339f",
+      "sha256": "07a7757c17baa6e65b7991b41ddbdf9444ef6b367debb1d0baab5a440d47881c",
       "mode": "100644"
     },
     {
@@ -271,7 +271,7 @@
     },
     {
       "path": "adapters/runtime/activity.py",
-      "sha256": "4dd88c1b66280dc2277ea8dd5923d6f3e1302d702f08ca36315d633b85c69f83",
+      "sha256": "7ed602099396ea6dba6f76ccf41c1fb09e71713f64a40aa67ccc7e38a305e440",
       "mode": "100644"
     },
     {
@@ -1216,7 +1216,7 @@
     },
     {
       "path": "skills/setup-hstack/SKILL.md",
-      "sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f",
+      "sha256": "ea9c0311ee63d3167594255b3ba57fc22d5461e66f0e023b4b4affddc9b823a8",
       "mode": "100644"
     },
     {

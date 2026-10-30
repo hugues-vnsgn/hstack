@@ -1,6 +1,6 @@
 # Planning, cleanup and executable helpers
 
-## Resolve bundled commands on both hosts
+## Resolve bundled commands on every host
 
 Use the absolute loaded `skills/hugues-mode/SKILL.md` found by
 `hugues-agent` as [host.md](host.md) directs. Its grandparent's parent is

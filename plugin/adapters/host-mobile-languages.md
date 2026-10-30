@@ -3,7 +3,7 @@
 Before reading or editing `.swift`, read `../skills/swift-best-practices/SKILL.md`
 in full. Before reading or editing `.kt` or `.kts`, read
 `../skills/kotlin-best-practices/SKILL.md` in full. Resolve these paths from this
-adapter's directory. These are scoped bundled file reads on both hosts, as
+adapter's directory. These are scoped bundled file reads on every host, as
 [host.md](host.md) specifies. `paths` metadata establishes no auto-load.
 Each fresh worker performs its own reads before the relevant source.
 

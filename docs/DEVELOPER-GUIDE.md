@@ -9,7 +9,7 @@ KMP and CMP proof rules.
 
 ## Before you start
 
-Use an already installed and signed-in Claude Code or Codex. Read your app's own
+Use an already installed and signed-in Claude Code, Codex or Cursor. Read your app's own
 instructions and preserve existing work. A source preview requires no simulator.
 Executing an app requires its actual build/test tooling and your authorization.
 The Python planning/audit helper requires Python 3.9+ and Git; plan validation
@@ -21,8 +21,8 @@ performs no installation or authentication setup.
 Once its tag exists, version 0.5.7 can load for one session from a `v0.5.7` checkout.
 Keep an active task on its recorded older copy until you reconcile its binding.
 Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were observed on
-both hosts. Both hosts on the maintainer machine hold 0.5.3 copies that match its
-tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
+Claude Code and Codex. Those two hosts on the maintainer machine hold 0.5.3 copies
+that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
 from 0.5.6 to 0.5.7 remains unobserved. Restart the Claude Code process
 after updating. A process started before an update can keep loading its old cache. Follow the
 [upgrade instructions](RELEASE-0.5.7.md#upgrade) for persistent installs.
@@ -48,9 +48,9 @@ migration from 0.3.0.
 Codex supports explicit skill invocation and project-native discovery. This
 version supplies canonical skills plus `agents/openai.yaml` invocation metadata.
 The 0.5.0 pretest used an installed Codex copy on CLI 0.163.0. Updates from
-0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were later observed on both
-hosts. Both hosts on the maintainer machine hold 0.5.3 copies that match its
-tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
+0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were later observed on Claude
+Code and Codex. Those two hosts on the maintainer machine hold 0.5.3 copies that
+match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
 from 0.5.6 to 0.5.7
 remains unobserved.
 Use your host's supported native discovery route, and check that `hugues-mode`
@@ -62,6 +62,36 @@ copy a disabled body under another name, or change owner settings to evade it.
 See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills)
 for host-specific discovery and invocation controls; this guide does not invent
 a plugin loader or claim a tested installation method.
+
+## Use Cursor
+
+Cursor is the third native host. The only Cursor surface is the Cursor IDE:
+the CLI, Cloud Agents, the SDK and T3 Code's Cursor provider are out of scope.
+
+Pick exactly one route. **Route A**: you already use hStack in Claude Code, so
+install nothing in Cursor, because Cursor loads hStack from Claude Code's
+install. **Route B**: you do not use Claude Code, so hold a copy of this tree's
+`plugin/` folder at `~/.cursor/plugins/local/hstack`. Copy the folder rather than
+symlinking it, because Cursor skips a symlink in that folder whose target
+resolves outside it. One hStack source at a time: a local copy plus an enabled
+Claude Code install registers every shared skill name twice.
+
+```sh
+src="/absolute/path/to/hstack/plugin"
+dst="$HOME/.cursor/plugins/local/hstack"
+rm -rf "$dst"
+mkdir -p "$dst"
+cp -R "$src"/. "$dst"/
+```
+
+In Cursor, the router is invoked as `/hugues-mode`, `/hugues-help` and
+`/setup-hstack`. Cursor loads a plugin agent in the foreground, so the
+`hugues-agent` delegate runs there and cannot be sent to the background.
+
+Route A is expected, not proven, and is checked at the end on the released
+plugin. Stock Cursor is unobserved: every Cursor observation in the 0.5.7
+release notes comes from Cursor 3.27.22 with a third-party auth extension. See
+[the 0.5.7 release notes](RELEASE-0.5.7.md#known-gaps) for the full gap list.
 
 ## Your first task: fix a small search bug
 
