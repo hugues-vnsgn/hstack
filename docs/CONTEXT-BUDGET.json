@@ -1132,9 +1132,9 @@
         "plugin/skills/why/SKILL.md"
       ],
       "unique_files": 63,
-      "bytes": 257893,
-      "characters": 257800,
-      "estimated_tokens_characters_divided_by_4": 64450.0,
+      "bytes": 257891,
+      "characters": 257798,
+      "estimated_tokens_characters_divided_by_4": 64449.5,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1341,8 +1341,8 @@
           "sha256": "8d741bb95066f69fb411b8426535f9762eccea66f890537581aabdbda2c12caf"
         },
         "plugin/skills/setup-hstack/SKILL.md": {
-          "bytes": 11266,
-          "sha256": "5e8fa51b0d16bca229f5c93976960baf0ab506441180c904e88d604817517b95"
+          "bytes": 11264,
+          "sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f"
         },
         "plugin/skills/sharpen/SKILL.md": {
           "bytes": 911,
@@ -1396,9 +1396,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 240267,
-      "characters": 240175,
-      "estimated_tokens_characters_divided_by_4": 60043.75
+      "bytes": 240265,
+      "characters": 240173,
+      "estimated_tokens_characters_divided_by_4": 60043.25
     },
     "mode_full_file": {
       "paths": [

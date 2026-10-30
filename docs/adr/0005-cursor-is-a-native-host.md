@@ -21,11 +21,6 @@ make until a run in the IDE shows it.
 - **Subagents are not observed in the Cursor IDE.** No lane ran a read-only
   Explore subagent, and no lane confirmed that a Cursor plugin subagent leaves
   the working tree clean.
-- **The `hugues-agent` delegate is not observed in the Cursor IDE.** No lane
-  ran one helper task. The foreground-delegate gap below stands on the
-  loader's own behaviour, unproven by a run.
-- **`setup-hstack` is not observed in the Cursor IDE.** No lane wrote
-  `.hstack/models.md` with a Cursor section.
 - **The paid-feature skip line is not observed in the Cursor IDE.** No lane
   asked for a paid Cursor feature and read the line it printed.
 - **The Swift skill is not observed in the Cursor IDE.** No lane loaded
@@ -41,6 +36,37 @@ make until a run in the IDE shows it.
   3.27.22 with a third-party auth extension. The free plan without that
   extension is unobserved too.
 
+Two lanes moved from gaps to observed, and the transcripts are the evidence.
+
+- **`setup-hstack` is observed in the Cursor IDE.** On 2026-10-30 a
+  `/hugues-help` session read the setup skill and the Cursor model roles,
+  asked for a budget and a model per role, and wrote `.hstack/models.md`. The
+  transcript is `af1aa92a-1e13-414d-afd6-65fc11841389`.
+- **The `hugues-agent` delegate is observed in the Cursor IDE.** On
+  2026-10-30 a `/hugues-mode` session routed to `bug-fix` and dispatched one
+  `Task` call with `subagent_type: "hugues-agent"`. The delegate ran in the
+  foreground, reported back, and the parent verified its work against the
+  committed file. The transcript is `8cf8c8f7-771d-4dd3-8452-90144dd23ce9`
+  and the subagent's is `a0514e09-d859-41e1-8ae6-1cc53cf1db54`.
+
+Both runs also produced two observations that change what hStack states.
+
+- **The agent tool exposes a model id and no effort parameter.** The setup
+  session read the agent tool's own schema and found one real model id plus
+  `inherit`, and no effort setting. The earlier claim that the detected model
+  set is empty on the free plan does not survive that run, so the
+  [model roles reference](../../plugin/skills/setup-hstack/references/cursor-models.md)
+  now tells a Cursor session to detect the ids from the schema instead.
+- **Cursor's shell adds a commit trailer.** The shell wrapper adds a
+  `Co-authored-by` trailer to every `git commit`, and `git commit --amend`
+  adds it again. A commit whose body must stay empty is built with
+  `git commit-tree` and pointed at with `git update-ref`, which bypasses
+  hooks, and the [Cursor page](../../plugin/adapters/hosts/cursor.md) says so.
+
+One more observation, with no change to hStack: the `/hugues-help` session
+ran `setup-hstack` and the repository's test suite itself, where the skill
+offers the user the choice to type `/setup-hstack` instead.
+
 ## Why
 
 Cursor is where a lot of the mobile work already happens, and hStack was invisible there. pstack was built for Cursor, so Cursor is not a new host so much as the host hStack was forked from. The fork is what let the third host be cheap: the plugin tree, the skills and the playbooks were already Cursor-shaped, so adding Cursor is a manifest and an adapter rather than a rewrite.
@@ -51,9 +77,18 @@ The CLI is excluded for the same reason of evidence. The CLI shares the plugin l
 
 ## The background gap
 
-A Cursor plugin agent runs in the foreground. Per Cursor's loader; not observed in the IDE: Cursor's own plugin-agent conversion drops the background flag on the way to the Task call, so `is_background: true` would be inert, and no hStack agent carries a read-only field: Claude Code also reads `permissionMode`, and `readonly` is not a value Claude Code accepts. `hugues-agent` is a background delegate on Claude Code and a foreground delegate in Cursor.
+A Cursor plugin agent runs in the foreground. Observed in the IDE on
+2026-10-30: a `Task` call with `subagent_type: "hugues-agent"` ran one helper
+task to completion inside the parent's turn, and the delegate's transcript
+sits beside the parent's under `subagents/`. Per Cursor's loader; not observed
+in the IDE: Cursor's own plugin-agent conversion drops the background flag on
+the way to the Task call, so `is_background: true` would be inert, and no
+hStack agent carries a read-only field: Claude Code also reads
+`permissionMode`, and `readonly` is not a value Claude Code accepts.
 
-This is a written gap, not a field. The [workers adapter](../../plugin/adapters/host-workers.md) says so, and a Cursor workflow that expects a background delegate dispatches the worker and waits for its result in the same turn.
+This is a written gap, not a field. The [workers adapter](../../plugin/adapters/host-workers.md)
+says so, and a Cursor workflow that expects a background delegate dispatches
+the worker and waits for its result in the same turn.
 
 ## The transcript gap
 
@@ -65,6 +100,6 @@ A Cursor transcript's project slug has two forms, because Cursor ships more than
 
 - The identity line and the glossary name three hosts. Claude Code and Codex keep their behavior: no edit in this change alters what those hosts load or do.
 - The [host adapter](../../plugin/adapters/host.md) splits its Cursor-only features into free and paid. The paid rows keep the skip line format `Skipped in <host>: <step>. <reason>.`
-- The [setup skill](../../plugin/skills/setup-hstack/SKILL.md) points at [cursor-models.md](../../plugin/skills/setup-hstack/references/cursor-models.md). On the free plan every role stays on `inherit-parent`.
+- The [setup skill](../../plugin/skills/setup-hstack/SKILL.md) points at [cursor-models.md](../../plugin/skills/setup-hstack/references/cursor-models.md). A Cursor session detects the model ids from the agent tool's own schema, and the effort token is recorded but not applied, because the tool has no effort setting.
 - The activity reader lives in [activity.py](../../plugin/adapters/runtime/activity.py) and covers three providers. It reads Cursor's `{"role", "message"}` envelope, its `text` and `tool_use` blocks and its `turn_ended` marker, and it treats any other shape as unreviewed and holds coverage.
 - Runtime behaviour in the IDE is unobserved until the owner runs the lanes. The release notes carry that gap. Route A is expected until the final check on the released plugin proves it: stock Cursor is unobserved, and the free plan without the third-party auth extension is unobserved.

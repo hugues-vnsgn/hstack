@@ -236,7 +236,7 @@
     },
     {
       "path": "adapters/hosts/cursor.md",
-      "sha256": "d4803c88a6d97982035449caf579cc4c39b58dcc2b4ec1ad305706dc9bbd6b35",
+      "sha256": "e11465ee9b5f307a9954f6980f394db823d3be293f0d3988ad0b929186bfdc2d",
       "mode": "100644"
     },
     {
@@ -1216,7 +1216,7 @@
     },
     {
       "path": "skills/setup-hstack/SKILL.md",
-      "sha256": "5e8fa51b0d16bca229f5c93976960baf0ab506441180c904e88d604817517b95",
+      "sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f",
       "mode": "100644"
     },
     {
@@ -1226,7 +1226,7 @@
     },
     {
       "path": "skills/setup-hstack/references/cursor-models.md",
-      "sha256": "8e520d757b691c9b77be50052582371ef325dbfdab710168502e4a9e0aa1d3a6",
+      "sha256": "f47d4ce64242622b01d6c2f6ddae5eab18a44ea82e3625bc0526d0f9b674b790",
       "mode": "100644"
     },
     {

@@ -1195,7 +1195,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/setup-hstack/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "5e8fa51b0d16bca229f5c93976960baf0ab506441180c904e88d604817517b95"
+      "destination_sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f"
     },
     {
       "source": "pstack/skills/sharpen/SKILL.md",
@@ -1932,7 +1932,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "ace85432770ac96f95ffb947b7fef0611729a38de4550d81022f8fd8f28d41b1",
+      "sha256": "4bc2abe9398e92e1746cbc80841a58a0d6babc7292fbfe393c7a8569011f10c8",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -1940,7 +1940,7 @@
       "mode": 420
     },
     "adapters/hosts/cursor.md": {
-      "sha256": "d4803c88a6d97982035449caf579cc4c39b58dcc2b4ec1ad305706dc9bbd6b35",
+      "sha256": "e11465ee9b5f307a9954f6980f394db823d3be293f0d3988ad0b929186bfdc2d",
       "mode": 420
     },
     "adapters/hosts/orca.md": {
@@ -1976,11 +1976,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "c91b4e1837aa236ffa0bb4edc82cbb74eabfe59c542d0b9a69954c8534860b73",
+      "sha256": "a567a7a607a2a60919984bdb924ac0d37dd86c77100e4e814e71d7bd775165ef",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "8b9f8fc72f439f6ea4d3d2652e8e5b35fd9bd22123c531da011c4dbabdb30e1d",
+      "sha256": "6e176efe97628125b2543a3f6f42dd5da278f29bf4a719af79c7fbfa80467152",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -2732,7 +2732,7 @@
       "mode": 420
     },
     "skills/setup-hstack/SKILL.md": {
-      "sha256": "5e8fa51b0d16bca229f5c93976960baf0ab506441180c904e88d604817517b95",
+      "sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f",
       "mode": 420
     },
     "skills/setup-hstack/agents/openai.yaml": {
@@ -2740,7 +2740,7 @@
       "mode": 420
     },
     "skills/setup-hstack/references/cursor-models.md": {
-      "sha256": "8e520d757b691c9b77be50052582371ef325dbfdab710168502e4a9e0aa1d3a6",
+      "sha256": "f47d4ce64242622b01d6c2f6ddae5eab18a44ea82e3625bc0526d0f9b674b790",
       "mode": 420
     },
     "skills/sharpen/SKILL.md": {

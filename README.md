@@ -93,9 +93,9 @@ copy. Route A keeps only the Claude-cache half; route B keeps only the local
 half. Stock Cursor is not observed.
 
 Gaps: stock Cursor is unobserved, and so is the free plan without the
-third-party auth extension. Subagents, the `hugues-agent` delegate,
-`setup-hstack`, the paid-feature skip line, the Swift skill and `recall` are
-not observed in the Cursor IDE either.
+third-party auth extension. A read-only Explore subagent, the paid-feature
+skip line, the Swift skill and `recall` are not observed in the Cursor IDE
+either. `setup-hstack` and the `hugues-agent` delegate are observed.
 
 A GitHub-marketplace route is also published: a repository root holding
 `.cursor-plugin/marketplace.json`, imported through **Dashboard → Plugins & MCPs
