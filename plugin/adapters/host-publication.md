@@ -7,7 +7,7 @@ Missing writing-for-agents is reported as a capability gap, never silently marke
 The bundled pinned
 unslop remains the prose contract.
 
-On both hosts, "Bugbot" means installed Claude Code Review,
+On every host, "Bugbot" means installed Claude Code Review,
 Claude GitHub Action review workflow, Codex review (`chatgpt-codex-connector`)
 or Cursor Bugbot. Both Claude bots use the Claude GitHub App.
 `bugbot-triage.md` applies to its comments unchanged.

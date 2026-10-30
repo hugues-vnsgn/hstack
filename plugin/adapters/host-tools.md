@@ -156,7 +156,11 @@ records. Never discover private history to fill a missing source. For example:
 ```
 
 The supported hosts are Claude Code, Codex and Cursor. Each provider contributes
-evidence and coverage independently, so a manifest may name any subset of them.
+evidence on its own, but a source caps the whole scan: a Cursor source never
+raises the scan's coverage above not-complete, whatever the owner asserted, so a
+manifest that names Cursor alongside Claude Code and Codex reports overall
+coverage unavailable even when the per-source reports say complete. A manifest
+may name any subset of them.
 A manifest with no supported source remains unavailable.
 
 `complete` is the owner's explicit assertion that the supplied set covers all

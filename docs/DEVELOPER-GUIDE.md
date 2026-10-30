@@ -1,6 +1,6 @@
-# Use hStack 0.5.6
+# Use hStack 0.5.7
 
-This guide is for version 0.5.6. `hugues-mode` is user-only, so type
+This guide is for version 0.5.7. `hugues-mode` is user-only, so type
 `/hstack:hugues-mode` or `$hugues-mode` to start it.
 The hStack rename shipped in 0.4.0. Your app stays in its own repository. Skills are instruction files for
 specific jobs. Playbooks order the steps of a larger task. Start with `hugues-mode` and describe the result you want.
@@ -9,7 +9,7 @@ KMP and CMP proof rules.
 
 ## Before you start
 
-Use an already installed and signed-in Claude Code or Codex. Read your app's own
+Use an already installed and signed-in Claude Code, Codex or Cursor. Read your app's own
 instructions and preserve existing work. A source preview requires no simulator.
 Executing an app requires its actual build/test tooling and your authorization.
 The Python planning/audit helper requires Python 3.9+ and Git; plan validation
@@ -18,13 +18,14 @@ performs no installation or authentication setup.
 
 ## Install in Claude Code
 
-Once its tag exists, version 0.5.6 can load for one session from a `v0.5.6` checkout.
+Once its tag exists, version 0.5.7 can load for one session from a `v0.5.7` checkout.
 Keep an active task on its recorded older copy until you reconcile its binding.
 Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were observed on
-both hosts. Both hosts on the maintainer machine hold 0.5.3 copies that match its
-tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5 and from 0.5.5 to 0.5.6 remains unobserved. Restart the Claude Code process
+Claude Code and Codex. Those two hosts on the maintainer machine hold 0.5.3 copies
+that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
+from 0.5.6 to 0.5.7 remains unobserved. Restart the Claude Code process
 after updating. A process started before an update can keep loading its old cache. Follow the
-[upgrade instructions](RELEASE-0.5.6.md#upgrade) for persistent installs.
+[upgrade instructions](RELEASE-0.5.7.md#upgrade) for persistent installs.
 Start from your app directory:
 
 ```sh
@@ -38,7 +39,7 @@ settings to force discovery or bypass an owner-disabled skill.
 For an earlier release, use its release notes ([0.2.0](RELEASE-0.2.0.md),
 [0.3.0](RELEASE-0.3.0.md)) and the instructions at that tag. Their historical
 instructions use the earlier names and do not apply to this version. The
-[0.5.6 release notes](RELEASE-0.5.6.md) describe the current upgrade and its
+[0.5.7 release notes](RELEASE-0.5.7.md) describe the current upgrade and its
 limits. The [0.4.0 notes](RELEASE-0.4.0.md) retain the historical rename and
 migration from 0.3.0.
 
@@ -47,9 +48,10 @@ migration from 0.3.0.
 Codex supports explicit skill invocation and project-native discovery. This
 version supplies canonical skills plus `agents/openai.yaml` invocation metadata.
 The 0.5.0 pretest used an installed Codex copy on CLI 0.163.0. Updates from
-0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were later observed on both
-hosts. Both hosts on the maintainer machine hold 0.5.3 copies that match its
-tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5 and from 0.5.5 to 0.5.6
+0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were later observed on Claude
+Code and Codex. Those two hosts on the maintainer machine hold 0.5.3 copies that
+match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
+from 0.5.6 to 0.5.7
 remains unobserved.
 Use your host's supported native discovery route, and check that `hugues-mode`
 is available before invoking `$hugues-mode`. Keep the complete resource layout.
@@ -60,6 +62,36 @@ copy a disabled body under another name, or change owner settings to evade it.
 See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills)
 for host-specific discovery and invocation controls; this guide does not invent
 a plugin loader or claim a tested installation method.
+
+## Use Cursor
+
+Cursor is the third native host. The only Cursor surface is the Cursor IDE:
+the CLI, Cloud Agents, the SDK and T3 Code's Cursor provider are out of scope.
+
+Pick exactly one route. **Route A**: you already use hStack in Claude Code, so
+install nothing in Cursor, because Cursor loads hStack from Claude Code's
+install. **Route B**: you do not use Claude Code, so hold a copy of this tree's
+`plugin/` folder at `~/.cursor/plugins/local/hstack`. Copy the folder rather than
+symlinking it, because Cursor skips a symlink in that folder whose target
+resolves outside it. One hStack source at a time: a local copy plus an enabled
+Claude Code install registers every shared skill name twice.
+
+```sh
+src="/absolute/path/to/hstack/plugin"
+dst="$HOME/.cursor/plugins/local/hstack"
+rm -rf "$dst"
+mkdir -p "$dst"
+cp -R "$src"/. "$dst"/
+```
+
+In Cursor, the router is invoked as `/hugues-mode`, `/hugues-help` and
+`/setup-hstack`. Cursor loads a plugin agent in the foreground, so the
+`hugues-agent` delegate runs there and cannot be sent to the background.
+
+Route A is expected, not proven, and is checked at the end on the released
+plugin. Stock Cursor is unobserved: every Cursor observation in the 0.5.7
+release notes comes from Cursor 3.27.22 with a third-party auth extension. See
+[the 0.5.7 release notes](RELEASE-0.5.7.md#known-gaps) for the full gap list.
 
 ## Your first task: fix a small search bug
 
@@ -169,7 +201,9 @@ and the Claude Code skill-list probe for the user-only router. The
 [0.5.5 validation](RELEASE-0.5.5.md#validation) records the static checks for
 the pstack 0.15.32 baseline. The
 [0.5.6 validation](RELEASE-0.5.6.md#validation) records the static checks, the
-session-start hook and the Orca coordinator runs.
+session-start hook and the Orca coordinator runs. The
+[0.5.7 validation](RELEASE-0.5.7.md#validation) records the static checks and
+the Cursor runs.
 hStack supports Swift/iOS, Kotlin/Android, KMP and CMP development through its
 mobile adapter. A complete journey on a real consumer project remains
-unobserved on either host.
+unobserved on any host.

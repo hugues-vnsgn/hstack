@@ -19,8 +19,8 @@ A role value is one or more alternatives joined by ` or `, such as `claude-opus-
 
 - The model is `inherit-parent` or a real slug: a full Claude model ID such as `claude-opus-5-5` or `claude-sonnet-5-5`, or a Codex model such as `gpt-6.1-sol`. Full IDs pin the version an alias can drift from. When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias: `claude-haiku-5-5` is `haiku`, `claude-sonnet-5-5` is `sonnet`, `claude-opus-5-5` is `opus`, and `claude-fable-5-1` is `fable`. `inherit-parent` leaves `model` unset, so the worker runs on the parent chat model. It is valid on every host.
 - The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. It sets the agent tool's effort.
-- A host runs the first alternative its agent tool accepts, so one file serves both hosts: a single-model role lists its Claude model first and its Codex model after it. With no accepted alternative, the role runs on `inherit-parent` at the first alternative's effort.
-- A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for both hosts and alternate which comes first, to use distinct available models where possible: `claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
+- A host runs the first alternative its agent tool accepts, so one file serves every host: a single-model role lists the current host's model first and the other hosts' alternatives after it. With no accepted alternative, the role runs on `inherit-parent` at the first alternative's effort.
+- A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for every host and alternate which comes first, to use distinct available models where possible: `claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
 - `arena cross-judge pool` is also a list, but Arena selects one value from it whose model differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ## Model tiers
@@ -39,7 +39,7 @@ A role's effort can move off its tier default because effort follows the work: `
 
 ### 1. Detect available models
 
-Read the `model` and effort values your host's native agent tool accepts from its own schema in this session. In Claude Code that is the Agent tool's `model` enum and its `effort` enum. A full Claude ID counts as detected when the enum lists it, or lists its alias and that alias resolves to the ID. On the Anthropic API each alias in the tier table resolves to its ID. A set `ANTHROPIC_DEFAULT_<FAMILY>_MODEL` must name the same ID, and on Bedrock, Vertex or Foundry the aliases name older models, so the role needs a choice. When the schema offers no model choice, the detected set is empty and every role stays on `inherit-parent`. Never write a real slug you have not confirmed is available, except the other host's alternatives, which step 4 lists as unverified.
+Read the `model` and effort values your host's native agent tool accepts from its own schema in this session. In Claude Code that is the Agent tool's `model` enum and its `effort` enum. A full Claude ID counts as detected when the enum lists it, or lists its alias and that alias resolves to the ID. On the Anthropic API each alias in the tier table resolves to its ID. A set `ANTHROPIC_DEFAULT_<FAMILY>_MODEL` must name the same ID, and on Bedrock, Vertex or Foundry the aliases name older models, so the role needs a choice. When the schema offers no model choice, the detected set is empty and every role stays on `inherit-parent`. Never write a real slug you have not confirmed is available, except the other hosts' alternatives, which step 4 lists as unverified.
 
 ### 2. Load current state
 
@@ -60,7 +60,7 @@ The starting role values are the file shape shown in step 5 below. If `.hstack/m
 
 ### 4. Validate
 
-Every real slug written for the current host must be in the detected set. The other host's alternatives (Codex models when setup runs in Claude Code, Claude model IDs when it runs in Codex) cannot be confirmed here: keep them and list them as unverified. `inherit-parent` always passes. If a chosen real slug is not available, stop and ask again.
+Every real slug written for the current host must be in the detected set. The other hosts' alternatives (Codex and Cursor models when setup runs in Claude Code, Claude model IDs when it runs in Codex, and so on) cannot be confirmed here: keep them and list them as unverified. `inherit-parent` always passes. If a chosen real slug is not available, stop and ask again.
 
 In Cursor, read [Cursor model roles](references/cursor-models.md) first and follow it: detect the Cursor model ids from the agent tool's own schema in the session, and put the detected id first in each role's alternatives.
 

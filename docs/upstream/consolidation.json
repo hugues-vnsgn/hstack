@@ -1195,7 +1195,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/setup-hstack/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f"
+      "destination_sha256": "ea9c0311ee63d3167594255b3ba57fc22d5461e66f0e023b4b4affddc9b823a8"
     },
     {
       "source": "pstack/skills/sharpen/SKILL.md",
@@ -1884,11 +1884,11 @@
   ],
   "installed_files": {
     ".claude-plugin/plugin.json": {
-      "sha256": "f252025ed3e8a0abf0d4a57da4d3eaac54fed1a0e4b2013a1e60ccaf6b4ea5f3",
+      "sha256": "8fcd2f6dd1b9cdd70c2de65ae813f3e7726bb4e2c1545fa153974b5f179d145e",
       "mode": 420
     },
     ".cursor-plugin/plugin.json": {
-      "sha256": "ae51556337591fd0de3a9ec2ced872752f60bbc2de50080ab58a6a540db86262",
+      "sha256": "227821f3369867dadab88c8a1a1a576d150c349b821d74bab26d85966188adac",
       "mode": 420
     },
     "PSTACK-LICENSE": {
@@ -1896,15 +1896,15 @@
       "mode": 420
     },
     "adapters/host-helper-setup.md": {
-      "sha256": "c8bea0acebcd7367483d0c322822310bfec29b6a4aa8a13f0f859c204b4d2c79",
+      "sha256": "06ed64f7c055a9578f48ed87481720540b8e0ab2820ce629f98e84431e2ffb94",
       "mode": 420
     },
     "adapters/host-mobile-languages.md": {
-      "sha256": "6bf8401a774c077a7ef81aef9d47c0c1cda58c06d56a89e8d481874ec6c2d405",
+      "sha256": "6017f189fe1afa54a804f163aa319a99933fcb25d2cc3d10d71231b3a91817c3",
       "mode": 420
     },
     "adapters/host-publication.md": {
-      "sha256": "c6e2bb7db2018feabfd94e92e26691691e04759bc1084bc62a402f9ac16f4e33",
+      "sha256": "9b4105a68132271af537817421ec8ed0cbc2879ec53cbce178226dbae7963359",
       "mode": 420
     },
     "adapters/host-special-skills.md": {
@@ -1912,7 +1912,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "87a7b490edf6389bc1a82fd8b2e48fae815de94a0492f6a1a8c27a6a62a2a9bf",
+      "sha256": "2f1ee01203c2aab5191c68343def82646d6983431d3379883d53cca2957ccfb9",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -1924,7 +1924,7 @@
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
-      "sha256": "9a105d0afc6b713ea58bc50bb0200d69687f70425e05a9271fb245c37894339f",
+      "sha256": "07a7757c17baa6e65b7991b41ddbdf9444ef6b367debb1d0baab5a440d47881c",
       "mode": 420
     },
     "adapters/host.md": {
@@ -1932,7 +1932,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "9924272f85c22c00c63d58735c4c0170535eca415265a8fa0e0d6e67b404182f",
+      "sha256": "e1dc23551590942883aaef569b3a4b362135b9e890c54425442a7e7a338281b1",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -1968,7 +1968,7 @@
       "mode": 420
     },
     "adapters/runtime/activity.py": {
-      "sha256": "4dd88c1b66280dc2277ea8dd5923d6f3e1302d702f08ca36315d633b85c69f83",
+      "sha256": "7ed602099396ea6dba6f76ccf41c1fb09e71713f64a40aa67ccc7e38a305e440",
       "mode": 420
     },
     "adapters/runtime/json_input.py": {
@@ -1976,11 +1976,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "990cf30ba226070e2f5aae7f2ca75205744301dcfed3caf072989f28fb353a89",
+      "sha256": "167bdb829e7f5b11f20567fdf0ac5b9465552ddb707ca2dd2da9eb66726518af",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "274486561429b6ab17df77e5a8ec4df3161174434b6d76f20c07d045ff4b41e2",
+      "sha256": "b7488ce0c89e93b724cd87b90a349ca02a320b8cfe206dff9c267fb4e972584d",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -2732,7 +2732,7 @@
       "mode": 420
     },
     "skills/setup-hstack/SKILL.md": {
-      "sha256": "c5a37cda654dfd17f263c54053c80398603c7cee80fffe29a9be2ba978ee598f",
+      "sha256": "ea9c0311ee63d3167594255b3ba57fc22d5461e66f0e023b4b4affddc9b823a8",
       "mode": 420
     },
     "skills/setup-hstack/agents/openai.yaml": {

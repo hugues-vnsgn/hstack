@@ -394,7 +394,17 @@ def cursor_operation_paths(block):
         yield str(Path(path).resolve())
 
 
-def mentions_worktree(value, worktree, decode_arguments=True):
+def mentions_worktree(value, worktree, decode_arguments=True, tolerant=False):
+    """Look for the worktree in a record's text.
+
+    `tolerant` relaxes the percent-decoding so a record carrying text that is
+    not valid percent-encoding (a git date format such as
+    `--format='%h %ad %s'`) is still searched instead of raising. It stays off
+    by default: Claude Code and Codex keep the strict decoding, whose
+    `UnicodeDecodeError` holds the source's coverage. Only the Cursor path
+    passes it, because a Cursor record is already bounded by its own limits.
+    The over-deep encoding guard holds in both modes.
+    """
     variants = {str(worktree)}
     # macOS Git canonicalizes /tmp and /var to /private/...; native records may
     # retain those system aliases. Do not miss activity because of spelling.
@@ -420,6 +430,8 @@ def mentions_worktree(value, worktree, decode_arguments=True):
             try:
                 decoded = unquote(representations[-1], errors='strict')
             except UnicodeDecodeError:
+                if not tolerant:
+                    raise
                 # The text carries a percent sign that is not valid encoding, as
                 # a git date format does (`--format='%h %ad %s'`). The raw text
                 # is still searched, and an undecodable one cannot hide a path.
@@ -431,7 +443,8 @@ def mentions_worktree(value, worktree, decode_arguments=True):
             if unquote(representations[-1], errors='strict') != representations[-1]:
                 raise ValueError('path encoding exceeds supported depth')
         except UnicodeDecodeError:
-            pass
+            if not tolerant:
+                raise
         for representation in representations:
             if re.search(r'~[^/\s]+/', representation):
                 raise ValueError('other-user home path cannot be resolved')
@@ -849,9 +862,13 @@ def scan(manifest, worktrees, now):
                         if cursor_source:
                             mtime_only = True
                     for wt in worktrees:
-                        hit = (mentions_worktree(row, wt, basis == 'validated-record') or mentions_worktree(normalized, wt) or
+                        # Only the Cursor path tolerates an undecodable percent
+                        # escape. Claude Code and Codex keep the strict decoding,
+                        # whose error holds the source's coverage.
+                        hit = (mentions_worktree(row, wt, basis == 'validated-record', cursor_source)
+                               or mentions_worktree(normalized, wt, tolerant=cursor_source) or
                                any(contains_worktree(Path(p), wt) for p in normalized) or
-                               bool(cwd and mentions_worktree({'cwd': str(Path(cwd).resolve())}, wt)))
+                               bool(cwd and mentions_worktree({'cwd': str(Path(cwd).resolve())}, wt, tolerant=cursor_source)))
                         if hit:
                             activity[str(wt)].append({'provider': source['provider'], 'source': str(path),
                                                      'timestamp': ts, 'timestamp_basis': origin,
