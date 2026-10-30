@@ -71,7 +71,21 @@ confirm the router answers.
 Do not enable hStack in Claude Code at the same time. Cursor loads the Claude
 plugin cache as well as `~/.cursor/plugins/local/`, and it de-duplicates
 within one plugin rather than across plugins, so every shared skill name
-registers twice.
+registers twice. Observed in Cursor's own plugin log on 2026-10-30: one
+session loaded `hstack` from both `~/.cursor/plugins/local/hstack` and
+`~/.claude/plugins/cache/hstack/hstack/0.5.6`, and ran the `host-detect.sh`
+hook once per copy.
+
+To keep exactly one source, disable hStack in Claude Code while Cursor holds
+the local copy. Cursor reads the same `enabledPlugins` map that Claude Code
+does, so one edit turns the plugin off for both:
+
+```sh
+# In ~/.claude/settings.json, set "hstack@hstack": false.
+```
+
+Re-enable it before the Claude Code and Codex regression lane, which needs
+hStack to load in Claude Code.
 
 A GitHub-marketplace route is also published: a repository root holding
 `.cursor-plugin/marketplace.json`, imported through **Dashboard → Plugins & MCPs
