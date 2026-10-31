@@ -1,5 +1,5 @@
 {
-  "source_revision": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
+  "source_revision": "4dd1d05818d19792e7cd6e818f1667f95f7e1dbe",
   "native_before_revision": "7db3e80d4b75e55f3f6d0ee85da5faa330e65d76",
   "files": [
     {
@@ -39,37 +39,10 @@
       "scope": "plan-checker tests added at pstack 0.15.25 plus one hStack case for the not-applicable Bugbot box; run with Bun against the hStack checker"
     },
     {
-      "source": "pstack/skills/poteto-mode/scripts/orch/orch.test.ts",
-      "installed": "plugin/skills/hugues-mode/scripts/orch/orch.test.ts",
-      "source_sha256": "c15bbcc17700acb812722bf3330e2b2ee2838407636cdb86784cdd9bb8ee93f3",
-      "candidate_sha256": "c15bbcc17700acb812722bf3330e2b2ee2838407636cdb86784cdd9bb8ee93f3",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
-    },
-    {
-      "source": "pstack/skills/poteto-mode/scripts/orch/orch.ts",
-      "installed": "plugin/skills/hugues-mode/scripts/orch/orch.ts",
-      "source_sha256": "47c92c57e8276616d8de94665a126bd832e748036afa8d0ffdbacb7946decb5c",
-      "candidate_sha256": "47c92c57e8276616d8de94665a126bd832e748036afa8d0ffdbacb7946decb5c",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
-    },
-    {
-      "source": "pstack/skills/poteto-mode/scripts/orch/store.ts",
-      "installed": "plugin/skills/hugues-mode/scripts/orch/store.ts",
-      "source_sha256": "bf0ed29c44093ee3b333aa10b138612f773c81eda73df7dc5337c59713f35a97",
-      "candidate_sha256": "bf0ed29c44093ee3b333aa10b138612f773c81eda73df7dc5337c59713f35a97",
-      "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
-      "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
-    },
-    {
       "source": "pstack/skills/poteto-mode/scripts/package.json",
       "installed": "plugin/skills/hugues-mode/scripts/package.json",
-      "source_sha256": "fd511a0c01f522e0c781ddd8eccea0e91697a0856c6e6a3261de78a6a0287c72",
-      "candidate_sha256": "fd511a0c01f522e0c781ddd8eccea0e91697a0856c6e6a3261de78a6a0287c72",
+      "source_sha256": "c9db6bb9362c6e319e395b358b113ebc72ab06b6c5e3a095093f6ebfdafe1c57",
+      "candidate_sha256": "c9db6bb9362c6e319e395b358b113ebc72ab06b6c5e3a095093f6ebfdafe1c57",
       "same_bytes_as_upstream": true,
       "same_bytes_as_7db3e80": true,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"

@@ -19,6 +19,17 @@ TRUNK = 'ae7cec396976abddfe27ca701e9fe782bc7db6f7'
 # than read from `origin/main` so the allowance does not collapse when that
 # branch starts carrying the Cursor commit itself.
 PRE_CURSOR = '4f64103ea6e7463ecc5e1d2b531e75ceb99c0d10'
+CURSOR = '97d9aa2f7f263324e42fee66930771fa3dfa34e9'
+# hStack just before the pstack 0.15.36 re-pin, and the bytes that re-pin carried
+# from upstream into adapted files, measured with `git diff` against it: the
+# router's first-message rule and Autopilot-stack trigger, arena's Phase C judge
+# skip, and the router's model-rejection fallback relocated to the workers adapter.
+REPIN_0_15_36 = '51409def98c395fa12b774f34a8671bb4639110d'
+CARRIED_AT_0_15_36 = {
+    'plugin/skills/hugues-mode/SKILL.md': 576,
+    'plugin/skills/arena/SKILL.md': 392,
+    'plugin/adapters/host-workers.md': 558,
+}
 # The Cursor-only features section grew when Cursor became a native host. After the review
 # moved the per-feature Cursor actions, the subagent and model meanings, the transcript store,
 # the foreground-delegate gap and the one-source rule out to plugin/adapters/hosts/cursor.md,
@@ -297,11 +308,28 @@ class ContextDisclosure(unittest.TestCase):
         self.assertEqual(scenarios['bug_fix']['fresh_mode_worker_floor']['candidate']['mode_workers'], 1)
         self.assertEqual(scenarios['larger_feature']['fresh_mode_worker_floor']['candidate']['mode_workers'], 8)
 
+    def carried_upstream_growth(self, paths):
+        """Bytes a re-pin carried from upstream into the adapted files among paths.
+
+        Each credit is capped by the file's real growth since the re-pin's base, so
+        a later edit that shrinks the file cannot leave unearned headroom.
+        """
+        growth = 0
+        for path in paths:
+            if path in CARRIED_AT_0_15_36:
+                before = subprocess.run(['git', '-C', str(ROOT), 'show', f'{REPIN_0_15_36}:{path}'],
+                                        capture_output=True, check=True).stdout
+                real = len((ROOT / path).read_bytes()) - len(before)
+                growth += max(0, min(CARRIED_AT_0_15_36[path], real))
+        return growth
+
     def cursor_adapter_growth(self, adapters=None):
         """The bytes the adapters add over the trunk hStack inherited.
 
-        Measured from the adapters' own bytes against the revision before
-        Cursor landed, so the figure is exactly the Cursor host's cost: the
+        Measured from the adapters' bytes at the Cursor commit against the
+        revision before it, so the figure is exactly the Cursor host's cost and
+        a later adapter edit, such as a re-pin's ported text, is not billed to
+        it: the
         door sentence that points a Cursor session at its page, the 8 bytes
         that name it in the adapter title, the Cursor sentence in the tools
         adapter and the two page doors in the workers adapter. The trunk text
@@ -314,7 +342,9 @@ class ContextDisclosure(unittest.TestCase):
         growth = 0
         for path in adapters:
             inherited = at_pre_cursor(path)
-            growth += len((ROOT / path).read_bytes()) - len(inherited.encode())
+            landed = subprocess.run(['git', '-C', str(ROOT), 'show', f'{CURSOR}:{path}'],
+                                    capture_output=True, text=True, check=True).stdout
+            growth += len(landed.encode()) - len(inherited.encode())
         # A negative growth would loosen the allowance it feeds, so it is
         # clamped at zero: an adapter that shrank adds no headroom.
         return max(0, growth)
@@ -360,8 +390,10 @@ class ContextDisclosure(unittest.TestCase):
         required_growth = native_growth + brief_growth
         issue_110 = self.issue_110_guidance_bytes()
         # The bound is on hStack-authored growth. A file whose bytes equal its pinned upstream
-        # source grows only when pstack does, so the last re-pin's growth in those files is
-        # allowed (0.15.32 rewrote two principles that bug_fix reads).
+        # source grows only when pstack does, so its growth since 0.15.25 is allowed (0.15.32
+        # rewrote two principles that bug_fix reads). The anchor is that fixed pin, not the
+        # previous one, so a re-pin cannot drop an allowance an earlier re-pin granted. Text a
+        # re-pin carried into adapted files is credited separately, at its measured size.
         receipt = json.loads((ROOT / 'docs/upstream/consolidation.json').read_text())
         verbatim = {r['destination']: r['source'] for r in receipt['files']
                     if r['destination'] and r['destination_sha256'] == r['source_sha256']}
@@ -370,12 +402,13 @@ class ContextDisclosure(unittest.TestCase):
             pin = json.loads((ROOT / 'docs/upstream' / pin).read_text())
             snapshot = json.loads((ROOT / 'docs/upstream' / pin['snapshot']).read_text())
             return {f['path']: f['size'] for f in snapshot['files']}
-        pinned, previous = sizes('pin.json'), sizes('baseline-pin.json')
+        pinned, previous = sizes('pin.json'), sizes('history/pstack-0.15.25-pin.json')
         for name in ['initial_mode_routing', 'bug_fix']:
             profile = measured['scenarios'][name]
             guidance = sum(size for path, size in issue_110.items() if path in profile['candidate']['paths'])
             upstream_growth = sum(pinned[verbatim[path]] - previous.get(verbatim[path], 0)
                                   for path in profile['candidate']['paths'] if path in verbatim)
+            upstream_growth += self.carried_upstream_growth(profile['candidate']['paths'])
             self.assertLess(profile['candidate']['bytes'] - required_growth - guidance - upstream_growth,
                             profile['native_before']['bytes'])
         selection_row = next(line for line in host.splitlines(keepends=True)
@@ -390,9 +423,10 @@ class ContextDisclosure(unittest.TestCase):
         self.assertLessEqual(cursor_adapter_growth, 400)
         feature = measured['scenarios']['larger_feature']
         feature_guidance = sum(size for path, size in issue_110.items() if path in feature['candidate']['paths'])
+        feature_upstream = self.carried_upstream_growth(feature['candidate']['paths'])
         self.assertLessEqual(feature['candidate']['bytes'],
                              feature['native_before']['bytes'] + selection_growth + required_growth
-                             + feature_guidance + cursor_adapter_growth)
+                             + feature_guidance + cursor_adapter_growth + feature_upstream)
         routing = measured['scenarios']['initial_mode_routing']
         routing_guidance = sum(size for path, size in issue_110.items() if path in routing['candidate']['paths'])
         self.assertLess(routing['candidate']['bytes'] - routing_guidance, routing['native_before']['bytes'] * .8)
@@ -473,15 +507,18 @@ class ContextDisclosure(unittest.TestCase):
         # the third host. The bound absorbs that growth explicitly rather than
         # leaving it to the guidance allowance, which is anchored to older
         # frozen revisions that predate both.
-        # Measured at this head: candidate 27,656 bytes, guidance 1,661 bytes
-        # (host.md 1,185 and hugues-mode/SKILL.md 476), router_growth 88 bytes,
-        # so the left-hand side is 25,907 against a `before` of 25,980: 73 bytes
-        # of headroom, which is what this bound now absorbs and no more.
+        # Measured at the pstack 0.15.36 re-pin: candidate 28,232 bytes, guidance
+        # 1,661 bytes (host.md 1,185 and hugues-mode/SKILL.md 476), router_growth
+        # 88 bytes and upstream_growth 576 bytes, so the left-hand side is
+        # 25,907 against a `before` of 25,980: the same 73 bytes of headroom.
+        router = 'plugin/skills/hugues-mode/SKILL.md'
         router_growth = self.cursor_adapter_growth(['plugin/adapters/host.md',
                                                     'plugin/adapters/mobile.md'])
-        self.assertLess(candidate - guidance - router_growth, before)
-        router = 'plugin/skills/hugues-mode/SKILL.md'
-        self.assertLess((ROOT / router).stat().st_size, len(main[router].encode()))
+        # The bound is on hStack-authored growth, so the router may also grow by
+        # the text a re-pin carried from upstream (0.15.36's first-message rule).
+        upstream_growth = self.carried_upstream_growth([router])
+        self.assertLess(candidate - guidance - router_growth - upstream_growth, before)
+        self.assertLess((ROOT / router).stat().st_size - upstream_growth, len(main[router].encode()))
 
     def test_pre_pr_mode_read_set_drift_is_rejected(self):
         with tempfile.TemporaryDirectory(prefix='pre-pr-mode-read-set-') as directory:
@@ -545,14 +582,13 @@ class InstalledPhaseGuidance(InstalledFixture, unittest.TestCase):
         body = ' '.join(result.stdout.split())
         for required in (
             "operator-named directory or the existing program's recorded directory",
-            'explicit `--store` or `ORCH_STORE` binding',
-            'existing flag/environment precedence',
+            "Orchestrate's Project store",
             '`~/hstack-evidence/<date>-<task>/`',
             'Resolve that choice once to an absolute path',
             'Resume the recorded store rather than creating a new dated directory',
             'plans under `docs/`, programs under `orchestrate/<project-slug>/`',
             'Explicit plan and log targets still win',
-            'preserving a bound program path without appending another program subdirectory',
+            "Orchestrate's Project tracker is `notes.md` in that program directory",
             'complete log-file path to `log.sh`',
             'Keep all state outside the installed plugin',
         ):

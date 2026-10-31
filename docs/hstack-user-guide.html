@@ -231,7 +231,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <path class="e" d="M230,332 L230,360" marker-end="url(#ah)"/>
 <rect class="n step" x="30" y="446" width="400" height="58" rx="8"/>
 <text class="tb" x="230.0" y="471.0" text-anchor="middle">6. Prepare Bun helpers (optional)</text>
-<text class="t" x="230.0" y="487.0" text-anchor="middle">only for watch-pr and orch</text>
+<text class="t" x="230.0" y="487.0" text-anchor="middle">only for watch-pr</text>
 <text class="nt" x="462" y="471" text-anchor="start">Needed before Babysit or</text>
 <text class="nt" x="462" y="486" text-anchor="start">Orchestrate call those scripts.</text>
 <path class="e" d="M230,418 L230,446" marker-end="url(#ah)"/>
@@ -240,7 +240,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <text class="t" x="230.0" y="573.0" text-anchor="middle">read-only preview, then a scoped fix</text>
 <text class="nt" x="462" y="557" text-anchor="start">Watch the todo list fill with</text>
 <text class="nt" x="462" y="572" text-anchor="start">the playbook&#x27;s steps.</text>
-<path class="e" d="M230,504 L230,532" marker-end="url(#ah)"/></svg><figcaption><strong>Figure 2. Setup, start to first task.</strong> Steps 1 to 3 happen once per host. Steps 4 and 5 happen once per app repository. Step 6 only matters when you use PR babysitting or orchestration.</figcaption></figure>
+<path class="e" d="M230,504 L230,532" marker-end="url(#ah)"/></svg><figcaption><strong>Figure 2. Setup, start to first task.</strong> Steps 1 to 3 happen once per host. Steps 4 and 5 happen once per app repository. Step 6 only matters when you use PR babysitting.</figcaption></figure>
 
 <h3>Before you start</h3>
 <table>
@@ -248,7 +248,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <tr><td>Claude Code, Codex or Cursor, installed and signed in</td><td>Everything. hStack does not install or authenticate the host.</td></tr>
 <tr><td>Git, Python 3.9+</td><td>The planning and audit helpers</td></tr>
 <tr><td>Node</td><td><code>check-plan.mjs</code>, which validates multi-PR plans</td></tr>
-<tr><td>Bun</td><td>Only the <code>watch-pr</code> and <code>orch</code> helpers (Babysit, Orchestrate)</td></tr>
+<tr><td>Bun</td><td>Only the <code>watch-pr</code> helper (Babysit, Shipping)</td></tr>
 <tr><td><code>gh</code> CLI, signed in</td><td>Opening, babysitting and shipping PRs on GitHub</td></tr>
 <tr><td>Xcode, Android SDK, JDK, Gradle, simulators or devices</td><td>Building and proving your app. hStack supplies none of these.</td></tr>
 <tr><td>Optional: jev-ios-bridge, XcodeBuildMCP</td><td>Driving the app on a simulator or emulator for screen proof</td></tr>
@@ -311,7 +311,7 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <p>An agent that can check its own work keeps going until the check passes. An agent that cannot hands every result back to you. Keep it honest by running <code class="cc">/hstack:maintain-verification-skill</code><code class="cx">$maintain-verification-skill</code><code class="cu">/maintain-verification-skill</code> regularly. It drives every mapped feature and opens at most one PR of proven corrections.</p></div>
 <p><span class="pill">new in 0.5.5</span> Setup also offers once to generate a formal verification skill. See the command reference.</p></li>
 
-<li><strong>Prepare the Bun helpers (only if you will babysit PRs or orchestrate)</strong>
+<li><strong>Prepare the Bun helper (only if you will babysit PRs)</strong>
 <p>Run once per installed copy. Replace <code>&lt;plugin&gt;</code> with the absolute root of the copy you loaded.</p>
 <pre><code><span class="cc"># Claude Code default root
 cd ~/.claude/plugins/cache/hstack/hstack/0.5.7/skills/hugues-mode/scripts
@@ -1302,7 +1302,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <div class="callout warn"><span class="h">Different family has limits inside one host</span>
 <p>Each host's subagents come from one vendor. Claude Code runs Claude models and Codex runs GPT models. Inside one host, "a different model" means a different model of that vendor. The only model-independent review is cross-host review. Claude Code reviews a Codex diff, or the reverse. <a href="#review">Section 22</a> shows how.</p></div>
 <div class="callout tip"><span class="h">Cloud workers run locally</span>
-<p>Some playbooks say cloud worker, inherited from Cursor. In Claude Code, Codex and Cursor they run as local native workers where the playbook permits local execution. A cloud spawn is a gap. An operation that needs one holds and reports it. Orchestrate's bookkeeping uses the <code>orch</code> helper, which needs the Bun setup from Part I.</p></div>
+<p>Some playbooks say cloud worker, inherited from Cursor. In Claude Code, Codex and Cursor they run as local native workers where the playbook permits local execution. A cloud spawn is a gap. An operation that needs one holds and reports it. Orchestrate keeps its state with the coordinator's own tools and runs no helper script.</p></div>
 
 <h2 id="run-team">21. Run the team in Claude Code</h2>
 <p>This section is the daily rhythm of a lead. <a href="#shape">Section 20</a> chose the team. Here you keep it on track without watching every move.</p>

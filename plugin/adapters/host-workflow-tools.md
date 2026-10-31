@@ -18,7 +18,6 @@ consumer plans, stores and log files against that directory.
 |---|---|
 | `node skills/hugues-mode/scripts/check-plan.mjs <plan.md>` in multi-phase-plan | `python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin-binding.json" "<absolute-consumer-plan.md>"` |
 | `scripts/watch-pr/watch-pr` in babysit and shipping, including `--queued-stack` | `bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" <same arguments>` |
-| `bun scripts/orch/orch.ts` and its `orch` shorthand in orchestrate | `bun "<plugin>/skills/hugues-mode/scripts/orch/orch.ts" <same arguments>` |
 | `scripts/log.sh` in show-me-your-work | `bash "<plugin>/skills/show-me-your-work/scripts/log.sh" <same arguments>` |
 | Worktree-cleanup's upstream audit script | `worktree-audit` through the installed host tools below |
 
@@ -33,19 +32,17 @@ table itself, without a hand-written script path in its brief.
 ## Agent-store translation
 
 Before a plan, program or decision trail needs the inherited "agent store",
-use the operator-named directory or the existing program's recorded directory,
-including an explicit `--store` or `ORCH_STORE` binding. Preserve the existing
-flag/environment precedence. With none established, use
+or Orchestrate's Project store, use the operator-named directory or the
+existing program's recorded directory. With none established, use
 `~/hstack-evidence/<date>-<task>/`. Resolve that choice once to an absolute path
 and carry it into briefs, helpers, pickup notes and replacement coordinators.
 Resume the recorded store rather than creating a new dated directory.
 
-Keep pstack's relative layout: plans under `docs/`, programs under
-`orchestrate/<project-slug>/`, and their decision trails, agent registers,
-receipts and recovery files. Explicit plan and log targets still win. Pass the
-actual orchestration program directory through the existing `--store` or
-`ORCH_STORE`, preserving a bound program path without appending another program
-subdirectory. Pass the complete log-file path to `log.sh`. Keep all state outside
+Keep the relative layout: plans under `docs/`, programs under
+`orchestrate/<project-slug>/` as Orchestrate's Project store, and their
+decision trails. Orchestrate's Project tracker is `notes.md` in that program
+directory. Explicit plan and log targets still win. Pass the
+complete log-file path to `log.sh`. Keep all state outside
 the installed plugin. This is a path translation, not a new runtime or permission
 to access another program's state.
 

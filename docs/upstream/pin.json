@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "repository": "https://github.com/cursor/plugins",
-  "revision": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
-  "version": "0.15.32",
-  "committed_at_utc": "2026-10-23T22:56:09Z",
-  "file_count": 200,
-  "pstack_tree_sha": "880564357e051d7c7802da1cb5d8df1d0b008299",
-  "snapshot": "snapshots/pstack-0.15.32.json",
-  "snapshot_sha256": "2e07fb1a718983ca22b54cbf2c999b6217a329bea781e407398a6ebc1de20724"
+  "revision": "4dd1d05818d19792e7cd6e818f1667f95f7e1dbe",
+  "version": "0.15.36",
+  "committed_at_utc": "2026-10-29T22:51:24Z",
+  "file_count": 573,
+  "pstack_tree_sha": "4719e1c4b4c43bac85d4206a8b41dd2899769c1c",
+  "snapshot": "snapshots/pstack-0.15.36.json",
+  "snapshot_sha256": "5fac43a939b3c20e5f17c63a5a9d9342f16154c5de1b8ec06c66a1f28c54fe2d"
 }

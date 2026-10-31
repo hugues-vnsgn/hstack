@@ -1,7 +1,7 @@
 # Prepare installed Bun helpers
 
-Before `watch-pr` or `orch`, inspect Bun and the loaded copy's dependency state.
-Both helpers share `<plugin>/skills/hugues-mode/scripts`. Standard cache directories
+Before `watch-pr`, inspect Bun and the loaded copy's dependency state.
+It runs from `<plugin>/skills/hugues-mode/scripts`. Standard cache directories
 are shown below. Use the loaded root from [workflow tools](host-workflow-tools.md)
 for custom locations and versions.
 

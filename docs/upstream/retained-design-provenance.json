@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
-  "upstream_version": "0.15.32",
+  "revision": "4dd1d05818d19792e7cd6e818f1667f95f7e1dbe",
+  "upstream_version": "0.15.36",
   "package": "design",
   "files": [
     {
@@ -64,10 +64,10 @@
       "source": "pstack/skills/arena/SKILL.md",
       "destination": "plugin/skills/arena/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "b198b9e425c6b3e6ff01ca789b97ca5b4abb7ce2",
-      "sha256": "ed72f6c132b1ce3974d949581d0adc5dade424fe20793ac3b4c4fae22ecb9354",
+      "blob_sha": "7580c3c9a7770d81b9dd7a537d9caa7362c04279",
+      "sha256": "d0adeca6c9b19d43d90ed8f0484f0ddd362f05006d628b8f4cc6c9b55fa4d2b3",
       "mode": "100644",
-      "destination_sha256": "9a8f903f0446fa1f17cabde569553a68f2f4c3ccd1b9e771372d8fbf1a1e6159",
+      "destination_sha256": "d3d3f51724d270b3397a34d6049dc3fede1e2736139ee50a9fbf4bbeae092725",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],

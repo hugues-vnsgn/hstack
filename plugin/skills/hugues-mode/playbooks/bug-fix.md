@@ -28,6 +28,6 @@ Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspender
    actual counts and the retained native reports. If automated testing is impractical,
    record the concrete reason and executable runtime reproduction without claiming
    automated RED/GREEN. Original runtime proof and the final consumer recipe remain required.
-6. Run **Opening a PR**. For explicitly selected mobile work, run **interrogate** with the [mobile review lens](../references/mobile-review.md) in this step, even when you open the PR yourself. Reuse this review when Opening a PR already requires `interrogate`.
+6. Run **Opening a PR**. For explicitly selected mobile work, run **interrogate** with the [mobile review lens](../references/mobile-review.md) in this step, even when you open the PR yourself.
 
 **Reply:** what was broken, root cause, fix, how you verified. Paste failing-then-passing repro output verbatim.
