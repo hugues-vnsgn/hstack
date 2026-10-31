@@ -62,9 +62,8 @@ codex plugin add hstack@hstack
 ```
 
 Check that the resolved payload reports 0.5.8. The marketplace follows the
-default branch. On the maintainer machine, the Claude Code cache matched
-`v0.5.6` before this release and the Cursor local copy held a stale tree. The
-update from 0.5.7 to 0.5.8 is unobserved until the release lanes record it.
+default branch. The update from 0.5.7 to 0.5.8 is unobserved until the release
+lanes record it.
 
 ### Bun dependencies
 
@@ -127,9 +126,6 @@ head.
 | `python3 scripts/check_whitespace.py` | PASS | Repository whitespace. |
 
 `claude plugin validate --strict` passes on `plugin` and on the marketplace.
-
-The release lanes ran by hand in Cursor against the installed 0.5.8 copy. Their
-transcripts and the Cursor log lines are in the maintainer's private store.
 
 ## Known gaps
 
