@@ -4,8 +4,8 @@ The 0.2.0 pinned-core restoration remains a historical release. Version 0.3.0
 consolidates its full skill bodies into native entries; see
 [native consolidation](NATIVE-CONSOLIDATION.md) for layout, migration and limits.
 
-The upstream archive retains 200 files from pstack 0.15.32 at
-`e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`. Git-object snapshots verify its
+The upstream archive retains 573 files from pstack 0.15.36 at
+`4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`. Git-object snapshots verify its
 paths, modes, SHA-1, SHA-256 and sizes. The adapted runtime no longer claims
 byte equality. Public native names, workflow phase order, role cardinality,
 feature arena, fallback, whole-map maintenance and mobile applicability remain

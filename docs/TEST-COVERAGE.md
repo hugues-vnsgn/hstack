@@ -486,3 +486,20 @@ broken, non-executable or wrongly-escaping hook. These are source and wiring che
 hook firing in a live Claude Code session was observed on 2026-10-28 with Claude Code
 2.1.311, and the Orca variables were observed in a live Orca 1.4.241 pane. A session
 reading the index because of the hook was not observed.
+
+The pstack 0.15.36 merge adds no case and keeps 584 top-level cases. The upstream-sync
+fixtures move one pin forward: the maintained delta is 0.15.32 to 0.15.36, and the
+0.15.25 to 0.15.32 delta now regenerates byte for byte from the 0.15.32 ledger beside the
+two older ones. The proposal case checks that a path upstream removed is retired at the new
+revision and never becomes a pending row; this is the first delta with removals. The
+interrogate cases follow upstream's redesign: the language-baseline case reads the adversary
+brief in `interrogate/SKILL.md` instead of the deleted reviewer prompt, and the phase-order
+contract and its mutation name the Frame, Fan out, Verify and Output sections. The mobile
+bug-fix case drops the two assertions that said Opening a PR runs `interrogate`, which
+upstream removed. The verbatim-file allowance in the context bounds is anchored at the
+fixed 0.15.25 pin instead of the previous pin, so this re-pin does not drop the allowance
+0.15.32 granted. The text this re-pin carried into adapted files (576 bytes in the router,
+392 in arena, 558 in the workers adapter) is credited at its measured size, capped by each
+file's real growth since the re-pin's base. The router read set keeps its 73 bytes of
+headroom. The Cursor adapter allowance is now measured at the Cursor commit, so later
+adapter edits are not billed to Cursor.

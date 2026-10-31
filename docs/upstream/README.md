@@ -1,7 +1,7 @@
 ## Native consolidation
 
-All 200 pstack 0.15.32 source files are preserved byte-for-byte with their modes in
-`provenance/upstream/pstack-0.15.32.tar.gz`. Canonical native bodies retain all 58 top-level skills,
+All 573 pstack 0.15.36 source files are preserved byte-for-byte with their modes in
+`provenance/upstream/pstack-0.15.36.tar.gz`. Canonical native bodies retain all 58 top-level skills,
 both upstream agents, 23 generic playbooks and four mobile routes. The runtime
 core mirror and generated body loaders are retired. The current ledger and
 [consolidation map](consolidation.json) distinguish adapted runtime files from
@@ -38,6 +38,33 @@ flag, and replaced `AskUserQuestion` in the question trigger with asking the
 user, plus an interview on a call no experiment can settle.
 The next upstream sync of this file is a manual merge against this body, not
 a line-by-line port.
+
+## pstack 0.15.36 merge
+
+The pin moves from 0.15.32 to 0.15.36 at upstream `main` (`4dd1d058`), whose
+pstack tree equals the 0.15.36 bump commit `c742dd6`. Upstream changed 25
+files, added 406 and removed 33. Three files whose hStack bytes still equalled
+the 0.15.32 upstream bytes took the new bytes, among them the Orchestrate
+playbook. The rest took upstream's intent by a three-way merge against the
+hStack body, and every hStack adaptation that still had text to attach to
+stayed.
+
+- Orchestrate is agentic: the coordinator keeps program state with its own
+  tools and runs no script. The `orch` helper and its tests are deleted, and the
+  workflow-tools adapter maps the Project store and its `notes.md` tracker onto
+  the agent store.
+- `interrogate` follows upstream's redesign. Adversaries try to break the
+  change, and only a finding a run proves survives. Its four reference files are
+  deleted. hStack keeps its host contract, its `.hstack/models.md` line and the
+  Swift and Kotlin baseline paths in every adversary brief.
+- `statechart` replaces its Node scripts with upstream's TypeScript compiler
+  behind a `scripts/statechart` wrapper, ported verbatim with its test corpus.
+- The router takes upstream's first-message rule and the new
+  "autopilot, don't merge" trigger for Autopilot-stack. Upstream's longer
+  model-rejection fallback lives in the workers adapter, translated to the
+  `inherit-parent` end of hStack's ` or ` rule.
+- Changed and added rows carry the release target `unreleased-pstack-0.15.36`
+  until a release ships them. Removed rows are retired at the new revision.
 
 ## pstack 0.15.32 merge
 
@@ -78,23 +105,24 @@ Changed and added rows carry the release target
 
 # Upstream sync
 
-The current pin is [cursor/plugins pstack 0.15.32](https://github.com/cursor/plugins/tree/e73df471cd4bd918367e99f3dd9c51bd53ddf5f0/pstack)
-at `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, committed
-23 October 2026 at 22:56:09 UTC. [pin.json](pin.json) binds the version, date,
-200-file inventory and pstack tree hash to the checked-in snapshot bytes.
-The previous pin, 0.15.25, is now the [baseline pin](baseline-pin.json) and
-accounts for 169 files. A fresh public Git fetch reproduced **31 added /
-43 changed / 0 removed** paths in [the delta](delta-6ce45c59-e73df471.md).
-The 0.15.9 to 0.15.25 sync stays in [its delta](delta-e43c7ee2-6ce45c59.md),
+The current pin is [cursor/plugins pstack 0.15.36](https://github.com/cursor/plugins/tree/4dd1d05818d19792e7cd6e818f1667f95f7e1dbe/pstack)
+at `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`, committed
+29 October 2026 at 22:51:24 UTC. [pin.json](pin.json) binds the version, date,
+573-file inventory and pstack tree hash to the checked-in snapshot bytes.
+The previous pin, 0.15.32, is now the [baseline pin](baseline-pin.json) and
+accounts for 200 files. A local Git snapshot of upstream `main` reproduced
+**406 added / 25 changed / 33 removed** paths in [the delta](delta-e73df471-4dd1d058.md).
+The 0.15.25 to 0.15.32 sync stays in [its delta](delta-6ce45c59-e73df471.md),
+the 0.15.9 to 0.15.25 sync in [its delta](delta-e43c7ee2-6ce45c59.md),
 and WP5's first sync, 0.15.5 to 0.15.9, in [its delta](delta-2eb7ed46-e43c7ee2.md).
-Their 161-file and 158-file pins and ledgers are in [history](history/).
+Their 169-file, 161-file and 158-file pins and ledgers are in [history](history/).
 
 [The current ledger](hstack-dispositions.json), also available as
 [CSV](hstack-dispositions.csv), has one active row per upstream file.
-The 169 responsibilities at 0.15.25 remain in
+The 200 responsibilities at 0.15.32 remain in
 [baseline-dispositions.json](baseline-dispositions.json); the current ledger
 retains their `earlier_proposal` fields and the previous decisions for the
-43 changed files. Current decisions follow [the revised plan](../PLAN.md).
+25 changed files. Current decisions follow [the revised plan](../PLAN.md).
 The inaccessible prototype ZIP contributes no rows or implementation claims.
 
 Each row distinguishes its decision (`port verbatim`, `port with adaptation`,
@@ -128,10 +156,10 @@ execution is needed. From the repository root:
 ```sh
 python3 scripts/upstream-diff.py check
 python3 scripts/upstream-diff.py diff \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.25.json \
-  --to-snapshot docs/upstream/snapshots/pstack-0.15.32.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.32.json \
+  --to-snapshot docs/upstream/snapshots/pstack-0.15.36.json \
   --ledger docs/upstream/hstack-dispositions.json \
-  --output docs/upstream/delta-6ce45c59-e73df471.md --check
+  --output docs/upstream/delta-e73df471-4dd1d058.md --check
 python3 -m unittest discover -s tests -v
 ./scripts/check-plugin.sh
 ```
@@ -151,8 +179,8 @@ To recapture from public Git, use a separate bare clone outside the plugin:
 ```sh
 git clone --bare https://github.com/cursor/plugins.git /tmp/pstack-upstream.git
 python3 scripts/upstream-diff.py snapshot --repo /tmp/pstack-upstream.git \
-  --revision e73df471cd4bd918367e99f3dd9c51bd53ddf5f0 \
-  --output docs/upstream/snapshots/pstack-0.15.32.json --check
+  --revision 4dd1d05818d19792e7cd6e818f1667f95f7e1dbe \
+  --output docs/upstream/snapshots/pstack-0.15.36.json --check
 ```
 
 Capture resolves a ref once and records its full commit SHA. Git replacement
@@ -180,7 +208,7 @@ and generate a separate ledger proposal:
 
 ```sh
 python3 scripts/upstream-diff.py reconcile \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.32.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.36.json \
   --to-snapshot /tmp/pstack-candidate.json \
   --ledger docs/upstream/hstack-dispositions.json \
   --output /tmp/pstack-ledger-proposal.json

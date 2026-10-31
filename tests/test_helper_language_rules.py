@@ -45,15 +45,13 @@ class HelperLanguageRules(InstalledFixture, unittest.TestCase):
             'The helper returns a prerequisite error that the agent cannot resolve.',
         ])
 
-    def test_reviewer_template_requires_language_baseline_before_source(self):
-        prompt = self.read('skills/interrogate/references/reviewer-prompt.md')
-        self.assertIn('## Language baseline\n\n{LANGUAGE_BASELINE_PATHS_OR_NONE}', prompt)
-        text = ' '.join(prompt.split())
-        self.assertIn('Read each listed baseline in full before the first source read.', text)
-        self.assertLess(prompt.index('## Language baseline'), prompt.index('## Code Under Review'))
+    def test_adversary_brief_requires_language_baseline_before_source(self):
         skill = (self.plugin / 'skills/interrogate/SKILL.md').read_text()
-        self.assertIn('the required Language baseline section', skill)
-        self.assertIn('absolute installed paths matching the languages in the diff, or `none`', ' '.join(skill.split()))
+        text = ' '.join(skill.split())
+        self.assertIn('Add the language baselines to each brief', text)
+        self.assertIn('matching the languages in the scope, or `none`, each read in full before the first source read', text)
+        self.assertLess(skill.index('Break this change.'), skill.index('Add the language baselines'))
+        self.assertLess(skill.index('Add the language baselines'), skill.index('## Verify'))
         for name in ['swift-best-practices', 'kotlin-best-practices']:
             self.assertIn(f'<plugin>/skills/{name}/SKILL.md', skill)
             self.assertIn(f'name: {name}', (self.plugin / f'skills/{name}/SKILL.md').read_text())

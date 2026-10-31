@@ -142,7 +142,7 @@ class NativeIntegrity(unittest.TestCase):
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
         self.assertEqual(result['active_skills'], 63)
-        self.assertEqual(result['upstream_archive_files'], 200)
+        self.assertEqual(result['upstream_archive_files'], 573)
 
     def test_missing_receipt_cannot_disable_integrity(self):
         (self.root / 'docs/upstream/consolidation.json').unlink()
@@ -175,7 +175,7 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_corrupt_source_archive_is_rejected(self):
-        path = self.root / 'provenance/upstream/pstack-0.15.32.tar.gz'
+        path = self.root / 'provenance/upstream/pstack-0.15.36.tar.gz'
         path.write_bytes(path.read_bytes() + b'changed')
         self.rejected()
 
@@ -514,7 +514,7 @@ class NativeIntegrity(unittest.TestCase):
         bodies['feature'] = (self.root / 'plugin/skills/hugues-mode/playbooks/feature.md').read_text()
         self.assertEqual(check_core.behavior_errors(bodies), [])
         for name, before, after in [('arena', '## Phase E: Graft', '## Phase Z: Graft'),
-            ('interrogate', '| Reviewer C | `inherit-parent max` |', '| Reviewer C | `opus max` |'),
+            ('interrogate', 'A finding survives only when a run proves it.', 'A finding survives when it reads well.'),
             ('swarm', 'A gap does not count as a pass', 'A gap counts as a pass'),
             ('tdd', '4. **Run the new test before fixing', '7. **Run the new test before fixing'),
             ('maintain-verification-skill', 'Exercise every feature at least once', 'Exercise one feature'),

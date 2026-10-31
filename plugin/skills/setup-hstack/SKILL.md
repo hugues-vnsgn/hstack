@@ -21,7 +21,7 @@ A role value is one or more alternatives joined by ` or `, such as `claude-opus-
 - The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. It sets the agent tool's effort.
 - A host runs the first alternative its agent tool accepts, so one file serves every host: a single-model role lists the current host's model first and the other hosts' alternatives after it. With no accepted alternative, the role runs on `inherit-parent` at the first alternative's effort.
 - A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for every host and alternate which comes first, to use distinct available models where possible: `claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
-- `arena cross-judge pool` is also a list, but Arena selects one value from it whose model differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+- `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values whose model differs from the parent's, in list order, so order it by preference. An `inherit-parent` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ## Model tiers
 

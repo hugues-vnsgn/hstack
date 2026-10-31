@@ -15,8 +15,8 @@ import tempfile
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PIN = 'e73df471cd4bd918367e99f3dd9c51bd53ddf5f0'
-TREE = '880564357e051d7c7802da1cb5d8df1d0b008299'
+PIN = '4dd1d05818d19792e7cd6e818f1667f95f7e1dbe'
+TREE = '4719e1c4b4c43bac85d4206a8b41dd2899769c1c'
 EXCLUDED = set()
 ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
@@ -139,7 +139,7 @@ WORKER_ROLES = {
     'reflect-tooling': ('reflect', 'generalPurpose', 'references/tooling-reviewer.md'),
     'reflect-divergent': ('reflect', 'generalPurpose', 'references/divergent-reviewer.md'),
     'reflect-synthesizer': ('reflect', 'generalPurpose', 'references/synthesizer.md'),
-    'interrogate-reviewer': ('interrogate', 'generalPurpose', 'references/reviewer-prompt.md'),
+    'interrogate-adversary': ('interrogate', 'generalPurpose', 'SKILL.md'),
     'architect-runner': ('architect', 'core', 'references/runner-prompt.md'),
     'arena-runner': ('arena', 'core', 'SKILL.md'),
     'arena-cross-judge': ('arena', 'core', 'SKILL.md'),
@@ -238,11 +238,10 @@ def behavior_errors(bodies):
            and ordered(bodies['feature'], ['1. `how`', '2. `architect`',
                                           '3. Write the throughput', '4. Delegate code-writing',
                                           '5. Verify', '6. Rebase', '7. If the design', '8. Run']))
-    expect('three-seat-interrogate', re.findall(
-        r'\| Reviewer [ABC] \| `([^`]+)` \|', bodies['interrogate']) == ['inherit-parent max'] * 3)
-    expect('interrogate-adjudication', ordered(bodies['interrogate'],
-        ['## Step 1,', '## Step 2,', '## Step 3,', '## Step 4,', '## Step 5,'])
-        and 'Do NOT auto-apply changes' in bodies['interrogate'])
+    expect('interrogate-run-proof', ordered(bodies['interrogate'],
+        ['## Frame', '## Fan out', '## Verify', '## Output'])
+        and 'A finding survives only when a run proves it.' in bodies['interrogate']
+        and 'Do not apply fixes.' in bodies['interrogate'])
     expect('generator-feature-map', 'aim for the top 3-5' in
         section(bodies['create-verification-skill'], '3. Seed the feature map')
         and 'features/README.md' in bodies['create-verification-skill'])
@@ -701,13 +700,13 @@ def check(root=ROOT):
     upstream = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(upstream)
     snapshot = upstream.read_pin(root / 'docs/upstream/pin.json')
-    require(snapshot['revision'] == PIN and snapshot['file_count'] == 200, 'upstream pin differs')
+    require(snapshot['revision'] == PIN and snapshot['file_count'] == 573, 'upstream pin differs')
     receipt = upstream.load(root / 'docs/upstream/consolidation.json')
     require(receipt['schema_version'] == 1 and receipt['upstream_revision'] == PIN,
             'consolidation pin differs')
     require(not (root / 'plugin/core').exists() and not (root / 'plugin/core-bindings.json').exists(),
             'retired runtime core or registry present')
-    archive = root / 'provenance/upstream/pstack-0.15.32.tar.gz'
+    archive = root / 'provenance/upstream/pstack-0.15.36.tar.gz'
     require(receipt['archive'] == archive.relative_to(root).as_posix() and not archive.is_symlink()
             and hashlib.sha256(archive.read_bytes()).hexdigest() == receipt['archive_sha256'],
             'upstream archive differs')
@@ -884,7 +883,7 @@ def check(root=ROOT):
                   for p, row in sorted(installed.items()) if p not in anchors]}, 'installed payload manifest differs')
     require("MANIFEST_SHA256 = '" + hashlib.sha256(payload_path.read_bytes()).hexdigest() + "'" in
             (root / 'plugin/adapters/runtime/payload.py').read_text(), 'payload anchor differs')
-    return {'upstream_archive_files': 200, 'active_skills': len(names), 'core_playbooks': 23,
+    return {'upstream_archive_files': 573, 'active_skills': len(names), 'core_playbooks': 23,
             'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 15}
 
 

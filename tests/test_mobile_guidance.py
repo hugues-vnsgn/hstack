@@ -113,9 +113,6 @@ class InstalledMobileGuidance(InstalledFixture, unittest.TestCase):
         self.assertIn('6. Run **Opening a PR**.', bug_fix)
         self.assertIn('run **interrogate** with the [mobile review lens]', bug_fix)
         self.assertIn('even when you open the PR yourself.', bug_fix)
-        self.assertIn('Reuse this review when Opening a PR already requires `interrogate`.', bug_fix)
-        opening = self.read('skills/hugues-mode/playbooks/opening-a-pr.md')
-        self.assertIn('A subagent that opens a PR runs `interrogate`', opening)
         review = self.read('skills/hugues-mode/references/mobile-review.md')
         for risk in ['Lifecycle and process restoration', 'Main-thread safety', 'Cancellation',
                      'Resource release', 'Offline, error and retry', 'Accessibility and text scaling',

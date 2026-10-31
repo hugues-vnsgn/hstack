@@ -69,7 +69,7 @@ class RetainedProvenanceTests(unittest.TestCase):
                                  'check', '--root', str(self.root)], capture_output=True, text=True)
         if error is None:
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertIn('Verified pstack 0.15.32', result.stdout)
+            self.assertIn('Verified pstack 0.15.36', result.stdout)
         else:
             self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
             self.assertIn(error, result.stderr)
