@@ -1,6 +1,6 @@
-# Use hStack 0.5.7
+# Use hStack 0.5.8
 
-This guide is for version 0.5.7. `hugues-mode` is user-only, so type
+This guide is for version 0.5.8. `hugues-mode` is user-only, so type
 `/hstack:hugues-mode` or `$hugues-mode` to start it.
 The hStack rename shipped in 0.4.0. Your app stays in its own repository. Skills are instruction files for
 specific jobs. Playbooks order the steps of a larger task. Start with `hugues-mode` and describe the result you want.
@@ -18,14 +18,14 @@ performs no installation or authentication setup.
 
 ## Install in Claude Code
 
-Once its tag exists, version 0.5.7 can load for one session from a `v0.5.7` checkout.
+Once its tag exists, version 0.5.8 can load for one session from a `v0.5.8` checkout.
 Keep an active task on its recorded older copy until you reconcile its binding.
 Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were observed on
 Claude Code and Codex. Those two hosts on the maintainer machine hold 0.5.3 copies
-that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
-from 0.5.6 to 0.5.7 remains unobserved. Restart the Claude Code process
+that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6,
+from 0.5.6 to 0.5.7 and from 0.5.7 to 0.5.8 remains unobserved. Restart the Claude Code process
 after updating. A process started before an update can keep loading its old cache. Follow the
-[upgrade instructions](RELEASE-0.5.7.md#upgrade) for persistent installs.
+[upgrade instructions](RELEASE-0.5.8.md#upgrade) for persistent installs.
 Start from your app directory:
 
 ```sh
@@ -39,7 +39,7 @@ settings to force discovery or bypass an owner-disabled skill.
 For an earlier release, use its release notes ([0.2.0](RELEASE-0.2.0.md),
 [0.3.0](RELEASE-0.3.0.md)) and the instructions at that tag. Their historical
 instructions use the earlier names and do not apply to this version. The
-[0.5.7 release notes](RELEASE-0.5.7.md) describe the current upgrade and its
+[0.5.8 release notes](RELEASE-0.5.8.md) describe the current upgrade and its
 limits. The [0.4.0 notes](RELEASE-0.4.0.md) retain the historical rename and
 migration from 0.3.0.
 
@@ -50,8 +50,8 @@ version supplies canonical skills plus `agents/openai.yaml` invocation metadata.
 The 0.5.0 pretest used an installed Codex copy on CLI 0.163.0. Updates from
 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2 were later observed on Claude
 Code and Codex. Those two hosts on the maintainer machine hold 0.5.3 copies that
-match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6 and
-from 0.5.6 to 0.5.7
+match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6,
+from 0.5.6 to 0.5.7 and from 0.5.7 to 0.5.8
 remains unobserved.
 Use your host's supported native discovery route, and check that `hugues-mode`
 is available before invoking `$hugues-mode`. Keep the complete resource layout.
@@ -89,9 +89,9 @@ In Cursor, the router is invoked as `/hugues-mode`, `/hugues-help` and
 `hugues-agent` delegate runs there and cannot be sent to the background.
 
 Route A is expected, not proven, and is checked at the end on the released
-plugin. Stock Cursor is unobserved: every Cursor observation in the 0.5.7
+plugin. Stock Cursor is unobserved: every Cursor observation in the 0.5.8
 release notes comes from Cursor 3.27.22 with a third-party auth extension. See
-[the 0.5.7 release notes](RELEASE-0.5.7.md#known-gaps) for the full gap list.
+[the 0.5.8 release notes](RELEASE-0.5.8.md#known-gaps) for the full gap list.
 
 ## Your first task: fix a small search bug
 
@@ -203,7 +203,9 @@ the pstack 0.15.32 baseline. The
 [0.5.6 validation](RELEASE-0.5.6.md#validation) records the static checks, the
 session-start hook and the Orca coordinator runs. The
 [0.5.7 validation](RELEASE-0.5.7.md#validation) records the static checks and
-the Cursor runs.
+the Cursor runs. The
+[0.5.8 validation](RELEASE-0.5.8.md#validation) records the static checks and
+the Cursor release runs.
 hStack supports Swift/iOS, Kotlin/Android, KMP and CMP development through its
 mobile adapter. A complete journey on a real consumer project remains
 unobserved on any host.

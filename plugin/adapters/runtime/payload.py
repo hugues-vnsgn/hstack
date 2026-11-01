@@ -16,7 +16,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = 'd03856567c1d0bc5a57bc0f0d77e6159b67bd2fd34353345c0b9cd7bf18b2797'
+MANIFEST_SHA256 = '6a485c56f1d3526448137bb5ff1114278e29d25e013ac6631c0d11e4d06efe65'
 
 
 def digest(path):
