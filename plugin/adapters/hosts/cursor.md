@@ -58,4 +58,6 @@ say so and leave the commit to the user.
 
 ## The one-source evidence
 
-Both halves of the one-source observation come from one lab session on 2026-10-30 with both sources present, observed in Cursor 3.27.22 with a third-party auth extension: that session loaded `hstack` from the local copy (`loadUserLocalPlugin`) and from `~/.claude/plugins/cache/hstack/hstack/0.5.6` (`loadClaudePlugin hstack@hstack`), and ran the `host-detect.sh` hook once per copy. Route A, loading from Claude Code's install, is expected, not proven: it is checked at the end, on the released plugin, with hStack on in Claude Code and no local copy. Stock Cursor is unobserved, and so is the free plan without the third-party auth extension.
+Both halves of the one-source observation come from one lab session on 2026-10-30 with both sources present, observed in Cursor 3.27.22 with a third-party auth extension: that session loaded `hstack` from the local copy (`loadUserLocalPlugin`) and from `~/.claude/plugins/cache/hstack/hstack/0.5.6` (`loadClaudePlugin hstack@hstack`), and ran the `host-detect.sh` hook once per copy.
+
+Route A, loading from Claude Code's install, is observed. A second session on 2026-11-01, with hStack installed in Claude Code at `~/.claude/plugins/cache/hstack/hstack/0.5.8` and no local copy, recorded `loadClaudePlugin hstack@hstack loaded` and `loadUserLocalPlugins completed in 5.0ms (0 plugins loaded)`, with no `loadUserLocalPlugin hstack` line. Stock Cursor is unobserved, and so is the free plan without the third-party auth extension.
