@@ -62,8 +62,8 @@ codex plugin add hstack@hstack
 ```
 
 Check that the resolved payload reports 0.5.8. The marketplace follows the
-default branch. The update from 0.5.7 to 0.5.8 is unobserved until the release
-lanes record it.
+default branch. The update from 0.5.7 to 0.5.8 was observed on Claude Code and
+in Cursor, in the release lanes recorded below.
 
 ### Bun dependencies
 
@@ -127,6 +127,41 @@ head.
 
 `claude plugin validate --strict` passes on `plugin` and on the marketplace.
 
+### The release lanes, observed
+
+Four lanes ran in Cursor on 2026-11-01 against the installed 0.5.8 copy. The
+lane sheet is at `~/hstack-evidence/2026-10-31-release-0.5.8/lanes.md` and the
+transcripts and logs stay in the maintainer's private store.
+
+- **The install.** Cursor loaded hStack from Claude Code's install at the
+  `0.5.8` cache path, once, with no local copy. The plugin log records
+  `loadClaudePlugin hstack@hstack loaded` and
+  `loadUserLocalPlugins completed in 5.0ms (0 plugins loaded)`, with no
+  `loadUserLocalPlugin hstack` line. The resolved install is
+  `~/.claude/plugins/cache/hstack/hstack/0.5.8`, and the installed record's
+  `gitCommitSha` is the merge commit `177628b`. The copy holds 63 skills.
+- **The release notes.** `/hugues-help What changed in Orchestrate and
+  interrogate in this version?` read the host contract, the Cursor page and
+  both skills from the 0.5.8 cache path, and reported the `orch` helper's
+  removal, interrogate's proof-gated findings, and the deleted upstream
+  reference files.
+- **A bug fix, test first.** In a scratch repository holding one Python
+  function with an off-by-one bound and a failing unittest, a `/hugues-mode`
+  run routed to the bug-fix playbook, reproduced the failure with two of three
+  tests red, established the cause by probing the function across
+  `n = 0, 1, 2, 3, 5, 10`, delegated the fix to one `hugues-agent`, and
+  committed it on the current branch without pushing. The failing test landed
+  in `1fc6154` and the fix in `9e2309a`, and the coordinator reran the suite
+  independently: 3 of 3 pass.
+- **An adversarial review.** `/interrogate the last commit` ran three
+  adversaries in separate worktrees. The coordinator reran every claimed
+  finding rather than trusting the reports, and kept two: the bound is computed
+  as `n + 1` in the caller's own type, so the function accepts strictly less
+  than `range()` did, and the committed suite pins the contract at `n = 0, 1`
+  and `5` only. Both are recorded in the private store. Neither was applied,
+  because interrogate reports findings and the scratch repository exists to
+  prove the release.
+
 ## Known gaps
 
 - **Issue [#150](https://github.com/hugues-vnsgn/hstack/issues/150)** is open and
@@ -139,7 +174,9 @@ head.
   the 0.15.36 re-pin.
 - No Codex session ran. The Codex install was updated through the CLI only, with
   no model call.
-- The update from 0.5.7 to 0.5.8 is unobserved until the release lanes record it.
+- The update from 0.5.7 to 0.5.8 was observed on Claude Code and in Cursor, in
+  the release lanes recorded above. No Codex session ran, so the Codex side of
+  the update is unobserved.
 - The `plugin/skills/statechart/scripts/package.json` dependency set has no
   lockfile, so its install is not reproducible.
 - Cursor, in the IDE. Stock Cursor is unobserved, and so is the free plan
@@ -151,8 +188,9 @@ head.
   loading on a Swift task is not observed. `recall` finding an earlier chat in
   Cursor's transcripts is not observed.
 - Cursor, in the IDE. Route A, where Cursor loads hStack from Claude Code's
-  install, is expected, not proven. It is checked at the end, on the released
-  plugin, with hStack on in Claude Code and no local copy.
+  install, is now observed on the released plugin, with hStack on in Claude
+  Code and no local copy. The plugin log records one source and no
+  `loadUserLocalPlugin hstack` line.
 - Cursor, in the IDE. The Cursor CLI, Cloud Agents, the Cursor SDK and T3 Code's
   Cursor provider are unsupported. A step that needs a paid Cursor plan keeps the
   skip line.
