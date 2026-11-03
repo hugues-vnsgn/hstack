@@ -4896,7 +4896,7 @@
       "mode": 420
     },
     "adapters/host-tools.md": {
-      "sha256": "2f1ee01203c2aab5191c68343def82646d6983431d3379883d53cca2957ccfb9",
+      "sha256": "411a4fedc49e8755e1a05e631696d68ee82efc16031464dd394bfa5b690e0441",
       "mode": 420
     },
     "adapters/host-typescript.md": {
@@ -4916,7 +4916,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "a014e93a48edc0644e938c506583b287cad0cf537a084dce5a2827e709fefebf",
+      "sha256": "238c43c454c4113a52f6fab9eaab4d3de2d313848971d2f07228f7e508d560af",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4952,7 +4952,7 @@
       "mode": 420
     },
     "adapters/runtime/activity.py": {
-      "sha256": "7ed602099396ea6dba6f76ccf41c1fb09e71713f64a40aa67ccc7e38a305e440",
+      "sha256": "0e9e871bdfbab13b03732c41f3e038f72485606cf9eca8a07fff30d20f92d18a",
       "mode": 420
     },
     "adapters/runtime/json_input.py": {
@@ -4960,11 +4960,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "3302ba26c0c75adb1d17d7f9cbff7e463f10d7d776215b9e2f4b6fb3febd5d7b",
+      "sha256": "11e887a17cd9b226dd27a0a9daff073877adb05bf29e8c699422d36acc1aa4b3",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "9c612bbd4e191908f5746a29534c7d978b7e7ca182342badaa8845e1d245fa8b",
+      "sha256": "91aa3dad441913d2fa5ad65a9b46204b3740299f362352a8cc75cbc14bdebde3",
       "mode": 420
     },
     "agents/hugues-agent.md": {
