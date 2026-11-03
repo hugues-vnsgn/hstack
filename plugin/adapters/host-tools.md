@@ -162,6 +162,8 @@ manifest that names Cursor alongside Claude Code and Codex reports overall
 coverage unavailable even when the per-source reports say complete. A manifest
 may name any subset of them.
 A manifest with no supported source remains unavailable.
+A source for `omp` is never read and reports coverage `unsupported`. It caps the
+scan the way a Cursor source does, because those sessions were not read.
 
 `complete` is the owner's explicit assertion that the supplied set covers all
 relevant supported-host chats and sibling trees; a successful scan cannot establish that
@@ -171,8 +173,9 @@ or malformed records produce unavailable coverage and a hold (exit 2). A complet
 empty root, empty file list, or empty/whitespace-only transcript also holds.
 Duplicate JSON keys and JSON nesting over 64 levels hold instead of hiding records. Valid complete sources with no recent evidence report that limited result.
 
-Supported inputs are Claude JSONL user/assistant records and string summaries
-and Codex JSONL session/turn/response records including JSON-encoded function
+Supported inputs are Claude JSONL user/assistant records, string summaries and
+session-log rows (titles, modes, queue, attachment, request-replay and file-history
+records), and Codex JSONL session/turn/response records including JSON-encoded function
 arguments, and Cursor JSONL `role`/`message` records with `text` and `tool_use`
 blocks plus `turn_ended` markers. Claude content blocks are text, tool_use, tool_result and plaintext
 thinking, with required content fields. Tool-result content is a string
@@ -184,14 +187,20 @@ Nested progress envelopes and unknown block/tool types hold
 coverage for inspection. Codex tool outputs require a nonempty call identifier
 and string output. Reasoning permits only reviewed plaintext summary/content
 blocks; encrypted reasoning holds. Textual agent/user events require string
-content and no opaque attachments. Other events, web-search responses, Claude
-system/history/queue records and redacted thinking have no reviewed content
-schema and hold. Unsupported records/files keep coverage unavailable while
+content and no opaque attachments. Other events, web-search responses,
+redacted thinking and Claude row types outside that list, such as progress, have
+no reviewed content schema and hold. Unsupported records/files keep coverage unavailable while
 independent later records/files can retain activity hints. Those hints are
 labeled as validated records or unparsed path hints, never as deletion safety.
 Opaque records invalidate inherited relative context until a reviewed context
-resets it. Envelope/message metadata also uses bounded fields and types;
-unknown metadata, including unreviewed usage structures, holds. Other formats hold.
+resets it. A Claude row or message may carry keys the reader has not seen, such as
+`toolUseResult` or new usage counters, because every string in the row is still
+searched and every tool call in it is decoded or holds. An unknown key holds the
+row only when it carries a relative path in a path-named field, which nothing
+resolves outside a tool call. Content
+blocks stay closed: an unknown block key or type holds. A file-history row names
+files that the text scan cannot see, so its paths are resolved like a tool path.
+Other formats hold.
 
 A Cursor record carries no working directory and no record-level timestamp, and
 its transcript may carry no tool results. A Cursor operation therefore resolves

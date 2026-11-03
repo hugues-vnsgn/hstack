@@ -264,6 +264,77 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertIn('separate active/pinned-chat gate', cleanup)
 
 
+def claude_current_rows(cwd, stamp):
+    """One session in the key names Claude Code 2.1.31x writes, with placeholder values."""
+    base = {'sessionId': 'fixture-session', 'version': '2.1.317', 'entrypoint': 'cli',
+            'userType': 'external', 'gitBranch': 'scratch', 'isSidechain': False,
+            'cwd': str(cwd), 'timestamp': stamp}
+    usage = {'input_tokens': 3, 'output_tokens': 5, 'cache_creation_input_tokens': 7,
+             'cache_read_input_tokens': 11,
+             'cache_creation': {'ephemeral_1h_input_tokens': 0, 'ephemeral_5m_input_tokens': 7},
+             'server_tool_use': {'web_fetch_requests': 0, 'web_search_requests': 0},
+             'output_tokens_details': {'thinking_tokens': 2}, 'service_tier': 'standard',
+             'speed': 'standard', 'inference_geo': '', 'iterations': [], 'fallback_credit': None}
+    assistant = dict(base, type='assistant', uuid='a1', parentUuid=None, requestId='req',
+                     requestRef='ref', requestedModel='model', effort='high', perTurnEffort='high',
+                     attributionSkill='skill', attributionPlugin='plugin', apiBlockIndex=0,
+                     message={'id': 'msg', 'type': 'message', 'role': 'assistant', 'model': 'model',
+                              'stop_reason': 'tool_use', 'stop_sequence': None, 'container': None,
+                              'context_management': None, 'diagnostics': {'cache_miss_reason': {'type': 'none'}},
+                              'input_transformations': [{'type': 'thinking_dropped', 'path': 'messages.3.content.1', 'reason': 'plain'}],
+                              'stop_details': None, 'usage': usage,
+                              'content': [{'type': 'thinking', 'thinking': 'plain', 'signature': 'sig'},
+                                          {'type': 'tool_use', 'id': 'tu1', 'name': 'Read',
+                                           'input': {'file_path': 'README.md'}, 'caller': {'type': 'direct'}}]})
+    user = dict(base, type='user', uuid='u1', parentUuid='a1', promptId='prompt', sandboxed=False,
+                permissionMode='default', promptSource='user', origin={'kind': 'human'},
+                turnPosition={'promptIndex': 0, 'turnIndex': 1}, isVisibleInTranscriptOnly=False,
+                permissionDecision={'decision': 'allow', 'source': 'user', 'grantScope': 'once'},
+                toolUseResult={'type': 'text', 'file': {'numLines': 1, 'totalLines': 1, 'content': 'plain'}},
+                message={'role': 'user', 'content': [{'type': 'tool_result', 'tool_use_id': 'tu1',
+                                                      'content': 'plain', 'is_error': False}]})
+    tool = {'name': 'Read', 'input_schema': {'properties': {'file_path': {'type': 'string'},
+                                                            'path': {'type': 'string'}}}}
+    meta = {'sessionId': 'fixture-session'}
+    return [
+        dict(meta, type='mode', mode='normal'),
+        dict(meta, type='permission-mode', permissionMode='default'),
+        dict(meta, type='session-owner', accountUuid='account', organizationUuid='organization'),
+        dict(meta, type='atis-latch', atis='latch'),
+        dict(meta, type='queue-operation', operation='enqueue', content='plain', timestamp=stamp),
+        dict(meta, type='last-prompt', lastPrompt='plain', leafUuid='u1'),
+        dict(meta, type='ai-title', aiTitle='plain'),
+        dict(meta, type='custom-title', customTitle='plain'),
+        dict(meta, type='agent-name', agentName='plain'),
+        dict(meta, type='pr-link', prNumber=1, prRepository='owner/repo',
+             prUrl='https://example.invalid/pull/1', timestamp=stamp),
+        dict(meta, type='tools-used', tools=['Read']),
+        dict(meta, type='cost-state', hasUnknownModelCost=False, startTime=1, totalCostUSD=0.5,
+             totalDuration=2, totalAPIDuration=1, totalLinesAdded=0, totalLinesRemoved=0,
+             modelUsage={'model': {'inputTokens': 3}}),
+        dict(base, type='system', subtype='turn_duration', content='plain', level='info',
+             durationMs=5, isMeta=False, uuid='s1', parentUuid='u1'),
+        dict(base, type='attachment', uuid='t1', parentUuid='u1', renderedRole='user',
+             rendered=[], renderedInHumanTurn=False,
+             attachment={'type': 'deferred_tools_delta', 'addedNames': ['Read'], 'tools': [tool]}),
+        dict(meta, type='api-request-shape', shapeHash='shape', timestamp=stamp, version='2.1.317',
+             shape={'system': [{'type': 'text', 'text': 'plain'}], 'tools': [tool]}),
+        dict(meta, type='api-request', id='request', base='shape', tail=['blob'], keep=1,
+             cacheControl=[{'path': [0, 1], 'type': 'ephemeral'}], shapeHash='shape',
+             requestDigest='digest', querySource='sdk', timestamp=stamp, version='2.1.317',
+             params={'model': 'model', 'max_tokens': 1, 'betas': [], 'thinking': {'type': 'adaptive'}}),
+        dict(meta, type='api-request-blob', hash='blob',
+             message={'role': 'user', 'content': [{'type': 'text', 'text': 'plain'}]}),
+        {'type': 'file-history-snapshot', 'messageId': 'u1', 'isSnapshotUpdate': False,
+         'snapshot': {'messageId': 'u1', 'timestamp': stamp, 'trackedFileBackups': {}}},
+        {'type': 'file-history-delta', 'messageId': 'u1', 'snapshotMessageId': 'u1', 'timestamp': stamp,
+         'trackingPath': str(Path(cwd) / 'README.md'),
+         'backup': {'backupFileName': None, 'backupTime': stamp, 'realParentDir': str(cwd), 'version': 1}},
+        assistant,
+        user,
+    ]
+
+
 class SyntheticActivity(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory(prefix='hstack-synthetic-history-')
@@ -684,18 +755,152 @@ class SyntheticActivity(unittest.TestCase):
         row = self.claude(message={'content': [{'type': 'tool_use', 'name': 'Read'}]})
         self.assertFalse(self.scan('claude', [row])[2])
 
-    def test_unsupported_host_is_ignored_without_reading_or_coverage(self):
-        ignored = {'provider': 'omp', 'root': '/not-authorized/not-read', 'coverage': 'complete'}
+    def test_unsupported_host_is_never_read_and_caps_coverage(self):
+        unread = {'provider': 'omp', 'root': '/not-authorized/not-read', 'coverage': 'complete'}
         with patch.object(activity, 'read_selected', side_effect=AssertionError('must not read unsupported host')):
-            hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [ignored]}, [self.wt], self.now)
+            hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [unread]}, [self.wt], self.now)
         self.assertFalse(complete)
         self.assertFalse(hits[str(self.wt)])
-        self.assertEqual(reports[0]['coverage'], 'ignored')
+        self.assertEqual(reports[0]['coverage'], 'unsupported')
         root = self.area / 'authorized empty host'
         root.mkdir()
         supported = {'provider': 'claude', 'root': str(root), 'authorization': 'synthetic', 'coverage': 'complete'}
         with patch.object(activity, 'read_selected', side_effect=AssertionError('empty root has no file reads')):
-            self.assertFalse(activity.scan({'coverage': 'complete', 'sources': [ignored, supported]}, [self.wt], self.now)[2])
+            self.assertFalse(activity.scan({'coverage': 'complete', 'sources': [unread, supported]}, [self.wt], self.now)[2])
+
+    def test_complete_claude_source_with_an_unread_omp_source_is_not_complete(self):
+        transcript = self.area / 'claude.jsonl'
+        transcript.write_text(json.dumps(self.claude()) + '\n')
+        claude = {'provider': 'claude', 'files': [str(transcript)], 'authorization': 'synthetic', 'coverage': 'complete'}
+        omp = {'provider': 'omp', 'files': [str(self.area / 'omp.jsonl')], 'authorization': 'synthetic', 'coverage': 'complete'}
+        hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [claude]}, [self.wt], self.now)
+        self.assertTrue(complete)
+        for sources in ([claude, omp], [omp, claude]):
+            with self.subTest(order=[source['provider'] for source in sources]):
+                with patch.object(activity, 'read_selected', wraps=activity.read_selected) as read:
+                    hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': sources}, [self.wt], self.now)
+                self.assertFalse(complete)
+                self.assertEqual([call.args[0] for call in read.call_args_list], [transcript])
+                self.assertEqual({report['provider']: report['coverage'] for report in reports},
+                                 {'claude': 'complete', 'omp': 'unsupported'})
+                self.assertTrue(hits[str(self.wt)])
+
+    def test_claude_2_1_31x_transcript_with_activity_is_complete(self):
+        rows = claude_current_rows(self.wt, self.stamp)
+        hits, reports, complete = self.scan('claude', rows)
+        self.assertTrue(complete)
+        self.assertEqual(reports[0]['coverage'], 'complete')
+        self.assertEqual(reports[0]['files_scanned'], 1)
+        self.assertTrue(hits[str(self.wt)][0]['recent'])
+        self.assertFalse(hits[str(self.other)])
+        for row in rows:
+            with self.subTest(row_type=row['type']):
+                self.assertTrue(self.scan('claude', [row])[2])
+
+    def test_unknown_claude_metadata_keys_keep_their_activity_visible(self):
+        sibling = '../' + self.other.name + '/README.md'
+        read_sibling = {'type': 'tool_use', 'name': 'Read', 'input': {'file_path': sibling}}
+        for key in ['toolUseResult', 'futureMetadata']:
+            with self.subTest(key=key, shape='absolute mention'):
+                hits, _, complete = self.scan('claude', [self.claude(**{key: {'detail': str(self.other)}})])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+            with self.subTest(key=key, shape='supported tool call'):
+                hits, _, complete = self.scan('claude', [self.claude(**{key: [read_sibling]})])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+            for shape, value in [('unsupported tool call', [{'type': 'tool_use', 'name': 'Grep', 'input': {'pattern': 'x'}}]),
+                                 ('native tool_calls', {'tool_calls': []}),
+                                 ('relative path field', {'type': 'file_reference', 'path': sibling}),
+                                 ('relative path beside a tool call', {**read_sibling, 'path': sibling}),
+                                 ('nested relative path field', [{'detail': {'file_path': 'README.md'}}]),
+                                 ('non-string path field', {'path': ['README.md']})]:
+                with self.subTest(key=key, shape=shape):
+                    self.assertFalse(self.scan('claude', [self.claude(**{key: value})])[2])
+        with self.subTest(shape='message metadata'):
+            message = {'content': [], 'future_detail': {'path': sibling}}
+            self.assertFalse(self.scan('claude', [self.claude(message=message)])[2])
+            message = {'content': [], 'input_transformations': [{'type': 'thinking_dropped', 'path': 'messages.3.content.1/../x'}]}
+            self.assertFalse(self.scan('claude', [self.claude(message=message)])[2])
+            message = {'content': [], 'future_detail': str(self.other)}
+            hits, _, complete = self.scan('claude', [self.claude(message=message)])
+            self.assertTrue(complete)
+            self.assertTrue(hits[str(self.other)])
+
+    def test_unknown_claude_row_types_hold_and_known_metadata_rows_still_see_text(self):
+        for kind in ['progress', 'future-row-type']:
+            with self.subTest(kind=kind):
+                self.assertFalse(self.scan('claude', [{'type': kind, 'sessionId': 'fixture'}])[2])
+        attachment = {'type': 'attachment', 'cwd': str(self.wt), 'timestamp': self.stamp,
+                      'attachment': {'type': 'file', 'filename': str(self.other / 'README.md')}}
+        hits, _, complete = self.scan('claude', [attachment])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.other)])
+        call = {'type': 'tool_use', 'name': 'Read', 'input': {'file_path': '../' + self.other.name + '/README.md'}}
+        hits, _, complete = self.scan('claude', [{'type': 'system', 'cwd': str(self.wt), 'timestamp': self.stamp, 'message': {'content': [call]}}])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.other)])
+        for row in [dict(attachment, attachment={'type': 'directory', 'path': '../' + self.other.name}),
+                    dict(attachment, attachment={'type': 'hook', 'call': dict(call, name='Grep', input={'pattern': 'x'})}),
+                    dict(attachment, cwd='relative/directory'),
+                    {'type': 'attachment', 'timestamp': 'not-a-time'},
+                    {'type': 'mode', 'sessionId': 17}]:
+            with self.subTest(row=row):
+                self.assertFalse(self.scan('claude', [row])[2])
+
+    def test_claude_2_1_31x_activity_blocks_stay_strict(self):
+        call = {'type': 'tool_use', 'id': 'tu1', 'name': 'Read', 'input': {'file_path': 'README.md'}}
+        for name, block in [('unreviewed block key', dict(call, unreviewed='field')),
+                            ('caller is not an object', dict(call, caller='direct')),
+                            ('caller carries a nested value', dict(call, caller={'type': {'path': 'x'}})),
+                            ('unsupported tool', dict(call, name='Grep', input={'pattern': 'x'})),
+                            ('unknown tool input field', dict(call, input={'file_path': 'README.md', 'unknown': 1}))]:
+            with self.subTest(name):
+                row = self.claude(message={'content': [block]})
+                self.assertFalse(self.scan('claude', [row])[2])
+        for name, block in [('unreviewed result key', {'type': 'tool_result', 'tool_use_id': 'tu1', 'content': 'plain', 'unreviewed': 1}),
+                            ('opaque result block', {'type': 'tool_result', 'tool_use_id': 'tu1', 'content': [{'type': 'image', 'source': {}}]}),
+                            ('unknown block type', {'type': 'server_tool_use', 'name': 'x', 'input': {}})]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [self.claude(message={'content': [block]})])[2])
+        for name, message in [('usage is not an object', {'content': [], 'usage': 'opaque'}),
+                              ('negative count', {'content': [], 'usage': {'input_tokens': -1}}),
+                              ('message id is not text', {'content': [], 'id': 17})]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [self.claude(message=message)])[2])
+
+    def test_claude_file_history_paths_are_read(self):
+        def snapshot(backups):
+            return {'type': 'file-history-snapshot', 'messageId': 'u1', 'isSnapshotUpdate': False,
+                    'snapshot': {'messageId': 'u1', 'timestamp': self.stamp, 'trackedFileBackups': backups}}
+
+        def delta(tracking_path):
+            return {'type': 'file-history-delta', 'messageId': 'u1', 'snapshotMessageId': 'u1',
+                    'timestamp': self.stamp, 'trackingPath': tracking_path,
+                    'backup': {'backupFileName': None, 'backupTime': self.stamp,
+                               'realParentDir': str(self.area), 'version': 1}}
+        sibling = '../' + self.other.name + '/README.md'
+        for name, row in [('snapshot, absolute', snapshot({str(self.other / 'README.md'): {'version': 1}})),
+                          ('snapshot, relative to the session directory', snapshot({sibling: {'version': 1}})),
+                          ('delta, absolute', delta(str(self.other / 'README.md'))),
+                          ('delta, relative to the session directory', delta(sibling))]:
+            with self.subTest(name):
+                hits, _, complete = self.scan('claude', [self.claude(), row])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+        for row in [snapshot({}), delta(str(self.wt / 'README.md'))]:
+            hits, _, complete = self.scan('claude', [row])
+            self.assertTrue(complete)
+            self.assertEqual(bool(hits[str(self.wt)]), row['type'] == 'file-history-delta')
+        for name, row in [('snapshot, relative without a session directory', snapshot({'README.md': {'version': 1}})),
+                          ('delta, relative without a session directory', delta('README.md')),
+                          ('snapshot is not an object', dict(snapshot({}), snapshot='opaque')),
+                          ('backups are not an object', snapshot(['README.md'])),
+                          ('snapshot is missing', {'type': 'file-history-snapshot', 'messageId': 'u1'}),
+                          ('delta lacks a tracking path', {'type': 'file-history-delta', 'messageId': 'u1'}),
+                          ('delta tracking path is not text', delta(['README.md']))]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [row])[2])
 
     def test_nested_progress_and_unknown_claude_blocks_hold(self):
         nested = self.claude(type='progress', data={'type': 'agent_progress', 'message': self.claude()})
@@ -796,9 +1001,9 @@ class SyntheticActivity(unittest.TestCase):
     def test_nonoperative_envelopes_require_reviewed_text_schemas(self):
         for provider, row in [('claude', self.claude(unknown={'type': 'file_reference', 'path': '../sibling'})),
                               ('codex', self.codex(unknown={'type': 'file_reference', 'path': '../sibling'})),
-                              ('claude', self.claude(message={'content': [], 'usage': {'unknown': '../sibling'}}))]:
+                              ('claude', self.claude(message={'content': [], 'usage': {'unknown': {'path': '../sibling'}}}))]:
             self.assertFalse(self.scan(provider, [row])[2])
-        for kind in ['system', 'file-history-snapshot', 'queue-operation']:
+        for kind in ['progress', 'future-row-type']:
             self.assertFalse(self.scan('claude', [self.claude(type=kind)])[2])
         for row in [self.claude(type='summary', summary=17),
                     {'type': 'summary', 'summary': 'plain', 'unknown': {'type': 'file_reference', 'path': '../sibling'}},
@@ -1048,20 +1253,43 @@ class ConsumerAudit(InstalledFixture, unittest.TestCase):
         _, report = self.audit(manifest)
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-wip')
 
-    def test_cli_unsupported_host_is_ignored_and_cannot_supply_supported_host_coverage(self):
-        ignored = {'provider': 'omp', 'files': ['/not-authorized/not-read.jsonl'], 'coverage': 'complete'}
-        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [ignored]})
+    def test_cli_unsupported_host_is_never_read_and_holds_the_audit(self):
+        unread = {'provider': 'omp', 'files': ['/not-authorized/not-read.jsonl'], 'coverage': 'complete'}
+        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [unread]})
         self.assertEqual(result.returncode, 2)
-        self.assertEqual(report['sources'][0]['coverage'], 'ignored')
+        self.assertEqual(report['sources'][0]['coverage'], 'unsupported')
         self.assertEqual(report['sources'][0]['files_scanned'], 0)
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-activity-unavailable')
         root = self.area / 'empty supported history'
         root.mkdir()
         (root / 'old.jsonl').write_text(json.dumps({'type': 'event_msg', 'timestamp': '2020-01-01T00:00:00Z', 'payload': {'type': 'agent_message', 'message': 'old unrelated fixture'}}) + '\n')
         supported = {'provider': 'codex', 'root': str(root), 'authorization': 'synthetic', 'coverage': 'complete'}
-        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [ignored, supported]})
-        self.assertEqual(result.returncode, 0)
-        self.assertFalse(report['worktrees'][1]['evidence'])
+        control, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [supported]})
+        self.assertEqual(control.returncode, 0)
+        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [unread, supported]})
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(report['audit_status'], 'hold')
+        self.assertEqual([source['coverage'] for source in report['sources']], ['unsupported', 'complete'])
+        self.assertEqual(report['worktrees'][1]['bucket'], 'hold-activity-unavailable')
+
+    def test_cli_reads_a_claude_2_1_31x_transcript(self):
+        stamp = datetime.now(timezone.utc).isoformat()
+        path = self.area / 'current.jsonl'
+        path.write_text(''.join(json.dumps(row) + '\n' for row in claude_current_rows(self.wt, stamp)))
+        manifest = {'schema_version': 1, 'coverage': 'complete', 'sources': [{'provider': 'claude', 'files': [str(path)], 'authorization': 'synthetic only', 'coverage': 'complete'}]}
+        result, report = self.audit(manifest)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report['audit_status'], 'complete')
+        self.assertEqual(report['sources'], [{'provider': 'claude', 'coverage': 'complete', 'files_scanned': 1}])
+        row = next(r for r in report['worktrees'] if r['worktree'] == str(self.wt))
+        self.assertEqual(row['bucket'], 'verify-recent-chat')
+        self.assertEqual(row['evidence'][0]['provider'], 'claude')
+        self.assertFalse(row['deletion_authorized'])
+        path.write_text(path.read_text() + json.dumps({'type': 'future-row-type', 'sessionId': 'fixture'}) + '\n')
+        result, report = self.audit(manifest)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(report['sources'][0]['coverage'], 'unavailable')
+        self.assertEqual(report['sources'][0]['error'], 'unsupported claude record envelope')
 
     def test_cli_supported_host_contexts_and_nested_progress_hold(self):
         stamp = datetime.now(timezone.utc).isoformat()

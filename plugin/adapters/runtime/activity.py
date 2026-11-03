@@ -10,11 +10,22 @@ import subprocess
 from urllib.parse import unquote
 
 PROVIDERS = {'claude', 'codex', 'cursor'}
-# A provider the owner named as deliberately out of scope. Its transcripts are
-# never read and it contributes no evidence. Any other provider this reader
-# does not support is an error, not a silent skip.
-IGNORED_PROVIDERS = {'omp'}
+# A host the owner may list that this reader never opens. Its sessions are
+# unread, so listing one caps the scan below complete. Any other provider this
+# reader does not support is an error.
+UNREAD_PROVIDERS = {'omp'}
+# Claude Code rows that log the session instead of a message. A tool call lives
+# in a user or assistant row, so these get no content schema. They still get the
+# text scan and the tool-call decoder, and a tool schema inside names path
+# fields that are not paths.
+CLAUDE_METADATA_ROWS = {
+    'agent-name', 'ai-title', 'api-request', 'api-request-blob', 'api-request-shape',
+    'atis-latch', 'attachment', 'cost-state', 'custom-title', 'file-history-delta',
+    'file-history-snapshot', 'last-prompt', 'mode', 'permission-mode', 'pr-link',
+    'queue-operation', 'session-owner', 'system', 'tools-used'}
 PR_STATES = {'OPEN', 'CLOSED', 'MERGED', 'NONE'}
+# `path` in a message's input_transformations locates a block in the API request.
+REQUEST_LOCATOR = re.compile(r'messages\.\d+\.content\.\d+')
 PATH_KEYS = {'cwd', 'workdir', 'file_path', 'path', 'absolute_path', 'directory'}
 # The Cursor reader also resolves `working_directory`, which only Cursor's own
 # tool inputs carry. The shared key set stays as Claude Code and Codex have it,
@@ -56,20 +67,20 @@ def text_strings(value, decode_arguments=True):
         yield value
 
 
-def context_paths(value, keys=PATH_KEYS):
+def context_paths(value, keys=PATH_KEYS, strict=True):
     if isinstance(value, dict):
         for key, child in value.items():
             if key in keys:
-                if child is not None and not isinstance(child, str):
+                if child is not None and not isinstance(child, str) and strict:
                     raise ValueError('invalid operation path field')
-                if child:
+                if child and isinstance(child, str):
                     yield child
             if key == 'arguments' and isinstance(child, str):
                 child = load_json(child)
-            yield from context_paths(child, keys)
+            yield from context_paths(child, keys, strict)
     elif isinstance(value, list):
         for child in value:
-            yield from context_paths(child, keys)
+            yield from context_paths(child, keys, strict)
 
 
 def resolve_operation_path(path, directory):
@@ -635,18 +646,33 @@ def claude_message(message):
     if not isinstance(message, dict):
         return False
     fields = {'id', 'type', 'role', 'model', 'stop_reason', 'stop_sequence'}
-    if set(message) - fields - {'content', 'usage'}:
-        return False
     if any(value is not None and not isinstance(value, str)
            for key, value in message.items() if key in fields):
         return False
     usage = message.get('usage')
     if usage is not None:
         counts = {'input_tokens', 'output_tokens', 'cache_creation_input_tokens', 'cache_read_input_tokens'}
-        if (not isinstance(usage, dict) or set(usage) - counts
-                or any(type(value) is not int or value < 0 for value in usage.values())):
+        if (not isinstance(usage, dict)
+                or any(type(value) is not int or value < 0 for key, value in usage.items() if key in counts)):
             return False
     return isinstance(message.get('content'), (str, list))
+
+
+def unresolved_path(value):
+    """A relative path in a path field outside a tool call's input.
+
+    Only a tool operation's working directory resolves a relative path, so one
+    anywhere else is a shape the reader has not reviewed.
+    """
+    if isinstance(value, dict):
+        call = value.get('type') == 'tool_use'
+        return any((key in PATH_KEYS and isinstance(child, str) and bool(child)
+                    and not Path(child).is_absolute() and not REQUEST_LOCATOR.fullmatch(child))
+                   or unresolved_path(child) for key, child in value.items()
+                   if not (call and key in {'input', 'cwd', 'workdir'}))
+    if isinstance(value, list):
+        return any(unresolved_path(child) for child in value)
+    return False
 
 
 def claude_envelope(row):
@@ -654,10 +680,30 @@ def claude_envelope(row):
               'gitBranch', 'slug', 'requestId', 'agentId', 'sourceToolAssistantUUID',
               'sourceToolUseID', 'summary', 'leafUuid'}
     flags = {'isSidechain', 'isApiErrorMessage', 'isMeta', 'isCompactSummary'}
-    return (not (set(row) - fields - flags - {'type', 'timestamp', 'message'})
-            and all(value is None or isinstance(value, str)
-                    for key, value in row.items() if key in fields)
-            and all(type(value) is bool for key, value in row.items() if key in flags))
+    return (all(value is None or isinstance(value, str)
+                for key, value in row.items() if key in fields)
+            and all(type(value) is bool for key, value in row.items() if key in flags)
+            and not unresolved_path(row))
+
+
+def history_paths(row, directory):
+    """The files a file-history row names, which the text scan cannot see.
+
+    A snapshot keys its backups by path and a delta carries one tracking path.
+    """
+    if row['type'] == 'file-history-snapshot':
+        snapshot = row.get('snapshot')
+        backups = snapshot.get('trackedFileBackups') if isinstance(snapshot, dict) else None
+        paths = list(backups) if isinstance(backups, dict) else None
+    else:
+        tracked = row.get('trackingPath')
+        paths = [tracked] if isinstance(tracked, str) and tracked else None
+    if paths is None:
+        raise ValueError('unsupported file-history record')
+    for path in paths:
+        if not Path(path).is_absolute() and not directory:
+            raise ValueError('relative operation path lacks working-directory context')
+        yield resolve_operation_path(path, directory)
 
 
 def records(provider, path, body, mtime):
@@ -673,9 +719,8 @@ def records(provider, path, body, mtime):
         if provider == 'claude':
             if not claude_envelope(row):
                 raise ValueError('unsupported Claude envelope metadata')
-            supported = (kind == 'summary' and isinstance(row.get('summary'), str)
-                         and not (set(row) - {'type', 'summary', 'timestamp', 'cwd',
-                                            'leafUuid', 'uuid', 'parentUuid'}))
+            supported = (kind in CLAUDE_METADATA_ROWS
+                         or kind == 'summary' and isinstance(row.get('summary'), str))
             if kind in {'user', 'assistant'}:
                 supported = claude_message(row.get('message'))
                 content = row['message'].get('content') if isinstance(row.get('message'), dict) else None
@@ -702,8 +747,11 @@ def records(provider, path, body, mtime):
                                              and not (set(block) - {'type', 'tool_use_id', 'content', 'is_error', 'cwd', 'workdir'})
                                              and ('is_error' not in block or type(block['is_error']) is bool))
                             elif block_type == 'tool_use':
-                                supported = (supported and not (set(block) - {'type', 'id', 'name', 'input', 'cwd', 'workdir'})
-                                             and ('id' not in block or isinstance(block['id'], str)))
+                                caller = block.get('caller', {})
+                                supported = (supported and not (set(block) - {'type', 'id', 'name', 'input', 'cwd', 'workdir', 'caller'})
+                                             and ('id' not in block or isinstance(block['id'], str))
+                                             and isinstance(caller, dict)
+                                             and all(isinstance(value, str) for value in caller.values()))
         elif provider == 'codex':
             if set(row) - {'type', 'timestamp', 'payload'}:
                 raise ValueError('unsupported Codex envelope metadata')
@@ -788,11 +836,10 @@ def scan(manifest, worktrees, now):
         report = {'provider': source.get('provider') if isinstance(source, dict) else None,
                   'coverage': 'unavailable', 'files_scanned': 0}
         reports.append(report)
-        if isinstance(source, dict) and source.get('provider') in IGNORED_PROVIDERS:
-            # An explicitly ignored host contributes no evidence and no coverage,
-            # and its transcripts are never read. Any other unknown provider
-            # reaches the source check below and reports its error.
-            report.update(coverage='ignored', reason='unsupported host; contributes no evidence')
+        if isinstance(source, dict) and source.get('provider') in UNREAD_PROVIDERS:
+            report.update(coverage='unsupported',
+                          limits=source['provider'] + ': sessions are not read, so this source supplies no evidence')
+            complete = False
             continue
         try:
             files = selected_files(source)
@@ -832,14 +879,17 @@ def scan(manifest, worktrees, now):
                             next_cwd = row['payload']['cwd']
                         if next_cwd and (not isinstance(next_cwd, str) or not Path(next_cwd).is_absolute()):
                             raise ValueError('invalid session working directory')
+                        row_type = row.get('type') if source['provider'] == 'claude' else None
                         if source['provider'] == 'cursor':
                             normalized = []
                             for block in cursor_operations(row):
                                 normalized.extend(cursor_operation_paths(block))
                         else:
                             normalized = list(operation_paths(row, next_cwd))
+                        if row_type in {'file-history-snapshot', 'file-history-delta'}:
+                            normalized.extend(history_paths(row, next_cwd))
                         keys = CURSOR_PATH_KEYS if cursor_source else PATH_KEYS
-                        for location in context_paths(row, keys):
+                        for location in context_paths(row, keys, row_type not in CLAUDE_METADATA_ROWS):
                             if Path(location).is_absolute():
                                 normalized.append(str(Path(location).resolve()))
                         cwd = next_cwd
