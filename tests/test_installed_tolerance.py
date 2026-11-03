@@ -28,6 +28,50 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                 result = self.bound('read-workflow', FEATURE)
                 self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_claude_code_session_markers_do_not_block_bound_helpers(self):
+        markers = self.plugin / '.in_use'
+        markers.mkdir()
+        (markers / '11264').write_text('{"pid":11264,"procStart":"Tue Nov  3 07:19:17 2026"}')
+        (self.plugin / '.orphaned_at').write_text('1793504969969')
+        result = self.bound('read-workflow', FEATURE)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        rebound = self.run_tool('bind')
+        self.assertEqual(rebound.returncode, 0, rebound.stderr)
+        self.assertEqual(rebound.stdout, self.binding.read_text())
+
+    def test_session_marker_lookalikes_are_still_rejected(self):
+        for name in ['.in_use/evil.md', '.in_use/12a', '.in_use/.1', '.in_use/sub/1', '.in_use/1/2',
+                     '.in_use/١٢', '.in_use/1\n', 'skills/.in_use/1', 'skills/.orphaned_at',
+                     '.orphaned_at/1', '.orphaned_at.md', '.in_use']:
+            with self.subTest(name=name):
+                path = self.plugin / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('extra\n')
+                result = self.bound('read-workflow', FEATURE)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('inventory differs', result.stderr)
+                path.unlink()
+                for parent in path.parents:
+                    if parent == self.plugin or any(parent.iterdir()):
+                        break
+                    parent.rmdir()
+
+    def test_session_marker_names_cannot_hide_a_symlink(self):
+        (self.plugin / '.in_use').mkdir()
+        for name in ['.orphaned_at', '.in_use/1']:
+            with self.subTest(name=name):
+                path = self.plugin / name
+                path.symlink_to('adapters/host.md')
+                result = self.bound('read-workflow', FEATURE)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('unsafe installed payload entry', result.stderr)
+                path.unlink()
+        (self.plugin / '.in_use').rmdir()
+        (self.plugin / '.in_use').symlink_to('adapters')
+        result = self.bound('read-workflow', FEATURE)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('unsafe installed payload entry', result.stderr)
+
     def test_extra_file_beside_bootstrap_dependencies_is_still_rejected(self):
         for name in ['skills/hugues-mode/scripts/extra.md', 'skills/hugues-mode/node_modules/x.js']:
             with self.subTest(name=name):

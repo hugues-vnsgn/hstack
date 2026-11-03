@@ -13,10 +13,12 @@ ANCHORS = {'adapters/runtime/payload.json', 'adapters/runtime/payload.py', 'adap
 # Created after install by the bundled Bun bootstrap or the host OS; never workflow inputs.
 GENERATED_TREES = {'skills/hugues-mode/scripts/node_modules'}
 HOST_METADATA = {'.DS_Store'}
+# Claude Code writes `.in_use/<pid>` while a session holds the plugin and `.orphaned_at` once a newer version supersedes it.
+SESSION_MARKER = re.compile(r'\.orphaned_at|\.in_use/[0-9]+')
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = '1c21fb33ba4317c75b1734cbf75e03dfd446be5a93b7bae3e1f74e9e08a22f14'
+MANIFEST_SHA256 = 'bfdef79ec80a898aa02f5c3d91a9d6f3a91dee71f07dff00e569f914c4916f1d'
 
 
 def digest(path):
@@ -118,8 +120,7 @@ def inventory(root, allow_runtime_cache=False):
             relative = path.relative_to(root).as_posix()
             if path.is_symlink() or not path.is_file():
                 raise ValueError('unsafe installed payload entry: ' + relative)
-            # Interpreter caches and host metadata are generated, never workflow inputs.
-            if allow_runtime_cache and (name in HOST_METADATA or (
+            if allow_runtime_cache and (name in HOST_METADATA or SESSION_MARKER.fullmatch(relative) or (
                     relative.startswith('adapters/runtime/__pycache__/') and path.suffix == '.pyc')):
                 continue
             files.append(relative)
