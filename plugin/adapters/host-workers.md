@@ -8,6 +8,9 @@ scoped-worker direct implementation exception; do not recursively delegate the
 same assignment. Supply absolute paths
 to the public mode, plugin skills directory and the host adapter and applicable mobile adapter,
 the exact base/head, writable scope, success predicate and evidence destination.
+On Claude Code a subagent's Write of a report file is rejected, so the brief asks for
+findings in the final message and the coordinator writes any evidence file from that
+text; files a command produces, such as logs, screenshots and build output, are unaffected.
 Carry the loaded mode's absolute path, derived from the current loaded skill, into every
 fresh worker, including general-purpose helpers; see [workflow tools](host-workflow-tools.md).
 Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled

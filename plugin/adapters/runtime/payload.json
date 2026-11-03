@@ -579,7 +579,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "2f1ee01203c2aab5191c68343def82646d6983431d3379883d53cca2957ccfb9",
+      "sha256": "966bfaf1e08428c1a16a2dc2c80c164a1c2272b0f0cba7a2f3f270d158076bf6",
       "mode": "100644"
     },
     {
@@ -589,7 +589,7 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "22790122e6a99fc7f42c446d610f48a4c196a2062b828db3eaf9489fa7fe7bc6",
+      "sha256": "ecc129aeaa7d7e210e8a00cdc041d9d43342b8b8a49ccca63328bd60f55d7a84",
       "mode": "100644"
     },
     {
