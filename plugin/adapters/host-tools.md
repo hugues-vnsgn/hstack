@@ -194,12 +194,24 @@ independent later records/files can retain activity hints. Those hints are
 labeled as validated records or unparsed path hints, never as deletion safety.
 Opaque records invalidate inherited relative context until a reviewed context
 resets it. A Claude row or message may carry keys the reader has not seen, such as
-`toolUseResult` or new usage counters, because every string in the row is still
-searched and every tool call in it is decoded or holds. An unknown key holds the
-row only when it carries a relative path in a path-named field, which nothing
-resolves outside a tool call. Content
-blocks stay closed: an unknown block key or type holds. A file-history row names
-files that the text scan cannot see, so its paths are resolved like a tool path.
+`toolUseResult` or new usage counters, because every string and every dictionary
+key in the row is still searched and every tool call in it is decoded or holds. An
+unknown key holds the row only when it carries a relative path in a path-named
+field (`cwd`, `path`, `file_path`, `filename`, `filePath`, `workingDirectory`), or
+a value that is not a string there, because nothing resolves a path outside a tool
+call. A `displayPath` is accepted only beside the absolute `filename` or `path`
+it shortens. Only a tool schema (`input_schema`) and a cache marker
+(`cacheControl`) may hold a non-string `path`. Content blocks stay closed: an
+unknown block key or type holds, and so does any block whose type ends in
+`tool_use` but is not `tool_use`. A `system` row is read for the subtypes and an
+`attachment` row for the attachment types seen in Claude Code 2.1.308 through
+2.1.317; any other value holds until someone reviews that payload. An
+`api-request` row's `base` and `tail` must be plain blob names. A file-history row
+names files that the text scan cannot see, so each entry resolves from the real
+parent directory it records beside the path, because a relative path is relative to
+the session's first directory. An entry with no recorded parent directory holds.
+A relative path inside free text, a prompt or a key that names no file field is
+still invisible to the reader, so a `complete` result stays the owner's assertion.
 Other formats hold.
 
 A Cursor record carries no working directory and no record-level timestamp, and
