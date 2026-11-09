@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement Delegate"
+  short_description: "Delegate a spec's Issues to implementer subagents"
+policy:
+  allow_implicit_invocation: false
