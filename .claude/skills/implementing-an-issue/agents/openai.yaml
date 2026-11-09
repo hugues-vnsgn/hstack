@@ -1,0 +1,3 @@
+interface:
+  display_name: "Implementing an Issue"
+  short_description: "Build one Issue test-first in a handed worktree and report"

@@ -3,5 +3,9 @@ __pycache__/
 .DS_Store
 docs/planning/
 skills-lock.json
-.claude/
+# Project skills, agents and hooks load in cloud sessions; the rest of .claude stays local.
+.claude/*
+!.claude/skills/
+!.claude/agents/
+!.claude/hooks/
 .agents/
