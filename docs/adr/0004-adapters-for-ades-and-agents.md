@@ -35,6 +35,10 @@ The rule is stated once, in [hosts/README.md](../../plugin/adapters/hosts/README
 
 This is [#50](https://github.com/hugues-vnsgn/hstack/issues/50) after its 2026-10-19 correction. The Orca page uses `orca-cli` for terminals and worktrees, resolving a pane's `tabId:leafId` to a terminal handle. It does not use Orca's `orchestration` skill, so hStack does the coordinating and Orca only hosts the agents' terminals and worktrees.
 
+## Herdr lands from its source, unobserved
+
+On 2026-11-10 the owner asked for a Herdr page, and no Herdr pane was available to the session that wrote it. The page and the door's fourth variable, `HERDR_ENV`, are read from Herdr 0.9.5's own CLI reference at commit `ee5bfb5`. This departs from the first consequence below: the page lands with a detection test and no observed evidence, so its opening line marks every row unobserved. The owner's first Herdr run replaces that line with what it saw.
+
 ## Consequences
 
 - P2 ships the door and an empty index. A page lands with its own detection test and its own observed evidence. A mechanic hStack has not seen on the host is written `unobserved`.

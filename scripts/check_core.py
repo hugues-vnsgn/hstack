@@ -164,7 +164,7 @@ PHASE_GUIDANCE = {
     'host-typescript.md': 'Reading or editing TypeScript files',
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
-DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`; '
+DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID HERDR_ENV`; '
         'if it prints a value, `t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
 ADAPTER_RESOURCES = (['plugin/adapters/' + name for name in PHASE_GUIDANCE]
                      + ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/hosts/README.md'])
@@ -178,6 +178,9 @@ HOOK_EVENT = 'SessionStart'
 # The Orca variables the hook tests. ORCA_TERMINAL_HANDLE, ORCA_PANE_KEY and
 # ORCA_TAB_ID were all observed set in a real Orca 1.4.241 pane.
 HOOK_ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
+# Herdr 0.9.5's CLI reference says a managed pane sets HERDR_ENV to 1. That is read
+# from Herdr's source, not observed in a pane.
+HOOK_VARIABLES = (*HOOK_ORCA_VARIABLES, 'HERDR_ENV')
 
 
 def require(value, message):
@@ -344,21 +347,21 @@ def hook_errors(root, load):
     if not isinstance(hook.get('timeout'), int) or hook['timeout'] < 1:
         errors.append('hook has no timeout')
     script = script_path.read_text()
-    for name in HOOK_ORCA_VARIABLES:
+    for name in HOOK_VARIABLES:
         if name not in script:
             errors.append('hook does not test ' + name)
     if 'CLAUDE_PLUGIN_ROOT' not in script:
         errors.append('hook does not resolve the plugin root')
     if 'hookSpecificOutput' not in script or HOOK_EVENT not in script:
         errors.append('hook does not emit a ' + HOOK_EVENT + ' context')
-    for forbidden in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
+    for forbidden in ['hosts/orca.md', 'hosts/herdr.md', 'hosts/t3-code.md', 'hosts/omp.md']:
         if forbidden in script:
             errors.append('hook names a page instead of the index: ' + forbidden)
     # The hook and the written door must test the same variables, so a session
     # that meets the hook's test also meets the written one.
     door = (root / 'plugin/adapters/host-workers.md').read_text()
     door_line = next((line for line in door.splitlines() if '(hosts/README.md)' in line), '')
-    for name in HOOK_ORCA_VARIABLES:
+    for name in HOOK_VARIABLES:
         if name not in door_line:
             errors.append('the written door does not test ' + name)
     errors.extend(hook_output_errors(script_path, root))
@@ -393,7 +396,7 @@ def hook_output_errors(script_path, root):
                     ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True),
                     ('no plugin root', '', False)]:
                 environment = dict(os.environ)
-                for name in HOOK_ORCA_VARIABLES:
+                for name in HOOK_VARIABLES:
                     environment[name] = ''
                 environment['ORCA_TERMINAL_HANDLE'] = 'probe'
                 if root_value:

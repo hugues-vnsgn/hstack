@@ -1172,6 +1172,7 @@ SKIP_LINE = re.compile(r'Skipped in .+: .+\. .+\.')
 HostPage = NamedTuple('HostPage', [('listing', str), ('skip_only', list)])
 HOST_PAGES = {
     'orca.md': HostPage(listing='ADEs', skip_only=['worker_done', 'orchestration']),
+    'herdr.md': HostPage(listing='ADEs', skip_only=['herdr worktree', '--machine']),
     'cursor.md': HostPage(listing='Agents', skip_only=[]),
 }
 HARNESS_MEMBER = 'pstack/docs/harness/claude-code.md'
@@ -1406,7 +1407,7 @@ class HostAdapterShape(unittest.TestCase):
             self.assertIn('settlement receipts', readme)
             workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
             door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
-            for test in ['ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID',
+            for test in ['ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID', 'HERDR_ENV',
                          '`t3-code` tools', 'omp']:
                 self.assertIn(test, door)
                 self.assertIn(test, readme)
@@ -1457,10 +1458,12 @@ class HostDetectionHook(unittest.TestCase):
     MANIFEST = ROOT / 'plugin/hooks/hooks.json'
     # The three Orca variables observed set in a real pane on Orca 1.4.241.
     ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
+    # Herdr 0.9.5's CLI reference says a managed pane sets HERDR_ENV to 1. Unobserved in a pane.
+    DOOR_VARIABLES = (*ORCA_VARIABLES, 'HERDR_ENV')
 
     def run_hook(self, env=None, root=None):
         environment = dict(os.environ)
-        for name in self.ORCA_VARIABLES:
+        for name in self.DOOR_VARIABLES:
             environment[name] = ''
         environment.update(env or {})
         environment['CLAUDE_PLUGIN_ROOT'] = str(root or ROOT / 'plugin')
@@ -1501,8 +1504,8 @@ class HostDetectionHook(unittest.TestCase):
         self.assertEqual(result.stdout, '')
         self.assertEqual(result.stderr, '')
 
-    def test_each_orca_variable_alone_triggers_the_door(self):
-        for name in self.ORCA_VARIABLES:
+    def test_each_door_variable_alone_triggers_the_door(self):
+        for name in self.DOOR_VARIABLES:
             with self.subTest(variable=name):
                 result = self.run_hook({name: 'probe-value'})
                 self.assertEqual(result.returncode, 0, result.stderr)
@@ -1520,7 +1523,7 @@ class HostDetectionHook(unittest.TestCase):
     def test_the_hook_names_the_index_only_and_grants_no_authority(self):
         result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'})
         context = self.context(result).replace(str(ROOT / 'plugin'), '')
-        for page in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
+        for page in ['hosts/orca.md', 'hosts/herdr.md', 'hosts/t3-code.md', 'hosts/omp.md']:
             with self.subTest(page=page):
                 self.assertNotIn(page, context)
         for word in ['must', 'required', 'never', 'shall', 'only', 'always', 'mandatory',
@@ -1541,9 +1544,9 @@ class HostDetectionHook(unittest.TestCase):
         # the other opens a session that reads the index and one that does not.
         workers = (ROOT / 'plugin/adapters/host-workers.md').read_text()
         door = next(line for line in workers.splitlines() if '(hosts/README.md)' in line)
-        written = {name for name in self.ORCA_VARIABLES if name in door}
-        self.assertEqual(written, set(self.ORCA_VARIABLES))
-        for name in self.ORCA_VARIABLES:
+        written = {name for name in self.DOOR_VARIABLES if name in door}
+        self.assertEqual(written, set(self.DOOR_VARIABLES))
+        for name in self.DOOR_VARIABLES:
             with self.subTest(variable=name):
                 self.assertIn(name, self.HOOK.read_text())
 
@@ -1561,7 +1564,7 @@ class HostDetectionHook(unittest.TestCase):
         # A relative path would send the session to an index guessed from the
         # working directory, which is worse than no message at all.
         environment = dict(os.environ)
-        for name in self.ORCA_VARIABLES:
+        for name in self.DOOR_VARIABLES:
             environment[name] = ''
         environment['ORCA_TERMINAL_HANDLE'] = 'probe-value'
         environment.pop('CLAUDE_PLUGIN_ROOT', None)

@@ -18,9 +18,14 @@
 # ORCA_TAB_ID are all set. Unobserved: a T3 Code thread exposes no Orca variable,
 # and the hook cannot see the tools a session was given, so such a thread keeps the
 # written check.
+#
+# Unobserved: HERDR_ENV in a Herdr pane. Herdr 0.9.5's CLI reference says a managed
+# pane sets it to 1 for every process it starts. The test is for any value, the
+# same test the written check runs.
 set -u
 
-if [ -z "${ORCA_TERMINAL_HANDLE:-}" ] && [ -z "${ORCA_PANE_KEY:-}" ] && [ -z "${ORCA_TAB_ID:-}" ]; then
+if [ -z "${ORCA_TERMINAL_HANDLE:-}" ] && [ -z "${ORCA_PANE_KEY:-}" ] && [ -z "${ORCA_TAB_ID:-}" ] \
+    && [ -z "${HERDR_ENV:-}" ]; then
     exit 0
 fi
 

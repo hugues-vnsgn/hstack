@@ -425,7 +425,8 @@ or no `readonly`, reaches a `general-purpose` row, and that the Claude Models ro
 value such as `claude-opus-5-5 xhigh`.
 `test_host_pages_follow_the_page_shape_and_the_index_lists_them` checks each page under
 `plugin/adapters/hosts/` for the ten rows in order and a skip line, and checks that the
-index lists exactly the pages that exist. `orca.md` is the first page. The test's
+index lists exactly the pages that exist. `orca.md` is the first page, and `herdr.md` joins it
+on 2026-11-10. The test's
 `HOST_PAGES` table gives each page its index list and the words only its skip line may use,
 and the index stays at most 1,750 bytes, a cap the owner raised from 1,500 on 2026-10-28.
 Synthetic pages prove each page and index check can fail. A subtest checks that the shared ADE rule is stated once, in the README, and that the
@@ -486,6 +487,13 @@ broken, non-executable or wrongly-escaping hook. These are source and wiring che
 hook firing in a live Claude Code session was observed on 2026-10-28 with Claude Code
 2.1.311, and the Orca variables were observed in a live Orca 1.4.241 pane. A session
 reading the index because of the hook was not observed.
+
+On 2026-11-10 the door gains a fourth variable, `HERDR_ENV`, in the hook, the written
+check and `scripts/check_core.py`. The case that ran each Orca variable alone is renamed
+`test_each_door_variable_alone_triggers_the_door` and runs all four, so no case is added
+and 584 top-level cases still collect. `HERDR_ENV` and every row of `herdr.md` come from
+Herdr 0.9.5's own CLI reference at commit `ee5bfb5`. No Herdr pane was observed, so these
+cases prove the wiring only.
 
 The pstack 0.15.36 merge adds no case and keeps 584 top-level cases. The upstream-sync
 fixtures move one pin forward: the maintained delta is 0.15.32 to 0.15.36, and the

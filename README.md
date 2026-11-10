@@ -165,6 +165,7 @@ required native runtime proof.
 - [Test accounting](docs/TEST-COVERAGE.md)
 - [Installed planning and read-only worktree audit](plugin/adapters/host-tools.md)
 - [Orca coordinator page](plugin/adapters/hosts/orca.md)
+- [Herdr coordinator page](plugin/adapters/hosts/herdr.md), read from Herdr's source and unobserved in a pane
 
 To check a source checkout, run these commands from the hstack folder:
 

@@ -589,7 +589,7 @@
     },
     {
       "path": "adapters/host-workers.md",
-      "sha256": "22790122e6a99fc7f42c446d610f48a4c196a2062b828db3eaf9489fa7fe7bc6",
+      "sha256": "965490003ae8dfae9bcd620102090c25c867d92d4ca2c0639ce0bc301b314d37",
       "mode": "100644"
     },
     {
@@ -604,12 +604,17 @@
     },
     {
       "path": "adapters/hosts/README.md",
-      "sha256": "ae799601d2c7b3ba8dd6f104c67d7ea447dfb62f6e18227cd268878ad31b84c7",
+      "sha256": "ee52d02818b655683d8c90d7907cb0a34e654bb1a6656135cb825debae18b7cf",
       "mode": "100644"
     },
     {
       "path": "adapters/hosts/cursor.md",
       "sha256": "78fe20cee64067ec807e99cc6d1c121cf6458a81371aee22d7751a2dd280ad71",
+      "mode": "100644"
+    },
+    {
+      "path": "adapters/hosts/herdr.md",
+      "sha256": "12eb1c9f1a9fc3432bdc2e9070d200862373317aa19475c120731e57899fed3f",
       "mode": "100644"
     },
     {
@@ -669,7 +674,7 @@
     },
     {
       "path": "hooks/host-detect.sh",
-      "sha256": "cc5a1b13366a305129f995225d4f8c28e936761951fdfdd0abbcf1e3050212d9",
+      "sha256": "554e3c527550c7bab6178d80982d41df263aa5b6538bdf13331575bda7c9aee2",
       "mode": "100755"
     },
     {
