@@ -1383,6 +1383,12 @@ class HostAdapterShape(unittest.TestCase):
             tools = ' '.join((ROOT / 'plugin/adapters/host-workflow-tools.md').read_text().split())
             self.assertIn('Native local workers substitute for cloud only where the core permits local execution', tools)
 
+    def test_workers_adapter_asks_claude_code_delegates_for_findings_as_text(self):
+        workers = ' '.join((ROOT / 'plugin/adapters/host-workers.md').read_text().split())
+        self.assertIn("On Claude Code a subagent's Write of a report file is rejected, so the brief asks for "
+                      'findings in the final message and the coordinator writes any evidence file from that text; '
+                      'files a command produces, such as logs, screenshots and build output, are unaffected.', workers)
+
     def test_host_pages_follow_the_page_shape_and_the_index_lists_them(self):
         directory = ROOT / 'plugin/adapters/hosts'
         readme = (directory / 'README.md').read_text()

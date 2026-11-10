@@ -21,9 +21,12 @@ installation path and every plugin file's hash and full permission mode. The
 manifest covers the entire installed inventory except the three trust anchors
 (manifest, payload verifier and bootstrap); the bootstrap binds runtime source
 and the saved binding also covers those anchors. Unexpected files hold. Only
-runtime Python bytecode caches, `.DS_Store` host metadata files and the
+runtime Python bytecode caches, `.DS_Store` host metadata files, the
 `skills/hugues-mode/scripts/node_modules/` tree that the Bun bootstrap installs
-are excluded; none is ever a workflow input. Installed modes are compared by
+and Claude Code's session markers, a top-level `.orphaned_at` file and files with
+all-digit names directly in the top-level `.in_use` folder, are excluded; none is
+ever a workflow input, and a marker written after `bind` leaves the saved binding
+valid. The same names anywhere else still hold. Installed modes are compared by
 what matters for safety: a world-writable file or a changed executable bit
 holds, while group-write from a `002` umask or archive extraction does not.
 Windows permission modes are not modelled; installed checks there are unobserved.
