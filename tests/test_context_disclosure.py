@@ -576,6 +576,33 @@ class InstalledPhaseGuidance(InstalledFixture, unittest.TestCase):
             with self.subTest(required=required):
                 self.assertIn(required, body)
 
+    def test_verification_surfaces_are_read_only_for_their_surface(self):
+        result = self.bound('read-workflow', 'adapters/host-special-skills.md')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        body = ' '.join(result.stdout.split())
+        surfaces = ROOT / 'plugin/skills/create-verification-skill/references/surfaces'
+        names = sorted(path.name for path in surfaces.glob('*.md'))
+        self.assertEqual(names, ['android-emulator.md', 'backend-api.md', 'desktop.md', 'ios-simulator.md'])
+        for name in names:
+            with self.subTest(surface=name):
+                self.assertIn(f'(../skills/create-verification-skill/references/surfaces/{name})', body)
+                text = (surfaces / name).read_text()
+                # No surface was driven for these pages, so each one says so.
+                self.assertIn('Authored guidance, not an observed run.', text)
+                for section in ('Launch', 'Doctor', 'Drive', 'Evidence', 'Cleanup', 'Isolate'):
+                    self.assertEqual(text.count(f'- **{section}:**'), 1, section)
+                self.assertLessEqual(len(text.encode()), 2000)
+        for name in ('ios-simulator.md', 'android-emulator.md'):
+            with self.subTest(mobile=name):
+                self.assertIn('its authority, tool and evidence rules win over this page',
+                              (surfaces / name).read_text())
+        self.assertIn('A web UI, an Electron app or a CLI/TUI reads none', body)
+        self.assertIn('It adds no gate and no authority.', body)
+        # The pointer lives in the adapter. The generator's pstack-derived body carries
+        # none of it, so a pstack re-pin merges without touching the surfaces.
+        generator = (ROOT / 'plugin/skills/create-verification-skill/SKILL.md').read_text()
+        self.assertNotIn('surfaces/', generator)
+
     def test_native_agent_store_preserves_existing_programs_and_helper_arguments(self):
         result = self.bound('read-workflow', 'adapters/host-workflow-tools.md')
         self.assertEqual(result.returncode, 0, result.stderr)

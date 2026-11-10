@@ -119,6 +119,16 @@ Mac. The README still lists a complete consumer journey as unobserved.
 The model-role file and the `/reflect` and `/correct` habit need no development
 and can start at any time.
 
+## Progress
+
+- 2026-11-10, step 2: `plugin/adapters/hosts/herdr.md` and the `HERDR_ENV` door variable landed. Both are read
+  from Herdr 0.9.5's source. No Herdr pane was observed, so the owner's first Herdr run must confirm each row.
+- 2026-11-10, step 4: four surface references landed under
+  `plugin/skills/create-verification-skill/references/surfaces/`, reached from
+  `plugin/adapters/host-special-skills.md`. They are authored guidance. No surface was driven.
+  The iOS and Android references are thin, because the mobile adapter already owns device and tool rules.
+- Steps 1, 3, 5, 6 and 7 are not started. Steps 1 and 5 need the owner's Mac.
+
 ## Measurement prompt
 
 Run this in Claude Code on the Mac, inside one project where hStack was used.

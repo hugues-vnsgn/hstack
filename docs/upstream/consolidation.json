@@ -4892,7 +4892,7 @@
       "mode": 420
     },
     "adapters/host-special-skills.md": {
-      "sha256": "d99021e398c8da0979a823db610ea46b7fd98bd3c8c32f9574b76753dd603837",
+      "sha256": "ace980f255bc48f9b5691920ae83101a4d234410ad6315d9a812614a3b8b9ed8",
       "mode": 420
     },
     "adapters/host-tools.md": {
@@ -4916,7 +4916,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "2248e32298cdb25d8ffd9ab85c52305023ed66a6c2dc30ca7520088c7b2043f6",
+      "sha256": "f24efd9a7bc9a96658fdc87e0062eeba8248d1092780138adbbd286f8aa8aa62",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4964,11 +4964,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "127fe64497ab143f8e674f455f0b56bb90fac43e04a28959c1ceda2c69a8a711",
+      "sha256": "5b6dcec55492c3831c5f20015977edde59473a96232a974d183f41743e5be462",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "f6782906f9a3a718a51ca403ebdf0ac848316f1cff04ebd7af4d8019df33b07f",
+      "sha256": "6ff9526493862a49b2dd181215517f9fcfe0623958c1a694af8d19257c486a79",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -5109,6 +5109,22 @@
     },
     "skills/create-verification-skill/references/project-skill-template.md": {
       "sha256": "207366fe6e5ebe7d8661206c66a30773731c1859b52889fba83309f598dc4406",
+      "mode": 420
+    },
+    "skills/create-verification-skill/references/surfaces/android-emulator.md": {
+      "sha256": "ceb825f527a08ba7c40c6f6e9277abcb23b1fa95d2a9673e49a30f20c0debef9",
+      "mode": 420
+    },
+    "skills/create-verification-skill/references/surfaces/backend-api.md": {
+      "sha256": "0fba54edcde516a42261ebfd3ab8d7667c0f3404a6d7640e72ff1df5e96b96d6",
+      "mode": 420
+    },
+    "skills/create-verification-skill/references/surfaces/desktop.md": {
+      "sha256": "6d695919b8eeb5d7e06518eb34f9bd90ad931abbd7c70d0d5fa08b18b07a50da",
+      "mode": 420
+    },
+    "skills/create-verification-skill/references/surfaces/ios-simulator.md": {
+      "sha256": "8791bf3258427d989fc22bdabf42a37cb3103cba86d058678e9318f29fa443fc",
       "mode": 420
     },
     "skills/deslop/LICENSE": {

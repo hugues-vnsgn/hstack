@@ -46,3 +46,14 @@ label the digest's source and coverage limits. A digest grants no access to pers
 history and no permission to apply Reflect's proposed edits. Preserve Recall's
 explicit state-capsule shortcut; do not pretend a digest proves a transcript audit
 for show-me-your-work or supplies automate-me's repeated historical evidence.
+
+## Verification surfaces
+
+Before create-verification-skill writes the generated skill's sections, read the
+reference for the project's primary surface: [iOS simulator](../skills/create-verification-skill/references/surfaces/ios-simulator.md),
+[Android emulator](../skills/create-verification-skill/references/surfaces/android-emulator.md),
+[backend API](../skills/create-verification-skill/references/surfaces/backend-api.md) or
+[desktop app](../skills/create-verification-skill/references/surfaces/desktop.md).
+A web UI, an Electron app or a CLI/TUI reads none, because the generator's own
+Drive recipes cover them. A reference says what each section pins on that
+surface. It adds no gate and no authority.
