@@ -4,7 +4,7 @@ The 0.2.0 pinned-core restoration remains a historical release. Version 0.3.0
 consolidates its full skill bodies into native entries; see
 [native consolidation](NATIVE-CONSOLIDATION.md) for layout, migration and limits.
 
-The upstream archive retains 573 files from pstack 0.15.36 at
+The upstream archive retains 573 files from upstream 0.15.36 at
 `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`. Git-object snapshots verify its
 paths, modes, SHA-1, SHA-256 and sizes. The adapted runtime no longer claims
 byte equality. Public native names, workflow phase order, role cardinality,
@@ -20,7 +20,7 @@ activity, unknown PR state and unsupported inputs retain conservative exit-2
 holds; the active/pinned-chat gate is separate and no helper deletes anything.
 The bootstrap executes verified source buffers, not bytecode caches.
 
-The current candidate collects 584 tests, including one driver for 50 historical 0.2.0 cases.
+The current candidate collects 586 tests, including one driver for 50 historical 0.2.0 cases.
 Current and historical suite totals are maintained in [test accounting](TEST-COVERAGE.md).
 The 0.1.0 archive and its tests are unchanged. The 50 old restoration-contract
 cases also run against a hash-bound 0.2.0 archive and are historical only.

@@ -1,11 +1,11 @@
 # hStack
 
-hStack is pstack for mobile development, running in Claude Code, Codex and Cursor.
-pstack is poteto's Cursor plugin: a router mode matches a task to a playbook,
-the playbook calls skills and principles as its steps fire, and the work ends in
-evidence. hStack preserves its upstream source in a nondiscoverable provenance archive
+hStack is an agent workflow plugin for Claude Code, Codex and Cursor. A router
+mode matches a task to a playbook, the playbook calls skills and principles as
+its steps fire, and the work ends in evidence. Mobile development is an optional
+adapter. hStack preserves its upstream source in a nondiscoverable provenance archive
 and authors one canonical native body per skill. Read the
-[pstack guide](docs/pstack/guide/README.md) and [glossary](docs/GLOSSARY.md).
+[hStack guide](docs/guide/README.md) and [glossary](docs/GLOSSARY.md).
 
 ## Where an edit goes
 
@@ -19,6 +19,9 @@ and authors one canonical native body per skill. Read the
   and bootstrap hashes after intentional edits; it is not a consumer repair tool.
 - Current candidate tests and frozen historical release tests are separate.
   Do not edit frozen archives to make current failures pass.
+- Product text says hStack. The upstream project's name belongs only in the
+  upstream records, dated history and the scripts and tests that compare against
+  upstream; elsewhere write "upstream". `scripts/check_plugin.py` rejects it.
 
 ## Checks
 

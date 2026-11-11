@@ -744,9 +744,9 @@ def check(root=ROOT):
             # pstack's adapter for running a Cursor-first plugin in Claude Code; hStack is native there.
             destination = None
         elif source.startswith('docs/'):
-            destination = 'docs/pstack/' + source.removeprefix('docs/')
+            destination = source
         elif source == 'LICENSE':
-            destination = 'plugin/PSTACK-LICENSE'
+            destination = 'plugin/UPSTREAM-LICENSE'
         else:
             destination = None
         require(row['destination'] == destination and row['disposition'] ==

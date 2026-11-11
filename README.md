@@ -1,27 +1,27 @@
 # hStack
 
-hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
+hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds optional guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.5.8** pins pstack 0.15.36, so Orchestrate runs with the
-coordinator's own tools and no helper script, interrogate keeps only the
-findings a run proves, and statechart ships a TypeScript compiler. The skill
-count stays at 63. A Cursor user installs the plugin, sees its skills and runs
+Version **0.5.9** adds a Frontier model tier: setup starts the hardest-tasks
+role on `claude-fable-5-2`, with Opus after it for hosts that lack Fable. Setup's
+verification offer is optional for every project, and mobile is one optional
+adapter. The pin stays at upstream 0.15.36 and the skill count stays at 63. A Cursor user installs the plugin, sees its skills and runs
 `/hugues-mode`, `/hugues-help` and
 `/setup-hstack` in the Cursor IDE. A `.cursor-plugin/` manifest pair points at
 the same `plugin/skills/` and `plugin/agents/`, so one tree serves all three
 hosts. Start a run by typing
 `/hstack:hugues-mode` in Claude Code or `$hugues-mode` in Codex. The release
-keeps the native helpers unchanged. The [0.5.8 release notes](docs/RELEASE-0.5.8.md) record
+keeps the native helpers unchanged. The [0.5.9 release notes](docs/RELEASE-0.5.9.md) record
 upgrade steps, checks and remaining gaps. hStack supports Swift/iOS, Kotlin/Android, KMP
-and CMP development through its mobile adapter. A complete journey on a real
+and CMP development through its optional mobile adapter. A complete journey on a real
 consumer project remains unobserved on any host. The plugin remains `hstack`. Its
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
 The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
-Version 0.5.1 added two authored user-only language skills. Version 0.5.8 has 63 in total. Each skill owns one canonical `SKILL.md`.
-Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
+Version 0.5.1 added two authored user-only language skills. Version 0.5.9 has 63 in total. Each skill owns one canonical `SKILL.md`.
+Against 0.3.0's 50 skills, 0.4.0 merges upstream 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
-Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
-Exact pstack source remains in a provenance archive outside
+Cursor's `cursor-team-kit`. Upstream calls these skills but does not ship them.
+Exact upstream source remains in a provenance archive outside
 runtime discovery. Only `setup-hstack` appears in the host's skill list. You
 type `hugues-mode`, and it reads the other skills as files. The published 0.1.0, 0.2.0 and 0.3.0 releases and
 their evidence are unchanged.
@@ -46,12 +46,10 @@ under normal permissions remains unobserved.
 ## Start with Cursor
 
 Cursor loads hStack from one source only. Pick exactly one route. Either way,
-remove pstack first, because 55 of hStack's 63 skill names are shared with
-pstack:
-
-```sh
-rm -rf "$HOME/.cursor/plugins/local/pstack"
-```
+remove the upstream plugin first if you installed it, because 55 of hStack's 63
+skill names are shared with it. It has its own folder under
+`$HOME/.cursor/plugins/local/`, and the [upstream record](docs/upstream/README.md)
+names it.
 
 - **A. You already use hStack in Claude Code.** Install nothing in Cursor.
   Cursor loads hStack from Claude Code's install, so both hosts stay on and
@@ -115,8 +113,8 @@ appears before using `$hugues-mode`. The 0.5.0 pretest exercised an installed
 Codex copy. Updates from 0.4.0 to 0.5.0, 0.5.0 to 0.5.1 and 0.5.1 to 0.5.2
 were later observed on both hosts, and both hosts on the maintainer machine
 hold 0.5.3 copies that match its tag. Updating from 0.5.3 to 0.5.4, from 0.5.4
-to 0.5.5, from 0.5.5 to 0.5.6, from 0.5.6 to 0.5.7 and from 0.5.7 to 0.5.8
-remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.8.md#upgrade). If
+to 0.5.5, from 0.5.5 to 0.5.6, from 0.5.6 to 0.5.7, from 0.5.7 to 0.5.8 and from 0.5.8 to 0.5.9
+remains unobserved. See the [upgrade instructions](docs/RELEASE-0.5.9.md#upgrade). If
 `hugues-mode` is unavailable or disabled, stop; direct-reading its body is
 not an invocation fallback. The [developer guide](docs/DEVELOPER-GUIDE.md#use-codex)
 explains the boundary and a first-task workflow.
@@ -132,7 +130,7 @@ limits. It establishes no complete mobile journey. Read the
 
 ## Bundled mobile guidance
 
-Version 0.5.8 includes `swift-best-practices` and `kotlin-best-practices`.
+Version 0.5.9 includes `swift-best-practices` and `kotlin-best-practices`.
 Before source reads, the router and fresh workers read the relevant baseline in
 full. Source declarations and consumer configuration select SwiftUI, UIKit,
 Android Compose, KMP native-boundary and CMP wrapper references as needed.
@@ -152,7 +150,7 @@ summaries. See the [execution contract](plugin/adapters/native-execution.md).
 The [0.5.1 validation](docs/RELEASE-0.5.1.md#validation) records final-source
 helper observations, including failed and incomplete attempts. The
 [0.5.2 validation](docs/RELEASE-0.5.2.md#validation) records the current helper
-source and why no 0.5.2 fixture re-runs were made. Versions 0.5.3 to 0.5.8 do not
+source and why no 0.5.2 fixture re-runs were made. Versions 0.5.3 to 0.5.9 do not
 change the native helpers. Helper checks complement the consumer's
 required native runtime proof.
 
@@ -179,4 +177,4 @@ python3 scripts/check_whitespace.py
 [Source maintenance CI](.github/workflows/maintenance.yml) runs these commands on
 pull requests and pushes to main. Native host and device proofs run separately.
 
-The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT. See [pstack's notice](PSTACK-LICENSE), the Cursor notices shipped with [deslop](plugin/skills/deslop/LICENSE), [control-cli](plugin/skills/control-cli/LICENSE) and [control-ui](plugin/skills/control-ui/LICENSE), and the [upstream pin and ledger](docs/upstream/README.md).
+The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT. See the [upstream notice](UPSTREAM-LICENSE), the Cursor notices shipped with [deslop](plugin/skills/deslop/LICENSE), [control-cli](plugin/skills/control-cli/LICENSE) and [control-ui](plugin/skills/control-ui/LICENSE), and the [upstream pin and ledger](docs/upstream/README.md).

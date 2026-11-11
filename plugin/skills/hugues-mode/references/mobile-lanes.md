@@ -68,7 +68,7 @@ during navigation, callback delivery to UI, release on disposal, offline failure
 and retry, and accessibility or enlarged text. Give each scenario an action and
 an expected state on an identified target. A lane can cover several related risks.
 An inapplicable risk needs a reason, while an applicable unrun risk remains a gap.
-This selection changes neither lane cardinality nor other pstack gates.
+This selection changes neither lane cardinality nor other hStack gates.
 
 For changes spanning domains, select every affected lane. A linked framework is build proof; it does not prove a native caller ran. JVM tests do not establish iOS behavior. A simulator screenshot does not establish physical-device performance.
 

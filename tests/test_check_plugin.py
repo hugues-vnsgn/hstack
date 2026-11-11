@@ -276,6 +276,31 @@ class CursorManifestChecks(unittest.TestCase):
         result = self.run_check()
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_the_upstream_name_stays_out_of_product_text(self):
+        # Built from parts so this file never holds the name it guards against.
+        name = 'p' + 'stack'
+        # The places that name upstream itself already hold the name, and `upstack` is another word.
+        for relative in ('docs/upstream/README.md', 'docs/RELEASE-0.5.8.md', 'tests/test_upstream_sync.py',
+                         'plugin/adapters/runtime/payload.py', 'plugin/skills/hugues-mode/scripts/check-plan.mjs',
+                         'plugin/skills/statechart/scripts/test/corpus/Counter/ChartRun.out'):
+            self.assertIn(name, (self.repo / relative).read_text(), relative)
+        readme = self.repo / 'README.md'
+        readme.write_text(readme.read_text() + '\nAn upstack PR waits.\n')
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        # Each product surface is rejected by path and line. A hash-bound file is resealed first,
+        # so the name is what the checker refuses, not the changed bytes.
+        for relative, sealed in (('README.md', False), ('docs/GLOSSARY.md', False),
+                                 ('docs/hstack-user-guide.html', False), ('docs/guide/README.md', True),
+                                 ('plugin/skills/how/SKILL.md', True), ('plugin/hooks/host-detect.sh', True)):
+            with self.subTest(surface=relative):
+                file = self.repo / relative
+                file.write_bytes(file.read_bytes() + f'\n# A {name.title()} skill.\n'.encode())
+                if sealed:
+                    seal_payload.seal(self.repo, accept=[relative])
+                line = len(file.read_bytes().splitlines())
+                self.assert_rejected(f'{relative}:{line}: names the upstream project')
+
     def test_a_cursor_name_mismatch_is_rejected(self):
         self.cursor_plugin(lambda m: m.update(name='other'))
         self.assert_rejected('cursor plugin: name differs from the Claude manifest')

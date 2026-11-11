@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **584 top-level unittest cases**. One is a driver that
+The current candidate collects **586 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -8,22 +8,22 @@ native workflow proof. Subtests are not added to case totals.
 | Group | Collected cases | Evidence |
 |---|---:|---|
 | Historical 0.1.0 contracts | 131 | Unchanged SHA256-bound release archive |
-| Current checker, historical 0.1.0 fixtures | 44 | Explicit historical validation mode, package mutations, and the Cursor manifest rules, each with its own negative case |
+| Current checker, historical 0.1.0 fixtures | 45 | Explicit historical validation mode, package mutations, the Cursor manifest rules, each with its own negative case, and the upstream-name guard |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
 | Current installed adapters and regressions | 129 | test_host_adapters (104), test_review_regressions (12), test_rereview_regressions (13) |
-| Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled non-pstack Cursor skills (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
+| Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled Cursor skills from outside upstream (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, the plan-check helper's operand, and a rejection matrix of 2,220 cases (379 `read-workflow`, 1,778 `translate-plan` and 63 in-plan cases) over all 63 bundled skills, the legacy aliases of the 58 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
-| Current setup-to-proof contracts | 9 | test_setup_proof; mobile recipe requirement, native holds and non-mobile harnesses, host handoffs, model tiers, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These nine cases check source/commands and evidence parsing, not host or device execution. |
+| Current setup-to-proof contracts | 10 | test_setup_proof; the optional verification offer and its mobile recipe requirement, native holds, host handoffs, model tiers, the Frontier line for hardest tasks and setup's host-only header, and installed mobile-proof reads from an external consumer with a decoy path. Includes rejection of absent, failed or text-only screenshot reads in native evidence. These ten cases check source/commands and evidence parsing, not host or device execution. |
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
-| Total collected | 584 | Current, mixed and historical scopes remain distinct |
+| Total collected | 586 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-584 Python cases. The opt-in CI workflow requires a provisioned native runner.
+586 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -38,7 +38,7 @@ native-layout plus eight disclosure cases gives 337, without dropping the frozen
 50 executions or counting them twice. The preceding native candidate had 329.
 The review-fix pass adds five native-layout and nine installed-tolerance cases,
 giving 351. The historical driver now also fails when any nested case is skipped.
-Restoring pstack's router design adds one skill-list budget disclosure case,
+Restoring upstream's router design adds one skill-list budget disclosure case,
 giving 352. PR 1 fix round 1 adds one native-layout case (an unknown skill body
 still refuses translation), one disclosure case (YAML-description quoting) and
 two installed-tolerance cases (a bundled skill's exact SKILL.md path now
@@ -109,7 +109,7 @@ JSON and unknown PR metadata. Candidate-specific holds and exit 2 remain require
 The active/pinned-chat gate stays separate. No real transcript was read and no
 real worktree was deleted.
 
-Native-layout cases compare all 63 public names (58 from pstack, three from Cursor's `cursor-team-kit` and two hStack-authored language baselines) and modes, archive/source identity,
+Native-layout cases compare all 63 public names (58 from upstream, three from Cursor's `cursor-team-kit` and two hStack-authored language baselines) and modes, archive/source identity,
 canonical mapping, workflow phase/cardinality/fallback constraints, the
 reviewed host invocation table, consumer boundaries and a measured source-context budget.
 Hash resealing cannot approve a lost phase gate or changed invocation policy.
@@ -156,7 +156,7 @@ The PR 54 retrospective adds two runner CLI cases, bringing the current total to
 Before the fix, all six orch-attempt subtests incorrectly passed the runner's
 hold validation. The other helper attempts were already rejected.
 
-The pstack 0.15.25 merge adds one native-layout case, bringing the current total
+The upstream 0.15.25 merge adds one native-layout case, bringing the current total
 to 442: the context inventory lists the four skills added after the 0.2.0
 release (`hugues-help`, `in-your-own-words`, `ketchup`, `sharpen`) by name, and an
 unlisted new skill or a missing listed one still fails the measurement. It also
@@ -165,7 +165,7 @@ fixtures follow the 0.15.9 to 0.15.25 delta, while the 0.15.5 snapshot and
 ledger (`docs/upstream/history/`) still back the Appendix A path list and the
 regenerated historical delta, and the
 installed-tolerance rejection matrix grows with the four new bundled skills and
-their `pstack/skills/...` aliases from 1,840 to 1,980 cases.
+their legacy upstream-path aliases from 1,840 to 1,980 cases.
 
 The hStack rename (0.4.0) adds two native-layout cases, bringing the current total
 to 444: every plugin file that names `.hstack/models.md` must also say to read a
@@ -237,7 +237,7 @@ current total to 458. Remaining runtime drift, bytecode and binding cases still
 cover the four runtime modules that stay.
 
 On 2026-10-17, issue #81 removes risk-based mobile coverage and returns plan
-validation to pstack's fixed rule of ten live lanes. The nineteen risk-coverage
+validation to upstream's fixed rule of ten live lanes. The nineteen risk-coverage
 cases go with the validator, risk catalog and selection guide they covered. One
 new installed-command case in test_host_adapters checks that the bound
 `plan-check` accepts a ten-lane plan, with or without frontmatter, and rejects an
@@ -248,19 +248,19 @@ verification-contract cases go with the `plan-compare` verb, its comparison
 helper and the contract reference they covered. The test_host_adapters case that
 rejects withdrawn verbs now also checks that the bound CLI rejects `plan-compare`
 as unknown. One new installed-command case checks that the bound `plan-check`
-accepts a plan whose Verdict and merge section holds pstack's own boxes and no
+accepts a plan whose Verdict and merge section holds upstream's own boxes and no
 verification-contract box, bringing the current total to 422.
 
 On 2026-10-17, issue #83 removes the Claude stack-permission preflight and the
-Astra High PR review policy, and puts pstack 0.15.25's wording back in the
+Astra High PR review policy, and puts upstream 0.15.25's wording back in the
 router. The two router cases that pinned the rewrite's own wording, autonomy
 placement and the scope of restated obligations, go with it, bringing the
-current total to 420. The Principles index case now checks pstack's naming
+current total to 420. The Principles index case now checks upstream's naming
 rule, a bold title in kebab case or a given name. The installed-binding drift
 cases no longer list the deleted policy file.
 
-The bundled `deslop` skill is a copy of Cursor's `cursor-team-kit` skill, not a
-pstack skill, and adds two native-layout cases. One binds the installed skill to
+The bundled `deslop` skill is a copy of Cursor's `cursor-team-kit` skill, not an
+upstream skill, and adds two native-layout cases. One binds the installed skill to
 its pinned Cursor source, the license notice and the two allowed additions. The
 other changes the installed body, the retained source copy, the shipped notice,
 the user-only metadata and the receipt in turn, reseals after each change and
@@ -268,7 +268,7 @@ expects the core check to reject it. The existing cases now expect 55 public
 skills, list `deslop` among the skills added after 0.2.0 and compare the
 startup-metadata budget with `native_before` over the 50 skills both declare.
 The installed-tolerance rejection matrix grows from 1,980 to 2,000 subtests with
-the new skill, which has no legacy `pstack/skills/...` path. These are source
+the new skill, which has no legacy upstream path. These are source
 checks of files and wiring. They do not show that a host lists, loads or runs
 `/deslop`.
 
@@ -393,13 +393,13 @@ edit that a reseal approves, and six that it cannot, including a removed host
 contract. The paragraphs above describing the two allowed additions and six
 mutations are historical.
 
-The pstack 0.15.32 merge adds no case and keeps 540 top-level cases. It rebinds
+The upstream 0.15.32 merge adds no case and keeps 540 top-level cases. It rebinds
 existing cases to the new pin: the upstream-sync fixtures follow the 0.15.25 to
 0.15.32 delta, and the 0.15.9 and 0.15.5 snapshots and ledgers still back the
 two historical deltas, which regenerate byte for byte. The skill counts move
 from 59 to 63, and the list of skills added after 0.2.0 names the four new
 skills. The rejection matrix grows from 2,080 to 2,220 subtests with them and
-their `pstack/skills/...` aliases. Three principle bodies that were still
+their legacy upstream-path aliases. Three principle bodies that were still
 byte-identical to the pre-restoration baseline took upstream's rewrites, so 7
 remain identical. The all-frontmatter upper bound moves from 16,000 to 18,000
 bytes for the four user-only skills; the per-turn skill-list budget is
@@ -408,7 +408,7 @@ byte-identical to their pinned upstream source between the baseline pin and
 the current pin, which covers the two principles upstream rewrote.
 
 The host.md harness-shape change (issue #136, multi-host P2) adds two cases. `test_upstream_harness_rows_are_mapped` reads
-`pstack/docs/harness/claude-code.md` from the archive the pin names and checks that each
+upstream's `docs/harness/claude-code.md` from the archive the pin names and checks that each
 first-column cell of each upstream table is a cell of the same-named table in `host.md` or
 `host-workers.md`, a key of that table's entry in the test's `DROPPED` map with its reason,
 or a key of its entry in `GAPS`, the rows hStack leaves open. Subtests build an archive with
@@ -487,7 +487,7 @@ hook firing in a live Claude Code session was observed on 2026-10-28 with Claude
 2.1.311, and the Orca variables were observed in a live Orca 1.4.241 pane. A session
 reading the index because of the hook was not observed.
 
-The pstack 0.15.36 merge adds no case and keeps 584 top-level cases. The upstream-sync
+The upstream 0.15.36 merge adds no case and keeps 584 top-level cases. The upstream-sync
 fixtures move one pin forward: the maintained delta is 0.15.32 to 0.15.36, and the
 0.15.25 to 0.15.32 delta now regenerates byte for byte from the 0.15.32 ledger beside the
 two older ones. The proposal case checks that a path upstream removed is retired at the new
@@ -503,3 +503,18 @@ fixed 0.15.25 pin instead of the previous pin, so this re-pin does not drop the 
 file's real growth since the re-pin's base. The router read set keeps its 73 bytes of
 headroom. The Cursor adapter allowance is now measured at the Cursor commit, so later
 adapter edits are not billed to Cursor.
+
+The setup refinement adds one setup-to-proof case, giving 585. It pins the Frontier tier's
+model, the three alternatives on the `hardest tasks` line in tier order, that no other role
+names the Frontier model, and that setup's header reads the host contract alone. Two existing
+setup-to-proof cases now assert the optional verification offer in place of the mobile
+requirement that step 7 used to open with.
+
+The name sweep adds one checker case, giving 586. `check_plugin.py` now rejects the upstream
+project's name in product text: every Markdown and HTML file and everything under `plugin/`,
+except the upstream records, dated history, the legacy path map with its readers, the verbatim
+statechart corpus output, and the repository's own scripts and tests. The case appends the name
+to five product surfaces and expects each to be rejected, then to five allowed files and
+expects a pass, with `upstack` accepted as a different word. The guide moved from the
+upstream-named folder to `docs/guide/` and the upstream notice to `UPSTREAM-LICENSE`; the
+ledgers, the checker and the receipts follow those paths.

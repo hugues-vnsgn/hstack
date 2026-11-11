@@ -405,6 +405,31 @@ for path in sorted(root.rglob('*.md')):
                 fail(f'{relative}: broken local link {value}')
         elif parsed.fragment and target.suffix == '.md' and unquote(parsed.fragment) not in headings(target):
             fail(f'{relative}: missing heading {value}')
+# The product is hStack. The upstream project's name belongs only where it names upstream
+# itself: the upstream records, dated history, the legacy path map with its readers, verbatim
+# upstream fixtures, and this repository's own scripts and tests. `upstack` is another word.
+UPSTREAM_NAME = re.compile(rb'(?<![A-Za-z])pstack', re.I)
+UPSTREAM_NAME_FOLDERS = ('docs/upstream/', 'provenance/', 'docs/adr/', 'docs/reviews/', 'docs/journals/',
+                         'docs/planning/', 'plans/', 'scripts/', 'tests/')
+UPSTREAM_NAME_FILES = {'docs/PLAN.md', 'docs/wp2-validation.md', 'docs/wp3-validation.md',
+                       'plugin/adapters/runtime/payload.json', 'plugin/adapters/runtime/payload.py',
+                       'plugin/skills/hugues-mode/scripts/check-plan.mjs'}
+def may_name_upstream(name):
+    return (name.startswith(UPSTREAM_NAME_FOLDERS) or name in UPSTREAM_NAME_FILES
+            or re.fullmatch(r'docs/RELEASE-[^/]+\.md', name) is not None
+            or (name.startswith('plugin/skills/statechart/scripts/test/corpus/') and name.endswith('.out')))
+if not historical:
+    surfaces = {path for pattern in ('*.md', '*.html') for path in root.rglob(pattern)}
+    surfaces |= {path for path in (root / 'plugin').rglob('*')}
+    for path in sorted(surfaces):
+        relative = path.relative_to(root)
+        if (not path.is_file() or path.is_symlink() or may_name_upstream(relative.as_posix())
+                or {'.git', '__pycache__', 'node_modules'} & set(relative.parts)):
+            continue
+        for number, line in enumerate(path.read_bytes().splitlines(), 1):
+            if UPSTREAM_NAME.search(line):
+                fail(f'{relative.as_posix()}:{number}: names the upstream project; '
+                     'write hStack, or "upstream" where the other project is meant')
 if errors:
     print('\n'.join(errors), file=sys.stderr)
     sys.exit(1)

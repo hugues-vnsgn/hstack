@@ -13,4 +13,4 @@ The adaptation replaces Cursor rules and model slugs with host-native fresh suba
 
 `principle-explain-the-number` retains its upstream link to `benchmark-checklist`, which the current plan defers to 0.2. The exact absent link is recorded in `deferred_links` and bound to the pinned source checksum. The package checker reports this known gap visibly and still rejects other broken links. No benchmark leaf is shipped. The mode requires a manual explanation of measured numbers and labels the deferred workflow.
 
-Keep the [pstack MIT notice](../../PSTACK-LICENSE). The broader upstream ledger and reproducible delta are now recorded in the [WP5 sync package](README.md). This record covers imported WP2 source; the full ledger distinguishes present files from planned and deferred responsibilities.
+Keep the [pstack MIT notice](../../UPSTREAM-LICENSE). The broader upstream ledger and reproducible delta are now recorded in the [WP5 sync package](README.md). This record covers imported WP2 source; the full ledger distinguishes present files from planned and deferred responsibilities.

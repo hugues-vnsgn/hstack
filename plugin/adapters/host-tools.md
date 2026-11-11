@@ -54,7 +54,7 @@ python3 "<plugin>/adapters/host_tools.py" translate-plan --markdown --binding "<
 python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin-binding.json" "<program>/plan.md"
 ```
 
-Use `--markdown` for pstack-style plans. Write executable commands in complete
+Use `--markdown` for hStack-style plans. Write executable commands in complete
 single-backtick code spans or fenced code blocks; text outside them is prose and
 is preserved. A `markdown` or `md` fence contains another Markdown example;
 other fences contain commands. Nested list items keep inline-code handling. Other
@@ -73,8 +73,8 @@ before inline references are split. Adding a backtick comment never switches the
 input mode.
 Use this default for standalone commands. Mixing translated standalone commands
 with other text holds, even across blank lines. The caller selects the mode;
-the file cannot declare its own mode. Neither mode requires prose markers in a
-pstack plan.
+the file cannot declare its own mode. Neither mode requires prose markers in an
+hStack plan.
 
 For a command that names a skill directory, use only a known owned Markdown
 resource path, `cat <known path>`, `git show origin/main:<known path>`, or the exact

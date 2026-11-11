@@ -60,7 +60,7 @@
       "reason": "Upstream MIT attribution is included in the installed artifact.",
       "release_target": "0.2",
       "destinations": [
-        "plugin/PSTACK-LICENSE"
+        "plugin/UPSTREAM-LICENSE"
       ],
       "implementation_state": "present",
       "category": "root_metadata",
@@ -410,7 +410,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/01-setup.md"
+        "docs/guide/01-setup.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -423,7 +423,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/01-setup.md"
+          "docs/guide/01-setup.md"
         ],
         "implementation_state": "present"
       }
@@ -438,7 +438,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/02-poteto-mode.md"
+        "docs/guide/02-poteto-mode.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -451,7 +451,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/02-poteto-mode.md"
+          "docs/guide/02-poteto-mode.md"
         ],
         "implementation_state": "present"
       }
@@ -466,7 +466,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/03-understand.md"
+        "docs/guide/03-understand.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -479,7 +479,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/03-understand.md"
+          "docs/guide/03-understand.md"
         ],
         "implementation_state": "present"
       }
@@ -494,7 +494,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.36",
       "destinations": [
-        "docs/pstack/guide/04-design.md"
+        "docs/guide/04-design.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -507,7 +507,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.32",
         "destinations": [
-          "docs/pstack/guide/04-design.md"
+          "docs/guide/04-design.md"
         ],
         "implementation_state": "present"
       }
@@ -522,7 +522,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/05-build-and-clean.md"
+        "docs/guide/05-build-and-clean.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -535,7 +535,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/05-build-and-clean.md"
+          "docs/guide/05-build-and-clean.md"
         ],
         "implementation_state": "present"
       }
@@ -550,7 +550,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.36",
       "destinations": [
-        "docs/pstack/guide/06-verify-and-ship.md"
+        "docs/guide/06-verify-and-ship.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -563,7 +563,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.32",
         "destinations": [
-          "docs/pstack/guide/06-verify-and-ship.md"
+          "docs/guide/06-verify-and-ship.md"
         ],
         "implementation_state": "present"
       }
@@ -578,7 +578,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.36",
       "destinations": [
-        "docs/pstack/guide/07-overnight.md"
+        "docs/guide/07-overnight.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -591,7 +591,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.32",
         "destinations": [
-          "docs/pstack/guide/07-overnight.md"
+          "docs/guide/07-overnight.md"
         ],
         "implementation_state": "present"
       }
@@ -606,7 +606,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/08-principles.md"
+        "docs/guide/08-principles.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -619,7 +619,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/08-principles.md"
+          "docs/guide/08-principles.md"
         ],
         "implementation_state": "present"
       }
@@ -634,7 +634,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/09-make-it-yours.md"
+        "docs/guide/09-make-it-yours.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -647,7 +647,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/09-make-it-yours.md"
+          "docs/guide/09-make-it-yours.md"
         ],
         "implementation_state": "present"
       }
@@ -662,7 +662,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.36",
       "destinations": [
-        "docs/pstack/guide/10-recipes-and-pitfalls.md"
+        "docs/guide/10-recipes-and-pitfalls.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -675,7 +675,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.32",
         "destinations": [
-          "docs/pstack/guide/10-recipes-and-pitfalls.md"
+          "docs/guide/10-recipes-and-pitfalls.md"
         ],
         "implementation_state": "present"
       }
@@ -690,7 +690,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.32",
       "destinations": [
-        "docs/pstack/guide/README.md"
+        "docs/guide/README.md"
       ],
       "implementation_state": "present",
       "category": "guide",
@@ -703,7 +703,7 @@
         "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
         "release_target": "unreleased-pstack-0.15.25",
         "destinations": [
-          "docs/pstack/guide/README.md"
+          "docs/guide/README.md"
         ],
         "implementation_state": "present"
       }
@@ -718,7 +718,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
-        "docs/pstack/guide/images/design.jpg"
+        "docs/guide/images/design.jpg"
       ],
       "implementation_state": "present",
       "category": "image",
@@ -737,7 +737,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
-        "docs/pstack/guide/images/overnight.jpg"
+        "docs/guide/images/overnight.jpg"
       ],
       "implementation_state": "present",
       "category": "image",
@@ -756,7 +756,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
-        "docs/pstack/guide/images/recipes.jpg"
+        "docs/guide/images/recipes.jpg"
       ],
       "implementation_state": "present",
       "category": "image",
@@ -775,7 +775,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
-        "docs/pstack/guide/images/router.jpg"
+        "docs/guide/images/router.jpg"
       ],
       "implementation_state": "present",
       "category": "image",
@@ -794,7 +794,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
-        "docs/pstack/guide/images/understanding.jpg"
+        "docs/guide/images/understanding.jpg"
       ],
       "implementation_state": "present",
       "category": "image",
@@ -813,7 +813,7 @@
       "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
       "release_target": "0.2",
       "destinations": [
-        "docs/pstack/guide/images/verification.jpg"
+        "docs/guide/images/verification.jpg"
       ],
       "implementation_state": "present",
       "category": "image",

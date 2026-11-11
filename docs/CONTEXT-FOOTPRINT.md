@@ -58,7 +58,7 @@ the fixed profile or claimed covered by its total.
 
 Ten of the 50 skill files declared at 0.2.0 remain byte-identical to `7db3e80`,
 all of them `principle-*` skills, which never carried the reworded host-contract
-marker below. The other 40 differ. Fourteen are the principle skills the pstack
+marker below. The other 40 differ. Fourteen are the principle skills the upstream
 0.15.25 re-pin updated. The 26 non-principle files differ for three separate
 reasons: `hugues-mode` and `setup-hstack` carry hStack's own router and setup
 changes; architect, arena, how, interrogate, reflect, swarm and
@@ -71,8 +71,8 @@ nine skills added after the release carry the marker too. All 59 skill files
 total 228,298 bytes; bodies excluding frontmatter and delimiters total 212,163
 bytes. The mode file is 20,242 bytes, including its 19,965-byte body.
 
-History, not current counts: until the pstack 0.15.25 re-pin, all 24
-`principle-*` files matched `7db3e80`. Restoring pstack's router design had put
+History, not current counts: until the upstream 0.15.25 re-pin, all 24
+`principle-*` files matched `7db3e80`. Restoring upstream's router design had put
 the inherited Cursor `disable-model-invocation: true` line back on 44 skill
 bodies, matching most of that pre-restoration baseline again. PR 1 fix round 2
 also reworded part of setup-hstack's (then setup-huguesstack's) own body (item
@@ -86,7 +86,7 @@ dropped the four Cursor-only frontmatter fields, moved the model-defaults
 paragraph into
 [the worker reference](../plugin/adapters/host-workers.md#model-defaults-and-role-labels)
 and added the four mobile routes to the Playbooks list. Issue #83 then put
-pstack's own wording back in every rule the rewrite had restated, keeping the
+upstream's own wording back in every rule the rewrite had restated, keeping the
 renames, the host translation and the mobile routes, which brought the mode file
 to the size given above.
 
@@ -133,7 +133,7 @@ skill-list tiering grew it to 26,724 bytes, 744 more than `main`, through the
 longer router description and the scoped bundled-reference rule in the host
 adapter. The router rewrite and its fix round took 752 bytes back, which left it 8
 bytes under `main`. Later adapter edits, including the shorter host-adapter
-wording, left it 264 bytes under that baseline, restoring pstack's router
+wording, left it 264 bytes under that baseline, restoring upstream's router
 wording (#83) left it 852 bytes under, and the bundled deslop and the #48 reach
 rule left it 817 bytes under. The executable-helper resolution rule (#44)
 left it 737 bytes under. Bundling the control skills left it 740 bytes under. The Codex loading

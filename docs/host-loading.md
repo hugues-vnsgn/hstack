@@ -128,7 +128,7 @@ metadata compatibility. A successful static check is not an observed host load.
 
 WP2 preserves one upstream local link from `principle-explain-the-number` to the
 unshipped `benchmark-checklist` skill. The checker accepts it only with the exact
-known source and target, pstack pin, verbatim source SHA-256 and matching
+known source and target, upstream pin, verbatim source SHA-256 and matching
 [provenance receipt](upstream/wp2-provenance.json). It prints `DEFERRED` visibly.
 Altered source bytes, a different broken link, excess or malformed exceptions,
 a changed pin or a newly shipped target fail. This exception preserves the

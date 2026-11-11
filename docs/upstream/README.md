@@ -245,7 +245,7 @@ before re-pinning; stale provenance is rejected rather than silently accepted.
 
 ## Attribution
 
-Keep [PSTACK-LICENSE](../../PSTACK-LICENSE) and the fork's
+Keep [UPSTREAM-LICENSE](../../UPSTREAM-LICENSE) and the fork's
 [LICENSE](../../LICENSE). [WP2 provenance](wp2-provenance.json) names the
 source and destination of imported plugin files. Adapted skills/playbooks
 retain `source:` annotations. The 24 principles and four interrogate references

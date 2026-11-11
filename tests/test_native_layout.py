@@ -756,7 +756,7 @@ class HuguesModeRouter(unittest.TestCase):
         for row, markers in zip(rows, expected):
             for marker in markers:
                 self.assertIn(marker, row)
-        for phrase in ["Keep pstack's playbook text.",
+        for phrase in ['Keep upstream playbook text.',
                        'gets one plain line, no bullet or bold: `Skipped in <host>: <step>. <reason>.`',
                        'Never ask the user to choose, offer an alternative or retry.',
                        'Independent steps continue; one that needs the skipped output holds, with a named placeholder.',

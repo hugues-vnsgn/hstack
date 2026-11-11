@@ -16,7 +16,7 @@ Answer the user's question about hStack, hand them a prompt they can send, and l
 
 A message that asks for work, such as "use hStack to fix this bug", is not a help question. Read [`hugues-mode`](../hugues-mode/SKILL.md) and do the work under it.
 
-This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, and the guide lives outside it, so give the user the file's public copy: `https://github.com/hugues-vnsgn/hstack/blob/main/` followed by its repository path, such as `plugin/skills/how/SKILL.md` or `docs/pstack/guide/01-setup.md`.
+This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, and the guide lives outside it, so give the user the file's public copy: `https://github.com/hugues-vnsgn/hstack/blob/main/` followed by its repository path, such as `plugin/skills/how/SKILL.md` or `docs/guide/01-setup.md`.
 
 Commands in this file use the short slash form. The user types the plugin prefix in Claude Code, as in `/hstack:how`, and `$` in Codex, as in `$how`.
 
@@ -44,10 +44,10 @@ When the model file is missing and it matters, ask whether the user wants to pic
 ## Get set up
 
 1. Install the plugin. In Claude Code, load the checkout for one session with `claude --plugin-dir "/absolute/path/to/hstack/plugin"` and confirm `/hstack:hugues-mode` is discovered before using it. In Codex, use a supported native discovery route and confirm `hugues-mode` appears before typing `$hugues-mode`. The Codex install route is unverified. If discovery or typing the command fails, stop. Don't paste a SKILL.md path as a workaround.
-2. Run [`/setup-hstack`](../setup-hstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes `.hstack/models.md` in the project. Each skill reads the file at its next role selection, so the roles apply from the next subagent spawn. For a mobile project it also looks for a `verify-<app>` skill and offers once to generate one. Then it offers once to generate a formal verification skill, unless the project already has one.
+2. Run [`/setup-hstack`](../setup-hstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes `.hstack/models.md` in the project. Each skill reads the file at its next role selection, so the roles apply from the next subagent spawn. It offers once to generate a verification skill when the project has no `verify-*` skill or harness, and for a mobile project whenever its `verify-<app>` skill is missing. Then it offers once to generate a formal verification skill, unless the project already has one.
 3. Start a real task with `/hugues-mode`, a goal, and a check that can pass or fail.
 
-Only `setup-hstack` appears in the host's skill list. Every other skill, `hugues-mode` included, is user-only: the user types its name, or `/hugues-mode` reads its SKILL.md as a file when a step needs it. The [README](https://github.com/hugues-vnsgn/hstack/blob/main/README.md) and [guide page 1](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
+Only `setup-hstack` appears in the host's skill list. Every other skill, `hugues-mode` included, is user-only: the user types its name, or `/hugues-mode` reads its SKILL.md as a file when a step needs it. The [README](https://github.com/hugues-vnsgn/hstack/blob/main/README.md) and [guide page 1](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).
 
 If cost is the worry, say where the tokens go and how to spend fewer. hStack spends extra tokens on subagents and review panels. Rerun `/setup-hstack` and pick a smaller budget or cheaper models, and match the budget to the job: less for easy work, more for hard design and review. A role set to `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/hugues-mode` for work that needs rigor.
 
@@ -55,7 +55,7 @@ hStack targets Claude Code, Codex and Cursor. Its workflow skills hand work to t
 
 ## Start a task with `/hugues-mode`
 
-`/hugues-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/02-poteto-mode.md) has examples.
+`/hugues-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/02-poteto-mode.md) has examples.
 
 Don't promise that the mode stays on every turn. hStack documents no host setting that pins it, so when it fades, start the next task with `/hugues-mode` again. Mid-chat, "new task" makes the mode match a fresh playbook.
 
@@ -153,11 +153,11 @@ Playbooks are step lists inside `/hugues-mode`, not skills, so they have no slas
 - "full autopilot on this queue" runs Autopilot-full. "autopilot, don't merge" runs Autopilot-stack.
 - "run the eval playbook" runs Eval.
 
-The Playbooks section of [`hugues-mode`](../hugues-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
+The Playbooks section of [`hugues-mode`](../hugues-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
 
 hStack has no planning skill. For work that spans phases or stacked PRs, asking `/hugues-mode` for a plan runs the [Multi-phase plan playbook](../hugues-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
 
-Principles are one-rule skills that `/hugues-mode` reads and cites in its replies. The user rarely types one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand. [Guide page 8](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/08-principles.md) lists them.
+Principles are one-rule skills that `/hugues-mode` reads and cites in its replies. The user rarely types one. They steer with the names instead, as in "apply prove it works. show me the real output." Typing `/principle-<name>` still loads one on demand. [Guide page 8](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/08-principles.md) lists them.
 
 ## Fix a run that went wrong
 
@@ -169,12 +169,12 @@ Principles are one-rule skills that `/hugues-mode` reads and cites in its replie
 | Runs cost more than expected | See the cost paragraph under Get set up. |
 | A skill didn't run on its own | Only `setup-hstack` can be picked from the user's words. The others run when the user types them or when `/hugues-mode` reads them, and it doesn't read every skill. |
 | Parallel agents overwrote each other | Give each agent its own worktree. |
-| An overnight run moved but finished nothing | A loop needs a check that can pass or fail, not a duration. See [guide page 7](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/07-overnight.md). |
+| An overnight run moved but finished nothing | A loop needs a check that can pass or fail, not a duration. See [guide page 7](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/07-overnight.md). |
 | The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |
 | A mobile result passed on one platform and was reported for both | Ask which target each result came from. A build or one target doesn't prove the other. |
 | A mobile proof step is reported blocked | A prerequisite is missing: the `verify-<app>` skill, a simulator or emulator, a tool, or the user's go-ahead to run. Supply it, or leave the gap visible. |
 
-For a run that drifts, [`references/prompting.md`](references/prompting.md) has one-line steers. [Guide page 10](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/10-recipes-and-pitfalls.md) has more pitfalls and the recipes worth copying.
+For a run that drifts, [`references/prompting.md`](references/prompting.md) has one-line steers. [Guide page 10](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/10-recipes-and-pitfalls.md) has more pitfalls and the recipes worth copying.
 
 ## Make hStack my own
 
@@ -183,7 +183,7 @@ For a run that drifts, [`references/prompting.md`](references/prompting.md) has 
 - `/hugues-mode write a skill for <workflow>` runs the authoring playbook. The eval playbook tests a skill change blind.
 - Fix a misbehaving skill in its own PR, not inside the feature work where it went wrong.
 
-[Guide page 9](https://github.com/hugues-vnsgn/hstack/blob/main/docs/pstack/guide/09-make-it-yours.md) covers each of these.
+[Guide page 9](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/09-make-it-yours.md) covers each of these.
 
 ## Reply
 

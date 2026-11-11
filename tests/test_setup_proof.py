@@ -31,7 +31,8 @@ class SetupProofContract(unittest.TestCase):
     def test_mobile_setup_and_proof_require_the_same_project_recipe(self):
         setup = (SKILLS / 'setup-hstack/SKILL.md').read_text().split('### 7.', 1)[1]
         proof = (SKILLS / 'hugues-mode/playbooks/mobile-proof.md').read_text()
-        self.assertIn('For a mobile project, require a project `verify-<app>` skill', setup)
+        self.assertIn('For a mobile project, [mobile proof](../hugues-mode/playbooks/mobile-proof.md) needs a project '
+                      '`verify-<app>` skill', setup)
         self.assertIn('even when a harness or device tools already exist', setup)
         self.assertIn('Reuse the existing harness', setup)
         self.assertIn('Invoke the existing project `verify-<app>`', proof)
@@ -40,7 +41,7 @@ class SetupProofContract(unittest.TestCase):
         setup = (SKILLS / 'setup-hstack/SKILL.md').read_text().split('### 7.', 1)[1]
         for contract in ('If generation is declined', 'hold dependent mobile proof',
                          'unavailable, disabled, denied or unknown',
-                         'For a non-mobile project, an existing harness remains sufficient'):
+                         'a project `verify-*` skill or an existing harness. If it has neither, offer once'):
             self.assertIn(contract, setup)
         proof = (SKILLS / 'hugues-mode/playbooks/mobile-proof.md').read_text()
         self.assertIn('Never read its body as a fallback', proof)
@@ -64,6 +65,20 @@ class SetupProofContract(unittest.TestCase):
         row = re.search(r'^interrogate reviewers: (.+)$', body, re.M).group(1)
         self.assertEqual(len(row.split(',')), 2)
         self.assertLessEqual(set(re.findall(r'gpt-[\w.-]+', row)), tiers)
+
+    def test_hardest_tasks_start_on_frontier_with_a_judgment_alternative(self):
+        body = (SKILLS / 'setup-hstack/SKILL.md').read_text()
+        models = dict(re.findall(r'^\| (Judgment|Frontier) \| `([^`]+)` \|', body, re.M))
+        self.assertEqual(models, {'Judgment': 'claude-opus-5-5', 'Frontier': 'claude-fable-5-2'})
+        lines = dict(re.findall(r'^([a-z][a-z, -]+): (.+)$', body, re.M))
+        self.assertEqual([seat.split()[0] for seat in lines['hardest tasks'].split(' or ')],
+                         [models['Frontier'], models['Judgment'], 'gpt-6-astra'])
+        self.assertEqual([role for role, value in lines.items() if models['Frontier'] in value], ['hardest tasks'])
+        self.assertIn('`claude-fable-5-2` is `fable`', body)
+        self.assertIn('drop the undetected one, say so, and the role runs the next', body)
+        header = body.split('# Setup hStack', 1)[0]
+        self.assertIn('[host contract](../../adapters/host.md) in full, then apply.', header)
+        self.assertNotIn('mobile', header)
 
 
 class SetupProofInstalled(InstalledFixture, unittest.TestCase):

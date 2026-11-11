@@ -104,19 +104,19 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
 </defs></svg>
-<header class="top"><span class="brand">hStack User Guide<small>v0.5.8</small></span>
+<header class="top"><span class="brand">hStack User Guide<small>v0.5.9</small></span>
 <div class="host-switch" role="group" aria-label="Show commands for">
 <button data-h="claude" aria-pressed="false">Claude Code</button><button data-h="codex" aria-pressed="false">Codex</button><button data-h="cursor" aria-pressed="false">Cursor</button><button data-h="all" aria-pressed="true">All</button></div></header>
 <div class="layout"><nav class="toc"><div class="grp">Part I. Get started</div><ol><li><a href="#start">1. Start here</a></li><li><a href="#concepts">2. How hStack thinks</a></li><li><a href="#setup">3. Set up hStack</a></li><li><a href="#commands">4. Command reference</a></li><li><a href="#prompting">5. Talk to hugues-mode</a></li><li><a href="#stuck">6. When you are stuck</a></li><li><a href="#debug">7. Debug a bug</a></li><li><a href="#feature">8. Build a new feature</a></li><li><a href="#mobile">9. Prove it on device</a></li><li><a href="#ship">10. Review and ship</a></li><li><a href="#big">11. Big and overnight work</a></li><li><a href="#principles">12. Steer with principles</a></li><li><a href="#tune">13. Tune cost and models</a></li><li><a href="#trouble">14. Troubleshooting and pitfalls</a></li></ol><div class="grp">Part II. Lead the team</div><ol><li><a href="#part2">Introduction and labels</a></li><li><a href="#lead">15. The lead's job</a></li><li><a href="#brief">16. Brief the team</a></li><li><a href="#backwards">17. Work backwards</a></li><li><a href="#measure">18. Measure a hundred times, cut once</a></li><li><a href="#plan">19. Turn the design into a plan</a></li><li><a href="#shape">20. Pick the team shape</a></li><li><a href="#run-team">21. Run the team in Claude Code</a></li><li><a href="#review">22. Review like a lead</a></li><li><a href="#improve">23. Make the team better</a></li><li><a href="#examples">24. Worked examples</a></li></ol><div class="grp">Appendix</div><ol><li><a href="#limits">A. What is verified today</a></li><li><a href="#glossary">B. Glossary</a></li></ol></nav>
 <main><div class="hero">
-<span class="pill">hStack 0.5.8 · pstack 0.15.36 baseline</span>
+<span class="pill">hStack 0.5.9 · upstream 0.15.36 baseline</span>
 <h1>hStack User Guide</h1>
 <p class="lede">How to set up hStack in Claude Code, Codex and Cursor, and how to use it when you are stuck, when you debug, and when you build a new feature. Part II shows how to lead hStack like a team: brief it, pick its shape, run it and review it. Written for developers working on Swift/iOS, Kotlin/Android, Kotlin Multiplatform and Compose Multiplatform apps, and for any nontrivial engineering work.</p>
 <p class="meta">Updated 2026-10-30. Use the switch at the top right to show commands for Claude Code, Codex, Cursor or all of them.</p>
 </div>
 
 <h2 id="start">1. Start here</h2>
-<p>hStack is pstack for mobile development. pstack is poteto's Cursor plugin. hStack carries the same workflow to Claude Code, Codex and Cursor and adds mobile proof rules for four domains: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI.</p>
+<p>hStack is an agent workflow plugin, forked from poteto's Cursor plugin. It carries the same workflow to Claude Code, Codex and Cursor and adds optional mobile proof rules for four domains: native Swift/iOS, native Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI.</p>
 <p>The idea fits in one sentence. <strong>You describe what you want and how you will know it is done. hStack picks a playbook, runs the right skills as each step fires, and ends with evidence you can check.</strong></p>
 
 <div class="callout why"><span class="h">Why use it at all?</span>
@@ -141,7 +141,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <tr><td><code>setup-huguesstack</code></td><td><code>setup-hstack</code></td></tr>
 <tr><td><code>.huguesstack/models.md</code></td><td><code>.hstack/models.md</code> (setup reads the old file once and tells you to move it)</td></tr>
 <tr><td>"Bugbot triage" as a fixed step</td><td>Triage of whichever review bot your repository has. hStack installs none. See <a href="#ship">Review and ship</a>.</td></tr>
-<tr><td><code>/poteto-mode</code>, <code>/setup-pstack</code> (Cursor)</td><td>Since 0.5.7 hStack is a native Cursor host too. Use hStack's own <code>/hugues-mode</code>, <code>/hugues-help</code> and <code>/setup-hstack</code> there; pstack stays the upstream project.</td></tr>
+<tr><td><code>/poteto-mode</code> and the upstream setup command (Cursor)</td><td>Since 0.5.7 hStack is a native Cursor host too. Use hStack's own <code>/hugues-mode</code>, <code>/hugues-help</code> and <code>/setup-hstack</code> there; the upstream plugin stays a separate project.</td></tr>
 </table>
 <p>The <code>hugues-*</code> skill names did not change.</p></div>
 
@@ -260,7 +260,7 @@ footer{margin-top:80px;color:var(--muted);font-size:13px;border-top:1px solid va
 <pre><code><span class="cc"># Claude Code
 claude plugin marketplace add hugues-vnsgn/hstack
 claude plugin install hstack@hstack
-claude plugin list          # should show hstack@hstack 0.5.8</span><span class="cx"># Codex
+claude plugin list          # should show hstack@hstack 0.5.9</span><span class="cx"># Codex
 codex plugin marketplace add hugues-vnsgn/hstack
 codex plugin add hstack@hstack</span><span class="cu"># Cursor: copy the plugin folder, then reload the window
 src="/absolute/path/to/hstack/plugin"
@@ -299,12 +299,13 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <tr><th>Tier</th><th>Claude Code</th><th>Codex</th><th>Cursor</th><th>Default effort</th><th>Used for</th></tr>
 <tr><td>Fast</td><td><code>claude-haiku-5-5</code></td><td><code>gpt-6-luna</code></td><td>detected id</td><td><code>xhigh</code></td><td>The <code>how</code> explorer</td></tr>
 <tr><td>Workhorse</td><td><code>claude-sonnet-5-5</code></td><td><code>gpt-6.1-sol</code></td><td>detected id</td><td><code>high</code></td><td>Code delegates, investigators, reflect tooling, swarm workers</td></tr>
-<tr><td>Judgment</td><td><code>claude-opus-5-5</code></td><td><code>gpt-6-astra</code></td><td>detected id</td><td><code>high</code></td><td>Judgment and prose, hardest tasks, the explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge</td></tr>
+<tr><td>Judgment</td><td><code>claude-opus-5-5</code></td><td><code>gpt-6-astra</code></td><td>detected id</td><td><code>high</code></td><td>Judgment and prose, the explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge</td></tr>
+<tr><td>Frontier</td><td><code>claude-fable-5-2</code></td><td><code>gpt-6-astra</code></td><td>detected id</td><td><code>high</code></td><td>Hardest tasks</td></tr>
 </table>
-<p>A tier fixes the model. A role's effort starts at the tier default and moves with the work. Version 0.5.4 added the Fast tier and folded the old Frontier tier into Judgment, because no default role uses <code>fable</code>. To restore a default, delete that role's line. Rerun setup at any time.</p></li>
+<p>A tier fixes the model. A role's effort starts at the tier default and moves with the work. Version 0.5.4 added the Fast tier and folded the old Frontier tier into Judgment. The Frontier tier is back for the <code>hardest tasks</code> role, which lists Opus after <code>claude-fable-5-2</code>, so a host whose agent tool does not accept Fable runs that role on Opus. To restore a default, delete that role's line. Rerun setup at any time.</p></li>
 
 <li><strong>Create a verification skill for your app</strong>
-<p>For mobile projects this is required, not optional. The mobile-proof playbook needs a project <code>verify-&lt;app&gt;</code> recipe, even if XcodeBuildMCP or jev-ios-bridge can already drive the app. Setup offers to generate one. Accept. You can also run it yourself:</p>
+<p>Setup offers to generate one when your project has no <code>verify-*</code> skill and no harness. For a mobile project it offers even if XcodeBuildMCP or jev-ios-bridge can already drive the app, because the mobile-proof playbook needs a project <code>verify-&lt;app&gt;</code> recipe. Accept. You can also run it yourself:</p>
 <pre class="prompt"><code><span class="cc">/hstack:create-verification-skill </span><span class="cx">$create-verification-skill </span><span class="cu">/create-verification-skill </span></code></pre>
 <p>The generator studies your repository, not you. It works out how the app launches, what can drive it, and what evidence proves each feature. It writes <code>verify-&lt;app&gt;/</code> under your <code>.claude/skills/</code> or <code>.agents/skills/</code> folder, with Launch, Doctor, Drive, Evidence and Cleanup sections and a feature map. It proves one feature end to end before handing it over. Commit it so every person and agent drives the app the same way.</p>
 <div class="callout why"><span class="h">Why this pays off the most</span>
@@ -314,10 +315,10 @@ claude --plugin-dir "$HOME/Codes/hstack/plugin"</code></pre></div>
 <li><strong>Prepare the Bun helper (only if you will babysit PRs)</strong>
 <p>Run once per installed copy. Replace <code>&lt;plugin&gt;</code> with the absolute root of the copy you loaded.</p>
 <pre><code><span class="cc"># Claude Code default root
-cd ~/.claude/plugins/cache/hstack/hstack/0.5.8/skills/hugues-mode/scripts
+cd ~/.claude/plugins/cache/hstack/hstack/0.5.9/skills/hugues-mode/scripts
 bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span><span class="cx"># Codex default root
-cd ~/.codex/plugins/cache/hstack/hstack/0.5.8/skills/hugues-mode/scripts
+cd ~/.codex/plugins/cache/hstack/hstack/0.5.9/skills/hugues-mode/scripts
 bun install --frozen-lockfile
 bun ./watch-pr/watch-pr --help</span><span class="cu"># Cursor default root
 cd ~/.cursor/plugins/local/hstack/skills/hugues-mode/scripts
@@ -347,7 +348,7 @@ cp -R "$src"/. "$dst"/</span></code></pre>
 <p>Keep a task that is in flight on the copy it started with until it finishes. To remove hStack, use the same host mechanism that installed it. A session-only <code>--plugin-dir</code> load ends with the session.</p>
 
 <h2 id="commands">4. Command reference</h2>
-<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Cursor uses <code>/</code> and the bare name. Arguments are plain English. Release 0.5.8 bundles 63 skills, the same as 0.5.7 and 0.5.6. The four added in 0.5.5 are listed after the table.</p>
+<p>Claude Code prefixes plugin skills with <code>/hstack:</code>. Codex uses <code>$</code> and the bare name. Cursor uses <code>/</code> and the bare name. Arguments are plain English. Release 0.5.9 bundles 63 skills, the same as 0.5.8, 0.5.7 and 0.5.6. The four added in 0.5.5 are listed after the table.</p>
 <table>
 <tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Cursor</th><th>Use it to</th></tr>
 <tr><td>hugues-mode</td><td><code>/hstack:hugues-mode</code></td><td><code>$hugues-mode</code></td><td><code>/hugues-mode</code></td><td>Start any nontrivial task. The front door.</td></tr>
@@ -368,7 +369,7 @@ cp -R "$src"/. "$dst"/</span></code></pre>
 </table>
 <p>Rows with several skills show the first one's command. The others follow the same pattern. The Cursor column is honest about what was run: <code>/hugues-mode</code>, <code>/hugues-help</code> and <code>/setup-hstack</code> were observed in the Cursor IDE, and no other row was. The <a href="#limits">Appendix A</a> lists the observed and unobserved lanes.</p>
 <h3>New in 0.5.5</h3>
-<p>Release 0.5.5 pins pstack 0.15.32 and adds four user-only skills. Release 0.5.8 moves the pin to pstack 0.15.36.</p>
+<p>Release 0.5.5 pins upstream 0.15.32 and adds four user-only skills. Release 0.5.8 moves the pin to upstream 0.15.36.</p>
 <table>
 <tr><th>Skill</th><th>Claude Code</th><th>Codex</th><th>Use it to</th></tr>
 <tr><td>create-formal-verification-skill</td><td><code>/hstack:create-formal-verification-skill</code></td><td><code>$create-formal-verification-skill</code></td><td>Generate a project skill that checks a key property, such as a race or an invariant, past what tests reach</td></tr>
@@ -828,7 +829,7 @@ cp -R "$src"/. "$dst"/</span></code></pre>
 <p>Babysit takes blockers in order: conflicts, then review threads, then CI. It batches every known fix into one push so checks restart once. A flaky CI job gets one fresh build, never a second retry. Review comments are triaged skeptically: real findings get a fix with a red-first proof, noise gets dismissed with a concrete reason on the thread. The second prompt asks for status only and does not start the loop.</p>
 
 <h3>Turn on a review bot</h3>
-<p>pstack's triage text calls the review bot "Bugbot". On every host it means whichever bot your repository has. hStack installs none.</p>
+<p>hStack's triage text calls the review bot "Bugbot". On every host it means whichever bot your repository has. hStack installs none.</p>
 <ul>
 <li><strong>Claude Code Review:</strong> an owner of your Claude organization turns it on (Team or Enterprise plan).</li>
 <li><strong>Claude GitHub Action:</strong> run <code>/install-github-app</code> in Claude Code and pick the review workflow.</li>
@@ -1016,7 +1017,7 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <p>Read Part II after you have finished a few tasks with Part I. The beginner path stays as it is. Every prompt below still starts with <code class="cc">/hstack:hugues-mode</code><code class="cx">$hugues-mode</code><code class="cu">/hugues-mode</code>, unless it names another skill directly.</p>
 
 <div class="callout why"><span class="h">Credit</span>
-<p>This part follows poteto's article <a href="https://x.com/poteto/article/2097732320606507506">The Complete Guide to pstack Pt. 2</a>. The ideas and the examples are his: the Slack thread, virtualization, the Dune tutorial, the dropdown prototype, webhook rate limiting, the StyleX migration and the background worker timeouts. We changed the commands and tools so they run in hStack, and we checked every claim about hStack against this repository.</p></div>
+<p>This part follows poteto's article <a href="https://x.com/poteto/article/2097732320606507506">part 2 of his complete guide</a>. The ideas and the examples are his: the Slack thread, virtualization, the Dune tutorial, the dropdown prototype, webhook rate limiting, the StyleX migration and the background worker timeouts. We changed the commands and tools so they run in hStack, and we checked every claim about hStack against this repository.</p></div>
 
 <h3>How to read the claim labels</h3>
 <p>A sentence that says what a skill file tells the agent to do quotes its source under <code>plugin/</code> and needs no label. A sentence about what a host did, or will do, carries one of three labels.</p>
@@ -1521,13 +1522,13 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 </table>
 
 <h2 id="limits">Appendix A. What is verified today</h2>
-<p>hStack's own docs separate what was observed from what was only built. As of 0.5.8:</p>
+<p>hStack's own docs separate what was observed from what was only built. As of 0.5.9:</p>
 <ul>
 <li><strong>Observed:</strong> installs and updates from 0.4.0 through 0.5.2 on both Claude Code and Codex, and 0.5.3 copies on both hosts that match the tag. Router discovery on Claude Code. Before 0.5.4 the router fired unprompted in one interactive session, and since 0.5.4 a typed <code>/hstack:hugues-mode</code> loaded it in a print-mode check on 2026-10-22. Bounded bug-fix runs on both hosts. Bounded <code>how</code>, <code>tdd</code>, <code>blast-radius</code> and design-only <code>architect</code> and <code>arena</code> runs. A fresh <code>hugues-agent</code> delegate writing a scratch function. Native helper runs, including failed and incomplete attempts. In Cursor 3.27.22 with a third-party auth extension, on the Auto model: the local-copy install showed 63 hStack skills with no duplicate names, <code>/hugues-help</code> answered and named Claude Code, Codex and Cursor, <code>/hugues-mode</code> routed to the <code>bug-fix</code> playbook and ran one foreground <code>hugues-agent</code> delegate whose work the parent checked against the committed file, and <code>/setup-hstack</code> asked for a reasoning budget and a model per role and wrote <code>.hstack/models.md</code>.</li>
 <li><strong>Not yet observed:</strong> a complete mobile journey on a real consumer project, on any host. Interactive Claude Code completion under normal permissions. Codex scheduling between turns. A real review bot reviewing an hStack PR. Codex with implicit invocation off for <code>hugues-mode</code>, including <code>$hugues-mode</code>. A live <code>hugues-agent</code> reading the mode by path. A session using the full model IDs that setup now writes. The updates from 0.5.3 to 0.5.4, from 0.5.4 to 0.5.5, from 0.5.5 to 0.5.6, from 0.5.6 to 0.5.7 and from 0.5.7 to 0.5.8 on any host. Any host run of the four skills new in 0.5.5. In Cursor: stock Cursor, the free plan without the third-party auth extension, a read-only Explore subagent, the paid-feature skip line, the Swift skill on a Swift task, <code>recall</code> over Cursor's transcripts, the install from the Claude Code cache (route A), the GitHub-marketplace install route, and every other row of the command reference above.</li>
 <li><strong>Defined, not yet observed (Part II):</strong> Orchestrate, Autopilot-full and Autopilot-stack, <code>swarm</code> and <code>arena</code> at scale, the full <code>architect</code> loop, the Prototype and Multi-phase plan playbooks, the plan checker, the <code>/loop</code> wake, <code>recall</code> and <code>reflect</code> over transcripts, cross-host review and multi-day programs. A Cursor plugin agent cannot run in the background: Cursor's plugin-agent conversion drops the flag, so <code>hugues-agent</code> runs in the foreground there.</li>
 </ul>
-<p>The release notes in the repository (<code>docs/RELEASE-0.5.8.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
+<p>The release notes in the repository (<code>docs/RELEASE-0.5.9.md</code>) carry the details. When the agent reports a gap, that is the system working as designed.</p>
 
 <h2 id="glossary">Appendix B. Glossary</h2>
 <table>
@@ -1555,7 +1556,7 @@ REPORT root cause, fix, RED then GREEN output, and what you could not prove</spa
 <tr><td>Decision log</td><td>The TSV that <code>show-me-your-work</code> keeps, with one row for each decision, its reason, an evidence pointer and the result.</td></tr>
 </table>
 
-<footer>hStack is forked from pstack under the MIT license. Repository: <a href="https://github.com/hugues-vnsgn/hstack">github.com/hugues-vnsgn/hstack</a>. This guide covers version 0.5.8 and was updated on 2026-10-31.</footer>
+<footer>hStack is a fork under the MIT license, and the upstream notice ships as UPSTREAM-LICENSE. Repository: <a href="https://github.com/hugues-vnsgn/hstack">github.com/hugues-vnsgn/hstack</a>. This guide covers version 0.5.8 and was updated on 2026-10-31.</footer>
 </main></div>
 <script>
 (function(){
