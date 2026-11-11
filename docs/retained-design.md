@@ -2,13 +2,13 @@
 
 # Retained design workflows
 
-`architect` and `arena` retain pstack 0.15.9's design exploration workflow at
+`architect` and `arena` retain upstream 0.15.9's design exploration workflow at
 `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a`. Read
 [architect](../plugin/skills/architect/SKILL.md) for Ground, Sketch, opt-in Agree,
 Implement and Scrap. Read [arena](../plugin/skills/arena/SKILL.md) for Frame,
 Fan out, Cross-judge, Pick, Graft and Verify. Both are explicit user tools;
 coordinators read their local dependencies directly.
-The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`; this record still describes the original package.
+The upstream 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`; this record still describes the original package.
 
 Architect grounds each touched subsystem through [how](../plugin/skills/how/SKILL.md)
 and changed ownership/layering through [why](../plugin/skills/why/SKILL.md). A
@@ -58,7 +58,7 @@ files with verified source Git blobs, SHA-256, mode and destination hashes.
 internals and hand-synced lists. The runner prompt adapts host identity and mobile
 scope. The arena-specific briefs live in its skill and reuse canonical
 [host notes](../plugin/skills/hugues-mode/references/host-notes.md). MIT attribution remains in
-[PSTACK-LICENSE](../PSTACK-LICENSE).
+[UPSTREAM-LICENSE](../UPSTREAM-LICENSE).
 
 Run `python3 -m unittest discover -s tests -p test_retained_design.py` for
 structural and mutation regressions. Run the repository package and provenance

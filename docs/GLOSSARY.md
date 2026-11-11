@@ -1,11 +1,11 @@
 # hStack
 
-hStack is the standalone adaptation of pstack for first-class mobile development through Claude Code, Codex and Cursor.
+hStack is an agent workflow plugin for Claude Code, Codex and Cursor, adapted from an upstream Cursor plugin. Mobile development is an optional adapter.
 
 ## Language
 
 **hStack**:
-The project named by the product owner for this mobile-first pstack adaptation. It was called huguesStack until 0.4.0. The rename moved the plugin and marketplace name to `hstack`, the command prefix to `/hstack:`, the setup skill to `setup-hstack` and the project-local folder to `.hstack/`. The `hugues-*` skill names are unchanged.
+The project named by the product owner for this adaptation of the upstream plugin. It was called huguesStack until 0.4.0. The rename moved the plugin and marketplace name to `hstack`, the command prefix to `/hstack:`, the setup skill to `setup-hstack` and the project-local folder to `.hstack/`. The `hugues-*` skill names are unchanged.
 _Avoid_: Mobile Stack, mobile stack as the product name, bare "hstack" for the retired predecessor (see **hstack-alpha**)
 
 **hstack-alpha**:
@@ -21,7 +21,7 @@ A mobile application that hStack helps its owner develop and verify. It is a sep
 _Avoid_: Bundled demo app, plugin app
 
 **Upstream responsibility**:
-An identifiable purpose or behavior supplied or required by the pinned pstack baseline, regardless of the file or feature that carries it.
+An identifiable purpose or behavior supplied or required by the pinned upstream baseline, regardless of the file or feature that carries it.
 _Avoid_: File count as feature parity
 
 **Master inventory**:
@@ -53,7 +53,7 @@ A program that runs a model, such as Claude Code, Codex, Cursor or omp. Not a **
 _Avoid_: PR owner, subagent, worker
 
 **hugues-mode**:
-The hStack router skill, forked from pstack's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
+The hStack router skill, forked from upstream's `poteto-mode`. It matches a request to a playbook, copies the steps into the todo list, and names a domain lane and proof surface for build and bug work.
 _Avoid_: mobile-mode, the orchestrator
 
 **Proof lane**:
@@ -85,7 +85,7 @@ One of authored, static-tested, observed-pass, observed-fail, blocked or deferre
 _Avoid_: Status, done
 
 **Upstream delta**:
-The list of files added, changed or removed between the pinned pstack revision and upstream main, produced by blob-SHA comparison and triaged at most weekly.
+The list of files added, changed or removed between the pinned upstream revision and upstream main, produced by blob-SHA comparison and triaged at most weekly.
 _Avoid_: Upgrade, resync
 
 **PR owner**:

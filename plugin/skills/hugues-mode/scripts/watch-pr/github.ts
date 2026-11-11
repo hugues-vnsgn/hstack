@@ -330,7 +330,7 @@ function parseComment(value: unknown): T.ReviewComment {
     createdAt: string(object.createdAt, "review comment.createdAt"),
   };
 }
-// pstack's "Bugbot" is whichever review bot is installed on the repository.
+// hStack's "Bugbot" is whichever review bot is installed on the repository.
 // The thread query reads GraphQL, which reports an app login without the
 // "[bot]" suffix that REST adds, so compare with the suffix stripped. The
 // login alone is not enough: a human account can share it (github.com/claude

@@ -87,7 +87,7 @@
       "source": "pstack/skills/poteto-mode/scripts/watch-pr/github.ts",
       "installed": "plugin/skills/hugues-mode/scripts/watch-pr/github.ts",
       "source_sha256": "7ba193190d488c8ce0982c85234ebea026e9a595703e99a3c3df0fcd640ddd18",
-      "candidate_sha256": "4323596671d54e5adf7f68dc0944824f50bcd794733ef09024faaed54c004495",
+      "candidate_sha256": "8e60c69a0f9da8c1ec74373bdff6b293deb9a1da1823c99cc9e30d92681f05ae",
       "same_bytes_as_upstream": false,
       "same_bytes_as_7db3e80": false,
       "scope": "adapted PR watcher: recognises Claude and Codex review bots as Bugbot (issue 34), and a --require-context status not yet posted on the head reads as pending; Bun tests and tsc run on a local install, no review bot or live PR observed"

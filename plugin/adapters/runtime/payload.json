@@ -3,7 +3,7 @@
   "revision": "hstack-native-v1",
   "upstream_revision": "4dd1d05818d19792e7cd6e818f1667f95f7e1dbe",
   "legacy_paths": {
-    "pstack/LICENSE": "PSTACK-LICENSE",
+    "pstack/LICENSE": "UPSTREAM-LICENSE",
     "pstack/agents/comment-sicko.md": "agents/hugues-comment-sicko.md",
     "pstack/agents/poteto-agent.md": "agents/hugues-agent.md",
     "pstack/skills/architect/SKILL.md": "skills/architect/SKILL.md",
@@ -553,7 +553,7 @@
       "mode": "100644"
     },
     {
-      "path": "PSTACK-LICENSE",
+      "path": "UPSTREAM-LICENSE",
       "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e",
       "mode": "100644"
     },
@@ -579,7 +579,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "2f1ee01203c2aab5191c68343def82646d6983431d3379883d53cca2957ccfb9",
+      "sha256": "6bf13f045e2f21532cc85413e6461f1f17954f4ebd5f66f876730fe23899d7e0",
       "mode": "100644"
     },
     {
@@ -594,12 +594,12 @@
     },
     {
       "path": "adapters/host-workflow-tools.md",
-      "sha256": "bba9d06d3d83f375a2b05400e4193e11bb383f89d53e6afa4b0301258595c649",
+      "sha256": "95f5fd4758c8605e133f82087a84f85b7fc9eae2a3374a8d8f3c7568d4a0da31",
       "mode": "100644"
     },
     {
       "path": "adapters/host.md",
-      "sha256": "3bcfe558b95ccdc1f045d46a24a3512175ed1100f10ac4320644f8c1b5883c91",
+      "sha256": "9ba563dc21093059d1a9c0ecb8b24a0f806996cd62b3392689e3c9c6bb55fdbe",
       "mode": "100644"
     },
     {
@@ -874,7 +874,7 @@
     },
     {
       "path": "skills/hugues-help/SKILL.md",
-      "sha256": "270bff02487e9656f546299e4c79ef2ee06b50dd1e5dc927b962872f264868dd",
+      "sha256": "c2b194fdaf59d04bdef1be9ee23945eb296d5cdea1905d64480bce664da2a813",
       "mode": "100644"
     },
     {
@@ -909,7 +909,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/autonomous-run.md",
-      "sha256": "f2d3ca89d00909ecf64bd4354c2c7f170ec541e6f80a5545bbad6355cdf600c1",
+      "sha256": "c3b0fa3dbf2bbc226ab813b4e9510a9cb0902a3f7ebb1bea73028b88af755376",
       "mode": "100644"
     },
     {
@@ -979,7 +979,7 @@
     },
     {
       "path": "skills/hugues-mode/playbooks/opening-a-pr.md",
-      "sha256": "5bfc32fb791fe2a4f56c4440c9baaf8a99af2ecdbfa0bae6cc5a00fa910dd5b8",
+      "sha256": "7905aaa5e0fa71f36bcb9483e39a2bb48c4cc688f3bfe036000fcea29143c54a",
       "mode": "100644"
     },
     {
@@ -1069,7 +1069,7 @@
     },
     {
       "path": "skills/hugues-mode/references/mobile-lanes.md",
-      "sha256": "d4b575cbff1ca1b8d2c60f578eae0ede08777ffeb5ed5b9f3a314f254f47e06b",
+      "sha256": "0b3126153fb4b3ed47bd77eae1e989d26991e7f7732e5489b23a63d02982fd11",
       "mode": "100644"
     },
     {
@@ -1124,7 +1124,7 @@
     },
     {
       "path": "skills/hugues-mode/scripts/watch-pr/github.ts",
-      "sha256": "4323596671d54e5adf7f68dc0944824f50bcd794733ef09024faaed54c004495",
+      "sha256": "8e60c69a0f9da8c1ec74373bdff6b293deb9a1da1823c99cc9e30d92681f05ae",
       "mode": "100644"
     },
     {

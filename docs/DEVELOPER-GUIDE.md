@@ -199,7 +199,7 @@ static checks and the watch-pr Bun suite. No live PR has used `--require-context
 The [0.5.4 validation](RELEASE-0.5.4.md#validation) records the static checks
 and the Claude Code skill-list probe for the user-only router. The
 [0.5.5 validation](RELEASE-0.5.5.md#validation) records the static checks for
-the pstack 0.15.32 baseline. The
+the upstream 0.15.32 baseline. The
 [0.5.6 validation](RELEASE-0.5.6.md#validation) records the static checks, the
 session-start hook and the Orca coordinator runs. The
 [0.5.7 validation](RELEASE-0.5.7.md#validation) records the static checks and

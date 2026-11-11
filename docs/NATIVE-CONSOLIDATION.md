@@ -14,15 +14,15 @@ mirror, symlink shadow or custom discovery registry. The former generated
 entrypoints are authored files now; `render_core.py` refuses to regenerate them.
 
 The two historical aliases remain `poteto-mode` → `hugues-mode` and
-`setup-pstack` → `setup-hstack` (then `setup-huguesstack`; the 0.4.0 rename moved
+upstream's setup skill → `setup-hstack` (then `setup-huguesstack`; the 0.4.0 rename moved
 that one skill, its folder and the plugin name from `hugues-stack` to `hstack`).
 Every other public native path remains stable, including
 paths an owner may have used to disable skills. Different installation roots can
 still affect path-based host settings; reconcile those explicitly during an update.
-The pstack 0.15.25 merge adds a third alias, `poteto-help` → `hugues-help`.
+The upstream 0.15.25 merge adds a third alias, `poteto-help` → `hugues-help`.
 
-All 573 original source files at the current pin, pstack 0.15.36, keep their
-modes and bytes in `provenance/upstream/pstack-0.15.36.tar.gz`, outside runtime
+All 573 original source files at the current pin, upstream 0.15.36, keep their
+modes and bytes in the archive under `provenance/upstream/`, outside runtime
 discovery. The
 Git-object snapshot independently checks the archive. The current adaptation
 map is `docs/upstream/consolidation.json`. The original releases and their frozen
@@ -30,7 +30,7 @@ tests are retained. `docs/upstream/core-restoration.json` remains the historical
 0.2.0 restoration receipt; `consolidation.json` is the current installed receipt. Upstream byte equality applies to the archive; it is no
 longer a claim about the adapted runtime tree.
 
-The upstream human guide lives under `docs/pstack/`. Benny's Cursor automation,
+The upstream human guide lives under `docs/guide/`. Benny's Cursor automation,
 the Cursor manifest and the legacy history-scanning cleanup shell script remain
 provenance-only. The installed artifact includes the original MIT notice.
 
@@ -44,9 +44,9 @@ phase. A manual handoff is
 needed only when the host requires explicit user invocation; it is not a
 proven universal limitation in this setup.
 
-At the pstack 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
+At the 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
 with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
-only `setup-pstack` is model-invocable; at 0.15.32 and 0.15.36 that holds for 57 of 58. hStack restores that design instead of the earlier native
+only upstream's setup skill is model-invocable; at 0.15.32 and 0.15.36 that holds for 57 of 58. hStack restores that design instead of the earlier native
 table that made 46 skills model-invocable: only `setup-hstack` is
 model-invocable now, so only its description enters startup context on Claude
 Code. The other 62 bundled skills, including `hugues-mode` ([ADR 0003](adr/0003-hugues-mode-is-user-only.md)), `deslop`, `control-cli` and `control-ui`, are user-only; the
@@ -138,7 +138,7 @@ setup description named the native model-role file. Workflow bodies
 excluding frontmatter changed only where nine skills replaced Cursor
 model-role wiring. These were source budgets, not actual startup exposure,
 full execution cost or runtime savings, and they predate PR 1's restoration
-of pstack's user-only tiering; see [context footprint](CONTEXT-FOOTPRINT.md)
+of upstream's user-only tiering; see [context footprint](CONTEXT-FOOTPRINT.md)
 and [the budget record](CONTEXT-BUDGET.json) for current figures.
 
 Live Codex invocation, disabled-skill and planning behavior remain UNVERIFIED

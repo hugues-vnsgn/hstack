@@ -2,13 +2,13 @@
 
 # Retained research skills
 
-This package retains `how` and `why` from pstack 0.15.9 at
+This package retains `how` and `why` from upstream 0.15.9 at
 `e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a`. The
 [source receipt](upstream/retained-research-provenance.json) accounts for all 16
 skill and reference files: eight adapted and eight verbatim. Each entry binds
 the materialized upstream blob and SHA-256 to the disposition ledger and records
 the destination SHA-256, retained contracts and deviations.
-The pstack 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`; this record still describes the original package.
+The upstream 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`; this record still describes the original package.
 
 | Upstream contract | Retained behavior |
 |---|---|

@@ -1,8 +1,8 @@
 # hStack
 
-hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
+hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds optional guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.5.8** pins pstack 0.15.36, so Orchestrate runs with the
+Version **0.5.8** pins upstream 0.15.36, so Orchestrate runs with the
 coordinator's own tools and no helper script, interrogate keeps only the
 findings a run proves, and statechart ships a TypeScript compiler. The skill
 count stays at 63. A Cursor user installs the plugin, sees its skills and runs
@@ -18,10 +18,10 @@ consumer project remains unobserved on any host. The plugin remains `hstack`. It
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
 The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
 Version 0.5.1 added two authored user-only language skills. Version 0.5.8 has 63 in total. Each skill owns one canonical `SKILL.md`.
-Against 0.3.0's 50 skills, 0.4.0 merges pstack 0.15.25 and adds four user-only
+Against 0.3.0's 50 skills, 0.4.0 merges upstream 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
-Cursor's `cursor-team-kit`. pstack calls these skills but does not ship them.
-Exact pstack source remains in a provenance archive outside
+Cursor's `cursor-team-kit`. Upstream calls these skills but does not ship them.
+Exact upstream source remains in a provenance archive outside
 runtime discovery. Only `setup-hstack` appears in the host's skill list. You
 type `hugues-mode`, and it reads the other skills as files. The published 0.1.0, 0.2.0 and 0.3.0 releases and
 their evidence are unchanged.
@@ -46,12 +46,10 @@ under normal permissions remains unobserved.
 ## Start with Cursor
 
 Cursor loads hStack from one source only. Pick exactly one route. Either way,
-remove pstack first, because 55 of hStack's 63 skill names are shared with
-pstack:
-
-```sh
-rm -rf "$HOME/.cursor/plugins/local/pstack"
-```
+remove the upstream plugin first if you installed it, because 55 of hStack's 63
+skill names are shared with it. It has its own folder under
+`$HOME/.cursor/plugins/local/`, and the [upstream record](docs/upstream/README.md)
+names it.
 
 - **A. You already use hStack in Claude Code.** Install nothing in Cursor.
   Cursor loads hStack from Claude Code's install, so both hosts stay on and
@@ -179,4 +177,4 @@ python3 scripts/check_whitespace.py
 [Source maintenance CI](.github/workflows/maintenance.yml) runs these commands on
 pull requests and pushes to main. Native host and device proofs run separately.
 
-The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT. See [pstack's notice](PSTACK-LICENSE), the Cursor notices shipped with [deslop](plugin/skills/deslop/LICENSE), [control-cli](plugin/skills/control-cli/LICENSE) and [control-ui](plugin/skills/control-ui/LICENSE), and the [upstream pin and ledger](docs/upstream/README.md).
+The 0.1.0 release and its evidence remain available. Its frozen tests are historical coverage, separate from the current adapter tests. Forked under MIT. See the [upstream notice](UPSTREAM-LICENSE), the Cursor notices shipped with [deslop](plugin/skills/deslop/LICENSE), [control-cli](plugin/skills/control-cli/LICENSE) and [control-ui](plugin/skills/control-ui/LICENSE), and the [upstream pin and ledger](docs/upstream/README.md).
