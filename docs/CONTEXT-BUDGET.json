@@ -1132,9 +1132,9 @@
         "plugin/skills/why/SKILL.md"
       ],
       "unique_files": 63,
-      "bytes": 259754,
-      "characters": 259659,
-      "estimated_tokens_characters_divided_by_4": 64914.75,
+      "bytes": 260278,
+      "characters": 260183,
+      "estimated_tokens_characters_divided_by_4": 65045.75,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 5830,
@@ -1193,8 +1193,8 @@
           "sha256": "ab01ab6ee01c1c3ec5349237d00c22c3b6c3a3a15d2c898ee2669514714bb5de"
         },
         "plugin/skills/hugues-help/SKILL.md": {
-          "bytes": 20127,
-          "sha256": "4502e07e29baf56ca8a4fbee2bc7e616c359fccba4526c32ea5bf03b0e128394"
+          "bytes": 20204,
+          "sha256": "270bff02487e9656f546299e4c79ef2ee06b50dd1e5dc927b962872f264868dd"
         },
         "plugin/skills/hugues-mode/SKILL.md": {
           "bytes": 20825,
@@ -1341,8 +1341,8 @@
           "sha256": "8d741bb95066f69fb411b8426535f9762eccea66f890537581aabdbda2c12caf"
         },
         "plugin/skills/setup-hstack/SKILL.md": {
-          "bytes": 11387,
-          "sha256": "6c83fc93354e579728d6666332a549926cba898da635c6af6e65fe7ac23f893f"
+          "bytes": 11834,
+          "sha256": "0b838526110a96d63212100de0ad92ceeada3fd5cdea2e9235d63acd6561a4db"
         },
         "plugin/skills/sharpen/SKILL.md": {
           "bytes": 911,
@@ -1396,9 +1396,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 242123,
-      "characters": 242029,
-      "estimated_tokens_characters_divided_by_4": 60507.25
+      "bytes": 242647,
+      "characters": 242553,
+      "estimated_tokens_characters_divided_by_4": 60638.25
     },
     "mode_full_file": {
       "paths": [

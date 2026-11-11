@@ -5,19 +5,18 @@ description: Configure hStack's model and reasoning budget per role. Use when se
 
 ## Host invocation contract
 
-Before tools, read [host contract](../../adapters/host.md)
-and [mobile applicability](../../adapters/mobile.md#applicability) in full, then apply.
+Before tools, read [host contract](../../adapters/host.md) in full, then apply.
 The host contract governs how this skill reaches any sibling dependency.
 
-# Setup pstack
+# Setup hStack
 
-Write `.hstack/models.md` at the project root: the model-role file every pstack skill reads before it picks a worker's model.
+Write `.hstack/models.md` at the project root: the model-role file every hStack skill reads before it picks a worker's model.
 
 ## Role values
 
 A role value is one or more alternatives joined by ` or `, such as `claude-opus-5-5 high or gpt-6-astra high`. Each alternative is a model and an effort.
 
-- The model is `inherit-parent` or a real slug: a full Claude model ID such as `claude-opus-5-5` or `claude-sonnet-5-5`, or a Codex model such as `gpt-6.1-sol`. Full IDs pin the version an alias can drift from. When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias: `claude-haiku-5-5` is `haiku`, `claude-sonnet-5-5` is `sonnet`, `claude-opus-5-5` is `opus`, and `claude-fable-5-1` is `fable`. `inherit-parent` leaves `model` unset, so the worker runs on the parent chat model. It is valid on every host.
+- The model is `inherit-parent` or a real slug: a full Claude model ID such as `claude-opus-5-5` or `claude-sonnet-5-5`, or a Codex model such as `gpt-6.1-sol`. Full IDs pin the version an alias can drift from. When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias: `claude-haiku-5-5` is `haiku`, `claude-sonnet-5-5` is `sonnet`, `claude-opus-5-5` is `opus`, and `claude-fable-5-2` is `fable`. `inherit-parent` leaves `model` unset, so the worker runs on the parent chat model. It is valid on every host.
 - The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. It sets the agent tool's effort.
 - A host runs the first alternative its agent tool accepts, so one file serves every host: a single-model role lists the current host's model first and the other hosts' alternatives after it. With no accepted alternative, the role runs on `inherit-parent` at the first alternative's effort.
 - A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for every host and alternate which comes first, to use distinct available models where possible: `claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
@@ -31,9 +30,12 @@ Step 5 gives each role a tier. When a host's model list changes, keep the tier a
 |---|---|---|---|---|
 | Fast | `claude-haiku-5-5` | `gpt-6-luna` | `xhigh` | The how explorer |
 | Workhorse | `claude-sonnet-5-5` | `gpt-6.1-sol` | `high` | Code delegates, investigators, reflect tooling, swarm workers |
-| Judgment | `claude-opus-5-5` | `gpt-6-astra` | `high` | Judgment and prose, hardest tasks, explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge |
+| Judgment | `claude-opus-5-5` | `gpt-6-astra` | `high` | Judgment and prose, explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge |
+| Frontier | `claude-fable-5-2` | `gpt-6-astra` | `high` | Hardest tasks |
 
 A role's effort can move off its tier default because effort follows the work: `medium` for parallel reading, lanes and hillclimb iterations, `high` for scoped implementation and judgment, `xhigh` for fixes, design and adversarial review. Every model in the table accepts `low` through `max`. Never write Codex's `ultra`, which delegates on its own.
+
+A Frontier role names the Judgment model as its next alternative, so a host whose agent tool does not accept the Frontier model runs the role on Judgment.
 
 ## Steps
 
@@ -56,7 +58,7 @@ The starting role values are the file shape shown in step 5 below. If `.hstack/m
 
 **(b) Apply it.** Build the working table from the step 5 values, and on a re-run keep the models or list of any role whose value differs from its step 5 value. `unlimited` leaves every effort as in that table. `large`, `medium`, and `small` set the effort of every alternative, panel and `inherit-parent` entries included, to `xhigh`, `high`, or `medium`. If the agent tool does not accept that effort for that model, use its highest accepted effort below the target, else mark the role as needing a choice. So `small` turns `claude-opus-5-5 xhigh or gpt-6-astra xhigh` into `claude-opus-5-5 medium or gpt-6-astra medium`.
 
-**(c) Show the roles and confirm.** Show every role with its value, marking any current-host slug not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` as the options. Prefer AskQuestion over free text.
+**(c) Show the roles and confirm.** Show every role with its value, marking any current-host slug not in the detected set as needing a choice. A role that also lists a detected current-host alternative needs no choice: drop the undetected one, say so, and the role runs the next. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` as the options. Prefer AskQuestion over free text.
 
 ### 4. Validate
 
@@ -77,7 +79,7 @@ bug-fix: claude-sonnet-5-5 high or gpt-6.1-sol xhigh
 perf-issue: claude-sonnet-5-5 high or gpt-6.1-sol xhigh
 hillclimb: claude-sonnet-5-5 high or gpt-6.1-sol high
 judgment and prose: claude-opus-5-5 high or gpt-6-astra high
-hardest tasks: claude-opus-5-5 xhigh or gpt-6-astra high
+hardest tasks: claude-fable-5-2 high or claude-opus-5-5 xhigh or gpt-6-astra high
 how explorer: claude-haiku-5-5 xhigh or gpt-6-luna xhigh
 how explainer: claude-opus-5-5 high or gpt-6-astra high
 why investigators: claude-sonnet-5-5 high or gpt-6.1-sol high
@@ -95,13 +97,13 @@ interrogate reviewers: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xh
 
 Tell the user the file was written and that each skill reads it at its next role selection. Re-running this skill updates it. Name the alternatives step 4 left unverified; re-running setup on the other host confirms them.
 
-### 7. Check verification readiness
+### 7. Offer a verification skill (optional)
 
-For a mobile project, require a project `verify-<app>` skill before [mobile proof](../hugues-mode/playbooks/mobile-proof.md). If absent, offer once to generate it, even when a harness or device tools already exist. Reuse the existing harness in the generated recipe; XcodeBuildMCP or jev-ios-bridge availability alone does not supply that recipe. If generation is declined, finish model setup and explicitly hold dependent mobile proof until the recipe is available. For an existing recipe, preserve native invocation controls: unavailable, disabled, denied or unknown invocation holds dependent proof; do not replace it to evade that hold.
+Check whether the project has a way to drive the real app for proof: a project `verify-*` skill or an existing harness. If it has neither, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one." On no, move on without pushing. Model setup is complete either way.
 
-For a non-mobile project, an existing harness remains sufficient. Offer generation only when neither a project verification skill nor a harness exists; declining leaves model setup complete.
+For a mobile project, [mobile proof](../hugues-mode/playbooks/mobile-proof.md) needs a project `verify-<app>` skill, so make the offer even when a harness or device tools already exist. Reuse the existing harness in the generated recipe; XcodeBuildMCP or jev-ios-bridge availability alone does not supply that recipe. If generation is declined, finish model setup and explicitly hold dependent mobile proof until the recipe is available. For an existing recipe, preserve native invocation controls: unavailable, disabled, denied or unknown invocation holds dependent proof; do not replace it to evade that hold.
 
-On acceptance, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. Report a generated but unproved recipe as a draft with its blocker. Before later mobile proof, invoke the project recipe through the host's native mechanism; writing the file does not establish discovery or permission.
+On yes, read `create-verification-skill`'s SKILL.md in full as the bundled reference and follow it, resolved from its own file or the plugin root, never the consumer workspace. Report a generated but unproved recipe as a draft with its blocker. Before later mobile proof, invoke the project recipe through the host's native mechanism; writing the file does not establish discovery or permission.
 
 For a manual handoff, show `/hstack:create-verification-skill` in Claude Code or `$create-verification-skill` in Codex, using the active host's discovered entry. End by reporting model setup and verification readiness separately, including any held proof.
 
