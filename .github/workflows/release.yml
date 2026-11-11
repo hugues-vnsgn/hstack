@@ -1,0 +1,65 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, such as 0.5.9. The manifests and docs/RELEASE-<version>.md must already be on main.'
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Check the version, manifests and release notes
+        run: |
+          set -eu
+          printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' || { echo "not a version: $VERSION"; exit 1; }
+          python3 - <<'EOF'
+          import json, os, sys
+          version = os.environ['VERSION']
+          found = {}
+          for path in ['.claude-plugin/marketplace.json', '.cursor-plugin/marketplace.json',
+                       'plugin/.claude-plugin/plugin.json', 'plugin/.cursor-plugin/plugin.json']:
+              def walk(node):
+                  if isinstance(node, dict):
+                      for key, value in node.items():
+                          if key == 'version':
+                              found.setdefault(path, []).append(value)
+                          walk(value)
+                  elif isinstance(node, list):
+                      for value in node:
+                          walk(value)
+              walk(json.load(open(path)))
+          wrong = {path: values for path, values in found.items() if set(values) != {version}}
+          if len(found) != 4 or wrong:
+              sys.exit(f'manifest versions differ from {version}: {wrong or found}')
+          EOF
+          test -s "docs/RELEASE-$VERSION.md" || { echo "missing docs/RELEASE-$VERSION.md"; exit 1; }
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null; then
+            echo "tag v$VERSION already exists"; exit 1
+          fi
+      - name: Tag main and publish the release
+        run: |
+          set -eu
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a "v$VERSION" -m "hStack $VERSION" HEAD
+          git push origin "refs/tags/v$VERSION"
+          gh release create "v$VERSION" --verify-tag --title "hStack $VERSION" --notes-file "docs/RELEASE-$VERSION.md"
+          echo "Released v$VERSION at $(git rev-parse HEAD)"
