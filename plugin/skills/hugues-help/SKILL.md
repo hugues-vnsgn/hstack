@@ -32,7 +32,7 @@ Infer the need from the message and the conversation. A named situation, such as
 
 Check the state that changes the answer, and mention it only when it does:
 
-- No `.hstack/models.md` at the project root means `/setup-hstack` hasn't run for this project, so every role keeps its default: the chat's own model at `xhigh` for code and `max` for prose and judgment. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
+- No `.hstack/models.md` at the project root means `/setup-hstack` hasn't run for this project, so every role keeps its default: Opus 5.5 at `xhigh` for code, prose and judgment, Opus 5.5 at `high` for trivial edits, swarm workers and verification, and panels of Fable 5.2, Opus 5.5 and a GPT model at `high`. A host that accepts none of these runs the chat's own model. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
 - No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app. Mention `/create-verification-skill` when the question is about proving a change works. Mobile proof needs the project's `verify-<app>` skill.
 - No formal verification skill in the project means no property is checked past what tests reach. Mention `/create-formal-verification-skill` when the question is about a race, an invariant, or another case tests rarely hit. When one exists and the code it covers changed after the commit it records as last in sync, mention `/maintain-formal-verification-skill` if the question touches that code.
 
@@ -55,7 +55,7 @@ hStack targets Claude Code, Codex and Cursor. Its workflow skills hand work to t
 
 ## Start a task with `/hugues-mode`
 
-`/hugues-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/02-poteto-mode.md) has examples.
+`/hugues-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/02-poteto-mode.md) has examples.
 
 Don't promise that the mode stays on every turn. hStack documents no host setting that pins it, so when it fades, start the next task with `/hugues-mode` again. Mid-chat, "new task" makes the mode match a fresh playbook.
 
@@ -130,16 +130,15 @@ Close calls:
 
 - `/how` explains what the code does. `/why` explains the reasons. `/teach` runs one or both and explains the result plainly.
 - `/arena` gives every worker the same brief and merges the best parts. `/swarm` splits work into slices or a race and returns one report.
-- `/architect` implements right after it settles the design. Add "with checkpoint" to review the design before it writes code.
 - `/interrogate` reviews the diff. `/blast-radius` looks for breakage outside the diff and proves the one fact that makes the change safe.
 - `/recall` rebuilds context across recent chats. `/ketchup` covers only this chat since the user's last message. Resuming one specific chat or branch is the Session pickup playbook.
-- `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.
+- `/figure-it-out` designs one rigorous run. The Autonomous run playbook drives one task to a finish condition.
 
 hStack bundles [`control-cli`](../control-cli/SKILL.md) and [`control-ui`](../control-ui/SKILL.md) from Cursor's `cursor-team-kit`. A playbook reaches them through the bundled-skill read rule. Their harnesses use available local terminal and browser tools; a missing driver remains an execution gap, not a missing skill.
 
 Not in hStack:
 
-- There is no `/orchestrate` skill. Orchestrate is a `/hugues-mode` playbook. If the skill menu shows `/orchestrate`, another plugin provides it.
+- There is no `/orchestrate` skill. If the skill menu shows `/orchestrate`, another plugin provides it.
 - There is no loop skill. Playbooks that loop use the host's loop primitive, and a host without one blocks that operation and reports the gap.
 
 ## Playbooks and principles
@@ -153,7 +152,7 @@ Playbooks are step lists inside `/hugues-mode`, not skills, so they have no slas
 - "full autopilot on this queue" runs Autopilot-full. "autopilot, don't merge" runs Autopilot-stack.
 - "run the eval playbook" runs Eval.
 
-The Playbooks section of [`hugues-mode`](../hugues-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
+The Playbooks section of [`hugues-mode`](../hugues-mode/SKILL.md) lists every playbook. [Guide page 6](https://github.com/hugues-vnsgn/hstack/blob/main/docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.
 
 hStack has no planning skill. For work that spans phases or stacked PRs, asking `/hugues-mode` for a plan runs the [Multi-phase plan playbook](../hugues-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.
 

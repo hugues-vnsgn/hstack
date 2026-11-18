@@ -77,8 +77,8 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertEqual(self.bound('read-workflow', 'skills/hugues-mode/playbooks/feature.md').returncode, 2)
 
     def test_missing_installed_helper_blocks_validation(self):
-        (self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs').unlink()
-        result = self.bound('plan-check', self.consumer / 'plan.md')
+        (self.plugin / 'skills/hugues-mode/scripts/bootstrap.ts').unlink()
+        result = self.bound('read-workflow', 'skills/hugues-mode/playbooks/feature.md')
         self.assertEqual(result.returncode, 2)
         self.assertIn('missing installed payload', result.stderr)
 
@@ -117,108 +117,21 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertEqual(reread.returncode, 0, reread.stderr)
         self.assertEqual(reread.stdout, (self.plugin / 'skills/hugues-mode/playbooks/feature.md').read_text())
 
-    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
-    def test_translated_plan_passes_and_invalid_live_gate_fails(self):
-        plan = self.consumer / 'plan with spaces.md'
-        plan.write_text((ROOT / 'tests/fixtures/adapter-plan.md').read_text())
-        translated = self.bound('translate-plan', plan)
-        self.assertEqual(translated.returncode, 0, translated.stderr)
-        plan.write_text(translated.stdout)
-        valid = self.bound('plan-check', plan)
-        self.assertEqual(valid.returncode, 0, valid.stderr + valid.stdout)
-        plan.write_text(plan.read_text().replace('**Verify, live.** Tests alone', '**Verify, live.** Tests suffice. Tests alone'))
-        bad = self.bound('plan-check', plan)
-        self.assertEqual(bad.returncode, 1)
-        self.assertIn('Verify, live. does not open with the rule', bad.stderr)
-
-    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
-    def test_plan_check_holds_pstack_fixed_ten_lane_rule(self):
-        plan = self.consumer / 'plan.md'
-        ten = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
-        # Frontmatter is skipped, as in pstack: no profile field selects another live rule.
-        for text in [ten, '---\nverification_profile: custom\n---\n' + ten]:
-            with self.subTest(plan=text[:40]):
-                plan.write_text(text)
-                result = self.bound('plan-check', plan)
-                self.assertEqual(result.returncode, 0, result.stderr)
-                self.assertIn('verify-live=10', result.stdout)
-        extra = '- [ ] Lane 11. Extra. Save `lane-11.png`. Pass when visible.\n'
-        for text, message in [
-                (ten.replace('**Verify, perf.**', extra + '**Verify, perf.**'), 'expected 1 to 10'),
-                (ten.replace('Ten lanes on', 'Risk-based lanes on'),
-                 'Verify, live lacks "Ten lanes on `<swarm workers model>` at the PR head" with the model filled in')]:
-            with self.subTest(message=message):
-                plan.write_text(text)
-                result = self.bound('plan-check', plan)
-                self.assertEqual(result.returncode, 1)
-                self.assertIn(message, result.stderr)
-
-    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
-    def test_plan_check_accepts_verdict_without_contract_box(self):
-        plan = self.consumer / 'plan.md'
-        fixture = (ROOT / 'tests/fixtures/adapter-plan.md').read_text()
-        self.assertEqual(fixture.count('### Verdict and merge\n### Boot recipe\n'), 1)
-        # The Verdict and merge boxes of pstack 0.15.25's plan skeleton, renamed only.
-        verdict = ('### Verdict and merge\n'
-                   '- [ ] A full swarm runs once, at the code-ready head. Run each full swarm per the '
-                   '`swarm` skill. One gates lane. The ten live lanes from the PR\'s **Verify, live** block.\n'
-                   '- [ ] Clean only when every lane is `PASS`. Findings go back to the owner.\n'
-                   '### Boot recipe\n')
-        text = fixture.replace('### Verdict and merge\n### Boot recipe\n', verdict)
-        self.assertIn('- [ ] Clean only when every lane is `PASS`.', text)
-        for marker in ['verification-contract', 'plan-compare', 'operator ruling']:
-            self.assertNotIn(marker, text)
-        plan.write_text(text)
-        result = self.bound('plan-check', plan)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('1 PR sections, 0 problems', result.stdout)
-
-    def test_missing_node_is_explicit_block(self):
-        result = self.bound('plan-check', self.consumer / 'plan.md', env=dict(os.environ, PATH=''))
-        self.assertEqual(result.returncode, 2)
-        self.assertIn('Node unavailable', result.stderr)
-
-    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
-    def test_plan_check_identifies_gitless_install_and_ignores_consumer_decoy(self):
-        plan = self.consumer / 'plan.md'
-        plan.write_text((ROOT / 'tests/fixtures/adapter-plan.md').read_text())
-        decoy = self.consumer / 'skills/hugues-mode/scripts/check-plan.mjs'
-        decoy.parent.mkdir(parents=True)
-        decoy.write_text('console.error("CONSUMER DECOY"); process.exit(99);\n')
-        subprocess.run(['git', 'init', '-q', str(self.consumer)], check=True)
-        subprocess.run(['git', '-C', str(self.consumer), 'add', '.'], check=True)
-        subprocess.run(['git', '-C', str(self.consumer), '-c', 'user.name=Fixture',
-                        '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'consumer'], check=True)
-        result = self.bound('plan-check', plan)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        identity = json.loads(result.stderr.splitlines()[0])
-        self.assertEqual(identity['checker_path'], str(self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs'))
-        self.assertEqual(identity['plugin_commit'], None)
-        self.assertEqual(identity['payload_sha256'], json.loads(self.binding.read_text())['payload_sha256'])
-        self.assertEqual(identity['checker_sha256'], hashlib.sha256(
-            (self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs').read_bytes()).hexdigest())
-        self.assertIn('1 PR sections, 0 problems', result.stdout)
-        self.assertNotIn('CONSUMER DECOY', result.stderr)
-
-    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
-    def test_plan_check_identifies_tracked_plugin_on_failure(self):
-        subprocess.run(['git', 'init', '-q', str(self.area)], check=True)
-        subprocess.run(['git', '-C', str(self.area), 'add', self.plugin.name], check=True)
-        subprocess.run(['git', '-C', str(self.area), '-c', 'user.name=Fixture',
-                        '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'plugin'], check=True)
-        commit = subprocess.check_output(['git', '-C', str(self.area), 'rev-parse', 'HEAD'], text=True).strip()
-        plan = self.consumer / 'plan.md'
-        plan.write_text('# Invalid plan\n')
-        result = self.bound('plan-check', plan)
-        self.assertEqual(result.returncode, 1, result.stderr)
-        identity = json.loads(result.stderr.splitlines()[0])
-        self.assertEqual(identity['plugin_commit'], commit)
-        self.assertEqual(identity['checker_path'], str(self.plugin / 'skills/hugues-mode/scripts/check-plan.mjs'))
-        self.assertIn('no "## Program checklist" section', result.stderr)
+    def test_a_draft_that_still_runs_the_plan_checker_is_refused(self):
+        # Upstream deleted its plan checker, so hStack no longer binds one. A leftover command
+        # is refused with nothing emitted, never rewritten into a verb that does not exist.
+        draft = self.consumer / 'draft.md'
+        draft.write_text((ROOT / 'tests/fixtures/adapter-plan.md').read_text()
+                         + '`node pstack/skills/poteto-mode/scripts/check-plan.mjs plan.md`\n')
+        result = self.bound('translate-plan', draft)
+        self.assertEqual(result.returncode, 2, result.stdout)
+        self.assertEqual(result.stdout, '')
+        self.assertIn('unsupported skill-directory command', result.stderr)
 
     def test_withdrawn_verbs_are_unknown(self):
         for verb in ['payload-policy', 'helper-ready', 'program-check', 'artifact-hash',
-                     'decode-design', 'worker-run', 'run-control', 'run-wait', 'plan-compare']:
+                     'decode-design', 'worker-run', 'run-control', 'run-wait', 'plan-compare',
+                     'plan-check']:
             with self.subTest(verb=verb):
                 result = self.bound(verb)
                 self.assertEqual(result.returncode, 2)
@@ -257,8 +170,11 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
                 self.assertIn(contract, workflow)
 
     def test_public_bridges_route_actual_adapter(self):
-        for name in ['multi-phase-plan', 'autopilot-full', 'autopilot-stack']:
+        for name in ['autopilot-full', 'autopilot-stack']:
             self.assertIn('read-workflow', (self.plugin / f'skills/hugues-mode/playbooks/{name}.md').read_text())
+        plan = (self.plugin / 'skills/hugues-mode/playbooks/multi-phase-plan.md').read_text()
+        self.assertNotIn('plan-check', plan)
+        self.assertNotIn('check-plan', plan)
         cleanup = (self.plugin / 'skills/hugues-mode/playbooks/worktree-cleanup.md').read_text()
         self.assertIn('host_tools.py worktree-audit', cleanup)
         self.assertIn('separate active/pinned-chat gate', cleanup)
@@ -1576,6 +1492,8 @@ DROPPED = {
         '`subagent_type: generalPurpose`':
             'the readonly rows map a generalPurpose worker by its readonly flag, the false row also with no readonly field',
         '`poteto-agent`, `comment-sicko`': 'host-workers.md names hstack:hugues-agent and hugues-comment-sicko',
+        "The `model:` line in `poteto-agent`'s file":
+            'hugues-agent keeps `model: inherit` and the models file picks the role model, so no Cursor slug reaches the API',
     },
     'Models': {
         '`auto` or `inherit-parent`': 'host-workers.md Model defaults omit model for an inherit-parent role',
@@ -1701,7 +1619,7 @@ class HostAdapterShape(unittest.TestCase):
         workers = ' '.join(self.adapters()[1].split())
         with self.subTest('readonly precedence'):
             claude = self.row('Subagent fields', '`readonly: true`')[1]
-            for phrase in ['`subagent_type: "general-purpose"`', '`"Explore"`', 'locate or search code', '`how` explorer',
+            for phrase in ['`subagent_type: "general-purpose"`', '`"Explore"`', 'locate or search code',
                            '"do not edit files"', "`git status` in the worker's checkout"]:
                 self.assertIn(phrase, claude)
             self.assertLess(claude.index('general-purpose'), claude.index('Explore'))
@@ -1713,14 +1631,14 @@ class HostAdapterShape(unittest.TestCase):
                     if 'generalPurpose`' in line:
                         readonly = next((value for value in ('true', 'false') if f'`readonly: {value}`' in line), None)
                         shapes.setdefault(readonly, []).append(path.relative_to(ROOT).as_posix())
-            self.assertEqual(set(shapes), {'true', 'false', None})
+            self.assertEqual(set(shapes), {'true', None})
             for readonly, paths in shapes.items():
                 claude = self.row('Subagent fields', f'`readonly: {readonly or "false"}`')[1]
                 self.assertIn('`subagent_type: "general-purpose"`', claude, paths)
                 if readonly is None:
                     self.assertIn('also for `generalPurpose` without `readonly`', claude, paths)
         with self.subTest('one model rule'):
-            claude = self.row('Models', 'A `grok-*`, `gpt-*`, or other non-Claude slug')[1]
+            claude = self.row('Models', 'A `gemini-*` or other non-Claude slug')[1]
             self.assertIn('the ` or ` rule above applies', claude)
             self.assertIn('the Workers line names the model that ran', claude)
             self.assertNotIn('Omit `model`', claude)
@@ -1755,7 +1673,7 @@ class HostAdapterShape(unittest.TestCase):
             self.assertTrue(row[2].startswith('Same; '), row[2])
             self.assertIn('its message tool is unobserved', row[2])
             router = (ROOT / 'plugin/skills/hugues-mode/SKILL.md').read_text()
-            self.assertIn('Resume, message, or queue a follow-up on an existing subagent only when', router)
+            self.assertIn('Resume an existing subagent only when the work needs state that lives in it', router)
         with self.subTest('the drop rule spares the fields the Agent tool lists'):
             self.assertIn('If a Cursor-only field has no row, drop it and say so.', workers)
             for field in ['subagent_type', 'model', 'effort', 'run_in_background', 'isolation']:

@@ -1,8 +1,8 @@
 ## Native consolidation
 
-All 573 pstack 0.15.36 source files are preserved byte-for-byte with their modes in
-`provenance/upstream/pstack-0.15.36.tar.gz`. Canonical native bodies retain all 58 top-level skills,
-both upstream agents, 23 generic playbooks and four mobile routes. The runtime
+All 551 pstack 0.15.43 source files are preserved byte-for-byte with their modes in
+`provenance/upstream/pstack-0.15.43.tar.gz`. Canonical native bodies retain all 58 top-level skills,
+both upstream agents, 22 generic playbooks and four mobile routes. The runtime
 core mirror and generated body loaders are retired. The current ledger and
 [consolidation map](consolidation.json) distinguish adapted runtime files from
 provenance-only assets. Historical releases and source snapshots remain unchanged.
@@ -38,6 +38,53 @@ flag, and replaced `AskUserQuestion` in the question trigger with asking the
 user, plus an interview on a call no experiment can settle.
 The next upstream sync of this file is a manual merge against this body, not
 a line-by-line port.
+
+## pstack 0.15.43 merge
+
+The pin moves from 0.15.36 to 0.15.43 at upstream `main` (`2f87c854`), the
+0.15.43 bump, whose pstack tree is `71d8e1d1`. Upstream changed 80 files, added
+2 and removed 24, and its text got markedly shorter. Files whose hStack bytes
+still equalled the 0.15.36 upstream bytes took the new bytes: the 14 principles,
+eight statechart files, three playbooks and the helper package manifest. The rest took upstream's intent by a
+three-way merge, and every hStack adaptation that still had text to attach to
+stayed. [ADR 0006](../adr/0006-follow-upstream-and-record-what-hstack-adds.md)
+now says what hStack keeps beyond upstream: a host or ADE adapter, a stack
+adapter, or a fix for friction cited from the owner's runs.
+
+- Model routing follows upstream: Opus 5.5 at `xhigh` for code, prose and
+  judgment, and at `high` for trivial, swarm and verification work. Panels seat
+  Fable 5.2 and Opus 5.5 at `high` beside hStack's existing non-Claude seat, and
+  Fable runs outside a panel only on request or after two failed Opus runs. No
+  role runs above `xhigh`, the `hardest tasks` role is retired and the
+  `unlimited` budget becomes `large`. Upstream's Cursor slugs (`-fast`, the
+  Gemini names) are not copied; each maps to the model IDs hStack already uses,
+  and "fast" maps to nothing. `setup-hstack` writes `# defaults: 3`, reads an old
+  `unlimited` as `large` and drops a `hardest tasks` line without asking. Old
+  Sonnet role lines in a user's models file stay as user choices.
+- Orchestrate is deleted with its router trigger and every reference to it.
+- The plan checker is deleted: the `plan-check` verb, its translation and its
+  helper receipts. The Multi-phase plan has five steps. The mobile ten-lane rule
+  stays as a mobile adaptation, now attached to step 4 of that plan.
+- `how`, `why`, `architect` and `reflect` are upstream's single files. Their
+  reference files and nine worker roles are retired, so the retained design and
+  research receipts list only `architect`, `how` and `why` themselves and say
+  that the owner-approved retained references are replaced. `reflect` keeps the
+  Claude Code and Codex cache and skill folders.
+- `hugues-mode/worker.md` is new: the operator's rules for any started agent.
+  Its never-ask-a-person and hold-only-for-a-failing-run rules apply to started
+  workers only, so the router keeps the interview rule (ADR 0003) and mobile
+  hold semantics stay a mobile adaptation. The Swift and Kotlin baseline paths,
+  the mode-path rule and the brief rules of the workers adapter are merged in,
+  and the worker's report gains Concerns and Deviations.
+- Statechart ships upstream's Mermaid parent-state border arrows and SANY line
+  and column errors verbatim, with the new `drawn.ts` test helper. Its suite
+  needs TLC and Java and was not run.
+- Arena's cross-judge keeps upstream's other-vendor rule, and where the host
+  offers no other vendor's model it falls back to one that differs from the
+  parent, so the judge is not silently skipped on Claude Code.
+- Changed and added rows carry the release target `unreleased-pstack-0.15.43`
+  until a release ships them. The 24 removed rows are retired as ignored, with
+  their earlier decisions kept as `previous_decision`.
 
 ## pstack 0.15.36 merge
 
@@ -105,24 +152,25 @@ Changed and added rows carry the release target
 
 # Upstream sync
 
-The current pin is [cursor/plugins pstack 0.15.36](https://github.com/cursor/plugins/tree/4dd1d05818d19792e7cd6e818f1667f95f7e1dbe/pstack)
-at `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`, committed
-29 October 2026 at 22:51:24 UTC. [pin.json](pin.json) binds the version, date,
-573-file inventory and pstack tree hash to the checked-in snapshot bytes.
-The previous pin, 0.15.32, is now the [baseline pin](baseline-pin.json) and
-accounts for 200 files. A local Git snapshot of upstream `main` reproduced
-**406 added / 25 changed / 33 removed** paths in [the delta](delta-e73df471-4dd1d058.md).
-The 0.15.25 to 0.15.32 sync stays in [its delta](delta-6ce45c59-e73df471.md),
+The current pin is [cursor/plugins pstack 0.15.43](https://github.com/cursor/plugins/tree/2f87c854fe3e2fcda44ca86b46ede35aad3c46b7/pstack)
+at `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`, committed
+16 November 2026 at 21:47:38 UTC. [pin.json](pin.json) binds the version, date,
+551-file inventory and pstack tree hash to the checked-in snapshot bytes.
+The previous pin, 0.15.36, is now the [baseline pin](baseline-pin.json) and
+accounts for 573 files. A local Git snapshot of upstream `main` reproduced
+**2 added / 80 changed / 24 removed** paths in [the delta](delta-4dd1d058-2f87c854.md).
+The 0.15.32 to 0.15.36 sync stays in [its delta](delta-e73df471-4dd1d058.md),
+the 0.15.25 to 0.15.32 sync in [its delta](delta-6ce45c59-e73df471.md),
 the 0.15.9 to 0.15.25 sync in [its delta](delta-e43c7ee2-6ce45c59.md),
 and WP5's first sync, 0.15.5 to 0.15.9, in [its delta](delta-2eb7ed46-e43c7ee2.md).
-Their 169-file, 161-file and 158-file pins and ledgers are in [history](history/).
+Their 200-file, 169-file, 161-file and 158-file pins and ledgers are in [history](history/).
 
 [The current ledger](hstack-dispositions.json), also available as
 [CSV](hstack-dispositions.csv), has one active row per upstream file.
-The 200 responsibilities at 0.15.32 remain in
+The 573 responsibilities at 0.15.36 remain in
 [baseline-dispositions.json](baseline-dispositions.json); the current ledger
 retains their `earlier_proposal` fields and the previous decisions for the
-25 changed files. Current decisions follow [the revised plan](../PLAN.md).
+80 changed files. Current decisions follow [the revised plan](../PLAN.md).
 The inaccessible prototype ZIP contributes no rows or implementation claims.
 
 Each row distinguishes its decision (`port verbatim`, `port with adaptation`,
@@ -156,10 +204,10 @@ execution is needed. From the repository root:
 ```sh
 python3 scripts/upstream-diff.py check
 python3 scripts/upstream-diff.py diff \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.32.json \
-  --to-snapshot docs/upstream/snapshots/pstack-0.15.36.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.36.json \
+  --to-snapshot docs/upstream/snapshots/pstack-0.15.43.json \
   --ledger docs/upstream/hstack-dispositions.json \
-  --output docs/upstream/delta-e73df471-4dd1d058.md --check
+  --output docs/upstream/delta-4dd1d058-2f87c854.md --check
 python3 -m unittest discover -s tests -v
 ./scripts/check-plugin.sh
 ```
@@ -179,8 +227,8 @@ To recapture from public Git, use a separate bare clone outside the plugin:
 ```sh
 git clone --bare https://github.com/cursor/plugins.git /tmp/pstack-upstream.git
 python3 scripts/upstream-diff.py snapshot --repo /tmp/pstack-upstream.git \
-  --revision 4dd1d05818d19792e7cd6e818f1667f95f7e1dbe \
-  --output docs/upstream/snapshots/pstack-0.15.36.json --check
+  --revision 2f87c854fe3e2fcda44ca86b46ede35aad3c46b7 \
+  --output docs/upstream/snapshots/pstack-0.15.43.json --check
 ```
 
 Capture resolves a ref once and records its full commit SHA. Git replacement
@@ -208,7 +256,7 @@ and generate a separate ledger proposal:
 
 ```sh
 python3 scripts/upstream-diff.py reconcile \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.36.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.43.json \
   --to-snapshot /tmp/pstack-candidate.json \
   --ledger docs/upstream/hstack-dispositions.json \
   --output /tmp/pstack-ledger-proposal.json
@@ -248,7 +296,7 @@ before re-pinning; stale provenance is rejected rather than silently accepted.
 Keep [UPSTREAM-LICENSE](../../UPSTREAM-LICENSE) and the fork's
 [LICENSE](../../LICENSE). [WP2 provenance](wp2-provenance.json) names the
 source and destination of imported plugin files. Adapted skills/playbooks
-retain `source:` annotations. The 24 principles and four interrogate references
+retain `source:` annotations. The 24 principles
 remain byte-for-byte upstream copies, with attribution in the receipts instead
 of altered frontmatter. The checker binds all WP2 receipts and the present WP3
 generator's source fingerprints, adaptation disposition and ledger destinations

@@ -21,7 +21,7 @@ paths an owner may have used to disable skills. Different installation roots can
 still affect path-based host settings; reconcile those explicitly during an update.
 The upstream 0.15.25 merge adds a third alias, `poteto-help` → `hugues-help`.
 
-All 573 original source files at the current pin, upstream 0.15.36, keep their
+All 551 original source files at the current pin, upstream 0.15.43, keep their
 modes and bytes in the archive under `provenance/upstream/`, outside runtime
 discovery. The
 Git-object snapshot independently checks the archive. The current adaptation
@@ -46,7 +46,7 @@ proven universal limitation in this setup.
 
 At the 0.15.9 pin, upstream Cursor metadata marked 49 skills manual-only,
 with `poteto-mode` the one exception. At 0.15.25, 53 of 54 are manual-only and
-only upstream's setup skill is model-invocable; at 0.15.32 and 0.15.36 that holds for 57 of 58. hStack restores that design instead of the earlier native
+only upstream's setup skill is model-invocable; at 0.15.32, 0.15.36 and 0.15.43 that holds for 57 of 58. hStack restores that design instead of the earlier native
 table that made 46 skills model-invocable: only `setup-hstack` is
 model-invocable now, so only its description enters startup context on Claude
 Code. The other 62 bundled skills, including `hugues-mode` ([ADR 0003](adr/0003-hugues-mode-is-user-only.md)), `deslop`, `control-cli` and `control-ui`, are user-only; the

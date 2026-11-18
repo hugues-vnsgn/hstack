@@ -28,4 +28,4 @@ final report. Preserve separate Android and iOS outcomes for shared changes.
 Use existing cheap test seams for state and cancellation. Keep native lifecycle,
 threading and UI claims tied to matching runtime observations. Tool or target
 unavailability remains a named gap. This lens changes scenario selection inside
-the existing ten-lane rule. It creates no new phase, lane-count policy or panel.
+the mobile ten-lane rule. It creates no new phase, lane-count policy or panel.

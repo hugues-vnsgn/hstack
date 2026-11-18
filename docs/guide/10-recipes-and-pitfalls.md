@@ -162,7 +162,7 @@ To watch the catch-up instead, run [`/ketchup-video`](../../plugin/skills/ketchu
 
 ## The pitfalls
 
-- **Enumerating skills in the prompt.** "use /how then /architect then /arena" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.
+- **Enumerating skills in the prompt.** "use /architect then /arena then /interrogate" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.
 - **A vague finish condition.** "make it better" gives `/loop` nothing to check. Give a command or artifact that can pass or fail.
 - **Leading with your theory of the cause.** The agent searches wherever you pointed. Ask it to restate the problem first, then share your hunch.
 - **Taking the first design.** One attempt locks in the first shape the model thought of. Ask for prototypes or `/architect` and pick from evidence.
@@ -173,7 +173,7 @@ To watch the catch-up instead, run [`/ketchup-video`](../../plugin/skills/ketchu
 - **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.
 - **Using `/arena` for coverage.** `/arena` repeats one design or code brief, then picks a base and grafts the best parts. `/swarm` partitions slices or declared race arms and aggregates one report.
 - **Accepting every review comment.** Bots and humans both file real catches and noise in one list. `/interrogate` keeps only the findings a rerun proves and lists what it dropped and why, and you can override either way.
-- **Reading a default panel as model diversity.** Every default `/interrogate`, `/arena`, and `/architect` seat is `inherit-parent`, so the panel is one model in fresh contexts: process independence. Name distinct models per seat in [setup](./01-setup.md) for model diversity.
+- **Reading a repeated model as model diversity.** A panel seat set to `inherit-parent`, or a seat that falls back to the parent chat model, repeats one model in fresh contexts: process independence. Name distinct models per seat in [setup](./01-setup.md) for model diversity.
 - **Reporting success off a green build.** A build proves it compiles. Ask for the real command, flow, stored value, or profile, and expect the evidence in the reply.
 - **Writing a `SKILL.md` freehand.** Route it through the [Authoring or modifying a skill playbook](../../plugin/skills/hugues-mode/playbooks/authoring-a-skill.md) so validation and review happen.
 

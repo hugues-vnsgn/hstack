@@ -2,10 +2,13 @@
 
 hStack gives Claude Code, Codex and Cursor a set of workflows for investigating, changing and checking code. It adds optional guidance for Swift/iOS, Kotlin/Android, Kotlin Multiplatform (KMP) shared logic and Compose Multiplatform (CMP) shared UI. Your app stays in its own repository.
 
-Version **0.5.9** adds a Frontier model tier: setup starts the hardest-tasks
-role on `claude-fable-5-2`, with Opus after it for hosts that lack Fable. Setup's
-verification offer is optional for every project, and mobile is one optional
-adapter. The pin stays at upstream 0.15.36 and the skill count stays at 63. A Cursor user installs the plugin, sees its skills and runs
+Setup starts the code, prose and judgment roles on `claude-opus-5-5` at `xhigh`
+and runs review panels at `high`. No role runs above `xhigh`, and
+`claude-fable-5-2` runs only when you ask for it or after two failed Opus runs.
+Setup's verification offer is optional for every project, and mobile is one
+optional adapter. The pin is upstream 0.15.43 and the skill count stays at 63.
+The tree has 22 generic playbooks and four mobile ones. Orchestrate and the plan
+checker are removed. A Cursor user installs the plugin, sees its skills and runs
 `/hugues-mode`, `/hugues-help` and
 `/setup-hstack` in the Cursor IDE. A `.cursor-plugin/` manifest pair points at
 the same `plugin/skills/` and `plugin/agents/`, so one tree serves all three

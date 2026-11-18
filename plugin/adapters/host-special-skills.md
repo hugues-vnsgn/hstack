@@ -28,8 +28,8 @@ maintenance and existing edit-scope rules. Preserve the multiple-candidate and
 missing-target gates. Personal/global placement or configuration needs explicit
 scope; use only the host's supported, authorized personal locations.
 
-Reflect's divergent, tooling and judgment reviewers recognize the actual host
-skill paths and tool events under the same used-skill and missed-trigger criteria.
+Reflect recognizes the actual host skill paths and tool events under the same
+used-skill and missed-trigger criteria.
 A path on disk alone is not evidence of use. Approved updates retain their exact
 targets; approved new skills use the same project placement rule. Keep the invocation and
 file-read rules in [host.md](host.md).
@@ -40,9 +40,8 @@ Use only the
 active workspace's supplied transcript paths, never unrelated project history.
 Without an authorized transcript source, automate-me history mining remains blocked;
 do not fabricate preferences or claim personal-mode execution from a routing check.
-Reflect retains the pinned current-session digest fallback when no transcript path
-resolves. Use only the authorized conversation already available to the coordinator;
-label the digest's source and coverage limits. A digest grants no access to personal
+Reflect works from the authorized conversation already available to the coordinator
+when no transcript path resolves; label that digest's source and coverage limits. A digest grants no access to personal
 history and no permission to apply Reflect's proposed edits. Preserve Recall's
 explicit state-capsule shortcut; do not pretend a digest proves a transcript audit
 for show-me-your-work or supplies automate-me's repeated historical evidence.

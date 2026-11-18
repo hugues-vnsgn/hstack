@@ -4,10 +4,13 @@ import textwrap
 import unittest
 ROOT = Path(__file__).resolve().parents[1]
 class NativeLayout(unittest.TestCase):
-    def test_native_entry_owns_architect_phases_without_runtime_core(self):
+    def test_native_entry_owns_the_single_file_architect_without_runtime_core(self):
+        # Upstream 0.15.43 cut architect to one brief that routes large designs through arena.
         body = (ROOT / 'plugin/skills/architect/SKILL.md').read_text()
-        self.assertIn('## Phase A: Ground the problem', body)
-        self.assertIn('## Phase E: Scrap when the architecture is wrong', body)
+        self.assertIn('sketch two different shapes', body)
+        self.assertIn('run the **arena** skill', body)
+        self.assertNotIn('## Phase A', body)
+        self.assertFalse((ROOT / 'plugin/skills/architect/references').exists())
         self.assertFalse((ROOT / 'plugin/core').exists())
 
     def test_every_reader_of_the_models_file_says_what_to_do_with_the_legacy_file(self):
@@ -19,9 +22,8 @@ class NativeLayout(unittest.TestCase):
         readers = {p.relative_to(ROOT / 'plugin').as_posix() for p in (ROOT / 'plugin').rglob('*.md')
                    if '.hstack/models.md' in p.read_text()}
         self.assertTrue({'adapters/host-workers.md', 'skills/setup-hstack/SKILL.md', 'skills/hugues-help/SKILL.md',
-                         'skills/architect/SKILL.md', 'skills/arena/SKILL.md', 'skills/how/SKILL.md',
-                         'skills/interrogate/SKILL.md', 'skills/reflect/SKILL.md', 'skills/swarm/SKILL.md',
-                         'skills/why/SKILL.md'} <= readers, sorted(readers))
+                         'skills/arena/SKILL.md', 'skills/interrogate/SKILL.md',
+                         'skills/swarm/SKILL.md'} <= readers, sorted(readers))
         for name in sorted(readers):
             text = (ROOT / 'plugin' / name).read_text()
             self.assertIn(legacy, ' '.join(text.split()), name)
@@ -34,22 +36,17 @@ class NativeLayout(unittest.TestCase):
 
 from test_host_adapters import InstalledFixture
 class NativeInstalled(InstalledFixture, unittest.TestCase):
-    @unittest.skipUnless(shutil.which('node'), 'Node unavailable; plan gate unrun')
-    def test_translated_plan_without_consumer_git_read_passes_bound_gate(self):
+    def test_translated_plan_without_consumer_git_read_binds_every_workflow_read(self):
         plan = self.consumer / 'plan with spaces.md'
         plan.write_text((ROOT / 'tests/fixtures/adapter-plan.md').read_text().replace(
             '`git show origin/main:PLAN.md`\n', ''))
-        self.assertEqual(self.bound('plan-check', plan).returncode, 0)
         translated = self.bound('translate-plan', plan)
         self.assertEqual(translated.returncode, 0, translated.stderr)
         self.assertNotIn('git show origin/main:', translated.stdout)
+        self.assertIn('read-workflow --binding', translated.stdout)
         plan.write_text(translated.stdout)
-        checked = self.bound('plan-check', plan)
-        self.assertEqual(checked.returncode, 0, checked.stderr)
-        plan.write_text(translated.stdout.replace('read-workflow --binding', 'read-workflow'))
-        rejected = self.bound('plan-check', plan)
-        self.assertEqual(rejected.returncode, 1)
-        self.assertIn('bound read-workflow', rejected.stderr)
+        again = self.bound('translate-plan', plan)
+        self.assertEqual((again.returncode, again.stdout), (0, translated.stdout), again.stderr)
 
     def test_installed_playbook_read_and_native_skill_boundary(self):
         result = self.bound('read-workflow', 'skills/hugues-mode/playbooks/feature.md')
@@ -142,7 +139,9 @@ class NativeIntegrity(unittest.TestCase):
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
         self.assertEqual(result['active_skills'], 63)
-        self.assertEqual(result['upstream_archive_files'], 573)
+        self.assertEqual(result['upstream_archive_files'], 551)
+        self.assertEqual(result['core_playbooks'], 22)
+        self.assertEqual(result['worker_roles'], 6)
 
     def test_missing_receipt_cannot_disable_integrity(self):
         (self.root / 'docs/upstream/consolidation.json').unlink()
@@ -157,7 +156,7 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_removed_required_reference_is_rejected(self):
-        (self.root / 'plugin/skills/architect/references/runner-prompt.md').unlink()
+        (self.root / 'plugin/skills/statechart/references/render.md').unlink()
         self.rejected()
 
     def test_extra_file_is_rejected(self):
@@ -175,13 +174,13 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_corrupt_source_archive_is_rejected(self):
-        path = self.root / 'provenance/upstream/pstack-0.15.36.tar.gz'
+        path = self.root / 'provenance/upstream/pstack-0.15.43.tar.gz'
         path.write_bytes(path.read_bytes() + b'changed')
         self.rejected()
 
     def test_sealing_does_not_approve_lost_workflow_gates(self):
         path = self.root / 'plugin/skills/architect/SKILL.md'
-        path.write_text(path.read_text().replace('at least two structurally distinct candidates', 'one candidate'))
+        path.write_text(path.read_text().replace('sketch two different shapes', 'sketch one shape'))
         seal_payload.seal(self.root, accept=['plugin/skills/architect/SKILL.md'])
         self.rejected()
 
@@ -270,7 +269,7 @@ class NativeIntegrity(unittest.TestCase):
     def test_role_prompt_mapping_cannot_change_after_sealing(self):
         path = self.root / 'docs/upstream/consolidation.json'
         data = json.loads(path.read_text())
-        data['worker_roles']['reflect-tooling']['prompt'] = 'plugin/skills/reflect/references/judgment-reviewer.md'
+        data['worker_roles']['interrogate-adversary']['prompt'] = 'plugin/skills/arena/SKILL.md'
         path.write_text(json.dumps(data))
         seal_payload.seal(self.root)
         self.rejected()
@@ -330,14 +329,14 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_seal_refuses_unaccepted_canonical_change_before_any_write(self):
-        path = self.root / 'plugin/skills/hugues-mode/scripts/check-plan.mjs'
+        path = self.root / 'plugin/skills/hugues-mode/scripts/bootstrap.ts'
         path.write_text(path.read_text() + '\n// appended\n')
         receipt = (self.root / 'docs/upstream/consolidation.json').read_bytes()
-        with self.assertRaisesRegex(ValueError, 'check-plan.mjs'):
+        with self.assertRaisesRegex(ValueError, 'bootstrap.ts'):
             seal_payload.seal(self.root)
         self.assertEqual((self.root / 'docs/upstream/consolidation.json').read_bytes(), receipt)
         self.rejected()
-        seal_payload.seal(self.root, accept=['plugin/skills/hugues-mode/scripts/check-plan.mjs'])
+        seal_payload.seal(self.root, accept=['plugin/skills/hugues-mode/scripts/bootstrap.ts'])
         self.rejected()
 
     def test_helper_input_receipt_cannot_go_stale(self):
@@ -518,7 +517,7 @@ class NativeIntegrity(unittest.TestCase):
             ('swarm', 'A gap does not count as a pass', 'A gap counts as a pass'),
             ('tdd', '4. **Run the new test before fixing', '7. **Run the new test before fixing'),
             ('maintain-verification-skill', 'Exercise every feature at least once', 'Exercise one feature'),
-            ('poteto-mode', 'Use **figure-it-out** whenever no bundled playbook fits', 'Skip unmatched work')]:
+            ('poteto-mode', 'routes to the **figure-it-out** skill', 'is left unrouted')]:
             with self.subTest(name=name):
                 self.assertIn(before, bodies[name])
                 changed = dict(bodies)
@@ -549,7 +548,6 @@ class HuguesModeRouter(unittest.TestCase):
         # The trigger names no host tool: subagents have no question tool and Codex's is
         # unobserved, so it asks, and interviews only on a call no experiment can settle.
         self.assertNotIn('AskUserQuestion', self.text)
-        self.assertIn('- About to ask the user on a "which approach"', self.text)
         self.assertIn('Reserve questions for a genuine product or preference call no experiment can settle, '
                       'and interview the user on it until you reach a shared understanding.', self.text)
         self.assertIn('subagent_type: "hugues-agent"', self.text)
@@ -563,8 +561,7 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertTrue(description.startswith("hugues's agent style for mobile and engineering work"), description)
         self.assertIn('/hugues-mode, or requests to work in this style.', description)
         # Cursor-only concepts keep their wording; the host adapter translates them.
-        for concept in ['Bugbot', '`control-cli`',
-                        '`control-ui`', '**create-skill**', 'Cursor restart']:
+        for concept in ['`control-cli`', '`control-ui`']:
             self.assertIn(concept, self.text)
         # Bugbot keeps pstack's wording; the publication adapter says what it means here.
         publication = ' '.join((ROOT / 'plugin/adapters/host-publication.md').read_text().split())
@@ -576,7 +573,7 @@ class HuguesModeRouter(unittest.TestCase):
                        'never tick it as if triage happened']:
             self.assertIn(marker, publication)
         # deslop is bundled, so the router names it like its sibling bundled skills.
-        self.assertIn('- Before commit → the **deslop** skill (`/deslop`).', self.text)
+        self.assertIn('- Before commit → **deslop**.', self.text)
         self.assertNotIn('cursor-team-kit` plugin (`/deslop`)', self.text)
         for path in re.findall(r'`(playbooks/[\w-]+\.md)`', self.text):
             self.assertTrue((ROOT / 'plugin/skills/hugues-mode' / path).is_file(), path)
@@ -608,12 +605,14 @@ class HuguesModeRouter(unittest.TestCase):
             self.assertFalse(moved in self.text, moved)
         defaults = check_core.section(self.workers, 'Model defaults and role labels')
         self.assertEqual(self.workers.count('**Defaults for every agent-tool call.**'), 1)
-        for phrase in ['`run_in_background: true`', '`inherit-parent xhigh` for code',
-                       '`inherit-parent max` for prose and judgment', 'strongest judgment model',
-                       'override these defaults and the model choices in the routed skills',
+        for phrase in ['`run_in_background: true`', 'Code, prose and judgment: `claude-opus-5-5 xhigh or gpt-6-astra xhigh`',
+                       'Trivial mechanical edits, swarm workers and verification: `claude-opus-5-5 high or gpt-6.1-sol high`',
+                       'No role runs above `xhigh`', 'override these defaults and the model choices in the routed skills',
                        '`feature, refactoring`', '`bug-fix`', '`perf-issue`', '`hillclimb`',
-                       '`hardest tasks`', '`judgment and prose`']:
+                       '`judgment and prose`']:
             self.assertIn(phrase, defaults)
+        for retired in ['`hardest tasks`', '`inherit-parent max`', 'strongest judgment model']:
+            self.assertNotIn(retired, defaults)
         setup = (ROOT / 'plugin/skills/setup-hstack/SKILL.md').read_text()
         self.assertIn(link, setup)
         self.assertNotIn('the same labels hugues-mode uses', setup)
@@ -787,8 +786,8 @@ class HuguesModeRouter(unittest.TestCase):
         self.assertIn('ask the user to log in in the browser', ui)
         bug_fix = (ROOT / 'plugin/skills/hugues-mode/playbooks/bug-fix.md').read_text()
         self.assertIn("Drive a long or stubborn hunt with Cursor's `/loop` command.", bug_fix)
-        plan = (ROOT / 'plugin/skills/hugues-mode/playbooks/multi-phase-plan.md').read_text()
-        self.assertIn('/loop 1h', plan)
+        autopilot = (ROOT / 'plugin/skills/hugues-mode/playbooks/autopilot-full.md').read_text()
+        self.assertIn('/loop 1h', autopilot)
 
     def test_both_native_agents_explicitly_inherit_the_parent_model(self):
         for name in ['hugues-agent', 'hugues-comment-sicko']:
@@ -862,16 +861,17 @@ class HuguesModeRouter(unittest.TestCase):
                       ' '.join((ROOT / 'plugin/adapters/host.md').read_text().split()))
 
     def test_playbook_headers_no_longer_hold_a_step_on_invocation(self):
-        # Issue #48: pstack's playbooks have no "never a path to read" clause. The three hStack
-        # headers keep read-workflow and plan-check (issue #78) and lose the clause.
-        for name in ['autopilot-full', 'autopilot-stack', 'multi-phase-plan']:
+        # Issue #48: pstack's playbooks have no "never a path to read" clause. The two hStack
+        # headers keep read-workflow and lose the clause. The plan checker is gone, and the
+        # five-step Multi-phase plan carries no header.
+        for name in ['autopilot-full', 'autopilot-stack']:
             text = (ROOT / 'plugin/skills/hugues-mode/playbooks' / (name + '.md')).read_text()
             header = ' '.join(text.split('\n\n', 1)[0].split())
             with self.subTest(playbook=name):
                 self.assertNotIn('never a path to read', header)
                 self.assertNotIn('Unavailable or denied invocation holds that step', header)
                 self.assertIn('bound `read-workflow`', header)
-                self.assertIn('`plan-check` for validation', header)
+                self.assertNotIn('plan-check', header)
                 self.assertIn('reach each skill as [host.md](../../../adapters/host.md) directs.', header)
         tools = ' '.join((ROOT / 'plugin/adapters/host-tools.md').read_text().split())
         self.assertNotIn('never a path to read', tools)

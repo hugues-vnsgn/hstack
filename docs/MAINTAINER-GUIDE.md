@@ -25,7 +25,7 @@ Canonical native skill bodies apply host guidance and mobile applicability befor
 /hugues-mode compare this CMP screen on both targets including text scaling
 ```
 
-Give the consumer path/revision, authorized actions and observable result. Intent precedes language: lifecycle, authoring, review, investigation and verification retain their routes. Native implementation uses core playbooks; KMP/CMP use named extensions. Large/cross-cutting/unmatched work uses figure-it-out; standing programs use Orchestrate. Mobile proof becomes a phase of that designed workflow.
+Give the consumer path/revision, authorized actions and observable result. Intent precedes language: lifecycle, authoring, review, investigation and verification retain their routes. Native implementation uses core playbooks; KMP/CMP use named extensions. Large/cross-cutting/unmatched work uses figure-it-out. Mobile proof becomes a phase of that designed workflow.
 
 The coordinator invokes the selected native skill, loads its phase-required owned references, copies ordered todos, grounds/designs, delegates fresh rounds and independently checks actual artifacts. Feature work with multiple valid shapes requires arena. For mobile arena work, candidates get sanitized fresh contexts and isolated write paths; the judge gets neutral artifacts/rubric after writers finish. Missing isolation blocks blind judging.
 
@@ -33,7 +33,7 @@ The coordinator invokes the selected native skill, loads its phase-required owne
 
 Every role defaults to `inherit-parent` at the effort its skill names. Optional project-local `.hstack/models.md` overrides roles; deleting a role restores its skill default. `/setup-hstack` detects exposed models, loads state, asks for budget/role choices, validates and writes only after confirmation and authority. Restoring the plugin does not execute setup.
 
-Budgets remain unlimited/max, large/xhigh, medium/high and small/medium. Panel lists launch one worker per entry, `inherit-parent` entries included. `inherit-parent` omits the model override. A rejected value runs on `inherit-parent` at its effort. Report actual models/efforts, blocked seats and process independence separately from model diversity.
+Budgets are large/xhigh, medium/high and small/medium; no role runs above xhigh, and an old unlimited budget reads as large. Panel lists launch one worker per entry, `inherit-parent` entries included. `inherit-parent` omits the model override. A rejected value runs on `inherit-parent` at its effort. Report actual models/efforts, blocked seats and process independence separately from model diversity.
 
 Generic interrogate keeps its three `inherit-parent` seats or configured list, sends the same prompt/rubric, synthesizes adjudicated findings and does not auto-fix.
 
@@ -55,7 +55,7 @@ Long/autonomous work keeps the pinned append-only TSV trail, ownership start row
 
 Helpers live alongside their owning canonical skills. Inspect local runtime/cache/authority first. Bun bootstrap may install packages; do not run it without installation scope. Missing cloud, loop, forge or model capability blocks dependent work. Shipping does not gain merge authority from green tests.
 
-For planning and cleanup, use the [installed host commands](../plugin/adapters/host-tools.md). Save the approved payload binding when authoring a program. Fill and translate bundled plan operands, validate with `plan-check`, and reread workflows through that binding at every required tick. Payload/adapter drift blocks the program; consumer-owned files still come from consumer trunk. The native worktree audit takes an explicit authorized source manifest and local PR snapshot. Incomplete activity coverage holds candidates. The separate active/pinned-chat gate remains required before any prune decision; the helper never deletes or discovers private transcript directories.
+For planning and cleanup, use the [installed host commands](../plugin/adapters/host-tools.md). Save the approved payload binding when authoring a program. Fill and translate bundled plan operands, and reread workflows through that binding at every required tick. Payload/adapter drift blocks the program; consumer-owned files still come from consumer trunk. The native worktree audit takes an explicit authorized source manifest and local PR snapshot. Incomplete activity coverage holds candidates. The separate active/pinned-chat gate remains required before any prune decision; the helper never deletes or discovers private transcript directories.
 
 ## Change and validate the plugin
 

@@ -61,7 +61,9 @@ Apply [mobile language scope](../../../adapters/host-mobile-languages.md) before
 
 ## Scenario choices within ten lanes
 
-Preserve the selected multi-phase plan's ten-lane rule. Choose concrete scenarios
+A mobile PR's live box holds ten lanes at the PR head. That count is the mobile
+adaptation of step 4 of the selected multi-phase plan, which no longer fixes one.
+Choose concrete scenarios
 from the [mobile review lens](mobile-review.md) within those lanes. For affected
 behavior, include restoration after owner recreation or process loss, cancellation
 during navigation, callback delivery to UI, release on disposal, offline failure

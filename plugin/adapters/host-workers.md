@@ -10,6 +10,11 @@ to the public mode, plugin skills directory and the host adapter and applicable 
 the exact base/head, writable scope, success predicate and evidence destination.
 Carry the loaded mode's absolute path, derived from the current loaded skill, into every
 fresh worker, including general-purpose helpers; see [workflow tools](host-workflow-tools.md).
+The first line of every kickoff is `Read <path>/worker.md before anything else.`, with `<path>` the
+absolute path of the loaded mode's folder, so the operator's rules in
+[worker.md](../skills/hugues-mode/worker.md) reach the worker. Only the mobile regression worker
+omits it, since its reading list is closed below. The kickoff also carries the mode path and, for
+Swift or Kotlin source, the baseline paths the router names.
 Full-mode workers load the mode per [host.md](host.md) before work. On Codex, select its enabled
 catalog entry and read the complete SKILL.md yourself.
 If the host cannot preserve required context isolation or parallelism, mark
@@ -26,11 +31,9 @@ Codex uses a fresh native worker with the workflow's prompt.
 Each owning skill names its complete worker prompts alongside its workflow.
 Read the selected role's ordinary prompt reference, fill its named placeholders,
 and preserve the owning workflow's order, cardinality and context isolation.
-For simple how, omit explorer findings exactly as directed. Why retains its
-category playbooks; reflect synthesis receives all three full outputs. Architect
-passes its runner brief through arena. Read arena's SKILL.md in full as the
-scoped bundled reference; never substitute a consumer or external fallback for
-it. Inline briefs remain with their owner.
+Architect sends a large or contested design through arena. Read arena's SKILL.md
+in full as the scoped bundled reference; never substitute a consumer or external
+fallback for it. Inline briefs remain with their owner.
 General-purpose native workers receive absolute source,
 adapter and fixture paths, scope and success predicate, without a mode persona.
 The mobile regression worker is a general-purpose native worker without a mode persona.
@@ -79,7 +82,7 @@ If a Cursor-only field has no row, drop it and say so. Never drop `subagent_type
 
 | Cursor | Claude Code | Codex |
 |---|---|---|
-| `readonly: true` | `subagent_type: "general-purpose"`, or `"Explore"` when the brief's job is to locate or search code, as a `how` explorer's is. The brief says "do not edit files"; then run `git status` in the worker's checkout. | unobserved |
+| `readonly: true` | `subagent_type: "general-purpose"`, or `"Explore"` when the brief's job is to locate or search code. The brief says "do not edit files"; then run `git status` in the worker's checkout. | unobserved |
 | `readonly: false` | `subagent_type: "general-purpose"`, also for `generalPurpose` without `readonly`. | unobserved |
 | `environment: "cloud"` | `isolation: "worktree"`, only where the core permits local execution. If the repo's AGENTS.md sets a worktree location, the coordinator creates the worktree there before dispatch and omits `isolation`. The brief names the branch. | unobserved |
 | `environment: "local"` | Omit; no such field. | unobserved |
@@ -95,16 +98,20 @@ In Cursor, read [hosts/cursor.md](hosts/cursor.md) for the field meanings.
 | Cursor | Claude Code | Codex |
 |---|---|---|
 | `claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh` | `model: "opus"` while the Agent tool takes only aliases, and `effort: "xhigh"` to start, which "Match the model to the job" may lower with a reported reason. So does a role value `claude-opus-5-5 xhigh`. Drop `-fast`. | unobserved |
-| A `grok-*`, `gpt-*`, or other non-Claude slug | Not accepted: the ` or ` rule above applies, and the Workers line names the model that ran. | unobserved |
+| A `gemini-*` or other non-Claude slug | Not accepted: the ` or ` rule above applies, and the Workers line names the model that ran. | unobserved |
 
 ## Model defaults and role labels
 
-**Defaults for every agent-tool call.** `run_in_background: true` (a steer or resume of a running agent too, because a foreground call holds your turn while other reports wait), agent mode, file pointers instead of inlined context, and an explicit model and effort per role. The defaults are `inherit-parent xhigh` for code and `inherit-parent max` for prose and judgment, and `/setup-hstack` configures them.
+**Defaults for every agent-tool call.** `run_in_background: true` (a steer or resume of a running agent too, because a foreground call holds your turn while other reports wait), agent mode, file pointers instead of inlined context, and an explicit model and effort per role. `/setup-hstack` configures these defaults, and the ` or ` rule above picks the host's model:
 
-Code delegates tier by difficulty. The hardest changes (cross-cutting design, gnarly concurrency, subtle algorithms) go to your strongest judgment model (default `inherit-parent max`), whether the task needs judgment on vague intent or is a precisely specified sequence of steps to execute to the letter. Trivial mechanical edits go to your fast code model.
+- Code, prose and judgment: `claude-opus-5-5 xhigh or gpt-6-astra xhigh`.
+- Trivial mechanical edits, swarm workers and verification: `claude-opus-5-5 high or gpt-6.1-sol high`.
+- Diverse review and design panels, one worker per seat: `claude-fable-5-2 high or claude-opus-5-5 high or gpt-6-astra high`, `claude-opus-5-5 high or gpt-6.1-sol high`, and `gpt-6-astra high or claude-opus-5-5 high`.
 
-Per-role lines in `.hstack/models.md`, written by `/setup-hstack`, override these defaults and the model choices in the routed skills (`how`, `why`, `arena`, `swarm`, `architect`, `interrogate`, `reflect`). A role with no line keeps its default; `inherit-parent` runs on the parent chat model (omit the agent tool's `model`). If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
+Fable 5.2 runs outside a panel only on the router's Fable exception. No role runs above `xhigh`, and none asks for a speed, since the native agent tools have no speed setting to pass.
 
-**Match the model to the job.** Before each spawn, start from the role's line or default and pick the reasoning level and speed the job needs. The `/setup-hstack` budget sets each role's starting level, `xhigh` for code and `max` for prose and judgment by default. Raise it one step, up to max, for the hardest or subtlest work. Lower it one step for judgment and two or more steps for routine work. Use fast mode only when the job is urgent, meaning CI or trunk is red or a person is blocked on the result right now. Otherwise use standard speed. Fast mode is a speed option on the native agent tool; Claude Code's has none and Codex's is unobserved, so the worker runs at standard speed and the report says so. Verification is the exception and stays on the `swarm workers` model and speed (`inherit-parent xhigh` by default). Change only the effort level and the speed, and keep the family the role names, so a diverse panel stays diverse. If the family has no model at that level and speed, use its nearest one the native agent tool exposes. A role on `auto` or `inherit-parent` stays on the parent model. If the native agent tool rejects the adjusted value, do not try another adjusted value. Use the role's line or default and say so. If the native agent tool rejects that too, continue with the calling skill's fallback, or the ` or ` rule above when it has none. A value counts as rejected once a tool error says the model is not valid or leaves it out of its list of valid values. Never pass it again, and skip any fallback that names it. When the calling skill's fallback runs out without saying what to do next, omit `model` so the worker runs on the parent model, and say so.
+Per-role lines in `.hstack/models.md`, written by `/setup-hstack`, override these defaults and the model choices in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default; `inherit-parent` runs on the parent chat model (omit the agent tool's `model`), and so does a role whose alternatives the native agent tool all rejects. A file without a `# defaults: 3` line comes from an older setup. Keep honoring its lines, and tell the user once per session to rerun `/setup-hstack`. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it.
 
-**Role labels.** `setup-hstack` writes these labels and the router's playbooks read them. A code playbook's configured model comes from its line: `feature, refactoring`, `bug-fix`, `perf-issue` or `hillclimb`. The hardest changes read `hardest tasks`. Prose and judgment read `judgment and prose`.
+**Match the model to the job.** Before each spawn, start from the role's line or default, keep its family, and set the reasoning level the job needs. The `/setup-hstack` budget sets each role's starting level. Panel seats keep their listed level. Raise any other role one step, up to `xhigh`, for the hardest or subtlest work. Lower it one step for judgment and two or more steps for routine work. Verification always runs on the `swarm workers` model and level (`claude-opus-5-5 high or gpt-6.1-sol high` by default). Change only the effort level, so a diverse panel stays diverse. If the family has no model at that level, use its nearest one the native agent tool exposes. A role on `auto` or `inherit-parent` stays on the parent model. If the native agent tool rejects the adjusted value, do not try another adjusted value. Use the role's line or default and say so. If the native agent tool rejects that too, continue with the calling skill's fallback, or the ` or ` rule above when it has none. A value counts as rejected once a tool error says the model is not valid or leaves it out of its list of valid values. Never pass it again, and skip any fallback that names it. When the calling skill's fallback runs out without saying what to do next, omit `model` so the worker runs on the parent model, and say so.
+
+**Role labels.** `setup-hstack` writes these labels and the router's playbooks read them. A code playbook's configured model comes from its line: `feature, refactoring`, `bug-fix`, `perf-issue` or `hillclimb`. Prose and judgment read `judgment and prose`. Trivial mechanical edits read `swarm workers`.

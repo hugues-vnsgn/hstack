@@ -46,10 +46,11 @@ before capture and translate the existing steps on the matching runtime.
 
 For mobile multi-phase plans, before step 4 of the selected
 [multi-phase plan](../skills/hugues-mode/playbooks/multi-phase-plan.md) writes
-the live lanes, read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)
+each PR's live box, read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)
 and the [mobile review lens](../skills/hugues-mode/references/mobile-review.md).
-Choose scenarios within the existing ten lanes and carry applicable risks into
-their actions and pass predicates. Keep the ten-lane rule unchanged.
+A mobile PR's live box holds ten lanes at the PR head. That count is a mobile
+adaptation, since the shared plan no longer fixes one. Choose scenarios within
+those ten lanes and carry applicable risks into their actions and pass predicates.
 
 Read [mobile lanes](../skills/hugues-mode/references/mobile-lanes.md),
 [evidence guide](../skills/hugues-mode/references/evidence-guide.md), and

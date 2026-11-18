@@ -85,15 +85,11 @@ class PlanOwnership(InstalledFixture, unittest.TestCase):
         result = self.translate("The operator's plan reads `" + self.source + "`.\nOther prose remains.")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn(' read-workflow ', result.stdout)
-        (self.consumer / '--help').write_text('invalid plan\n')
+        # The plan checker is gone, so a draft that still runs it is refused, never rewritten.
         translated = self.translate('node pstack/skills/poteto-mode/scripts/check-plan.mjs --help')
-        self.assertEqual(translated.returncode, 0, translated.stderr)
-        helper_args = shlex.split(translated.stdout)
-        checked = subprocess.run(helper_args, cwd=self.consumer, capture_output=True, text=True)
-        self.assertEqual(checked.returncode, 1, checked.stdout + checked.stderr)
-        helper_args[helper_args.index('--binding') + 1] = str(self.area / 'missing-binding.json')
-        checked = subprocess.run(helper_args, cwd=self.consumer, capture_output=True, text=True)
-        self.assertEqual(checked.returncode, 2, checked.stdout + checked.stderr)
+        self.assertEqual(translated.returncode, 2, translated.stdout)
+        self.assertEqual(translated.stdout, '')
+        self.assertIn('unsupported skill-directory command', translated.stderr)
         path = self.plugin / self.source
         path.write_text(path.read_text() + '\ndrift\n')
         read = subprocess.run(args, cwd=self.consumer, capture_output=True, text=True)
@@ -106,10 +102,10 @@ class PlanOwnership(InstalledFixture, unittest.TestCase):
                      'git show origin/main:' + self.source + ';id',
                      'git show origin/main:' + self.source + '; id',
                      'git show origin/main:' + self.source + '| cat',
-                     'node pstack/skills/poteto-mode/scripts/check-plan.mjs; true',
+                     'node pstack/skills/poteto-mode/scripts/bootstrap.ts; true',
                      'git show HEAD:README.md;cat<' + self.source,
                      'cat pstack/skills/"swarm"/SKILL.md;id',
-                     *['node pstack/skills/poteto-mode/scripts/check-plan.mjs ' + operand
+                     *['node pstack/skills/poteto-mode/scripts/bootstrap.ts ' + operand
                        for operand in ['plan.md;id', 'plan.md|cat', 'plan.md>out',
                                        '"$PLAN"', '*.md', '~/plan.md']],
                      'cat ' + self.source + ' `printf extra`',

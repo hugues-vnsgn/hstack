@@ -20,14 +20,14 @@ Keep the Claude and Codex alternatives after the detected id, so the same file
 still serves the other hosts:
 
 ```
-judgment and prose: claude-opus-5-5 high or gpt-6-astra high
+judgment and prose: claude-opus-5-5 xhigh or gpt-6-astra xhigh
 ```
 
 When Cursor's detected id differs from the Claude and Codex ids, put Cursor's
 first, because a host runs the first alternative its agent tool accepts:
 
 ```
-judgment and prose: <cursor-id> high or claude-opus-5-5 high or gpt-6-astra high
+judgment and prose: <cursor-id> xhigh or claude-opus-5-5 xhigh or gpt-6-astra xhigh
 ```
 
 A Claude or Codex id that Cursor's agent tool does not accept is an

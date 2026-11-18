@@ -16,7 +16,7 @@ HOST_METADATA = {'.DS_Store'}
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = 'ca901ff2a8cb4469119d54762f2166aea741bc6e846af79aa0860ad0bd75f2ab'
+MANIFEST_SHA256 = '469770465956a8e5a7581ec90cc8954143678f98751178fce2c79c4248d2a5b8'
 
 
 def digest(path):
@@ -167,9 +167,8 @@ def translate(root, binding, text, *, markdown=False):
     rows = verify(root)
     known = {row['path'] for row in rows['files'] if row['path'].endswith('.md')}
     known |= {old for old, new in rows['legacy_paths'].items() if new in known}
-    helpers = {'pstack/skills/poteto-mode/scripts/check-plan.mjs', 'skills/hugues-mode/scripts/check-plan.mjs'}
     operands = [re.compile(r'(?<![\w./:-])(?:origin/main:)?' + re.escape(source) + r'(?![\w./-])')
-                for source in known | helpers]
+                for source in known]
 
     joined = re.sub(r'\\\r?\n', '', text)
     if joined != text or '<<' in text:
@@ -196,9 +195,6 @@ def translate(root, binding, text, *, markdown=False):
             source = words[-1]
             if source in known and value == command(root, binding, 'read-workflow', source):
                 return value
-            if (not names_skill_directory(source) and not is_skill_body(source)
-                    and value == command(root, binding, 'plan-check', source)):
-                return value
         if (skill_directory or skill_name) and re.search(r'[$`(){}\[\]*?~]', value):
             raise ValueError('shell expansion near a skill name; name the skill to apply')
         bundled = any(pattern.search(content) for pattern in operands
@@ -214,9 +210,6 @@ def translate(root, binding, text, *, markdown=False):
                     return command(root, binding, 'read-workflow', source)
         if len(words) == 2 and words[0] == 'cat' and words[1] in known:
             return command(root, binding, 'read-workflow', words[1])
-        if (len(words) == 3 and words[0] == 'node' and words[1] in helpers
-                and not names_skill_directory(words[2]) and not is_skill_body(words[2])):
-            return command(root, binding, 'plan-check', words[2])
         if skill_directory:
             raise ValueError('unsupported skill-directory command; name the skill to apply')
         if bundled:

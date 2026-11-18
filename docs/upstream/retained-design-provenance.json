@@ -1,73 +1,35 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "4dd1d05818d19792e7cd6e818f1667f95f7e1dbe",
-  "upstream_version": "0.15.36",
+  "revision": "2f87c854fe3e2fcda44ca86b46ede35aad3c46b7",
+  "upstream_version": "0.15.43",
   "package": "design",
   "files": [
     {
       "source": "pstack/skills/architect/SKILL.md",
       "destination": "plugin/skills/architect/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "88e23ca105b89e67f4085d0e676c40d4b170a623",
-      "sha256": "31f8e97a52bfa5432edd61f68ade2a8632ef0bacbc2d2a6802d7a0e6821944ac",
+      "blob_sha": "0c1a1338ff46497bf9086abab9dd9c44d244cd66",
+      "sha256": "aea83d7aa109eb73402182701b14c289844663ad9c8f959fedbef2df66787ce0",
       "mode": "100644",
-      "destination_sha256": "dcf78b1d76823e5a7551ff65525a1298fd509f5e51814089838aad89202f9312",
+      "destination_sha256": "92823290dca073c4eb17db70f8dceb56ebb5edf0be914d5adf4c28f1b9ece5dc",
       "retained_contracts": [
-        "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
+        "Read the complete pinned skill. Upstream 0.15.43 cut it to a single file with no references or workers; immutable source, effective loader and behavior checks enforce the contract."
       ],
       "deviations": [
         "Native consolidation: one canonical body, native invocation boundary and relocated references.",
         "Host invocation table: model-invocable on Claude Code and Codex; inherited Cursor manual-only metadata removed.",
-        "Native model roles: project-local `.huguesstack/models.md` with `inherit-parent` defaults and effort tokens replace the Cursor rule and vendor slugs."
+        "Native model roles: project-local `.huguesstack/models.md` with `inherit-parent` defaults and effort tokens replace the Cursor rule and vendor slugs.",
+        "Upstream 0.15.43 collapsed this skill to one file. The retained references and worker roles owner-approved on 6 October 2026 are retired, not carried forward (owner decision for the 0.15.43 sync)."
       ]
-    },
-    {
-      "source": "pstack/skills/architect/references/design-red-flags.md",
-      "destination": "plugin/skills/architect/references/design-red-flags.md",
-      "disposition": "verbatim",
-      "blob_sha": "f8503c9595b289c607ff5088f82b21197edf94ec",
-      "sha256": "d0e639e4cc588ec865f930d3a4111faad60987ae36925917e319d7ceca7c69ce",
-      "mode": "100644",
-      "destination_sha256": "d0e639e4cc588ec865f930d3a4111faad60987ae36925917e319d7ceca7c69ce",
-      "retained_contracts": [
-        "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
-      ],
-      "deviations": []
-    },
-    {
-      "source": "pstack/skills/architect/references/rationale-template.md",
-      "destination": "plugin/skills/architect/references/rationale-template.md",
-      "disposition": "verbatim",
-      "blob_sha": "a10f77f59510c532cd909faaf3bfeee5ffbfd588",
-      "sha256": "0cedfccdc7b47fc881febd5a8293eecbc542c20f8df825639904a8102d2eb5d3",
-      "mode": "100644",
-      "destination_sha256": "0cedfccdc7b47fc881febd5a8293eecbc542c20f8df825639904a8102d2eb5d3",
-      "retained_contracts": [
-        "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
-      ],
-      "deviations": []
-    },
-    {
-      "source": "pstack/skills/architect/references/runner-prompt.md",
-      "destination": "plugin/skills/architect/references/runner-prompt.md",
-      "disposition": "verbatim",
-      "blob_sha": "b1ad21aef22e80d718c361787190b599eb359d6c",
-      "sha256": "21dd5314aab778c5007228027a4591d97693fbec6ab86524037772b63f40948e",
-      "mode": "100644",
-      "destination_sha256": "21dd5314aab778c5007228027a4591d97693fbec6ab86524037772b63f40948e",
-      "retained_contracts": [
-        "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
-      ],
-      "deviations": []
     },
     {
       "source": "pstack/skills/arena/SKILL.md",
       "destination": "plugin/skills/arena/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "7580c3c9a7770d81b9dd7a537d9caa7362c04279",
-      "sha256": "d0adeca6c9b19d43d90ed8f0484f0ddd362f05006d628b8f4cc6c9b55fa4d2b3",
+      "blob_sha": "fafaf37544107ff75d914b03096500afb6a23292",
+      "sha256": "04f79ee8239251bc0c8a9e92f895ebe7bff42e785a5f6ef8ed2dc34dae18e85d",
       "mode": "100644",
-      "destination_sha256": "d3d3f51724d270b3397a34d6049dc3fede1e2736139ee50a9fbf4bbeae092725",
+      "destination_sha256": "34e6e5734bba877e7298ece54d5b567a27555a049c4acd5976a8a5bf7e9e66de",
       "retained_contracts": [
         "Read the complete pinned skill and its phase-required references; immutable source, effective loader and behavior checks enforce the contract."
       ],

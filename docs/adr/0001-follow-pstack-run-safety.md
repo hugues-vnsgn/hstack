@@ -12,6 +12,8 @@ A skill that breaks mid-run is now fixed by the agent in its own PR against the 
 
 The rule for this and later alignment work: follow the original pstack, and remove whatever pstack lacks unless it is a mobile adaptation.
 
+Superseded for the alignment rule: [ADR 0006](0006-follow-upstream-and-record-what-hstack-adds.md) now says what hStack keeps beyond upstream.
+
 ## Consequences
 
 - Under an operator's full-autonomy grant, an hStack skill-fix PR goes from opening to merge on a clean verdict, as in pstack. Lab installs that track `main` pick up that fix on their next run without a manual review; the owner accepted this to match pstack.

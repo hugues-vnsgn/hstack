@@ -56,7 +56,7 @@ Map Cursor `AskQuestion`, todos, filesystem and Git to host tools.
 | Cursor | Claude Code | Codex |
 |---|---|---|
 | `AskQuestion` | `AskUserQuestion`. In `-p` mode it is absent: write the question in plain text in your report and hold the dependent step. | unobserved. Use its question tool. |
-| Open a todolist | `TodoWrite` | unobserved |
+| Open a todolist, or copy steps into the todolist tool | `TodoWrite` | unobserved |
 | `Grep`, `Glob` | `Bash`: `rg`, else `grep` and `find`, for whichever the session lacks. | unobserved |
 
 Without a todo tool, use a Markdown checklist in the task's [agent store](host-workflow-tools.md#agent-store-translation), copied and marked per [Playbooks](../skills/hugues-mode/SKILL.md#playbooks). Name the file in your reply.
