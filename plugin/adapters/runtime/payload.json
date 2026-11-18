@@ -647,7 +647,7 @@
     },
     {
       "path": "hooks/host-detect.sh",
-      "sha256": "cc5a1b13366a305129f995225d4f8c28e936761951fdfdd0abbcf1e3050212d9",
+      "sha256": "2bf2118714ce90e01132eb456153cea2d26ae54c3105b267c0693fe8586d0c10",
       "mode": "100755"
     },
     {
