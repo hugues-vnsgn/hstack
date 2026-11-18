@@ -281,7 +281,7 @@ class CursorManifestChecks(unittest.TestCase):
         name = 'p' + 'stack'
         # The places that name upstream itself already hold the name, and `upstack` is another word.
         for relative in ('docs/upstream/README.md', 'docs/RELEASE-0.5.8.md', 'tests/test_upstream_sync.py',
-                         'plugin/adapters/runtime/payload.py', 'plugin/skills/hugues-mode/scripts/check-plan.mjs',
+                         'plugin/adapters/runtime/payload.py',
                          'plugin/skills/statechart/scripts/test/corpus/Counter/ChartRun.out'):
             self.assertIn(name, (self.repo / relative).read_text(), relative)
         readme = self.repo / 'README.md'

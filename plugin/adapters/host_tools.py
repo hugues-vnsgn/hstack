@@ -10,16 +10,14 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
-import shutil
 import stat
-import subprocess
 
 sys.dont_write_bytecode = True
 RUNTIME_SHA256 = {
     "__init__.py": "277b071e8e40f0aabb4007e0ae389824708b2bdd5259075623998749da582807",
     "json_input.py": "d162867227d23f2c56b0e391977450ddfb81e1311394646947325581651c5423",
     "activity.py": "1ab0f100c6ea9e218a0cb0b0f17f0ba8ff8e1bf07273de8fa4b0e27836d342fa",
-    "payload.py": "68fd96436958559848bb63959014e31bd601f19f7cca2ba07114e7cd3ae1637e"
+    "payload.py": "2b070522807edfabaa03990366cb169791b994ff98daf869c8ee4909e7db5424"
 }
 
 
@@ -78,8 +76,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='verb', required=True)
     sub.add_parser('bind', help='Print the installed payload binding for an approved program')
-    for verb, operand in [('read-workflow', 'source'), ('plan-check', 'plan'),
-                          ('translate-plan', 'plan')]:
+    for verb, operand in [('read-workflow', 'source'), ('translate-plan', 'plan')]:
         child = sub.add_parser(verb)
         child.add_argument('--binding', type=Path, required=True)
         if verb == 'translate-plan':
@@ -105,24 +102,6 @@ def main(argv=None):
         elif args.verb == 'translate-plan':
             print(payload.translate(root, args.binding.resolve(), Path(args.plan).read_text(),
                                     markdown=args.markdown), end='')
-        elif args.verb == 'plan-check':
-            node = shutil.which('node')
-            if not node:
-                raise ValueError('Node unavailable; plan validation gate blocked')
-            helper = payload.checked_file(root, 'skills/hugues-mode/scripts/check-plan.mjs')
-            commit = None
-            try:
-                subprocess.run(['git', '-C', str(root), 'ls-files', '--error-unmatch', str(helper)],
-                               check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                commit = subprocess.run(['git', '-C', str(root), 'rev-parse', 'HEAD'],
-                                        check=True, capture_output=True, text=True).stdout.strip()
-            except (OSError, subprocess.CalledProcessError):
-                pass
-            print(json.dumps({'checker_path': str(helper),
-                              'checker_sha256': hashlib.sha256(helper.read_bytes()).hexdigest(),
-                              'payload_sha256': payload.MANIFEST_SHA256,
-                              'plugin_commit': commit}), file=sys.stderr, flush=True)
-            return subprocess.run([node, str(helper), str(Path(args.plan).resolve())], check=False).returncode
         elif args.verb == 'worktree-audit':
             result = activity.audit(args.repo.resolve(), args.sources, args.pr_snapshot, args.base)
             print(json.dumps(result, indent=2))

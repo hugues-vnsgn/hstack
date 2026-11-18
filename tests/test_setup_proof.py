@@ -60,20 +60,30 @@ class SetupProofContract(unittest.TestCase):
 
     def test_review_seats_use_declared_model_tiers(self):
         body = (SKILLS / 'setup-hstack/SKILL.md').read_text()
-        tiers = set(re.findall(r'^\| (?:Workhorse|Judgment|Frontier) \| `[^`]+` \| `(gpt-[^`]+)`', body, re.M))
+        tiers = set(re.findall(r'^\| (?:Primary|Light|Fable seat) \| `[^`]+` \| `(gpt-[^`]+)`', body, re.M))
         self.assertTrue(tiers)
         row = re.search(r'^interrogate reviewers: (.+)$', body, re.M).group(1)
-        self.assertEqual(len(row.split(',')), 2)
+        self.assertEqual(len(row.split(',')), 3)
         self.assertLessEqual(set(re.findall(r'gpt-[\w.-]+', row)), tiers)
 
-    def test_hardest_tasks_start_on_frontier_with_a_judgment_alternative(self):
+    def test_fable_holds_one_panel_seat_and_no_role_runs_above_xhigh(self):
         body = (SKILLS / 'setup-hstack/SKILL.md').read_text()
-        models = dict(re.findall(r'^\| (Judgment|Frontier) \| `([^`]+)` \|', body, re.M))
-        self.assertEqual(models, {'Judgment': 'claude-opus-5-5', 'Frontier': 'claude-fable-5-2'})
+        models = dict(re.findall(r'^\| (Primary|Light|Fable seat) \| `([^`]+)` \|', body, re.M))
+        self.assertEqual(models, {'Primary': 'claude-opus-5-5', 'Light': 'claude-opus-5-5',
+                                  'Fable seat': 'claude-fable-5-2'})
         lines = dict(re.findall(r'^([a-z][a-z, -]+): (.+)$', body, re.M))
-        self.assertEqual([seat.split()[0] for seat in lines['hardest tasks'].split(' or ')],
-                         [models['Frontier'], models['Judgment'], 'gpt-6-astra'])
-        self.assertEqual([role for role, value in lines.items() if models['Frontier'] in value], ['hardest tasks'])
+        # Fable sits in the two review panels only, never in a single-model role, and the
+        # retired hardest-tasks role has no line.
+        self.assertEqual(sorted(role for role, value in lines.items() if models['Fable seat'] in value),
+                         ['arena runners', 'interrogate reviewers'])
+        self.assertNotIn('hardest tasks', lines)
+        for role in ('arena runners', 'interrogate reviewers'):
+            self.assertEqual(lines[role].split(' or ')[0], 'claude-fable-5-2 high')
+        for role, value in lines.items():
+            if ' or ' in value:
+                self.assertNotRegex(value, r'\bmax\b', role)
+        self.assertIn('read its `# budget: unlimited` line as `large`', body)
+        self.assertIn('`# defaults: 3`', body)
         self.assertIn('`claude-fable-5-2` is `fable`', body)
         self.assertIn('drop the undetected one, say so, and the role runs the next', body)
         header = body.split('# Setup hStack', 1)[0]
@@ -131,7 +141,7 @@ class SetupProofInstalled(InstalledFixture, unittest.TestCase):
 
     def test_router_mobile_proof_resolves_from_external_consumer(self):
         router = (self.plugin / 'skills/hugues-mode/SKILL.md').read_text()
-        self.assertIn('relative to this SKILL.md', router)
+        self.assertIn('open its steps at `playbooks/<title>.md`', router)
         self.assertIn('skills/hugues-mode/playbooks/<name>.md', router)
         source = 'skills/hugues-mode/playbooks/mobile-proof.md'
         # A consumer lookalike must never supply the installed proof instructions.

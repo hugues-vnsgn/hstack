@@ -71,7 +71,7 @@ For a quick status instead of an audit, run [`/ketchup`](../../plugin/skills/ket
 
 ## When the night holds a queue, not a task
 
-The contract above drives one task to one finish condition. Some nights hold more, a queue of independent changes or a whole program. Three playbooks scale the same trust up.
+The contract above drives one task to one finish condition. Some nights hold more, a queue of independent changes or a whole program. Two playbooks and one skill scale the same trust up.
 
 [Autopilot-full](../../plugin/skills/hugues-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers checks the owner's code-ready head. A later rebase or minor fix gets one fresh verifier, and only new behavior or a large new diff calls the full swarm again. Only a clean verdict on the patch that merges authorizes the merge:
 
@@ -87,15 +87,15 @@ The contract above drives one task to one finish condition. Some nights hold mor
 
 Both autopilots end their reply by catching you up the way [`/ketchup`](../../plugin/skills/ketchup/SKILL.md) does: a few plain sentences, small visuals, and only the calls that are yours to make. Type `/ketchup` yourself in any chat when you come back and want that summary of what changed since your last message.
 
-[Orchestrate](../../plugin/skills/hugues-mode/playbooks/orchestrate.md) is for a program that outlives any single agent: multi-day, many stacked PRs, fleets of subagents under one standing coordinator chat. The coordinator decides which agent does each piece of work, checks what each one produces, and never writes code itself. If one agent could finish the work in a session, the playbook itself routes you back to the overnight contract above:
+A whole program, such as a migration across many packages, has no playbook of its own. `/hugues-mode` routes large or cross-cutting work to [`/figure-it-out`](../../plugin/skills/figure-it-out/SKILL.md), which designs one rigorous run for it:
 
 ```text
-/hugues-mode orchestrate the store migration. own it until every package is converted and merged. i'll check in twice a day.
+/hugues-mode migrate every package to the new store. own it until each one is converted and merged. i'll check in twice a day.
 ```
 
 ## Run many programs in parallel
 
-The [Orchestrate playbook](../../plugin/skills/hugues-mode/playbooks/orchestrate.md) expects one standing coordinator chat per program. The coordinator doesn't write code. It directs subagents. Start your prompts to the coordinator with `/hugues-mode`, and the subagents it spawns follow the playbooks.
+Give each program one standing coordinator chat. The coordinator doesn't write code. It directs subagents. Start your prompts to the coordinator with `/hugues-mode`, and the subagents it spawns follow the playbooks. Each agent it starts reads [`worker.md`](../../plugin/skills/hugues-mode/worker.md) first, so workers hold to the kickoff's bar, decide reversible calls instead of asking you, and open PRs ready for review. A worker holds only for a failing run at its head or a bug a user would hit, or, on a mobile task, when its proof cannot run. Its report ends with its Concerns, what it is unsure of, and its Deviations, where it departed from the brief and why. The coordinator still interviews you on a product or preference call that no experiment can settle.
 
 A few habits help:
 

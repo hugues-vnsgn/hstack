@@ -130,14 +130,19 @@ class InstalledMobileGuidance(InstalledFixture, unittest.TestCase):
         workflow = self.read('adapters/mobile-workflows.md')
         planning = workflow.split('For mobile multi-phase plans, before step 4', 1)[1]
         planning = planning.split('Read [mobile lanes]', 1)[0]
-        self.assertIn('writes\nthe live lanes', planning)
+        self.assertIn("writes\neach PR's live box", planning)
+        self.assertIn("A mobile PR's live box holds ten lanes at the PR head.", ' '.join(planning.split()))
         self.assertIn('[mobile lanes](../skills/hugues-mode/references/mobile-lanes.md)', planning)
         self.assertIn('[mobile review lens](../skills/hugues-mode/references/mobile-review.md)', planning)
         plan = self.read('skills/hugues-mode/playbooks/multi-phase-plan.md')
-        self.assertIn('4. Copy the skeleton below into the plan file and fill every placeholder.', plan)
-        self.assertIn('Ten lanes at the PR head drive the real surface', plan)
+        # Upstream's five-step plan fixes no lane count. Ten lanes is a mobile adaptation, and it
+        # attaches to step 4, where each live box drives the real surface.
+        self.assertIn('4. Tests alone are not sufficient verification.', plan)
+        self.assertIn('Each live box drives the real surface with a concrete scenario and a pass predicate.', plan)
+        self.assertNotIn('Ten lanes', plan)
         lanes = self.read('skills/hugues-mode/references/mobile-lanes.md')
-        self.assertIn("Preserve the selected multi-phase plan's ten-lane rule.", lanes)
+        self.assertIn("A mobile PR's live box holds ten lanes at the PR head.", ' '.join(lanes.split()))
+        self.assertIn('adaptation of step 4 of the selected multi-phase plan', ' '.join(lanes.split()))
         self.assertIn('An inapplicable risk needs a reason', lanes)
         self.assertIn('an applicable unrun risk remains a gap.', lanes)
         self.assertIn('are optional supplements, reached through native invocation controls.', lanes)

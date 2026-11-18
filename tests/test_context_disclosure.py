@@ -1,6 +1,7 @@
 from pathlib import Path
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -51,11 +52,13 @@ def issue_110_guidance(read, host_guidance):
         'plugin/adapters/host-workers.md': ['Report deliberate effort lowering too, with its reason.',
                                             'Full-mode workers load the mode per [host.md](host.md) before work.'],
     }
+    playbooks_end = re.search(r'\n\n(?:A large or cross-cutting|Large, cross-cutting, or unattended)', mode)
+    workers_line = next(line for line in mode.splitlines() if 'Whenever a run spawned workers' in line)
     texts = {
         'plugin/adapters/host.md': host_guidance(read('plugin/adapters/host.md')),
         'plugin/skills/hugues-mode/SKILL.md': (
-            mode[mode.index('A step includes'):mode.index('\n\nA large or cross-cutting')]
-            + next(line for line in mode.splitlines() if line.startswith('- Whenever a run spawned workers'))),
+            mode[mode.index('A step includes'):playbooks_end.start()]
+            + workers_line[workers_line.index('Whenever a run spawned workers'):]),
         'plugin/adapters/host-workers.md': workers[workers.index('The mobile regression worker is'):workers.index('\nAgent mode preserves')],
         'plugin/adapters/host-workflow-tools.md': check_core.section(read('plugin/adapters/host-workflow-tools.md'), 'Codex sandbox'),
         'plugin/skills/hugues-mode/playbooks/bug-fix.md': bug[bug.index('   Use a fresh general-purpose regression worker.'):bug.index('   Run the same selected regression')],
@@ -289,11 +292,10 @@ class ContextDisclosure(unittest.TestCase):
         expected = {
             'initial_mode_routing': ['plugin/skills/unslop/SKILL.md',
                                     'plugin/skills/hugues-mode/playbooks/bug-fix.md'],
-            'bug_fix': ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/tdd/SKILL.md', 'plugin/skills/why/references/epistemics.md',
-                        'plugin/skills/why/references/sources/code-archaeology.md',
+            'bug_fix': ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/tdd/SKILL.md', 'plugin/skills/why/SKILL.md',
                         'plugin/agents/hugues-comment-sicko.md', 'plugin/adapters/host-workers.md',
                         'plugin/skills/principle-subtract-before-you-add/SKILL.md'],
-            'larger_feature': ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/architect/references/design-red-flags.md',
+            'larger_feature': ['plugin/skills/control-cli/SKILL.md', 'plugin/skills/architect/SKILL.md',
                                'plugin/skills/arena/SKILL.md', 'plugin/skills/swarm/SKILL.md',
                                'plugin/skills/typescript-best-practices/references/patterns.md',
                                'plugin/adapters/host-typescript.md',
@@ -364,13 +366,14 @@ class ContextDisclosure(unittest.TestCase):
         # principle bodies, so 10 remained identical. The four skills it added (hugues-help,
         # in-your-own-words, ketchup, sharpen) have no baseline body and are not compared. The
         # pstack 0.15.32 merge ported upstream's rewrites of three more of those 10, leaving 7;
-        # its four new skills have no baseline body either. The list is recomputed here from the
-        # files, so only principle-* bodies can be counted.
+        # its four new skills have no baseline body either. The 0.15.43 merge ported upstream's
+        # shortening of 14 principles, five of which were among the 7, leaving 2. The list is
+        # recomputed here from the files, so only principle-* bodies can be counted.
         baseline, _ = measure_context.native_baseline(ROOT)
         baseline = measure_context.current_names(baseline)
         identical = sorted(p for p in baseline if p.startswith('plugin/skills/') and p.endswith('/SKILL.md')
                            and baseline[p] == (ROOT / p).read_text())
-        self.assertEqual(len(identical), 7)
+        self.assertEqual(len(identical), 2)
         self.assertTrue(all(p.startswith('plugin/skills/principle-') for p in identical))
         self.assertEqual(measured['canonical_skill_bodies']['unchanged_files'], len(identical))
         self.assertLess(measured['native_frontmatter']['candidate_original_skills']['bytes'],
@@ -570,7 +573,7 @@ class InstalledPhaseGuidance(InstalledFixture, unittest.TestCase):
             "maintain-verification-skill's target lookup",
             'multiple-candidate and missing-target gates',
             'Personal/global placement or configuration needs explicit scope',
-            "Reflect's divergent, tooling and judgment reviewers",
+            'Reflect recognizes the actual host skill paths and tool events',
             'A path on disk alone is not evidence of use',
         ):
             with self.subTest(required=required):
@@ -582,13 +585,11 @@ class InstalledPhaseGuidance(InstalledFixture, unittest.TestCase):
         body = ' '.join(result.stdout.split())
         for required in (
             "operator-named directory or the existing program's recorded directory",
-            "Orchestrate's Project store",
             '`~/hstack-evidence/<date>-<task>/`',
             'Resolve that choice once to an absolute path',
             'Resume the recorded store rather than creating a new dated directory',
-            'plans under `docs/`, programs under `orchestrate/<project-slug>/`',
+            'Keep the relative layout: plans under `docs/`.',
             'Explicit plan and log targets still win',
-            "Orchestrate's Project tracker is `notes.md` in that program directory",
             'complete log-file path to `log.sh`',
             'Keep all state outside the installed plugin',
         ):

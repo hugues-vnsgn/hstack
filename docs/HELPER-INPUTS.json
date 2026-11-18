@@ -1,5 +1,5 @@
 {
-  "source_revision": "4dd1d05818d19792e7cd6e818f1667f95f7e1dbe",
+  "source_revision": "2f87c854fe3e2fcda44ca86b46ede35aad3c46b7",
   "native_before_revision": "7db3e80d4b75e55f3f6d0ee85da5faa330e65d76",
   "files": [
     {
@@ -21,30 +21,12 @@
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
     },
     {
-      "source": "pstack/skills/poteto-mode/scripts/check-plan.mjs",
-      "installed": "plugin/skills/hugues-mode/scripts/check-plan.mjs",
-      "source_sha256": "e3d4e9ca638c6fb4a2b52c434c17c7af30da4fdd44605ccfe9906f82fe37b555",
-      "candidate_sha256": "0fc93f19769d7a035982d72d4bd35a6c80e02565081cdcc041a00ba9614db569",
-      "same_bytes_as_upstream": false,
-      "same_bytes_as_7db3e80": false,
-      "scope": "adapted plan checker; differs from upstream only by accepting a bound read-workflow command as the trunk read; installed Python/Node integration tests cover it"
-    },
-    {
-      "source": "pstack/skills/poteto-mode/scripts/check-plan.test.ts",
-      "installed": "plugin/skills/hugues-mode/scripts/check-plan.test.ts",
-      "source_sha256": "848d321f2b76299d1b2d7bb46c929dbaebef08ca4ba8669dbe09d1d5c86f96e2",
-      "candidate_sha256": "30150c31a91b06f6a2829d12bdd487b3cf89523581c74e5097cf5126924dbed5",
-      "same_bytes_as_upstream": false,
-      "same_bytes_as_7db3e80": false,
-      "scope": "plan-checker tests added at pstack 0.15.25 plus one hStack case for the not-applicable Bugbot box; run with Bun against the hStack checker"
-    },
-    {
       "source": "pstack/skills/poteto-mode/scripts/package.json",
       "installed": "plugin/skills/hugues-mode/scripts/package.json",
-      "source_sha256": "c9db6bb9362c6e319e395b358b113ebc72ab06b6c5e3a095093f6ebfdafe1c57",
-      "candidate_sha256": "c9db6bb9362c6e319e395b358b113ebc72ab06b6c5e3a095093f6ebfdafe1c57",
+      "source_sha256": "0b7aa62edc524bf9d3f735b17f10ab7fea22797b80b7edc4a91620a570332d13",
+      "candidate_sha256": "0b7aa62edc524bf9d3f735b17f10ab7fea22797b80b7edc4a91620a570332d13",
       "same_bytes_as_upstream": true,
-      "same_bytes_as_7db3e80": true,
+      "same_bytes_as_7db3e80": false,
       "scope": "relocated helper/dependency input; Bun/TypeScript execution observed on the review-fix scratch install"
     },
     {
@@ -169,8 +151,7 @@
     "Byte identity is not runtime parity.",
     "The disclosure-pass Bun/TypeScript run did not start because the harmless offline sandbox preflight returned EPERM. No containment bypass or retry occurred.",
     "A later review-fix run on a scratch install of this candidate observed Bun 1.4.2: bun install --frozen-lockfile through the session proxy, bun test orch watch-pr 52 of 52 passing and tsc --strict --noEmit (TypeScript 7.0.2) exiting 0 for watch-pr. Bound helper reads still passed with the installed node_modules present.",
-    "The Node plan gate differs from upstream and passed current installed Node tests.",
     "Python installed helpers changed during consolidation and are covered separately by current adapter tests. Progressive disclosure only changes their bound inventory/hash constants.",
-    "The review-bot change adapts five watch-pr files and adds a plan-check test. They ran under Bun and tsc on a local install; recognition of the Claude and Codex logins is checked against synthetic GraphQL fixtures only, and no review bot has been observed on a PR here."
+    "The review-bot change adapts five watch-pr files. They ran under Bun and tsc on a local install; recognition of the Claude and Codex logins is checked against synthetic GraphQL fixtures only, and no review bot has been observed on a PR here."
   ]
 }

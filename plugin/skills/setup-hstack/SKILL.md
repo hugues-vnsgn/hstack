@@ -17,10 +17,10 @@ Write `.hstack/models.md` at the project root: the model-role file every hStack 
 A role value is one or more alternatives joined by ` or `, such as `claude-opus-5-5 high or gpt-6-astra high`. Each alternative is a model and an effort.
 
 - The model is `inherit-parent` or a real slug: a full Claude model ID such as `claude-opus-5-5` or `claude-sonnet-5-5`, or a Codex model such as `gpt-6.1-sol`. Full IDs pin the version an alias can drift from. When Claude Code's Agent tool accepts only aliases for `model`, pass the ID's alias: `claude-haiku-5-5` is `haiku`, `claude-sonnet-5-5` is `sonnet`, `claude-opus-5-5` is `opus`, and `claude-fable-5-2` is `fable`. `inherit-parent` leaves `model` unset, so the worker runs on the parent chat model. It is valid on every host.
-- The effort is the last token, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. It sets the agent tool's effort.
+- The effort is the last token, on the ladder `xhigh` > `high` > `medium` > `low`. It sets the agent tool's effort. No role runs above `xhigh`, so setup never writes `max`.
 - A host runs the first alternative its agent tool accepts, so one file serves every host: a single-model role lists the current host's model first and the other hosts' alternatives after it. With no accepted alternative, the role runs on `inherit-parent` at the first alternative's effort.
-- A panel role (arena runners, architect runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for every host and alternate which comes first, to use distinct available models where possible: `claude-opus-5-5 xhigh or gpt-6-astra xhigh, gpt-6.1-sol xhigh or claude-sonnet-5-5 xhigh` runs Opus against Sonnet in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
-- `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values whose model differs from the parent's, in list order, so order it by preference. An `inherit-parent` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+- A panel role (arena runners, interrogate reviewers) holds a comma-separated list, and one subagent runs per entry, `inherit-parent` entries included, so the list length sets the count. Give each seat a model for every host and alternate which comes first, to use distinct available models where possible: `claude-fable-5-2 high or gpt-6-astra high, gpt-6.1-sol high or claude-opus-5-5 high` runs Fable against Opus in Claude Code and GPT-6-Astra against GPT-6.1-Sol in Codex. Distinct models give model diversity; a repeated model gives process independence.
+- `arena cross-judge pool` is also a list, but Arena runs one judge. It tries values from another vendor than the parent's first, then values whose model differs from the parent's, in list order, so order it by preference. An `inherit-parent` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ## Model tiers
 
@@ -28,14 +28,13 @@ Step 5 gives each role a tier. When a host's model list changes, keep the tier a
 
 | Tier | Claude Code | Codex | Effort | Roles |
 |---|---|---|---|---|
-| Fast | `claude-haiku-5-5` | `gpt-6-luna` | `xhigh` | The how explorer |
-| Workhorse | `claude-sonnet-5-5` | `gpt-6.1-sol` | `high` | Code delegates, investigators, reflect tooling, swarm workers |
-| Judgment | `claude-opus-5-5` | `gpt-6-astra` | `high` | Judgment and prose, explainer, synthesizers, reflect reviewers, design and review seats, the cross-judge |
-| Frontier | `claude-fable-5-2` | `gpt-6-astra` | `high` | Hardest tasks |
+| Primary | `claude-opus-5-5` | `gpt-6-astra` | `xhigh` | Code delegates, judgment and prose |
+| Light | `claude-opus-5-5` | `gpt-6.1-sol` | `high` | Swarm workers, trivial mechanical edits, verification, the cross-judge, one seat in each panel |
+| Fable seat | `claude-fable-5-2` | `gpt-6-astra` | `high` | One seat in each panel, never a single-model role |
 
-A role's effort can move off its tier default because effort follows the work: `medium` for parallel reading, lanes and hillclimb iterations, `high` for scoped implementation and judgment, `xhigh` for fixes, design and adversarial review. Every model in the table accepts `low` through `max`. Never write Codex's `ultra`, which delegates on its own.
+A role's effort moves off its tier default only through the budget in step 3 and the router's match-the-model rule. Every model in the table accepts `low` through `max`, but no role runs above `xhigh`. Never write Codex's `ultra`, which delegates on its own.
 
-A Frontier role names the Judgment model as its next alternative, so a host whose agent tool does not accept the Frontier model runs the role on Judgment.
+A Fable seat names the Primary tier's Claude model as its next alternative, so a host whose agent tool does not accept Fable runs the seat on Opus. Fable runs outside a panel only when the user names it or two Opus runs of the same brief fail its check.
 
 ## Steps
 
@@ -45,57 +44,51 @@ Read the `model` and effort values your host's native agent tool accepts from it
 
 ### 2. Load current state
 
-The starting role values are the file shape shown in step 5 below. If `.hstack/models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it. Treat its values as the current choices. Otherwise start from those values. A line whose role is not in step 5, such as `how critics`, is from a retired role. Drop it.
+The starting role values are the file shape shown in step 5 below. If `.hstack/models.md` already exists, read it and treat its `# budget` line and its role values as the current choices. If `.hstack/models.md` is absent and `.huguesstack/models.md` exists, read the legacy file and tell the user to move it. Treat its values as the current choices. Otherwise start from those values. A line whose role is not in step 5 is from a retired role. Drop it without asking. The retired roles include `hardest tasks`, `how explorer`, `how explainer`, `why investigators`, `why synthesizer`, `architect runners`, `reflect tooling` and `reflect judgment, divergent, synthesizer`.
+
+A file without the `# defaults: 3` line comes from an older setup. Before step 3, read its `# budget: unlimited` line as `large`, because no role runs above `xhigh`. Do not ask about this or about the dropped roles. Mention both changes once in step 6.
 
 ### 3. Budget, map, and confirm
 
-**(a) Ask for a budget.** Prefer AskQuestion over free text. Offer these four options with these exact labels, and name the current budget when the file records one.
+**(a) Ask for a budget.** Prefer AskQuestion over free text. Offer these three options with these exact labels, and name the current budget when the file records one. With no file, say that `large` matches the skill defaults.
 
-- `unlimited — keep max`
 - `large — xhigh reasoning`
 - `medium — high reasoning`
 - `small — medium reasoning`
 
-**(b) Apply it.** Build the working table from the step 5 values, and on a re-run keep the models or list of any role whose value differs from its step 5 value. `unlimited` leaves every effort as in that table. `large`, `medium`, and `small` set the effort of every alternative, panel and `inherit-parent` entries included, to `xhigh`, `high`, or `medium`. If the agent tool does not accept that effort for that model, use its highest accepted effort below the target, else mark the role as needing a choice. So `small` turns `claude-opus-5-5 xhigh or gpt-6-astra xhigh` into `claude-opus-5-5 medium or gpt-6-astra medium`.
+**(b) Apply it.** Build the working table from the step 5 values, and on a re-run keep the models or list of any role whose models differ from its step 5 value. Each role has a target effort, which is its step 5 effort moved by the budget. `large` keeps it, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `xhigh` > `high` > `medium` > `low`. A target at the bottom of the ladder stays there. Set the effort of every alternative in the role, panel and `inherit-parent` entries included, to the role's target. If the agent tool does not accept that effort for that model, use its highest accepted effort below the target, else mark the role as needing a choice. So `medium` turns `claude-opus-5-5 xhigh or gpt-6-astra xhigh` into `claude-opus-5-5 high or gpt-6-astra high` and `claude-opus-5-5 high or gpt-6.1-sol high` into `claude-opus-5-5 medium or gpt-6.1-sol medium`.
 
-**(c) Show the roles and confirm.** Show every role with its value, marking any current-host slug not in the detected set as needing a choice. A role that also lists a detected current-host alternative needs no choice: drop the undetected one, say so, and the role runs the next. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` as the options. Prefer AskQuestion over free text.
+**(c) Show the roles and confirm.** Show every role with its value, marking any current-host slug not in the detected set as needing a choice. A role that also lists a detected current-host alternative needs no choice: drop the undetected one, say so, and the role runs the next. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models at `xhigh` or below plus `inherit-parent` as the options. Prefer AskQuestion over free text.
 
 ### 4. Validate
 
-Every real slug written for the current host must be in the detected set. The other hosts' alternatives (Codex and Cursor models when setup runs in Claude Code, Claude model IDs when it runs in Codex, and so on) cannot be confirmed here: keep them and list them as unverified. `inherit-parent` always passes. If a chosen real slug is not available, stop and ask again.
+Every real slug written for the current host must be in the detected set and at `xhigh` or below. The other hosts' alternatives (Codex and Cursor models when setup runs in Claude Code, Claude model IDs when it runs in Codex, and so on) cannot be confirmed here: keep them and list them as unverified. `inherit-parent` always passes. If a chosen real slug is not available, stop and ask again.
 
 In Cursor, read [Cursor model roles](references/cursor-models.md) first and follow it: detect the Cursor model ids from the agent tool's own schema in the session, and put the detected id first in each role's alternatives.
 
 ### 5. Write the file
 
-Write `.hstack/models.md` with a `# budget` line naming the chosen label and its target effort, and one line per role, using the role labels in [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels). Overwrite the whole file so re-runs stay idempotent. Setup writes only `.hstack/`; it never writes or deletes `.huguesstack/`. Shape:
+Write `.hstack/models.md` with the `# defaults: 3` line, a `# budget` line naming the chosen label and the effort that label names, and one line per role, using the role labels in [workers and models](../../adapters/host-workers.md#model-defaults-and-role-labels). Overwrite the whole file so re-runs stay idempotent. Setup writes only `.hstack/`; it never writes or deletes `.huguesstack/`. Shape:
 
 ```
-# hStack model roles. One line per role. Delete a line to fall back to the skill default (`inherit-parent`).
+# hStack model roles. One line per role. Delete a line to fall back to the skill default.
 # Value: alternatives joined by ` or `, each `<model> <effort>`. Claude models are full IDs; Claude Code passes the alias when its agent tool accepts only aliases. A host runs the first one its agent tool accepts. Panel seats alternate which host's model comes first. `inherit-parent` leaves the agent tool's `model` unset. Each comma-separated panel entry runs one subagent.
-# budget: unlimited (max)
-feature, refactoring: claude-sonnet-5-5 high or gpt-6.1-sol high
-bug-fix: claude-sonnet-5-5 high or gpt-6.1-sol xhigh
-perf-issue: claude-sonnet-5-5 high or gpt-6.1-sol xhigh
-hillclimb: claude-sonnet-5-5 high or gpt-6.1-sol high
-judgment and prose: claude-opus-5-5 high or gpt-6-astra high
-hardest tasks: claude-fable-5-2 high or claude-opus-5-5 xhigh or gpt-6-astra high
-how explorer: claude-haiku-5-5 xhigh or gpt-6-luna xhigh
-how explainer: claude-opus-5-5 high or gpt-6-astra high
-why investigators: claude-sonnet-5-5 high or gpt-6.1-sol high
-why synthesizer: claude-opus-5-5 xhigh or gpt-6-astra high
-reflect tooling: claude-sonnet-5-5 high or gpt-6.1-sol high
-reflect judgment, divergent, synthesizer: claude-opus-5-5 xhigh or gpt-6-astra high
-arena runners: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xhigh or claude-sonnet-5-5 high
-arena cross-judge pool: claude-opus-5-5 xhigh or gpt-6.1-sol xhigh
-swarm workers: claude-sonnet-5-5 high or gpt-6.1-sol high
-architect runners: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xhigh
-interrogate reviewers: claude-opus-5-5 xhigh or gpt-6-astra high, gpt-6.1-sol xhigh
+# defaults: 3
+# budget: large (xhigh)
+feature, refactoring: claude-opus-5-5 xhigh or gpt-6-astra xhigh
+bug-fix: claude-opus-5-5 xhigh or gpt-6-astra xhigh
+perf-issue: claude-opus-5-5 xhigh or gpt-6-astra xhigh
+hillclimb: claude-opus-5-5 xhigh or gpt-6-astra xhigh
+judgment and prose: claude-opus-5-5 xhigh or gpt-6-astra xhigh
+arena runners: claude-fable-5-2 high or claude-opus-5-5 high or gpt-6-astra high, claude-opus-5-5 high or gpt-6.1-sol high, gpt-6-astra high or claude-opus-5-5 high
+arena cross-judge pool: claude-opus-5-5 high or gpt-6.1-sol high, gpt-6-astra high or claude-opus-5-5 high
+swarm workers: claude-opus-5-5 high or gpt-6.1-sol high
+interrogate reviewers: claude-fable-5-2 high or claude-opus-5-5 high or gpt-6-astra high, claude-opus-5-5 high or gpt-6.1-sol high, gpt-6-astra high or claude-opus-5-5 high
 ```
 
 ### 6. Confirm
 
-Tell the user the file was written and that each skill reads it at its next role selection. Re-running this skill updates it. Name the alternatives step 4 left unverified; re-running setup on the other host confirms them.
+Tell the user the file was written and that each skill reads it at its next role selection. Re-running this skill updates it. If step 2 read `unlimited` as `large` or dropped a retired role, say so once. Name the alternatives step 4 left unverified; re-running setup on the other host confirms them.
 
 ### 7. Offer a verification skill (optional)
 

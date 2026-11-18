@@ -15,8 +15,8 @@ import tempfile
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PIN = '4dd1d05818d19792e7cd6e818f1667f95f7e1dbe'
-TREE = '4719e1c4b4c43bac85d4206a8b41dd2899769c1c'
+PIN = '2f87c854fe3e2fcda44ca86b46ede35aad3c46b7'
+TREE = '71d8e1d1d718e2149dc43b2535618064f29cba6b'
 EXCLUDED = set()
 ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
@@ -116,14 +116,13 @@ ROUTER_SECTION_POINTERS = (
     ('plugin/skills/figure-it-out/SKILL.md', 'Principles', 'Principles section of the **hugues-mode** skill'),
     ('plugin/agents/hugues-agent.md', 'Subagents', "hugues-mode's Subagents section"),
     ('plugin/agents/hugues-agent.md', 'Principles', 'inline Principles index'),
-    ('plugin/skills/hugues-mode/playbooks/multi-phase-plan.md', 'Subagents', 'per the Subagents section'),
     ('plugin/skills/hugues-mode/playbooks/bug-fix.md', 'Non-negotiables', '(Non-negotiables)'),
     ('plugin/skills/hugues-mode/playbooks/investigation.md', 'Autonomy', '(see Autonomy)'),
     ('plugin/skills/hugues-mode/playbooks/worktree-cleanup.md', 'Autonomy', 'Per Autonomy,'),
 )
 # Every section of the router that is kept by name, whether or not a sibling points at it.
 ROUTER_SECTIONS = ('Non-negotiables', 'Principles', 'Autonomy', 'Subagents',
-                   'Writing the reply', 'Comments', 'Playbooks')
+                   'Writing the reply', 'Playbooks')
 AGENTS = {
     'poteto-agent': {'source': 'pstack/agents/poteto-agent.md',
                      'entrypoint': 'plugin/agents/hugues-agent.md'},
@@ -131,16 +130,7 @@ AGENTS = {
                       'entrypoint': 'plugin/agents/hugues-comment-sicko.md'},
 }
 WORKER_ROLES = {
-    'how-explorer': ('how', 'generalPurpose', 'references/explorer-prompt.md'),
-    'how-explainer': ('how', 'generalPurpose', 'references/explainer-prompt.md'),
-    'why-investigator': ('why', 'generalPurpose', 'references/investigator-prompt.md'),
-    'why-synthesizer': ('why', 'generalPurpose', 'references/synthesizer-prompt.md'),
-    'reflect-judgment': ('reflect', 'generalPurpose', 'references/judgment-reviewer.md'),
-    'reflect-tooling': ('reflect', 'generalPurpose', 'references/tooling-reviewer.md'),
-    'reflect-divergent': ('reflect', 'generalPurpose', 'references/divergent-reviewer.md'),
-    'reflect-synthesizer': ('reflect', 'generalPurpose', 'references/synthesizer.md'),
     'interrogate-adversary': ('interrogate', 'generalPurpose', 'SKILL.md'),
-    'architect-runner': ('architect', 'core', 'references/runner-prompt.md'),
     'arena-runner': ('arena', 'core', 'SKILL.md'),
     'arena-cross-judge': ('arena', 'core', 'SKILL.md'),
     'swarm-worker': ('swarm', 'generalPurpose', 'SKILL.md'),
@@ -225,17 +215,15 @@ def behavior_errors(bodies):
         if not value:
             errors.append(name)
     for name, headings in {
-        'architect': ['Ground the problem', 'Sketch', 'Agree (opt-in)',
-                      'Implement against the sketch', 'Scrap when the architecture is wrong'],
         'arena': ['Frame', 'Fan out', 'Cross-judge', 'Pick a base', 'Graft', 'Verify'],
         'swarm': ['Frame', 'Fan out', 'Aggregate', 'Report'],
     }.items():
         actual = re.findall(r'^## Phase [A-F]: (.+)$', bodies[name], re.M)
         expect(name + '-phase-order', actual == headings)
-    expect('architect-two-shapes', 'at least two structurally distinct candidates' in
-           section(bodies['architect'], 'Phase B: Sketch'))
+    expect('architect-two-shapes', 'sketch two different shapes' in bodies['architect']
+           and 'run the **arena** skill' in bodies['architect'])
     expect('mandatory-feature-arena', 'Mandatory: no skip-with-reason escape' in bodies['feature']
-           and ordered(bodies['feature'], ['1. `how`', '2. `architect`',
+           and ordered(bodies['feature'], ['1. Trace the affected subsystem.', '2. `architect`',
                                           '3. Write the throughput', '4. Delegate code-writing',
                                           '5. Verify', '6. Rebase', '7. If the design', '8. Run']))
     expect('interrogate-run-proof', ordered(bodies['interrogate'],
@@ -266,12 +254,12 @@ def behavior_errors(bodies):
     expect('setup-panel-cardinality', all(marker in bodies['setup-pstack'] for marker in
         ['one subagent runs per entry', 'list length sets the count',
          'Never write a real slug you have not confirmed', 'Every real slug written',
-         'unlimited — keep max', 'large — xhigh reasoning',
+         'large — xhigh reasoning',
          'medium — high reasoning', 'small — medium reasoning']))
     mode = bodies['poteto-mode']
     expect('mode-fallback-and-trail', all(marker in mode for marker in
-        ['Use **figure-it-out** whenever no bundled playbook fits',
-         'routes to **Orchestrate** instead', '**show-me-your-work**',
+        ['routes to the **figure-it-out** skill',
+         '**show-me-your-work**',
          '**swarm**', '**benchmark-checklist**', '**no-comments**', '**technical-writing**']))
     return errors
 
@@ -469,7 +457,7 @@ def adapter_errors(texts):
                      'Registration grants no permission to process personal transcripts',
                      'TypeScript paths remain `**/*.ts` and `**/*.tsx`',
                      'automate-me history mining remains blocked',
-                     'Reflect retains the pinned current-session digest fallback',
+                     'Reflect works from the authorized conversation already available',
                      'Preserve Recall\'s\nexplicit state-capsule shortcut'],
         ADAPTERS[1]: ['For all other work, follow the pinned core unchanged', 'For mobile bug fixes',
                      'For mobile arena work', 'Intent before domain', 'Large, cross-cutting, unmatched',
@@ -700,13 +688,13 @@ def check(root=ROOT):
     upstream = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(upstream)
     snapshot = upstream.read_pin(root / 'docs/upstream/pin.json')
-    require(snapshot['revision'] == PIN and snapshot['file_count'] == 573, 'upstream pin differs')
+    require(snapshot['revision'] == PIN and snapshot['file_count'] == 551, 'upstream pin differs')
     receipt = upstream.load(root / 'docs/upstream/consolidation.json')
     require(receipt['schema_version'] == 1 and receipt['upstream_revision'] == PIN,
             'consolidation pin differs')
     require(not (root / 'plugin/core').exists() and not (root / 'plugin/core-bindings.json').exists(),
             'retired runtime core or registry present')
-    archive = root / 'provenance/upstream/pstack-0.15.36.tar.gz'
+    archive = root / 'provenance/upstream/pstack-0.15.43.tar.gz'
     require(receipt['archive'] == archive.relative_to(root).as_posix() and not archive.is_symlink()
             and hashlib.sha256(archive.read_bytes()).hexdigest() == receipt['archive_sha256'],
             'upstream archive differs')
@@ -883,8 +871,8 @@ def check(root=ROOT):
                   for p, row in sorted(installed.items()) if p not in anchors]}, 'installed payload manifest differs')
     require("MANIFEST_SHA256 = '" + hashlib.sha256(payload_path.read_bytes()).hexdigest() + "'" in
             (root / 'plugin/adapters/runtime/payload.py').read_text(), 'payload anchor differs')
-    return {'upstream_archive_files': 573, 'active_skills': len(names), 'core_playbooks': 23,
-            'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 15}
+    return {'upstream_archive_files': 551, 'active_skills': len(names), 'core_playbooks': 22,
+            'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 6}
 
 
 if __name__ == '__main__':

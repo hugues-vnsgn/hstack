@@ -3,7 +3,7 @@
 These are mechanical translations of bundled operands in the canonical playbooks.
 Reach the selected skill first, as [host.md](host.md) directs, and preserve its todo order,
 verification rules, explicit execution go and active/pinned-chat gate. Python 3 and Git must already
-be available; plan validation also needs Node. Missing tools block the gate.
+be available. Missing tools block the gate.
 The adapters do not install dependencies, fetch, query a forge or delete anything.
 
 ## Bind and reread the approved installed payload
@@ -46,12 +46,11 @@ owner-disabled skill as enabled; the reach and denial rules are in [host.md](hos
 Owned references and playbooks are ordinary resources; never move a skill body
 into them as an invocation workaround.
 
-Translate the filled bundled references in multi-phase-plan, autopilot-full and
+Translate the filled bundled references in a plan, autopilot-full and
 autopilot-stack before handing the plan to another worker:
 
 ```sh
 python3 "<plugin>/adapters/host_tools.py" translate-plan --markdown --binding "<program>/plugin-binding.json" "<program>/plan-draft.md" > "<program>/plan.md"
-python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin-binding.json" "<program>/plan.md"
 ```
 
 Use `--markdown` for hStack-style plans. Write executable commands in complete
@@ -77,9 +76,7 @@ the file cannot declare its own mode. Neither mode requires prose markers in an
 hStack plan.
 
 For a command that names a skill directory, use only a known owned Markdown
-resource path, `cat <known path>`, `git show origin/main:<known path>`, or the exact
-bundled Node plan-check command with one literal plan operand outside skill
-directories. Any path segment named `skills` is in scope, including consumer,
+resource path, `cat <known path>`, or `git show origin/main:<known path>`. Any path segment named `skills` is in scope, including consumer,
 home, plugin and absolute paths, with quotes, escapes and letter case accounted
 for. Unknown paths, other Git revisions and unsupported commands in that scope
 hold. Glob, brace, tilde, variable and command-substitution syntax near a skill
@@ -87,10 +84,9 @@ directory or a `skill.md` token also hold, even inside quotes. Name the skill to
 apply when the step needs a skill; reach it as [host.md](host.md) directs.
 
 A literal path to any `SKILL.md` still holds on every line, after `.`, `..` and
-repeated slashes resolve, in any letter case, at any Git revision, including as
-the plan-check operand. A bare `SKILL.md` in prose names no file. Supported owned
-resource reads become quoted, binding-guarded `read-workflow` commands; the Node
-command becomes `plan-check`. Exact emitted commands can be translated again.
+repeated slashes resolve, in any letter case, at any Git revision. A bare `SKILL.md` in prose names no file. Supported owned
+resource reads become quoted, binding-guarded `read-workflow` commands. Exact
+emitted commands can be translated again.
 Shell operators and expansions on bundled operands hold rather than being
 partially rewritten. Commands outside skill directories that name no skill body
 or bundled operand retain their shell syntax and consumer Git revisions.
@@ -101,14 +97,8 @@ text does not establish ownership. Line continuations and heredocs hold before
 fragment processing. This translator enforces a plan contract, not a shell
 sandbox; host permissions remain the execution boundary.
 
-The installed Node helper validates the absolute consumer plan path
-and preserves its exit code and diagnostics. Before execution, stderr reports a JSON
-identity record with `checker_path`, `checker_sha256`, `payload_sha256` and
-`plugin_commit`. Save it with the verdict. The commit is the installed tracked
-checkout's HEAD, or null when Git metadata is unavailable; it is never the
-consumer's commit. The file and payload digests identify uncommitted or Gitless
-bytes. Any binding, hash, mode or
-required-file drift blocks rereading or validation. Reconcile changed payloads
+Any binding, hash, mode or required-file drift blocks rereading.
+Reconcile changed payloads
 with the operator; never silently rebind a live program. These commands do not
 arm loops or start implementation.
 

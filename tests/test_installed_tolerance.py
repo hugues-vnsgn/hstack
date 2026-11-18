@@ -121,7 +121,7 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                  '.claude/skills/mine/SKILL.MD', '.claude/skills/mine/Skill.md',
                  '.claude//skills//mine//SKILL.md', 'mine/SKILL.md']
         forms = ['cat {}', 'sed -n 1,20p {}', 'git show origin/main:{}', 'git show HEAD:{}',
-                 'node skills/hugues-mode/scripts/check-plan.mjs {}', '`cat {}`']
+                 'node skills/hugues-mode/scripts/bootstrap.ts {}', '`cat {}`']
         for path in paths:
             for form in forms:
                 with self.subTest(line=form.format(path)):
@@ -196,7 +196,7 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
                      "cat $(find .claude -iname 'skill.md",
                      'cat .claude/Skills',
                      'find skills -type f -exec cat {} ;',
-                     'node skills/hugues-mode/scripts/check-plan.mjs .claude/skills/mine/notes.md',
+                     'node skills/hugues-mode/scripts/bootstrap.ts .claude/skills/mine/notes.md',
                      'git show HEAD:skills/hugues-mode/playbooks/feature.md']:
             with self.subTest(text=text):
                 result = self.plan_result(text)
@@ -328,8 +328,7 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
             bound = self.run_tool('bind')
             self.assertEqual(bound.returncode, 0, bound.stderr)
             self.binding.write_text(bound.stdout)
-            for command in ['cat ' + FEATURE,
-                            'node skills/hugues-mode/scripts/check-plan.mjs plan.md']:
+            for command in ['cat ' + FEATURE]:
                 with self.subTest(folder=folder, command=command):
                     translated = self.plan_result(command)
                     self.assertEqual(translated.returncode, 0, translated.stderr)
@@ -341,10 +340,7 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
         helper = ['python3', str(self.helper)]
         binding = ['--binding', str(self.binding), '--']
         plan_path = str(self.consumer / 'filled plan.md')
-        replacements = {
-            'node skills/hugues-mode/scripts/check-plan.mjs ' + shlex.quote(plan_path):
-                shlex.join(helper + ['plan-check'] + binding + [plan_path]),
-        }
+        replacements = {}
         for playbook in ['autopilot-full', 'autopilot-stack', 'opening-a-pr']:
             source = f'skills/hugues-mode/playbooks/{playbook}.md'
             guarded = shlex.join(helper + ['read-workflow'] + binding + [source])
@@ -352,7 +348,7 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
             replacements['git show origin/main:' + source] = guarded
         commands = {}
         inline = r'(?<!`)`([^`\n]+)`(?!`)'
-        for template in ['multi-phase-plan', 'autopilot-full', 'autopilot-stack']:
+        for template in ['autopilot-full', 'autopilot-stack']:
             for execution in ['autopilot-full', 'autopilot-stack']:
                 with self.subTest(template=template, execution=execution):
                     text = (self.plugin / f'skills/hugues-mode/playbooks/{template}.md').read_text()
@@ -422,9 +418,9 @@ class InstalledTolerance(InstalledFixture, unittest.TestCase):
     def test_translate_rejects_consumer_and_external_skill_body_paths(self):
         # A consumer's own `.claude/skills/...` or `.agents/skills/...` convention, and an
         # external plugin's skill, are never bundled references: no guarded read ever
-        # substitutes for their native invocation. The plan-check helper's operand is the
-        # round 3 review's case: it must not translate a consumer skill into a validation run.
-        helper = 'skills/hugues-mode/scripts/check-plan.mjs'
+        # substitutes for their native invocation. A helper command's operand is the
+        # round 3 review's case: it must not translate a consumer skill into a helper run.
+        helper = 'skills/hugues-mode/scripts/bootstrap.ts'
         for text in ['cat .claude/skills/mine/SKILL.md',
                      'cat .agents/skills/mine/SKILL.md',
                      '`other-plugin/skills/foo/SKILL.md`',
@@ -495,8 +491,8 @@ class SkillBodyRejectionMatrix(InstalledFixture, unittest.TestCase):
                 '.agents/skills/mine/SKILL.md', 'node_modules/pkg/skills/foo/SKILL.md']
     PLAN_FORMS = ['`{p}`', '{p}', 'cat {p}', 'cat "{p}"', "cat '{p}'", 'git show origin/main:{p}',
                   'git show HEAD:{p}', 'git show feature-branch:{p}', 'sed -n 1,5p {p}', 'head {p}',
-                  'node skills/hugues-mode/scripts/check-plan.mjs {p}',
-                  'node pstack/skills/poteto-mode/scripts/check-plan.mjs {p}',
+                  'node skills/hugues-mode/scripts/bootstrap.ts {p}',
+                  'node pstack/skills/poteto-mode/scripts/bootstrap.ts {p}',
                   '`cat {p}`', 'Read ({p}) first.']
 
     def setUp(self):

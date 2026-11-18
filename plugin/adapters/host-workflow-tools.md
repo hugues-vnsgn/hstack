@@ -16,7 +16,6 @@ consumer plans, stores and log files against that directory.
 
 | Canonical operand and caller | Installed command |
 |---|---|
-| `node skills/hugues-mode/scripts/check-plan.mjs <plan.md>` in multi-phase-plan | `python3 "<plugin>/adapters/host_tools.py" plan-check --binding "<program>/plugin-binding.json" "<absolute-consumer-plan.md>"` |
 | `scripts/watch-pr/watch-pr` in babysit and shipping, including `--queued-stack` | `bun "<plugin>/skills/hugues-mode/scripts/watch-pr/watch-pr" <same arguments>` |
 | `scripts/log.sh` in show-me-your-work | `bash "<plugin>/skills/show-me-your-work/scripts/log.sh" <same arguments>` |
 | Worktree-cleanup's upstream audit script | `worktree-audit` through the installed host tools below |
@@ -32,16 +31,14 @@ table itself, without a hand-written script path in its brief.
 ## Agent-store translation
 
 Before a plan, program or decision trail needs the inherited "agent store",
-or Orchestrate's Project store, use the operator-named directory or the
+use the operator-named directory or the
 existing program's recorded directory. With none established, use
 `~/hstack-evidence/<date>-<task>/`. Resolve that choice once to an absolute path
 and carry it into briefs, helpers, pickup notes and replacement coordinators.
 Resume the recorded store rather than creating a new dated directory.
 
-Keep the relative layout: plans under `docs/`, programs under
-`orchestrate/<project-slug>/` as Orchestrate's Project store, and their
-decision trails. Orchestrate's Project tracker is `notes.md` in that program
-directory. Explicit plan and log targets still win. Pass the
+Keep the relative layout: plans under `docs/`.
+Explicit plan and log targets still win. Pass the
 complete log-file path to `log.sh`. Keep all state outside
 the installed plugin. This is a path translation, not a new runtime or permission
 to access another program's state.
@@ -61,9 +58,8 @@ Run commands directly. Never use a wrapper script that runs arbitrary arguments.
 ## Planning and audit translations
 
 For executable operands in planning and cleanup, use the installed
-[host tools](host-tools.md) and [entrypoint](host_tools.py). In multi-phase-plan,
-replace the consumer-relative Node command with `plan-check`. Translate bundled
-`git show origin/main:skills/...` reads in that plan and autopilot-full/stack to
+[host tools](host-tools.md) and [entrypoint](host_tools.py). Translate bundled
+`git show origin/main:skills/...` reads in a filled plan and in autopilot-full/stack to
 `read-workflow` using the program's saved installed-payload binding at every tick.
 Consumer-owned trunk reads stay on consumer Git. In worktree-cleanup step 1 use
 `worktree-audit` with explicit authorized native source inputs. Unknown activity

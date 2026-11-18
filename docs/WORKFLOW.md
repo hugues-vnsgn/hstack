@@ -2,7 +2,7 @@
 
 Load the intended checkout using the [guide](DEVELOPER-GUIDE.md). State a goal, consumer path/revision, authorized actions and an observable result. Invoke the mode natively. Its canonical body applies the host contract and mobile applicability before selecting a playbook. If native invocation is unavailable or denied, hold; do not substitute a file read.
 
-Intent precedes domain: pause, pickup, maintenance, authoring, review and investigation retain their own routes. Language alone grants no implementation authority. Large or unmatched work uses figure-it-out; standing programs use Orchestrate. Mobile proof becomes a phase in that workflow.
+Intent precedes domain: pause, pickup, maintenance, authoring, review and investigation retain their own routes. Language alone grants no implementation authority. Large or unmatched work uses figure-it-out. Mobile proof becomes a phase in that workflow.
 
 The coordinator grounds/designs, copies the selected todos, delegates fresh rounds, reads actual outputs and verifies them. Feature work with several valid shapes requires arena. Mobile bug work observes RED against unfixed production before a separate production worker, then GREEN on the same regression, or records the pinned impractical-test exception. KMP/CMP changes need affected target proof.
 

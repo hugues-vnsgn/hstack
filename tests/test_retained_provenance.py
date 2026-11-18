@@ -41,7 +41,7 @@ class RetainedProvenanceTests(unittest.TestCase):
                             upstream_version=self.source['version'], package='fixture', files=[])
         # These tiny adaptations exist only in temporary fixtures. The fingerprints
         # still refer to the real pinned how source, not a synthetic snapshot.
-        for source in ('pstack/skills/how/SKILL.md', 'pstack/skills/how/references/explorer-prompt.md'):
+        for source in ('pstack/skills/how/SKILL.md', 'pstack/skills/architect/SKILL.md'):
             row = next(row for row in self.ledger['items'] if row['path'] == source)
             destination = 'plugin/' + source[len('pstack/'):]
             row.update(implementation_state='present', disposition='port with adaptation',
@@ -69,7 +69,7 @@ class RetainedProvenanceTests(unittest.TestCase):
                                  'check', '--root', str(self.root)], capture_output=True, text=True)
         if error is None:
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertIn('Verified pstack 0.15.36', result.stdout)
+            self.assertIn('Verified pstack 0.15.43', result.stdout)
         else:
             self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
             self.assertIn(error, result.stderr)
@@ -91,13 +91,13 @@ class RetainedProvenanceTests(unittest.TestCase):
         self.run_check('coverage missing')
 
     def test_duplicate_sources_and_destinations_rejected(self):
-        for field in ('source', 'destination'):
-            with self.subTest(field=field):
-                saved = copy.deepcopy(self.receipt)
-                self.receipt['files'][1][field] = self.receipt['files'][0][field]
-                self.save()
-                self.run_check('duplicate retained')
-                self.receipt = saved
+        # Each family has one upstream file now, so a second entry cannot repeat only the source
+        # or only the destination and stay inside its own family. It repeats both.
+        saved = copy.deepcopy(self.receipt)
+        self.receipt['files'][1] = copy.deepcopy(self.receipt['files'][0])
+        self.save()
+        self.run_check('duplicate retained')
+        self.receipt = saved
 
     def test_duplicate_receipts_across_packages_rejected(self):
         self.run_check()
@@ -184,6 +184,7 @@ class RetainedProvenanceTests(unittest.TestCase):
     def test_unreceipted_reference_rejected_and_missing_destination_rejected(self):
         self.run_check()
         reference = self.root / 'plugin/skills/how/references/unreceipted.md'
+        reference.parent.mkdir()
         reference.write_bytes(b'Unreceipted reference.\n')
         self.run_check('coverage missing')
         reference.unlink()

@@ -22,7 +22,7 @@
       "workers": []
     },
     "bug_fix": {
-      "scenario": "One local CLI logic defect in one Python function, simple how, one source-control why category, cheap existing regression target; one scoped implementation worker; no defensive-code investigation, function-boundary change, comment findings, retries or mobile work. Includes the full Opening a PR contract and its preparatory guidance. External publication is modeled only, never executed.",
+      "scenario": "One local CLI logic defect in one Python function, a traced subsystem, cheap existing regression target; one scoped implementation worker; no defensive-code investigation, function-boundary change, comment findings, retries or mobile work. Includes the full Opening a PR contract and its preparatory guidance. External publication is modeled only, never executed.",
       "required": [
         {
           "path": "plugin/agents/hugues-agent.md",
@@ -35,10 +35,6 @@
         {
           "path": "plugin/skills/how/SKILL.md",
           "reason": "Ground the affected subsystem"
-        },
-        {
-          "path": "plugin/skills/how/references/explainer-prompt.md",
-          "reason": "Simple explainer or complex synthesis prompt"
         },
         {
           "path": "plugin/skills/hugues-mode/SKILL.md",
@@ -117,26 +113,6 @@
           "reason": "Regression history investigation"
         },
         {
-          "path": "plugin/skills/why/references/epistemics.md",
-          "reason": "Required source-control investigation/synthesis reference"
-        },
-        {
-          "path": "plugin/skills/why/references/investigator-prompt.md",
-          "reason": "Required source-control investigation/synthesis reference"
-        },
-        {
-          "path": "plugin/skills/why/references/source-playbook.md",
-          "reason": "Required source-control investigation/synthesis reference"
-        },
-        {
-          "path": "plugin/skills/why/references/sources/code-archaeology.md",
-          "reason": "Required source-control investigation/synthesis reference"
-        },
-        {
-          "path": "plugin/skills/why/references/synthesizer-prompt.md",
-          "reason": "Required source-control investigation/synthesis reference"
-        },
-        {
           "path": "plugin/skills/principle-subtract-before-you-add/SKILL.md",
           "reason": "Evaluate removal or reuse before adding the regression case or feature code"
         }
@@ -147,21 +123,6 @@
         "host-publication.md"
       ],
       "workers": [
-        {
-          "role": "how explainer",
-          "count": 1,
-          "mode_context": false
-        },
-        {
-          "role": "why source-control investigator",
-          "count": 1,
-          "mode_context": false
-        },
-        {
-          "role": "why synthesizer",
-          "count": 1,
-          "mode_context": false
-        },
         {
           "role": "implementation",
           "count": 1,
@@ -181,7 +142,7 @@
       ]
     },
     "larger_feature": {
-      "scenario": "One TypeScript CLI feature with repeatable state transitions spanning three modules in one existing subsystem. Complex how runs in Feature and Architect, two exploration angles each. One design arena and one implementation arena, each three candidates and one judge. No ownership redesign, contested design, retries, comment findings, mobile work or unattended program. Includes full Opening a PR contract and preparatory guidance. A genuinely large/cross-cutting migration requires figure-it-out and a task-designed closure, not this fixed profile.",
+      "scenario": "One TypeScript CLI feature with repeatable state transitions spanning three modules in one existing subsystem. The subsystem is traced in Feature and Architect without workers. One design arena and one implementation arena, each three candidates and one judge. No ownership redesign, contested design, retries, comment findings, mobile work or unattended program. Includes full Opening a PR contract and preparatory guidance. A genuinely large/cross-cutting migration requires figure-it-out and a task-designed closure, not this fixed profile.",
       "required": [
         {
           "path": "plugin/agents/hugues-agent.md",
@@ -196,32 +157,12 @@
           "reason": "Mandatory feature design exploration"
         },
         {
-          "path": "plugin/skills/architect/references/design-red-flags.md",
-          "reason": "Mandatory architect candidate/synthesis input"
-        },
-        {
-          "path": "plugin/skills/architect/references/rationale-template.md",
-          "reason": "Mandatory architect candidate/synthesis input"
-        },
-        {
-          "path": "plugin/skills/architect/references/runner-prompt.md",
-          "reason": "Mandatory architect candidate/synthesis input"
-        },
-        {
           "path": "plugin/skills/arena/SKILL.md",
           "reason": "Design and implementation alternatives"
         },
         {
           "path": "plugin/skills/how/SKILL.md",
           "reason": "Ground the affected subsystem"
-        },
-        {
-          "path": "plugin/skills/how/references/explainer-prompt.md",
-          "reason": "Simple explainer or complex synthesis prompt"
-        },
-        {
-          "path": "plugin/skills/how/references/explorer-prompt.md",
-          "reason": "Complex subsystem exploration"
         },
         {
           "path": "plugin/skills/hugues-mode/SKILL.md",
@@ -343,16 +284,6 @@
         "host-publication.md"
       ],
       "workers": [
-        {
-          "role": "how explorer across two rounds",
-          "count": 4,
-          "mode_context": false
-        },
-        {
-          "role": "how explainer across two rounds",
-          "count": 2,
-          "mode_context": false
-        },
         {
           "role": "arena design candidate",
           "count": 3,
