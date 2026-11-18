@@ -264,6 +264,93 @@ class InstalledAdapters(InstalledFixture, unittest.TestCase):
         self.assertIn('separate active/pinned-chat gate', cleanup)
 
 
+def claude_current_rows(cwd, stamp):
+    base = {'sessionId': 'fixture-session', 'version': '2.1.317', 'entrypoint': 'cli',
+            'userType': 'external', 'gitBranch': 'scratch', 'isSidechain': False,
+            'cwd': str(cwd), 'timestamp': stamp}
+    usage = {'input_tokens': 3, 'output_tokens': 5, 'cache_creation_input_tokens': 7,
+             'cache_read_input_tokens': 11,
+             'cache_creation': {'ephemeral_1h_input_tokens': 0, 'ephemeral_5m_input_tokens': 7},
+             'server_tool_use': {'web_fetch_requests': 0, 'web_search_requests': 0},
+             'output_tokens_details': {'thinking_tokens': 2}, 'service_tier': 'standard',
+             'speed': 'standard', 'inference_geo': '', 'iterations': [], 'fallback_credit': None}
+    assistant = dict(base, type='assistant', uuid='a1', parentUuid='a0', requestId='req',
+                     requestRef='ref', requestedModel='model', effort='high', perTurnEffort='high',
+                     attributionSkill='skill', attributionPlugin='plugin', apiBlockIndex=0,
+                     message={'id': 'msg', 'type': 'message', 'role': 'assistant', 'model': 'model',
+                              'stop_reason': 'tool_use', 'stop_sequence': None, 'container': None,
+                              'context_management': None, 'diagnostics': {'cache_miss_reason': {'type': 'none'}},
+                              'input_transformations': [{'type': 'thinking_dropped', 'path': 'messages.3.content.1', 'reason': 'plain'}],
+                              'stop_details': None, 'usage': usage,
+                              'content': [{'type': 'thinking', 'thinking': 'plain', 'signature': 'sig'},
+                                          {'type': 'tool_use', 'id': 'tu1', 'name': 'Read',
+                                           'input': {'file_path': 'README.md'}, 'caller': {'type': 'direct'}}]})
+    user = dict(base, type='user', uuid='u1', parentUuid='a1', promptId='prompt', sandboxed=False,
+                permissionMode='default', promptSource='user', origin={'kind': 'human'},
+                turnPosition={'promptIndex': 0, 'turnIndex': 1}, isVisibleInTranscriptOnly=False,
+                permissionDecision={'decision': 'allow', 'source': 'user', 'grantScope': 'once'},
+                toolUseResult={'type': 'text', 'file': {'numLines': 1, 'totalLines': 1, 'content': 'plain'}},
+                message={'role': 'user', 'content': [{'type': 'tool_result', 'tool_use_id': 'tu1',
+                                                      'content': 'plain', 'is_error': False}]})
+    schema = {'properties': {'file_path': {'type': 'string'}, 'path': {'type': 'string'}}}
+    tool = {'name': 'Read', 'description': 'plain', 'defer_loading': False, 'input_schema': schema}
+    meta = {'sessionId': 'fixture-session'}
+    return [
+        dict(meta, type='mode', mode='normal'),
+        dict(meta, type='permission-mode', permissionMode='default'),
+        dict(meta, type='session-owner', accountUuid='account', organizationUuid='organization'),
+        dict(meta, type='atis-latch', atis='latch'),
+        dict(meta, type='queue-operation', operation='enqueue', content='plain', timestamp=stamp),
+        dict(meta, type='last-prompt', lastPrompt='plain', leafUuid='u1'),
+        dict(meta, type='ai-title', aiTitle='plain'),
+        dict(meta, type='custom-title', customTitle='plain'),
+        dict(meta, type='agent-name', agentName='plain'),
+        dict(meta, type='pr-link', prNumber=1, prRepository='owner/repo',
+             prUrl='https://example.invalid/pull/1', timestamp=stamp),
+        dict(meta, type='tools-used', tools=['Read']),
+        dict(meta, type='cost-state', hasUnknownModelCost=False, startTime=1, totalCostUSD=0.5,
+             totalDuration=2, totalAPIDuration=1, totalLinesAdded=0, totalLinesRemoved=0,
+             modelUsage={'model': {'inputTokens': 3}}),
+        dict(base, type='system', subtype='turn_duration', durationMs=5, messageCount=2,
+             pendingBackgroundAgentCount=0, isMeta=False, uuid='s1', parentUuid='u1'),
+        dict(base, type='system', subtype='local_command', content='plain', level='info', isMeta=False,
+             commandRun={'command': 'plain', 'args': 'plain'}, uuid='s2', parentUuid='u1'),
+        dict(base, type='attachment', uuid='t1', parentUuid='u1', renderedRole='user',
+             rendered=[{'content': 'plain'}], renderedInHumanTurn=[{'content': 'plain'}],
+             attachment={'type': 'deferred_tools_delta', 'addedNames': ['Read'], 'loadedNames': [],
+                         'toolSearchAbsent': False}),
+        dict(base, type='attachment', uuid='t2', parentUuid='u1', renderedRole='user',
+             rendered=[{'content': 'plain'}],
+             attachment={'type': 'deferred_tools_record', 'entries': [tool]}),
+        dict(base, type='attachment', uuid='t3', parentUuid='u1', renderedRole='user',
+             rendered=[{'content': 'plain'}],
+             attachment={'type': 'file', 'filename': str(Path(cwd) / 'README.md'),
+                         'displayPath': 'README.md', 'content': {'type': 'text', 'file': {'content': 'plain'}}}),
+        dict(meta, type='api-request-shape', shapeHash='shape', timestamp=stamp, version='2.1.317',
+             shape={'system': [{'type': 'text', 'text': 'plain'}], 'tools': [tool]}),
+        dict(meta, type='api-request', id='request', base='shape', tail=['blob'], keep=1,
+             cacheControl=[{'path': ['messages', 1], 'value': {'type': 'ephemeral', 'ttl': '1h'}}],
+             shapeHash='shape',
+             requestDigest='digest', querySource='sdk', timestamp=stamp, version='2.1.317',
+             params={'model': 'model', 'max_tokens': 1, 'betas': [], 'thinking': {'type': 'adaptive'},
+                     'safeguards': [{'type': 'dangerous_tool_use',
+                                     'classifier_context': {'live_cwd': str(cwd), 'platform': 'plain',
+                                                            'trusted_directories': {'primary': {'path': str(cwd), 'resolved': [str(cwd)]},
+                                                                                    'additional': []}}}]}),
+        dict(meta, type='api-request-blob', hash='blob',
+             message={'role': 'user', 'content': [{'type': 'text', 'text': 'plain'}]}),
+        {'type': 'file-history-snapshot', 'messageId': 'u1', 'isSnapshotUpdate': False,
+         'snapshot': {'messageId': 'u1', 'timestamp': stamp,
+                      'trackedFileBackups': {'README.md': {'backupFileName': None, 'backupTime': stamp,
+                                                           'realParentDir': str(cwd), 'version': 1}}}},
+        {'type': 'file-history-delta', 'messageId': 'u1', 'snapshotMessageId': 'u1', 'timestamp': stamp,
+         'trackingPath': str(Path(cwd) / 'README.md'),
+         'backup': {'backupFileName': None, 'backupTime': stamp, 'realParentDir': str(cwd), 'version': 1}},
+        assistant,
+        user,
+    ]
+
+
 class SyntheticActivity(unittest.TestCase):
     def setUp(self):
         temp = tempfile.TemporaryDirectory(prefix='hstack-synthetic-history-')
@@ -684,18 +771,276 @@ class SyntheticActivity(unittest.TestCase):
         row = self.claude(message={'content': [{'type': 'tool_use', 'name': 'Read'}]})
         self.assertFalse(self.scan('claude', [row])[2])
 
-    def test_unsupported_host_is_ignored_without_reading_or_coverage(self):
-        ignored = {'provider': 'omp', 'root': '/not-authorized/not-read', 'coverage': 'complete'}
+    def test_unsupported_host_is_never_read_and_caps_coverage(self):
+        unread = {'provider': 'omp', 'root': '/not-authorized/not-read', 'coverage': 'complete'}
         with patch.object(activity, 'read_selected', side_effect=AssertionError('must not read unsupported host')):
-            hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [ignored]}, [self.wt], self.now)
+            hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [unread]}, [self.wt], self.now)
         self.assertFalse(complete)
         self.assertFalse(hits[str(self.wt)])
-        self.assertEqual(reports[0]['coverage'], 'ignored')
+        self.assertEqual(reports[0]['coverage'], 'unsupported')
         root = self.area / 'authorized empty host'
         root.mkdir()
         supported = {'provider': 'claude', 'root': str(root), 'authorization': 'synthetic', 'coverage': 'complete'}
         with patch.object(activity, 'read_selected', side_effect=AssertionError('empty root has no file reads')):
-            self.assertFalse(activity.scan({'coverage': 'complete', 'sources': [ignored, supported]}, [self.wt], self.now)[2])
+            self.assertFalse(activity.scan({'coverage': 'complete', 'sources': [unread, supported]}, [self.wt], self.now)[2])
+
+    def test_complete_claude_source_with_an_unread_omp_source_is_not_complete(self):
+        transcript = self.area / 'claude.jsonl'
+        transcript.write_text(json.dumps(self.claude()) + '\n')
+        claude = {'provider': 'claude', 'files': [str(transcript)], 'authorization': 'synthetic', 'coverage': 'complete'}
+        omp = {'provider': 'omp', 'files': [str(self.area / 'omp.jsonl')], 'authorization': 'synthetic', 'coverage': 'complete'}
+        hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': [claude]}, [self.wt], self.now)
+        self.assertTrue(complete)
+        for sources in ([claude, omp], [omp, claude]):
+            with self.subTest(order=[source['provider'] for source in sources]):
+                with patch.object(activity, 'read_selected', wraps=activity.read_selected) as read:
+                    hits, reports, complete = activity.scan({'coverage': 'complete', 'sources': sources}, [self.wt], self.now)
+                self.assertFalse(complete)
+                self.assertEqual([call.args[0] for call in read.call_args_list], [transcript])
+                self.assertEqual({report['provider']: report['coverage'] for report in reports},
+                                 {'claude': 'complete', 'omp': 'unsupported'})
+                self.assertTrue(hits[str(self.wt)])
+
+    def test_claude_2_1_31x_transcript_with_activity_is_complete(self):
+        rows = claude_current_rows(self.wt, self.stamp)
+        hits, reports, complete = self.scan('claude', rows)
+        self.assertTrue(complete)
+        self.assertEqual(reports[0]['coverage'], 'complete')
+        self.assertEqual(reports[0]['files_scanned'], 1)
+        self.assertTrue(hits[str(self.wt)][0]['recent'])
+        self.assertFalse(hits[str(self.other)])
+        for row in rows:
+            with self.subTest(row_type=row['type']):
+                self.assertTrue(self.scan('claude', [row])[2])
+
+    def test_unknown_claude_metadata_keys_keep_their_activity_visible(self):
+        sibling = '../' + self.other.name + '/README.md'
+        read_sibling = {'type': 'tool_use', 'name': 'Read', 'input': {'file_path': sibling}}
+        for key in ['toolUseResult', 'futureMetadata']:
+            with self.subTest(key=key, shape='absolute mention'):
+                hits, _, complete = self.scan('claude', [self.claude(**{key: {'detail': str(self.other)}})])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+            with self.subTest(key=key, shape='supported tool call'):
+                hits, _, complete = self.scan('claude', [self.claude(**{key: [read_sibling]})])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+            for shape, value in [('unsupported tool call', [{'type': 'tool_use', 'name': 'Grep', 'input': {'pattern': 'x'}}]),
+                                 ('native tool_calls', {'tool_calls': []}),
+                                 ('relative path field', {'type': 'file_reference', 'path': sibling}),
+                                 ('relative path beside a tool call', {**read_sibling, 'path': sibling}),
+                                 ('nested relative path field', [{'detail': {'file_path': 'README.md'}}]),
+                                 ('non-string path field', {'path': ['README.md']})]:
+                with self.subTest(key=key, shape=shape):
+                    self.assertFalse(self.scan('claude', [self.claude(**{key: value})])[2])
+        with self.subTest(shape='message metadata'):
+            message = {'content': [], 'future_detail': {'path': sibling}}
+            self.assertFalse(self.scan('claude', [self.claude(message=message)])[2])
+            message = {'content': [], 'input_transformations': [{'type': 'thinking_dropped', 'path': 'messages.3.content.1/../x'}]}
+            self.assertFalse(self.scan('claude', [self.claude(message=message)])[2])
+            message = {'content': [], 'future_detail': str(self.other)}
+            hits, _, complete = self.scan('claude', [self.claude(message=message)])
+            self.assertTrue(complete)
+            self.assertTrue(hits[str(self.other)])
+
+    def test_unknown_claude_row_types_hold_and_known_metadata_rows_still_see_text(self):
+        for kind in ['progress', 'future-row-type']:
+            with self.subTest(kind=kind):
+                self.assertFalse(self.scan('claude', [{'type': kind, 'sessionId': 'fixture'}])[2])
+        attachment = {'type': 'attachment', 'cwd': str(self.wt), 'timestamp': self.stamp,
+                      'attachment': {'type': 'file', 'filename': str(self.other / 'README.md')}}
+        hits, _, complete = self.scan('claude', [attachment])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.other)])
+        call = {'type': 'tool_use', 'name': 'Read', 'input': {'file_path': '../' + self.other.name + '/README.md'}}
+        system = {'type': 'system', 'subtype': 'local_command', 'cwd': str(self.wt), 'timestamp': self.stamp}
+        hits, _, complete = self.scan('claude', [dict(system, message={'content': [call]})])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.other)])
+        for row in [dict(attachment, attachment={'type': 'directory', 'path': '../' + self.other.name}),
+                    dict(attachment, attachment={'type': 'hook_success', 'call': dict(call, name='Grep', input={'pattern': 'x'})}),
+                    dict(attachment, cwd='relative/directory'),
+                    {'type': 'attachment', 'timestamp': 'not-a-time'},
+                    {'type': 'mode', 'sessionId': 17}]:
+            with self.subTest(row=row):
+                self.assertFalse(self.scan('claude', [row])[2])
+
+    def test_claude_2_1_31x_activity_blocks_stay_strict(self):
+        call = {'type': 'tool_use', 'id': 'tu1', 'name': 'Read', 'input': {'file_path': 'README.md'}}
+        for name, block in [('unreviewed block key', dict(call, unreviewed='field')),
+                            ('caller is not an object', dict(call, caller='direct')),
+                            ('caller carries a nested value', dict(call, caller={'type': {'path': 'x'}})),
+                            ('unsupported tool', dict(call, name='Grep', input={'pattern': 'x'})),
+                            ('unknown tool input field', dict(call, input={'file_path': 'README.md', 'unknown': 1}))]:
+            with self.subTest(name):
+                row = self.claude(message={'content': [block]})
+                self.assertFalse(self.scan('claude', [row])[2])
+        for name, block in [('unreviewed result key', {'type': 'tool_result', 'tool_use_id': 'tu1', 'content': 'plain', 'unreviewed': 1}),
+                            ('opaque result block', {'type': 'tool_result', 'tool_use_id': 'tu1', 'content': [{'type': 'image', 'source': {}}]}),
+                            ('unknown block type', {'type': 'server_tool_use', 'name': 'x', 'input': {}})]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [self.claude(message={'content': [block]})])[2])
+        for name, message in [('usage is not an object', {'content': [], 'usage': 'opaque'}),
+                              ('negative count', {'content': [], 'usage': {'input_tokens': -1}}),
+                              ('message id is not text', {'content': [], 'id': 17})]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [self.claude(message=message)])[2])
+
+    def test_claude_file_history_paths_resolve_from_the_recorded_parent_directory(self):
+        def backup(parent):
+            entry = {'backupFileName': None, 'backupTime': self.stamp, 'version': 1}
+            return entry if parent is None else dict(entry, realParentDir=str(parent))
+
+        def snapshot(backups):
+            return {'type': 'file-history-snapshot', 'messageId': 'u1', 'isSnapshotUpdate': False,
+                    'snapshot': {'messageId': 'u1', 'timestamp': self.stamp, 'trackedFileBackups': backups}}
+
+        def delta(tracking_path, parent):
+            return {'type': 'file-history-delta', 'messageId': 'u1', 'snapshotMessageId': 'u1',
+                    'timestamp': self.stamp, 'trackingPath': tracking_path, 'backup': backup(parent)}
+        sibling = '../' + self.other.name + '/README.md'
+        for name, row in [('snapshot, absolute', snapshot({str(self.other / 'README.md'): backup(self.other)})),
+                          ('snapshot, relative name', snapshot({sibling: backup(self.other)})),
+                          ('delta, absolute', delta(str(self.other / 'README.md'), self.other)),
+                          ('delta, relative name', delta(sibling, self.other)),
+                          ('delta, absolute through a symlinked directory', delta(str(self.area / 'link' / 'README.md'), self.other))]:
+            with self.subTest(name):
+                hits, _, complete = self.scan('claude', [self.claude(), row])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+        with self.subTest('the session directory is not the base'):
+            hits, _, complete = self.scan('claude', [delta('README.md', self.other)])
+            self.assertTrue(complete)
+            self.assertTrue(hits[str(self.other)])
+            self.assertFalse(hits[str(self.wt)])
+        with self.subTest('a session that changed directory'):
+            old = datetime.fromtimestamp(self.now - 9 * 86400, timezone.utc).isoformat()
+            moved = [self.claude(cwd=str(self.wt), timestamp=old), self.claude(cwd=str(self.area), timestamp=old)]
+            hits, _, complete = self.scan('claude', moved + [delta('README.md', self.wt)])
+            self.assertTrue(complete)
+            self.assertTrue(any(hit['recent'] for hit in hits[str(self.wt)]))
+            hits, _, complete = self.scan('claude', moved + [delta('README.md', None)])
+            self.assertTrue(not complete or any(hit['recent'] for hit in hits[str(self.wt)]))
+        for row in [snapshot({}), delta(str(self.wt / 'README.md'), self.wt)]:
+            hits, _, complete = self.scan('claude', [row])
+            self.assertTrue(complete)
+            self.assertEqual(bool(hits[str(self.wt)]), row['type'] == 'file-history-delta')
+        for name, row in [('snapshot entry without a parent directory', snapshot({'README.md': backup(None)})),
+                          ('snapshot entry is not an object', snapshot({'README.md': 'opaque'})),
+                          ('snapshot parent directory is relative', snapshot({'README.md': dict(backup(None), realParentDir='sub')})),
+                          ('delta without a parent directory', delta('README.md', None)),
+                          ('delta without a backup', {key: value for key, value in delta('README.md', None).items() if key != 'backup'}),
+                          ('delta parent directory is not text', dict(delta('README.md', None), backup=dict(backup(None), realParentDir=['x']))),
+                          ('delta names a directory', delta('..', self.other)),
+                          ('snapshot is not an object', dict(snapshot({}), snapshot='opaque')),
+                          ('backups are not an object', snapshot(['README.md'])),
+                          ('snapshot is missing', {'type': 'file-history-snapshot', 'messageId': 'u1'}),
+                          ('delta lacks a tracking path', {'type': 'file-history-delta', 'messageId': 'u1'}),
+                          ('delta tracking path is not text', delta(['README.md'], self.other))]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [row])[2])
+
+    def assert_seen_or_held(self, rows):
+        hits, _, complete = self.scan('claude', rows)
+        self.assertTrue(hits[str(self.other)] or not complete)
+
+    def test_claude_paths_used_as_dict_keys_are_searched(self):
+        sibling = str(self.other / 'README.md')
+        attachment = {'type': 'attachment', 'cwd': str(self.wt), 'timestamp': self.stamp,
+                      'attachment': {'type': 'file', 'filename': str(self.wt / 'README.md'),
+                                     'content': {sibling: {'status': 'modified'}}}}
+        for name, row in [('user result', self.claude(type='user', message={'content': 'plain'},
+                                                      toolUseResult={'files': {sibling: {'status': 'modified'}}})),
+                          ('attachment', attachment),
+                          ('path in a key of a key', self.claude(type='user', message={'content': 'plain'},
+                                                                 toolUseResult={sibling + '/x': {sibling: 1}}))]:
+            with self.subTest(name):
+                hits, _, complete = self.scan('claude', [row])
+                self.assertTrue(complete)
+                self.assertTrue(hits[str(self.other)])
+
+    def test_claude_relative_paths_in_path_named_fields_are_seen_or_held(self):
+        sibling = '../' + self.other.name + '/README.md'
+        unnormalised = str(self.wt) + '/../' + self.other.name + '/README.md'
+
+        def attachment(**fields):
+            return {'type': 'attachment', 'cwd': str(self.wt), 'timestamp': self.stamp, 'attachment': fields}
+
+        def result(**fields):
+            return self.claude(type='user', message={'content': 'plain'}, toolUseResult=fields)
+        for name, row in [('relative filePath in a result', result(type='update', filePath=sibling)),
+                          ('unnormalised filePath in a result', result(type='update', filePath=unnormalised)),
+                          ('relative filename in an attachment', attachment(type='edited_text_file', filename=sibling, snippet='plain')),
+                          ('unnormalised filename in an attachment', attachment(type='edited_text_file', filename=unnormalised, snippet='plain')),
+                          ('relative workingDirectory', attachment(type='environment', workingDirectory='../' + self.other.name)),
+                          ('relative displayPath alone', attachment(type='file', displayPath=sibling)),
+                          ('relative displayPath beside a relative filename', attachment(type='file', displayPath=sibling, filename=sibling)),
+                          ('tilde filename', attachment(type='file', filename='~/' + self.other.name))]:
+            with self.subTest(name):
+                self.assert_seen_or_held([row])
+        with self.subTest('displayPath beside its absolute filename'):
+            hits, _, complete = self.scan('claude', [attachment(type='file', displayPath=sibling, filename=str(self.other / 'README.md'))])
+            self.assertTrue(complete)
+            self.assertTrue(hits[str(self.other)])
+
+    def test_unobserved_claude_system_subtypes_and_attachment_types_hold(self):
+        command = {'command': 'rm', 'args': '-rf ../' + self.other.name}
+        system = {'type': 'system', 'cwd': str(self.wt), 'timestamp': self.stamp, 'commandRun': command}
+        attachment = {'type': 'attachment', 'cwd': str(self.wt), 'timestamp': self.stamp}
+        for name, row in [('unknown subtype', dict(system, subtype='future_subtype')),
+                          ('no subtype', system),
+                          ('subtype is not text', dict(system, subtype=['local_command'])),
+                          ('unknown attachment type', dict(attachment, attachment={'type': 'future_attachment', 'detail': 'plain'})),
+                          ('no attachment type', dict(attachment, attachment={'detail': 'plain'})),
+                          ('attachment is not an object', dict(attachment, attachment='plain'))]:
+            with self.subTest(name):
+                self.assertFalse(self.scan('claude', [row])[2])
+        for subtype in ['local_command', 'turn_duration', 'stop_hook_summary']:
+            with self.subTest(subtype=subtype):
+                self.assertTrue(self.scan('claude', [dict(system, subtype=subtype)])[2])
+
+    def test_claude_metadata_path_fields_stay_strings(self):
+        sibling = '../' + self.other.name
+        attachment = {'type': 'attachment', 'cwd': str(self.wt), 'timestamp': self.stamp}
+        for name, fields in [('list', {'type': 'file', 'path': [sibling, 'README.md']}),
+                             ('object', {'type': 'file', 'path': {'relative': sibling + '/README.md'}}),
+                             ('number', {'type': 'file', 'path': 7}),
+                             ('nested list', {'type': 'file', 'detail': {'file_path': [sibling]}})]:
+            with self.subTest(name):
+                self.assert_seen_or_held([dict(attachment, attachment=fields)])
+        with self.subTest('tool schemas and cache markers'):
+            schema = {'properties': {'path': {'type': 'string', 'default': str(self.other)}}}
+            rows = [dict(attachment, attachment={'type': 'deferred_tools_record', 'entries': [{'name': 'x', 'input_schema': schema}]}),
+                    {'type': 'api-request', 'sessionId': 's', 'timestamp': self.stamp,
+                     'cacheControl': [{'path': ['messages', 1], 'value': {'type': 'ephemeral'}}]}]
+            for row in rows:
+                self.assertTrue(self.scan('claude', [row])[2])
+            hits, _, complete = self.scan('claude', rows[:1])
+            self.assertTrue(hits[str(self.other)])
+        with self.subTest('a non-string path outside the schema keys'):
+            self.assert_seen_or_held([dict(attachment, attachment={'type': 'file', 'detail': {'path': [sibling]}})])
+
+    def test_claude_tool_calls_outside_the_tool_use_shape_hold(self):
+        sibling = '../' + self.other.name + '/README.md'
+        meta = {'type': 'api-request-blob', 'sessionId': 's', 'hash': 'h'}
+
+        def blob(block):
+            return dict(meta, message={'role': 'assistant', 'content': [block]})
+        read = {'type': 'tool_use', 'id': 't', 'name': 'Read', 'input': {'file_path': sibling}}
+        hits, _, complete = self.scan('claude', [self.claude(), blob(read)])
+        self.assertTrue(complete)
+        self.assertTrue(hits[str(self.other)])
+        classifier = {'type': 'dangerous_tool_use', 'classifier_context': {'live_cwd': str(self.wt)}}
+        request = {'type': 'api-request', 'sessionId': 's', 'timestamp': self.stamp, 'params': {'safeguards': [classifier]}}
+        self.assertTrue(self.scan('claude', [request])[2])
+        for name, row in [('a call named like the classifier', dict(request, params={'safeguards': [dict(classifier, name='bash', input={})]})),
+                          ('mcp_tool_use', blob({'type': 'mcp_tool_use', 'id': 't', 'name': 'write_file', 'server_name': 'fs', 'input': {'file': sibling}})),
+                          ('server_tool_use', blob({'type': 'server_tool_use', 'id': 't', 'name': 'bash', 'input': {'command': 'cat ' + sibling}})),
+                          ('a call encoded in the blob list',
+                           {'type': 'api-request', 'sessionId': 's', 'timestamp': self.stamp,
+                            'tail': [json.dumps(read)]})]:
+            with self.subTest(name):
+                self.assert_seen_or_held([self.claude(), row])
 
     def test_nested_progress_and_unknown_claude_blocks_hold(self):
         nested = self.claude(type='progress', data={'type': 'agent_progress', 'message': self.claude()})
@@ -796,9 +1141,9 @@ class SyntheticActivity(unittest.TestCase):
     def test_nonoperative_envelopes_require_reviewed_text_schemas(self):
         for provider, row in [('claude', self.claude(unknown={'type': 'file_reference', 'path': '../sibling'})),
                               ('codex', self.codex(unknown={'type': 'file_reference', 'path': '../sibling'})),
-                              ('claude', self.claude(message={'content': [], 'usage': {'unknown': '../sibling'}}))]:
+                              ('claude', self.claude(message={'content': [], 'usage': {'unknown': {'path': '../sibling'}}}))]:
             self.assertFalse(self.scan(provider, [row])[2])
-        for kind in ['system', 'file-history-snapshot', 'queue-operation']:
+        for kind in ['progress', 'future-row-type']:
             self.assertFalse(self.scan('claude', [self.claude(type=kind)])[2])
         for row in [self.claude(type='summary', summary=17),
                     {'type': 'summary', 'summary': 'plain', 'unknown': {'type': 'file_reference', 'path': '../sibling'}},
@@ -1048,20 +1393,63 @@ class ConsumerAudit(InstalledFixture, unittest.TestCase):
         _, report = self.audit(manifest)
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-wip')
 
-    def test_cli_unsupported_host_is_ignored_and_cannot_supply_supported_host_coverage(self):
-        ignored = {'provider': 'omp', 'files': ['/not-authorized/not-read.jsonl'], 'coverage': 'complete'}
-        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [ignored]})
+    def test_cli_unsupported_host_is_never_read_and_holds_the_audit(self):
+        unread = {'provider': 'omp', 'files': ['/not-authorized/not-read.jsonl'], 'coverage': 'complete'}
+        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [unread]})
         self.assertEqual(result.returncode, 2)
-        self.assertEqual(report['sources'][0]['coverage'], 'ignored')
+        self.assertEqual(report['sources'][0]['coverage'], 'unsupported')
         self.assertEqual(report['sources'][0]['files_scanned'], 0)
         self.assertEqual(report['worktrees'][1]['bucket'], 'hold-activity-unavailable')
         root = self.area / 'empty supported history'
         root.mkdir()
         (root / 'old.jsonl').write_text(json.dumps({'type': 'event_msg', 'timestamp': '2020-01-01T00:00:00Z', 'payload': {'type': 'agent_message', 'message': 'old unrelated fixture'}}) + '\n')
         supported = {'provider': 'codex', 'root': str(root), 'authorization': 'synthetic', 'coverage': 'complete'}
-        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [ignored, supported]})
-        self.assertEqual(result.returncode, 0)
-        self.assertFalse(report['worktrees'][1]['evidence'])
+        control, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [supported]})
+        self.assertEqual(control.returncode, 0)
+        result, report = self.audit({'schema_version': 1, 'coverage': 'complete', 'sources': [unread, supported]})
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(report['audit_status'], 'hold')
+        self.assertEqual([source['coverage'] for source in report['sources']], ['unsupported', 'complete'])
+        self.assertEqual(report['worktrees'][1]['bucket'], 'hold-activity-unavailable')
+
+    def test_cli_reads_a_claude_2_1_31x_transcript(self):
+        stamp = datetime.now(timezone.utc).isoformat()
+        path = self.area / 'current.jsonl'
+        path.write_text(''.join(json.dumps(row) + '\n' for row in claude_current_rows(self.wt, stamp)))
+        manifest = {'schema_version': 1, 'coverage': 'complete', 'sources': [{'provider': 'claude', 'files': [str(path)], 'authorization': 'synthetic only', 'coverage': 'complete'}]}
+        result, report = self.audit(manifest)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report['audit_status'], 'complete')
+        self.assertEqual(report['sources'], [{'provider': 'claude', 'coverage': 'complete', 'files_scanned': 1}])
+        row = next(r for r in report['worktrees'] if r['worktree'] == str(self.wt))
+        self.assertEqual(row['bucket'], 'verify-recent-chat')
+        self.assertEqual(row['evidence'][0]['provider'], 'claude')
+        self.assertFalse(row['deletion_authorized'])
+        path.write_text(path.read_text() + json.dumps({'type': 'future-row-type', 'sessionId': 'fixture'}) + '\n')
+        result, report = self.audit(manifest)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(report['sources'][0]['coverage'], 'unavailable')
+        self.assertEqual(report['sources'][0]['error'], 'unsupported claude record envelope')
+
+    def test_cli_does_not_report_no_recent_evidence_for_a_worktree_a_claude_row_names_indirectly(self):
+        stamp = datetime.now(timezone.utc).isoformat()
+        target = str(self.wt / 'README.md')
+        attachment = {'type': 'attachment', 'cwd': str(self.consumer), 'timestamp': stamp}
+        keyed = {'type': 'user', 'cwd': str(self.consumer), 'timestamp': stamp, 'message': {'role': 'user', 'content': 'plain'},
+                 'toolUseResult': {'files': {target: {'status': 'modified'}}}}
+        for name, row, recent in [
+                ('absolute filename', dict(attachment, attachment={'type': 'edited_text_file', 'filename': target, 'snippet': 'plain'}), True),
+                ('path used as a key', keyed, True),
+                ('relative filename', dict(attachment, attachment={'type': 'edited_text_file', 'filename': os.path.relpath(target, self.consumer), 'snippet': 'plain'}), False)]:
+            with self.subTest(name):
+                path = self.area / 'indirect.jsonl'
+                path.write_text(json.dumps(row) + '\n')
+                manifest = {'schema_version': 1, 'coverage': 'complete', 'sources': [{'provider': 'claude', 'files': [str(path)], 'authorization': 'synthetic only', 'coverage': 'complete'}]}
+                result, report = self.audit(manifest)
+                row = next(r for r in report['worktrees'] if r['worktree'] == str(self.wt))
+                self.assertNotEqual(row['activity'], 'no-recent-evidence')
+                self.assertEqual(row['activity'] == 'recent', recent)
+                self.assertEqual(result.returncode, 0 if recent else 2)
 
     def test_cli_supported_host_contexts_and_nested_progress_hold(self):
         stamp = datetime.now(timezone.utc).isoformat()

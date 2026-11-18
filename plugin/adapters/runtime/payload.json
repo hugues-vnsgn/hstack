@@ -579,7 +579,7 @@
     },
     {
       "path": "adapters/host-tools.md",
-      "sha256": "6bf13f045e2f21532cc85413e6461f1f17954f4ebd5f66f876730fe23899d7e0",
+      "sha256": "03274efb4f1a26fafaa025b3a44c1da8c016030b13a037e6d05a3b8db99ce312",
       "mode": "100644"
     },
     {
@@ -644,7 +644,7 @@
     },
     {
       "path": "adapters/runtime/activity.py",
-      "sha256": "7ed602099396ea6dba6f76ccf41c1fb09e71713f64a40aa67ccc7e38a305e440",
+      "sha256": "1ab0f100c6ea9e218a0cb0b0f17f0ba8ff8e1bf07273de8fa4b0e27836d342fa",
       "mode": "100644"
     },
     {
