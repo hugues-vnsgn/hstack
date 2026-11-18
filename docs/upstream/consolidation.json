@@ -4647,11 +4647,11 @@
   ],
   "installed_files": {
     ".claude-plugin/plugin.json": {
-      "sha256": "c5291e38fb73b9d5cc04cf95e3e5f26af386291936e2a430aaa3066bed8e1392",
+      "sha256": "51725e67ca0bc80ac949a6f4ce57549895ff83c6960241b5618b6ad9c01cbe12",
       "mode": 420
     },
     ".cursor-plugin/plugin.json": {
-      "sha256": "28405a6c0d7ad583e3ca796016aa095121fec6e91414f45ad653f6d5d40f6348",
+      "sha256": "351856bd779bd88bbbd4cbfebd65b89967390c5a75275db38c6c0565d77171ea",
       "mode": 420
     },
     "UPSTREAM-LICENSE": {
@@ -4695,7 +4695,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "ccd103115a891bf7b294eeda31c5b65c4e20296f6caf735044ef05ca28132d3a",
+      "sha256": "665281766a1eecdaf7753fef831a7108b966c6a313a81fa15641dc5ec416611c",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4739,11 +4739,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "469770465956a8e5a7581ec90cc8954143678f98751178fce2c79c4248d2a5b8",
+      "sha256": "fedac13b1644d11b42eb11ca87f12a3dd5044ea0d0a5cdd9ca336fb269a7b12f",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "2b070522807edfabaa03990366cb169791b994ff98daf869c8ee4909e7db5424",
+      "sha256": "828b5597495ea7b9adceb839d92f8fb77903dff9391c74a274b5f22171b939c5",
       "mode": 420
     },
     "agents/hugues-agent.md": {

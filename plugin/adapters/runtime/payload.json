@@ -522,12 +522,12 @@
   "files": [
     {
       "path": ".claude-plugin/plugin.json",
-      "sha256": "c5291e38fb73b9d5cc04cf95e3e5f26af386291936e2a430aaa3066bed8e1392",
+      "sha256": "51725e67ca0bc80ac949a6f4ce57549895ff83c6960241b5618b6ad9c01cbe12",
       "mode": "100644"
     },
     {
       "path": ".cursor-plugin/plugin.json",
-      "sha256": "28405a6c0d7ad583e3ca796016aa095121fec6e91414f45ad653f6d5d40f6348",
+      "sha256": "351856bd779bd88bbbd4cbfebd65b89967390c5a75275db38c6c0565d77171ea",
       "mode": "100644"
     },
     {
