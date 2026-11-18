@@ -1863,6 +1863,18 @@ class HostDetectionHook(unittest.TestCase):
         context = payload['hookSpecificOutput']['additionalContext']
         self.assertIn('/tmp/we"ird\\path/adapters/hosts/README.md', context)
 
+    def test_a_python3_that_exists_but_cannot_run_falls_back_to_the_encoder_in_shell(self):
+        # Windows puts a Microsoft Store stub named python3 on PATH. It passes
+        # `command -v`, prints an install prompt and exits 49.
+        with tempfile.TemporaryDirectory() as stub_dir:
+            stub = Path(stub_dir) / 'python3'
+            stub.write_text('#!/bin/sh\necho "Python was not found" >&2\nexit 49\n')
+            stub.chmod(0o755)
+            result = self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value',
+                                    'PATH': stub_dir + os.pathsep + os.environ['PATH']})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('/adapters/hosts/README.md', self.context(result))
+
     def test_the_hook_says_nothing_without_a_plugin_root(self):
         # A relative path would send the session to an index guessed from the
         # working directory, which is worse than no message at all.

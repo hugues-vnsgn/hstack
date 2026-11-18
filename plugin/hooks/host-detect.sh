@@ -36,7 +36,9 @@ fi
 index="${CLAUDE_PLUGIN_ROOT}/adapters/hosts/README.md"
 message="This session runs in an ADE. Before your first dispatch, read ${index} in full, then read the page of the first ADE or agent in its lists whose detection test is true. A session that matches no line reads no page."
 
-if command -v python3 >/dev/null 2>&1; then
+# Run python3 rather than look it up: Windows puts a Microsoft Store stub named
+# python3 on PATH, which `command -v` finds and which exits 49 when run.
+if python3 -c '' >/dev/null 2>&1; then
     python3 -c 'import json,sys; print(json.dumps({"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":sys.argv[1]}}))' "$message"
 else
     # No JSON encoder on the host. Escape the two characters a path may hold
