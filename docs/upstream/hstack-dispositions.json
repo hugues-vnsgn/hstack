@@ -3357,8 +3357,8 @@
       "size": 9100,
       "sha256": "010b7b4532406739b1c3a426d1a45f02bb618a42561fc96b3976e064a7f8384d",
       "disposition": "port with adaptation",
-      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.32; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.32. Kind 3 fix for friction seen in the owner's runs (issue #164): Run adds one sentence, that on Windows you run it from Git Bash with Node. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
         "plugin/skills/statechart/SKILL.md"
       ],
@@ -3367,7 +3367,7 @@
       "previous_decision": {
         "disposition": "port with adaptation",
         "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.32; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.32",
+        "release_target": "unreleased-pstack-0.15.36",
         "destinations": [
           "plugin/skills/statechart/SKILL.md"
         ],
@@ -3764,8 +3764,8 @@
       "blob_sha": "017684f82ddffe860b4b9312771174622603c4a7",
       "size": 18005,
       "sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0",
-      "disposition": "port verbatim",
-      "reason": "SANY spec errors report line and column. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "disposition": "port with adaptation",
+      "reason": "Kind 3 fix for friction seen in the owner's runs (issue #164): killGroup is killTree from the hStack-only processes.ts, whose POSIX branch runs upstream's exact /bin/sh kill and whose win32 branch runs taskkill and waits until the killed processes leave the process list. fileLines and outputLines drop one trailing carriage return per line, because TLC on Windows ends lines with CRLF and the message reader then missed every end marker. The java and mise spawns set windowsHide, which Node ignores on other systems, so TLC opens no console window. SANY spec errors report line and column, as upstream. Every other upstream byte is unchanged. Original bytes preserved in the upstream provenance archive.",
       "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
         "plugin/skills/statechart/scripts/run.ts"
@@ -3774,8 +3774,8 @@
       "category": "script_config_test_helper",
       "previous_decision": {
         "disposition": "port verbatim",
-        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "SANY spec errors report line and column. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/statechart/scripts/run.ts"
         ],
@@ -3788,14 +3788,23 @@
       "blob_sha": "7d3aeb8c219bf20aea4cbc321892fca9cbd582f1",
       "size": 991,
       "sha256": "aeffb7077850fd4c225e3d18049ca6ed7b988cf48e88cd8463526a7feaa74d13",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "disposition": "port with adaptation",
+      "reason": "Kind 3 fix for friction seen in the owner's runs (issue #164): under Git Bash, MSYS or Cygwin the launcher picks only Node 22.18 to 22.x or 23.6 and later, and otherwise exits 127 saying that Windows needs that Node. Upstream's Node, Bun and Deno order is unchanged on other systems. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
         "plugin/skills/statechart/scripts/statechart"
       ],
       "implementation_state": "present",
-      "category": "script_config_test_helper"
+      "category": "script_config_test_helper",
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.36",
+        "destinations": [
+          "plugin/skills/statechart/scripts/statechart"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/statechart/scripts/statechart.ts",
@@ -3803,14 +3812,23 @@
       "blob_sha": "4e2967e680895875d7d5352bfe997a4c08c2d1fc",
       "size": 6044,
       "sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12",
-      "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "disposition": "port with adaptation",
+      "reason": "Kind 3 fix for friction seen in the owner's runs (issue #164): native Windows has no /bin/sh. The janitor spawn is one startJanitor call into the hStack-only processes.ts, whose POSIX branch runs upstream's exact /bin/sh script and whose win32 branch is a Node process that runs taskkill and removes the folders. On win32 the worker also gets TEMP and TMP, so its temporary folder stays inside the one the janitor removes. Every other upstream byte is unchanged. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
         "plugin/skills/statechart/scripts/statechart.ts"
       ],
       "implementation_state": "present",
-      "category": "script_config_test_helper"
+      "category": "script_config_test_helper",
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.36",
+        "destinations": [
+          "plugin/skills/statechart/scripts/statechart.ts"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/statechart/scripts/test/ConfigOracle.java",

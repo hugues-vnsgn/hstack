@@ -1091,7 +1091,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/statechart/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "a3f9caccc4bfa85ed697eb5927e89b4d20c28f988118a8f0fb6ea5db8234ac08"
+      "destination_sha256": "9a93f784dd4690d9f9599ca6ef891699ae904b21014dc787b5317f3014921709"
     },
     {
       "source": "pstack/skills/statechart/references/render.md",
@@ -1299,7 +1299,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/run.ts",
       "disposition": "canonical",
-      "destination_sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0"
+      "destination_sha256": "1d16fe912188bcb33e25f67a23b1bc5083c69e99dc15425f6233a83da1d79fc2"
     },
     {
       "source": "pstack/skills/statechart/scripts/statechart",
@@ -1307,7 +1307,7 @@
       "source_mode": 493,
       "destination": "plugin/skills/statechart/scripts/statechart",
       "disposition": "canonical",
-      "destination_sha256": "aeffb7077850fd4c225e3d18049ca6ed7b988cf48e88cd8463526a7feaa74d13"
+      "destination_sha256": "b894d7f52eac342d9878f096a42a93544f1a93e670e9611f3b87fbecbb338b8b"
     },
     {
       "source": "pstack/skills/statechart/scripts/statechart.ts",
@@ -1315,7 +1315,7 @@
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/statechart.ts",
       "disposition": "canonical",
-      "destination_sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12"
+      "destination_sha256": "13e515a6cb5bec4347d8c8d87765cc9a6c4a4ee2f6197eaccd80530ae530b3ce"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/ConfigOracle.java",
@@ -4695,7 +4695,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "b0fc9db2bdb9530fcf3d03ad25c48573aa996be3909dd03d8511c8f3dbdbadf2",
+      "sha256": "418d2684b03fb2f9b45b0242b2307fc4544a14a602149116d2728cd147c74633",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4739,11 +4739,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "90aa77bfa5a54981002d6831228dfd0eb11d37056c4ec2dfec1b93c49c1546c9",
+      "sha256": "3e3d2a19645712b07e7a7739e5b028997e09203bf91ba1be20205a1e1695ea21",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "3f11e9e64130182d2b948bee0bbc457294c2cd98f46d1df0f1d6d5f7e2fe716b",
+      "sha256": "8777b67f983ac424df4e10c29a3ed34acec85512df35b4d52071751d4e03c02a",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -5459,7 +5459,7 @@
       "mode": 493
     },
     "skills/statechart/SKILL.md": {
-      "sha256": "a3f9caccc4bfa85ed697eb5927e89b4d20c28f988118a8f0fb6ea5db8234ac08",
+      "sha256": "9a93f784dd4690d9f9599ca6ef891699ae904b21014dc787b5317f3014921709",
       "mode": 420
     },
     "skills/statechart/agents/openai.yaml": {
@@ -5566,16 +5566,20 @@
       "sha256": "8aa8d9295ab6762f7f2ffae91a0aee98b1a1314747c875edba4598fdab8ed543",
       "mode": 420
     },
+    "skills/statechart/scripts/processes.ts": {
+      "sha256": "c7be071121396c3e9bba07ac49d5aa3adbc4ac5bfcad87e06332046c751565b8",
+      "mode": 420
+    },
     "skills/statechart/scripts/run.ts": {
-      "sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0",
+      "sha256": "1d16fe912188bcb33e25f67a23b1bc5083c69e99dc15425f6233a83da1d79fc2",
       "mode": 420
     },
     "skills/statechart/scripts/statechart": {
-      "sha256": "aeffb7077850fd4c225e3d18049ca6ed7b988cf48e88cd8463526a7feaa74d13",
+      "sha256": "b894d7f52eac342d9878f096a42a93544f1a93e670e9611f3b87fbecbb338b8b",
       "mode": 493
     },
     "skills/statechart/scripts/statechart.ts": {
-      "sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12",
+      "sha256": "13e515a6cb5bec4347d8c8d87765cc9a6c4a4ee2f6197eaccd80530ae530b3ce",
       "mode": 420
     },
     "skills/statechart/scripts/test/ConfigOracle.java": {

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { parseArgs } from "node:util";
+import { startJanitor } from "./processes.ts";
 import { killGroup, messageOf } from "./run.ts";
 
 const USAGE = `Usage: statechart SPEC.tla [--config FILE] [--view FILE] [--out DIR]
@@ -110,21 +111,14 @@ try {
       {
         detached: true,
         stdio: ["ignore", "inherit", "inherit"],
-        env: { ...process.env, TMPDIR: tmp },
+        env: {
+          ...process.env,
+          TMPDIR: tmp,
+          ...(process.platform === "win32" ? { TEMP: tmp, TMP: tmp } : {}),
+        },
       },
     );
-    janitor = spawn(
-      "/bin/sh",
-      [
-        "-c",
-        'while read -r line; do :; done; kill -s KILL -- "-$1"; rm -rf -- "$2" "$3"',
-        "sh",
-        String(worker.pid),
-        stage,
-        tmp,
-      ],
-      { detached: true, stdio: ["pipe", "ignore", "ignore"] },
-    );
+    janitor = startJanitor({ pid: worker.pid, folders: [stage, tmp] });
     const exited = new Promise<number>((resolve) =>
       worker.on("exit", (code) => resolve(code ?? 2)),
     );

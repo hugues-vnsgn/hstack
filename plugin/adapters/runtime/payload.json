@@ -1522,7 +1522,7 @@
     },
     {
       "path": "skills/statechart/SKILL.md",
-      "sha256": "a3f9caccc4bfa85ed697eb5927e89b4d20c28f988118a8f0fb6ea5db8234ac08",
+      "sha256": "9a93f784dd4690d9f9599ca6ef891699ae904b21014dc787b5317f3014921709",
       "mode": "100644"
     },
     {
@@ -1656,18 +1656,23 @@
       "mode": "100644"
     },
     {
+      "path": "skills/statechart/scripts/processes.ts",
+      "sha256": "c7be071121396c3e9bba07ac49d5aa3adbc4ac5bfcad87e06332046c751565b8",
+      "mode": "100644"
+    },
+    {
       "path": "skills/statechart/scripts/run.ts",
-      "sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0",
+      "sha256": "1d16fe912188bcb33e25f67a23b1bc5083c69e99dc15425f6233a83da1d79fc2",
       "mode": "100644"
     },
     {
       "path": "skills/statechart/scripts/statechart",
-      "sha256": "aeffb7077850fd4c225e3d18049ca6ed7b988cf48e88cd8463526a7feaa74d13",
+      "sha256": "b894d7f52eac342d9878f096a42a93544f1a93e670e9611f3b87fbecbb338b8b",
       "mode": "100755"
     },
     {
       "path": "skills/statechart/scripts/statechart.ts",
-      "sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12",
+      "sha256": "13e515a6cb5bec4347d8c8d87765cc9a6c4a4ee2f6197eaccd80530ae530b3ce",
       "mode": "100644"
     },
     {

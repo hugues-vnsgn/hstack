@@ -22,7 +22,7 @@ Work in a scratch folder outside the repo. Write a TLA+ spec and its config. The
 <skill dir>/scripts/statechart SPEC.tla [--config FILE] [--view FILE] [--out DIR]
 ```
 
-`scripts/statechart.ts` is TypeScript, so run it with a runtime that can execute TypeScript.
+`scripts/statechart.ts` is TypeScript, so run it with a runtime that can execute TypeScript. On Windows, run it from Git Bash with Node.
 
 The first run installs TLC and Java with mise and needs the network.
 
