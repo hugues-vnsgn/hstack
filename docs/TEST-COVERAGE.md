@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **595 top-level unittest cases**. One is a driver that
+The current candidate collects **596 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -10,7 +10,7 @@ native workflow proof. Subtests are not added to case totals.
 | Historical 0.1.0 contracts | 131 | Unchanged SHA256-bound release archive |
 | Current checker, historical 0.1.0 fixtures | 45 | Explicit historical validation mode, package mutations, the Cursor manifest rules, each with its own negative case, and the upstream-name guard |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
-| Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
+| Current source/provenance checks | 49 | test_upstream_sync (38), test_retained_provenance (11) |
 | Current installed adapters and regressions | 139 | test_host_adapters (114), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled Cursor skills from outside upstream (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
@@ -19,11 +19,11 @@ native workflow proof. Subtests are not added to case totals.
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
-| Total collected | 595 | Current, mixed and historical scopes remain distinct |
+| Total collected | 596 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-595 Python cases. The opt-in CI workflow requires a provisioned native runner.
+596 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -582,3 +582,12 @@ prints to stderr and exits 49 first on `PATH`, and expects the hook to exit 0 wi
 index named through the shell encoder. This is a source check with a synthetic stub. The
 failure was observed in a Claude Code session in an Orca pane on Windows 11; the fixed hook
 in that pane is not yet observed.
+
+The statechart Windows fix (#164) adds one case to `test_upstream_sync`, so 38 sit there and
+596 top-level cases collect. The case fails when a `/bin/sh` string appears in a statechart
+runtime script outside the POSIX branch of `processes.ts`. It also checks that the two shell
+scripts in that branch are in upstream's `statechart.ts` and `run.ts` from the provenance
+archive. Its subtests put upstream's `statechart.ts` and `run.ts` back, and move a `/bin/sh`
+spawn into the win32 branch. The check must reject each one. The statechart suite gains
+`test/win32.test.ts`, two Node cases that run only on win32 and skip elsewhere. They are not
+in the Python totals.

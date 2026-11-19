@@ -39,6 +39,18 @@ user, plus an interview on a call no experiment can settle.
 The next upstream sync of this file is a manual merge against this body, not
 a line-by-line port.
 
+## Statechart on native Windows
+
+Issue #164 is a kind-3 fix under ADR 0006. On native Windows, statechart spawned
+`/bin/sh`, so it stopped with `ENOENT` before it checked anything. The
+hStack-only `skills/statechart/scripts/processes.ts` holds both process helpers.
+Its POSIX branch is upstream's exact `/bin/sh` code, and its win32 branch uses
+`taskkill` and Node. It has no ledger row because upstream has no such file, so
+its reason lives here and in the `statechart.ts` and `run.ts` rows. Those rows,
+the launcher row and the `SKILL.md` row are `port with adaptation` and say what
+each file changes. `test/win32.test.ts` is hStack-only too. A
+`test_upstream_sync` case fails if a `/bin/sh` spawn appears anywhere else.
+
 ## pstack 0.15.43 merge
 
 The pin moves from 0.15.36 to 0.15.43 at upstream `main` (`2f87c854`), the

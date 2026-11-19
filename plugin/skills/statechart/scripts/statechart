@@ -19,6 +19,12 @@ node=$(version node)
 if [ "$node" -ge 23006000 ] || { [ "$node" -ge 22018000 ] && [ "$node" -lt 23000000 ]; }; then
   exec node --disable-warning=ExperimentalWarning "$entry" "$@"
 fi
+case $(uname -s 2>/dev/null) in
+  MINGW* | MSYS* | CYGWIN*)
+    echo "statechart on Windows needs Node 22.18 to 22.x, or Node 23.6 or later." >&2
+    exit 127
+    ;;
+esac
 if [ "$(version bun)" -ge 1001005 ]; then
   exec bun "$entry" "$@"
 fi
