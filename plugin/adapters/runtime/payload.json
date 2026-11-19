@@ -3556,6 +3556,11 @@
       "mode": "100644"
     },
     {
+      "path": "skills/statechart/scripts/test/win32.test.ts",
+      "sha256": "5f6059dab8e6aa438c071f3427e104514555e68a388c92c8432dfa5c048ff641",
+      "mode": "100644"
+    },
+    {
       "path": "skills/statechart/scripts/tsconfig.json",
       "sha256": "6bb2af53f7b251328e6117cd4fb761468dc4d4b96085d31a19304ccb73c32cc1",
       "mode": "100644"

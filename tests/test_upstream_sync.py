@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
 
@@ -555,6 +556,60 @@ class RetiredPredecessorTests(unittest.TestCase):
         self.assertEqual(len(targets), 13)
         for source, expected in targets.items():
             self.assertEqual(self.sha256(source), expected, source)
+
+
+STATECHART_SCRIPTS = ROOT / 'plugin/skills/statechart/scripts'
+BIN_SH = re.compile(r'''["'`]/bin/sh["'`]''')
+
+
+def posix_branch(lines):
+    # Native Windows has no /bin/sh (issue #164). processes.ts keeps upstream's /bin/sh code
+    # in `const posix = {` up to its closing `};`, so a spawn anywhere else breaks Windows.
+    start = next((i for i, line in enumerate(lines) if line.startswith('const posix')), len(lines))
+    return start, next((i for i in range(start, len(lines)) if lines[i] == '};'), start)
+
+
+def bin_sh_outside_posix_branch(scripts):
+    processes = scripts / 'processes.ts'
+    start, end = posix_branch(processes.read_text().splitlines() if processes.is_file() else [])
+    outside = []
+    for path in sorted(scripts.rglob('*.ts')):
+        relative = path.relative_to(scripts).as_posix()
+        if relative.startswith('test/'):
+            continue
+        for number, line in enumerate(path.read_text().splitlines()):
+            if BIN_SH.search(line) and not (relative == 'processes.ts' and start < number < end):
+                outside.append(f'{relative}:{number + 1}')
+    return outside
+
+
+class StatechartWindowsAdaptationTests(unittest.TestCase):
+    def test_bin_sh_is_spawned_only_in_the_posix_branch_of_processes_ts(self):
+        self.assertEqual(bin_sh_outside_posix_branch(STATECHART_SCRIPTS), [])
+        text = (STATECHART_SCRIPTS / 'processes.ts').read_text()
+        self.assertIn('process.platform === "win32" ? win32 : posix', text)
+        archive = ROOT / json.loads((ROOT / 'docs/upstream/consolidation.json').read_text())['archive']
+        with tarfile.open(archive) as stream:
+            upstream = {name: stream.extractfile(f'pstack/skills/statechart/scripts/{name}').read()
+                        for name in ('statechart.ts', 'run.ts')}
+        lines = text.splitlines()
+        start, end = posix_branch(lines)
+        scripts = re.findall(r"'[^']*'", '\n'.join(lines[start:end]))
+        self.assertEqual(len(scripts), 2)
+        for script in scripts:
+            self.assertIn(script.encode(), b''.join(upstream.values()))
+        with tempfile.TemporaryDirectory() as directory:
+            tree = Path(directory) / 'scripts'
+            shutil.copytree(STATECHART_SCRIPTS, tree, ignore=shutil.ignore_patterns('test'))
+            for name, body in upstream.items():
+                with self.subTest(sync=f'upstream {name}'):
+                    original = (tree / name).read_bytes()
+                    (tree / name).write_bytes(body)
+                    self.assertTrue(any(f.startswith(name + ':') for f in bin_sh_outside_posix_branch(tree)))
+                    (tree / name).write_bytes(original)
+            with self.subTest(change='a /bin/sh spawn in the win32 branch'):
+                (tree / 'processes.ts').write_text(text.replace('"taskkill"', '"/bin/sh"', 1))
+                self.assertTrue(bin_sh_outside_posix_branch(tree))
 
 
 if __name__ == '__main__':

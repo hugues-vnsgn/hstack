@@ -4695,7 +4695,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "353a3ba0287f8ce360e590d08d1aff58ab0a30d3e18dc799e504d6b4a6c5e185",
+      "sha256": "b0fc9db2bdb9530fcf3d03ad25c48573aa996be3909dd03d8511c8f3dbdbadf2",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4739,11 +4739,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "3ab7521339b8cfdbf449b8fe35145e75cd912fc31c7ceb58f476e1fb2209de4d",
+      "sha256": "90aa77bfa5a54981002d6831228dfd0eb11d37056c4ec2dfec1b93c49c1546c9",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "9e873a720dfe64e24f5a75eedf5177e17e80ed1c3c72b519dd62907489dad417",
+      "sha256": "3f11e9e64130182d2b948bee0bbc457294c2cd98f46d1df0f1d6d5f7e2fe716b",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -7084,6 +7084,10 @@
     },
     "skills/statechart/scripts/test/tlc.ts": {
       "sha256": "73f5cf9dca5ca55aa65d5b342405e31f6eff858ed2bc2124c3e3fbb328259cca",
+      "mode": 420
+    },
+    "skills/statechart/scripts/test/win32.test.ts": {
+      "sha256": "5f6059dab8e6aa438c071f3427e104514555e68a388c92c8432dfa5c048ff641",
       "mode": 420
     },
     "skills/statechart/scripts/tsconfig.json": {
