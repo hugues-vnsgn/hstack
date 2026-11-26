@@ -4,7 +4,7 @@ This is the kit for running hStack in an Orca bot. You read it and do the steps 
 
 A bot chat has no terminal. hStack's [Orca bot page](../plugin/adapters/hosts/orca-bot.md) says how the bot starts workers, waits for them and reports. [ADR 0007](adr/0007-an-orca-bot-uses-supervised-workers-as-transport.md) gives the reason, and issue #168 holds the spec.
 
-Everything here was observed on Orca 1.4.271 with a Claude Code bot and Claude Code workers, unless a line says otherwise. A Codex or omp bot, a Codex worker, a bot group room and any later Orca build are unobserved.
+Everything here was observed on Orca 1.4.271 with a Claude Code bot and Claude Code workers, unless a line says otherwise. A line that cites 1.4.269 was seen while the app was updating to 1.4.271, so it may be either build. A Codex or omp bot, a Codex worker, a bot group room and any later Orca build are unobserved.
 
 ## Steps
 

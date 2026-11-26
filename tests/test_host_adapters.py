@@ -1818,7 +1818,8 @@ class HostAdapterShape(unittest.TestCase):
             self.assertNotIn('host page', page.lower())
         with self.subTest('the intro dates 1.4.271 and cites 1.4.269 only where it was seen'):
             self.assertIn('observed on 2026-11-25 and 2026-11-26 and in the bot\'s transcripts on disk', page)
-            self.assertIn('A cell that cites 1.4.269 was seen on that build only', page)
+            self.assertIn('A cell that cites 1.4.269 was seen while the app was updating to 1.4.271, '
+                          'so it may be either build', page)
             self.assertNotIn('2026-11-22', page)
             self.assertNotIn('to 2026-11-26', page)
 

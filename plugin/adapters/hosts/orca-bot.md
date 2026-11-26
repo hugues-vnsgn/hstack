@@ -1,6 +1,6 @@
 # Orca bot
 
-You are in an Orca bot chat. This page maps Orca CLI 1.4.271, observed on 2026-11-25 and 2026-11-26 and in the bot's transcripts on disk, with a Claude Code bot and Claude Code workers. A cell that cites 1.4.269 was seen on that build only. On another CLI version, treat each row as unobserved until it is checked again. Pass `--json` to every command below and read its result. The bot is the coordinator and runs `hugues-mode` in its own chat. A bot that hands one task to one worker is the simple case of this page. Orca carries the work and wakes the bot. It never decides that work is done. A worker the bot starts is an Orca pane, not a bot chat, and reads [orca.md](orca.md).
+You are in an Orca bot chat. This page maps Orca CLI 1.4.271, observed on 2026-11-25 and 2026-11-26 and in the bot's transcripts on disk, with a Claude Code bot and Claude Code workers. A cell that cites 1.4.269 was seen while the app was updating to 1.4.271, so it may be either build. On another CLI version, treat each row as unobserved until it is checked again. Pass `--json` to every command below and read its result. The bot is the coordinator and runs `hugues-mode` in its own chat. A bot that hands one task to one worker is the simple case of this page. Orca carries the work and wakes the bot. It never decides that work is done. A worker the bot starts is an Orca pane, not a bot chat, and reads [orca.md](orca.md).
 
 | Row | Mechanics |
 |---|---|
