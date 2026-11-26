@@ -166,6 +166,7 @@ required native runtime proof.
 - [Test accounting](docs/TEST-COVERAGE.md)
 - [Installed planning and read-only worktree audit](plugin/adapters/host-tools.md)
 - [Orca coordinator page](plugin/adapters/hosts/orca.md)
+- [Orca bot page](plugin/adapters/hosts/orca-bot.md) and its [bot kit](docs/orca-bots.md)
 
 To check a source checkout, run these commands from the hstack folder:
 

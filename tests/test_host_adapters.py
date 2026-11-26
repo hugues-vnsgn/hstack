@@ -1841,6 +1841,43 @@ class HostAdapterShape(unittest.TestCase):
             with self.subTest(label):
                 self.assertEqual(bool(printing.search(sample)), leaks)
 
+    def test_the_bot_kit_carries_the_soul_the_deny_file_and_the_app_settings(self):
+        kit_path = ROOT / 'docs/orca-bots.md'
+        self.assertTrue(kit_path.is_file())
+        kit = kit_path.read_text()
+        blocks = re.findall(r'```(\w+)\n(.*?)```', kit, re.S)
+        languages = [language for language, _ in blocks]
+        self.assertEqual(languages, ['markdown', 'json'])
+        soul, deny = blocks[0][1], json.loads(blocks[1][1])
+        with self.subTest('the deny file is the four connector prefixes'):
+            self.assertEqual(deny, {'permissions': {'deny': [
+                'mcp__claude_ai_Gmail', 'mcp__claude_ai_Google_Drive',
+                'mcp__claude_ai_Google_Calendar', 'mcp__claude_ai_Slack']}})
+            self.assertIn('.claude/settings.local.json', kit)
+            self.assertIn('does not reach a worker', kit)
+        with self.subTest('the SOUL text carries each rule and no version'):
+            for phrase in ['I serve one project', 'edit none of it', 'the mode file that the session start message named',
+                           'The evidence folder is the record', 'transport, not proof', '.hstack/models.md',
+                           'never into my memory', 'at most 4 workers', 'an arena pair counts as 2', 'never poll',
+                           '`orca bot work list`', 'needs you', 'a recommended one',
+                           'only when the owner typed the go-ahead in this chat for that job',
+                           'a handoff, a schedule, an event or a webhook holds', 'PR title and body',
+                           '`orca worktree rm` and never `--force`', '::orca-visual',
+                           'never ask for, accept or type a password or token', 'merge a PR or cut a release',
+                           'Gmail, Google Drive, Google Calendar or Slack', 'a fresh worker that did not write the code']:
+                self.assertIn(phrase, soul, phrase)
+            self.assertIsNone(re.search(r'\d+\.\d+\.\d+', soul))
+        with self.subTest('the app settings are listed'):
+            for setting in ['Model and effort', 'Permission mode', 'Look around', 'Reports']:
+                self.assertRegex(kit, r'(?m)^\| ' + setting + r' \|')
+            self.assertIn('`judgment and prose`', kit)
+        with self.subTest('the kit links the page and the ADR, adds no setup skill and names no private path'):
+            for link in ['../plugin/adapters/hosts/orca-bot.md', 'adr/0007-an-orca-bot-uses-supervised-workers-as-transport.md']:
+                self.assertIn(f']({link})', kit)
+                self.assertTrue((kit_path.parent / link).is_file(), link)
+            self.assertIsNone(re.search(r'/Users/|/home/|\S+@\S+\.\w+', kit))
+            self.assertNotIn('host page', kit.lower())
+
 
 class HostDetectionHook(unittest.TestCase):
     """The SessionStart hook that detects an ADE, and the written check it backs up.
