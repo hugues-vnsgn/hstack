@@ -8,7 +8,9 @@
 # cannot miss it.
 #
 # The hook adds no gate and no authority. It names one file to read, and the
-# session reads nothing under hosts/ when no test matches.
+# session reads nothing under hosts/ when no test matches. In an Orca bot chat it
+# names a second file, the hugues-mode skill, because a leading slash command does
+# not expand in a handoff or an automation body and the Skill tool refuses the mode.
 #
 # The written check in host-workers.md stays. It is the only path for Codex and
 # omp, which load no plugin hook, and it covers a T3 Code thread that exposes no
@@ -18,9 +20,18 @@
 # ORCA_TAB_ID are all set. Unobserved: a T3 Code thread exposes no Orca variable,
 # and the hook cannot see the tools a session was given, so such a thread keeps the
 # written check.
+#
+# Observed: ORCA_BOT_TOOLS_TOKEN is set in an Orca 1.4.271 bot chat and unset in a
+# pane. It is Orca's key to the bot tool relay, so the hook tests that it is set
+# and never prints, echoes or logs its value.
 set -u
 
-if [ -z "${ORCA_TERMINAL_HANDLE:-}" ] && [ -z "${ORCA_PANE_KEY:-}" ] && [ -z "${ORCA_TAB_ID:-}" ]; then
+bot_chat=0
+if [ -n "${ORCA_BOT_TOOLS_TOKEN:-}" ]; then
+    bot_chat=1
+fi
+
+if [ "$bot_chat" = 0 ] && [ -z "${ORCA_TERMINAL_HANDLE:-}" ] && [ -z "${ORCA_PANE_KEY:-}" ] && [ -z "${ORCA_TAB_ID:-}" ]; then
     exit 0
 fi
 
@@ -35,6 +46,10 @@ fi
 # the path does.
 index="${CLAUDE_PLUGIN_ROOT}/adapters/hosts/README.md"
 message="This session runs in an ADE. Before your first dispatch, read ${index} in full, then read the page of the first ADE or agent in its lists whose detection test is true. A session that matches no line reads no page."
+if [ "$bot_chat" = 1 ]; then
+    mode="${CLAUDE_PLUGIN_ROOT}/skills/hugues-mode/SKILL.md"
+    message="${message} This is an Orca bot chat. For any code task, read ${mode} in full before anything else."
+fi
 
 # Run python3 rather than look it up: Windows puts a Microsoft Store stub named
 # python3 on PATH, which `command -v` finds and which exits 49 when run.

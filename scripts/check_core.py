@@ -155,7 +155,8 @@ PHASE_GUIDANCE = {
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
 DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`; '
-        'if it prints a value, `t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
+        'if it prints a value, `ORCA_BOT_TOOLS_TOKEN` is set (test it with `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]`, never print it), '
+        '`t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
 ADAPTER_RESOURCES = (['plugin/adapters/' + name for name in PHASE_GUIDANCE]
                      + ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/hosts/README.md'])
 # The SessionStart hook that detects an ADE. It is the reliable path to the hosts
@@ -168,6 +169,11 @@ HOOK_EVENT = 'SessionStart'
 # The Orca variables the hook tests. ORCA_TERMINAL_HANDLE, ORCA_PANE_KEY and
 # ORCA_TAB_ID were all observed set in a real Orca 1.4.241 pane.
 HOOK_ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
+# The bot variable the hook also tests. ORCA_BOT_TOOLS_TOKEN was observed set in a real
+# Orca 1.4.271 bot chat and unset in a pane. It is a secret: the hook tests that it is
+# set and never prints it, and the check below holds that line.
+HOOK_BOT_VARIABLE = 'ORCA_BOT_TOOLS_TOKEN'
+HOOK_BOT_TEST = '[ -n "${ORCA_BOT_TOOLS_TOKEN:-}" ]'
 
 
 def require(value, message):
@@ -332,23 +338,30 @@ def hook_errors(root, load):
     if not isinstance(hook.get('timeout'), int) or hook['timeout'] < 1:
         errors.append('hook has no timeout')
     script = script_path.read_text()
-    for name in HOOK_ORCA_VARIABLES:
+    for name in HOOK_ORCA_VARIABLES + (HOOK_BOT_VARIABLE,):
         if name not in script:
             errors.append('hook does not test ' + name)
+    # The token is a secret, so a line that is not a comment may hold its name only in
+    # the set test, never in a command that could print it.
+    for line in script.splitlines():
+        if HOOK_BOT_VARIABLE in line and not line.lstrip().startswith('#') and HOOK_BOT_TEST not in line:
+            errors.append('hook uses ' + HOOK_BOT_VARIABLE + ' beyond the set test: ' + line.strip())
     if 'CLAUDE_PLUGIN_ROOT' not in script:
         errors.append('hook does not resolve the plugin root')
     if 'hookSpecificOutput' not in script or HOOK_EVENT not in script:
         errors.append('hook does not emit a ' + HOOK_EVENT + ' context')
-    for forbidden in ['hosts/orca.md', 'hosts/t3-code.md', 'hosts/omp.md']:
+    for forbidden in ['hosts/orca.md', 'hosts/orca-bot.md', 'hosts/t3-code.md', 'hosts/omp.md']:
         if forbidden in script:
             errors.append('hook names a page instead of the index: ' + forbidden)
     # The hook and the written door must test the same variables, so a session
     # that meets the hook's test also meets the written one.
     door = (root / 'plugin/adapters/host-workers.md').read_text()
     door_line = next((line for line in door.splitlines() if '(hosts/README.md)' in line), '')
-    for name in HOOK_ORCA_VARIABLES:
+    for name in HOOK_ORCA_VARIABLES + (HOOK_BOT_VARIABLE,):
         if name not in door_line:
             errors.append('the written door does not test ' + name)
+    if 'printenv ' + HOOK_BOT_VARIABLE in door or 'echo' in door_line:
+        errors.append('the written door prints ' + HOOK_BOT_VARIABLE)
     errors.extend(hook_output_errors(script_path, root))
     return errors
 
@@ -363,6 +376,9 @@ def hook_output_errors(script_path, root):
     errors = []
     plugin_root = (root / 'plugin').as_posix()
     index = (root / 'plugin/adapters/hosts/README.md').as_posix()
+    mode = (root / 'plugin/skills/hugues-mode/SKILL.md').as_posix()
+    # A made-up value. The hook must test that the token is set and never print it.
+    secret = 'bot-token-canary-3f9c71d2'
     # The hook has two encoders: python3, and a sed fallback for a host without
     # it. Both must produce valid JSON, so both are exercised. The fallback runs
     # under a stub PATH that holds sed and tr but no python3, so the branch is
@@ -376,14 +392,20 @@ def hook_output_errors(script_path, root):
         # unreachable, or the branch is skipped and the fallback goes unchecked.
         stub_path = stub
         for encoder, path in [('python3', None), ('the sed fallback', stub_path)]:
-            for label, root_value, expect_message in [
-                    ('a plain path', plugin_root, True),
-                    ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True),
-                    ('no plugin root', '', False)]:
+            for label, root_value, expect_message, bot_chat in [
+                    ('a plain path', plugin_root, True, False),
+                    ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True, False),
+                    ('no plugin root', '', False, False),
+                    ('a bot chat', plugin_root, True, True),
+                    ('a bot chat on a path holding a quote and a backslash', '/tmp/we"ird\\path', True, True),
+                    ('a bot chat with no plugin root', '', False, True)]:
                 environment = dict(os.environ)
-                for name in HOOK_ORCA_VARIABLES:
+                for name in HOOK_ORCA_VARIABLES + (HOOK_BOT_VARIABLE,):
                     environment[name] = ''
-                environment['ORCA_TERMINAL_HANDLE'] = 'probe'
+                if bot_chat:
+                    environment[HOOK_BOT_VARIABLE] = secret
+                else:
+                    environment['ORCA_TERMINAL_HANDLE'] = 'probe'
                 if root_value:
                     environment['CLAUDE_PLUGIN_ROOT'] = root_value
                 else:
@@ -392,6 +414,9 @@ def hook_output_errors(script_path, root):
                     environment['PATH'] = path
                 result = subprocess.run(['bash', str(script_path)], capture_output=True,
                                         text=True, env=environment)
+                if secret in result.stdout or secret in result.stderr:
+                    errors.append('the hook prints the bot token on ' + label + ' with ' + encoder)
+                    continue
                 if result.returncode != 0:
                     errors.append('the hook fails on ' + label + ' with ' + encoder + ': '
                                   + result.stderr.strip())
@@ -414,8 +439,13 @@ def hook_output_errors(script_path, root):
                 if not named.startswith('/'):
                     errors.append('the hook names a relative index path on ' + label + ' with '
                                   + encoder)
-                if label.startswith('a plain') and named != index:
+                if label in ('a plain path', 'a bot chat') and named != index:
                     errors.append('the hook names a path that is not the loaded plugin index')
+                # A bot chat gets the mode file as well. A pane gets the index alone.
+                if label == 'a bot chat' and mode not in context:
+                    errors.append('the hook names no mode file in a bot chat with ' + encoder)
+                if not bot_chat and '/skills/hugues-mode/' in context:
+                    errors.append('the hook names the mode file in a pane with ' + encoder)
     return errors
 
 

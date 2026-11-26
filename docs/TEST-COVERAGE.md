@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **595 top-level unittest cases**. One is a driver that
+The current candidate collects **600 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -11,7 +11,7 @@ native workflow proof. Subtests are not added to case totals.
 | Current checker, historical 0.1.0 fixtures | 45 | Explicit historical validation mode, package mutations, the Cursor manifest rules, each with its own negative case, and the upstream-name guard |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
-| Current installed adapters and regressions | 139 | test_host_adapters (114), test_review_regressions (12), test_rereview_regressions (13) |
+| Current installed adapters and regressions | 144 | test_host_adapters (119), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled Cursor skills from outside upstream (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, a helper command's operand, and a rejection matrix of 2,220 cases (379 `read-workflow`, 1,778 `translate-plan` and 63 in-plan cases) over all 63 bundled skills, the legacy aliases of the 58 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
@@ -19,11 +19,11 @@ native workflow proof. Subtests are not added to case totals.
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
-| Total collected | 595 | Current, mixed and historical scopes remain distinct |
+| Total collected | 600 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-595 Python cases. The opt-in CI workflow requires a provisioned native runner.
+600 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -427,7 +427,7 @@ value such as `claude-opus-5-5 xhigh`.
 `plugin/adapters/hosts/` for the ten rows in order and a skip line, and checks that the
 index lists exactly the pages that exist. `orca.md` is the first page. The test's
 `HOST_PAGES` table gives each page its index list and the words only its skip line may use,
-and the index stays at most 1,750 bytes, a cap the owner raised from 1,500 on 2026-10-28.
+and the index stays at most 2,000 bytes, a cap the owner raised from 1,500 to 1,750 on 2026-10-28 and this change raises to 2,000 for the Orca bot page (#168).
 Synthetic pages prove each page and index check can fail. A subtest checks that the shared ADE rule is stated once, in the README, and that the
 README repeats the three tests the door names and points back to `host-workers.md`. Another checks that the README names the
 door's unobserved limits and that ADR 0004 lets a session outside every listed ADE and agent
@@ -582,3 +582,18 @@ prints to stderr and exits 49 first on `PATH`, and expects the hook to exit 0 wi
 index named through the shell encoder. This is a source check with a synthetic stub. The
 failure was observed in a Claude Code session in an Orca pane on Windows 11; the fixed hook
 in that pane is not yet observed.
+
+The Orca bot page (#168) adds five cases to `test_host_adapters`, so 119 sit there and 600
+top-level cases collect. `orca-bot.md` joins `HOST_PAGES`, so the page-shape case reads its ten
+rows in order and its skip line, and the index case lists it before `orca.md` under ADEs. Five
+cases are new, three in `HostAdapterShape` and two in `HostDetectionHook`. One reads the bot page
+for an Orca version or `unobserved` in every row but the skip line, for the guide or help text a
+row quotes, for the Detect row's set-only test, and for each rule the page carries. One holds that
+`orca.md` gains exactly one clause, for a worker a bot dispatched, and keeps its stamps. One scans
+the adapter pages, the hook and the ADR for a command that would print `ORCA_BOT_TOOLS_TOKEN`.
+The hook cases run the script with a made-up token: it alone triggers the door, the message names
+the index and then the mode file, a pane's message names the index alone, and the value never
+appears on stdout or stderr under either encoder or a path holding a quote and a backslash.
+Existing hook cases now loop over a pane and a bot chat for the no-authority words and the
+missing plugin root. `check_core.py` runs the same bot case and reads the door sentence for the
+token. These are source checks with synthetic values. A bot chat reading the page is not observed.

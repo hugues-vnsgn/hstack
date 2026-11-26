@@ -4683,7 +4683,7 @@
       "mode": 420
     },
     "adapters/host-workers.md": {
-      "sha256": "fcec78f43c10613c5b175bcb941403755eabe129d55ae4763dcbe80329f881a1",
+      "sha256": "9376d3456a3ecbfbb39cba2553d3d7e21c2aca8b75c475823614ea3f9fafd7e1",
       "mode": 420
     },
     "adapters/host-workflow-tools.md": {
@@ -4695,19 +4695,23 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "353a3ba0287f8ce360e590d08d1aff58ab0a30d3e18dc799e504d6b4a6c5e185",
+      "sha256": "7ac3cd9f379b0e225f0209d24a7d88f779dc650d6ea60ce1c07c81a549ed49ca",
       "mode": 420
     },
     "adapters/hosts/README.md": {
-      "sha256": "ae799601d2c7b3ba8dd6f104c67d7ea447dfb62f6e18227cd268878ad31b84c7",
+      "sha256": "266e0481645f346e997c6eabef091a1c76f9fd359807e0e57b0e0aabea073cf2",
       "mode": 420
     },
     "adapters/hosts/cursor.md": {
       "sha256": "78fe20cee64067ec807e99cc6d1c121cf6458a81371aee22d7751a2dd280ad71",
       "mode": 420
     },
+    "adapters/hosts/orca-bot.md": {
+      "sha256": "f92a3b810eb652271c0ccac93421a28c96f08c64ca369307e52cc319311fd324",
+      "mode": 420
+    },
     "adapters/hosts/orca.md": {
-      "sha256": "f676d58fd5114a7c6098723f057c1418a141c918fc1e3fdb46cf8900e14b2f82",
+      "sha256": "ea73415c96cc041cd385818060ad20ad14b7d0f4ba2df7a49dbda8dc825b4e6b",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -4739,11 +4743,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "3ab7521339b8cfdbf449b8fe35145e75cd912fc31c7ceb58f476e1fb2209de4d",
+      "sha256": "1aa0e9c89236cae287e0c1165b181b1954fe06305236d4eb0515f14213f00126",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "9e873a720dfe64e24f5a75eedf5177e17e80ed1c3c72b519dd62907489dad417",
+      "sha256": "cca7adba736069bc74c9fc95c350ce4975386793725cc4b159d0148457a77406",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -4759,7 +4763,7 @@
       "mode": 420
     },
     "hooks/host-detect.sh": {
-      "sha256": "2bf2118714ce90e01132eb456153cea2d26ae54c3105b267c0693fe8586d0c10",
+      "sha256": "fdcf8d527b56e10674e9694f7648f414dfb8c5b8282e465d7338ae026e17ba9d",
       "mode": 493
     },
     "skills/architect/SKILL.md": {
