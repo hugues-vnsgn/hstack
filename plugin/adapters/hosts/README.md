@@ -1,14 +1,12 @@
 # Hosts and ADEs
 
-[host-workers.md](../host-workers.md) sends you here when `$ORCA_TERMINAL_HANDLE`, `$ORCA_PANE_KEY`, `$ORCA_TAB_ID` or `$ORCA_BOT_TOOLS_TOKEN` is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
-
-Each list line reads `- [name](name.md): detection test`.
+[host-workers.md](../host-workers.md) sends you here when an Orca variable named below is set, `t3-code` tools are listed, or the agent is omp. Read this once. Run each list's detection test, read the page of the first match, and go on under host.md when none matches.
 
 Unobserved: omp matches at dispatch, not its first tool call, so an omp agent that never dispatches reads no page. Codex's `shell_environment_policy` may strip `ORCA_TERMINAL_HANDLE` in Orca. Every process an Orca pane starts inherits it. A Claude Code hook also sends you here.
 
 ## Shared ADE rule
 
-A page maps terminal and worktree mechanics only: which session and worktree a worker runs in, so the coordinator can send, read and wait on it. hStack's playbooks keep dispatch, completion, verification and every record. A page never creates or reads the ADE's own runs, tasks, dispatches, inboxes or settlement receipts. The Orca bot page is the one exception: a bot chat has no terminal, so it uses supervised workers, their `worker_done` mail and items as transport, and Orca never decides that work is done. New work gets a fresh worker.
+A page maps terminal and worktree mechanics only: which session and worktree a worker runs in, so the coordinator can send, read and wait on it. hStack's playbooks keep dispatch, completion, verification and every record. A page never creates or reads the ADE's own runs, tasks, dispatches, inboxes or settlement receipts. The Orca bot page is the one exception (ADR 0007). New work gets a fresh worker.
 
 ## Page shape
 
@@ -20,5 +18,5 @@ Each agent or ADE gets one page, `<name>.md`, with one table `| Row | Mechanics 
 
 ## ADEs
 
-- [Orca bot](orca-bot.md): `$ORCA_BOT_TOOLS_TOKEN` is set.
+- [Orca bot](orca-bot.md): `$ORCA_BOT_TOOLS_TOKEN` is set and the three Orca variables below are not. Test it with `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]`, never print it.
 - [Orca](orca.md): `$ORCA_TERMINAL_HANDLE`, `$ORCA_PANE_KEY` or `$ORCA_TAB_ID` is set.

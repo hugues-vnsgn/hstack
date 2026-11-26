@@ -155,7 +155,7 @@ PHASE_GUIDANCE = {
     'host-publication.md': 'Skill authoring, commits, review, Bugbot triage or its plan box, PR preparation/publication or missing control/writing capability reports',
 }
 DOOR = ('Before your first dispatch, run `printenv ORCA_TERMINAL_HANDLE ORCA_PANE_KEY ORCA_TAB_ID`; '
-        'if it prints a value, `ORCA_BOT_TOOLS_TOKEN` is set (test it with `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]`, never print it), '
+        'if it prints a value, or prints nothing while `ORCA_BOT_TOOLS_TOKEN` is set (test it with `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]`, never print it), '
         '`t3-code` tools are listed or the agent is omp, read [Hosts](hosts/README.md).')
 ADAPTER_RESOURCES = (['plugin/adapters/' + name for name in PHASE_GUIDANCE]
                      + ['plugin/adapters/mobile-workflows.md', 'plugin/adapters/hosts/README.md'])
@@ -170,8 +170,9 @@ HOOK_EVENT = 'SessionStart'
 # ORCA_TAB_ID were all observed set in a real Orca 1.4.241 pane.
 HOOK_ORCA_VARIABLES = ('ORCA_TERMINAL_HANDLE', 'ORCA_PANE_KEY', 'ORCA_TAB_ID')
 # The bot variable the hook also tests. ORCA_BOT_TOOLS_TOKEN was observed set in a real
-# Orca 1.4.271 bot chat and unset in a pane. It is a secret: the hook tests that it is
-# set and never prints it, and the check below holds that line.
+# Orca 1.4.271 bot chat and unset in a pane, with the three pane variables unset in the
+# chat. A bot chat is the token set and all three unset. It is a secret: the hook tests
+# that it is set and never prints it, and the check below holds that line.
 HOOK_BOT_VARIABLE = 'ORCA_BOT_TOOLS_TOKEN'
 HOOK_BOT_TEST = '[ -n "${ORCA_BOT_TOOLS_TOKEN:-}" ]'
 
@@ -392,19 +393,23 @@ def hook_output_errors(script_path, root):
         # unreachable, or the branch is skipped and the fallback goes unchecked.
         stub_path = stub
         for encoder, path in [('python3', None), ('the sed fallback', stub_path)]:
-            for label, root_value, expect_message, bot_chat in [
-                    ('a plain path', plugin_root, True, False),
-                    ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True, False),
-                    ('no plugin root', '', False, False),
-                    ('a bot chat', plugin_root, True, True),
-                    ('a bot chat on a path holding a quote and a backslash', '/tmp/we"ird\\path', True, True),
-                    ('a bot chat with no plugin root', '', False, True)]:
+            for label, root_value, expect_message, kind in [
+                    ('a plain path', plugin_root, True, 'pane'),
+                    ('a path holding a quote and a backslash', '/tmp/we"ird\\path', True, 'pane'),
+                    ('no plugin root', '', False, 'pane'),
+                    ('a bot chat', plugin_root, True, 'bot'),
+                    ('a bot chat on a path holding a quote and a backslash', '/tmp/we"ird\\path', True, 'bot'),
+                    ('a bot chat with no plugin root', '', False, 'bot'),
+                    ('the token beside a pane variable', plugin_root, True, 'both')]:
+                bot_chat = kind == 'bot'
+                # Every variable the hook tests is removed, not emptied: a bare reference
+                # under `set -u` would fail on an unset variable and pass on an empty one.
                 environment = dict(os.environ)
                 for name in HOOK_ORCA_VARIABLES + (HOOK_BOT_VARIABLE,):
-                    environment[name] = ''
-                if bot_chat:
+                    environment.pop(name, None)
+                if kind in ('bot', 'both'):
                     environment[HOOK_BOT_VARIABLE] = secret
-                else:
+                if kind in ('pane', 'both'):
                     environment['ORCA_TERMINAL_HANDLE'] = 'probe'
                 if root_value:
                     environment['CLAUDE_PLUGIN_ROOT'] = root_value
@@ -439,13 +444,15 @@ def hook_output_errors(script_path, root):
                 if not named.startswith('/'):
                     errors.append('the hook names a relative index path on ' + label + ' with '
                                   + encoder)
-                if label in ('a plain path', 'a bot chat') and named != index:
+                if label in ('a plain path', 'a bot chat', 'the token beside a pane variable') and named != index:
                     errors.append('the hook names a path that is not the loaded plugin index')
-                # A bot chat gets the mode file as well. A pane gets the index alone.
+                # A bot chat, the token with all three pane variables unset, gets the mode
+                # file as well. A pane gets the index alone, with or without the token.
                 if label == 'a bot chat' and mode not in context:
                     errors.append('the hook names no mode file in a bot chat with ' + encoder)
                 if not bot_chat and '/skills/hugues-mode/' in context:
-                    errors.append('the hook names the mode file in a pane with ' + encoder)
+                    errors.append('the hook names the mode file outside a bot chat on ' + label
+                                  + ' with ' + encoder)
     return errors
 
 

@@ -1694,7 +1694,7 @@ class HostAdapterShape(unittest.TestCase):
     def test_host_pages_follow_the_page_shape_and_the_index_lists_them(self):
         directory = ROOT / 'plugin/adapters/hosts'
         readme = (directory / 'README.md').read_text()
-        self.assertLessEqual(len(readme.encode()), 2000)
+        self.assertLessEqual(len(readme.encode()), 1750)
         self.assertIn(', '.join(HOST_PAGE_ROWS), readme)
         pages = sorted(path.name for path in directory.glob('*.md') if path.name != 'README.md')
         self.assertEqual(host_index_errors(readme, pages), [])
@@ -1764,26 +1764,43 @@ class HostAdapterShape(unittest.TestCase):
             for name in ('Send', 'Read', 'Close'):
                 self.assertRegex(rows[name], r"Orca's (guide|help)", name)
             self.assertIn('Orca\'s rules block says', rows['Allowed tools'])
+        with self.subTest('a chat worker is not said to lack a terminal handle'):
+            self.assertNotIn('has no terminal handle and reads no page', page)
         with self.subTest('Detect tests that the token is set and never prints it'):
-            self.assertTrue(rows['Detect'].startswith('`ORCA_BOT_TOOLS_TOKEN` is set. Test only that it is set'))
+            self.assertTrue(rows['Detect'].startswith(
+                '`ORCA_BOT_TOOLS_TOKEN` is set and `ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID` are all unset.'))
+            self.assertIn('A session with the token and any of those three is a pane', rows['Detect'])
+            self.assertIn('Test only that the token is set', rows['Detect'])
             self.assertIn('never print, echo or log its value', rows['Detect'])
             self.assertIn('unset in a pane', rows['Detect'])
+            self.assertIn('whether a pane a bot started carries the token', rows['Detect'])
         with self.subTest('the index lists the bot page before the Orca page and scopes the shared rule'):
             ades = readme.split('## ADEs\n', 1)[1]
             self.assertLess(ades.index('](orca-bot.md)'), ades.index('](orca.md)'))
             self.assertIn('The Orca bot page is the one exception', readme.split('## Shared ADE rule', 1)[1].split('## Page shape')[0])
+            bullet = next(line for line in ades.splitlines() if '](orca-bot.md)' in line)
+            self.assertIn('is set and the three Orca variables below are not', bullet)
         carried = {
             'Sessions and worktrees': ['--worktree new-child --repo id:<repo> --base-branch origin/main --name <slug>',
                                        'A bot reads repos and edits none', 'One task, one worker, one worktree',
                                        'Never run `orca repo add` or `orca project setup-update`',
-                                       'A group room is unmapped', '--worktree-base-path'],
+                                       'A group room is unmapped', '--worktree-base-path',
+                                       "Orca's source says a worker started as a chat gets `ORCA_TERMINAL_HANDLE` (1.4.271)",
+                                       'whether it reads a page is unobserved'],
             'Start': ['orca orchestration worker-start --spec-file <brief> --agent claude --model <id> --effort <level> --item <n> --json',
                       'Read <root>/skills/hugues-mode/worker.md before anything else.', '.hstack/models.md',
                       'never into bot memory', 'tool ban in words', 'mode: terminal', 'anything but `terminal` is a gap',
-                      'at most 4 workers per bot', 'an arena pair as 2', 'did not write the code'],
-            'Send': ['orca orchestration send --to dispatch:<id>', '--body-file'],
+                      'at most 4 workers per bot', 'an arena pair as 2', 'did not write the code',
+                      'the first seat on the `interrogate reviewers` line that names a model rather than `inherit-parent`',
+                      "hStack does not enforce a worker's tool deny", 'has no flag for agent arguments (help, 1.4.271)',
+                      "Orca strips `--disallowedTools` from a chat's configured arguments (source, 1.4.271)",
+                      'whether one reaches a worker pane is unobserved', '(from `ps`, 1.4.269)'],
+            'Send': ['orca orchestration send --to dispatch:<id>', '--body-file',
+                     'A worker reports with `worker_done`', 'does not tell it to ask',
+                     'in the bot\'s transcripts on disk, on 1.4.271: 5 worker `question` messages arrived',
+                     'If one arrives, answer it with `orca orchestration reply --id <message_id>'],
             'Read': ['worker-show', 'worker-read --dispatch <id>', 'The evidence folder is the record'],
-            'Wait': ['Never poll', '`worker_done` is transport, not done', 'On every wake, before acting',
+            'Wait': ["Observed in the bot's transcripts on disk, on 1.4.271: 91 `worker_done`, 1 `escalation` and 5 worker `question`", 'Never poll', '`worker_done` is transport, not done', 'On every wake, before acting',
                      '--retry-of', 'lost worker', 'gh pr checks --watch', 'up to 2 times'],
             'Close': ['worker-release', 'on the owner\'s word', '--delete-branch', 'never `--force`'],
             'Allowed tools': ['orca bot item add`, `set`, `comment`, `done`, `link`, `list` and `show`',
@@ -1799,6 +1816,11 @@ class HostAdapterShape(unittest.TestCase):
                     self.assertIn(phrase, rows[name])
         with self.subTest('the page is an ADE page, never called a host page'):
             self.assertNotIn('host page', page.lower())
+        with self.subTest('the intro dates 1.4.271 and cites 1.4.269 only where it was seen'):
+            self.assertIn('observed on 2026-11-25 and 2026-11-26 and in the bot\'s transcripts on disk', page)
+            self.assertIn('A cell that cites 1.4.269 was seen on that build only', page)
+            self.assertNotIn('2026-11-22', page)
+            self.assertNotIn('to 2026-11-26', page)
 
     def test_orca_md_gains_one_clause_for_a_worker_a_bot_dispatched(self):
         page = (ROOT / 'plugin/adapters/hosts/orca.md').read_text()
@@ -1834,6 +1856,28 @@ class HostAdapterShape(unittest.TestCase):
                     if re.search(r'\$\{' + name, line):
                         self.assertRegex(line, set_test)
         self.assertGreater(named, 5)
+
+        def unsafe_detection(text):
+            # A line that names the token as a detection test must carry the safe test and the
+            # ban itself, because a session runs it before it reads the page's own rule.
+            return [line for line in text.splitlines()
+                    if name in line and not (set_test.search(line) and 'never print' in line)]
+
+        index = (ROOT / 'plugin/adapters/hosts/README.md').read_text()
+        door = (ROOT / 'plugin/adapters/host-workers.md').read_text()
+        page = (ROOT / 'plugin/adapters/hosts/orca-bot.md').read_text()
+        for label, text in [('the index', index), ('the written door', door), ('the bot page', page)]:
+            with self.subTest(label):
+                self.assertTrue(name in text)
+                self.assertEqual(unsafe_detection(text), [])
+        for label, sample, unsafe in [
+                ('the old index line', '- [Orca bot](orca-bot.md): `$ORCA_BOT_TOOLS_TOKEN` is set.', True),
+                ('a line with the test and no ban', 'Test it with `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]` for `ORCA_BOT_TOOLS_TOKEN`.', True),
+                ('a line with the ban and no test', '`$ORCA_BOT_TOOLS_TOKEN` is set, never print it.', True),
+                ('a line with both', '`$ORCA_BOT_TOOLS_TOKEN` is set. Test it with `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]`, never print it.', False),
+                ('a line that does not name it', 'Test it with `[ -n "${ORCA_TAB_ID-}" ]`.', False)]:
+            with self.subTest(label):
+                self.assertEqual(bool(unsafe_detection(sample)), unsafe)
         for label, sample, leaks in [('a printenv', 'run `printenv ORCA_BOT_TOOLS_TOKEN`', True),
                                      ('an echo', 'run `echo $ORCA_BOT_TOOLS_TOKEN`', True),
                                      ('the set test', 'test `[ -n "${ORCA_BOT_TOOLS_TOKEN-}" ]`', False),
@@ -1862,7 +1906,7 @@ class HostAdapterShape(unittest.TestCase):
                            '`orca bot work list`', 'needs you', 'a recommended one',
                            'only when the owner typed the go-ahead in this chat for that job',
                            'a handoff, a schedule, an event or a webhook holds', 'PR title and body',
-                           '`orca worktree rm` and never `--force`', '::orca-visual',
+                           '`orca worktree rm --delete-branch` and never `--force`', '::orca-visual',
                            'never ask for, accept or type a password or token', 'merge a PR or cut a release',
                            'Gmail, Google Drive, Google Calendar or Slack', 'a fresh worker that did not write the code']:
                 self.assertIn(phrase, soul, phrase)
@@ -1971,16 +2015,24 @@ class HostDetectionHook(unittest.TestCase):
     def test_the_bot_token_alone_triggers_the_door_and_names_two_files(self):
         index = str(ROOT / 'plugin/adapters/hosts/README.md')
         self.assertTrue(self.MODE.is_file())
-        for label, env in [('the token alone', {self.BOT_VARIABLE: self.BOT_SECRET}),
-                           ('the token beside a pane variable',
-                            {self.BOT_VARIABLE: self.BOT_SECRET, 'ORCA_TERMINAL_HANDLE': 'probe-value'})]:
-            with self.subTest(label):
-                result = self.run_hook(env)
+        with self.subTest('the token alone is a bot chat'):
+            result = self.run_hook({self.BOT_VARIABLE: self.BOT_SECRET})
+            self.assertEqual(result.returncode, 0, result.stderr)
+            context = self.context(result)
+            self.assertIn(index, context)
+            self.assertIn(str(self.MODE), context)
+            self.assertLess(context.index(index), context.index(str(self.MODE)))
+            self.assertIn('This is an Orca bot chat.', context)
+        for name in self.ORCA_VARIABLES:
+            with self.subTest(f'the token beside {name} is a pane'):
+                result = self.run_hook({self.BOT_VARIABLE: self.BOT_SECRET, name: 'probe-value'})
                 self.assertEqual(result.returncode, 0, result.stderr)
                 context = self.context(result)
                 self.assertIn(index, context)
-                self.assertIn(str(self.MODE), context)
-                self.assertLess(context.index(index), context.index(str(self.MODE)))
+                self.assertNotIn(str(self.MODE), context)
+                self.assertNotIn('hugues-mode', context)
+                self.assertNotIn('bot chat', context)
+                self.assertEqual(context, self.context(self.run_hook({name: 'probe-value'})))
         with self.subTest('a pane names the index and not the mode file'):
             context = self.context(self.run_hook({'ORCA_TERMINAL_HANDLE': 'probe-value'}))
             self.assertIn(index, context)
@@ -2006,6 +2058,9 @@ class HostDetectionHook(unittest.TestCase):
                         self.assertNotIn(self.BOT_SECRET, result.stderr)
                         context = self.context(result)
                         self.assertIn(f'{root}/skills/hugues-mode/SKILL.md', context)
+        with self.subTest('the token beside a pane variable is never printed either'):
+            result = self.run_hook({self.BOT_VARIABLE: self.BOT_SECRET, 'ORCA_TAB_ID': 'probe-value'})
+            self.assertNotIn(self.BOT_SECRET, result.stdout + result.stderr)
         with self.subTest('the script holds the name only in a set test'):
             for line in self.HOOK.read_text().splitlines():
                 if self.BOT_VARIABLE in line and not line.lstrip().startswith('#'):
@@ -2071,6 +2126,53 @@ class HostDetectionHook(unittest.TestCase):
                                         env=environment)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(result.stdout, '')
+
+    def run_hook_with_only(self, env, script=None):
+        """Run the hook with every Orca variable removed, not emptied, then set `env`."""
+        environment = dict(os.environ)
+        for name in (*self.ORCA_VARIABLES, self.BOT_VARIABLE):
+            environment.pop(name, None)
+        environment.update(env)
+        environment['CLAUDE_PLUGIN_ROOT'] = str(ROOT / 'plugin')
+        return subprocess.run(['bash', str(script or self.HOOK)], capture_output=True, text=True,
+                              env=environment)
+
+    def test_a_token_missing_from_the_environment_is_not_a_bot_chat(self):
+        # An empty variable and a missing one differ: `${NAME:-}` reads both, a bare `$NAME`
+        # under `set -u` fails on the missing one. Every case here removes the key.
+        index = str(ROOT / 'plugin/adapters/hosts/README.md')
+        with self.subTest('no Orca variable at all'):
+            result = self.run_hook_with_only({})
+            self.assertEqual((result.returncode, result.stdout, result.stderr), (0, '', ''))
+        with self.subTest('a pane variable and no token key'):
+            result = self.run_hook_with_only({'ORCA_PANE_KEY': 'probe-value'})
+            self.assertEqual((result.returncode, result.stderr), (0, ''))
+            self.assertIn(index, self.context(result))
+            self.assertNotIn('hugues-mode', self.context(result))
+        with self.subTest('the token and no pane variable key'):
+            result = self.run_hook_with_only({self.BOT_VARIABLE: self.BOT_SECRET})
+            self.assertEqual((result.returncode, result.stderr), (0, ''))
+            self.assertIn(str(self.MODE), self.context(result))
+            self.assertNotIn(self.BOT_SECRET, result.stdout)
+
+    def test_a_bare_reference_to_a_missing_variable_would_fail_under_set_u(self):
+        # Proves the case above can fail: the same script with the token read bare dies on an
+        # environment that lacks the key, and the real script does not.
+        script = self.HOOK.read_text()
+        self.assertIn('set -u', script)
+        self.assertNotRegex(script, r'\$\{?ORCA_BOT_TOOLS_TOKEN\}?(?![\w:-])')
+        bare = '${ORCA_BOT_TOOLS_TOKEN:-}'
+        self.assertIn(bare, script)
+        with tempfile.TemporaryDirectory() as directory:
+            mutant = Path(directory) / 'host-detect.sh'
+            mutant.write_text(script.replace(bare, '$ORCA_BOT_TOOLS_TOKEN'))
+            for label, env in [('no Orca variable', {}), ('a pane variable', {'ORCA_TAB_ID': 'probe-value'})]:
+                with self.subTest(label):
+                    broken = self.run_hook_with_only(env, mutant)
+                    self.assertNotEqual(broken.returncode, 0, broken.stdout)
+                    self.assertIn('unbound variable', broken.stderr)
+                    fine = self.run_hook_with_only(env)
+                    self.assertEqual(fine.returncode, 0, fine.stderr)
 
     def test_the_hook_adds_no_always_read_bytes_to_the_host_adapters(self):
         # The hook's message is delivered by the host, not by an adapter every

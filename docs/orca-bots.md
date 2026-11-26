@@ -9,12 +9,12 @@ Everything here was observed on Orca 1.4.271 with a Claude Code bot and Claude C
 ## Steps
 
 1. Register the repo in Orca yourself. The bot never runs `orca repo add`.
-2. If the repo needs its worktrees in one place, set the base path once: `orca project setup-update --setup <setup-id> --worktree-base-path <path>`. With no base path, Orca put a bot's worktrees under `~/orca/workspaces/<repo>/<name>` (observed on 1.4.271). Whether `new-child` follows a custom path is unobserved.
+2. If the repo needs its worktrees in one place, set the base path once: `orca project setup-update --setup <setup-id> --worktree-base-path <path>`. A bot's worktree was made under `~/orca/workspaces/<repo>/<name>` (observed on 1.4.271). Whether `new-child` follows a custom path is unobserved.
 3. In the Orca app, create one lead bot for this project and name it for the project. Creating it is your approval of full access for the bot and its workers.
 4. Put the SOUL text below in the bot's `SOUL.md`.
 5. Put the deny file below in the bot's home folder.
 6. Set the app settings below.
-7. Start a new chat. The session start message should name the hosts index and the mode file. That is unobserved until the proof run. If it does not, the bot has to say so and stop, as its SOUL says.
+7. Start a new chat. The session start message should name the hosts index and the mode file. hStack's door calls a session a bot chat when `ORCA_BOT_TOOLS_TOKEN` is set and `ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID` are all unset, so a pane gets the index alone. That is unobserved until the proof run. If the message names no mode file, the bot has to say so and stop, as its SOUL says.
 
 ## The lead SOUL text
 
@@ -35,7 +35,7 @@ I am the lead for <project>. I plan its work, hand every change to a worker and 
 - After I start workers I end my turn and never poll. When Orca wakes me, before I act, I compare `orca bot work list` and my open items with the evidence folder, and pick up anything that finished and was not handled.
 - A blocking question for the owner goes on the task's item as needs you, with options and a recommended one. My chat message points at the item.
 - Local commits are free. I push and open a PR only when the owner typed the go-ahead in this chat for that job. A run started by a handoff, a schedule, an event or a webhook holds: the worker saves the PR title and body locally, and I report the paths.
-- After a merge I remove a worker's worktree and branch only on the owner's word, with `orca worktree rm` and never `--force`. I report a refusal.
+- After a merge I remove a worker's worktree and branch only on the owner's word, with `orca worktree rm --delete-branch` and never `--force`. I report a refusal.
 - I report as one complete HTML file saved in the folder that `ORCA_CHAT_SCRATCH_DIR` names, then a line on its own, outside any code block: `::orca-visual{file="<name>.html" title="<title>"}`. I make item comments first and write the report last.
 
 ## Never
@@ -66,7 +66,7 @@ This file is required. Orca starts a bot with full access, and a connector tool 
 
 Orca starts the bot's Claude Code with user, project and local settings (source, 1.4.271), so this file applies to the bot chat. On Orca 1.4.269 it removed the Gmail, Drive and Calendar tools from a bot chat that ran with full access. The Slack entry is unobserved, because that bot had no Slack tool.
 
-The file does not reach a worker. A worker runs in a repo worktree, where this file does not apply: a worker started there listed the Gmail tools (observed on 1.4.269). Orca also strips `--disallowedTools` from configured agent arguments (source, 1.4.271). So hStack states the ban in each worker's brief and cannot enforce it. To enforce it, add the same four entries to `permissions.deny` in your own `~/.claude/settings.json`. That applies to every Claude Code session you run, and it is unobserved here.
+The file does not reach a worker. A worker runs in a repo worktree, where this file does not apply: a pane a bot started there listed the Gmail tools (observed on 1.4.269). `worker-start` has no flag for agent arguments (help, 1.4.271), and Orca strips `--disallowedTools` from a chat's configured arguments (source, 1.4.271). Whether a flag reaches a worker pane is unobserved, although a `--disallowedTools` flag on a `claude` command run in a pane hid the tools on 1.4.269. So hStack states the ban in each worker's brief and does not enforce it. To enforce it, add the same four entries to `permissions.deny` in your own `~/.claude/settings.json`. That applies to every Claude Code session you run, and it is unobserved here.
 
 ## Settings in the Orca app
 
@@ -82,5 +82,5 @@ Orca sets a bot's model, effort and permission mode only in the app. A bot is cr
 ## Not covered
 
 - Bot groups, Orca automations as schedulers, remote or paired computers and any bot other than the lead.
-- A worker as a chat instead of a pane. The bot reports it as a gap.
+- A worker started as a chat instead of a pane. The bot reports a `worker-start` receipt whose `mode` is not `terminal` as a gap. Orca's source says such a worker gets `ORCA_TERMINAL_HANDLE` (1.4.271), so whether it reads a page is unobserved.
 - Proof on Orca 1.4.277: it runs after this lands, with the lanes in issue #168.

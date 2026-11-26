@@ -22,17 +22,29 @@
 # written check.
 #
 # Observed: ORCA_BOT_TOOLS_TOKEN is set in an Orca 1.4.271 bot chat and unset in a
-# pane. It is Orca's key to the bot tool relay, so the hook tests that it is set
-# and never prints, echoes or logs its value.
+# pane, and the three pane variables are unset in a bot chat. A bot chat is the
+# token set with all three pane variables unset. A session with the token and any
+# pane variable is a pane: whether a pane a bot started carries the token is
+# unobserved, and that worker must read the Orca page, not the bot page. The token
+# is Orca's key to the bot tool relay, so the hook tests that it is set and never
+# prints, echoes or logs its value.
 set -u
 
-bot_chat=0
+pane=0
+if [ -n "${ORCA_TERMINAL_HANDLE:-}" ] || [ -n "${ORCA_PANE_KEY:-}" ] || [ -n "${ORCA_TAB_ID:-}" ]; then
+    pane=1
+fi
+token=0
 if [ -n "${ORCA_BOT_TOOLS_TOKEN:-}" ]; then
-    bot_chat=1
+    token=1
 fi
 
-if [ "$bot_chat" = 0 ] && [ -z "${ORCA_TERMINAL_HANDLE:-}" ] && [ -z "${ORCA_PANE_KEY:-}" ] && [ -z "${ORCA_TAB_ID:-}" ]; then
+if [ "$pane" = 0 ] && [ "$token" = 0 ]; then
     exit 0
+fi
+bot_chat=0
+if [ "$token" = 1 ] && [ "$pane" = 0 ]; then
+    bot_chat=1
 fi
 
 # Without the plugin root there is no absolute index path to name, so the hook
