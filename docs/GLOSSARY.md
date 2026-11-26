@@ -45,8 +45,16 @@ The Orca-managed worker runtime, Work Units and captured-review contracts of hst
 _Avoid_: Phase 2, the full product
 
 **ADE**:
-An agent development environment: an app that hosts several agent sessions and their worktrees, such as Orca or T3 Code. hStack maps only its terminal and worktree mechanics ([ADR 0004](adr/0004-adapters-for-ades-and-agents.md)). It is not **Layer 1** or **Layer 2**.
+An agent development environment: an app that hosts several agent sessions and their worktrees, such as Orca or T3 Code. hStack maps only its terminal and worktree mechanics ([ADR 0004](adr/0004-adapters-for-ades-and-agents.md)), and in a **bot chat** also the ADE's worker transport. It is not **Layer 1** or **Layer 2**.
 _Avoid_: Host (that means Claude Code, Codex or Cursor), orchestrator, Layer 2
+
+**Bot**:
+An Orca identity with a home folder, a soul and a memory, whose chats run an **agent**. It is not an agent, a host or an **ADE**, and using one is still **Layer 1**.
+_Avoid_: Agent, host, worker, Layer 2
+
+**Bot chat**:
+One session of a **bot**. It has no terminal and no worktree of its own.
+_Avoid_: Pane, bot session, bot run
 
 **Agent**:
 A program that runs a model, such as Claude Code, Codex, Cursor or omp. Not a **PR owner**, which is a role an agent can hold, and not **Layer 1** or **Layer 2**.

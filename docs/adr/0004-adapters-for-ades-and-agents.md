@@ -35,6 +35,8 @@ The rule is stated once, in [hosts/README.md](../../plugin/adapters/hosts/README
 
 This is [#50](https://github.com/hugues-vnsgn/hstack/issues/50) after its 2026-10-19 correction. The Orca page uses `orca-cli` for terminals and worktrees, resolving a pane's `tabId:leafId` to a terminal handle. It does not use Orca's `orchestration` skill, so hStack does the coordinating and Orca only hosts the agents' terminals and worktrees.
 
+A bot chat is the one exception, because it has no terminal: [ADR 0007](0007-an-orca-bot-uses-supervised-workers-as-transport.md).
+
 ## Consequences
 
 - P2 ships the door and an empty index. A page lands with its own detection test and its own observed evidence. A mechanic hStack has not seen on the host is written `unobserved`.
