@@ -4,17 +4,20 @@ This is the kit for running hStack in an Orca bot. You read it and do the steps 
 
 A bot chat has no terminal. hStack's [Orca bot page](../plugin/adapters/hosts/orca-bot.md) says how the bot starts workers, waits for them and reports. [ADR 0007](adr/0007-an-orca-bot-uses-supervised-workers-as-transport.md) gives the reason, and issue #168 holds the spec.
 
-Everything here was observed on Orca 1.4.271 with a Claude Code bot and Claude Code workers, unless a line says otherwise. A line that cites 1.4.269 was seen while the app was updating to 1.4.271, so it may be either build. A Codex or omp bot, a Codex worker, a bot group room and any later Orca build are unobserved.
+Everything here was observed on Orca 1.4.271 with a Claude Code bot and Claude Code workers, unless a line says otherwise. A line that cites 1.4.269 was seen while the app was updating to 1.4.271, so it may be either build. A line that cites 1.4.277 was seen on that build on 2026-11-27, in a proof run with a throwaway bot and a throwaway repo. A Codex or omp bot, a Codex worker, a bot group room and any Orca build a line does not cite are unobserved.
 
 ## Steps
 
 1. Register the repo in Orca yourself. The bot never runs `orca repo add`.
-2. If the repo needs its worktrees in one place, set the base path once: `orca project setup-update --setup <setup-id> --worktree-base-path <path>`. A bot's worktree was made under `~/orca/workspaces/<repo>/<name>` (observed on 1.4.271). Whether `new-child` follows a custom path is unobserved.
-3. In the Orca app, create one lead bot for this project and name it for the project. Creating it is your approval of full access for the bot and its workers.
-4. Put the SOUL text below in the bot's `SOUL.md`.
-5. Put the deny file below in the bot's home folder.
+2. If the repo needs its worktrees in one place, set the base path once: `orca project setup-update --setup <setup-id> --worktree-base-path <path>`. A bot's worktree was made under `~/orca/workspaces/<repo>/<name>` (observed on 1.4.271 and 1.4.277). Whether `new-child` follows a custom path is unobserved.
+3. In the Orca app, create one lead bot for this project and name it for the project. Creating it is your approval of full access for the bot and its workers. Orca opens the bot's first chat at once, while `SOUL.md` still holds Orca's placeholder, and sends that chat first-run rules that tell it to write its own `SOUL.md` and keep a `## Never` section as it is (observed on 1.4.277). Send that chat no task.
+4. Put the SOUL text below in the bot's `SOUL.md`, before you send the bot its first message.
+5. Put the deny file below in the bot's home folder, also before the first message.
 6. Set the app settings below.
-7. Start a new chat. The session start message should name the hosts index and the mode file. hStack's door calls a session a bot chat when `ORCA_BOT_TOOLS_TOKEN` is set and `ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID` are all unset, so a pane gets the index alone. That is unobserved until the proof run. If the message names no mode file, the bot has to say so and stop, as its SOUL says.
+7. Start a new chat and send the first message there. The session start message should name the hosts index and the mode file. hStack's door calls a session a bot chat when `ORCA_BOT_TOOLS_TOKEN` is set and `ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID` are all unset, so a pane gets the index alone. On 1.4.277 the message in a bot chat named both files, and the bot read them. If the message names no mode file, the bot has to say so and stop, as its SOUL says.
+8. After the bot's first run, open `SOUL.md`. It should still be the text from step 4. If the bot rewrote it, put the text back. On 1.4.277 Orca then pushed the restored text into the open chat on its next wake, with the note that it replaces the bot's earlier standing instructions, and a chat started after the restore held the text from its start.
+
+On 1.4.277 the first chat, opened while `SOUL.md` held the placeholder, wrote its own short SOUL over the kit text within a minute of its first task, although the kit text was already in the file. No push of the kit text reached that chat before its first task, although the kit text was in the file. A new chat opened while the kit text was in the file read the kit text and got no first-run rules. That a first task sent to a new chat leaves the SOUL alone is unobserved, and step 8 is the check.
 
 ## The lead SOUL text
 
@@ -45,6 +48,8 @@ I am the lead for <project>. I plan its work, hand every change to a worker and 
 - I never run `orca repo add`, `orca project setup-update`, `orca bot create` or `orca bot new-chat`.
 - I never use a Gmail, Google Drive, Google Calendar or Slack tool, and each worker's brief says the same.
 - I never print or log `ORCA_BOT_TOOLS_TOKEN`, or any other secret.
+- I never rewrite my SOUL unless my owner asks me to in the chat.
+- I never offer to break one of my own Never lines. If my owner wants such a thing done, my owner does it.
 ```
 
 ## The deny file
@@ -64,7 +69,7 @@ This file is required. Orca starts a bot with full access, and a connector tool 
 }
 ```
 
-Orca starts the bot's Claude Code with user, project and local settings (source, 1.4.271), so this file applies to the bot chat. On Orca 1.4.269 it removed the Gmail, Drive and Calendar tools from a bot chat that ran with full access. The Slack entry is unobserved, because that bot had no Slack tool.
+Orca starts the bot's Claude Code with user, project and local settings (source, 1.4.271), so this file applies to the bot chat. On Orca 1.4.269 it removed the Gmail, Drive and Calendar tools from a bot chat that ran with full access. On 1.4.277 the Gmail, Drive and Calendar tool names were absent from a bot chat's transcript with this file in place, while other connector tools were present, and a Claude Code session outside the bot on the same account listed them. The bot noted that the Google Drive server's instructions still appeared in its context, although none of its tools did. The Slack entry is unobserved on both builds, because the account had no Slack tool.
 
 The file does not reach a worker. A worker runs in a repo worktree, where this file does not apply: a pane a bot started there listed the Gmail tools (observed on 1.4.269). `worker-start` has no flag for agent arguments (help, 1.4.271), and Orca strips `--disallowedTools` from a chat's configured arguments (source, 1.4.271). Whether a flag reaches a worker pane is unobserved, although a `--disallowedTools` flag on a `claude` command run in a pane hid the tools on 1.4.269. So hStack states the ban in each worker's brief and does not enforce it. To enforce it, add the same four entries to `permissions.deny` in your own `~/.claude/settings.json`. That applies to every Claude Code session you run, and it is unobserved here.
 
@@ -77,10 +82,10 @@ Orca sets a bot's model, effort and permission mode only in the app. A bot is cr
 | Model and effort | The Claude value of the `judgment and prose` line in the repo's `.hstack/models.md`, at that line's effort. | The lead plans, briefs and judges. Its workers take their own role lines. |
 | Permission mode | Full access, which is the default for a new bot (observed on 1.4.269 as `bypassPermissions`). | A mode that asks would stop the run on a card that nobody answers, which is unobserved in a bot. The page grants no permission. |
 | Look around | Off. | It runs on a schedule, about every 4 hours on a canary bot (observed on 1.4.271), and each run costs tokens. |
-| Reports | Nothing to set. The SOUL text above asks for one `::orca-visual` HTML file. | Orca's chat visuals work when `ORCA_CHAT_SCRATCH_DIR` is set, and it was set in a bot chat (observed on 1.4.271). Unobserved: whether the app has a switch for it. |
+| Reports | Nothing to set. The SOUL text above asks for one `::orca-visual` HTML file. | Orca's chat visuals work when `ORCA_CHAT_SCRATCH_DIR` is set, and it was set in a bot chat (observed on 1.4.271 and 1.4.277). On 1.4.277 the bot saved its report as one HTML file in that folder and ended its message with the `::orca-visual` line. Unobserved: whether the app has a switch for it, and whether the chat showed the visual. |
 
 ## Not covered
 
 - Bot groups, Orca automations as schedulers, remote or paired computers and any bot other than the lead.
-- A worker started as a chat instead of a pane. The bot reports a `worker-start` receipt whose `mode` is not `terminal` as a gap. Orca's source says such a worker gets `ORCA_TERMINAL_HANDLE` (1.4.271), so whether it reads a page is unobserved.
-- Proof on Orca 1.4.277: it runs after this lands, with the lanes in issue #168.
+- A worker's mode. `worker-start` returned `mode: terminal` on 1.4.271 and `mode: structured` on 1.4.277, and `--help` on 1.4.277 has no option that chooses it. The bot records the receipt's mode and treats neither as a gap. The structured workers whose transcripts were kept ran hStack's session start hook and sent `worker_done` (1.4.277), but `worker_done` does not show that hStack loaded, because Orca's own dispatch wrapper tells a structured worker to send it. So the brief asks each worker to list, in its evidence report, the files it read before the task: `worker.md`, the mode file, the hosts index and its page. The bot reads that report before it accepts the work, and reports a worker whose report lacks them as a gap. That list is the worker's own statement, not proof, and the independent reviewer is what the page relies on. Whether `worker-read` shows a worker's session start message or its reads is unobserved.
+- Proof on Orca 1.4.277 was run on 2026-11-27 for five of the lanes in issue #168: the door, an owner-typed run to its end, a handoff run with an implementer and a fresh reviewer, a lost worker, and the deny file for Gmail, Drive and Calendar. Still gaps: a `worker_done` that arrives while the bot's turn is dead, saving a PR title and body locally (the runs pushed nothing, and none asked for a PR title and body), `new-child` under a custom base path, the Slack deny entry, a Codex or omp bot, a Codex worker started by a bot, bot groups, and a plain Orca chat that is not a bot.

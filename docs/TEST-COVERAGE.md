@@ -1,6 +1,6 @@
 # Python test roots and evidence limits
 
-The current candidate collects **603 top-level unittest cases**. One is a driver that
+The current candidate collects **605 top-level unittest cases**. One is a driver that
 separately executes **50 frozen 0.2.0 restoration cases**. Do not add the driver
 and its children as independent coverage, or describe historical passes as current
 native workflow proof. Subtests are not added to case totals.
@@ -11,7 +11,7 @@ native workflow proof. Subtests are not added to case totals.
 | Current checker, historical 0.1.0 fixtures | 45 | Explicit historical validation mode, package mutations, the Cursor manifest rules, each with its own negative case, and the upstream-name guard |
 | Historical 0.2.0 restoration driver | 1 | Executes 50 cases inside a separate hash-bound archive |
 | Current source/provenance checks | 48 | test_upstream_sync (37), test_retained_provenance (11) |
-| Current installed adapters and regressions | 147 | test_host_adapters (122), test_review_regressions (12), test_rereview_regressions (13) |
+| Current installed adapters and regressions | 149 | test_host_adapters (124), test_review_regressions (12), test_rereview_regressions (13) |
 | Current native-layout contracts | 63 | test_native_layout; canonical source, permissions, host invocation table, seal acceptance, helper receipt, the three bundled Cursor skills from outside upstream (their pinned sources and notices, the user-only and host-contract requirements, one body edit that resealing approves, and 18 drift mutations that resealing cannot approve), budgets (including the explicit list of skills added after 0.2.0 that have no historical context counterpart) and the native-reach lint (a corpus of 49 reviewed contradictions in five line shapes each, 17 correct sentences, the package wiring and a one-entry allowlist), plus the router rewrite: router section pointers and the Principles index, the four dead Cursor frontmatter fields through the plugin check, and five read-only cases on the router and the files it points at (title, host tool names and description, mobile routes, single-source model defaults, the registered `hugues-agent` name and question tool per host, worker definition), and three source-wording cases for issue #48 (the agent finds its own mode file, the Skill-tool rule, the playbook headers) |
 | Current progressive-disclosure contracts | 16 | test_context_disclosure; retained rules, mandatory phase reads, complete declared source inventories, the skill-list budget (including its pinned pre-PR `a67df90` point), YAML-description quoting, the router's initial read set against `main`'s pinned read set and bound resources |
 | Current installed-tolerance regressions | 45 | test_installed_tolerance; bootstrap dependencies, host metadata, unreadable folders, umask modes, every spelling of a raw skill read, normalized paths (`.`, `..`, letter case, repeated slashes), open quotes and split code spans, every revision/syntax a skill-body guard must still check, a helper command's operand, and a rejection matrix of 2,255 cases (385 `read-workflow`, 1,806 `translate-plan` and 64 in-plan cases) over all 64 bundled skills, the legacy aliases of the 59 that have one, consumer and external paths, with symlink and traversal cases and positive controls |
@@ -19,11 +19,11 @@ native workflow proof. Subtests are not added to case totals.
 | Current bundled mobile guidance | 6 | test_mobile_guidance; installed nine-context selection contract, scoped skill controls, reference resolution, review and native-forensics hooks, ten-lane preservation and authored inventory mutations. These are delivered-source contracts, not device journeys. |
 | Current helper and language rules | 5 | test_helper_language_rules; command routing and resolved helper link, per-command exceptions and Gaps, reviewer baseline template, both-host worker briefs and portable lens links. Delivered-source contracts only. |
 | Current native execution helpers | 86 | test_native_exec and test_native_exec_review; 83 controlled installed CLI cases, two installed workflow/evidence contracts and one collection/accounting guard. Native project observations run separately. |
-| Total collected | 603 | Current, mixed and historical scopes remain distinct |
+| Total collected | 605 | Current, mixed and historical scopes remain distinct |
 
 The [native setup-to-proof check](../tests/setup-proof.md) runs separately on an
 authorized Mac. Its real iOS UI tests and Claude sessions are not included in the
-603 Python cases. The opt-in CI workflow requires a provisioned native runner.
+605 Python cases. The opt-in CI workflow requires a provisioned native runner.
 The source maintenance workflow runs the README's five commands on pull requests
 and pushes to main; it does not run native host or device probes.
 
@@ -625,3 +625,29 @@ CLI and message tests replay committed TLC output through a fake Java, and they 
 copy outside the repository with Node 22.23.4: 166 of 167 passed, and the one failure, the launcher reached
 through a relative symlink, fails the same way on the 0.15.43 upstream bytes on this macOS temporary folder. These are source checks. No host ran `reframe`, and no
 Windows run was observed.
+
+The Orca bot page correction after the Orca 1.4.277 proof adds two cases to `test_host_adapters`, so 124 sit there
+and 605 top-level cases collect. One reads the bot page, the pane page, the ADR and the kit for the corrected rules: the
+Start row records both receipt modes, `terminal` on 1.4.271 and `structured` on 1.4.277, names the gap as a worker that
+shows no ADE message or sends no `worker_done`, and no longer says that a worker must be a pane or that any mode but
+`terminal` is a gap. The Wait row names the send to the same dispatch, without `--item`, before `--retry-of`, which it marks
+unobserved on 1.4.277. The Detect row records the door and the unset `CLAUDE_PLUGIN_ROOT`, the pane page records the
+structured worker seen with one pane variable, and no file still calls the 1.4.277 proof a later step. The other reads
+the kit's step order: the SOUL text and the deny file come before the first message, the first task stays out of the chat
+Orca opened, the SOUL check comes after the first run, the SOUL's Never list carries the no-rewrite line, and the guide's
+section 22 lists the same steps in the same order. Existing cases change their pins: the bot page's intro and stamps, the
+Detect, Sessions and Start rows, the one-clause case for `orca.md`, which now also allows its one Detect sentence, and the
+kit's SOUL phrases. These are source checks. The observed claims come from the proof run's transcripts of 2026-11-27, kept
+outside the repository, and no check here reads them. A first task sent to a new chat leaving the SOUL alone is unobserved.
+
+Fix round 1 for that correction adds no case and keeps 605. It extends the two cases. The page case now holds that the gap
+test is one a bot can apply: the brief asks the worker to list the files it read, the bot reports a report that lacks them,
+and the page, the kit and the ADR each say the list is the worker's own statement and not proof, that `worker_done` does not
+show hStack loaded, and that the independent reviewer is what the page relies on. It holds that the Read and Wait rows credit
+`worker-show` with `state`, `stage` and `liveness` and `worker-read` with the `projection` outcome, that the Wait row lists the
+two kill subjects apart from "Worker stopped without reporting", and that the Allowed tools row records the prompted refusal, the
+offered override and the finished owner-typed run. No file may still call that run a gap. The kit case holds that step 8 records
+Orca's push of the restored SOUL into the open chat and the new chat that held it from its start, and that no file claims an open chat keeps
+the SOUL it started with. The SOUL-text case also pins the second new Never line, that the bot never offers to break one of its own
+Never lines, in the kit, the guide and the ADR. That rule is defined, not yet observed. These are source checks. The lane 2 run, the SOUL push and the worker transcripts are in the
+proof run's evidence, outside the repository.
