@@ -126,20 +126,23 @@ explains the boundary and a first-task workflow.
 ## Run hStack inside Orca
 
 Orca is an agent development environment (ADE), not a host. hStack still runs
-in Claude Code or Codex, installed as above. Orca holds the sessions and their
-worktrees.
+in Claude Code or Codex, installed as above. Cursor inside Orca is unmapped.
+Orca holds the sessions and their worktrees.
 
-- **In an Orca pane** there is nothing to set up. In Claude Code, hStack's
-  session-start hook sees the Orca pane variables and tells the session to read
-  the [hosts index](plugin/adapters/hosts/README.md), which sends it to the
-  [Orca page](plugin/adapters/hosts/orca.md). The coordinator runs each worker
-  in its own Orca pane and keeps dispatch, completion and verification for
-  itself. Codex loads no plugin hook, so it relies on the written check in
-  [host-workers.md](plugin/adapters/host-workers.md). Coordinators in Orca
-  panes were observed on Orca CLI 1.4.241 and 1.4.243 with Claude Code, on tiny
-  tasks; see the [0.5.6 validation](docs/RELEASE-0.5.6.md#validation). Codex in
-  Orca is unobserved.
-- **In an Orca bot** you set up one lead bot per project by hand, from the
+- **In an Orca pane**, start Claude Code or Codex in the pane and run
+  `hugues-mode` the usual way. There is nothing else to set up. In Claude Code,
+  hStack's session-start hook tells the session to read the
+  [hosts index](plugin/adapters/hosts/README.md), which sends it to the
+  [Orca page](plugin/adapters/hosts/orca.md); Codex loads no plugin hook and
+  relies on the written check in [host-workers.md](plugin/adapters/host-workers.md).
+  The coordinator runs each worker in its own Orca pane and keeps dispatch,
+  completion and verification for itself.
+
+  Status: released in 0.5.6. Coordinators in Orca panes were observed on Orca
+  CLI 1.4.241 and 1.4.243 with Claude Code, on tiny tasks; see the
+  [0.5.6 validation](docs/RELEASE-0.5.6.md#validation). Codex in Orca is
+  unobserved.
+- **In an Orca bot**, you set up one lead bot per project by hand, from the
   [bot kit](docs/orca-bots.md). hStack ships no setup skill. The bot runs
   `hugues-mode` in its own chat, coordinates and edits no repo: every change
   goes to a worker in its own worktree, which Orca makes. It pushes and opens a
@@ -147,11 +150,14 @@ worktrees.
   never merges or releases. The [Orca bot page](plugin/adapters/hosts/orca-bot.md)
   gives the mechanics and
   [ADR 0007](docs/adr/0007-an-orca-bot-uses-supervised-workers-as-transport.md)
-  the reason. This is on main and not yet released. The page's Orca facts were
-  observed on Orca 1.4.271 with a Claude Code bot and Claude Code workers, but
-  nothing from the page or the kit has run in a real bot chat yet: the proof on
-  Orca 1.4.277 is a later step. Codex and omp bots, Codex workers started by a
-  bot, workers started as chats and bot groups are unobserved.
+  the reason.
+
+  Status: on main, not yet released. The page's Orca facts were observed on
+  Orca 1.4.271 with a Claude Code bot and Claude Code workers; a few, stamped
+  1.4.269, were seen during the update and may come from either build. Nothing
+  from the page or the kit has run in a real bot chat yet: the proof on Orca
+  1.4.277 is a later step. Codex and omp bots, Codex workers started by a bot,
+  workers started as chats and bot groups are unobserved.
 
 ## What to expect
 
