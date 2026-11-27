@@ -1,6 +1,6 @@
 {
   "name": "hstack",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "description": "Mobile routing, proof guidance and principles for hStack in Claude Code, Codex and Cursor.",
   "author": {
     "name": "hugues-vnsgn"
