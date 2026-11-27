@@ -156,10 +156,10 @@ Orca holds the sessions and their worktrees.
   Orca 1.4.271 with a Claude Code bot and Claude Code workers; a few, stamped
   1.4.269, were seen during the update and may come from either build. On
   2026-11-27, on Orca 1.4.277, a proof run with a throwaway bot and repo
-  observed the door, a handoff run with an implementer and a fresh reviewer, a
-  lost worker, and the deny file for Gmail, Drive and Calendar. Gaps: a full
-  owner-typed run to its end, a `worker_done` that arrives while the bot's turn
-  is dead, saving a PR title and body locally, a custom worktree base path, the
+  observed the door, an owner-typed run to its end, a handoff run with an
+  implementer and a fresh reviewer, a lost worker, and the deny file for Gmail,
+  Drive and Calendar. Gaps: a `worker_done` that arrives while the bot's turn is
+  dead, saving a PR title and body locally, a custom worktree base path, the
   Slack deny entry, Codex and omp bots, Codex workers started by a bot, bot
   groups, and a plain Orca chat that is not a bot.
 

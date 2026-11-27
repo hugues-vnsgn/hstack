@@ -639,3 +639,15 @@ section 22 lists the same steps in the same order. Existing cases change their p
 Detect, Sessions and Start rows, the one-clause case for `orca.md`, which now also allows its one Detect sentence, and the
 kit's SOUL phrases. These are source checks. The observed claims come from the proof run's transcripts of 2026-11-27, kept
 outside the repository, and no check here reads them. A first task sent to a new chat leaving the SOUL alone is unobserved.
+
+Fix round 1 for that correction adds no case and keeps 605. It extends the two cases. The page case now holds that the gap
+test is one a bot can apply: the brief asks the worker to list the files it read, the bot reports a report that lacks them,
+and the page, the kit and the ADR each say the list is the worker's own statement and not proof, that `worker_done` does not
+show hStack loaded, and that the independent reviewer is what the page relies on. It holds that the Read and Wait rows credit
+`worker-show` with `state`, `stage` and `liveness` and `worker-read` with the `projection` outcome, that the Wait row lists the
+two kill subjects apart from "Worker stopped without reporting", and that the Allowed tools row records the prompted refusal, the
+offered override and the finished owner-typed run. No file may still call that run a gap. The kit case holds that step 8 records
+Orca's push of the restored SOUL into the open chat and the new chat that held it from its start, and that no file claims an open chat keeps
+the SOUL it started with. The SOUL-text case also pins the second new Never line, that the bot never offers to break one of its own
+Never lines, in the kit, the guide and the ADR. That rule is defined, not yet observed. These are source checks. The lane 2 run, the SOUL push and the worker transcripts are in the
+proof run's evidence, outside the repository.

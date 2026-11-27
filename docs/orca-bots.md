@@ -15,9 +15,9 @@ Everything here was observed on Orca 1.4.271 with a Claude Code bot and Claude C
 5. Put the deny file below in the bot's home folder, also before the first message.
 6. Set the app settings below.
 7. Start a new chat and send the first message there. The session start message should name the hosts index and the mode file. hStack's door calls a session a bot chat when `ORCA_BOT_TOOLS_TOKEN` is set and `ORCA_TERMINAL_HANDLE`, `ORCA_PANE_KEY` and `ORCA_TAB_ID` are all unset, so a pane gets the index alone. On 1.4.277 the message in a bot chat named both files, and the bot read them. If the message names no mode file, the bot has to say so and stop, as its SOUL says.
-8. After the bot's first run, open `SOUL.md`. It should still be the text from step 4. If the bot rewrote it, put the text back and start a new chat, because an open chat keeps the SOUL it started with.
+8. After the bot's first run, open `SOUL.md`. It should still be the text from step 4. If the bot rewrote it, put the text back. On 1.4.277 Orca then pushed the restored text into the open chat on its next wake, with the note that it replaces the bot's earlier standing instructions, and a chat started after the restore held the text from its start.
 
-On 1.4.277 the first chat, opened while `SOUL.md` held the placeholder, wrote its own short SOUL over the kit text within a minute of its first task, although the kit text was already in the file. A new chat opened while the kit text was in the file read the kit text and got no first-run rules. That a first task sent to a new chat leaves the SOUL alone is unobserved, and step 8 is the check.
+On 1.4.277 the first chat, opened while `SOUL.md` held the placeholder, wrote its own short SOUL over the kit text within a minute of its first task, although the kit text was already in the file. No push of the kit text reached that chat before its first task, although the kit text was in the file. A new chat opened while the kit text was in the file read the kit text and got no first-run rules. That a first task sent to a new chat leaves the SOUL alone is unobserved, and step 8 is the check.
 
 ## The lead SOUL text
 
@@ -49,6 +49,7 @@ I am the lead for <project>. I plan its work, hand every change to a worker and 
 - I never use a Gmail, Google Drive, Google Calendar or Slack tool, and each worker's brief says the same.
 - I never print or log `ORCA_BOT_TOOLS_TOKEN`, or any other secret.
 - I never rewrite my SOUL unless my owner asks me to in the chat.
+- I never offer to break one of my own Never lines. If my owner wants such a thing done, my owner does it.
 ```
 
 ## The deny file
@@ -81,10 +82,10 @@ Orca sets a bot's model, effort and permission mode only in the app. A bot is cr
 | Model and effort | The Claude value of the `judgment and prose` line in the repo's `.hstack/models.md`, at that line's effort. | The lead plans, briefs and judges. Its workers take their own role lines. |
 | Permission mode | Full access, which is the default for a new bot (observed on 1.4.269 as `bypassPermissions`). | A mode that asks would stop the run on a card that nobody answers, which is unobserved in a bot. The page grants no permission. |
 | Look around | Off. | It runs on a schedule, about every 4 hours on a canary bot (observed on 1.4.271), and each run costs tokens. |
-| Reports | Nothing to set. The SOUL text above asks for one `::orca-visual` HTML file. | Orca's chat visuals work when `ORCA_CHAT_SCRATCH_DIR` is set, and it was set in a bot chat (observed on 1.4.271 and 1.4.277). Unobserved: whether the app has a switch for it. |
+| Reports | Nothing to set. The SOUL text above asks for one `::orca-visual` HTML file. | Orca's chat visuals work when `ORCA_CHAT_SCRATCH_DIR` is set, and it was set in a bot chat (observed on 1.4.271 and 1.4.277). On 1.4.277 the bot saved its report as one HTML file in that folder and ended its message with the `::orca-visual` line. Unobserved: whether the app has a switch for it, and whether the chat showed the visual. |
 
 ## Not covered
 
 - Bot groups, Orca automations as schedulers, remote or paired computers and any bot other than the lead.
-- A worker's mode. `worker-start` returned `mode: terminal` on 1.4.271 and `mode: structured` on 1.4.277, and `--help` on 1.4.277 has no option that chooses it. The bot records the receipt's mode and treats neither as a gap. A structured worker ran hStack's session start hook, read the Orca page and sent `worker_done` (1.4.277). A worker that shows no ADE message or sends no `worker_done` is the gap.
-- Proof on Orca 1.4.277 was run on 2026-11-27 for four of the lanes in issue #168: the door, a handoff run with an implementer and a fresh reviewer, a lost worker, and the deny file for Gmail, Drive and Calendar. Still gaps: a full owner-typed run to its end (only the command's expansion and a refusal to register a repo were seen), a `worker_done` that arrives while the bot's turn is dead, saving a PR title and body locally (a handoff run pushed nothing), `new-child` under a custom base path, the Slack deny entry, a Codex or omp bot, a Codex worker started by a bot, bot groups, and a plain Orca chat that is not a bot.
+- A worker's mode. `worker-start` returned `mode: terminal` on 1.4.271 and `mode: structured` on 1.4.277, and `--help` on 1.4.277 has no option that chooses it. The bot records the receipt's mode and treats neither as a gap. The structured workers whose transcripts were kept ran hStack's session start hook and sent `worker_done` (1.4.277), but `worker_done` does not show that hStack loaded, because Orca's own dispatch wrapper tells a structured worker to send it. So the brief asks each worker to list, in its evidence report, the files it read before the task: `worker.md`, the mode file, the hosts index and its page. The bot reads that report before it accepts the work, and reports a worker whose report lacks them as a gap. That list is the worker's own statement, not proof, and the independent reviewer is what the page relies on. Whether `worker-read` shows a worker's session start message or its reads is unobserved.
+- Proof on Orca 1.4.277 was run on 2026-11-27 for five of the lanes in issue #168: the door, an owner-typed run to its end, a handoff run with an implementer and a fresh reviewer, a lost worker, and the deny file for Gmail, Drive and Calendar. Still gaps: a `worker_done` that arrives while the bot's turn is dead, saving a PR title and body locally (the runs pushed nothing, and none asked for a PR title and body), `new-child` under a custom base path, the Slack deny entry, a Codex or omp bot, a Codex worker started by a bot, bot groups, and a plain Orca chat that is not a bot.

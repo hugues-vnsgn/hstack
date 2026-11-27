@@ -1842,13 +1842,36 @@ class HostAdapterShape(unittest.TestCase):
             for phrase in ['`mode: terminal`', '`mode: structured`', 'structworker_<uuid>',
                            '`worker-start --help` on 1.4.277 has no option that chooses the mode',
                            'neither mode is a gap by itself', 'record it in the evidence folder',
-                           'A worker that shows no ADE message or sends no `worker_done` is the gap']:
+                           'five starts in three runs']:
                 self.assertIn(phrase, start, phrase)
+            self.assertNotIn('is the gap: report it', page)
             for stale in ['anything but `terminal` is a gap', 'A worker must be a pane', 'a worker the bot starts is an Orca pane']:
                 self.assertNotIn(stale, page, stale)
                 self.assertNotIn(stale, kit, stale)
             self.assertNotIn('A worker a bot starts is an Orca pane', adr)
             self.assertNotIn("The bot reports a `worker-start` receipt whose `mode` is not `terminal` as a gap", kit)
+        with self.subTest('the gap test is one the bot can apply, and it says it is the worker\'s own statement'):
+            start = rows['Start']
+            for phrase in ['It also asks the worker to list, in its evidence report, the files it read before the task: '
+                           '`worker.md`, the mode file, the hosts index and the page the index named',
+                           '`worker_done` does not show that hStack loaded, because Orca\'s own dispatch wrapper tells a structured worker to send it',
+                           'report a worker whose report does not list `worker.md`, the mode file, the hosts index and its page as a gap',
+                           'That list is the worker\'s own statement, not proof',
+                           'This page relies on the independent reviewer for the rest',
+                           'Unobserved: that `worker-read` shows a worker\'s session start message or its reads']:
+                self.assertIn(phrase, start, phrase)
+            for label, text in [('the kit', kit), ('the ADR', adr)]:
+                self.assertIn("own statement, not proof", text, label)
+                self.assertIn('independent reviewer is what the page relies on', text, label)
+                self.assertIn('lacks `worker.md`, the mode file, the hosts index and its page as a gap' if label == 'the ADR'
+                              else 'lacks them as a gap', text, label)
+        with self.subTest('the Read and Wait rows credit each command with what it returned'):
+            read = rows['Read']
+            self.assertIn('`worker-show` returned `state`, `stage` and `liveness`', read)
+            self.assertIn('`worker-read` returned the worker\'s text and tool-call blocks with a `nextCursor`, a `status`, '
+                          'and a `projection` that held the `stage`, an `outcome` and a `liveness` verdict', read)
+            self.assertIn('`worker-show` still showed state `ready`, stage `input_accepted` and liveness `exited`, '
+                          'and `worker-read` showed outcome `in_progress` in its `projection`', rows['Wait'])
         with self.subTest('the Wait row names the send to the same dispatch before --retry-of'):
             wait = rows['Wait']
             route = 'Retry it once with `orca orchestration send --to dispatch:<id>` to the same dispatch, without `--item`'
@@ -1857,6 +1880,10 @@ class HostAdapterShape(unittest.TestCase):
             self.assertIn('is unobserved on 1.4.277', wait.split('--retry-of', 1)[1])
             for subject in ['Worker exited without reporting', 'Worker stopped on an error without reporting']:
                 self.assertIn(f'"{subject}"', wait)
+            self.assertIn('"Worker exited without reporting" (the agent process exited on SIGKILL) or '
+                          '"Worker stopped on an error without reporting"', wait)
+            self.assertIn('A worker that ended its turn without sending `worker_done` arrived as '
+                          '"Worker stopped without reporting"', wait)
             self.assertIn('set the item to needs-you and report the work as lost', wait)
         with self.subTest('the door and the pane page no longer call the hook unobserved in a bot chat'):
             detect = rows['Detect']
@@ -1864,11 +1891,22 @@ class HostAdapterShape(unittest.TestCase):
             self.assertIn('`CLAUDE_PLUGIN_ROOT` was unset in the bot\'s own Bash', detect)
             self.assertNotIn('whether a hook in a bot chat sees the plugin root', page)
             self.assertIn('A structured worker that a bot started on Orca 1.4.277 was seen with one of the three set', orca)
-        with self.subTest('nothing still says the 1.4.277 proof is a later step'):
+        with self.subTest('the Allowed tools row records the prompted refusal, the offered override and the finished owner-typed run'):
+            tools = rows['Allowed tools']
+            for phrase in ['in a message that already said the Orca page bars it',
+                           'One option on that item offered the owner to have the bot run `repo add` anyway',
+                           'the owner-typed run went to its end',
+                           'ended its message with the `::orca-visual` line']:
+                self.assertIn(phrase, tools, phrase)
+            self.assertNotIn('Unobserved: an owner-typed run to its end', tools)
+        with self.subTest('nothing still says the 1.4.277 proof is a later step or lane 2 is a gap'):
             for label, text in [('the ADR', adr), ('the kit', kit), ('the README', (ROOT / 'README.md').read_text()),
-                                ('the guide', (ROOT / 'docs/hstack-user-guide.html').read_text())]:
+                                ('the guide', (ROOT / 'docs/hstack-user-guide.html').read_text()),
+                                ('the page', page)]:
                 for stale in ['is a later step', 'it runs after this lands', 'the proof on Orca 1.4.277 has not run',
-                              'has run in a real bot chat yet', 'unobserved until the proof run']:
+                              'has run in a real bot chat yet', 'unobserved until the proof run',
+                              'a full owner-typed run', 'Unobserved: an owner-typed run to its end',
+                              'only pushed nothing', 'keeps the SOUL it started with']:
                     self.assertNotIn(stale, text, f'{label}: {stale}')
 
     def test_the_bot_kit_puts_the_soul_first_and_checks_it_after_the_first_run(self):
@@ -1894,10 +1932,22 @@ class HostAdapterShape(unittest.TestCase):
             self.assertIn('before you send the bot its first message', text[str(by_theme['soul'])])
             self.assertIn('before the first message', text[str(by_theme['deny'])])
             self.assertIn('Send that chat no task', text[str(by_theme['create'])])
+        with self.subTest('step 8 records the push into the open chat and the new chat, with no claim that an open chat keeps its SOUL'):
+            step = dict(numbered)[str(by_theme['check'])]
+            self.assertIn('Orca then pushed the restored text into the open chat on its next wake', step)
+            self.assertIn('a chat started after the restore held the text from its start', step)
+            self.assertNotIn('keeps the SOUL it started with', kit)
+            guide_text = (ROOT / 'docs/hstack-user-guide.html').read_text()
+            self.assertIn('Orca then pushed the restored text into the open chat on its next wake', guide_text)
         with self.subTest('the Never list asks the bot not to rewrite its SOUL'):
             soul = re.findall(r'```(\w+)\n(.*?)```', kit, re.S)[0][1]
             never = soul.split('## Never', 1)[1]
             self.assertIn('- I never rewrite my SOUL unless my owner asks me to in the chat.', never)
+            self.assertIn('- I never offer to break one of my own Never lines. If my owner wants such a thing done, my owner does it.', never)
+            guide_text = (ROOT / 'docs/hstack-user-guide.html').read_text()
+            self.assertIn('never offers to break one of its own Never lines', guide_text)
+            self.assertIn('The owner ruled that the bot never offers to break one of its own Never lines',
+                          (ROOT / 'docs/adr/0007-an-orca-bot-uses-supervised-workers-as-transport.md').read_text())
         with self.subTest('the guide mirrors the step order'):
             guide = (ROOT / 'docs/hstack-user-guide.html').read_text()
             section = guide.split('<h4>Set up a lead bot</h4>', 1)[1].split('</ol>', 1)[0]
@@ -1998,7 +2048,8 @@ class HostAdapterShape(unittest.TestCase):
                            '`orca worktree rm --delete-branch` and never `--force`', '::orca-visual',
                            'never ask for, accept or type a password or token', 'merge a PR or cut a release',
                            'Gmail, Google Drive, Google Calendar or Slack', 'a fresh worker that did not write the code',
-                           'I never rewrite my SOUL unless my owner asks me to in the chat']:
+                           'I never rewrite my SOUL unless my owner asks me to in the chat',
+                           'I never offer to break one of my own Never lines. If my owner wants such a thing done, my owner does it']:
                 self.assertIn(phrase, soul, phrase)
             self.assertIsNone(re.search(r'\d+\.\d+\.\d+', soul))
         with self.subTest('the app settings are listed'):
