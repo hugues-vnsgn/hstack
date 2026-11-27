@@ -23,6 +23,7 @@ ADDED_AFTER_RELEASE = (
     'plugin/skills/ketchup-video/SKILL.md',
     'plugin/skills/kotlin-best-practices/SKILL.md',
     'plugin/skills/maintain-formal-verification-skill/SKILL.md',
+    'plugin/skills/reframe/SKILL.md',
     'plugin/skills/sharpen/SKILL.md',
     'plugin/skills/statechart/SKILL.md',
     'plugin/skills/swift-best-practices/SKILL.md',

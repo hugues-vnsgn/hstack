@@ -4,8 +4,8 @@ The 0.2.0 pinned-core restoration remains a historical release. Version 0.3.0
 consolidates its full skill bodies into native entries; see
 [native consolidation](NATIVE-CONSOLIDATION.md) for layout, migration and limits.
 
-The upstream archive retains 551 files from upstream 0.15.43 at
-`2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`. Git-object snapshots verify its
+The upstream archive retains 554 files from upstream 0.15.48 at
+`9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc`. Git-object snapshots verify its
 paths, modes, SHA-1, SHA-256 and sizes. The adapted runtime no longer claims
 byte equality. Public native names, workflow phase order, role cardinality,
 feature arena, fallback, whole-map maintenance and mobile applicability remain

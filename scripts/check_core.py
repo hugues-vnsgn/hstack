@@ -15,8 +15,8 @@ import tempfile
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PIN = '2f87c854fe3e2fcda44ca86b46ede35aad3c46b7'
-TREE = '71d8e1d1d718e2149dc43b2535618064f29cba6b'
+PIN = '9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc'
+TREE = '971573532de6714a4ddff8ec39b52d021ebf161a'
 EXCLUDED = set()
 ALIASES = {'poteto-mode': 'hugues-mode', 'setup-pstack': 'setup-hstack', 'poteto-help': 'hugues-help'}
 # Reviewed host invocation table. pstack's router read every other skill as a file;
@@ -41,7 +41,7 @@ USER_ONLY = {
     'principle-redesign-from-first-principles', 'principle-separate-before-serializing-shared-state',
     'principle-sequence-verifiable-units', 'principle-subtract-before-you-add',
     'principle-test-behavior-not-implementation', 'principle-type-system-discipline',
-    'recall', 'reflect', 'sharpen', 'show-me-your-work', 'statechart', 'swarm', 'tdd', 'teach',
+    'recall', 'reflect', 'reframe', 'sharpen', 'show-me-your-work', 'statechart', 'swarm', 'tdd', 'teach',
     'technical-writing',
     'swift-best-practices', 'kotlin-best-practices',
     'typescript-best-practices', 'unslop', 'why',
@@ -725,13 +725,13 @@ def check(root=ROOT):
     upstream = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(upstream)
     snapshot = upstream.read_pin(root / 'docs/upstream/pin.json')
-    require(snapshot['revision'] == PIN and snapshot['file_count'] == 551, 'upstream pin differs')
+    require(snapshot['revision'] == PIN and snapshot['file_count'] == 554, 'upstream pin differs')
     receipt = upstream.load(root / 'docs/upstream/consolidation.json')
     require(receipt['schema_version'] == 1 and receipt['upstream_revision'] == PIN,
             'consolidation pin differs')
     require(not (root / 'plugin/core').exists() and not (root / 'plugin/core-bindings.json').exists(),
             'retired runtime core or registry present')
-    archive = root / 'provenance/upstream/pstack-0.15.43.tar.gz'
+    archive = root / 'provenance/upstream/pstack-0.15.48.tar.gz'
     require(receipt['archive'] == archive.relative_to(root).as_posix() and not archive.is_symlink()
             and hashlib.sha256(archive.read_bytes()).hexdigest() == receipt['archive_sha256'],
             'upstream archive differs')
@@ -787,7 +787,7 @@ def check(root=ROOT):
             require(stat.S_IMODE(path.stat().st_mode) == row['source_mode'], 'canonical source mode differs')
     names = {ALIASES.get(Path(name).parts[2], Path(name).parts[2]) for name in expected
              if len(Path(name).parts) == 4 and name.endswith('/SKILL.md')}
-    require(len(names) == 58 and not names & set(EXTERNAL_SKILLS), 'pstack skill inventory differs')
+    require(len(names) == 59 and not names & set(EXTERNAL_SKILLS), 'pstack skill inventory differs')
     names |= set(EXTERNAL_SKILLS) | set(AUTHORED_SKILLS)
     require(receipt.get('authored_skills') == AUTHORED_SKILLS, 'authored skill inventory differs')
     require(set(receipt['public_skills']) == names, 'public skill inventory differs')
@@ -908,7 +908,7 @@ def check(root=ROOT):
                   for p, row in sorted(installed.items()) if p not in anchors]}, 'installed payload manifest differs')
     require("MANIFEST_SHA256 = '" + hashlib.sha256(payload_path.read_bytes()).hexdigest() + "'" in
             (root / 'plugin/adapters/runtime/payload.py').read_text(), 'payload anchor differs')
-    return {'upstream_archive_files': 551, 'active_skills': len(names), 'core_playbooks': 22,
+    return {'upstream_archive_files': 554, 'active_skills': len(names), 'core_playbooks': 22,
             'mobile_playbooks': 4, 'core_agents': 2, 'worker_roles': 6}
 
 

@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "2f87c854fe3e2fcda44ca86b46ede35aad3c46b7",
-  "upstream_version": "0.15.43",
+  "revision": "9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc",
+  "upstream_version": "0.15.48",
   "package": "research",
   "files": [
     {

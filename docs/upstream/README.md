@@ -1,7 +1,7 @@
 ## Native consolidation
 
-All 551 pstack 0.15.43 source files are preserved byte-for-byte with their modes in
-`provenance/upstream/pstack-0.15.43.tar.gz`. Canonical native bodies retain all 58 top-level skills,
+All 554 pstack 0.15.48 source files are preserved byte-for-byte with their modes in
+`provenance/upstream/pstack-0.15.48.tar.gz`. Canonical native bodies retain all 59 top-level skills,
 both upstream agents, 22 generic playbooks and four mobile routes. The runtime
 core mirror and generated body loaders are retired. The current ledger and
 [consolidation map](consolidation.json) distinguish adapted runtime files from
@@ -14,7 +14,7 @@ reverses that: it returns to pstack's own router design, where only
 `poteto-mode` (here `hugues-mode`) was model-invocable and read every other
 skill as a file. At the 0.15.25 pin `poteto-mode` is manual-only too, so
 `hugues-mode` is user-only ([ADR 0003](../adr/0003-hugues-mode-is-user-only.md)). Only `setup-hstack` stays
-model-invocable now; the other 62 bundled skills are user-only (57 from pstack, three from Cursor's
+model-invocable now; the other 63 bundled skills are user-only (58 from pstack, three from Cursor's
 `cursor-team-kit`, and the two hStack-authored Swift and Kotlin baselines), which is the host invocation table's `user_only` list in [consolidation.json](consolidation.json).
 The invocation-exposure change moves no upstream responsibility or destination.
 Issue #105 adds hStack-authored mobile baselines in the separate authored inventory.
@@ -38,6 +38,38 @@ flag, and replaced `AskUserQuestion` in the question trigger with asking the
 user, plus an interview on a call no experiment can settle.
 The next upstream sync of this file is a manual merge against this body, not
 a line-by-line port.
+
+## pstack 0.15.48 merge
+
+The pin moves from 0.15.43 to 0.15.48 at upstream `main` (`9e278fe4`), the second
+`/reframe` commit, whose pstack tree is `97157353`. Upstream changed 15 files,
+added 3 and removed none. Five statechart files whose hStack bytes still equalled
+the 0.15.43 upstream bytes took the new bytes, and the two new scripts ship
+verbatim. Guide chapter 2, `hugues-help` and the `statechart` skill took upstream's
+change by a clean three-way merge. [ADR 0006](../adr/0006-follow-upstream-and-record-what-hstack-adds.md)
+decided each adaptation again, and none of the three kinds had text to attach to
+in the Gemini hunks.
+
+- `reframe` is new and user-only. It teaches the expert words for what the
+  operator is building, borrows words from neighboring fields, and rewrites the
+  description with them. hStack ports the body unchanged and adds the host
+  invocation contract and the Codex policy file `agents/openai.yaml`. `hugues-help`
+  and the guide chapter on the mode list it.
+- Statechart takes upstream's native Windows fix verbatim: the group kill moves
+  to `kill.ts` and the janitor to `janitor.ts`, so no script spawns `/bin/sh`,
+  TLC's `\r\n` line ends are read, and `SKILL.md` says to run Node directly on
+  Windows. No Windows run was observed here. The suite needs TLC and Java and was
+  not run whole. Its CLI and message tests, which replay committed TLC output, ran
+  once in a scratch copy: 166 of 167 passed, and the one failure, a relative-symlink
+  launcher case, fails the same way on the 0.15.43 upstream bytes on this Mac.
+- Upstream's panel Gemini seat becomes `gemini-4-neon-xhigh` in the router, arena
+  and setup, and setup migrates an old Gemini entry in a user's rule. hStack's
+  panels seat Fable, Opus and a GPT model, and `.hstack/models.md` has never held
+  a Gemini slug, so none of those three hStack bodies changed.
+- Upstream's README, both manifests and its Claude Code harness document stay in
+  the provenance archive only.
+- Changed and added rows carry the release target `unreleased-pstack-0.15.48`
+  until a release ships them.
 
 ## pstack 0.15.43 merge
 
@@ -152,25 +184,26 @@ Changed and added rows carry the release target
 
 # Upstream sync
 
-The current pin is [cursor/plugins pstack 0.15.43](https://github.com/cursor/plugins/tree/2f87c854fe3e2fcda44ca86b46ede35aad3c46b7/pstack)
-at `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`, committed
-16 November 2026 at 21:47:38 UTC. [pin.json](pin.json) binds the version, date,
-551-file inventory and pstack tree hash to the checked-in snapshot bytes.
-The previous pin, 0.15.36, is now the [baseline pin](baseline-pin.json) and
-accounts for 573 files. A local Git snapshot of upstream `main` reproduced
-**2 added / 80 changed / 24 removed** paths in [the delta](delta-4dd1d058-2f87c854.md).
-The 0.15.32 to 0.15.36 sync stays in [its delta](delta-e73df471-4dd1d058.md),
+The current pin is [cursor/plugins pstack 0.15.48](https://github.com/cursor/plugins/tree/9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc/pstack)
+at `9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc`, committed
+24 November 2026 at 00:41:29 UTC. [pin.json](pin.json) binds the version, date,
+554-file inventory and pstack tree hash to the checked-in snapshot bytes.
+The previous pin, 0.15.43, is now the [baseline pin](baseline-pin.json) and
+accounts for 551 files. A local Git snapshot of upstream `main` reproduced
+**3 added / 15 changed / 0 removed** paths in [the delta](delta-2f87c854-9e278fe4.md).
+The 0.15.36 to 0.15.43 sync stays in [its delta](delta-4dd1d058-2f87c854.md),
+the 0.15.32 to 0.15.36 sync in [its delta](delta-e73df471-4dd1d058.md),
 the 0.15.25 to 0.15.32 sync in [its delta](delta-6ce45c59-e73df471.md),
 the 0.15.9 to 0.15.25 sync in [its delta](delta-e43c7ee2-6ce45c59.md),
 and WP5's first sync, 0.15.5 to 0.15.9, in [its delta](delta-2eb7ed46-e43c7ee2.md).
-Their 200-file, 169-file, 161-file and 158-file pins and ledgers are in [history](history/).
+Their 573-file, 200-file, 169-file, 161-file and 158-file pins and ledgers are in [history](history/).
 
 [The current ledger](hstack-dispositions.json), also available as
 [CSV](hstack-dispositions.csv), has one active row per upstream file.
-The 573 responsibilities at 0.15.36 remain in
+The 551 responsibilities at 0.15.43 remain in
 [baseline-dispositions.json](baseline-dispositions.json); the current ledger
 retains their `earlier_proposal` fields and the previous decisions for the
-80 changed files. Current decisions follow [the revised plan](../PLAN.md).
+15 changed files. Current decisions follow [the revised plan](../PLAN.md).
 The inaccessible prototype ZIP contributes no rows or implementation claims.
 
 Each row distinguishes its decision (`port verbatim`, `port with adaptation`,
@@ -204,10 +237,10 @@ execution is needed. From the repository root:
 ```sh
 python3 scripts/upstream-diff.py check
 python3 scripts/upstream-diff.py diff \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.36.json \
-  --to-snapshot docs/upstream/snapshots/pstack-0.15.43.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.43.json \
+  --to-snapshot docs/upstream/snapshots/pstack-0.15.48.json \
   --ledger docs/upstream/hstack-dispositions.json \
-  --output docs/upstream/delta-4dd1d058-2f87c854.md --check
+  --output docs/upstream/delta-2f87c854-9e278fe4.md --check
 python3 -m unittest discover -s tests -v
 ./scripts/check-plugin.sh
 ```
@@ -227,8 +260,8 @@ To recapture from public Git, use a separate bare clone outside the plugin:
 ```sh
 git clone --bare https://github.com/cursor/plugins.git /tmp/pstack-upstream.git
 python3 scripts/upstream-diff.py snapshot --repo /tmp/pstack-upstream.git \
-  --revision 2f87c854fe3e2fcda44ca86b46ede35aad3c46b7 \
-  --output docs/upstream/snapshots/pstack-0.15.43.json --check
+  --revision 9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc \
+  --output docs/upstream/snapshots/pstack-0.15.48.json --check
 ```
 
 Capture resolves a ref once and records its full commit SHA. Git replacement
@@ -256,7 +289,7 @@ and generate a separate ledger proposal:
 
 ```sh
 python3 scripts/upstream-diff.py reconcile \
-  --from-snapshot docs/upstream/snapshots/pstack-0.15.43.json \
+  --from-snapshot docs/upstream/snapshots/pstack-0.15.48.json \
   --to-snapshot /tmp/pstack-candidate.json \
   --ledger docs/upstream/hstack-dispositions.json \
   --output /tmp/pstack-ledger-proposal.json

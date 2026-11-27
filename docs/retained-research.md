@@ -8,7 +8,7 @@ This package retains `how` and `why` from upstream 0.15.9 at
 skill and reference files: eight adapted and eight verbatim. Each entry binds
 the materialized upstream blob and SHA-256 to the disposition ledger and records
 the destination SHA-256, retained contracts and deviations.
-The upstream 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`, and the 0.15.43 merge to `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`; this record still describes the original package.
+The upstream 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`, and the 0.15.43 merge to `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`, and the 0.15.48 merge to `9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc`; this record still describes the original package.
 
 The 0.15.43 merge replaces the retained `how` and `why` with upstream's single files. The 14 reference files and the explorer, explainer, investigator and synthesizer roles are retired, so the [receipt](upstream/retained-research-provenance.json) binds `how` and `why` only. The tables below describe the original 0.15.9 package, not the current skills.
 

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "base": "4ae13bbfa81f305cd9ab432bed6cfce8f078f95c",
-  "upstream_revision": "2f87c854fe3e2fcda44ca86b46ede35aad3c46b7",
-  "archive": "provenance/upstream/pstack-0.15.43.tar.gz",
-  "archive_sha256": "7cd7e22a5755875c41e51c7fd2234f55db60575c9a86467d82c6fa601551752f",
+  "upstream_revision": "9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc",
+  "archive": "provenance/upstream/pstack-0.15.48.tar.gz",
+  "archive_sha256": "3ef10aff87ad6f9ee9f3e5a23dba78cc97bd1a87c901351646601bc4be4bc52f",
   "files": [
     {
       "source": "pstack/.cursor-plugin/plugin.json",
-      "source_sha256": "caf1667dcf11be11f7a41e801f95d6f42a713273073ed716d61a48fbbcdc6ee1",
+      "source_sha256": "cc4f2ba19580f50d111231dac77298ed9307e31af4dfd5d9d5fd3e4982256689",
       "source_mode": 420,
       "destination": null,
       "disposition": "provenance-only",
@@ -31,7 +31,7 @@
     },
     {
       "source": "pstack/README.md",
-      "source_sha256": "cbe5a826afedbd396d9ee5845d850ccbd0f7f801fca728129fc90153ea70a015",
+      "source_sha256": "3b21e8b4c6f894b4f3c44fbfd85ab49ad4aed6c329b27933b3134ee039083dd2",
       "source_mode": 420,
       "destination": null,
       "disposition": "provenance-only",
@@ -167,11 +167,11 @@
     },
     {
       "source": "pstack/docs/guide/02-poteto-mode.md",
-      "source_sha256": "4fd0f84bd539283d6d6973fd231c4b2f155128aa3c83ab62be457cc02ac2bc3b",
+      "source_sha256": "264e3127a8fdfa6e3e2ac64645ae81e4f5fb8a3e6f00d5f98f7ffc528c8da8ff",
       "source_mode": 420,
       "destination": "docs/guide/02-poteto-mode.md",
       "disposition": "canonical",
-      "destination_sha256": "e82e4fe38dfdf29d49761209f7dfd24952086fe8b73fdfefe885d35cab2d63d5"
+      "destination_sha256": "35d66882f2fe964072c963b357c6fd160f0e5fefaf5ca2b54f91810674492ef6"
     },
     {
       "source": "pstack/docs/guide/03-understand.md",
@@ -295,7 +295,7 @@
     },
     {
       "source": "pstack/docs/harness/claude-code.md",
-      "source_sha256": "5f859ef4fa39664b1ccdff521bcb15854f8805394191da509e68ce625b97cba6",
+      "source_sha256": "289a9127a3597d7b3fbbe10c40aea4aea3f15cd5361a75be43806a07b96f634f",
       "source_mode": 420,
       "destination": null,
       "disposition": "provenance-only",
@@ -303,7 +303,7 @@
     },
     {
       "source": "pstack/plugin.json",
-      "source_sha256": "656bb69215a4277e4ea67dcd2f7786bbad9d17d08e4717bb32c44ba5e404fcd7",
+      "source_sha256": "889ac708a47d28a16edd2ce39367968a359c990f9a79abe2e747be3028d333f2",
       "source_mode": 420,
       "destination": null,
       "disposition": "provenance-only",
@@ -319,7 +319,7 @@
     },
     {
       "source": "pstack/skills/arena/SKILL.md",
-      "source_sha256": "04f79ee8239251bc0c8a9e92f895ebe7bff42e785a5f6ef8ed2dc34dae18e85d",
+      "source_sha256": "24366948a9546dcb7dfc15a5cf7a4571edd917a8c1efef060b458a0fad608053",
       "source_mode": 420,
       "destination": "plugin/skills/arena/SKILL.md",
       "disposition": "canonical",
@@ -487,11 +487,11 @@
     },
     {
       "source": "pstack/skills/poteto-help/SKILL.md",
-      "source_sha256": "d6d72057e5cdfa5cebeec88ee50d1ebf8f46f2e64788f5580968a73a16aba08d",
+      "source_sha256": "ea4b36ba83fa7027b9637ad7d926d9a62b4b630a4525304245ae66e1d44c8713",
       "source_mode": 420,
       "destination": "plugin/skills/hugues-help/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "7081f8511b6a19bf336b1ac409f33ab86a257fccd59675236eb371f392e45152"
+      "destination_sha256": "958fdd48ef85fa2041701c57e1f1dc57d20a7f9ed25fd3c7a718dccbf661a087"
     },
     {
       "source": "pstack/skills/poteto-help/references/prompting.md",
@@ -511,7 +511,7 @@
     },
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
-      "source_sha256": "67fd2c54fd25ebfae1e46db62c4b2e54f806a7ea9dfb6c83922de37e9b9635ea",
+      "source_sha256": "7aa026dc1fad7db0ea1ff39171e6b768ee99d03a7f46d0b9cd38973511251d81",
       "source_mode": 420,
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "canonical",
@@ -1046,8 +1046,16 @@
       "destination_sha256": "0d6d220ca33f88f39cb50258fa1ef7c218cb1ea01e9d229c0267481768741f6d"
     },
     {
+      "source": "pstack/skills/reframe/SKILL.md",
+      "source_sha256": "1e2e8a11da838c9169dae6fb71257041cf4e91d58862d1629354648b9bd458f3",
+      "source_mode": 420,
+      "destination": "plugin/skills/reframe/SKILL.md",
+      "disposition": "canonical",
+      "destination_sha256": "be846487eaabb624763916b6ee16d565477e0479d59aabfcce1fff8bf05ca936"
+    },
+    {
       "source": "pstack/skills/setup-pstack/SKILL.md",
-      "source_sha256": "54ff000a23b5c7e2277be11a0ee1d6a2049a64fb1f59027288cf87ffc8759415",
+      "source_sha256": "9347e6a17d41c92fd9d57e689c63d81defbd63df18dbcd5e9858ab03de5994ea",
       "source_mode": 420,
       "destination": "plugin/skills/setup-hstack/SKILL.md",
       "disposition": "canonical",
@@ -1087,11 +1095,11 @@
     },
     {
       "source": "pstack/skills/statechart/SKILL.md",
-      "source_sha256": "010b7b4532406739b1c3a426d1a45f02bb618a42561fc96b3976e064a7f8384d",
+      "source_sha256": "ca7b3e43b1ddc4fb2425a33960f9390357323a869e1d921b6e2aff4f3004d55e",
       "source_mode": 420,
       "destination": "plugin/skills/statechart/SKILL.md",
       "disposition": "canonical",
-      "destination_sha256": "a3f9caccc4bfa85ed697eb5927e89b4d20c28f988118a8f0fb6ea5db8234ac08"
+      "destination_sha256": "8dff3c4129e5ee3ba6d50647527bf858f5c96fe4129cba92936d4e8c827838c6"
     },
     {
       "source": "pstack/skills/statechart/references/render.md",
@@ -1143,11 +1151,11 @@
     },
     {
       "source": "pstack/skills/statechart/scripts/frontends/dot.ts",
-      "source_sha256": "4eef9ec848557dcd01ca8dbbec75b71c0653c1b73583108bafbb6f559f6d677b",
+      "source_sha256": "cd2e681ff58c759ddeaa17c2f3d4af1f0c3e71273566be555187b5d0e7767dac",
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/frontends/dot.ts",
       "disposition": "canonical",
-      "destination_sha256": "4eef9ec848557dcd01ca8dbbec75b71c0653c1b73583108bafbb6f559f6d677b"
+      "destination_sha256": "cd2e681ff58c759ddeaa17c2f3d4af1f0c3e71273566be555187b5d0e7767dac"
     },
     {
       "source": "pstack/skills/statechart/scripts/frontends/marks.ts",
@@ -1212,6 +1220,22 @@
       "destination": "plugin/skills/statechart/scripts/ir.ts",
       "disposition": "canonical",
       "destination_sha256": "5602beca4e4ac08421cfa07e4da989f0e75439f1d136cc923226909e771dc7ff"
+    },
+    {
+      "source": "pstack/skills/statechart/scripts/janitor.ts",
+      "source_sha256": "defac41e4cbfca3044c5078c544a0667f857a610c500c5ec96cb3bfaeec7120b",
+      "source_mode": 420,
+      "destination": "plugin/skills/statechart/scripts/janitor.ts",
+      "disposition": "canonical",
+      "destination_sha256": "defac41e4cbfca3044c5078c544a0667f857a610c500c5ec96cb3bfaeec7120b"
+    },
+    {
+      "source": "pstack/skills/statechart/scripts/kill.ts",
+      "source_sha256": "058df69d1184029e55d7e81b4fd37a6dc8557c9208979fb7032482d5ab0db448",
+      "source_mode": 420,
+      "destination": "plugin/skills/statechart/scripts/kill.ts",
+      "disposition": "canonical",
+      "destination_sha256": "058df69d1184029e55d7e81b4fd37a6dc8557c9208979fb7032482d5ab0db448"
     },
     {
       "source": "pstack/skills/statechart/scripts/package.json",
@@ -1295,11 +1319,11 @@
     },
     {
       "source": "pstack/skills/statechart/scripts/run.ts",
-      "source_sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0",
+      "source_sha256": "fb6ec4a1835a15e6e72df28bb932b8df5a4c04c5de6f9c270fd63ff5cd148dc7",
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/run.ts",
       "disposition": "canonical",
-      "destination_sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0"
+      "destination_sha256": "fb6ec4a1835a15e6e72df28bb932b8df5a4c04c5de6f9c270fd63ff5cd148dc7"
     },
     {
       "source": "pstack/skills/statechart/scripts/statechart",
@@ -1311,11 +1335,11 @@
     },
     {
       "source": "pstack/skills/statechart/scripts/statechart.ts",
-      "source_sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12",
+      "source_sha256": "5d5feff7d78204c828a8e30d531d23419234a81a7149dc3e48efb08dd770d6c1",
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/statechart.ts",
       "disposition": "canonical",
-      "destination_sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12"
+      "destination_sha256": "5d5feff7d78204c828a8e30d531d23419234a81a7149dc3e48efb08dd770d6c1"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/ConfigOracle.java",
@@ -1359,11 +1383,11 @@
     },
     {
       "source": "pstack/skills/statechart/scripts/test/cli.test.ts",
-      "source_sha256": "fdd3154882a0c4505868973a9de133b3f5d2140f0ca9e0a9dcfd7b2cc55871df",
+      "source_sha256": "7201a0eece44078a27f85880e2118c69bbfa072fbb9770af1db64442f03970a7",
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/test/cli.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "fdd3154882a0c4505868973a9de133b3f5d2140f0ca9e0a9dcfd7b2cc55871df"
+      "destination_sha256": "7201a0eece44078a27f85880e2118c69bbfa072fbb9770af1db64442f03970a7"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/config-fuzz.test.ts",
@@ -4287,11 +4311,11 @@
     },
     {
       "source": "pstack/skills/statechart/scripts/test/messages.test.ts",
-      "source_sha256": "e7ca0ea446907074452df5388719598bb297d7f8ee50145b8b8f2a41c0c4c92f",
+      "source_sha256": "70dc23d0a9c76e9949f052c8f426d35463a1416aca2457d09de544654d0f5721",
       "source_mode": 420,
       "destination": "plugin/skills/statechart/scripts/test/messages.test.ts",
       "disposition": "canonical",
-      "destination_sha256": "e7ca0ea446907074452df5388719598bb297d7f8ee50145b8b8f2a41c0c4c92f"
+      "destination_sha256": "70dc23d0a9c76e9949f052c8f426d35463a1416aca2457d09de544654d0f5721"
     },
     {
       "source": "pstack/skills/statechart/scripts/test/pipeline.test.ts",
@@ -4466,6 +4490,7 @@
     "principle-type-system-discipline",
     "recall",
     "reflect",
+    "reframe",
     "setup-hstack",
     "sharpen",
     "show-me-your-work",
@@ -4532,6 +4557,7 @@
       "principle-type-system-discipline",
       "recall",
       "reflect",
+      "reframe",
       "sharpen",
       "show-me-your-work",
       "statechart",
@@ -4695,7 +4721,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "eee29a0a11fe4a8bad11a02c1f65816002e1556136229cd9aba0697b8a441f46",
+      "sha256": "5564beca7dada0e6d87fb269f096c52dfc8ef5b4dd7674f6c43627975ba2d8b5",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4743,11 +4769,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "587d8b7920142458f17460a059e4e265f2e4594cab3a2a08463e7efaed7e3f3f",
+      "sha256": "8a45932744fd455a6d9d7e0fe359f231bf3a97acc6df8a639a2147372d5b2872",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "d2b8cd381f4a240d6d5a366d5dc0b30c892045edb1b23c5531aabf8bcd34d4e9",
+      "sha256": "1d5e5603fc7c092b9defb1f62ddb1bcc7992894e640dfc0615cad1c7e0d6704e",
       "mode": 420
     },
     "agents/hugues-agent.md": {
@@ -4907,7 +4933,7 @@
       "mode": 420
     },
     "skills/hugues-help/SKILL.md": {
-      "sha256": "7081f8511b6a19bf336b1ac409f33ab86a257fccd59675236eb371f392e45152",
+      "sha256": "958fdd48ef85fa2041701c57e1f1dc57d20a7f9ed25fd3c7a718dccbf661a087",
       "mode": 420
     },
     "skills/hugues-help/agents/openai.yaml": {
@@ -5426,6 +5452,14 @@
       "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
       "mode": 420
     },
+    "skills/reframe/SKILL.md": {
+      "sha256": "be846487eaabb624763916b6ee16d565477e0479d59aabfcce1fff8bf05ca936",
+      "mode": 420
+    },
+    "skills/reframe/agents/openai.yaml": {
+      "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94",
+      "mode": 420
+    },
     "skills/setup-hstack/SKILL.md": {
       "sha256": "916605c623cafaedbdd9e2d4b713bde7b26481585d1ff1c9784c4f65a1edde76",
       "mode": 420
@@ -5463,7 +5497,7 @@
       "mode": 493
     },
     "skills/statechart/SKILL.md": {
-      "sha256": "a3f9caccc4bfa85ed697eb5927e89b4d20c28f988118a8f0fb6ea5db8234ac08",
+      "sha256": "8dff3c4129e5ee3ba6d50647527bf858f5c96fe4129cba92936d4e8c827838c6",
       "mode": 420
     },
     "skills/statechart/agents/openai.yaml": {
@@ -5495,7 +5529,7 @@
       "mode": 420
     },
     "skills/statechart/scripts/frontends/dot.ts": {
-      "sha256": "4eef9ec848557dcd01ca8dbbec75b71c0653c1b73583108bafbb6f559f6d677b",
+      "sha256": "cd2e681ff58c759ddeaa17c2f3d4af1f0c3e71273566be555187b5d0e7767dac",
       "mode": 420
     },
     "skills/statechart/scripts/frontends/marks.ts": {
@@ -5528,6 +5562,14 @@
     },
     "skills/statechart/scripts/ir.ts": {
       "sha256": "5602beca4e4ac08421cfa07e4da989f0e75439f1d136cc923226909e771dc7ff",
+      "mode": 420
+    },
+    "skills/statechart/scripts/janitor.ts": {
+      "sha256": "defac41e4cbfca3044c5078c544a0667f857a610c500c5ec96cb3bfaeec7120b",
+      "mode": 420
+    },
+    "skills/statechart/scripts/kill.ts": {
+      "sha256": "058df69d1184029e55d7e81b4fd37a6dc8557c9208979fb7032482d5ab0db448",
       "mode": 420
     },
     "skills/statechart/scripts/package.json": {
@@ -5571,7 +5613,7 @@
       "mode": 420
     },
     "skills/statechart/scripts/run.ts": {
-      "sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0",
+      "sha256": "fb6ec4a1835a15e6e72df28bb932b8df5a4c04c5de6f9c270fd63ff5cd148dc7",
       "mode": 420
     },
     "skills/statechart/scripts/statechart": {
@@ -5579,7 +5621,7 @@
       "mode": 493
     },
     "skills/statechart/scripts/statechart.ts": {
-      "sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12",
+      "sha256": "5d5feff7d78204c828a8e30d531d23419234a81a7149dc3e48efb08dd770d6c1",
       "mode": 420
     },
     "skills/statechart/scripts/test/ConfigOracle.java": {
@@ -5603,7 +5645,7 @@
       "mode": 420
     },
     "skills/statechart/scripts/test/cli.test.ts": {
-      "sha256": "fdd3154882a0c4505868973a9de133b3f5d2140f0ca9e0a9dcfd7b2cc55871df",
+      "sha256": "7201a0eece44078a27f85880e2118c69bbfa072fbb9770af1db64442f03970a7",
       "mode": 420
     },
     "skills/statechart/scripts/test/config-fuzz.test.ts": {
@@ -7067,7 +7109,7 @@
       "mode": 420
     },
     "skills/statechart/scripts/test/messages.test.ts": {
-      "sha256": "e7ca0ea446907074452df5388719598bb297d7f8ee50145b8b8f2a41c0c4c92f",
+      "sha256": "70dc23d0a9c76e9949f052c8f426d35463a1416aca2457d09de544654d0f5721",
       "mode": 420
     },
     "skills/statechart/scripts/test/pipeline.test.ts": {

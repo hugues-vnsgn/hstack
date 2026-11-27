@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
   "repository": "https://github.com/cursor/plugins",
-  "revision": "2f87c854fe3e2fcda44ca86b46ede35aad3c46b7",
+  "revision": "9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc",
   "items": [
     {
       "path": "pstack/.cursor-plugin/plugin.json",
       "mode": "100644",
-      "blob_sha": "37a0bef357f388b879bb487e0ad3ad3ef1567170",
+      "blob_sha": "7f76fb34aeedc3a921951865d4218973514579c2",
       "size": 722,
-      "sha256": "caf1667dcf11be11f7a41e801f95d6f42a713273073ed716d61a48fbbcdc6ee1",
+      "sha256": "cc4f2ba19580f50d111231dac77298ed9307e31af4dfd5d9d5fd3e4982256689",
       "disposition": "ignore with reason",
-      "reason": "Version bump to 0.15.43 in the Cursor manifest. hStack ships its own manifests; the upstream manifest stays in the provenance archive only, as before.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Version bump to 0.15.48 in the Cursor manifest. hStack ships its own manifests; the upstream manifest stays in the provenance archive only, as before.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
@@ -23,10 +23,10 @@
       },
       "previous_decision": {
         "disposition": "ignore with reason",
-        "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
-        "release_target": "0.2",
+        "reason": "Version bump to 0.15.43 in the Cursor manifest. hStack ships its own manifests; the upstream manifest stays in the provenance archive only, as before.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
-          "provenance/upstream/pstack-0.15.36.tar.gz"
+          "provenance/upstream/pstack-0.15.43.tar.gz"
         ],
         "implementation_state": "not planned"
       }
@@ -41,7 +41,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
@@ -72,14 +72,14 @@
     {
       "path": "pstack/README.md",
       "mode": "100644",
-      "blob_sha": "e5d3e49e7f1b6b78cd7b9a485bed2bb10822ac9a",
-      "size": 27945,
-      "sha256": "cbe5a826afedbd396d9ee5845d850ccbd0f7f801fca728129fc90153ea70a015",
+      "blob_sha": "e392d0dd9cf7a71359d83b305f6c9b364112222c",
+      "size": 28650,
+      "sha256": "3b21e8b4c6f894b4f3c44fbfd85ab49ad4aed6c329b27933b3134ee039083dd2",
       "disposition": "ignore with reason",
-      "reason": "Upstream README follows its new default models, drops Orchestrate (twenty-two playbooks) and the how and architect routes. hStack documents itself in its own README and guides, so the upstream README stays in the provenance archive only.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Upstream README lists the new /reframe skill and names the panel's Gemini 4 Neon seat. hStack documents itself in its own README and guides, so the upstream README stays in the provenance archive only.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
@@ -89,10 +89,10 @@
       },
       "previous_decision": {
         "disposition": "ignore with reason",
-        "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
-        "release_target": "0.2",
+        "reason": "Upstream README follows its new default models, drops Orchestrate (twenty-two playbooks) and the how and architect routes. hStack documents itself in its own README and guides, so the upstream README stays in the provenance archive only.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
-          "provenance/upstream/pstack-0.15.36.tar.gz"
+          "provenance/upstream/pstack-0.15.43.tar.gz"
         ],
         "implementation_state": "not planned"
       }
@@ -163,7 +163,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "image",
@@ -182,7 +182,7 @@
       "reason": "Benny drops `how` from its shared-dependency list after upstream collapsed `how` to one file. Cursor-only automation outside the hStack runtime; provenance only.",
       "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -210,7 +210,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -229,7 +229,7 @@
       "reason": "Benny traces the code directly instead of running `how`. Cursor-only automation outside the hStack runtime; provenance only.",
       "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_skill",
@@ -257,7 +257,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -276,7 +276,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -295,7 +295,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -314,7 +314,7 @@
       "reason": "Benny drops `how` from its shared dependencies. Cursor-only automation outside the hStack runtime; provenance only.",
       "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_skill",
@@ -342,7 +342,7 @@
       "reason": "Benny traces the code directly instead of running `how`. Cursor-only automation outside the hStack runtime; provenance only.",
       "release_target": "unreleased-pstack-0.15.43",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_skill",
@@ -370,7 +370,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -389,7 +389,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -408,7 +408,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -427,7 +427,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "not planned",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "automation_support",
@@ -467,12 +467,12 @@
     {
       "path": "pstack/docs/guide/02-poteto-mode.md",
       "mode": "100644",
-      "blob_sha": "5b78906907a6cf73c876b0eb2ecd9f0b3a7ffe33",
-      "size": 7958,
-      "sha256": "4fd0f84bd539283d6d6973fd231c4b2f155128aa3c83ab62be457cc02ac2bc3b",
+      "blob_sha": "665f935ca675f29dcec6afef5d88dd7c59599caa",
+      "size": 8678,
+      "sha256": "264e3127a8fdfa6e3e2ac64645ae81e4f5fb8a3e6f00d5f98f7ffc528c8da8ff",
       "disposition": "port with adaptation",
-      "reason": "Guide chapter on the mode follows the 22-playbook list without Orchestrate and the worker.md rules. hStack keeps hugues-mode, its mobile routes and user-only invocation. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Adds the section that runs /reframe before /sharpen. hStack keeps hugues-mode, its mobile routes and user-only invocation, and links the skill under plugin/skills. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "docs/guide/02-poteto-mode.md"
       ],
@@ -484,8 +484,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.32",
+        "reason": "Guide chapter on the mode follows the 22-playbook list without Orchestrate and the worker.md rules. hStack keeps hugues-mode, its mobile routes and user-only invocation. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "docs/guide/02-poteto-mode.md"
         ],
@@ -861,23 +861,23 @@
     {
       "path": "pstack/docs/harness/claude-code.md",
       "mode": "100644",
-      "blob_sha": "0f12039b22700373ae349d96a574b474d95c2429",
-      "size": 6021,
-      "sha256": "5f859ef4fa39664b1ccdff521bcb15854f8805394191da509e68ce625b97cba6",
+      "blob_sha": "2a59bc80edf61649b22e05cfd07a25bc7f997994",
+      "size": 6020,
+      "sha256": "289a9127a3597d7b3fbbe10c40aea4aea3f15cd5361a75be43806a07b96f634f",
       "disposition": "ignore with reason",
-      "reason": "Upstream's Cursor-first adapter for Claude Code now maps its new default slugs and the `model:` line in its agent file. hStack is native on Claude Code and translates models itself, so this document stays in the provenance archive only.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Upstream's Cursor-first adapter for Claude Code maps the Gemini 4 Neon default slug. hStack is native on Claude Code and translates models itself, so this document stays in the provenance archive only.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "guide",
       "previous_decision": {
         "disposition": "ignore with reason",
-        "reason": "Upstream Claude Code adapter for installing Cursor-first pstack in Claude Code; hStack is native to Claude Code and Codex, so the mapping does not apply. Adopting its generator pattern is separate multi-host work. Original bytes preserved in the provenance archive only.",
-        "release_target": "not planned",
+        "reason": "Upstream's Cursor-first adapter for Claude Code now maps its new default slugs and the `model:` line in its agent file. hStack is native on Claude Code and translates models itself, so this document stays in the provenance archive only.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
-          "provenance/upstream/pstack-0.15.36.tar.gz"
+          "provenance/upstream/pstack-0.15.43.tar.gz"
         ],
         "implementation_state": "not planned"
       }
@@ -885,23 +885,23 @@
     {
       "path": "pstack/plugin.json",
       "mode": "100644",
-      "blob_sha": "c4d248860b705e47a7edbe141be68220134875fc",
+      "blob_sha": "8e545265dc982a326e3e0ea9285220205a1ed03b",
       "size": 619,
-      "sha256": "656bb69215a4277e4ea67dcd2f7786bbad9d17d08e4717bb32c44ba5e404fcd7",
+      "sha256": "889ac708a47d28a16edd2ce39367968a359c990f9a79abe2e747be3028d333f2",
       "disposition": "ignore with reason",
-      "reason": "Version bump to 0.15.43 in the Agent Plugins root manifest. hStack ships its own manifests; the upstream root manifest stays in the provenance archive only, as before.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Version bump to 0.15.48 in the Agent Plugins root manifest. hStack ships its own manifests; the upstream root manifest stays in the provenance archive only, as before.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "root_metadata",
       "previous_decision": {
         "disposition": "ignore with reason",
-        "reason": "Upstream Agent Plugins v1 root manifest; hStack ships its own Claude Code and Codex manifests. Historical source preserved in provenance archive only.",
-        "release_target": "not planned",
+        "reason": "Version bump to 0.15.43 in the Agent Plugins root manifest. hStack ships its own manifests; the upstream root manifest stays in the provenance archive only, as before.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
-          "provenance/upstream/pstack-0.15.36.tar.gz"
+          "provenance/upstream/pstack-0.15.43.tar.gz"
         ],
         "implementation_state": "not planned"
       }
@@ -937,12 +937,12 @@
     {
       "path": "pstack/skills/arena/SKILL.md",
       "mode": "100644",
-      "blob_sha": "fafaf37544107ff75d914b03096500afb6a23292",
-      "size": 4603,
-      "sha256": "04f79ee8239251bc0c8a9e92f895ebe7bff42e785a5f6ef8ed2dc34dae18e85d",
+      "blob_sha": "e908a7c6221cdb06d381b4621e265745955d4b2d",
+      "size": 4601,
+      "sha256": "24366948a9546dcb7dfc15a5cf7a4571edd917a8c1efef060b458a0fad608053",
       "disposition": "port with adaptation",
-      "reason": "Runner and cross-judge steps trimmed, defaults moved to Opus 5.5, Fable 5.2 and a non-Claude seat at high. hStack reads `.hstack/models.md`, uses its own model IDs and its GPT seat, and on a host with no other vendor's model falls back to a judge that differs from the parent, so the cross-judge is never skipped. hStack keeps its host invocation contract header. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Upstream moves the panel's Gemini seat to gemini-4-neon-xhigh in the runner and cross-judge steps. hStack's panel seats a GPT model beside Fable and Opus and carries no Gemini slug, so its bytes do not change. It keeps its `.hstack/models.md` lines, its own model IDs, its host invocation contract header and the cross-judge fallback to a model that differs from the parent. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/arena/SKILL.md"
       ],
@@ -954,8 +954,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "Runner and cross-judge steps trimmed, defaults moved to Opus 5.5, Fable 5.2 and a non-Claude seat at high. hStack reads `.hstack/models.md`, uses its own model IDs and its GPT seat, and on a host with no other vendor's model falls back to a judge that differs from the parent, so the cross-judge is never skipped. hStack keeps its host invocation contract header. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/arena/SKILL.md"
         ],
@@ -1448,12 +1448,12 @@
     {
       "path": "pstack/skills/poteto-help/SKILL.md",
       "mode": "100644",
-      "blob_sha": "77f1bd585bb44b1e14cb1dfc333bdf48c0815809",
-      "size": 15429,
-      "sha256": "d6d72057e5cdfa5cebeec88ee50d1ebf8f46f2e64788f5580968a73a16aba08d",
+      "blob_sha": "11bc4e47429373201c4edd371c4fbcfe428c33ab",
+      "size": 15648,
+      "sha256": "ea4b36ba83fa7027b9637ad7d926d9a62b4b630a4525304245ae66e1d44c8713",
       "disposition": "port with adaptation",
-      "reason": "Help drops the how and why per-role-model claim, the skip marker, with-checkpoint and Orchestrate. hStack keeps the hugues-help name, its hosts and its mobile routes. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Adds the /reframe row. hStack keeps the hugues-help name, its hosts and its mobile routes. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/hugues-help/SKILL.md"
       ],
@@ -1461,8 +1461,8 @@
       "category": "top_level_skill",
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.25; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "Help drops the how and why per-role-model claim, the skip marker, with-checkpoint and Orchestrate. hStack keeps the hugues-help name, its hosts and its mobile routes. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/hugues-help/SKILL.md"
         ],
@@ -1511,12 +1511,12 @@
     {
       "path": "pstack/skills/poteto-mode/SKILL.md",
       "mode": "100644",
-      "blob_sha": "057af2d980ae336d8a64910b7ca95946e2c1bbdf",
-      "size": 11227,
-      "sha256": "67fd2c54fd25ebfae1e46db62c4b2e54f806a7ea9dfb6c83922de37e9b9635ea",
+      "blob_sha": "82a1941713eb18905b93f7c5b2004664f6722898",
+      "size": 11238,
+      "sha256": "7aa026dc1fad7db0ea1ff39171e6b768ee99d03a7f46d0b9cd38973511251d81",
       "disposition": "port with adaptation",
-      "reason": "Router shortened to upstream's trigger list; Orchestrate and the Comments section are gone and a worker.md trigger is added. hStack keeps the host invocation contract, user-only invocation (ADR 0003) with its interview rule, the mobile routes, the Swift and Kotlin brief rule and the Workers line. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Upstream moves the Gemini panel seat and its level rule to gemini-4-neon-xhigh. hStack's model defaults live in the workers adapter and its panel has no Gemini seat, so the router's bytes do not change. hStack keeps the host invocation contract, user-only invocation (ADR 0003) with its interview rule, the mobile routes, the Swift and Kotlin brief rule and the Workers line. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/hugues-mode/SKILL.md"
       ],
@@ -1528,8 +1528,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "Router shortened to upstream's trigger list; Orchestrate and the Comments section are gone and a worker.md trigger is added. hStack keeps the host invocation contract, user-only invocation (ADR 0003) with its interview rule, the mobile routes, the Swift and Kotlin brief rule and the Workers line. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/hugues-mode/SKILL.md"
         ],
@@ -2493,7 +2493,7 @@
       "reason": "Historical source preserved in provenance archive only; not a supported native runtime capability.",
       "release_target": "0.2",
       "destinations": [
-        "provenance/upstream/pstack-0.15.43.tar.gz"
+        "provenance/upstream/pstack-0.15.48.tar.gz"
       ],
       "implementation_state": "not planned",
       "category": "script_config_test_helper",
@@ -3233,14 +3233,29 @@
       }
     },
     {
+      "path": "pstack/skills/reframe/SKILL.md",
+      "mode": "100644",
+      "blob_sha": "57a219851a939cfb1ee46ed74b20a5196a983539",
+      "size": 1330,
+      "sha256": "1e2e8a11da838c9169dae6fb71257041cf4e91d58862d1629354648b9bd458f3",
+      "disposition": "port with adaptation",
+      "reason": "New user-only skill that teaches the expert words for what the operator is building and rewrites their description with them. hStack ports the body unchanged, adds the host invocation contract and the Codex policy file `agents/openai.yaml`, and leaves model invocation off. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
+      "destinations": [
+        "plugin/skills/reframe/SKILL.md"
+      ],
+      "implementation_state": "present",
+      "category": "top_level_skill"
+    },
+    {
       "path": "pstack/skills/setup-pstack/SKILL.md",
       "mode": "100644",
-      "blob_sha": "e9d16b1cd3cc5fd4d8ae5c2b80f0f242e3924026",
-      "size": 8059,
-      "sha256": "54ff000a23b5c7e2277be11a0ee1d6a2049a64fb1f59027288cf87ffc8759415",
+      "blob_sha": "7358536071ed21b257da26adc1aec452c3d46466",
+      "size": 8751,
+      "sha256": "9347e6a17d41c92fd9d57e689c63d81defbd63df18dbcd5e9858ab03de5994ea",
       "disposition": "port with adaptation",
-      "reason": "Opus 5.5 at xhigh for code, prose and judgment and at high for trivial, swarm and verification work, panels with Fable 5.2, no role above xhigh, `unlimited` becomes `large`, and the `# defaults: 3` marker. Cursor slugs are translated to hStack's model IDs, a re-run reads an old `unlimited` as `large` and drops a `hardest tasks` line silently, and setup-hstack keeps its tiers, `.hstack/models.md` and its optional verification-skill offer. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Upstream seats Gemini 4 Neon at xhigh in the panels and migrates an old Gemini entry in a user's rule. hStack's `.hstack/models.md` has no Gemini seat and never wrote a Gemini slug, so there is no old entry to migrate and its bytes do not change. It keeps its model-ID translation, ` or ` alternatives, the `# defaults: 3` marker, the `unlimited` to `large` migration, its tiers and its optional verification-skill offer. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/setup-hstack/SKILL.md"
       ],
@@ -3252,8 +3267,8 @@
       },
       "previous_decision": {
         "disposition": "port with adaptation",
-        "reason": "Canonical native consolidation; the 0.15.25 hunks only change Cursor model defaults and budget semantics (owner decision: keep hStack defaults), so the body is unchanged at this pin. Original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "Opus 5.5 at xhigh for code, prose and judgment and at high for trivial, swarm and verification work, panels with Fable 5.2, no role above xhigh, `unlimited` becomes `large`, and the `# defaults: 3` marker. Cursor slugs are translated to hStack's model IDs, a re-run reads an old `unlimited` as `large` and drops a `hardest tasks` line silently, and setup-hstack keeps its tiers, `.hstack/models.md` and its optional verification-skill offer. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/setup-hstack/SKILL.md"
         ],
@@ -3353,12 +3368,12 @@
     {
       "path": "pstack/skills/statechart/SKILL.md",
       "mode": "100644",
-      "blob_sha": "f5a64a8db4b8a5957ac5e76e051b1823cecd4d5e",
-      "size": 9100,
-      "sha256": "010b7b4532406739b1c3a426d1a45f02bb618a42561fc96b3976e064a7f8384d",
+      "blob_sha": "18d653a810dfbb3ea35a6ed88bcfe8cb84f0a893",
+      "size": 9311,
+      "sha256": "ca7b3e43b1ddc4fb2425a33960f9390357323a869e1d921b6e2aff4f3004d55e",
       "disposition": "port with adaptation",
-      "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.32; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "reason": "Adds how to run statechart on native Windows with Node. hStack keeps the host invocation contract header and user-only invocation. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/statechart/SKILL.md"
       ],
@@ -3367,7 +3382,7 @@
       "previous_decision": {
         "disposition": "port with adaptation",
         "reason": "Canonical native consolidation; user-only skill added at pstack 0.15.32; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.32",
+        "release_target": "unreleased-pstack-0.15.36",
         "destinations": [
           "plugin/skills/statechart/SKILL.md"
         ],
@@ -3476,17 +3491,26 @@
     {
       "path": "pstack/skills/statechart/scripts/frontends/dot.ts",
       "mode": "100644",
-      "blob_sha": "003dfc89d4925c6aed3e59073b6a9414da78117b",
-      "size": 2484,
-      "sha256": "4eef9ec848557dcd01ca8dbbec75b71c0653c1b73583108bafbb6f559f6d677b",
+      "blob_sha": "09d5481e70d9cf911dc16ddf655c91c197ff1fac",
+      "size": 2596,
+      "sha256": "cd2e681ff58c759ddeaa17c2f3d4af1f0c3e71273566be555187b5d0e7767dac",
       "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "reason": "Splits TLC output on `\\r?\\n` so Windows line ends read like Unix ones. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/statechart/scripts/frontends/dot.ts"
       ],
       "implementation_state": "present",
-      "category": "script_config_test_helper"
+      "category": "script_config_test_helper",
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.36",
+        "destinations": [
+          "plugin/skills/statechart/scripts/frontends/dot.ts"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/statechart/scripts/frontends/marks.ts",
@@ -3604,6 +3628,36 @@
       "release_target": "unreleased-pstack-0.15.36",
       "destinations": [
         "plugin/skills/statechart/scripts/ir.ts"
+      ],
+      "implementation_state": "present",
+      "category": "script_config_test_helper"
+    },
+    {
+      "path": "pstack/skills/statechart/scripts/janitor.ts",
+      "mode": "100644",
+      "blob_sha": "5e69fb316c9e6bd4bc1de68781b43c345381188b",
+      "size": 549,
+      "sha256": "defac41e4cbfca3044c5078c544a0667f857a610c500c5ec96cb3bfaeec7120b",
+      "disposition": "port verbatim",
+      "reason": "New TypeScript cleanup process that stops the worker's tree and removes its folders when the command ends, so native Windows needs no `/bin/sh`. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
+      "destinations": [
+        "plugin/skills/statechart/scripts/janitor.ts"
+      ],
+      "implementation_state": "present",
+      "category": "script_config_test_helper"
+    },
+    {
+      "path": "pstack/skills/statechart/scripts/kill.ts",
+      "mode": "100644",
+      "blob_sha": "014d7c35049a8786359264cb4489c0c5e0a7ff1d",
+      "size": 421,
+      "sha256": "058df69d1184029e55d7e81b4fd37a6dc8557c9208979fb7032482d5ab0db448",
+      "disposition": "port verbatim",
+      "reason": "New group kill: a signal on POSIX and `taskkill` on native Windows, in place of spawning `/bin/sh`. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
+      "destinations": [
+        "plugin/skills/statechart/scripts/kill.ts"
       ],
       "implementation_state": "present",
       "category": "script_config_test_helper"
@@ -3761,12 +3815,12 @@
     {
       "path": "pstack/skills/statechart/scripts/run.ts",
       "mode": "100644",
-      "blob_sha": "017684f82ddffe860b4b9312771174622603c4a7",
-      "size": 18005,
-      "sha256": "751d97cfde3c241bfeed8913fc74a7a7cbc6acd3829e37a441016af3eb78f0e0",
+      "blob_sha": "45e13dcb4d4ee41d4437ed64e3177fe1a412ae56",
+      "size": 17946,
+      "sha256": "fb6ec4a1835a15e6e72df28bb932b8df5a4c04c5de6f9c270fd63ff5cd148dc7",
       "disposition": "port verbatim",
-      "reason": "SANY spec errors report line and column. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Reads TLC output with `\\r?\\n` line ends, starts Java and mise without a console window on Windows, asks TLC for UTF-8 output and moves the group kill to kill.ts. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/statechart/scripts/run.ts"
       ],
@@ -3774,8 +3828,8 @@
       "category": "script_config_test_helper",
       "previous_decision": {
         "disposition": "port verbatim",
-        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "SANY spec errors report line and column. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/statechart/scripts/run.ts"
         ],
@@ -3800,17 +3854,26 @@
     {
       "path": "pstack/skills/statechart/scripts/statechart.ts",
       "mode": "100644",
-      "blob_sha": "4e2967e680895875d7d5352bfe997a4c08c2d1fc",
-      "size": 6044,
-      "sha256": "1c653f05d0cd0f3298455701f36e3d7d1f837f93e6e642f7c20afb5d613c2d12",
+      "blob_sha": "43ee983edfa7b1fa76ddab07e0e99cba897373b9",
+      "size": 6337,
+      "sha256": "5d5feff7d78204c828a8e30d531d23419234a81a7149dc3e48efb08dd770d6c1",
       "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "reason": "Starts the janitor from janitor.ts, sets TEMP and TMP for the worker, and skips the group kill on Windows once the worker has exited so a reused pid is spared. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/statechart/scripts/statechart.ts"
       ],
       "implementation_state": "present",
-      "category": "script_config_test_helper"
+      "category": "script_config_test_helper",
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.36",
+        "destinations": [
+          "plugin/skills/statechart/scripts/statechart.ts"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/statechart/scripts/test/ConfigOracle.java",
@@ -3899,12 +3962,12 @@
     {
       "path": "pstack/skills/statechart/scripts/test/cli.test.ts",
       "mode": "100644",
-      "blob_sha": "11f06a6fd7ee078a66b9cfbc15452e4a8eb20471",
-      "size": 50179,
-      "sha256": "fdd3154882a0c4505868973a9de133b3f5d2140f0ca9e0a9dcfd7b2cc55871df",
+      "blob_sha": "ee80722d6fdbb1e3c091c0c9f6f981636f61a264",
+      "size": 51410,
+      "sha256": "7201a0eece44078a27f85880e2118c69bbfa072fbb9770af1db64442f03970a7",
       "disposition": "port verbatim",
-      "reason": "Test for SANY line and column errors. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.43",
+      "reason": "Adds a replay of every corpus case with TLC's Windows line ends. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/statechart/scripts/test/cli.test.ts"
       ],
@@ -3912,8 +3975,8 @@
       "category": "script_config_test_helper",
       "previous_decision": {
         "disposition": "port verbatim",
-        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-        "release_target": "unreleased-pstack-0.15.36",
+        "reason": "Test for SANY line and column errors. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.43",
         "destinations": [
           "plugin/skills/statechart/scripts/test/cli.test.ts"
         ],
@@ -9425,17 +9488,26 @@
     {
       "path": "pstack/skills/statechart/scripts/test/messages.test.ts",
       "mode": "100644",
-      "blob_sha": "61af006968a6e9c2dc359c8b5859a1238b9e56cb",
-      "size": 7763,
-      "sha256": "e7ca0ea446907074452df5388719598bb297d7f8ee50145b8b8f2a41c0c4c92f",
+      "blob_sha": "4e0d3c358809a2c3b17a171b3e4601f3f2790992",
+      "size": 8468,
+      "sha256": "70dc23d0a9c76e9949f052c8f426d35463a1416aca2457d09de544654d0f5721",
       "disposition": "port verbatim",
-      "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
-      "release_target": "unreleased-pstack-0.15.36",
+      "reason": "Adds a test that Windows line ends still name the rule that breaks. Shipped byte for byte. Original bytes preserved in the upstream provenance archive.",
+      "release_target": "unreleased-pstack-0.15.48",
       "destinations": [
         "plugin/skills/statechart/scripts/test/messages.test.ts"
       ],
       "implementation_state": "present",
-      "category": "script_config_test_helper"
+      "category": "script_config_test_helper",
+      "previous_decision": {
+        "disposition": "port verbatim",
+        "reason": "Canonical native consolidation; original bytes preserved in the upstream provenance archive.",
+        "release_target": "unreleased-pstack-0.15.36",
+        "destinations": [
+          "plugin/skills/statechart/scripts/test/messages.test.ts"
+        ],
+        "implementation_state": "present"
+      }
     },
     {
       "path": "pstack/skills/statechart/scripts/test/pipeline.test.ts",

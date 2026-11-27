@@ -25,14 +25,16 @@ class PinnedEvidenceTests(unittest.TestCase):
         cls.older = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.9.json')
         cls.prior = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.25.json')
         cls.middle = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.32.json')
-        cls.before = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.36.json')
-        cls.after = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json')
+        cls.recent = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.36.json')
+        cls.before = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json')
+        cls.after = u.load(ROOT / 'docs/upstream/snapshots/pstack-0.15.48.json')
         cls.ledger = u.load(ROOT / 'docs/upstream/hstack-dispositions.json')
         cls.baseline = u.load(ROOT / 'docs/upstream/baseline-dispositions.json')
         cls.history_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.5-dispositions.json')
         cls.older_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.9-dispositions.json')
         cls.prior_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.25-dispositions.json')
         cls.middle_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.32-dispositions.json')
+        cls.recent_ledger = u.load(ROOT / 'docs/upstream/history/pstack-0.15.36-dispositions.json')
 
     def test_exact_appendix_a_paths_and_counts(self):
         # Appendix A is the historical 0.15.5 to 0.15.9 delta; its snapshots stay retained.
@@ -71,7 +73,7 @@ class PinnedEvidenceTests(unittest.TestCase):
         # The 0.15.32 to 0.15.36 delta: every added file belongs to statechart's TypeScript
         # compiler, and the removals are its .mjs scripts, the orch scripts and four interrogate
         # references.
-        rows = u.changes(u.validate_snapshot(self.middle), u.validate_snapshot(self.before))
+        rows = u.changes(u.validate_snapshot(self.middle), u.validate_snapshot(self.recent))
         self.assertEqual([sum(r['change'] == k for r in rows) for k in ('added', 'changed', 'removed')], [406, 25, 33])
         self.assertTrue(all(r['path'].startswith('pstack/skills/statechart/') for r in rows if r['change'] == 'added'))
         removed = {r['path'] for r in rows if r['change'] == 'removed'}
@@ -83,10 +85,10 @@ class PinnedEvidenceTests(unittest.TestCase):
             'pstack/skills/poteto-mode/scripts/orch/orch.test.ts',
             'pstack/skills/poteto-mode/scripts/orch/orch.ts',
             'pstack/skills/poteto-mode/scripts/orch/store.ts'})
-        # The maintained delta is 0.15.36 to 0.15.43: two added files and 24 removed. The removals
-        # are the Orchestrate playbook, the plan checker and its test, and the references of
-        # architect, how, reflect and why, which upstream collapsed to single files.
-        rows = u.changes(u.validate_snapshot(self.before), u.validate_snapshot(self.after))
+        # The 0.15.36 to 0.15.43 delta: two added files and 24 removed. The removals are the
+        # Orchestrate playbook, the plan checker and its test, and the references of architect,
+        # how, reflect and why, which upstream collapsed to single files.
+        rows = u.changes(u.validate_snapshot(self.recent), u.validate_snapshot(self.before))
         self.assertEqual([sum(r['change'] == k for r in rows) for k in ('added', 'changed', 'removed')], [2, 80, 24])
         self.assertEqual({r['path'] for r in rows if r['change'] == 'added'},
                          {'pstack/skills/poteto-mode/worker.md', 'pstack/skills/statechart/scripts/test/drawn.ts'})
@@ -98,21 +100,30 @@ class PinnedEvidenceTests(unittest.TestCase):
         self.assertEqual({p.split('/')[2] for p in removed if '/references/' in p},
                          {'architect', 'how', 'reflect', 'why'})
         self.assertEqual(len(removed), 24)
+        # The maintained delta is 0.15.43 to 0.15.48: the /reframe skill, the statechart janitor and
+        # group kill that let it run on native Windows, and fifteen changed files. Nothing is removed.
+        rows = u.changes(u.validate_snapshot(self.before), u.validate_snapshot(self.after))
+        self.assertEqual([sum(r['change'] == k for r in rows) for k in ('added', 'changed', 'removed')], [3, 15, 0])
+        self.assertEqual({r['path'] for r in rows if r['change'] == 'added'},
+                         {'pstack/skills/reframe/SKILL.md', 'pstack/skills/statechart/scripts/janitor.ts',
+                          'pstack/skills/statechart/scripts/kill.ts'})
 
     def test_checked_in_artifacts_and_licenses(self):
         self.assertEqual(u.main(['check']), 0)
-        self.assertEqual(len(self.baseline['items']), 573)
-        self.assertEqual(len(self.ledger['items']), 551)
+        self.assertEqual(len(self.baseline['items']), 551)
+        self.assertEqual(len(self.ledger['items']), 554)
         # The retired baselines stay reproducible: each ledger validates against its snapshot and
         # each historical delta regenerates byte for byte from the ledger of its later pin.
         self.assertEqual(len(self.history_ledger['items']), 158)
         self.assertEqual(len(self.older_ledger['items']), 161)
         self.assertEqual(len(self.prior_ledger['items']), 169)
         self.assertEqual(len(self.middle_ledger['items']), 200)
+        self.assertEqual(len(self.recent_ledger['items']), 573)
         u.validate_ledger(self.history_ledger, u.validate_snapshot(self.history_before))
         u.validate_ledger(self.older_ledger, u.validate_snapshot(self.older))
         u.validate_ledger(self.prior_ledger, u.validate_snapshot(self.prior))
         u.validate_ledger(self.middle_ledger, u.validate_snapshot(self.middle))
+        u.validate_ledger(self.recent_ledger, u.validate_snapshot(self.recent))
         u.validate_ledger(self.baseline, u.validate_snapshot(self.before))
         self.assertEqual(u.render_delta(self.history_before, self.older, self.older_ledger),
                          (ROOT / 'docs/upstream/delta-2eb7ed46-e43c7ee2.md').read_bytes())
@@ -120,8 +131,10 @@ class PinnedEvidenceTests(unittest.TestCase):
                          (ROOT / 'docs/upstream/delta-e43c7ee2-6ce45c59.md').read_bytes())
         self.assertEqual(u.render_delta(self.prior, self.middle, self.middle_ledger),
                          (ROOT / 'docs/upstream/delta-6ce45c59-e73df471.md').read_bytes())
-        self.assertEqual(u.render_delta(self.middle, self.before, self.baseline),
+        self.assertEqual(u.render_delta(self.middle, self.recent, self.recent_ledger),
                          (ROOT / 'docs/upstream/delta-e73df471-4dd1d058.md').read_bytes())
+        self.assertEqual(u.render_delta(self.recent, self.before, self.baseline),
+                         (ROOT / 'docs/upstream/delta-4dd1d058-2f87c854.md').read_bytes())
         self.assertEqual(sum(r['path'].startswith('pstack/skills/principle-') for r in self.ledger['items']), 24)
 
     def test_proposal_preserves_unchanged_decisions_and_requires_changed_triage(self):
@@ -142,7 +155,7 @@ class PinnedEvidenceTests(unittest.TestCase):
         carried = {r['path'] for r in self.baseline['items'] if 'previous_decision' in r} - removed
         self.assertEqual({r['path'] for r in proposal['items'] if 'previous_decision' in r},
                          (changed & baseline_paths) | carried)
-        self.assertEqual(sum('previous_decision' in r for r in proposal['items']), 108)
+        self.assertEqual(sum('previous_decision' in r for r in proposal['items']), 111)
         with self.assertRaisesRegex(ValueError, 'untriaged'):
             u.validate_ledger(proposal, self.after)
         self.assertEqual(u.encode(proposal), u.encode(u.reconcile(saved, self.before, self.after)))
@@ -360,16 +373,16 @@ class PinnedEvidenceTests(unittest.TestCase):
         pin = (ROOT / 'docs/upstream/pin.json').read_bytes()
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / 'delta.md'
-            args = ['diff', '--from-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.36.json'),
-                    '--to-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json'),
+            args = ['diff', '--from-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json'),
+                    '--to-snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.48.json'),
                     '--ledger', str(ROOT / 'docs/upstream/hstack-dispositions.json'), '--output', str(target)]
             subprocess.run([sys.executable, str(SCRIPT), *args], check=True, capture_output=True)
-            self.assertEqual(target.read_bytes(), (ROOT / 'docs/upstream/delta-4dd1d058-2f87c854.md').read_bytes())
+            self.assertEqual(target.read_bytes(), (ROOT / 'docs/upstream/delta-2f87c854-9e278fe4.md').read_bytes())
             subprocess.run([sys.executable, str(SCRIPT), *args, '--check'], check=True, capture_output=True)
             proposal = Path(folder) / 'proposal.json'
             subprocess.run([sys.executable, str(SCRIPT), 'reconcile', '--from-snapshot',
-                            str(ROOT / 'docs/upstream/snapshots/pstack-0.15.36.json'), '--to-snapshot',
-                            str(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json'), '--ledger',
+                            str(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json'), '--to-snapshot',
+                            str(ROOT / 'docs/upstream/snapshots/pstack-0.15.48.json'), '--ledger',
                             str(ROOT / 'docs/upstream/baseline-dispositions.json'), '--output', str(proposal)],
                            check=True, capture_output=True)
             self.assertEqual(u.load(proposal), u.reconcile(self.baseline, self.before, self.after))
@@ -384,7 +397,7 @@ class PinnedEvidenceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             output = Path(folder) / 'ledger.csv'
             args = [sys.executable, str(SCRIPT), 'csv', '--ledger', str(ROOT / 'docs/upstream/hstack-dispositions.json'),
-                    '--snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json'), '--output', str(output)]
+                    '--snapshot', str(ROOT / 'docs/upstream/snapshots/pstack-0.15.48.json'), '--output', str(output)]
             subprocess.run(args, check=True, capture_output=True)
             self.assertEqual(output.read_bytes(), (ROOT / 'docs/upstream/hstack-dispositions.csv').read_bytes())
             subprocess.run(args + ['--check'], check=True, capture_output=True)
@@ -393,7 +406,7 @@ class PinnedEvidenceTests(unittest.TestCase):
             self.assertEqual(output.read_bytes(), b'curated export')
             bad = Path(folder) / 'bad.csv'
             args[args.index('--output') + 1] = str(bad)
-            args[args.index('--snapshot') + 1] = str(ROOT / 'docs/upstream/snapshots/pstack-0.15.36.json')
+            args[args.index('--snapshot') + 1] = str(ROOT / 'docs/upstream/snapshots/pstack-0.15.43.json')
             self.assertNotEqual(subprocess.run(args, capture_output=True).returncode, 0)
             self.assertFalse(bad.exists())
 
