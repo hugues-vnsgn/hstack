@@ -595,12 +595,12 @@
     },
     {
       "path": "adapters/hosts/orca-bot.md",
-      "sha256": "62c3514d4c255b066c553eedb3fbfec102244bdd7abcc9632ec37131d0541971",
+      "sha256": "a4a781824c8e580aeb100c111660a38d178739764e3803f524e39be73da44aee",
       "mode": "100644"
     },
     {
       "path": "adapters/hosts/orca.md",
-      "sha256": "ea73415c96cc041cd385818060ad20ad14b7d0f4ba2df7a49dbda8dc825b4e6b",
+      "sha256": "36cb7857caa9fee70baac1b9d1890a2257ea59e0cbb1ac72e2c39603c64e729b",
       "mode": "100644"
     },
     {

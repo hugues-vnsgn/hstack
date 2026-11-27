@@ -4721,7 +4721,7 @@
       "mode": 420
     },
     "adapters/host_tools.py": {
-      "sha256": "5564beca7dada0e6d87fb269f096c52dfc8ef5b4dd7674f6c43627975ba2d8b5",
+      "sha256": "6d31e70a744b2bc8cb987c9839d8bb41fe443b7ca3b07729ffa341f47bfba450",
       "mode": 420
     },
     "adapters/hosts/README.md": {
@@ -4733,11 +4733,11 @@
       "mode": 420
     },
     "adapters/hosts/orca-bot.md": {
-      "sha256": "62c3514d4c255b066c553eedb3fbfec102244bdd7abcc9632ec37131d0541971",
+      "sha256": "a4a781824c8e580aeb100c111660a38d178739764e3803f524e39be73da44aee",
       "mode": 420
     },
     "adapters/hosts/orca.md": {
-      "sha256": "ea73415c96cc041cd385818060ad20ad14b7d0f4ba2df7a49dbda8dc825b4e6b",
+      "sha256": "36cb7857caa9fee70baac1b9d1890a2257ea59e0cbb1ac72e2c39603c64e729b",
       "mode": 420
     },
     "adapters/mobile-workflows.md": {
@@ -4769,11 +4769,11 @@
       "mode": 420
     },
     "adapters/runtime/payload.json": {
-      "sha256": "8a45932744fd455a6d9d7e0fe359f231bf3a97acc6df8a639a2147372d5b2872",
+      "sha256": "4c8a0bc1f918d5b88d6bc3c280ffe1e972f44776871fa0f5ce7101a064ecb098",
       "mode": 420
     },
     "adapters/runtime/payload.py": {
-      "sha256": "1d5e5603fc7c092b9defb1f62ddb1bcc7992894e640dfc0615cad1c7e0d6704e",
+      "sha256": "424f048d0437b375c1e35cbdf5036a8a46ddaa2f690c333a59f8aeccc19a3593",
       "mode": 420
     },
     "agents/hugues-agent.md": {
