@@ -8,7 +8,7 @@
 Implement and Scrap. Read [arena](../plugin/skills/arena/SKILL.md) for Frame,
 Fan out, Cross-judge, Pick, Graft and Verify. Both are explicit user tools;
 coordinators read their local dependencies directly.
-The upstream 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`, and the 0.15.43 merge to `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`; this record still describes the original package.
+The upstream 0.15.25 merge rebound the provenance receipt to `6ce45c59b9301a638c1fe1a7b8dc2a82b650898f` after porting the upstream changes, and the 0.15.32 merge rebound it to `e73df471cd4bd918367e99f3dd9c51bd53ddf5f0`, and the 0.15.36 merge to `4dd1d05818d19792e7cd6e818f1667f95f7e1dbe`, and the 0.15.43 merge to `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`, and the 0.15.48 merge to `9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc`; this record still describes the original package.
 
 The 0.15.43 merge replaces the retained `architect` with upstream's single file, which routes design exploration through `arena`. Its three references (red flags, rationale template and runner prompt) and the `architect-runner` role are retired, so the [receipt](upstream/retained-design-provenance.json) binds `architect` and `arena` only. The package description below is the original 0.15.9 one, and the references it names no longer exist.
 

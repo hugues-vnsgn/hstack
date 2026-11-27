@@ -353,7 +353,7 @@ cp -R "$src"/. "$dst"/</span></code></pre>
 <tr><td>hugues-help</td><td><code>/hstack:hugues-help</code></td><td><code>$hugues-help</code></td><td><code>/hugues-help</code></td><td>Ask which skill or playbook fits. It answers and hands you a prompt. It does not start work.</td></tr>
 <tr><td>how · why · teach</td><td><code>/hstack:how</code></td><td><code>$how</code></td><td>not observed</td><td>Understand code: how it works, why it is shaped this way, or both woven together</td></tr>
 <tr><td>recall · ketchup</td><td><code>/hstack:recall</code></td><td><code>$recall</code></td><td>not observed</td><td>Rebuild context from past work, or catch up on this chat</td></tr>
-<tr><td>in-your-own-words · sharpen · bro</td><td><code>/hstack:sharpen</code></td><td><code>$sharpen</code></td><td>not observed</td><td>Check the agent understood you, sharpen a thin prompt, or get plain language. Since 0.5.5 <code>sharpen</code> returns a rewritten prompt and does not do the task.</td></tr>
+<tr><td>in-your-own-words · sharpen · reframe · bro</td><td><code>/hstack:sharpen</code></td><td><code>$sharpen</code></td><td>not observed</td><td>Check the agent understood you, sharpen a thin prompt, learn the expert words for what you are building, or get plain language. Since 0.5.5 <code>sharpen</code> returns a rewritten prompt and does not do the task. <code>reframe</code> is unreleased: it comes with the upstream 0.15.48 merge.</td></tr>
 <tr><td>architect · arena · swarm</td><td><code>/hstack:architect</code></td><td><code>$architect</code></td><td>not observed</td><td>Design before code, compare parallel attempts, fan out parallel checks</td></tr>
 <tr><td>interrogate · blast-radius</td><td><code>/hstack:interrogate</code></td><td><code>$interrogate</code></td><td>not observed</td><td>Multi-model adversarial review, or find what a change could break elsewhere</td></tr>
 <tr><td>tdd</td><td><code>/hstack:tdd</code></td><td><code>$tdd</code></td><td>not observed</td><td>Failing test first, then the fix</td></tr>
@@ -1130,6 +1130,9 @@ keep going until done. if you&#x27;re truly stuck after a few hours, stop and wr
 <h3>Sharpen a thin prompt</h3>
 <p><code>sharpen</code> asks four questions about your task. What would a top professional do that you did not ask for? What raw material would they start from? Which methods and tools would they use? What, other than you or the agent, would show the result is right? It leaves the choices that are yours open.</p>
 <p><span class="pill">new in 0.5.5</span> <code>sharpen</code> then rewrites your prompt and does not do the task. Send the rewrite yourself. Before 0.5.5 it applied the framing and did the work instead.</p>
+
+<h3>Find the words for what you are building</h3>
+<p>When you cannot name what you are after, run <code>reframe</code> on your own description and files before you ask for anything. If your description could name more than one problem, it lists the two or three it could be, with the sign that tells each apart, and picks the likeliest. Then it gives 8 to 12 expert terms, ranked by how much each would change what you build. Each ties to the part of your description it names and to a real project whose link it opened. It borrows terms from 2 or 3 neighboring fields that solved the same problem under other names, says where each analogy breaks, and rewrites your description with the new words. Send the rewrite, or run <code>sharpen</code> on it. <code>reframe</code> is user-only and unreleased, and no host run of it has been observed.</p>
 
 <h3>Build a shared mental model</h3>
 <p>You cannot supervise code you cannot picture. Three skills build the picture, and the agent benefits from the same research.</p>

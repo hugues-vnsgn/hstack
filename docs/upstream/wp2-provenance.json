@@ -1,14 +1,14 @@
 {
   "repository": "https://github.com/cursor/plugins",
-  "revision": "2f87c854fe3e2fcda44ca86b46ede35aad3c46b7",
-  "upstream_version": "0.15.43",
+  "revision": "9e278fe4d4ecd8bfe98b1b79bf4be662efb338cc",
+  "upstream_version": "0.15.48",
   "files": [
     {
       "source": "pstack/skills/poteto-mode/SKILL.md",
       "destination": "plugin/skills/hugues-mode/SKILL.md",
       "disposition": "adapted",
-      "blob_sha": "057af2d980ae336d8a64910b7ca95946e2c1bbdf",
-      "sha256": "67fd2c54fd25ebfae1e46db62c4b2e54f806a7ea9dfb6c83922de37e9b9635ea"
+      "blob_sha": "82a1941713eb18905b93f7c5b2004664f6722898",
+      "sha256": "7aa026dc1fad7db0ea1ff39171e6b768ee99d03a7f46d0b9cd38973511251d81"
     },
     {
       "source": "pstack/agents/poteto-agent.md",

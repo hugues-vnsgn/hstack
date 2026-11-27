@@ -138,8 +138,8 @@ class NativeIntegrity(unittest.TestCase):
 
     def test_current_package_and_public_inventory(self):
         result = check_core.check(self.root)
-        self.assertEqual(result['active_skills'], 63)
-        self.assertEqual(result['upstream_archive_files'], 551)
+        self.assertEqual(result['active_skills'], 64)
+        self.assertEqual(result['upstream_archive_files'], 554)
         self.assertEqual(result['core_playbooks'], 22)
         self.assertEqual(result['worker_roles'], 6)
 
@@ -174,7 +174,7 @@ class NativeIntegrity(unittest.TestCase):
         self.rejected()
 
     def test_corrupt_source_archive_is_rejected(self):
-        path = self.root / 'provenance/upstream/pstack-0.15.43.tar.gz'
+        path = self.root / 'provenance/upstream/pstack-0.15.48.tar.gz'
         path.write_bytes(path.read_bytes() + b'changed')
         self.rejected()
 
@@ -427,7 +427,7 @@ class NativeIntegrity(unittest.TestCase):
         import measure_context
         measured = measure_context.measure(self.root)
         self.assertEqual(json.loads((self.root / 'docs/CONTEXT-BUDGET.json').read_text()), measured)
-        self.assertEqual(measured['public_skills'], 63)
+        self.assertEqual(measured['public_skills'], 64)
         self.assertLessEqual(measured['mode_initial_read_set']['candidate']['bytes'], 38000)
         # An upper bound over every declared frontmatter block, user-only skills included. The
         # pstack 0.15.32 merge added four user-only skills, so the bound moved from 16000; the
@@ -444,6 +444,7 @@ class NativeIntegrity(unittest.TestCase):
                           'plugin/skills/in-your-own-words/SKILL.md', 'plugin/skills/ketchup-video/SKILL.md',
                           'plugin/skills/ketchup/SKILL.md', 'plugin/skills/kotlin-best-practices/SKILL.md',
                           'plugin/skills/maintain-formal-verification-skill/SKILL.md',
+                          'plugin/skills/reframe/SKILL.md',
                           'plugin/skills/sharpen/SKILL.md', 'plugin/skills/statechart/SKILL.md',
                           'plugin/skills/swift-best-practices/SKILL.md'])
         unlisted = self.root / 'plugin/skills/unlisted/SKILL.md'

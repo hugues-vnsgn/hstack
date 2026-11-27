@@ -6,7 +6,8 @@ Setup starts the code, prose and judgment roles on `claude-opus-5-5` at `xhigh`
 and runs review panels at `high`. No role runs above `xhigh`, and
 `claude-fable-5-2` runs only when you ask for it or after two failed Opus runs.
 Setup's verification offer is optional for every project, and mobile is one
-optional adapter. The pin is upstream 0.15.43 and the skill count stays at 63.
+optional adapter. The pin is upstream 0.15.48 and the skill count is 64: the new
+user-only `reframe` skill teaches the expert words for what you are building.
 The tree has 22 generic playbooks and four mobile ones. Orchestrate and the plan
 checker are removed. A Cursor user installs the plugin, sees its skills and runs
 `/hugues-mode`, `/hugues-help` and
@@ -20,7 +21,7 @@ and CMP development through its optional mobile adapter. A complete journey on a
 consumer project remains unobserved on any host. The plugin remains `hstack`. Its
 commands start with `/hstack:`, and the setup skill is `setup-hstack`.
 The 0.5.0 release has 57 public skills, 23 generic playbooks, two agents and four mobile playbooks.
-Version 0.5.1 added two authored user-only language skills. Version 0.5.10 has 63 in total. Each skill owns one canonical `SKILL.md`.
+Version 0.5.1 added two authored user-only language skills. Version 0.5.10 has 63 in total, and `reframe` makes 64 after it. Each skill owns one canonical `SKILL.md`.
 Against 0.3.0's 50 skills, 0.4.0 merges upstream 0.15.25 and adds four user-only
 skills. After 0.4.0, hStack bundles `deslop`, `control-cli` and `control-ui` from
 Cursor's `cursor-team-kit`. Upstream calls these skills but does not ship them.
@@ -49,7 +50,7 @@ under normal permissions remains unobserved.
 ## Start with Cursor
 
 Cursor loads hStack from one source only. Pick exactly one route. Either way,
-remove the upstream plugin first if you installed it, because 55 of hStack's 63
+remove the upstream plugin first if you installed it, because 56 of hStack's 64
 skill names are shared with it. It has its own folder under
 `$HOME/.cursor/plugins/local/`, and the [upstream record](docs/upstream/README.md)
 names it.

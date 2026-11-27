@@ -38,7 +38,7 @@
     }
   },
   "native_frontmatter": {
-    "scope": "All 63 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. baseline and native_before cover the 50 skills declared at 0.2.0; candidate adds the 13 listed in added_after_release, which have no historical counterpart.",
+    "scope": "All 64 declared frontmatter blocks, an upper bound; actual native startup exposure is unknown. baseline and native_before cover the 50 skills declared at 0.2.0; candidate adds the 14 listed in added_after_release, which have no historical counterpart.",
     "baseline": {
       "bytes": 15764,
       "characters": 15761,
@@ -50,9 +50,9 @@
       "estimated_tokens_characters_divided_by_4": 3700.0
     },
     "candidate": {
-      "bytes": 17000,
-      "characters": 16999,
-      "estimated_tokens_characters_divided_by_4": 4249.75
+      "bytes": 17246,
+      "characters": 17245,
+      "estimated_tokens_characters_divided_by_4": 4311.25
     },
     "candidate_original_skills": {
       "bytes": 13535,
@@ -70,6 +70,7 @@
       "plugin/skills/ketchup/SKILL.md",
       "plugin/skills/kotlin-best-practices/SKILL.md",
       "plugin/skills/maintain-formal-verification-skill/SKILL.md",
+      "plugin/skills/reframe/SKILL.md",
       "plugin/skills/sharpen/SKILL.md",
       "plugin/skills/statechart/SKILL.md",
       "plugin/skills/swift-best-practices/SKILL.md"
@@ -126,6 +127,7 @@
       "plugin/skills/principle-type-system-discipline/SKILL.md",
       "plugin/skills/recall/SKILL.md",
       "plugin/skills/reflect/SKILL.md",
+      "plugin/skills/reframe/SKILL.md",
       "plugin/skills/setup-hstack/SKILL.md",
       "plugin/skills/sharpen/SKILL.md",
       "plugin/skills/show-me-your-work/SKILL.md",
@@ -455,6 +457,7 @@
         "plugin/skills/principle-type-system-discipline/agents/openai.yaml",
         "plugin/skills/recall/agents/openai.yaml",
         "plugin/skills/reflect/agents/openai.yaml",
+        "plugin/skills/reframe/agents/openai.yaml",
         "plugin/skills/setup-hstack/agents/openai.yaml",
         "plugin/skills/sharpen/agents/openai.yaml",
         "plugin/skills/show-me-your-work/agents/openai.yaml",
@@ -468,10 +471,10 @@
         "plugin/skills/unslop/agents/openai.yaml",
         "plugin/skills/why/agents/openai.yaml"
       ],
-      "unique_files": 63,
-      "bytes": 2708,
-      "characters": 2708,
-      "estimated_tokens_characters_divided_by_4": 677.0,
+      "unique_files": 64,
+      "bytes": 2751,
+      "characters": 2751,
+      "estimated_tokens_characters_divided_by_4": 687.75,
       "inputs": {
         "plugin/skills/architect/agents/openai.yaml": {
           "bytes": 43,
@@ -674,6 +677,10 @@
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
         "plugin/skills/reflect/agents/openai.yaml": {
+          "bytes": 43,
+          "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
+        },
+        "plugin/skills/reframe/agents/openai.yaml": {
           "bytes": 43,
           "sha256": "a1499d95abd8447558c535fe5554adcc3c9b988a0a39264a6283d430effe1e94"
         },
@@ -1118,6 +1125,7 @@
         "plugin/skills/principle-type-system-discipline/SKILL.md",
         "plugin/skills/recall/SKILL.md",
         "plugin/skills/reflect/SKILL.md",
+        "plugin/skills/reframe/SKILL.md",
         "plugin/skills/setup-hstack/SKILL.md",
         "plugin/skills/sharpen/SKILL.md",
         "plugin/skills/show-me-your-work/SKILL.md",
@@ -1131,10 +1139,10 @@
         "plugin/skills/unslop/SKILL.md",
         "plugin/skills/why/SKILL.md"
       ],
-      "unique_files": 63,
-      "bytes": 212792,
-      "characters": 212703,
-      "estimated_tokens_characters_divided_by_4": 53175.75,
+      "unique_files": 64,
+      "bytes": 214802,
+      "characters": 214713,
+      "estimated_tokens_characters_divided_by_4": 53678.25,
       "inputs": {
         "plugin/skills/architect/SKILL.md": {
           "bytes": 972,
@@ -1193,8 +1201,8 @@
           "sha256": "593ba1a5d99571745d7159a54e5e0a9f5367b82eecccfc66253bf33a8ef737b4"
         },
         "plugin/skills/hugues-help/SKILL.md": {
-          "bytes": 20001,
-          "sha256": "7081f8511b6a19bf336b1ac409f33ab86a257fccd59675236eb371f392e45152"
+          "bytes": 20220,
+          "sha256": "958fdd48ef85fa2041701c57e1f1dc57d20a7f9ed25fd3c7a718dccbf661a087"
         },
         "plugin/skills/hugues-mode/SKILL.md": {
           "bytes": 11647,
@@ -1340,6 +1348,10 @@
           "bytes": 1786,
           "sha256": "0d6d220ca33f88f39cb50258fa1ef7c218cb1ea01e9d229c0267481768741f6d"
         },
+        "plugin/skills/reframe/SKILL.md": {
+          "bytes": 1580,
+          "sha256": "be846487eaabb624763916b6ee16d565477e0479d59aabfcce1fff8bf05ca936"
+        },
         "plugin/skills/setup-hstack/SKILL.md": {
           "bytes": 12397,
           "sha256": "916605c623cafaedbdd9e2d4b713bde7b26481585d1ff1c9784c4f65a1edde76"
@@ -1353,8 +1365,8 @@
           "sha256": "a597cea755d3877a8d9c718fa0f9ac80f3a892a367107fb6920f25f20f4baab7"
         },
         "plugin/skills/statechart/SKILL.md": {
-          "bytes": 9350,
-          "sha256": "a3f9caccc4bfa85ed697eb5927e89b4d20c28f988118a8f0fb6ea5db8234ac08"
+          "bytes": 9561,
+          "sha256": "8dff3c4129e5ee3ba6d50647527bf858f5c96fe4129cba92936d4e8c827838c6"
         },
         "plugin/skills/swarm/SKILL.md": {
           "bytes": 3088,
@@ -1396,9 +1408,9 @@
       "estimated_tokens_characters_divided_by_4": 43821.5
     },
     "workflow_body_only_candidate": {
-      "bytes": 195414,
-      "characters": 195326,
-      "estimated_tokens_characters_divided_by_4": 48831.5
+      "bytes": 197172,
+      "characters": 197084,
+      "estimated_tokens_characters_divided_by_4": 49271.0
     },
     "mode_full_file": {
       "paths": [
@@ -3129,7 +3141,7 @@
       }
     }
   },
-  "public_skills": 63,
+  "public_skills": 64,
   "limits": [
     "No runtime host, tokenizer, prompt framing, cache or native invocation observation.",
     "Required transitive bundled reads are included for the stated scenarios even if invocation would hold.",
