@@ -18,7 +18,7 @@ SESSION_MARKER = re.compile(r'\.orphaned_at|\.in_use/[0-9]+')
 # A run of path characters names a file when it holds a slash or follows a Git revision's colon;
 # a bare SKILL.md in prose names none.
 PATH_RUN = re.compile(r'(:?)([\w./-]+)')
-MANIFEST_SHA256 = 'bfdef79ec80a898aa02f5c3d91a9d6f3a91dee71f07dff00e569f914c4916f1d'
+MANIFEST_SHA256 = 'a1842596dee9c67b34430058ecddce8f583708061d1ffcca1154beeb9cc8526d'
 
 
 def digest(path):

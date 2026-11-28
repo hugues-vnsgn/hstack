@@ -159,11 +159,18 @@ Orca holds the sessions and their worktrees.
   build. On 2026-11-27, on Orca 1.4.277, a proof run with a throwaway bot and repo
   observed the door, an owner-typed run to its end, a handoff run with an
   implementer and a fresh reviewer, a lost worker, and the deny file for Gmail,
-  Drive and Calendar. It ran on `main` at `e6f687a`, so the page and kit text
-  corrected after it is defined, not yet observed. Gaps: a `worker_done` that
-  arrives while the bot's turn is dead, saving a PR title and body locally, a
-  custom worktree base path, the Slack deny entry, Codex and omp bots, Codex
-  workers started by a bot, bot groups, and a plain Orca chat that is not a bot.
+  Drive and Calendar. On 2026-11-28, on Orca 1.4.281 with the released 0.5.11,
+  a second run with the same bot and repo, in a new chat, observed, once each, a
+  bot turn killed as its `worker_done` wake began, a handoff run that pushed
+  nothing and saved its PR title and body locally, and worktrees under a custom
+  base path. It also saw the worker text corrected in #172: the bot took
+  `mode: structured` as no gap, and each worker listed the files it read. Its
+  origin was a local bare repo, not GitHub. The kit's SOUL-first step order and
+  its Never line against offering to break a Never line are defined, not yet
+  observed. Gaps: a
+  `worker_done` that arrives after the bot's process is already dead, the Slack
+  deny entry, Codex and omp bots, Codex workers started by a bot, bot groups, a
+  plain Orca chat that is not a bot, and a run with a real GitHub remote.
 
 ## What to expect
 
